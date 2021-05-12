@@ -1,0 +1,36 @@
+<pxb-drawer-layout [variant]="getVariant()" (backdropClick)="closeDrawer()">
+    <pxb-drawer pxb-drawer [open]="isOpen()" [sideBorder]="true">
+        <pxb-drawer-header title="PX Blue" subtitle="Angular Project">
+            <button mat-icon-button pxb-icon (click)="toggleDrawerOpen()">
+                <mat-icon>menu</mat-icon>
+            </button>
+        </pxb-drawer-header>
+        <pxb-drawer-body>
+            <pxb-drawer-nav-group>
+                <pxb-drawer-nav-item
+                    *ngFor="let navItem of navItems"
+                    [divider]="true"
+                    [title]="navItem.title"
+                    [selected]="navItem.title === getSelectedItem()"
+                    (select)="selectItem(navItem)"
+                >
+                    <mat-icon pxb-icon>{{ navItem.icon }}</mat-icon>
+                </pxb-drawer-nav-item>
+            </pxb-drawer-nav-group>
+        </pxb-drawer-body>
+    </pxb-drawer>
+    <div pxb-content class="drawer-content">
+        <mat-toolbar class="toolbar" color="primary">
+            <button
+                mat-icon-button
+                *ngIf="variant === 'temporary'"
+                (click)="openDrawer()"
+                style="margin-right: 16px; margin-left: -16px"
+            >
+                <mat-icon>menu</mat-icon>
+            </button>
+            <h2>{{ toolbarTitle }}</h2>
+        </mat-toolbar>
+        <router-outlet></router-outlet>
+    </div>
+</pxb-drawer-layout>
