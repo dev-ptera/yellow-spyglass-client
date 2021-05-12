@@ -4,7 +4,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ViewportService } from '../services/viewport/viewport.service';
 import { DrawerStateService } from '../services/drawer-state/drawer-state.service';
-import { APP_NAV_ITEMS, NavItem } from './nav-items';
+import { APP_NAV_ITEMS, NavItem, EXPLORER_NAV_GROUP, NETWORK_NAV_GROUP } from './nav-items';
 
 @Component({
     selector: 'app-navigation',
@@ -15,7 +15,8 @@ export class NavigationComponent {
     toolbarTitle: string;
     routeListener: Subscription;
     variant: DrawerLayoutVariantType;
-    navItems = [APP_NAV_ITEMS.home, APP_NAV_ITEMS.page1, APP_NAV_ITEMS.page2];
+    explorerNavGroup = EXPLORER_NAV_GROUP;
+    networkNavGroup = NETWORK_NAV_GROUP;
 
     constructor(
         private readonly _router: Router,
@@ -61,9 +62,9 @@ export class NavigationComponent {
         this.routeListener = this._router.events.subscribe((route) => {
             if (route instanceof NavigationEnd) {
                 switch (route.urlAfterRedirects) {
-                    case `/${APP_NAV_ITEMS.home.route}`: {
-                        this.toolbarTitle = APP_NAV_ITEMS.home.title;
-                        this._stateService.setSelectedItem(APP_NAV_ITEMS.home.title);
+                    case `/${APP_NAV_ITEMS.search.route}`: {
+                        this.toolbarTitle = APP_NAV_ITEMS.search.title;
+                        this._stateService.setSelectedItem(APP_NAV_ITEMS.search.title);
                         break;
                     }
                     case `/${APP_NAV_ITEMS.page1.route}`: {

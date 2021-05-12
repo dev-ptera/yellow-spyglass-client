@@ -1,16 +1,32 @@
 <pxb-drawer-layout [variant]="getVariant()" (backdropClick)="closeDrawer()">
     <pxb-drawer pxb-drawer [open]="isOpen()" [sideBorder]="true">
-        <pxb-drawer-header title="PX Blue" subtitle="Angular Project">
+        <pxb-drawer-header title="Yellow Spyglass" subtitle="Banano Network Explorer">
             <button mat-icon-button pxb-icon (click)="toggleDrawerOpen()">
                 <mat-icon>menu</mat-icon>
             </button>
         </pxb-drawer-header>
         <pxb-drawer-body>
-            <pxb-drawer-nav-group>
+
+            <pxb-drawer-nav-group title="Block Lettuce Explorer">
+
                 <pxb-drawer-nav-item
-                    *ngFor="let navItem of navItems"
+                        *ngFor="let navItem of explorerNavGroup"
+                        [divider]="true"
+                        [title]="navItem.title"
+                        [subtitle]="navItem.subtitle"
+                        [selected]="navItem.title === getSelectedItem()"
+                        (select)="selectItem(navItem)"
+                >
+                    <mat-icon pxb-icon>{{ navItem.icon }}</mat-icon>
+                </pxb-drawer-nav-item>
+            </pxb-drawer-nav-group>
+
+            <pxb-drawer-nav-group title="Network Health">
+                <pxb-drawer-nav-item
+                    *ngFor="let navItem of networkNavGroup"
                     [divider]="true"
                     [title]="navItem.title"
+                    [subtitle]="navItem.subtitle"
                     [selected]="navItem.title === getSelectedItem()"
                     (select)="selectItem(navItem)"
                 >

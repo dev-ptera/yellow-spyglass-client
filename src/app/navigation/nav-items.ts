@@ -1,29 +1,53 @@
 export type NavItem = {
     title: string;
+    subtitle?: string;
     route: string;
     icon: string;
 };
 
-const homeNavItem: NavItem = {
-    title: 'Home',
-    route: 'home',
-    icon: 'home',
+const searchNavItem: NavItem = {
+    title: 'Explore',
+    route: 'search',
+    icon: 'search',
 };
 
-const pageOneNavItem: NavItem = {
-    title: 'Page 1',
+
+const distributionNavItem: NavItem = {
+    title: 'Accounts & Distribution',
+    route: 'distribution',
+    icon: 'account_balance_wallet',
+};
+
+const knownAccountsNavItems: NavItem = {
+    title: 'Known Accounts',
+    route: 'distribution',
+    icon: 'account_balance_wallet',
+}
+
+const networkNavItem: NavItem = {
+    title: 'Network',
     route: 'page-one',
-    icon: 'looks_one',
+    icon: 'share',
 };
 
-const pageTwoNavItem: NavItem = {
-    title: 'Page 2',
+const representativesNavItem: NavItem = {
+    title: 'Representatives',
+    route: 'ho',
+    icon: 'how_to_vote',
+};
+
+const nodeNavItem: NavItem = {
+    title: 'Node',
     route: 'page-two',
-    icon: 'looks_two',
+    icon: 'router',
 };
 
 export const APP_NAV_ITEMS = {
-    home: homeNavItem,
-    page1: pageOneNavItem,
-    page2: pageTwoNavItem,
+    search: searchNavItem,
+    page1: networkNavItem,
+    page2: nodeNavItem,
 };
+
+
+export const EXPLORER_NAV_GROUP = [searchNavItem, distributionNavItem];
+export const NETWORK_NAV_GROUP = [networkNavItem, representativesNavItem, nodeNavItem];
