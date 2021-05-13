@@ -1,9 +1,9 @@
 <div class="explore-root">
-    <div class="explore-body" >
+    <div class="explore-body" responsive>
         <div class="explore-body-content">
 
-            <div class="mat-display-2" [style.marginBottom.px]="8">Search</div>
-            <div class="mat-subheading-1">Lookup addresses or transaction hashes</div>
+            <div class="mat-display-2" [style.marginBottom.px]="8">Banano Explorer</div>
+            <div class="mat-subheading-1">Search Banano address or Transaction hashes</div>
             <mat-form-field appearance="outline" [style.marginTop.px]="32">
                 <mat-label>Address</mat-label>
                 <input
@@ -16,7 +16,14 @@
                 />
             </mat-form-field>
             <div style="text-align: left">
-                <button [style.width.px]="140" mat-flat-button color="primary" [disabled]="loading">Search</button>
+                <button responsive class="explore-search-button" mat-flat-button color="primary"
+                        [disabled]="loading || !searchFormControl.value"
+                        (click)="search(searchFormControl.value)">
+                    <div [class.explore-loading]="loading">
+                        <mat-spinner *ngIf="loading" [diameter]="18" [style.marginRight.px]="16"></mat-spinner>
+                        Search
+                    </div>
+                </button>
             </div>
 
 
@@ -27,7 +34,7 @@
                     <div class="mat-subheading-1" [style.marginBottom.px]="16">Sample Addresses</div>
                     <div >
                         <button mat-stroked-button color="accent" *ngFor="let addr of sampleAddresses"
-                                [style.marginRight.px]="32"
+                                [style.marginRight.px]="32" [style.marginBottom.px]="16"
                                 (click)="search(addr)">
                             {{formatShortedAddress(addr)}}
                         </button>
@@ -38,7 +45,7 @@
                     <div class="mat-subheading-1" [style.marginBottom.px]="16">Sample Transactions</div>
                     <div>
                         <button mat-stroked-button color="accent" *ngFor="let tx of sampleTransactions"
-                                [style.marginRight.px]="32"
+                                [style.marginRight.px]="32" [style.marginBottom.px]="16"
                                 (click)="search(tx)">
                             {{formatShortenedTx(tx)}}
                         </button>
@@ -47,19 +54,30 @@
             </ng-container>
 
             <ng-container *ngIf="searched">
-            <div class="mat-display-2" [style.marginTop.px]="72" [style.marginBottom.px]="8">Account</div>
-            <div class="mat-subheading-1" [style.marginBottom.px]="16">{{searchFormControl.value}}</div>
+                <div class="mat-display-2" [style.marginTop.px]="72" [style.marginBottom.px]="8">
+                    {{ loading ? 'Loading' : 'Account Information' }}
+                </div>
+                <div class="mat-subheading-1" [style.marginBottom.px]="16" style="word-break: break-all">{{searchFormControl.value}}</div>
             </ng-container>
 
+
+
             <div class="explore-account-history">
-                <pxb-info-list-item *ngFor="let tx of data?.accountHistory?.history" [divider]="true" style="background-color: white">
-                    <div *ngIf="monkeyTest" pxb-icon [innerHTML]="monkeyTest | safe"></div>
-                    <div pxb-title>{{tx.account}}</div>
-                    <div pxb-subtitle>{{tx.hash}}</div>
-                    <div pxb-right-content>
-                        <pxb-list-item-tag [label]="tx.type"></pxb-list-item-tag>
-                    </div>
-                </pxb-info-list-item>
+                <mat-list>
+
+                    <pxb-info-list-item *ngFor="let tx of data?.accountHistory?.history"
+                                        [divider]="true"
+                                        [wrapTitle]="true"
+                                        [wrapSubtitle]="false"
+                                        style="background-color: white">
+                        <div *ngIf="monkeyTest" pxb-icon [innerHTML]="monkeyTest | safe"></div>
+                        <div pxb-title>{{tx.account}}</div>
+                        <div pxb-subtitle>{{tx.hash}}</div>
+                        <div pxb-right-content>
+                            <pxb-list-item-tag [label]="tx.type"></pxb-list-item-tag>
+                        </div>
+                    </pxb-info-list-item>
+                </mat-list>
             </div>
         </div>
     </div>

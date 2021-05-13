@@ -12,7 +12,7 @@ const searchNavItem: NavItem = {
 };
 
 const distributionNavItem: NavItem = {
-    title: 'Accounts & Distribution',
+    title: 'Distribution',
     route: 'distribution',
     icon: 'account_balance_wallet',
 };

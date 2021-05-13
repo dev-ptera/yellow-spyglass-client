@@ -6,7 +6,7 @@
             </button>
         </pxb-drawer-header>
         <pxb-drawer-body>
-            <pxb-drawer-nav-group title="Block Lettuce Explorer">
+            <pxb-drawer-nav-group title="Explorer" [divider]="true">
                 <pxb-drawer-nav-item
                     *ngFor="let navItem of explorerNavGroup"
                     [divider]="true"
@@ -19,7 +19,7 @@
                 </pxb-drawer-nav-item>
             </pxb-drawer-nav-group>
 
-            <pxb-drawer-nav-group title="Network Health">
+            <pxb-drawer-nav-group title="Network Health" [divider]="true">
                 <pxb-drawer-nav-item
                     *ngFor="let navItem of networkNavGroup"
                     [divider]="true"
@@ -31,6 +31,8 @@
                     <mat-icon pxb-icon>{{ navItem.icon }}</mat-icon>
                 </pxb-drawer-nav-item>
             </pxb-drawer-nav-group>
+
+            <pxb-spacer></pxb-spacer>
         </pxb-drawer-body>
     </pxb-drawer>
     <div pxb-content class="drawer-content">

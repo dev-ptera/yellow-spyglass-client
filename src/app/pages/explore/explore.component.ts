@@ -74,15 +74,12 @@ export class ExploreComponent {
         }
     }
 
-    isSmall(): boolean {
-        return this._viewportService.isSmall();
-    }
-
     search(searchValue: string): void {
         this.searched = true;
         this.loading = true;
         this.searchFormControl.setValue(searchValue);
-        const spin = new Promise((resolve) => setTimeout(resolve, 2000));
+        this.data = undefined;
+        const spin = new Promise((resolve) => setTimeout(resolve, 500));
         Promise.all([this._apiService.account(searchValue), spin]).then()
             .then(([data]) => {
                 console.log(data);

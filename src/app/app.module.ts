@@ -17,9 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 // app
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing';
-import { PxbLogoComponent } from './components/pxb-logo/pxb-logo.component';
 import { NavigationComponent } from './navigation/navigation.component';
-import { HomeComponent } from './pages/home/home.component';
 import { PageTwoComponent } from './pages/page-two/page-two.component';
 import { PageOneComponent } from './pages/page-one/page-one.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -27,17 +25,18 @@ import { ExploreComponent } from './pages/explore/explore.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from "@angular/material/input";
 import {SafeHtmlPipe} from "./pipes/safe.pipe";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {ResponsiveDirective} from "./directives/responsive.directive";
 
 @NgModule({
     declarations: [
         AppComponent,
         ExploreComponent,
-        HomeComponent,
         NavigationComponent,
         PageOneComponent,
         PageTwoComponent,
-        PxbLogoComponent,
-        SafeHtmlPipe
+        ResponsiveDirective,
+        SafeHtmlPipe,
     ],
     imports: [
         AppRoutingModule,
@@ -53,8 +52,8 @@ import {SafeHtmlPipe} from "./pipes/safe.pipe";
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
+        MatProgressSpinnerModule,
         MatToolbarModule,
-        InfoListItemModule,
         ListItemTagModule,
         RouterModule,
         ReactiveFormsModule,

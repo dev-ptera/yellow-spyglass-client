@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { APP_NAV_ITEMS } from './navigation/nav-items';
-import { HomeComponent } from './pages/home/home.component';
 import { PageOneComponent } from './pages/page-one/page-one.component';
 import { PageTwoComponent } from './pages/page-two/page-two.component';
 import { ExploreComponent } from './pages/explore/explore.component';
