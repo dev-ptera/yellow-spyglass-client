@@ -32,6 +32,9 @@ export class ViewportService {
 
     isSmall(): boolean {
         return this.sm;
+    }
 
+    isMedium(): boolean {
+        return this.md;
     }
 }

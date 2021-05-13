@@ -36,7 +36,7 @@ export class NavigationComponent {
 
     selectItem(navItem: NavItem): void {
         this.navigate(navItem.route);
-        if (this._viewportService.isSmall()) {
+        if (this.isSmall()) {
             this._stateService.setDrawerOpen(false);
         }
     }
@@ -55,6 +55,10 @@ export class NavigationComponent {
 
     getSelectedItem(): string {
         return this._stateService.getSelectedItem();
+    }
+
+    isSmall(): boolean {
+        return this._viewportService.isMedium() || this._viewportService.isSmall();
     }
 
     // Observes route changes and determines which PXB Auth page to show via route name.
@@ -86,12 +90,12 @@ export class NavigationComponent {
     }
 
     getVariant(): DrawerLayoutVariantType {
-        if (this.variant === 'persistent' && this._viewportService.isSmall()) {
+        if (this.variant === 'persistent' && this.isSmall()) {
             this._stateService.setDrawerOpen(false);
-        } else if (this.variant === 'temporary' && !this._viewportService.isSmall()) {
+        } else if (this.variant === 'temporary' && !this.isSmall()) {
             this._stateService.setDrawerOpen(true);
         }
-        this.variant = this._viewportService.isSmall() ? 'temporary' : 'persistent';
+        this.variant = this.isSmall() ? 'temporary' : 'persistent';
         return this.variant;
     }
 }
