@@ -3,8 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  api: 'http://localhost:3000/yellowspyglass'
+    production: false,
+    api: 'http://192.168.1.231:3000/yellowspyglass',
 };
 
 /*

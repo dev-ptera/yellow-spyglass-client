@@ -6,16 +6,14 @@
             </button>
         </pxb-drawer-header>
         <pxb-drawer-body>
-
             <pxb-drawer-nav-group title="Block Lettuce Explorer">
-
                 <pxb-drawer-nav-item
-                        *ngFor="let navItem of explorerNavGroup"
-                        [divider]="true"
-                        [title]="navItem.title"
-                        [subtitle]="navItem.subtitle"
-                        [selected]="navItem.title === getSelectedItem()"
-                        (select)="selectItem(navItem)"
+                    *ngFor="let navItem of explorerNavGroup"
+                    [divider]="true"
+                    [title]="navItem.title"
+                    [subtitle]="navItem.subtitle"
+                    [selected]="navItem.title === getSelectedItem()"
+                    (select)="selectItem(navItem)"
                 >
                     <mat-icon pxb-icon>{{ navItem.icon }}</mat-icon>
                 </pxb-drawer-nav-item>

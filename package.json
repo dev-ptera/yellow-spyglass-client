@@ -4,7 +4,7 @@
     "scripts": {
         "ng": "ng",
         "start": "ng serve --open --host 0.0.0.0",
-        "build": "ng build",
+        "build": "ng build -c production",
         "test": "ng test",
         "lint": "eslint \"src/**/**.ts\"",
         "e2e": "ng e2e",
@@ -25,9 +25,11 @@
         "@angular/platform-browser": "~11.2.13",
         "@angular/platform-browser-dynamic": "~11.2.13",
         "@angular/router": "~11.2.13",
+        "@dev-ptera/nano-node-rpc": "^1.0.2",
         "@pxblue/angular-components": "^4.3.0",
         "@pxblue/angular-themes": "^6.0.3",
         "@pxblue/colors": "^3.0.0",
+        "placeholder-loading": "^0.4.0",
         "rxjs": "~6.6.0",
         "tslib": "^2.0.0",
         "zone.js": "~0.11.3"

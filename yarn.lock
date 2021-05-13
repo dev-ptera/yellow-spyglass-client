@@ -1141,6 +1141,13 @@
     "@babel/helper-validator-identifier" "^7.14.0"
     to-fast-properties "^2.0.0"
 
+"@dev-ptera/nano-node-rpc@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@dev-ptera/nano-node-rpc/-/nano-node-rpc-1.0.2.tgz#8c5715f9c8014e44c6912201c3012cbbcc991099"
+  integrity sha512-uZhl8LNk8IgUBy1rwFN30kM7kpvZ4BVnL7v+ynl9o85sV/9eAJOalcIdTZDnE0gAHEaEeLda4D+oAAsD281fgQ==
+  dependencies:
+    axios "^0.21.1"
+
 "@discoveryjs/json-ext@0.5.2":
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.2.tgz#8f03a22a04de437254e8ce8cc84ba39689288752"
@@ -2050,6 +2057,13 @@ aws4@^1.8.0:
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.11.0.tgz#d61f46d83b2519250e2784daf5b09479a8b41c59"
   integrity sha512-xh1Rl34h6Fi1DC2WWKfxUTVqRsNnr6LsKz2+hfwDxQJWmrx8+c7ylaqBMcHfl1U1r2dsifOvKX3LQuLNZ+XSvA==
+
+axios@^0.21.1:
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
+  integrity sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
+  dependencies:
+    follow-redirects "^1.10.0"
 
 axobject-query@2.0.2:
   version "2.0.2"
@@ -4245,7 +4259,7 @@ flush-write-stream@^1.0.0:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
 
-follow-redirects@^1.0.0:
+follow-redirects@^1.0.0, follow-redirects@^1.10.0:
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.1.tgz#d9114ded0a1cfdd334e164e6662ad02bfd91ff43"
   integrity sha512-HWqDgT7ZEkqRzBvc2s64vSZ/hfOceEol3ac/7tKwzuvEyWx3/4UegXh5oBOIotkGsObyk3xznnSRVADBgWSQVg==
@@ -6890,6 +6904,11 @@ pkg-dir@^4.1.0:
   integrity sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==
   dependencies:
     find-up "^4.0.0"
+
+placeholder-loading@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/placeholder-loading/-/placeholder-loading-0.4.0.tgz#bef86521d614ab76bfeff17cb4872f281d023116"
+  integrity sha512-Po3XESQ/rKy9WKJSmHV7xSvW9y7hl8y0YBWG6By6zdiP4xkSPSpYPxbUlL0m3WqMI4oBnt/eQMlRwo9OVgJHVQ==
 
 pnp-webpack-plugin@1.6.4:
   version "1.6.4"

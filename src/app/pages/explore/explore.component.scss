@@ -3,26 +3,32 @@
     flex: 1;
 }
 
-.home-root {
+.explore-root {
     display: flex;
     flex: 1;
     flex-direction: column;
 }
 
-.home-body {
+.explore-body {
     display: flex;
     flex: 1;
     justify-content: center;
-    padding: 32px 64px;
+    padding: 64px 64px 32px 64px;
     box-sizing: border-box;
-    .home-body-content {
-        max-width: 600px;
+    .explore-body-content {
+        width: 100%;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        .home-title {
+        .explore-title {
             margin-bottom: 16px;
             text-align: center;
         }
     }
+}
+
+
+.explore-account-history .pxb-info-list-item-icon-wrapper > * {
+    height: 3rem!important;
+    width: 3rem!important;
+    font-size: 3rem!important;
 }

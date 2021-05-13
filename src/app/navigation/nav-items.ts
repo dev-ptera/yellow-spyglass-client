@@ -11,7 +11,6 @@ const searchNavItem: NavItem = {
     icon: 'search',
 };
 
-
 const distributionNavItem: NavItem = {
     title: 'Accounts & Distribution',
     route: 'distribution',
@@ -22,7 +21,7 @@ const knownAccountsNavItems: NavItem = {
     title: 'Known Accounts',
     route: 'distribution',
     icon: 'account_balance_wallet',
-}
+};
 
 const networkNavItem: NavItem = {
     title: 'Network',
@@ -47,7 +46,6 @@ export const APP_NAV_ITEMS = {
     page1: networkNavItem,
     page2: nodeNavItem,
 };
-
 
 export const EXPLORER_NAV_GROUP = [searchNavItem, distributionNavItem];
 export const NETWORK_NAV_GROUP = [networkNavItem, representativesNavItem, nodeNavItem];
