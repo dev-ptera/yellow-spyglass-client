@@ -69,94 +69,16 @@
                 </div>
             </ng-container>
 
-            <ng-container *ngIf="searchedValue">
-                <div class="mat-display-2" [style.marginTop.px]="72" [style.marginBottom.px]="8">
-                    {{ loading ? 'Loading' : 'Account Information' }}
-                </div>
-                <div class="mat-subheading-1" [style.marginBottom.px]="16" style="word-break: break-all">
-                    {{ searchedValue }}
-                </div>
-                <canvas id="qr-code"></canvas>
-                <div *ngIf="monkeyTest" pxb-icon [innerHTML]="monkeyTest | safe"></div>
-
-                <mat-tab-group *ngIf="!loading">
-                    <mat-tab>
-                        <ng-template mat-tab-label>
-                            <mat-icon class="example-tab-icon">thumb_up</mat-icon>
-                            Completed Transactions
-                        </ng-template>
-                        <div class="explore-account-history">
-                            <mat-list>
-                                <pxb-info-list-item
-                                    *ngFor="let tx of data?.accountHistory?.history"
-                                    [divider]="true"
-                                    [wrapTitle]="true"
-                                    [wrapSubtitle]="false"
-                                    style="background-color: white"
-                                >
-                                    <div *ngIf="monkeyTest" pxb-icon [innerHTML]="monkeyTest | safe"></div>
-                                    <div (click)="search(tx.account)" pxb-title>{{ tx.account }}</div>
-                                    <div pxb-subtitle>{{ tx.hash }}</div>
-                                    <div pxb-right-content>
-                                        <pxb-list-item-tag [label]="tx.type"></pxb-list-item-tag>
-                                    </div>
-                                </pxb-info-list-item>
-                            </mat-list>
-                        </div>
-                    </mat-tab>
-
-                    <mat-tab>
-                        <ng-template mat-tab-label>
-                            <mat-icon class="example-tab-icon">thumb_up</mat-icon>
-                            Pending Transactions
-                        </ng-template>
-                        <div class="explore-account-history">
-                            <mat-list>
-                                <pxb-info-list-item
-                                    *ngFor="let tx of data?.accountHistory?.history"
-                                    [divider]="true"
-                                    [wrapTitle]="true"
-                                    [wrapSubtitle]="false"
-                                    style="background-color: white"
-                                >
-                                    <div *ngIf="monkeyTest" pxb-icon [innerHTML]="monkeyTest | safe"></div>
-                                    <div (click)="search(tx.account)" pxb-title>{{ tx.account }}</div>
-                                    <div pxb-subtitle>{{ tx.hash }}</div>
-                                    <div pxb-right-content>
-                                        <pxb-list-item-tag [label]="tx.type"></pxb-list-item-tag>
-                                    </div>
-                                </pxb-info-list-item>
-                            </mat-list>
-                        </div>
-                    </mat-tab>
-
-                    <mat-tab>
-                        <ng-template mat-tab-label>
-                            <mat-icon class="example-tab-icon">thumb_up</mat-icon>
-                            Delegators
-                        </ng-template>
-
-                        <div class="explore-account-history">
-                            <mat-list>
-                                <pxb-info-list-item
-                                    *ngFor="let tx of data?.accountHistory?.history"
-                                    [divider]="true"
-                                    [wrapTitle]="true"
-                                    [wrapSubtitle]="false"
-                                    style="background-color: white"
-                                >
-                                    <div *ngIf="monkeyTest" pxb-icon [innerHTML]="monkeyTest | safe"></div>
-                                    <div (click)="search(tx.account)" pxb-title>{{ tx.account }}</div>
-                                    <div pxb-subtitle>{{ tx.hash }}</div>
-                                    <div pxb-right-content>
-                                        <pxb-list-item-tag [label]="tx.type"></pxb-list-item-tag>
-                                    </div>
-                                </pxb-info-list-item>
-                            </mat-list>
-                        </div>
-                    </mat-tab>
-                </mat-tab-group>
-            </ng-container>
+            <app-account
+                *ngIf="searchedValue"
+                [accountOverview]="accountOverview"
+                [confirmedTransactions]="confirmedTransactions"
+                [loading]="loading"
+                [address]="searchedValue"
+                [monkeyTest]="monkeyTest"
+                (search)="search($event)"
+            >
+            </app-account>
         </div>
     </div>
 </div>

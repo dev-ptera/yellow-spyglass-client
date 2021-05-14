@@ -58,33 +58,3 @@
         }
     }
 }
-
-/* List item style overrides */
-.explore-account-history {
-    .pxb-info-list-item-title-wrapper {
-        word-break: break-all;
-        cursor: pointer;
-        &:hover {
-            text-decoration: underline;
-        }
-    }
-    .pxb-info-list-item .pxb-info-list-item-subtitle-wrapper {
-        font-size: 0.75rem;
-    }
-    .pxb-info-list-item-icon-wrapper > * {
-        height: 4rem !important;
-        width: 4rem !important;
-        font-size: 4rem !important;
-    }
-    .pxb-info-list-item-icon-wrapper {
-        max-width: unset !important;
-        width: unset !important;
-        min-width: unset !important;
-    }
-}
-
-#qr-code {
-    height: 180px !important;
-    width: 180px !important;
-    margin-bottom: 4px;
-}

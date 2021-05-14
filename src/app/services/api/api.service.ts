@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { AccountOverview } from '../../types';
 
 @Injectable({
     providedIn: 'root',
@@ -22,13 +23,14 @@ export class ApiService {
         return this._http.get<any>(`${this.url}/account?address=${address}&offset=0`).toPromise();
     }
 
+    accountOverview(address: string): Promise<AccountOverview> {
+        return this._http.get<AccountOverview>(`${this.url}/account-overview?address=${address}`).toPromise();
+    }
+
     monkey(address: string): Promise<string> {
         const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
         return this._http
-            .get(
-                `https://monkey.banano.cc/api/v1/monkey/${address}`,
-                { headers, responseType: 'text' }
-            )
+            .get(`https://monkey.banano.cc/api/v1/monkey/${address}`, { headers, responseType: 'text' })
             .toPromise<string>();
     }
 }

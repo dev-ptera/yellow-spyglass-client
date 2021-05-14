@@ -1,15 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ExploreComponent } from './explore.component';
-import { AppModule } from '../../app.module';
+import { ExploreModule } from './explore.module';
 
-describe('HomeComponent', () => {
+describe('ExploreComponent', () => {
     let component: ExploreComponent;
     let fixture: ComponentFixture<ExploreComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [AppModule],
+            imports: [ExploreModule],
         }).compileComponents();
     });
 

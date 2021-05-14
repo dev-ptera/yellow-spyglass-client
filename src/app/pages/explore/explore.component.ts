@@ -7,6 +7,7 @@ import { ActivatedRoute, NavigationStart, Router, RouterEvent } from '@angular/r
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import * as QRCode from 'qrcode';
+import { AccountOverview } from '../../types';
 
 @Component({
     selector: 'app-explore',
@@ -16,7 +17,6 @@ import * as QRCode from 'qrcode';
 })
 export class ExploreComponent {
     pxbBlue = blue;
-    data: any;
     pxbWhite = white;
     searchFormControl: FormControl;
     idFieldActive: boolean;
@@ -24,6 +24,8 @@ export class ExploreComponent {
     loading: boolean;
     monkeyTest;
     searchedValue: string;
+    accountOverview: AccountOverview;
+    confirmedTransactions: any;
 
     sampleAddresses = [
         'ban_39qbrcfii4imaekkon7gqs1emssg7pfhiirfg7u85nh9rnf51zbmr84xrtbp',
@@ -76,16 +78,17 @@ export class ExploreComponent {
         this.searchedValue = searchValue;
         this.loading = true;
         this.searchFormControl.setValue(searchValue);
-        this.data = undefined;
+        this.monkeyTest = undefined;
+        this.confirmedTransactions = undefined;
+        this.accountOverview = undefined;
         const spin = new Promise((resolve) => setTimeout(resolve, 500));
 
-        // Tx Data
-        Promise.all([this._apiService.account(searchValue), spin])
-            .then()
-            .then(([data]) => {
-                this.data = data;
+        // Confirmed Transactions
+        Promise.all([this._apiService.account(searchValue), this._apiService.accountOverview(searchValue), spin])
+            .then(([confirmedTransactions, accountOverview]) => {
                 this.loading = false;
-                this.renderQRCode(searchValue);
+                this.accountOverview = accountOverview;
+                this.confirmedTransactions = confirmedTransactions;
                 void this._router.navigate([], {
                     relativeTo: this._activatedRoute,
                     queryParams: { address: searchValue },
@@ -97,9 +100,8 @@ export class ExploreComponent {
             });
 
         // Monkey
-        this._apiService
-            .monkey(searchValue)
-            .then((data) => {
+        Promise.all([this._apiService.monkey(searchValue), spin])
+            .then(([data]) => {
                 this.monkeyTest = data;
             })
             .catch((err) => {
@@ -113,12 +115,5 @@ export class ExploreComponent {
 
     formatShortenedTx(tx: string): string {
         return `${tx.substr(0, 15)}...`;
-    }
-
-    renderQRCode(addr: string): void {
-        const canvas = document.getElementById('qr-code');
-        QRCode.toCanvas(canvas, addr, function (error) {
-            if (error) console.error(error);
-        });
     }
 }

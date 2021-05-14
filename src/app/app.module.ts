@@ -21,24 +21,16 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { PageTwoComponent } from './pages/page-two/page-two.component';
 import { PageOneComponent } from './pages/page-one/page-one.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ExploreComponent } from './pages/explore/explore.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SafeHtmlPipe } from './pipes/safe.pipe';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ResponsiveDirective } from './directives/responsive.directive';
 import { MatTabsModule } from '@angular/material/tabs';
+import { ExploreModule } from './pages/explore/explore.module';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        ExploreComponent,
-        NavigationComponent,
-        PageOneComponent,
-        PageTwoComponent,
-        ResponsiveDirective,
-        SafeHtmlPipe,
-    ],
+    declarations: [AppComponent, NavigationComponent, PageOneComponent, PageTwoComponent, ResponsiveDirective],
     imports: [
         AppRoutingModule,
         BrowserAnimationsModule,
@@ -46,6 +38,7 @@ import { MatTabsModule } from '@angular/material/tabs';
         CommonModule,
         DrawerModule,
         EmptyStateModule,
+        ExploreModule,
         FlexLayoutModule,
         FormsModule,
         HttpClientModule,

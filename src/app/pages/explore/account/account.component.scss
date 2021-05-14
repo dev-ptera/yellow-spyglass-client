@@ -1,0 +1,46 @@
+@import '~@pxblue/colors/palette';
+
+.account-header {
+    margin-top: 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .account-monkey-title {
+        display: flex;
+        align-items: center;
+    }
+}
+
+#qr-code {
+    height: 120px !important;
+    width: 120px !important;
+    border: solid 1px map-get($pxb-green, 500);
+}
+
+.account-tabs .mat-tab-label {
+    height: 4.5rem;
+}
+
+/* List item style overrides */
+.account-history {
+    .pxb-info-list-item-title-wrapper {
+        word-break: break-all;
+        cursor: pointer;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    .pxb-info-list-item .pxb-info-list-item-subtitle-wrapper {
+        font-size: 0.75rem;
+    }
+    .pxb-info-list-item-icon-wrapper > * {
+        height: 4rem !important;
+        width: 4rem !important;
+        font-size: 4rem !important;
+    }
+    .pxb-info-list-item-icon-wrapper {
+        max-width: unset !important;
+        width: unset !important;
+        min-width: unset !important;
+    }
+}

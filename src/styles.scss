@@ -27,7 +27,7 @@ $custom-typography: mat-typography-config(
 
 @include mat-core($custom-typography);
 $material-theme-primary: mat-palette($pxb-green);
-$material-theme-accent: mat-palette($pxb-yellow);
+$material-theme-accent: mat-palette($pxb-blue);
 $material-theme-warn: mat-palette($mat-deep-orange, A200);
 $material-theme: map-merge(
     mat-light-theme($material-theme-primary, $material-theme-accent, $material-theme-warn),
@@ -87,6 +87,5 @@ body {
 
 // Why can't I use the branding color palettes for my theme?
 // $material-theme-primary: mat-palette($brand-trophy);
-
 
 // How can I avoid copy pasting all this nonsense just to change some theme colors?
