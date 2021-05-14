@@ -1,3 +1,5 @@
+@import '~@pxblue/colors/palette';
+
 :host {
     display: flex;
     flex: 1;
@@ -7,6 +9,7 @@
     display: flex;
     flex: 1;
     flex-direction: column;
+    align-items: center;
 }
 
 .explore-body {
@@ -15,6 +18,7 @@
     justify-content: center;
     padding: 64px 64px 32px 64px;
     box-sizing: border-box;
+    width: 100%;
     &.md {
         padding: 32px 48px 24px 48px;
     }
@@ -23,8 +27,7 @@
     }
     .explore-body-content {
         width: 100%;
-        display: flex;
-        flex-direction: column;
+        max-width: 1200px;
         .explore-title {
             margin-bottom: 16px;
             text-align: center;
@@ -32,15 +35,27 @@
     }
 }
 
-.explore-search-button {
-    width: 140px;
-    &.sm {
+.explore-search-bar {
+    display: flex;
+    margin-top: 32px;
+    mat-form-field {
         width: 100%;
+        margin-right: 16px;
+        .mat-form-field-wrapper {
+            margin: 0;
+            padding: 0;
+        }
     }
-    .explore-loading {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    .explore-search-button {
+        width: 140px;
+        &.sm {
+            width: 100px;
+        }
+        .explore-loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     }
 }
 
@@ -48,9 +63,13 @@
 .explore-account-history {
     .pxb-info-list-item-title-wrapper {
         word-break: break-all;
+        cursor: pointer;
+        &:hover {
+            text-decoration: underline;
+        }
     }
     .pxb-info-list-item .pxb-info-list-item-subtitle-wrapper {
-        font-size: .75rem;
+        font-size: 0.75rem;
     }
     .pxb-info-list-item-icon-wrapper > * {
         height: 4rem !important;
@@ -58,8 +77,14 @@
         font-size: 4rem !important;
     }
     .pxb-info-list-item-icon-wrapper {
-        max-width: unset!important;
-        width: unset!important;
-        min-width: unset!important;
+        max-width: unset !important;
+        width: unset !important;
+        min-width: unset !important;
     }
+}
+
+#qr-code {
+    height: 180px !important;
+    width: 180px !important;
+    margin-bottom: 4px;
 }

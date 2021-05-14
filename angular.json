@@ -29,7 +29,6 @@
                         ],
                         "styles": [
                             "src/styles.scss",
-                            "./node_modules/@pxblue/angular-themes/theme.scss",
                             "./node_modules/@pxblue/angular-themes/open-sans.scss"
                         ],
                         "scripts": []

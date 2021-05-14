@@ -7,7 +7,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 
 //pxblue modules
-import {DrawerModule, EmptyStateModule, InfoListItemModule, ListItemTagModule} from '@pxblue/angular-components';
+import { DrawerModule, EmptyStateModule, InfoListItemModule, ListItemTagModule } from '@pxblue/angular-components';
 
 //material modules
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -23,10 +23,11 @@ import { PageOneComponent } from './pages/page-one/page-one.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ExploreComponent } from './pages/explore/explore.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatInputModule} from "@angular/material/input";
-import {SafeHtmlPipe} from "./pipes/safe.pipe";
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {ResponsiveDirective} from "./directives/responsive.directive";
+import { MatInputModule } from '@angular/material/input';
+import { SafeHtmlPipe } from './pipes/safe.pipe';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ResponsiveDirective } from './directives/responsive.directive';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
     declarations: [
@@ -53,6 +54,7 @@ import {ResponsiveDirective} from "./directives/responsive.directive";
         MatIconModule,
         MatInputModule,
         MatProgressSpinnerModule,
+        MatTabsModule,
         MatToolbarModule,
         ListItemTagModule,
         RouterModule,
