@@ -18,7 +18,7 @@ import { AccountComponent } from './account/account.component';
 import { ExploreComponent } from './explore.component';
 import { SafeHtmlPipe } from '../../pipes/safe.pipe';
 import { MatBadgeModule } from '@angular/material/badge';
-import {ResponsiveDirective} from "../../directives/responsive.directive";
+import { ResponsiveDirective } from '../../directives/responsive.directive';
 
 @NgModule({
     declarations: [AccountComponent, ExploreComponent, SafeHtmlPipe, ResponsiveDirective],

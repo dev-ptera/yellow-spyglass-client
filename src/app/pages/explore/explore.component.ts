@@ -6,8 +6,8 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute, NavigationStart, Router, RouterEvent } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-import {AccountOverview, ConfirmedTransaction} from '../../types';
-import {UtilService} from "../../services/util/util.service";
+import { AccountOverview, ConfirmedTransaction } from '../../types';
+import { UtilService } from '../../services/util/util.service';
 
 @Component({
     selector: 'app-explore',
@@ -87,7 +87,9 @@ export class ExploreComponent {
         // Confirmed Transactions
         Promise.all([
             this._apiService.confirmedTransactions(searchValue),
-            this._apiService.accountOverview(searchValue), spin])
+            this._apiService.accountOverview(searchValue),
+            spin,
+        ])
             .then(([confirmedTransactions, accountOverview]) => {
                 this.loading = false;
                 this.accountOverview = accountOverview;

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import {AccountOverview, ConfirmedTransaction} from '../../types';
+import { AccountOverview, ConfirmedTransaction } from '../../types';
 
 @Injectable({
     providedIn: 'root',
@@ -12,7 +12,9 @@ export class ApiService {
     constructor(private readonly _http: HttpClient) {}
 
     confirmedTransactions(address: string, offset: number = 0): Promise<ConfirmedTransaction[]> {
-        return this._http.get<ConfirmedTransaction[]>(`${this.url}/confirmed-transactions?address=${address}&offset=0`).toPromise();
+        return this._http
+            .get<ConfirmedTransaction[]>(`${this.url}/confirmed-transactions?address=${address}&offset=0`)
+            .toPromise();
     }
 
     accountOverview(address: string): Promise<AccountOverview> {

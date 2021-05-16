@@ -9,12 +9,12 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import * as QRCode from 'qrcode';
-import {AccountOverview, ConfirmedTransaction} from '../../../types';
-import {ViewportService} from '../../../services/viewport/viewport.service';
-import {ApiService} from '../../../services/api/api.service';
-import {rawToBan} from "banano-unit-converter";
-import {StateType} from "../../../types/modal/stateType";
-import {UtilService} from "../../../services/util/util.service";
+import { AccountOverview, ConfirmedTransaction } from '../../../types';
+import { ViewportService } from '../../../services/viewport/viewport.service';
+import { ApiService } from '../../../services/api/api.service';
+import { rawToBan } from 'banano-unit-converter';
+import { StateType } from '../../../types/modal/stateType';
+import { UtilService } from '../../../services/util/util.service';
 
 @Component({
     selector: 'app-account',
@@ -55,18 +55,26 @@ export class AccountComponent {
 
     convertRawToBan(raw: string, state: StateType): string {
         const modifier = state === 'receive' ? '+' : '-';
-        const ban = Number(rawToBan(raw)).toFixed(10).replace(/\.?0+$/, '')
+        const ban = Number(rawToBan(raw))
+            .toFixed(10)
+            .replace(/\.?0+$/, '');
         return `${modifier}${this._util.numberWithCommas(ban)} BAN`;
     }
 
     formatDateString(timestamp: number): string {
         const date = new Date(timestamp * 1000);
-        return (((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear());
+        return (
+            (date.getMonth() > 8 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1)) +
+            '/' +
+            (date.getDate() > 9 ? date.getDate() : '0' + date.getDate()) +
+            '/' +
+            date.getFullYear()
+        );
     }
 
     formatTimeString(timestamp: number): string {
         const date = new Date(timestamp * 1000);
-        return date.toTimeString().substr(0,8)
+        return date.toTimeString().substr(0, 8);
     }
 
     formatBadge(count: number): string {

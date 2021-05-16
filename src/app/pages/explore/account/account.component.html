@@ -18,9 +18,7 @@
 <mat-tab-group *ngIf="!loading" class="account-tabs">
     <mat-tab>
         <ng-template mat-tab-label>
-            <span color="primary"
-                  matBadgeOverlap="false"
-                  [matBadge]="formatBadge(accountOverview.completedTxCount)">
+            <span color="primary" matBadgeOverlap="false" [matBadge]="formatBadge(accountOverview.completedTxCount)">
                 Completed Transactions
             </span>
         </ng-template>
@@ -35,10 +33,10 @@
                 >
                     <div *ngIf="monkeyTest" pxb-icon [innerHTML]="monkeyTest | safe"></div>
                     <div pxb-title>
-                            <div>
-                                <pxb-list-item-tag [label]="tx.type" [class]="'type '  + tx.type" ></pxb-list-item-tag>
-                                <span [class]="'amount ' + tx.type">{{convertRawToBan(tx.balanceRaw, tx.type)}}</span>
-                            </div>
+                        <div>
+                            <pxb-list-item-tag [label]="tx.type" [class]="'type ' + tx.type"></pxb-list-item-tag>
+                            <span [class]="'amount ' + tx.type">{{ convertRawToBan(tx.balanceRaw, tx.type) }}</span>
+                        </div>
                         <div>
                             <span class="to-from">{{ tx.type === 'receive' ? ' from' : 'to' }}</span>
                             <span class="address" (click)="search.emit(tx.address)">{{ ' ' + tx.address }}</span>
@@ -48,10 +46,9 @@
                     <div pxb-right-content>
                         <!--<pxb-list-item-tag [label]="tx.type" [class]="'type '  + tx.type" ></pxb-list-item-tag>-->
                         <div class="timestamps" responsive>
-                            <span>{{formatDateString(tx.timestamp)}}</span>
-                            <span [style.marginLeft.px]="16">{{formatTimeString(tx.timestamp)}}</span>
+                            <span>{{ formatDateString(tx.timestamp) }}</span>
+                            <span [style.marginLeft.px]="16">{{ formatTimeString(tx.timestamp) }}</span>
                         </div>
-
                     </div>
                 </pxb-info-list-item>
             </mat-list>

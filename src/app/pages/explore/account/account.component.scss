@@ -27,7 +27,8 @@
         .address {
             word-break: break-all;
         }
-        .address, .hash {
+        .address,
+        .hash {
             cursor: pointer;
             &:hover {
                 text-decoration: underline;
@@ -55,7 +56,7 @@
     }
 
     pxb-list-item-tag.type {
-        color: white!important;
+        color: white !important;
         &.send {
             background-color: map-get($pxb-red, 500);
         }
@@ -68,7 +69,7 @@
     }
     .amount {
         margin-left: 8px;
-        font-size: .75rem;
+        font-size: 0.75rem;
         &.receive {
             color: map-get($pxb-green, 500);
         }
@@ -87,7 +88,7 @@
 
 .account-tabs .mat-badge-content {
     min-width: 22px;
-    width: unset!important;
+    width: unset !important;
     padding: 2px;
-    top: -16px!important;
+    top: -16px !important;
 }
