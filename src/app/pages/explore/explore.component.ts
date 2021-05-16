@@ -6,8 +6,8 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute, NavigationStart, Router, RouterEvent } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-import * as QRCode from 'qrcode';
-import { AccountOverview } from '../../types';
+import {AccountOverview, ConfirmedTransaction} from '../../types';
+import {UtilService} from "../../services/util/util.service";
 
 @Component({
     selector: 'app-explore',
@@ -25,7 +25,7 @@ export class ExploreComponent {
     monkeyTest;
     searchedValue: string;
     accountOverview: AccountOverview;
-    confirmedTransactions: any;
+    confirmedTransactions: ConfirmedTransaction[];
 
     sampleAddresses = [
         'ban_39qbrcfii4imaekkon7gqs1emssg7pfhiirfg7u85nh9rnf51zbmr84xrtbp',
@@ -45,7 +45,8 @@ export class ExploreComponent {
         private readonly _viewportService: ViewportService,
         private readonly _apiService: ApiService,
         private readonly _router: Router,
-        private readonly _activatedRoute: ActivatedRoute
+        private readonly _activatedRoute: ActivatedRoute,
+        private readonly _util: UtilService
     ) {
         this._router.events
             .pipe(
@@ -84,7 +85,9 @@ export class ExploreComponent {
         const spin = new Promise((resolve) => setTimeout(resolve, 500));
 
         // Confirmed Transactions
-        Promise.all([this._apiService.account(searchValue), this._apiService.accountOverview(searchValue), spin])
+        Promise.all([
+            this._apiService.confirmedTransactions(searchValue),
+            this._apiService.accountOverview(searchValue), spin])
             .then(([confirmedTransactions, accountOverview]) => {
                 this.loading = false;
                 this.accountOverview = accountOverview;

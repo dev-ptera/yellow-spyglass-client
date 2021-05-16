@@ -30,6 +30,7 @@
         "@pxblue/angular-themes": "^6.0.3",
         "@pxblue/colors": "^3.0.0",
         "@pxblue/colors-branding": "^3.0.1",
+        "banano-unit-converter": "^0.1.0",
         "qrcode": "^1.4.4",
         "rxjs": "~6.6.0",
         "tslib": "^2.0.0",

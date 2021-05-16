@@ -1,0 +1,79 @@
+<div class="account-header">
+    <div class="account-monkey-title">
+        <div pxb-icon style="height: 150px; width: 150px" *ngIf="monkeyTest" [innerHTML]="monkeyTest | safe"></div>
+        <div>
+            <div class="mat-display-2" [style.marginBottom.px]="8">
+                {{ loading ? 'Loading' : 'Account Information' }}
+            </div>
+            <div class="mat-subheading-1" style="word-break: break-all">
+                {{ address }}
+            </div>
+        </div>
+    </div>
+    <div>
+        <canvas id="qr-code" [style.display.none]="!monkeyTest"></canvas>
+    </div>
+</div>
+
+<mat-tab-group *ngIf="!loading" class="account-tabs">
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <span color="primary"
+                  matBadgeOverlap="false"
+                  [matBadge]="formatBadge(accountOverview.completedTxCount)">
+                Completed Transactions
+            </span>
+        </ng-template>
+        <div class="account-history">
+            <mat-list [style.paddingTop.px]="0">
+                <pxb-info-list-item
+                    *ngFor="let tx of confirmedTransactions; trackBy: trackByFn"
+                    [divider]="true"
+                    [wrapTitle]="true"
+                    [wrapSubtitle]="false"
+                    style="background-color: white"
+                >
+                    <div *ngIf="monkeyTest" pxb-icon [innerHTML]="monkeyTest | safe"></div>
+                    <div pxb-title>
+                            <div>
+                                <pxb-list-item-tag [label]="tx.type" [class]="'type '  + tx.type" ></pxb-list-item-tag>
+                                <span [class]="'amount ' + tx.type">{{convertRawToBan(tx.balanceRaw, tx.type)}}</span>
+                            </div>
+                        <div>
+                            <span class="to-from">{{ tx.type === 'receive' ? ' from' : 'to' }}</span>
+                            <span class="address" (click)="search.emit(tx.address)">{{ ' ' + tx.address }}</span>
+                        </div>
+                    </div>
+                    <div pxb-subtitle class="hash">{{ tx.hash }}</div>
+                    <div pxb-right-content>
+                        <!--<pxb-list-item-tag [label]="tx.type" [class]="'type '  + tx.type" ></pxb-list-item-tag>-->
+                        <div class="timestamps" responsive>
+                            <span>{{formatDateString(tx.timestamp)}}</span>
+                            <span [style.marginLeft.px]="16">{{formatTimeString(tx.timestamp)}}</span>
+                        </div>
+
+                    </div>
+                </pxb-info-list-item>
+            </mat-list>
+        </div>
+    </mat-tab>
+
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <span color="primary" [matBadge]="accountOverview.pendingTxCount" matBadgeOverlap="false">
+                Pending Transactions
+            </span>
+        </ng-template>
+        <div class="account-history"></div>
+    </mat-tab>
+
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <span color="primary" [matBadge]="accountOverview.delegatorsCount" matBadgeOverlap="false">
+                Delegators
+            </span>
+        </ng-template>
+
+        <div class="account-history"></div>
+    </mat-tab>
+</mat-tab-group>

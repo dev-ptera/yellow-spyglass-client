@@ -23,15 +23,20 @@
 
 /* List item style overrides */
 .account-history {
-    .pxb-info-list-item-title-wrapper {
-        word-break: break-all;
-        cursor: pointer;
-        &:hover {
-            text-decoration: underline;
+    .pxb-info-list-item {
+        .address {
+            word-break: break-all;
+        }
+        .address, .hash {
+            cursor: pointer;
+            &:hover {
+                text-decoration: underline;
+            }
         }
     }
     .pxb-info-list-item .pxb-info-list-item-subtitle-wrapper {
         font-size: 0.75rem;
+        color: map-get($pxb-black, 300);
     }
     .pxb-info-list-item-icon-wrapper > * {
         height: 4rem !important;
@@ -43,4 +48,46 @@
         width: unset !important;
         min-width: unset !important;
     }
+
+    .to-from {
+        color: map-get($pxb-black, 500);
+        font-weight: 200;
+    }
+
+    pxb-list-item-tag.type {
+        color: white!important;
+        &.send {
+            background-color: map-get($pxb-red, 500);
+        }
+        &.receive {
+            background-color: map-get($pxb-green, 500);
+        }
+        &.change {
+            background-color: map-get($pxb-blue, 500);
+        }
+    }
+    .amount {
+        margin-left: 8px;
+        font-size: .75rem;
+        &.receive {
+            color: map-get($pxb-green, 500);
+        }
+        &.send {
+            color: map-get($pxb-red, 500);
+        }
+    }
+    .timestamps {
+        display: flex;
+        &.md {
+            flex-direction: column;
+            text-align: right;
+        }
+    }
+}
+
+.account-tabs .mat-badge-content {
+    min-width: 22px;
+    width: unset!important;
+    padding: 2px;
+    top: -16px!important;
 }

@@ -18,9 +18,10 @@ import { AccountComponent } from './account/account.component';
 import { ExploreComponent } from './explore.component';
 import { SafeHtmlPipe } from '../../pipes/safe.pipe';
 import { MatBadgeModule } from '@angular/material/badge';
+import {ResponsiveDirective} from "../../directives/responsive.directive";
 
 @NgModule({
-    declarations: [AccountComponent, ExploreComponent, SafeHtmlPipe],
+    declarations: [AccountComponent, ExploreComponent, SafeHtmlPipe, ResponsiveDirective],
     imports: [
         CommonModule,
         InfoListItemModule,
@@ -34,6 +35,6 @@ import { MatBadgeModule } from '@angular/material/badge';
         MatTabsModule,
         ReactiveFormsModule,
     ],
-    exports: [AccountComponent, ExploreComponent, SafeHtmlPipe],
+    exports: [AccountComponent, ExploreComponent, SafeHtmlPipe, ResponsiveDirective],
 })
 export class ExploreModule {}
