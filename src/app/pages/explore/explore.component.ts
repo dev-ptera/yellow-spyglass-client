@@ -6,7 +6,7 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute, NavigationStart, Router, RouterEvent } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-import { AccountOverview, ConfirmedTransaction } from '../../types';
+import { AccountOverview } from '../../types';
 import { UtilService } from '../../services/util/util.service';
 
 @Component({
@@ -22,10 +22,9 @@ export class ExploreComponent {
     idFieldActive: boolean;
     touchedIdField: boolean;
     loading: boolean;
-    monkeyTest;
+    monkeySvg: string;
     searchedValue: string;
     accountOverview: AccountOverview;
-    confirmedTransactions: ConfirmedTransaction[];
 
     sampleAddresses = [
         'ban_39qbrcfii4imaekkon7gqs1emssg7pfhiirfg7u85nh9rnf51zbmr84xrtbp',
@@ -42,7 +41,7 @@ export class ExploreComponent {
     private destroyed$ = new Subject();
 
     constructor(
-        private readonly _viewportService: ViewportService,
+        public vp: ViewportService,
         private readonly _apiService: ApiService,
         private readonly _router: Router,
         private readonly _activatedRoute: ActivatedRoute,
@@ -72,6 +71,10 @@ export class ExploreComponent {
             this.search(address);
         } else if (hash && searchValue !== hash) {
             this.search(hash);
+        } else {
+          //  this.searchedValue = undefined;
+          //  this.accountOverview = undefined;
+           // this.confirmedTransactions = undefined;
         }
     }
 
@@ -79,21 +82,18 @@ export class ExploreComponent {
         this.searchedValue = searchValue;
         this.loading = true;
         this.searchFormControl.setValue(searchValue);
-        this.monkeyTest = undefined;
-        this.confirmedTransactions = undefined;
+        this.monkeySvg = undefined;
         this.accountOverview = undefined;
         const spin = new Promise((resolve) => setTimeout(resolve, 500));
 
         // Confirmed Transactions
         Promise.all([
-            this._apiService.confirmedTransactions(searchValue),
             this._apiService.accountOverview(searchValue),
             spin,
         ])
-            .then(([confirmedTransactions, accountOverview]) => {
+            .then(([accountOverview]) => {
                 this.loading = false;
                 this.accountOverview = accountOverview;
-                this.confirmedTransactions = confirmedTransactions;
                 void this._router.navigate([], {
                     relativeTo: this._activatedRoute,
                     queryParams: { address: searchValue },
@@ -107,7 +107,7 @@ export class ExploreComponent {
         // Monkey
         Promise.all([this._apiService.monkey(searchValue), spin])
             .then(([data]) => {
-                this.monkeyTest = data;
+                this.monkeySvg = data;
             })
             .catch((err) => {
                 console.error(err);

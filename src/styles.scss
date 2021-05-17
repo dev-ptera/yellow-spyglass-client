@@ -78,6 +78,14 @@ $material-theme: map-merge(
     @import 'light-theme';
 }
 
+.mat-tab-label-active {
+    opacity: 1 !important;
+}
+.mat-list-base .mat-list-item.pxb-info-list-item-content.pxb-info-list-item-wrap .mat-list-item-content,
+.pxb-info-list-item-content.pxb-info-list-item-wrap .mat-list-item-content {
+    min-height: 5.5rem !important;
+}
+
 html,
 body {
     height: 100%;

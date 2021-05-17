@@ -1,10 +1,15 @@
 @import '~@pxblue/colors/palette';
 
 .account-header {
-    margin-top: 72px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 32px;
+    &.sm {
+        margin-bottom: 16px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
     .account-monkey-title {
         display: flex;
         align-items: center;
@@ -14,11 +19,18 @@
 #qr-code {
     height: 120px !important;
     width: 120px !important;
+    box-sizing: border-box;
     border: solid 1px map-get($pxb-green, 500);
+    &.sm {
+        height: 80px !important;
+        width: 80px !important;
+    }
 }
 
-.account-tabs .mat-tab-label {
-    height: 4.5rem;
+.account-tabs {
+    .mat-tab-label {
+        height: 4.5rem;
+    }
 }
 
 /* List item style overrides */
@@ -32,6 +44,17 @@
             cursor: pointer;
             &:hover {
                 text-decoration: underline;
+            }
+        }
+        .height {
+            font-size: 12px;
+            background-color: map-get($pxb-gray, 400);
+            font-weight: 600;
+            margin-right: 8px;
+            &.sm {
+                position: absolute;
+                top: 0px;
+                left: 0px;
             }
         }
     }
@@ -86,9 +109,32 @@
     }
 }
 
-.account-tabs .mat-badge-content {
-    min-width: 22px;
-    width: unset !important;
-    padding: 2px;
-    top: -16px !important;
+.account-tabs {
+    .account-confirmed-tab {
+        .mat-badge-content {
+
+            background-color: map-get($pxb-green, 500);
+        }
+    }
+    .account-pending-tab {
+
+        .mat-badge-content {
+
+            background-color: map-get($pxb-yellow, 500) !important
+        }
+    }
+    .account-delegators-tab {
+
+        .mat-badge-content {
+
+            background-color: map-get($pxb-blue, 500);
+        }
+    }
+
+    .mat-badge-content {
+        min-width: 22px;
+        width: unset !important;
+        padding: 2px;
+        top: -16px !important;
+    }
 }

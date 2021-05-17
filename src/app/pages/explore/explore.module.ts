@@ -3,7 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 //pxblue modules
-import { InfoListItemModule, ListItemTagModule } from '@pxblue/angular-components';
+import {EmptyStateModule, InfoListItemModule, ListItemTagModule} from '@pxblue/angular-components';
 
 //material modules
 import { MatButtonModule } from '@angular/material/button';
@@ -24,6 +24,7 @@ import { ResponsiveDirective } from '../../directives/responsive.directive';
     declarations: [AccountComponent, ExploreComponent, SafeHtmlPipe, ResponsiveDirective],
     imports: [
         CommonModule,
+        EmptyStateModule,
         InfoListItemModule,
         ListItemTagModule,
         MatBadgeModule,

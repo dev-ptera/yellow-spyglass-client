@@ -1,3 +1,7 @@
+import { ConfirmedTransaction } from './ConfirmedTransaction';
+import { PendingTransaction } from './PendingTransaction';
+import { Delegator } from './Delegator';
+
 export type AccountOverview = {
     opened: boolean;
     address: string;
@@ -7,4 +11,7 @@ export type AccountOverview = {
     pendingTxCount: number;
     delegatorsCount: number;
     representative: string;
+    confirmedTransactions: ConfirmedTransaction[];
+    pendingTransactions: PendingTransaction[];
+    delegators: Delegator[];
 };

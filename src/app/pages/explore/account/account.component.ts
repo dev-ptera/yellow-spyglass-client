@@ -9,7 +9,7 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import * as QRCode from 'qrcode';
-import { AccountOverview, ConfirmedTransaction } from '../../../types';
+import {AccountOverview, ConfirmedTransaction, Delegator, PendingTransaction} from '../../../types';
 import { ViewportService } from '../../../services/viewport/viewport.service';
 import { ApiService } from '../../../services/api/api.service';
 import { rawToBan } from 'banano-unit-converter';
@@ -25,14 +25,17 @@ import { UtilService } from '../../../services/util/util.service';
 })
 export class AccountComponent {
     @Input() accountOverview: AccountOverview;
-    @Input() confirmedTransactions: ConfirmedTransaction[];
     @Input() loading: boolean;
     @Input() address: string;
-    @Input() monkeyTest: string;
+    @Input() monkeySvg: string;
     @Output() search: EventEmitter<string> = new EventEmitter<string>();
 
+    delegators: Delegator[];
+    pendingTransactions: PendingTransaction[];
+    confirmedTransactions: ConfirmedTransaction[];
+
     constructor(
-        private readonly _viewportService: ViewportService,
+        public vp: ViewportService,
         private readonly _apiService: ApiService,
         private readonly _ref: ChangeDetectorRef,
         private readonly _util: UtilService
@@ -42,6 +45,11 @@ export class AccountComponent {
         if (changes.address) {
             console.log('ADDRESS CHANGED RUNNING CD');
             this.renderQRCode(this.address);
+        }
+        if (changes.accountOverview) {
+            this.delegators = this.accountOverview.delegators;
+            this.confirmedTransactions = this.accountOverview.confirmedTransactions;
+            this.pendingTransactions = this.accountOverview.pendingTransactions;
         }
     }
 
@@ -70,6 +78,10 @@ export class AccountComponent {
             '/' +
             date.getFullYear()
         );
+    }
+
+    addComma(num: number): string {
+        return this._util.numberWithCommas(num);
     }
 
     formatTimeString(timestamp: number): string {

@@ -19,7 +19,7 @@ export class ViewportService {
     // Viewports are treated as mutually exclusive; a viewpoint cannot be 'sm' and 'md' at the same time.
     constructor(private readonly _breakpointObserver: BreakpointObserver) {
         this.breakpointSubscription = this._breakpointObserver
-            .observe(['(max-width: 1280px)', '(max-width: 960px)'])
+            .observe(['(max-width: 1280px)', '(max-width: 760px)'])
             .subscribe((result) => {
                 const md = Object.keys(result.breakpoints)[0];
                 const sm = Object.keys(result.breakpoints)[1];

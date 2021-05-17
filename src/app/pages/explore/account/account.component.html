@@ -1,24 +1,36 @@
-<div class="account-header">
+<div class="account-header" responsive>
     <div class="account-monkey-title">
-        <div pxb-icon style="height: 150px; width: 150px" *ngIf="monkeyTest" [innerHTML]="monkeyTest | safe"></div>
+        <div
+            pxb-icon
+            style="height: 150px; width: 150px"
+            *ngIf="monkeySvg && !vp.sm"
+            [innerHTML]="monkeySvg | safe"
+        ></div>
         <div>
-            <div class="mat-display-2" [style.marginBottom.px]="8">
+            <div [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm" [style.marginBottom.px]="8">
                 {{ loading ? 'Loading' : 'Account Information' }}
             </div>
-            <div class="mat-subheading-1" style="word-break: break-all">
+            <div class="mat-subheading-2" style="word-break: break-all">
                 {{ address }}
             </div>
+            <pxb-list-item-tag label="Representative Online"></pxb-list-item-tag>
         </div>
     </div>
-    <div>
-        <canvas id="qr-code" [style.display.none]="!monkeyTest"></canvas>
+    <div style="display: flex; align-items: center">
+        <div
+            pxb-icon
+            style="height: 150px; width: 150px"
+            *ngIf="monkeySvg && vp.sm"
+            [innerHTML]="monkeySvg | safe"
+        ></div>
+        <canvas id="qr-code" [style.display.none]="!monkeySvg"></canvas>
     </div>
 </div>
 
 <mat-tab-group *ngIf="!loading" class="account-tabs">
-    <mat-tab>
+    <mat-tab class="account-confirmed-tab">
         <ng-template mat-tab-label>
-            <span color="primary" matBadgeOverlap="false" [matBadge]="formatBadge(accountOverview.completedTxCount)">
+            <span color="accent" matBadgeOverlap="false" [matBadge]="formatBadge(accountOverview.completedTxCount)">
                 Completed Transactions
             </span>
         </ng-template>
@@ -29,17 +41,41 @@
                     [divider]="true"
                     [wrapTitle]="true"
                     [wrapSubtitle]="false"
-                    style="background-color: white"
+                    style="background-color: white; position: relative"
                 >
-                    <div *ngIf="monkeyTest" pxb-icon [innerHTML]="monkeyTest | safe"></div>
+                    <div pxb-icon>
+                        <div *ngIf="monkeySvg" [innerHTML]="monkeySvg | safe"></div>
+                        <pxb-list-item-tag
+                            *ngIf="vp.sm"
+                            responsive
+                            [label]="'#' + addComma(tx.height)"
+                            [class]="'height ' + tx.type"
+                        ></pxb-list-item-tag>
+                    </div>
                     <div pxb-title>
                         <div>
+                            <pxb-list-item-tag
+                                *ngIf="!vp.sm"
+                                [label]="'#' + addComma(tx.height)"
+                                [class]="'height ' + tx.type"
+                            ></pxb-list-item-tag>
                             <pxb-list-item-tag [label]="tx.type" [class]="'type ' + tx.type"></pxb-list-item-tag>
-                            <span [class]="'amount ' + tx.type">{{ convertRawToBan(tx.balanceRaw, tx.type) }}</span>
+                            <span *ngIf="tx.type !== 'change'" [class]="'amount ' + tx.type">{{
+                                convertRawToBan(tx.balanceRaw, tx.type)
+                            }}</span>
                         </div>
                         <div>
                             <span class="to-from">{{ tx.type === 'receive' ? ' from' : 'to' }}</span>
-                            <span class="address" (click)="search.emit(tx.address)">{{ ' ' + tx.address }}</span>
+                            <span *ngIf="tx.type !== 'change'" class="address" (click)="search.emit(tx.address)">
+                                {{ ' ' + tx.address }}
+                            </span>
+                            <span
+                                *ngIf="tx.type === 'change'"
+                                class="address"
+                                (click)="search.emit(tx.newRepresentative)"
+                            >
+                                {{ ' ' + tx.newRepresentative }}
+                            </span>
                         </div>
                     </div>
                     <div pxb-subtitle class="hash">{{ tx.hash }}</div>
@@ -55,22 +91,29 @@
         </div>
     </mat-tab>
 
-    <mat-tab>
+    <mat-tab class="account-pending-tab">
         <ng-template mat-tab-label>
             <span color="primary" [matBadge]="accountOverview.pendingTxCount" matBadgeOverlap="false">
                 Pending Transactions
             </span>
         </ng-template>
-        <div class="account-history"></div>
+        <div class="account-history" [style.padding.px]="48">
+            <pxb-empty-state title="No Pending Transactions" description="This account has already received all pending payments">
+                <mat-icon pxb-empty-icon>paid</mat-icon>
+            </pxb-empty-state>
+        </div>
     </mat-tab>
 
-    <mat-tab>
+    <mat-tab class="account-delegators-tab">
         <ng-template mat-tab-label>
             <span color="primary" [matBadge]="accountOverview.delegatorsCount" matBadgeOverlap="false">
                 Delegators
             </span>
         </ng-template>
-
-        <div class="account-history"></div>
+        <div class="account-history" [style.padding.px]="48">
+            <pxb-empty-state title="No Delegators" description="This account has no weight delegators towards it.  If this account is not running a node, this is a good thing.">
+                <mat-icon pxb-empty-icon>how_to_vote</mat-icon>
+            </pxb-empty-state>
+        </div>
     </mat-tab>
 </mat-tab-group>
