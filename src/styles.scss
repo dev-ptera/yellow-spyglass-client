@@ -26,7 +26,7 @@ $custom-typography: mat-typography-config(
 );
 
 @include mat-core($custom-typography);
-$material-theme-primary: mat-palette($pxb-green);
+$material-theme-primary: mat-palette($pxb-green, 800);
 $material-theme-accent: mat-palette($pxb-blue);
 $material-theme-warn: mat-palette($mat-deep-orange, A200);
 $material-theme: map-merge(

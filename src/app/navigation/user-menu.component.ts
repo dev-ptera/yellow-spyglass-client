@@ -1,16 +1,16 @@
-import {Component} from "@angular/core";
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-user-menu',
     template: `
         <pxb-user-menu [avatarValue]="avatarValue" [(open)]="open">
             <mat-nav-list pxb-menu-body [style.paddingTop.px]="0">
-                <pxb-info-list-item *ngFor="let item of items" [dense]="true" (click)="open=false">
-                    <mat-icon pxb-icon>{{item.icon}}</mat-icon>
-                    <div pxb-title>{{item.title}}</div>
+                <pxb-info-list-item *ngFor="let item of items" [dense]="true" (click)="open = false">
+                    <mat-icon pxb-icon>{{ item.icon }}</mat-icon>
+                    <div pxb-title>{{ item.title }}</div>
                 </pxb-info-list-item>
             </mat-nav-list>
-        </pxb-user-menu> 
+        </pxb-user-menu>
     `,
 })
 export class UserMenuComponent {
@@ -28,6 +28,6 @@ export class UserMenuComponent {
         {
             title: 'Log Out',
             icon: 'logout',
-        }
+        },
     ];
 }

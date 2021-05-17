@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PageOneComponent } from './page-one.component';
+import { ComingSoonComponent } from './coming-soon.component';
 import { AppModule } from '../../app.module';
 
-describe('PageOneComponent', () => {
-    let component: PageOneComponent;
-    let fixture: ComponentFixture<PageOneComponent>;
+describe('ComingSoonComponent', () => {
+    let component: ComingSoonComponent;
+    let fixture: ComponentFixture<ComingSoonComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
@@ -14,7 +14,7 @@ describe('PageOneComponent', () => {
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(PageOneComponent);
+        fixture = TestBed.createComponent(ComingSoonComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

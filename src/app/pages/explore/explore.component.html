@@ -1,7 +1,6 @@
 <div class="explore-root">
     <div class="explore-body" responsive>
         <div class="explore-body-content">
-
             <ng-container *ngIf="!searchedValue">
                 <div [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm" [style.marginBottom.px]="8">
                     Banano Explorer
@@ -11,21 +10,21 @@
                     <mat-form-field appearance="outline" style="background: white">
                         <mat-label>Address</mat-label>
                         <input
-                                matInput
-                                name="address"
-                                autocomplete="off"
-                                (focus)="touchedIdField = true; idFieldActive = true"
-                                (blur)="idFieldActive = false"
-                                [formControl]="searchFormControl"
+                            matInput
+                            name="address"
+                            autocomplete="off"
+                            (focus)="touchedIdField = true; idFieldActive = true"
+                            (blur)="idFieldActive = false"
+                            [formControl]="searchFormControl"
                         />
                     </mat-form-field>
                     <button
-                            responsive
-                            class="explore-search-button"
-                            mat-flat-button
-                            color="primary"
-                            [disabled]="loading || !searchFormControl.value"
-                            (click)="search(searchFormControl.value)"
+                        responsive
+                        class="explore-search-button"
+                        mat-flat-button
+                        color="primary"
+                        [disabled]="loading || !searchFormControl.value"
+                        (click)="search(searchFormControl.value)"
                     >
                         <div [class.explore-loading]="loading">
                             <mat-spinner *ngIf="loading" [diameter]="18" [style.marginRight.px]="16"></mat-spinner>
@@ -42,12 +41,12 @@
                     <div class="mat-subheading-1" [style.marginBottom.px]="16">Sample Addresses</div>
                     <div>
                         <button
-                                mat-stroked-button
-                                color="accent"
-                                *ngFor="let addr of sampleAddresses"
-                                [style.marginRight.px]="32"
-                                [style.marginBottom.px]="16"
-                                (click)="search(addr)"
+                            mat-stroked-button
+                            color="accent"
+                            *ngFor="let addr of sampleAddresses"
+                            [style.marginRight.px]="32"
+                            [style.marginBottom.px]="16"
+                            (click)="search(addr)"
                         >
                             {{ formatShortedAddress(addr) }}
                         </button>
@@ -58,19 +57,18 @@
                     <div class="mat-subheading-1" [style.marginBottom.px]="16">Sample Transactions</div>
                     <div>
                         <button
-                                mat-stroked-button
-                                color="accent"
-                                *ngFor="let tx of sampleTransactions"
-                                [style.marginRight.px]="32"
-                                [style.marginBottom.px]="16"
-                                (click)="search(tx)"
+                            mat-stroked-button
+                            color="accent"
+                            *ngFor="let tx of sampleTransactions"
+                            [style.marginRight.px]="32"
+                            [style.marginBottom.px]="16"
+                            (click)="search(tx)"
                         >
                             {{ formatShortenedTx(tx) }}
                         </button>
                     </div>
                 </div>
             </ng-container>
-
 
             <app-account
                 *ngIf="searchedValue"

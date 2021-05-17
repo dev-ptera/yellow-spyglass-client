@@ -33,6 +33,18 @@
     }
 }
 
+.account-summary-tags {
+    pxb-list-item-tag {
+        margin-right: 16px;
+    }
+    .account-balance {
+        background-color: map-get($pxb-orange, 700) !important;
+    }
+    .account-pending {
+        background-color: map-get($pxb-purple, 500);
+    }
+}
+
 /* List item style overrides */
 .account-history {
     .pxb-info-list-item {
@@ -112,21 +124,16 @@
 .account-tabs {
     .account-confirmed-tab {
         .mat-badge-content {
-
             background-color: map-get($pxb-green, 500);
         }
     }
     .account-pending-tab {
-
         .mat-badge-content {
-
-            background-color: map-get($pxb-yellow, 500) !important
+            background-color: map-get($pxb-yellow, 500) !important;
         }
     }
     .account-delegators-tab {
-
         .mat-badge-content {
-
             background-color: map-get($pxb-blue, 500);
         }
     }

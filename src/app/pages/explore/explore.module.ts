@@ -3,7 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 //pxblue modules
-import {EmptyStateModule, InfoListItemModule, ListItemTagModule} from '@pxblue/angular-components';
+import { EmptyStateModule, InfoListItemModule, ListItemTagModule } from '@pxblue/angular-components';
 
 //material modules
 import { MatButtonModule } from '@angular/material/button';

@@ -72,9 +72,9 @@ export class ExploreComponent {
         } else if (hash && searchValue !== hash) {
             this.search(hash);
         } else {
-          //  this.searchedValue = undefined;
-          //  this.accountOverview = undefined;
-           // this.confirmedTransactions = undefined;
+            //  this.searchedValue = undefined;
+            //  this.accountOverview = undefined;
+            // this.confirmedTransactions = undefined;
         }
     }
 
@@ -87,10 +87,7 @@ export class ExploreComponent {
         const spin = new Promise((resolve) => setTimeout(resolve, 500));
 
         // Confirmed Transactions
-        Promise.all([
-            this._apiService.accountOverview(searchValue),
-            spin,
-        ])
+        Promise.all([this._apiService.accountOverview(searchValue), spin])
             .then(([accountOverview]) => {
                 this.loading = false;
                 this.accountOverview = accountOverview;

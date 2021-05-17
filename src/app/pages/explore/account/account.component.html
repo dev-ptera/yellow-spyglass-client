@@ -8,12 +8,29 @@
         ></div>
         <div>
             <div [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm" [style.marginBottom.px]="8">
-                {{ loading ? 'Loading' : 'Account Information' }}
+                <span *ngIf="loading">Loading</span>
+                <ng-container *ngIf="accountOverview?.delegatorsCount === 0">
+                <span *ngIf="accountOverview?.opened">
+                    Account Information
+                </span>
+                    <span *ngIf="!accountOverview?.opened">
+                    Unopened Account
+                </span>
+                </ng-container>
+                <span *ngIf="accountOverview?.delegatorsCount > 0">Representative Account</span>
             </div>
-            <div class="mat-subheading-2" style="word-break: break-all">
+            <div class="mat-subheading-2" style="word-break: break-all; margin-right: 24px">
                 {{ address }}
             </div>
-            <pxb-list-item-tag label="Representative Online"></pxb-list-item-tag>
+            <div class="account-summary-tags" *ngIf="accountOverview">
+                <pxb-list-item-tag label="Representative Online"></pxb-list-item-tag>
+                <pxb-list-item-tag
+                                   [label]="convertRawToBan(accountOverview.balanceRaw) + ' BALANCE'" class="account-balance">
+                </pxb-list-item-tag>
+                <pxb-list-item-tag
+                                   [label]="convertRawToBan(accountOverview.pendingRaw) + ' PENDING'" class="account-pending"></pxb-list-item-tag>
+
+            </div>
         </div>
     </div>
     <div style="display: flex; align-items: center">
@@ -35,6 +52,12 @@
             </span>
         </ng-template>
         <div class="account-history">
+            <pxb-empty-state [style.padding.px]="72" *ngIf="confirmedTransactions.length === 0"
+                             title="No Confirmed Transactions"
+                             description="This account has not received or sent anything yet."
+            >
+                <mat-icon pxb-empty-icon>paid</mat-icon>
+            </pxb-empty-state>
             <mat-list [style.paddingTop.px]="0">
                 <pxb-info-list-item
                     *ngFor="let tx of confirmedTransactions; trackBy: trackByFn"
@@ -97,10 +120,39 @@
                 Pending Transactions
             </span>
         </ng-template>
-        <div class="account-history" [style.padding.px]="48">
-            <pxb-empty-state title="No Pending Transactions" description="This account has already received all pending payments">
+        <div class="account-history" >
+            <pxb-empty-state [style.padding.px]="48" *ngIf="pendingTransactions.length === 0"
+                title="No Pending Transactions"
+                description="This account has already received all pending payments"
+            >
                 <mat-icon pxb-empty-icon>paid</mat-icon>
             </pxb-empty-state>
+            <mat-list [style.paddingTop.px]="0">
+                <pxb-info-list-item
+                        *ngFor="let tx of pendingTransactions; trackBy: trackByFn"
+                        [divider]="true"
+                        [wrapTitle]="true"
+                        [wrapSubtitle]="false"
+                        style="background-color: white; position: relative"
+                >
+                    <div pxb-icon>
+                        <div *ngIf="monkeySvg" [innerHTML]="monkeySvg | safe"></div>
+                    </div>
+                    <div pxb-title>
+                        <div>
+                            <pxb-list-item-tag [label]="'receive'" class="type receive"></pxb-list-item-tag>
+                            <span class="amount receive">{{convertRawToBan(tx.balanceRaw, 'receive')}}</span>
+                        </div>
+                        <div>
+                            <span class="to-from">from</span>
+                            <span class="address" (click)="search.emit(tx.address)">
+                                {{ ' ' + tx.address }}
+                            </span>
+                        </div>
+                    </div>
+                    <div pxb-subtitle class="hash">{{ tx.hash }}</div>
+                </pxb-info-list-item>
+            </mat-list>
         </div>
     </mat-tab>
 
@@ -110,8 +162,16 @@
                 Delegators
             </span>
         </ng-template>
-        <div class="account-history" [style.padding.px]="48">
-            <pxb-empty-state title="No Delegators" description="This account has no weight delegators towards it.  If this account is not running a node, this is a good thing.">
+        <div class="account-delegators" >
+            <div *ngFor="let delegator of delegators">
+                {{delegator.address}}
+                {{delegator.weightRaw}}
+            </div>
+
+            <pxb-empty-state *ngIf="delegators.length === 0" [style.padding.px]="72"
+                title="No Delegators"
+                description="This account has no delegated weight.  If this account is not running a node, this is a good thing."
+            >
                 <mat-icon pxb-empty-icon>how_to_vote</mat-icon>
             </pxb-empty-state>
         </div>

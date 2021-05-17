@@ -1,41 +1,39 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {Component, NgModule} from '@angular/core';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {CommonModule} from '@angular/common';
-import {FlexLayoutModule} from '@angular/flex-layout';
-import {RouterModule} from '@angular/router';
+import { BrowserModule } from '@angular/platform-browser';
+import { Component, NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { RouterModule } from '@angular/router';
 
 //pxblue modules
-import {DrawerModule, EmptyStateModule, ListItemTagModule, UserMenuModule} from '@pxblue/angular-components';
+import { DrawerModule, EmptyStateModule, ListItemTagModule, UserMenuModule } from '@pxblue/angular-components';
 
 //material modules
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 // app
-import {AppRoutingModule} from './app.routing';
-import {NavigationComponent} from './navigation/navigation.component';
-import {UserMenuComponent} from "./navigation/user-menu.component";
-import {PageTwoComponent} from './pages/page-two/page-two.component';
-import {PageOneComponent} from './pages/page-one/page-one.component';
-import {HttpClientModule} from '@angular/common/http';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatTabsModule} from '@angular/material/tabs';
-import {ExploreModule} from './pages/explore/explore.module';
+import { AppRoutingModule } from './app.routing';
+import { NavigationComponent } from './navigation/navigation.component';
+import { UserMenuComponent } from './navigation/user-menu.component';
+import { HttpClientModule } from '@angular/common/http';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTabsModule } from '@angular/material/tabs';
+import { ExploreModule } from './pages/explore/explore.module';
+import { ComingSoonComponent } from './pages/coming-soon/coming-soon.component';
 
 @Component({
     selector: 'app-root',
-    template: `<app-navigation></app-navigation>`
+    template: `<app-navigation></app-navigation>`,
 })
 export class AppComponent {}
 
 @NgModule({
-    declarations: [AppComponent, NavigationComponent, PageOneComponent, PageTwoComponent,
-        UserMenuComponent],
+    declarations: [AppComponent, NavigationComponent, ComingSoonComponent, UserMenuComponent],
     imports: [
         AppRoutingModule,
         BrowserAnimationsModule,
@@ -62,4 +60,3 @@ export class AppComponent {}
     bootstrap: [AppComponent],
 })
 export class AppModule {}
-

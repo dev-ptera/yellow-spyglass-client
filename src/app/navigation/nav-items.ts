@@ -13,31 +13,31 @@ const searchNavItem: NavItem = {
 
 const distributionNavItem: NavItem = {
     title: 'Distribution',
-    route: 'distribution',
+    route: 'coming-soon',
     icon: 'account_balance_wallet',
 };
 
 const knownAccountsNavItems: NavItem = {
     title: 'Known Accounts',
-    route: 'distribution',
+    route: 'coming-soon',
     icon: 'account_balance_wallet',
 };
 
 const networkNavItem: NavItem = {
     title: 'Network',
-    route: 'page-one',
+    route: 'coming-soon',
     icon: 'share',
 };
 
 const representativesNavItem: NavItem = {
     title: 'Representatives',
-    route: 'ho',
+    route: 'coming-soon',
     icon: 'how_to_vote',
 };
 
 const nodeNavItem: NavItem = {
     title: 'Node',
-    route: 'page-two',
+    route: 'coming-soon',
     icon: 'router',
 };
 

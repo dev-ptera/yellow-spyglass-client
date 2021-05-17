@@ -9,7 +9,7 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import * as QRCode from 'qrcode';
-import {AccountOverview, ConfirmedTransaction, Delegator, PendingTransaction} from '../../../types';
+import { AccountOverview, ConfirmedTransaction, Delegator, PendingTransaction } from '../../../types';
 import { ViewportService } from '../../../services/viewport/viewport.service';
 import { ApiService } from '../../../services/api/api.service';
 import { rawToBan } from 'banano-unit-converter';
@@ -61,12 +61,22 @@ export class AccountComponent {
         });
     }
 
-    convertRawToBan(raw: string, state: StateType): string {
+    convertRawToBan(raw: string, state?: StateType): string {
+        if (!raw) {
+            return '';
+        }
+        if (raw === "0") {
+            return "0 BAN";
+        }
         const modifier = state === 'receive' ? '+' : '-';
         const ban = Number(rawToBan(raw))
             .toFixed(10)
             .replace(/\.?0+$/, '');
-        return `${modifier}${this._util.numberWithCommas(ban)} BAN`;
+        if (state) {
+            return `${modifier}${this._util.numberWithCommas(ban)} BAN`;
+        } else {
+            return `${this._util.numberWithCommas(ban)} BAN`;
+        }
     }
 
     formatDateString(timestamp: number): string {

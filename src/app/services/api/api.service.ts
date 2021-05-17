@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { AccountOverview, ConfirmedTransaction } from '../../types';
-import {Delegator} from "../../types/dto/Delegator";
+import { Delegator } from '../../types/dto/Delegator';
 
 @Injectable({
     providedIn: 'root',
