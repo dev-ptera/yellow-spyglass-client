@@ -1,9 +1,17 @@
-<pxb-drawer-layout [variant]="getVariant()" (backdropClick)="closeDrawer()">
+<pxb-drawer-layout [variant]="getVariant()" (backdropClick)="closeDrawer()" width="280">
     <pxb-drawer pxb-drawer [open]="isOpen()" [sideBorder]="true">
-        <pxb-drawer-header title="Yellow Spyglass" subtitle="Banano Network Explorer">
-            <button mat-icon-button pxb-icon (click)="toggleDrawerOpen()">
+        <pxb-drawer-header>
+            <button pxb-icon mat-icon-button (click)="toggleDrawerOpen()">
                 <mat-icon>menu</mat-icon>
             </button>
+            <div pxb-title-content>
+                <mat-toolbar-row style="padding: 0">
+                    <img class="spyglass" responsive src="assets/spyglass.svg" />
+                </mat-toolbar-row >
+                <mat-toolbar-row style="padding: 0">
+                    <div class="mat-overline" [style.marginTop.px]="0">Network Explorer</div>
+                </mat-toolbar-row>
+            </div>
         </pxb-drawer-header>
         <pxb-drawer-body>
             <pxb-drawer-nav-group title="Explorer" [divider]="true">
@@ -35,20 +43,27 @@
             <pxb-spacer></pxb-spacer>
         </pxb-drawer-body>
     </pxb-drawer>
-    <div pxb-content class="drawer-content">
-        <mat-toolbar class="toolbar" color="primary">
+    <div pxb-content class="navigation-drawer-content">
+        <div class="navigation-header-container" responsive>
             <button
-                mat-icon-button
-                *ngIf="variant === 'temporary'"
-                (click)="openDrawer()"
-                style="margin-right: 16px; margin-left: -16px"
+                    mat-icon-button
+                    *ngIf="variant === 'temporary'"
+                    (click)="openDrawer()"
+                    style="margin-right: 16px; margin-left: -16px; color: white"
             >
                 <mat-icon>menu</mat-icon>
             </button>
-            <h2>{{ toolbarTitle }}</h2>
-            <pxb-spacer></pxb-spacer>
-            <app-user-menu></app-user-menu>
-        </mat-toolbar>
+            <mat-toolbar class="navigation-toolbar" color="primary">
+                <mat-toolbar-row>
+                    <h2>{{ toolbarTitle }}</h2>
+                    <pxb-spacer></pxb-spacer>
+                    <app-user-menu></app-user-menu>
+                </mat-toolbar-row>
+                <mat-toolbar-row style="padding: 0">
+                    <h2>{{ toolbarTitle }}</h2>
+                </mat-toolbar-row>
+            </mat-toolbar>
+        </div>
         <router-outlet></router-outlet>
     </div>
 </pxb-drawer-layout>

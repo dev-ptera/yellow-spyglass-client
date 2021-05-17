@@ -17,7 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 // app
 import { AppRoutingModule } from './app.routing';
 import { NavigationComponent } from './navigation/navigation.component';
-import { UserMenuComponent } from './navigation/user-menu.component';
+import { UserMenuComponent } from './navigation/user-menu/user-menu.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';

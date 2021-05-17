@@ -1,12 +1,56 @@
-.toolbar {
+.navigation-header-container {
+    position: sticky;
+    position: -webkit-sticky;
+    background-size: contain;
+    background-image: url('../../assets/bg-footer.svg');
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    &.sm {
+        background-size: 160%;
+    }
+    mat-toolbar, mat-toolbar-row {
+        padding: 0;
+    }
+}
+
+.spyglass {
+    width: 180px;
+    margin-top: 60px;
+    &.sm {
+        margin-top: 32px;
+    }
+}
+
+::ng-deep .pxb-drawer-header-background {
+    background-image: url('../../assets/electric_circuit.svg');
+    background-position: -21%;
+    opacity: .1!important;
+    background-size: 420% !important;
+}
+
+.navigation-toolbar {
     position: sticky;
     position: -webkit-sticky;
     top: 0;
     z-index: 1000;
     padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    background: unset!important;
+    div {
+        display: flex;
+        width: 100%;
+        flex: 1 1 0;
+    }
 }
 
-.drawer-content {
+::ng-deep .pxb-drawer-header-content {
+    height: unset!important;
+}
+
+.navigation-drawer-content {
     display: flex;
     flex-direction: column;
     height: 100%;

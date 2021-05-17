@@ -3,7 +3,8 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'app-user-menu',
     template: `
-        <pxb-user-menu [avatarValue]="avatarValue" [(open)]="open">
+        <pxb-user-menu [(open)]="open">
+            <mat-icon pxb-avatar>settings</mat-icon>
             <mat-nav-list pxb-menu-body [style.paddingTop.px]="0">
                 <pxb-info-list-item *ngFor="let item of items" [dense]="true" (click)="open = false">
                     <mat-icon pxb-icon>{{ item.icon }}</mat-icon>
@@ -12,6 +13,7 @@ import { Component } from '@angular/core';
             </mat-nav-list>
         </pxb-user-menu>
     `,
+    styleUrls: ['user-menu.component.scss']
 })
 export class UserMenuComponent {
     open: false;
