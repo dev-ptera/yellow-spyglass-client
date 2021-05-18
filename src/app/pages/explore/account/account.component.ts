@@ -15,11 +15,10 @@ import { ApiService } from '../../../services/api/api.service';
 import { rawToBan } from 'banano-unit-converter';
 import { StateType } from '../../../types/modal/stateType';
 import { UtilService } from '../../../services/util/util.service';
-import {Delegator} from "../../../types/modal/Delegator";
-import {ConfirmedTransaction} from "../../../types/modal/ConfirmedTransaction";
-import {PendingTransaction} from "../../../types/modal/PendingTransactionDto";
-import {PageEvent} from "@angular/material/paginator";
-
+import { Delegator } from '../../../types/modal/Delegator';
+import { ConfirmedTransaction } from '../../../types/modal/ConfirmedTransaction';
+import { PendingTransaction } from '../../../types/modal/PendingTransactionDto';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
     selector: 'app-account',
@@ -64,25 +63,23 @@ export class AccountComponent {
         for (const delegator of accountOverview.delegators) {
             this.delegators.push({
                 address: delegator.address,
-                weight: this._rawToBan(delegator.weightRaw)
-            })
+                weight: this._rawToBan(delegator.weightRaw),
+            });
         }
     }
 
     private _processConfirmed(accountOverview: AccountOverviewDto): void {
         this.confirmedTransactions = [];
         for (const confirmedTx of accountOverview.confirmedTransactions) {
-            this.confirmedTransactions.push(
-                {
-                    balance: this._sendReceiveRawToBan(confirmedTx.balanceRaw),
-                    hash: confirmedTx.hash,
-                    type: confirmedTx.type,
-                    height: `#${this._util.numberWithCommas(confirmedTx.height)}`,
-                    address: confirmedTx.address || confirmedTx.newRepresentative,
-                    date: this.formatDateString(confirmedTx.timestamp),
-                    time: this.formatTimeString(confirmedTx.timestamp)
-                }
-            )
+            this.confirmedTransactions.push({
+                balance: this._sendReceiveRawToBan(confirmedTx.balanceRaw),
+                hash: confirmedTx.hash,
+                type: confirmedTx.type,
+                height: `#${this._util.numberWithCommas(confirmedTx.height)}`,
+                address: confirmedTx.address || confirmedTx.newRepresentative,
+                date: this.formatDateString(confirmedTx.timestamp),
+                time: this.formatTimeString(confirmedTx.timestamp),
+            });
         }
     }
 
@@ -94,8 +91,6 @@ export class AccountComponent {
             .toFixed(10)
             .replace(/\.?0+$/, '');
     }
-
-
 
     private _sendReceiveRawToBan(raw: string, state?: StateType): string {
         if (!raw || raw === '0') {
@@ -111,7 +106,6 @@ export class AccountComponent {
             return `${this._util.numberWithCommas(ban)} BAN`;
         }
     }
-
 
     renderQRCode(addr: string): void {
         this._ref.detectChanges();
@@ -146,7 +140,7 @@ export class AccountComponent {
             '/' +
             (date.getDate() > 9 ? date.getDate() : '0' + date.getDate()) +
             '/' +
-            (this.vp.sm ? date.getFullYear().toString().substring(2,4) : date.getFullYear() + '')
+            (this.vp.sm ? date.getFullYear().toString().substring(2, 4) : date.getFullYear() + '')
         );
     }
 
@@ -166,7 +160,6 @@ export class AccountComponent {
     trackByFn(index) {
         return index;
     }
-
 
     changePage(e: PageEvent): void {
         console.log(e);

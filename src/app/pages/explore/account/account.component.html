@@ -60,9 +60,7 @@
                 <mat-icon pxb-empty-icon>paid</mat-icon>
             </pxb-empty-state>
             <mat-divider></mat-divider>
-            <mat-list
-                    *ngIf="confirmedTransactions.length >= 0"
-                    [style.paddingTop.px]="0">
+            <mat-list *ngIf="confirmedTransactions.length >= 0" [style.paddingTop.px]="0">
                 <pxb-info-list-item
                     *ngFor="let tx of confirmedTransactions; trackBy: trackByFn"
                     [divider]="true"
@@ -76,16 +74,13 @@
                     </div>
                     <div pxb-title>
                         <div>
-                            <pxb-list-item-tag
-                                [label]="tx.height"
-                                [class]="'height ' + tx.type"
-                            ></pxb-list-item-tag>
+                            <pxb-list-item-tag [label]="tx.height" [class]="'height ' + tx.type"></pxb-list-item-tag>
                             <pxb-list-item-tag [label]="tx.type" [class]="'type ' + tx.type"></pxb-list-item-tag>
                             <span *ngIf="tx.type !== 'change'" [class]="'amount ' + tx.type">{{ tx.balance }}</span>
                         </div>
                         <div>
                             <span class="to-from">{{ tx.type === 'receive' ? ' from' : 'to' }}</span>
-                            <span  class="address" (click)="search.emit(tx.address)">
+                            <span class="address" (click)="search.emit(tx.address)">
                                 {{ ' ' + tx.address }}
                             </span>
                         </div>
@@ -98,10 +93,12 @@
                         </div>
                     </div>
                 </pxb-info-list-item>
-                <mat-paginator [length]="accountOverview.completedTxCount"
-                               [pageSize]="paginatorSize"
-                               [disabled]="loading"
-                               (page)="changePage($event)">
+                <mat-paginator
+                    [length]="accountOverview.completedTxCount"
+                    [pageSize]="paginatorSize"
+                    [disabled]="loading"
+                    (page)="changePage($event)"
+                >
                 </mat-paginator>
             </mat-list>
         </div>

@@ -1,6 +1,7 @@
 @import '~@pxblue/colors/palette';
 
-.navigation-app-header-container, .navigation-drawer-header-content {
+.navigation-app-header-container,
+.navigation-drawer-header-content {
     height: 128px;
     &.sm {
         height: 64px;
