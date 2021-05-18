@@ -16,14 +16,14 @@
     display: flex;
     flex: 1;
     justify-content: center;
-    padding: 64px 64px 32px 64px;
+    padding: 64px 64px 64px 64px;
     box-sizing: border-box;
     width: 100%;
     &.md {
-        padding: 48px 48px 24px 48px;
+        padding: 48px 48px 48px 48px;
     }
     &.sm {
-        padding: 48px 16px 24px 16px;
+        padding: 48px 16px 48px 16px;
     }
     .explore-body-content {
         width: 100%;

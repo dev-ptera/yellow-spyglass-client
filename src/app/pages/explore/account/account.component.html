@@ -10,12 +10,8 @@
             <div [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm" [style.marginBottom.px]="8">
                 <span *ngIf="loading">Loading</span>
                 <ng-container *ngIf="accountOverview?.delegatorsCount === 0">
-                <span *ngIf="accountOverview?.opened">
-                    Account Information
-                </span>
-                    <span *ngIf="!accountOverview?.opened">
-                    Unopened Account
-                </span>
+                    <span *ngIf="accountOverview?.opened"> Account Information </span>
+                    <span *ngIf="!accountOverview?.opened"> Unopened Account </span>
                 </ng-container>
                 <span *ngIf="accountOverview?.delegatorsCount > 0">Representative Account</span>
             </div>
@@ -24,12 +20,15 @@
             </div>
             <div class="account-summary-tags" *ngIf="accountOverview">
                 <pxb-list-item-tag label="Representative Online"></pxb-list-item-tag>
-                <pxb-list-item-tag
-                                   [label]="convertRawToBan(accountOverview.balanceRaw) + ' BALANCE'" class="account-balance">
+                <!--<pxb-list-item-tag
+                    [label]="convertRawToBan(accountOverview.balanceRaw) + ' BALANCE'"
+                    class="account-balance"
+                >
                 </pxb-list-item-tag>
                 <pxb-list-item-tag
-                                   [label]="convertRawToBan(accountOverview.pendingRaw) + ' PENDING'" class="account-pending"></pxb-list-item-tag>
-
+                    [label]="convertRawToBan(accountOverview.pendingRaw) + ' PENDING'"
+                    class="account-pending"
+                ></pxb-list-item-tag> -->
             </div>
         </div>
     </div>
@@ -52,64 +51,58 @@
             </span>
         </ng-template>
         <div class="account-history">
-            <pxb-empty-state [style.padding.px]="72" *ngIf="confirmedTransactions.length === 0"
-                             title="No Confirmed Transactions"
-                             description="This account has not received or sent anything yet."
+            <pxb-empty-state
+                *ngIf="confirmedTransactions.length === 0"
+                class="account-empty-state"
+                title="No Confirmed Transactions"
+                description="This account has not received or sent anything yet."
             >
                 <mat-icon pxb-empty-icon>paid</mat-icon>
             </pxb-empty-state>
-            <mat-list [style.paddingTop.px]="0">
+            <mat-divider></mat-divider>
+            <mat-list
+                    *ngIf="confirmedTransactions.length >= 0"
+                    [style.paddingTop.px]="0">
                 <pxb-info-list-item
                     *ngFor="let tx of confirmedTransactions; trackBy: trackByFn"
                     [divider]="true"
                     [wrapTitle]="true"
                     [wrapSubtitle]="false"
+                    [hidePadding]="true"
                     style="background-color: white; position: relative"
                 >
-                    <div pxb-icon>
+                    <div pxb-icon *ngIf="!vp.sm">
                         <div *ngIf="monkeySvg" [innerHTML]="monkeySvg | safe"></div>
-                        <pxb-list-item-tag
-                            *ngIf="vp.sm"
-                            responsive
-                            [label]="'#' + addComma(tx.height)"
-                            [class]="'height ' + tx.type"
-                        ></pxb-list-item-tag>
                     </div>
                     <div pxb-title>
                         <div>
                             <pxb-list-item-tag
-                                *ngIf="!vp.sm"
-                                [label]="'#' + addComma(tx.height)"
+                                [label]="tx.height"
                                 [class]="'height ' + tx.type"
                             ></pxb-list-item-tag>
                             <pxb-list-item-tag [label]="tx.type" [class]="'type ' + tx.type"></pxb-list-item-tag>
-                            <span *ngIf="tx.type !== 'change'" [class]="'amount ' + tx.type">{{
-                                convertRawToBan(tx.balanceRaw, tx.type)
-                            }}</span>
+                            <span *ngIf="tx.type !== 'change'" [class]="'amount ' + tx.type">{{ tx.balance }}</span>
                         </div>
                         <div>
                             <span class="to-from">{{ tx.type === 'receive' ? ' from' : 'to' }}</span>
-                            <span *ngIf="tx.type !== 'change'" class="address" (click)="search.emit(tx.address)">
+                            <span  class="address" (click)="search.emit(tx.address)">
                                 {{ ' ' + tx.address }}
-                            </span>
-                            <span
-                                *ngIf="tx.type === 'change'"
-                                class="address"
-                                (click)="search.emit(tx.newRepresentative)"
-                            >
-                                {{ ' ' + tx.newRepresentative }}
                             </span>
                         </div>
                     </div>
                     <div pxb-subtitle class="hash">{{ tx.hash }}</div>
                     <div pxb-right-content>
-                        <!--<pxb-list-item-tag [label]="tx.type" [class]="'type '  + tx.type" ></pxb-list-item-tag>-->
                         <div class="timestamps" responsive>
-                            <span>{{ formatDateString(tx.timestamp) }}</span>
-                            <span [style.marginLeft.px]="16">{{ formatTimeString(tx.timestamp) }}</span>
+                            <span>{{ tx.date }}</span>
+                            <span>{{ tx.time }}</span>
                         </div>
                     </div>
                 </pxb-info-list-item>
+                <mat-paginator [length]="accountOverview.completedTxCount"
+                               [pageSize]="paginatorSize"
+                               [disabled]="loading"
+                               (page)="changePage($event)">
+                </mat-paginator>
             </mat-list>
         </div>
     </mat-tab>
@@ -120,8 +113,10 @@
                 Pending Transactions
             </span>
         </ng-template>
-        <div class="account-history" >
-            <pxb-empty-state [style.padding.px]="48" *ngIf="pendingTransactions.length === 0"
+        <div class="account-history">
+            <pxb-empty-state
+                class="account-empty-state"
+                *ngIf="pendingTransactions.length === 0"
                 title="No Pending Transactions"
                 description="This account has already received all pending payments"
             >
@@ -129,11 +124,11 @@
             </pxb-empty-state>
             <mat-list [style.paddingTop.px]="0">
                 <pxb-info-list-item
-                        *ngFor="let tx of pendingTransactions; trackBy: trackByFn"
-                        [divider]="true"
-                        [wrapTitle]="true"
-                        [wrapSubtitle]="false"
-                        style="background-color: white; position: relative"
+                    *ngFor="let tx of pendingTransactions; trackBy: trackByFn"
+                    [divider]="true"
+                    [wrapTitle]="true"
+                    [wrapSubtitle]="false"
+                    style="background-color: white; position: relative"
                 >
                     <div pxb-icon>
                         <div *ngIf="monkeySvg" [innerHTML]="monkeySvg | safe"></div>
@@ -141,7 +136,7 @@
                     <div pxb-title>
                         <div>
                             <pxb-list-item-tag [label]="'receive'" class="type receive"></pxb-list-item-tag>
-                            <span class="amount receive">{{convertRawToBan(tx.balanceRaw, 'receive')}}</span>
+                            <span class="amount receive">{{ convertRawToBan(tx.balanceRaw, 'receive') }}</span>
                         </div>
                         <div>
                             <span class="to-from">from</span>
@@ -162,13 +157,15 @@
                 Delegators
             </span>
         </ng-template>
-        <div class="account-delegators" >
+        <div class="account-delegators">
             <div *ngFor="let delegator of delegators">
-                {{delegator.address}}
-                {{delegator.weightRaw}}
+                {{ delegator.address }}
+                {{ delegator.weightRaw }}
             </div>
 
-            <pxb-empty-state *ngIf="delegators.length === 0" [style.padding.px]="72"
+            <pxb-empty-state
+                *ngIf="delegators.length === 0"
+                class="account-empty-state"
                 title="No Delegators"
                 description="This account has no delegated weight.  If this account is not running a node, this is a good thing."
             >

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { AccountOverview, ConfirmedTransaction } from '../../types';
-import { Delegator } from '../../types/dto/Delegator';
+import { AccountOverviewDto, ConfirmedTransactionDto } from '../../types';
+import { DelegatorDto } from '../../types/dto/DelegatorDto';
 
 @Injectable({
     providedIn: 'root',
@@ -12,13 +12,13 @@ export class ApiService {
 
     constructor(private readonly _http: HttpClient) {}
 
-    accountOverview(address: string): Promise<AccountOverview> {
-        return this._http.get<AccountOverview>(`${this.url}/account-overview?address=${address}`).toPromise();
+    accountOverview(address: string): Promise<AccountOverviewDto> {
+        return this._http.get<AccountOverviewDto>(`${this.url}/account-overview?address=${address}`).toPromise();
     }
 
-    confirmedTransactions(address: string, offset: number): Promise<ConfirmedTransaction[]> {
+    confirmedTransactions(address: string, offset: number): Promise<ConfirmedTransactionDto[]> {
         return this._http
-            .get<ConfirmedTransaction[]>(`${this.url}/confirmed-transactions?address=${address}&offset=${offset}`)
+            .get<ConfirmedTransactionDto[]>(`${this.url}/confirmed-transactions?address=${address}&offset=${offset}`)
             .toPromise();
     }
 

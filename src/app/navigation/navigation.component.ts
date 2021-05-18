@@ -17,6 +17,7 @@ export class NavigationComponent {
     variant: DrawerLayoutVariantType;
     explorerNavGroup = EXPLORER_NAV_GROUP;
     networkNavGroup = NETWORK_NAV_GROUP;
+    searchValue: string;
 
     constructor(
         private readonly _router: Router,

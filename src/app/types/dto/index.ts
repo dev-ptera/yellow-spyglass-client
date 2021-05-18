@@ -1,5 +1,5 @@
 /* Types send to the client. */
-export * from './AccountOverview';
-export * from './Delegator';
-export * from './ConfirmedTransaction';
-export * from './PendingTransaction';
+export * from './AccountOverviewDto';
+export * from './DelegatorDto';
+export * from './ConfirmedTransactionDto';
+export * from './PendingTransactionDto';

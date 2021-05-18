@@ -9,12 +9,17 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import * as QRCode from 'qrcode';
-import { AccountOverview, ConfirmedTransaction, Delegator, PendingTransaction } from '../../../types';
+import { AccountOverviewDto, ConfirmedTransactionDto, DelegatorDto, PendingTransactionDto } from '../../../types';
 import { ViewportService } from '../../../services/viewport/viewport.service';
 import { ApiService } from '../../../services/api/api.service';
 import { rawToBan } from 'banano-unit-converter';
 import { StateType } from '../../../types/modal/stateType';
 import { UtilService } from '../../../services/util/util.service';
+import {Delegator} from "../../../types/modal/Delegator";
+import {ConfirmedTransaction} from "../../../types/modal/ConfirmedTransaction";
+import {PendingTransaction} from "../../../types/modal/PendingTransactionDto";
+import {PageEvent} from "@angular/material/paginator";
+
 
 @Component({
     selector: 'app-account',
@@ -24,15 +29,16 @@ import { UtilService } from '../../../services/util/util.service';
     encapsulation: ViewEncapsulation.None,
 })
 export class AccountComponent {
-    @Input() accountOverview: AccountOverview;
+    @Input() accountOverview: AccountOverviewDto;
     @Input() loading: boolean;
     @Input() address: string;
     @Input() monkeySvg: string;
     @Output() search: EventEmitter<string> = new EventEmitter<string>();
 
     delegators: Delegator[];
-    pendingTransactions: PendingTransaction[];
+    pendingTransactions: PendingTransactionDto[];
     confirmedTransactions: ConfirmedTransaction[];
+    paginatorSize: 50;
 
     constructor(
         public vp: ViewportService,
@@ -47,11 +53,65 @@ export class AccountComponent {
             this.renderQRCode(this.address);
         }
         if (changes.accountOverview) {
-            this.delegators = this.accountOverview.delegators;
-            this.confirmedTransactions = this.accountOverview.confirmedTransactions;
+            this._processDelegators(this.accountOverview);
+            this._processConfirmed(this.accountOverview);
             this.pendingTransactions = this.accountOverview.pendingTransactions;
         }
     }
+
+    private _processDelegators(accountOverview: AccountOverviewDto): void {
+        this.delegators = [];
+        for (const delegator of accountOverview.delegators) {
+            this.delegators.push({
+                address: delegator.address,
+                weight: this._rawToBan(delegator.weightRaw)
+            })
+        }
+    }
+
+    private _processConfirmed(accountOverview: AccountOverviewDto): void {
+        this.confirmedTransactions = [];
+        for (const confirmedTx of accountOverview.confirmedTransactions) {
+            this.confirmedTransactions.push(
+                {
+                    balance: this._sendReceiveRawToBan(confirmedTx.balanceRaw),
+                    hash: confirmedTx.hash,
+                    type: confirmedTx.type,
+                    height: `#${this._util.numberWithCommas(confirmedTx.height)}`,
+                    address: confirmedTx.address || confirmedTx.newRepresentative,
+                    date: this.formatDateString(confirmedTx.timestamp),
+                    time: this.formatTimeString(confirmedTx.timestamp)
+                }
+            )
+        }
+    }
+
+    private _rawToBan(raw: string): string {
+        if (!raw) {
+            return '0';
+        }
+        return Number(rawToBan(raw))
+            .toFixed(10)
+            .replace(/\.?0+$/, '');
+    }
+
+
+
+    private _sendReceiveRawToBan(raw: string, state?: StateType): string {
+        if (!raw || raw === '0') {
+            return '0 BAN';
+        }
+        const modifier = state === 'receive' ? '+' : '-';
+        const ban = Number(rawToBan(raw))
+            .toFixed(10)
+            .replace(/\.?0+$/, '');
+        if (state) {
+            return `${modifier}${this._util.numberWithCommas(ban)} BAN`;
+        } else {
+            return `${this._util.numberWithCommas(ban)} BAN`;
+        }
+    }
+
 
     renderQRCode(addr: string): void {
         this._ref.detectChanges();
@@ -65,8 +125,8 @@ export class AccountComponent {
         if (!raw) {
             return '';
         }
-        if (raw === "0") {
-            return "0 BAN";
+        if (raw === '0') {
+            return '0 BAN';
         }
         const modifier = state === 'receive' ? '+' : '-';
         const ban = Number(rawToBan(raw))
@@ -86,7 +146,7 @@ export class AccountComponent {
             '/' +
             (date.getDate() > 9 ? date.getDate() : '0' + date.getDate()) +
             '/' +
-            date.getFullYear()
+            (this.vp.sm ? date.getFullYear().toString().substring(2,4) : date.getFullYear() + '')
         );
     }
 
@@ -105,5 +165,10 @@ export class AccountComponent {
 
     trackByFn(index) {
         return index;
+    }
+
+
+    changePage(e: PageEvent): void {
+        console.log(e);
     }
 }

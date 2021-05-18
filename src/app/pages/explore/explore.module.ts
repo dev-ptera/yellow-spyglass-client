@@ -19,6 +19,8 @@ import { ExploreComponent } from './explore.component';
 import { SafeHtmlPipe } from '../../pipes/safe.pipe';
 import { MatBadgeModule } from '@angular/material/badge';
 import { ResponsiveDirective } from '../../directives/responsive.directive';
+import {MatPaginatorIntl, MatPaginatorModule} from "@angular/material/paginator";
+import {MatPaginatorIntlCustom} from "../../services/material/mat-paginator-itl.service";
 
 @NgModule({
     declarations: [AccountComponent, ExploreComponent, SafeHtmlPipe, ResponsiveDirective],
@@ -32,10 +34,15 @@ import { ResponsiveDirective } from '../../directives/responsive.directive';
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
+        MatPaginatorModule,
         MatProgressSpinnerModule,
         MatTabsModule,
         ReactiveFormsModule,
     ],
+    providers: [{
+    provide: MatPaginatorIntl,
+        useClass: MatPaginatorIntlCustom
+    }],
     exports: [AccountComponent, ExploreComponent, SafeHtmlPipe, ResponsiveDirective],
 })
 export class ExploreModule {}

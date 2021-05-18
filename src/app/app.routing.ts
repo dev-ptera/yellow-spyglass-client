@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { APP_NAV_ITEMS } from './navigation/nav-items';
 import { ExploreComponent } from './pages/explore/explore.component';
-import {ComingSoonComponent} from "./pages/coming-soon/coming-soon.component";
+import { ComingSoonComponent } from './pages/coming-soon/coming-soon.component';
 
 const routes: Routes = [
     { path: '', redirectTo: APP_NAV_ITEMS.search.route, pathMatch: 'full' },

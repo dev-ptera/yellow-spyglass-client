@@ -13,7 +13,7 @@ import { Component } from '@angular/core';
             </mat-nav-list>
         </pxb-user-menu>
     `,
-    styleUrls: ['user-menu.component.scss']
+    styleUrls: ['user-menu.component.scss'],
 })
 export class UserMenuComponent {
     open: false;

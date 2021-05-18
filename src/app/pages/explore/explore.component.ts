@@ -6,7 +6,7 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute, NavigationStart, Router, RouterEvent } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-import { AccountOverview } from '../../types';
+import { AccountOverviewDto } from '../../types';
 import { UtilService } from '../../services/util/util.service';
 
 @Component({
@@ -24,7 +24,7 @@ export class ExploreComponent {
     loading: boolean;
     monkeySvg: string;
     searchedValue: string;
-    accountOverview: AccountOverview;
+    accountOverview: AccountOverviewDto;
 
     sampleAddresses = [
         'ban_39qbrcfii4imaekkon7gqs1emssg7pfhiirfg7u85nh9rnf51zbmr84xrtbp',

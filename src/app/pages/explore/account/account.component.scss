@@ -60,7 +60,9 @@
         }
         .height {
             font-size: 12px;
-            background-color: map-get($pxb-gray, 400);
+            background-color: unset;
+            color: map-get($pxb-black, 500);
+            border: solid 1px map-get($pxb-black, 500);
             font-weight: 600;
             margin-right: 8px;
             &.sm {
@@ -75,9 +77,9 @@
         color: map-get($pxb-black, 300);
     }
     .pxb-info-list-item-icon-wrapper > * {
-        height: 4rem !important;
-        width: 4rem !important;
-        font-size: 4rem !important;
+        height: 5rem !important;
+        width: 5rem !important;
+        font-size: 5rem !important;
     }
     .pxb-info-list-item-icon-wrapper {
         max-width: unset !important;
@@ -118,6 +120,15 @@
             flex-direction: column;
             text-align: right;
         }
+        > span {
+            margin-left: 16px;
+        }
+        &.sm {
+            font-size: .875rem;
+            > span {
+                margin-left: 0;
+            }
+        }
     }
 }
 
@@ -144,4 +155,9 @@
         padding: 2px;
         top: -16px !important;
     }
+}
+
+.account-empty-state {
+    padding: 48px;
+    padding-top: 72px;
 }

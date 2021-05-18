@@ -1,4 +1,4 @@
-export type ConfirmedTransaction = {
+export type ConfirmedTransactionDto = {
     balanceRaw?: string;
     hash: string;
     type: 'receive' | 'send' | 'change';

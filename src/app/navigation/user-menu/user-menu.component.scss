@@ -1,6 +1,6 @@
 @import '~@pxblue/colors/palette';
 
 ::ng-deep .pxb-user-menu-avatar {
-  background-color: map-get($pxb-yellow, 500)!important;
-  color: map-get($pxb-green, 700)!important;
+    background-color: map-get($pxb-yellow, 500) !important;
+    color: map-get($pxb-green, 700) !important;
 }
