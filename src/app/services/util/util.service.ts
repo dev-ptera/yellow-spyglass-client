@@ -5,6 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class UtilService {
     numberWithCommas(x) {
-        return x.toLocaleString();
+        var parts = x.toString().split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return parts.join(".");
     }
 }

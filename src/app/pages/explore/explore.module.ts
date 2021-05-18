@@ -21,6 +21,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { ResponsiveDirective } from '../../directives/responsive.directive';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatPaginatorIntlCustom } from '../../services/material/mat-paginator-itl.service';
+import {MatTableModule} from "@angular/material/table";
 
 @NgModule({
     declarations: [AccountComponent, ExploreComponent, SafeHtmlPipe, ResponsiveDirective],
@@ -37,6 +38,7 @@ import { MatPaginatorIntlCustom } from '../../services/material/mat-paginator-it
         MatPaginatorModule,
         MatProgressSpinnerModule,
         MatTabsModule,
+        MatTableModule,
         ReactiveFormsModule,
     ],
     providers: [

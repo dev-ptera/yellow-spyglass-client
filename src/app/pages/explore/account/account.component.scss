@@ -161,3 +161,14 @@
     padding: 48px;
     padding-top: 72px;
 }
+
+.account-delegator-address-cell {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    word-break: break-all;
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+
+}

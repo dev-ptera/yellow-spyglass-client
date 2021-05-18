@@ -34,24 +34,34 @@ export class AccountComponent {
     @Input() monkeySvg: string;
     @Output() search: EventEmitter<string> = new EventEmitter<string>();
 
-    delegators: Delegator[];
-    pendingTransactions: PendingTransactionDto[];
-    confirmedTransactions: ConfirmedTransaction[];
-    paginatorSize: 50;
+    delegators: Delegator[] = [];
+
+    // TODO!
+    pendingTransactions: PendingTransactionDto[] = [];
+
+    confirmedTransactions: {
+        all: ConfirmedTransaction[],
+        display: ConfirmedTransaction[]
+    };
+
+    paginatorSize = 50;
+    currentPage = 0;
+    loadedPages: Set<number>;
 
     constructor(
         public vp: ViewportService,
+        private readonly _util: UtilService,
         private readonly _apiService: ApiService,
         private readonly _ref: ChangeDetectorRef,
-        private readonly _util: UtilService
     ) {}
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes.address) {
+        if (changes.address && changes.address.currentValue) {
             console.log('ADDRESS CHANGED RUNNING CD');
             this.renderQRCode(this.address);
         }
-        if (changes.accountOverview) {
+        if (changes.accountOverview && changes.accountOverview.currentValue) {
+            this.loadedPages = new Set<number>().add(0);
             this._processDelegators(this.accountOverview);
             this._processConfirmed(this.accountOverview);
             this.pendingTransactions = this.accountOverview.pendingTransactions;
@@ -63,32 +73,50 @@ export class AccountComponent {
         for (const delegator of accountOverview.delegators) {
             this.delegators.push({
                 address: delegator.address,
-                weight: this._rawToBan(delegator.weightRaw),
+                weight: this._rawToBan(delegator.weightRaw, 3),
             });
+        }
+        this.delegators.sort((a, b) => (Number(a.weight) < Number(b.weight)) ? 1 : -1)
+        for (const delegator of this.delegators) {
+            delegator.weight = this._util.numberWithCommas(delegator.weight);
+            if (delegator.weight === "0") {
+                delegator.weight = "~0";
+            }
         }
     }
 
     private _processConfirmed(accountOverview: AccountOverviewDto): void {
-        this.confirmedTransactions = [];
+        this.confirmedTransactions = {
+            all: [],
+            display: []
+        }
         for (const confirmedTx of accountOverview.confirmedTransactions) {
-            this.confirmedTransactions.push({
-                balance: this._sendReceiveRawToBan(confirmedTx.balanceRaw),
-                hash: confirmedTx.hash,
-                type: confirmedTx.type,
-                height: `#${this._util.numberWithCommas(confirmedTx.height)}`,
-                address: confirmedTx.address || confirmedTx.newRepresentative,
-                date: this.formatDateString(confirmedTx.timestamp),
-                time: this.formatTimeString(confirmedTx.timestamp),
-            });
+            this.confirmedTransactions.all.push(
+                this._convertConfirmedTxDtoToModal(confirmedTx)
+            );
+        }
+        this.confirmedTransactions.display = this.confirmedTransactions.all;
+    }
+
+    private _convertConfirmedTxDtoToModal(tx: ConfirmedTransactionDto): ConfirmedTransaction {
+        return {
+            balance: this._sendReceiveRawToBan(tx.balanceRaw),
+            hash: tx.hash,
+            type: tx.type,
+            height: tx.height,
+            formatHeight: `#${this._util.numberWithCommas(tx.height)}`,
+            address: tx.address || tx.newRepresentative,
+            date: this.formatDateString(tx.timestamp),
+            time: this.formatTimeString(tx.timestamp),
         }
     }
 
-    private _rawToBan(raw: string): string {
+    private _rawToBan(raw: string, precision = 10): string {
         if (!raw) {
             return '0';
         }
         return Number(rawToBan(raw))
-            .toFixed(10)
+            .toFixed(precision)
             .replace(/\.?0+$/, '');
     }
 
@@ -161,7 +189,30 @@ export class AccountComponent {
         return index;
     }
 
+    private _setDisplayTx(tx: { display: any[], all: any[] }, pageIndex: number): void {
+        const pageSize = this.paginatorSize;
+        tx.display =  tx.all.slice(pageIndex * pageSize, pageIndex * pageSize + pageSize);
+    }
+
     changePage(e: PageEvent): void {
-        console.log(e);
+        this.currentPage = e.pageIndex;
+        if (this.loadedPages.has(e.pageIndex)) {
+            this._setDisplayTx(this.confirmedTransactions, e.pageIndex);
+            return;
+        }
+        this._apiService.confirmedTransactions(this.address, e.pageSize * e.pageIndex)
+            .then((data: ConfirmedTransactionDto[]) => {
+                this.loadedPages.add(e.pageIndex);
+                for (const tx of data) {
+                    this.confirmedTransactions.all.push(
+                        this._convertConfirmedTxDtoToModal(tx));
+                }
+                this.confirmedTransactions.all.sort((a, b) => (a.height < b.height) ? 1 : -1)
+                // Debounce monkey fetch api
+                this._setDisplayTx(this.confirmedTransactions, e.pageIndex);
+                this._ref.detectChanges();
+            }).catch((err) => {
+                console.error(err);
+        })
     }
 }
