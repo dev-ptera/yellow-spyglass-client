@@ -9,7 +9,7 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import * as QRCode from 'qrcode';
-import { AccountOverviewDto, ConfirmedTransactionDto, DelegatorDto, PendingTransactionDto } from '../../../types';
+import { AccountOverviewDto, ConfirmedTransactionDto, PendingTransactionDto } from '../../../types';
 import { ViewportService } from '../../../services/viewport/viewport.service';
 import { ApiService } from '../../../services/api/api.service';
 import { rawToBan } from 'banano-unit-converter';
@@ -17,7 +17,6 @@ import { StateType } from '../../../types/modal/stateType';
 import { UtilService } from '../../../services/util/util.service';
 import { Delegator } from '../../../types/modal/Delegator';
 import { ConfirmedTransaction } from '../../../types/modal/ConfirmedTransaction';
-import { PendingTransaction } from '../../../types/modal/PendingTransactionDto';
 import { PageEvent } from '@angular/material/paginator';
 
 @Component({
@@ -34,14 +33,17 @@ export class AccountComponent {
     @Input() monkeySvg: string;
     @Output() search: EventEmitter<string> = new EventEmitter<string>();
 
+    pendingBalance: string;
+    confirmedBalance: string;
+
     delegators: Delegator[] = [];
 
     // TODO!
     pendingTransactions: PendingTransactionDto[] = [];
 
     confirmedTransactions: {
-        all: ConfirmedTransaction[],
-        display: ConfirmedTransaction[]
+        all: ConfirmedTransaction[];
+        display: ConfirmedTransaction[];
     };
 
     paginatorSize = 50;
@@ -52,7 +54,7 @@ export class AccountComponent {
         public vp: ViewportService,
         private readonly _util: UtilService,
         private readonly _apiService: ApiService,
-        private readonly _ref: ChangeDetectorRef,
+        private readonly _ref: ChangeDetectorRef
     ) {}
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -61,14 +63,33 @@ export class AccountComponent {
             this.renderQRCode(this.address);
         }
         if (changes.accountOverview && changes.accountOverview.currentValue) {
-            this.loadedPages = new Set<number>().add(0);
-            this._processDelegators(this.accountOverview);
-            this._processConfirmed(this.accountOverview);
-            this.pendingTransactions = this.accountOverview.pendingTransactions;
+            this._prepareNewAccount();
         }
     }
 
-    private _processDelegators(accountOverview: AccountOverviewDto): void {
+    private _prepareNewAccount(): void {
+        this.currentPage = 0;
+        this.loadedPages = new Set<number>().add(0);
+        this._prepareAccountOverview(this.accountOverview);
+        this._prepareDelegators(this.accountOverview);
+        this._prepareConfirmed(this.accountOverview);
+        this.pendingTransactions = this.accountOverview.pendingTransactions;
+    }
+
+    private _prepareAccountOverview(accountOverview: AccountOverviewDto): void {
+        const approxBalance = accountOverview.balanceRaw !== '0';
+        const approxPending = accountOverview.pendingRaw !== '0';
+        this.confirmedBalance = this._util.numberWithCommas(this._rawToBan(accountOverview.balanceRaw, 2));
+        if (approxBalance && this.confirmedBalance === '0') {
+            this.confirmedBalance = '~0';
+        }
+        this.pendingBalance = this._util.numberWithCommas(this._rawToBan(accountOverview.pendingRaw, 2));
+        if (approxPending && this.pendingBalance === '0') {
+            this.pendingBalance = '~0';
+        }
+    }
+
+    private _prepareDelegators(accountOverview: AccountOverviewDto): void {
         this.delegators = [];
         for (const delegator of accountOverview.delegators) {
             this.delegators.push({
@@ -76,24 +97,22 @@ export class AccountComponent {
                 weight: this._rawToBan(delegator.weightRaw, 3),
             });
         }
-        this.delegators.sort((a, b) => (Number(a.weight) < Number(b.weight)) ? 1 : -1)
+        this.delegators.sort((a, b) => (Number(a.weight) < Number(b.weight) ? 1 : -1));
         for (const delegator of this.delegators) {
             delegator.weight = this._util.numberWithCommas(delegator.weight);
-            if (delegator.weight === "0") {
-                delegator.weight = "~0";
+            if (delegator.weight === '0') {
+                delegator.weight = '~0';
             }
         }
     }
 
-    private _processConfirmed(accountOverview: AccountOverviewDto): void {
+    private _prepareConfirmed(accountOverview: AccountOverviewDto): void {
         this.confirmedTransactions = {
             all: [],
-            display: []
-        }
+            display: [],
+        };
         for (const confirmedTx of accountOverview.confirmedTransactions) {
-            this.confirmedTransactions.all.push(
-                this._convertConfirmedTxDtoToModal(confirmedTx)
-            );
+            this.confirmedTransactions.all.push(this._convertConfirmedTxDtoToModal(confirmedTx));
         }
         this.confirmedTransactions.display = this.confirmedTransactions.all;
     }
@@ -108,11 +127,11 @@ export class AccountComponent {
             address: tx.address || tx.newRepresentative,
             date: this.formatDateString(tx.timestamp),
             time: this.formatTimeString(tx.timestamp),
-        }
+        };
     }
 
     private _rawToBan(raw: string, precision = 10): string {
-        if (!raw) {
+        if (!raw || raw === '0') {
             return '0';
         }
         return Number(rawToBan(raw))
@@ -189,9 +208,9 @@ export class AccountComponent {
         return index;
     }
 
-    private _setDisplayTx(tx: { display: any[], all: any[] }, pageIndex: number): void {
+    private _setDisplayTx(tx: { display: any[]; all: any[] }, pageIndex: number): void {
         const pageSize = this.paginatorSize;
-        tx.display =  tx.all.slice(pageIndex * pageSize, pageIndex * pageSize + pageSize);
+        tx.display = tx.all.slice(pageIndex * pageSize, pageIndex * pageSize + pageSize);
     }
 
     changePage(e: PageEvent): void {
@@ -200,19 +219,20 @@ export class AccountComponent {
             this._setDisplayTx(this.confirmedTransactions, e.pageIndex);
             return;
         }
-        this._apiService.confirmedTransactions(this.address, e.pageSize * e.pageIndex)
+        this._apiService
+            .confirmedTransactions(this.address, e.pageSize * e.pageIndex)
             .then((data: ConfirmedTransactionDto[]) => {
                 this.loadedPages.add(e.pageIndex);
                 for (const tx of data) {
-                    this.confirmedTransactions.all.push(
-                        this._convertConfirmedTxDtoToModal(tx));
+                    this.confirmedTransactions.all.push(this._convertConfirmedTxDtoToModal(tx));
                 }
-                this.confirmedTransactions.all.sort((a, b) => (a.height < b.height) ? 1 : -1)
+                this.confirmedTransactions.all.sort((a, b) => (a.height < b.height ? 1 : -1));
                 // Debounce monkey fetch api
                 this._setDisplayTx(this.confirmedTransactions, e.pageIndex);
                 this._ref.detectChanges();
-            }).catch((err) => {
+            })
+            .catch((err) => {
                 console.error(err);
-        })
+            });
     }
 }

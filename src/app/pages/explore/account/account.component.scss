@@ -6,13 +6,22 @@
     align-items: center;
     margin-bottom: 32px;
     &.sm {
-        margin-bottom: 16px;
+        margin-bottom: 8px;
         flex-direction: column;
         align-items: flex-start;
     }
-    .account-monkey-title {
+    .account-title {
         display: flex;
         align-items: center;
+    }
+    .account-monkey {
+        width: 150px;
+        min-width: 150px;
+        &.sm {
+            width: 100px;
+            min-width: 100px;
+            margin-right: 16px;
+        }
     }
 }
 
@@ -21,27 +30,29 @@
     width: 120px !important;
     box-sizing: border-box;
     border: solid 1px map-get($pxb-green, 500);
-    &.sm {
-        height: 80px !important;
-        width: 80px !important;
-    }
 }
 
-.account-tabs {
-    .mat-tab-label {
-        height: 4.5rem;
-    }
+.account-tabs .mat-tab-label {
+    height: 4.5rem;
+    width: 100%;
 }
 
 .account-summary-tags {
+    &.sm {
+        display: flex;
+    }
     pxb-list-item-tag {
         margin-right: 16px;
     }
     .account-balance {
-        background-color: map-get($pxb-orange, 700) !important;
+        background-color: map-get($pxb-white, 50);
+        color: map-get($pxb-green, 700);
+        border: solid 1px map-get($pxb-green, 700);
     }
     .account-pending {
-        background-color: map-get($pxb-purple, 500);
+        background-color: map-get($pxb-white, 50);
+        color: map-get($pxb-orange, 500);
+        border: solid 1px map-get($pxb-orange, 500);
     }
 }
 
@@ -133,22 +144,16 @@
 }
 
 .account-tabs {
-    .account-confirmed-tab {
+    .account-pending-badge {
         .mat-badge-content {
-            background-color: map-get($pxb-green, 500);
+            background: map-get($pxb-orange, 500);
         }
     }
-    .account-pending-tab {
-        .mat-badge-content {
-            background-color: map-get($pxb-yellow, 500) !important;
-        }
-    }
-    .account-delegators-tab {
+    .account-delegators-badge {
         .mat-badge-content {
             background-color: map-get($pxb-blue, 500);
         }
     }
-
     .mat-badge-content {
         min-width: 22px;
         width: unset !important;
@@ -170,5 +175,4 @@
     &:hover {
         text-decoration: underline;
     }
-
 }

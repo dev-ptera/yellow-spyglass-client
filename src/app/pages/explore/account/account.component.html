@@ -1,62 +1,55 @@
-<div class="account-header" responsive>
-    <div class="account-monkey-title">
-        <div
-            pxb-icon
-            style="height: 150px; width: 150px"
-            *ngIf="monkeySvg && !vp.sm"
-            [innerHTML]="monkeySvg | safe"
-        ></div>
-        <div>
-            <div [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm" [style.marginBottom.px]="8">
-                <span *ngIf="loading">Loading</span>
-                <ng-container *ngIf="accountOverview?.delegatorsCount === 0">
-                    <span *ngIf="accountOverview?.opened"> Account Information </span>
-                    <span *ngIf="!accountOverview?.opened"> Unopened Account </span>
-                </ng-container>
-                <span *ngIf="accountOverview?.delegatorsCount > 0">Representative Account</span>
-            </div>
-            <div class="mat-subheading-2" style="word-break: break-all; margin-right: 24px">
-                {{ address }}
-            </div>
-            <div class="account-summary-tags" *ngIf="accountOverview">
-                <pxb-list-item-tag label="Representative Online"></pxb-list-item-tag>
-                <!--<pxb-list-item-tag
-                    [label]="convertRawToBan(accountOverview.balanceRaw) + ' BALANCE'"
-                    class="account-balance"
-                >
-                </pxb-list-item-tag>
-                <pxb-list-item-tag
-                    [label]="convertRawToBan(accountOverview.pendingRaw) + ' PENDING'"
-                    class="account-pending"
-                ></pxb-list-item-tag> -->
-            </div>
-        </div>
-    </div>
-    <div style="display: flex; align-items: center">
-        <div
-            pxb-icon
-            style="height: 150px; width: 150px"
-            *ngIf="monkeySvg && vp.sm"
-            [innerHTML]="monkeySvg | safe"
-        ></div>
-        <canvas id="qr-code" [style.display]="loading ? 'none' : 'block' "></canvas>
-    </div>
-</div>
+<ng-template #accountMonkey>
+    <div *ngIf="monkeySvg" responsive class="account-monkey" [innerHTML]="monkeySvg | safe"></div>
+</ng-template>
 
 <ng-template #pageinator>
     <mat-paginator
-            *ngIf="accountOverview.completedTxCount > 50"
-            [length]="accountOverview.completedTxCount"
-            [pageSize]="paginatorSize"
-            [pageIndex]="currentPage"
-            [disabled]="loading"
-            (page)="changePage($event)"
+        *ngIf="accountOverview.completedTxCount > 50"
+        [length]="accountOverview.completedTxCount"
+        [pageSize]="paginatorSize"
+        [pageIndex]="currentPage"
+        [disabled]="loading"
+        (page)="changePage($event)"
     >
     </mat-paginator>
 </ng-template>
 
+<div class="account-header" responsive>
+    <div class="account-title">
+        <ng-template *ngIf="!vp.sm" [ngTemplateOutlet]="accountMonkey"></ng-template>
+        <div>
+            <div [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm" [style.marginBottom.px]="8">
+                <span *ngIf="loading">Loading</span>
+                <ng-container *ngIf="accountOverview?.delegatorsCount === 0">
+                    <span *ngIf="accountOverview?.opened"> Account </span>
+                    <span *ngIf="!accountOverview?.opened"> Unopened Account </span>
+                </ng-container>
+                <span *ngIf="accountOverview?.delegatorsCount > 0">Representative</span>
+            </div>
+            <div class="mat-subheading-2" style="word-break: break-all; line-height: 16px; margin-right: 24px">
+                {{ address }}
+                <button mat-icon-button>
+                    <mat-icon>content_copy</mat-icon>
+                </button>
+            </div>
+            <div class="account-summary-tags" responsive *ngIf="accountOverview">
+                <ng-template *ngIf="vp.sm" [ngTemplateOutlet]="accountMonkey"></ng-template>
+                <div [style.marginTop.px]="vp.sm ? 16 : 0">
+                    <pxb-list-item-tag label="Representative Online"></pxb-list-item-tag>
+                    <pxb-list-item-tag [label]="confirmedBalance + ' BAN'" class="account-balance"> </pxb-list-item-tag>
+                    <pxb-list-item-tag
+                        [label]="pendingBalance + ' PENDING'"
+                        class="account-pending"
+                    ></pxb-list-item-tag>
+                </div>
+            </div>
+        </div>
+    </div>
+    <canvas id="qr-code" [style.display]="loading || vp.sm ? 'none' : 'block'"></canvas>
+</div>
+
 <mat-tab-group *ngIf="!loading" class="account-tabs">
-    <mat-tab class="account-confirmed-tab">
+    <mat-tab>
         <ng-template mat-tab-label>
             <span color="accent" matBadgeOverlap="false" [matBadge]="formatBadge(accountOverview.completedTxCount)">
                 Completed <ng-container *ngIf="!vp.sm">Transactions</ng-container>
@@ -87,7 +80,10 @@
                     </div>
                     <div pxb-title>
                         <div>
-                            <pxb-list-item-tag [label]="tx.formatHeight" [class]="'height ' + tx.type"></pxb-list-item-tag>
+                            <pxb-list-item-tag
+                                [label]="tx.formatHeight"
+                                [class]="'height ' + tx.type"
+                            ></pxb-list-item-tag>
                             <pxb-list-item-tag [label]="tx.type" [class]="'type ' + tx.type"></pxb-list-item-tag>
                             <span *ngIf="tx.type !== 'change'" [class]="'amount ' + tx.type">{{ tx.balance }}</span>
                         </div>
@@ -113,7 +109,7 @@
 
     <mat-tab class="account-pending-tab">
         <ng-template mat-tab-label>
-            <span color="primary" [matBadge]="accountOverview.pendingTxCount" matBadgeOverlap="false">
+            <span class="account-pending-badge" [matBadge]="accountOverview.pendingTxCount" matBadgeOverlap="false">
                 Pending <ng-container *ngIf="!vp.sm">Transactions</ng-container>
             </span>
         </ng-template>
@@ -155,25 +151,37 @@
         </div>
     </mat-tab>
 
-    <mat-tab class="account-delegators-tab">
+    <mat-tab>
         <ng-template mat-tab-label>
-            <span color="primary" [matBadge]="accountOverview.delegatorsCount" matBadgeOverlap="false">
+            <span class="account-delegators-badge" [matBadge]="accountOverview.delegatorsCount" matBadgeOverlap="false">
                 Delegators
             </span>
         </ng-template>
         <div class="account-delegators">
-
-            <table [style.width.%]="100" *ngIf="delegators.length > 0" mat-table [dataSource]="delegators" class="mat-elevation-z4">
+            <table
+                mat-table
+                *ngIf="delegators.length > 0"
+                [style.width.%]="100"
+                [dataSource]="delegators"
+                class="mat-elevation-z4"
+            >
                 <ng-container matColumnDef="address">
-                    <th mat-header-cell *matHeaderCellDef> Address </th>
-                    <td mat-cell class="account-delegator-address-cell" *matCellDef="let element" (click)="search.emit(element.address)"> {{element.address}} </td>
+                    <th mat-header-cell *matHeaderCellDef>Address</th>
+                    <td
+                        mat-cell
+                        class="account-delegator-address-cell"
+                        *matCellDef="let element"
+                        (click)="search.emit(element.address)"
+                    >
+                        {{ element.address }}
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="weight">
-                    <th mat-header-cell [style.paddingLeft.px]="16"  *matHeaderCellDef> Weight (BAN) </th>
-                    <td mat-cell  [style.paddingLeft.px]="16"  *matCellDef="let element"> {{element.weight}} </td>
+                    <th mat-header-cell [style.paddingLeft.px]="16" *matHeaderCellDef>Weight (BAN)</th>
+                    <td mat-cell [style.paddingLeft.px]="16" *matCellDef="let element">{{ element.weight }}</td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="['address', 'weight']"></tr>
-                <tr mat-row *matRowDef="let row; columns: ['address', 'weight'];"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['address', 'weight']"></tr>
             </table>
             <div *ngIf="delegators.length > 0" style="text-align: right; margin-top: 8px; font-size: 10px">
                 *Accounts with a 0 BANANO balance have been removed from the total delegators count.
