@@ -1,0 +1,7 @@
+.account-delegator-address-cell {
+    word-break: break-all;
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+}

@@ -2,7 +2,15 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "./src",
+    "paths": {
+      "@angular/*": [ "../node_modules/@angular/*" ],
+      "@app/directives/*": ["app/directives/*"],
+      "@app/pages/*": ["app/pages/*"],
+      "@app/pipes/*": ["app/pipes/*"],
+      "@app/services/*": ["app/services/*"],
+      "@app/types/*": ["app/types/*"],
+    },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,

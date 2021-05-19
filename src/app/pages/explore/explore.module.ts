@@ -22,9 +22,21 @@ import { ResponsiveDirective } from '../../directives/responsive.directive';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatPaginatorIntlCustom } from '../../services/material/mat-paginator-itl.service';
 import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
+import { PendingTabComponent } from '@app/pages/explore/account/tabs/pending/pending-tab.component';
+import { ConfirmedTabComponent } from '@app/pages/explore/account/tabs/confirmed/confirmed-tab.component';
+import { DelegatorsTabComponent } from '@app/pages/explore/account/tabs/delegators/delegators-tab.components';
 
 @NgModule({
-    declarations: [AccountComponent, ExploreComponent, SafeHtmlPipe, ResponsiveDirective],
+    declarations: [
+        AccountComponent,
+        ConfirmedTabComponent,
+        DelegatorsTabComponent,
+        ExploreComponent,
+        PendingTabComponent,
+        SafeHtmlPipe,
+        ResponsiveDirective,
+    ],
     imports: [
         CommonModule,
         EmptyStateModule,
@@ -32,6 +44,7 @@ import { MatTableModule } from '@angular/material/table';
         ListItemTagModule,
         MatBadgeModule,
         MatButtonModule,
+        MatCardModule,
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
@@ -47,6 +60,14 @@ import { MatTableModule } from '@angular/material/table';
             useClass: MatPaginatorIntlCustom,
         },
     ],
-    exports: [AccountComponent, ExploreComponent, SafeHtmlPipe, ResponsiveDirective],
+    exports: [
+        AccountComponent,
+        ConfirmedTabComponent,
+        DelegatorsTabComponent,
+        ExploreComponent,
+        PendingTabComponent,
+        SafeHtmlPipe,
+        ResponsiveDirective,
+    ],
 })
 export class ExploreModule {}

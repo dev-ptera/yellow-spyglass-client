@@ -14,6 +14,25 @@
         display: flex;
         align-items: center;
     }
+    .account-address,
+    .account-representative {
+        word-break: break-all;
+        line-height: 16px;
+        margin-right: 24px;
+    }
+
+    .account-representative {
+        color: map-get($pxb-gray, 500);
+        margin-bottom: 16px;
+        margin-top: -4px;
+        .link {
+            cursor: pointer;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
     .account-monkey {
         width: 150px;
         min-width: 150px;
@@ -56,91 +75,8 @@
     }
 }
 
-/* List item style overrides */
-.account-history {
-    .pxb-info-list-item {
-        .address {
-            word-break: break-all;
-        }
-        .address,
-        .hash {
-            cursor: pointer;
-            &:hover {
-                text-decoration: underline;
-            }
-        }
-        .height {
-            font-size: 12px;
-            background-color: unset;
-            color: map-get($pxb-black, 500);
-            border: solid 1px map-get($pxb-black, 500);
-            font-weight: 600;
-            margin-right: 8px;
-            &.sm {
-                position: absolute;
-                top: 0px;
-                left: 0px;
-            }
-        }
-    }
-    .pxb-info-list-item .pxb-info-list-item-subtitle-wrapper {
-        font-size: 0.75rem;
-        color: map-get($pxb-black, 300);
-    }
-    .pxb-info-list-item-icon-wrapper > * {
-        height: 5rem !important;
-        width: 5rem !important;
-        font-size: 5rem !important;
-    }
-    .pxb-info-list-item-icon-wrapper {
-        max-width: unset !important;
-        width: unset !important;
-        min-width: unset !important;
-    }
-
-    .to-from {
-        color: map-get($pxb-black, 500);
-        font-weight: 200;
-    }
-
-    pxb-list-item-tag.type {
-        color: white !important;
-        &.send {
-            background-color: map-get($pxb-red, 500);
-        }
-        &.receive {
-            background-color: map-get($pxb-green, 500);
-        }
-        &.change {
-            background-color: map-get($pxb-blue, 500);
-        }
-    }
-    .amount {
-        margin-left: 8px;
-        font-size: 0.75rem;
-        &.receive {
-            color: map-get($pxb-green, 500);
-        }
-        &.send {
-            color: map-get($pxb-red, 500);
-        }
-    }
-    .timestamps {
-        display: flex;
-        &.md {
-            flex-direction: column;
-            text-align: right;
-        }
-        > span {
-            margin-left: 16px;
-        }
-        &.sm {
-            font-size: 0.875rem;
-            > span {
-                margin-left: 0;
-            }
-        }
-    }
+.account-tx-list {
+    background-color: map-get($pxb-white, 200);
 }
 
 .account-tabs {
@@ -165,14 +101,4 @@
 .account-empty-state {
     padding: 48px;
     padding-top: 72px;
-}
-
-.account-delegator-address-cell {
-    padding-top: 4px;
-    padding-bottom: 4px;
-    word-break: break-all;
-    cursor: pointer;
-    &:hover {
-        text-decoration: underline;
-    }
 }

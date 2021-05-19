@@ -32,17 +32,25 @@
                         </div>
                     </button>
                 </div>
-                <div class="mat-display-2" [style.marginTop.px]="72" [style.marginBottom.px]="8">Getting Started?</div>
-                <div class="mat-subheading-1">
+
+                <div
+                    [class.mat-display-2]="!vp.sm"
+                    [class.mat-display-1]="vp.sm"
+                    [style.marginTop.px]="72"
+                    [style.marginBottom.px]="8"
+                >
+                    Getting Started?
+                </div>
+                <div class="mat-subheading-2">
                     Below are some sample accounts and transactions to help get familiar with how things work around
                     here
                 </div>
                 <div [style.marginTop.px]="32">
-                    <div class="mat-subheading-1" [style.marginBottom.px]="16">Sample Addresses</div>
+                    <div class="mat-subheading-2" [style.marginBottom.px]="16">Sample Addresses</div>
                     <div>
                         <button
                             mat-stroked-button
-                            color="accent"
+                            color="primary"
                             *ngFor="let addr of sampleAddresses"
                             [style.marginRight.px]="32"
                             [style.marginBottom.px]="16"
@@ -58,7 +66,7 @@
                     <div>
                         <button
                             mat-stroked-button
-                            color="accent"
+                            color="primary"
                             *ngFor="let tx of sampleTransactions"
                             [style.marginRight.px]="32"
                             [style.marginBottom.px]="16"

@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
     selector: 'app-user-menu',
     template: `
         <pxb-user-menu [(open)]="open">
-            <mat-icon pxb-avatar>settings</mat-icon>
+            <mat-icon pxb-avatar>more_vert</mat-icon>
             <mat-nav-list pxb-menu-body [style.paddingTop.px]="0">
                 <pxb-info-list-item *ngFor="let item of items" [dense]="true" (click)="open = false">
                     <mat-icon pxb-icon>{{ item.icon }}</mat-icon>
@@ -17,7 +17,6 @@ import { Component } from '@angular/core';
 })
 export class UserMenuComponent {
     open: false;
-    avatarValue = 'AV';
     items = [
         {
             title: 'Settings',

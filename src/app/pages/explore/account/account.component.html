@@ -2,7 +2,7 @@
     <div *ngIf="monkeySvg" responsive class="account-monkey" [innerHTML]="monkeySvg | safe"></div>
 </ng-template>
 
-<ng-template #pageinator>
+<ng-template #paginator>
     <mat-paginator
         *ngIf="accountOverview.completedTxCount > 50"
         [length]="accountOverview.completedTxCount"
@@ -26,12 +26,17 @@
                 </ng-container>
                 <span *ngIf="accountOverview?.delegatorsCount > 0">Representative</span>
             </div>
-            <div class="mat-subheading-2" style="word-break: break-all; line-height: 16px; margin-right: 24px">
+            <div class="mat-subheading-2 account-address">
                 {{ address }}
                 <button mat-icon-button>
                     <mat-icon>content_copy</mat-icon>
                 </button>
             </div>
+            <div *ngIf="accountOverview" class="mat-subheading-2 account-representative">
+                Represented by
+                <span class="link" (click)="search.emit(accountOverview.representative)">{{ shortenedRep }}</span>
+            </div>
+
             <div class="account-summary-tags" responsive *ngIf="accountOverview">
                 <ng-template *ngIf="vp.sm" [ngTemplateOutlet]="accountMonkey"></ng-template>
                 <div [style.marginTop.px]="vp.sm ? 16 : 0">
@@ -49,152 +54,58 @@
 </div>
 
 <mat-tab-group *ngIf="!loading" class="account-tabs">
+    <!-- Confirmed transactions -->
     <mat-tab>
         <ng-template mat-tab-label>
             <span color="accent" matBadgeOverlap="false" [matBadge]="formatBadge(accountOverview.completedTxCount)">
-                Completed <ng-container *ngIf="!vp.sm">Transactions</ng-container>
+                <!-- Completed <ng-container *ngIf="!vp.isLessThanMedium()">Transactions</ng-container> -->
+                <mat-icon>check</mat-icon>
             </span>
         </ng-template>
-        <div class="account-history">
-            <pxb-empty-state
-                *ngIf="confirmedTransactions.display.length === 0"
-                class="account-empty-state"
-                title="No Confirmed Transactions"
-                description="This account has not received or sent anything yet."
-            >
-                <mat-icon pxb-empty-icon>paid</mat-icon>
-            </pxb-empty-state>
-            <ng-template [ngTemplateOutlet]="pageinator"></ng-template>
-            <mat-divider></mat-divider>
-            <mat-list *ngIf="confirmedTransactions.display.length >= 0" [style.paddingTop.px]="0">
-                <pxb-info-list-item
-                    *ngFor="let tx of confirmedTransactions.display; trackBy: trackByFn"
-                    [divider]="true"
-                    [wrapTitle]="true"
-                    [wrapSubtitle]="false"
-                    [hidePadding]="true"
-                    style="background-color: white; position: relative"
-                >
-                    <div pxb-icon *ngIf="!vp.sm">
-                        <div *ngIf="monkeySvg" [innerHTML]="monkeySvg | safe"></div>
-                    </div>
-                    <div pxb-title>
-                        <div>
-                            <pxb-list-item-tag
-                                [label]="tx.formatHeight"
-                                [class]="'height ' + tx.type"
-                            ></pxb-list-item-tag>
-                            <pxb-list-item-tag [label]="tx.type" [class]="'type ' + tx.type"></pxb-list-item-tag>
-                            <span *ngIf="tx.type !== 'change'" [class]="'amount ' + tx.type">{{ tx.balance }}</span>
-                        </div>
-                        <div>
-                            <span class="to-from">{{ tx.type === 'receive' ? ' from' : 'to' }}</span>
-                            <span class="address" (click)="search.emit(tx.address)">
-                                {{ ' ' + tx.address }}
-                            </span>
-                        </div>
-                    </div>
-                    <div pxb-subtitle class="hash">{{ tx.hash }}</div>
-                    <div pxb-right-content>
-                        <div class="timestamps" responsive>
-                            <span>{{ tx.date }}</span>
-                            <span>{{ tx.time }}</span>
-                        </div>
-                    </div>
-                </pxb-info-list-item>
-                <ng-template [ngTemplateOutlet]="pageinator"></ng-template>
-            </mat-list>
-        </div>
+        <account-confirmed-tab
+            [paginator]="paginator"
+            [confirmedTransactions]="confirmedTransactions.display"
+            (search)="search.emit($event)"
+        ></account-confirmed-tab>
     </mat-tab>
 
+    <!-- Pending transactions -->
     <mat-tab class="account-pending-tab">
         <ng-template mat-tab-label>
             <span class="account-pending-badge" [matBadge]="accountOverview.pendingTxCount" matBadgeOverlap="false">
-                Pending <ng-container *ngIf="!vp.sm">Transactions</ng-container>
+                <!--Pending <ng-container *ngIf="!vp.isLessThanMedium()">Transactions</ng-container> -->
+                <mat-icon>pending</mat-icon>
             </span>
         </ng-template>
-        <div class="account-history">
-            <pxb-empty-state
-                class="account-empty-state"
-                *ngIf="pendingTransactions.length === 0"
-                title="No Pending Transactions"
-                description="This account has already received all pending payments"
-            >
-                <mat-icon pxb-empty-icon>paid</mat-icon>
-            </pxb-empty-state>
-            <mat-list [style.paddingTop.px]="0">
-                <pxb-info-list-item
-                    *ngFor="let tx of pendingTransactions; trackBy: trackByFn"
-                    [divider]="true"
-                    [wrapTitle]="true"
-                    [wrapSubtitle]="false"
-                    style="background-color: white; position: relative"
-                >
-                    <div pxb-icon>
-                        <div *ngIf="monkeySvg" [innerHTML]="monkeySvg | safe"></div>
-                    </div>
-                    <div pxb-title>
-                        <div>
-                            <pxb-list-item-tag [label]="'receive'" class="type receive"></pxb-list-item-tag>
-                            <span class="amount receive">{{ convertRawToBan(tx.balanceRaw, 'receive') }}</span>
-                        </div>
-                        <div>
-                            <span class="to-from">from</span>
-                            <span class="address" (click)="search.emit(tx.address)">
-                                {{ ' ' + tx.address }}
-                            </span>
-                        </div>
-                    </div>
-                    <div pxb-subtitle class="hash">{{ tx.hash }}</div>
-                </pxb-info-list-item>
-            </mat-list>
-        </div>
+        <account-pending-tab
+            [paginator]="paginator"
+            [pendingTransactions]="pendingTransactions"
+            (search)="search.emit($event)"
+        ></account-pending-tab>
     </mat-tab>
 
+    <!-- Delegators -->
     <mat-tab>
         <ng-template mat-tab-label>
             <span class="account-delegators-badge" [matBadge]="accountOverview.delegatorsCount" matBadgeOverlap="false">
-                Delegators
+                <!-- Delegators -->
+                <mat-icon>how_to_vote</mat-icon>
             </span>
         </ng-template>
-        <div class="account-delegators">
-            <table
-                mat-table
-                *ngIf="delegators.length > 0"
-                [style.width.%]="100"
-                [dataSource]="delegators"
-                class="mat-elevation-z4"
-            >
-                <ng-container matColumnDef="address">
-                    <th mat-header-cell *matHeaderCellDef>Address</th>
-                    <td
-                        mat-cell
-                        class="account-delegator-address-cell"
-                        *matCellDef="let element"
-                        (click)="search.emit(element.address)"
-                    >
-                        {{ element.address }}
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="weight">
-                    <th mat-header-cell [style.paddingLeft.px]="16" *matHeaderCellDef>Weight (BAN)</th>
-                    <td mat-cell [style.paddingLeft.px]="16" *matCellDef="let element">{{ element.weight }}</td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="['address', 'weight']"></tr>
-                <tr mat-row *matRowDef="let row; columns: ['address', 'weight']"></tr>
-            </table>
-            <div *ngIf="delegators.length > 0" style="text-align: right; margin-top: 8px; font-size: 10px">
-                *Accounts with a 0 BANANO balance have been removed from the total delegators count.
-            </div>
+        <account-delegators-tab
+            [paginator]="paginator"
+            [delegators]="delegators"
+            (search)="search.emit($event)"
+        ></account-delegators-tab>
+    </mat-tab>
 
-            <pxb-empty-state
-                *ngIf="delegators.length === 0"
-                class="account-empty-state"
-                title="No Delegators"
-                description="This account has no delegated weight.  If this account is not running a node, this is a good thing."
-            >
-                <mat-icon pxb-empty-icon>how_to_vote</mat-icon>
-            </pxb-empty-state>
-        </div>
+    <!-- Insights -->
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon>insights</mat-icon>
+        </ng-template>
+        <pxb-empty-state class="account-empty-state" title="Coming Soon" description="Feature in progress">
+            <mat-icon pxb-empty-icon>how_to_vote</mat-icon>
+        </pxb-empty-state>
     </mat-tab>
 </mat-tab-group>

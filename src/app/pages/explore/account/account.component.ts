@@ -9,15 +9,15 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import * as QRCode from 'qrcode';
-import { AccountOverviewDto, ConfirmedTransactionDto, PendingTransactionDto } from '../../../types';
-import { ViewportService } from '../../../services/viewport/viewport.service';
-import { ApiService } from '../../../services/api/api.service';
 import { rawToBan } from 'banano-unit-converter';
-import { StateType } from '../../../types/modal/stateType';
-import { UtilService } from '../../../services/util/util.service';
-import { Delegator } from '../../../types/modal/Delegator';
-import { ConfirmedTransaction } from '../../../types/modal/ConfirmedTransaction';
 import { PageEvent } from '@angular/material/paginator';
+import { AccountOverviewDto, ConfirmedTransactionDto, PendingTransactionDto } from '@app/types/dto';
+import { Delegator } from '@app/types/modal/Delegator';
+import { ConfirmedTransaction } from '@app/types/modal/ConfirmedTransaction';
+import { ViewportService } from '@app/services/viewport/viewport.service';
+import { UtilService } from '@app/services/util/util.service';
+import { ApiService } from '@app/services/api/api.service';
+import { StateType } from '@app/types/modal/stateType';
 
 @Component({
     selector: 'app-account',
@@ -35,6 +35,7 @@ export class AccountComponent {
 
     pendingBalance: string;
     confirmedBalance: string;
+    shortenedRep: string;
 
     delegators: Delegator[] = [];
 
@@ -67,6 +68,10 @@ export class AccountComponent {
         }
     }
 
+    /**
+     * Called whenever a new address has been loaded; takes in the DTO and transforms data to be displayed.
+     * @private
+     */
     private _prepareNewAccount(): void {
         this.currentPage = 0;
         this.loadedPages = new Set<number>().add(0);
@@ -76,6 +81,11 @@ export class AccountComponent {
         this.pendingTransactions = this.accountOverview.pendingTransactions;
     }
 
+    /**
+     *
+     * @param accountOverview
+     * @private
+     */
     private _prepareAccountOverview(accountOverview: AccountOverviewDto): void {
         const approxBalance = accountOverview.balanceRaw !== '0';
         const approxPending = accountOverview.pendingRaw !== '0';
@@ -87,6 +97,8 @@ export class AccountComponent {
         if (approxPending && this.pendingBalance === '0') {
             this.pendingBalance = '~0';
         }
+        const rep = accountOverview.representative;
+        this.shortenedRep = `${rep.substr(0, 11)}...${rep.substr(rep.length - 6, rep.length)}`;
     }
 
     private _prepareDelegators(accountOverview: AccountOverviewDto): void {
