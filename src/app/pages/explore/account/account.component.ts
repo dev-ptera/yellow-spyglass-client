@@ -18,6 +18,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
 import { UtilService } from '@app/services/util/util.service';
 import { ApiService } from '@app/services/api/api.service';
 import { StateType } from '@app/types/modal/stateType';
+import {MonkeyCacheService} from "@app/services/monkey-cache/monkey-cache.service";
 
 @Component({
     selector: 'app-account',
@@ -55,7 +56,8 @@ export class AccountComponent {
         public vp: ViewportService,
         private readonly _util: UtilService,
         private readonly _apiService: ApiService,
-        private readonly _ref: ChangeDetectorRef
+        private readonly _ref: ChangeDetectorRef,
+        private readonly _monkeyCache: MonkeyCacheService
     ) {}
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -69,22 +71,20 @@ export class AccountComponent {
     }
 
     /**
-     * Called whenever a new address has been loaded; takes in the DTO and transforms data to be displayed.
-     * @private
+     * Called whenever a new address has been loaded.
+     * Converts DTO into displayable format.
      */
     private _prepareNewAccount(): void {
         this.currentPage = 0;
         this.loadedPages = new Set<number>().add(0);
         this._prepareAccountOverview(this.accountOverview);
-        this._prepareDelegators(this.accountOverview);
         this._prepareConfirmed(this.accountOverview);
+        this._prepareDelegators(this.accountOverview);
         this.pendingTransactions = this.accountOverview.pendingTransactions;
     }
 
     /**
-     *
-     * @param accountOverview
-     * @private
+     * Formats account balance, account pending, and representative.
      */
     private _prepareAccountOverview(accountOverview: AccountOverviewDto): void {
         const approxBalance = accountOverview.balanceRaw !== '0';
@@ -101,6 +101,10 @@ export class AccountComponent {
         this.shortenedRep = `${rep.substr(0, 11)}...${rep.substr(rep.length - 6, rep.length)}`;
     }
 
+
+    /**
+     * Sorts delegators based on weight descending and formats RAW balance into BAN balance.
+     */
     private _prepareDelegators(accountOverview: AccountOverviewDto): void {
         this.delegators = [];
         for (const delegator of accountOverview.delegators) {
@@ -127,11 +131,40 @@ export class AccountComponent {
             this.confirmedTransactions.all.push(this._convertConfirmedTxDtoToModal(confirmedTx));
         }
         this.confirmedTransactions.display = this.confirmedTransactions.all;
+        this.fetchMonkeys(this.confirmedTransactions.display);
     }
 
+    private fetchMonkeys(transactions: ConfirmedTransaction[] | PendingTransactionDto[]): void {
+        const addrSet = new Set<string>();
+        for (const tx of transactions) {
+            addrSet.add(tx.address);
+        }
+        const monkeyPromise: Promise<void>[] = [];
+        for (const addr of addrSet.values()) {
+            if (this._monkeyCache.getMonkey(addr)) {
+                continue;
+            }
+            monkeyPromise.push(
+                this._apiService.monkey(addr).then((monkey: string) => {
+                    this._monkeyCache.addCache(addr, monkey);
+                    return Promise.resolve();
+                }).catch((err) => {
+                    console.error(err);
+                    return Promise.reject(err);
+                })
+            )
+        }
+        void Promise.all(monkeyPromise).then(() => {
+            this._ref.detectChanges();
+        })
+    }
+
+    /**
+     * Converts a ConfirmedTransactionDto into a displayable format.
+     */
     private _convertConfirmedTxDtoToModal(tx: ConfirmedTransactionDto): ConfirmedTransaction {
         return {
-            balance: this._sendReceiveRawToBan(tx.balanceRaw),
+            balance: this._sendReceiveRawToBan(tx.balanceRaw, tx.type),
             hash: tx.hash,
             type: tx.type,
             height: tx.height,
@@ -151,7 +184,7 @@ export class AccountComponent {
             .replace(/\.?0+$/, '');
     }
 
-    private _sendReceiveRawToBan(raw: string, state?: StateType): string {
+    private _sendReceiveRawToBan(raw: string, state: StateType): string {
         if (!raw || raw === '0') {
             return '0 BAN';
         }
@@ -174,24 +207,6 @@ export class AccountComponent {
         });
     }
 
-    convertRawToBan(raw: string, state?: StateType): string {
-        if (!raw) {
-            return '';
-        }
-        if (raw === '0') {
-            return '0 BAN';
-        }
-        const modifier = state === 'receive' ? '+' : '-';
-        const ban = Number(rawToBan(raw))
-            .toFixed(10)
-            .replace(/\.?0+$/, '');
-        if (state) {
-            return `${modifier}${this._util.numberWithCommas(ban)} BAN`;
-        } else {
-            return `${this._util.numberWithCommas(ban)} BAN`;
-        }
-    }
-
     formatDateString(timestamp: number): string {
         const date = new Date(timestamp * 1000);
         return (
@@ -203,21 +218,9 @@ export class AccountComponent {
         );
     }
 
-    addComma(num: number): string {
-        return this._util.numberWithCommas(num);
-    }
-
     formatTimeString(timestamp: number): string {
         const date = new Date(timestamp * 1000);
         return date.toTimeString().substr(0, 8);
-    }
-
-    formatBadge(count: number): string {
-        return this._util.numberWithCommas(count);
-    }
-
-    trackByFn(index) {
-        return index;
     }
 
     private _setDisplayTx(tx: { display: any[]; all: any[] }, pageIndex: number): void {
@@ -239,8 +242,9 @@ export class AccountComponent {
                     this.confirmedTransactions.all.push(this._convertConfirmedTxDtoToModal(tx));
                 }
                 this.confirmedTransactions.all.sort((a, b) => (a.height < b.height ? 1 : -1));
-                // Debounce monkey fetch api
+                // Debounce monkey fetch api?
                 this._setDisplayTx(this.confirmedTransactions, e.pageIndex);
+                this.fetchMonkeys(this.confirmedTransactions.display);
                 this._ref.detectChanges();
             })
             .catch((err) => {

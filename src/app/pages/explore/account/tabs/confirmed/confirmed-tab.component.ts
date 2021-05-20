@@ -7,16 +7,17 @@ import {
     TemplateRef,
     ViewEncapsulation,
 } from '@angular/core';
-import { ViewportService } from '@app/services/viewport/viewport.service';
-import { ConfirmedTransaction } from '@app/types/modal/ConfirmedTransaction';
+import {ConfirmedTransaction} from '@app/types/modal/ConfirmedTransaction';
+import {MonkeyCacheService} from "@app/services/monkey-cache/monkey-cache.service";
 
 @Component({
     selector: 'account-confirmed-tab',
     template: `
         <ng-template [ngTemplateOutlet]="paginator"></ng-template>
         <mat-divider></mat-divider>
+        
 
-        <mat-list class="tab-transaction-list" *ngIf="confirmedTransactions.length >= 0">
+        <mat-list class="tab-transaction-list" *ngIf="confirmedTransactions.length >= 0" responsive>
             <pxb-info-list-item
                 *ngFor="let tx of confirmedTransactions; trackBy: trackByFn"
                 [divider]="true"
@@ -25,11 +26,11 @@ import { ConfirmedTransaction } from '@app/types/modal/ConfirmedTransaction';
                 [hidePadding]="true"
                 style="background-color: #fdfdfd; position: relative"
             >
-                <div pxb-icon *ngIf="!vp.sm">
-                    <!--<div *ngIf="monkeySvg" [innerHTML]="monkeySvg | safe"></div>-->
+                <div class="large-monkey-wrapper" pxb-icon>
+                    <div *ngIf="monkeyCache.getMonkey(tx.address)" [innerHTML]="monkeyCache.getMonkey(tx.address) | safe"></div>
                 </div>
                 <div pxb-title>
-                    <div>
+                    <div class="tag-row">
                         <pxb-list-item-tag [label]="tx.formatHeight" [class]="'height ' + tx.type"></pxb-list-item-tag>
                         <pxb-list-item-tag [label]="tx.type" [class]="'type ' + tx.type"></pxb-list-item-tag>
                         <span *ngIf="tx.type !== 'change'" [class]="'amount ' + tx.type">{{ tx.balance }}</span>
@@ -43,7 +44,7 @@ import { ConfirmedTransaction } from '@app/types/modal/ConfirmedTransaction';
                 </div>
                 <div pxb-subtitle class="hash">{{ tx.hash }}</div>
                 <div pxb-right-content>
-                    <div class="timestamps" responsive>
+                    <div class="timestamps">
                         <span>{{ tx.date }}</span>
                         <span>{{ tx.time }}</span>
                     </div>
@@ -62,7 +63,6 @@ import { ConfirmedTransaction } from '@app/types/modal/ConfirmedTransaction';
         </pxb-empty-state>
     `,
     styleUrls: ['confirmed-tab.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
 export class ConfirmedTabComponent {
@@ -71,7 +71,7 @@ export class ConfirmedTabComponent {
 
     @Output() search: EventEmitter<string> = new EventEmitter<string>();
 
-    constructor(public vp: ViewportService) {}
+    constructor(public monkeyCache: MonkeyCacheService) {}
 
     trackByFn(index) {
         return index;

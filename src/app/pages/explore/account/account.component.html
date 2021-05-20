@@ -31,6 +31,9 @@
                 <button mat-icon-button>
                     <mat-icon>content_copy</mat-icon>
                 </button>
+                <button mat-icon-button>
+                    <mat-icon>bookmark</mat-icon>
+                </button>
             </div>
             <div *ngIf="accountOverview" class="mat-subheading-2 account-representative">
                 Represented by
@@ -57,7 +60,7 @@
     <!-- Confirmed transactions -->
     <mat-tab>
         <ng-template mat-tab-label>
-            <span color="accent" matBadgeOverlap="false" [matBadge]="formatBadge(accountOverview.completedTxCount)">
+            <span color="accent" matBadgeOverlap="false" [matBadge]="accountOverview.completedTxCount">
                 <!-- Completed <ng-container *ngIf="!vp.isLessThanMedium()">Transactions</ng-container> -->
                 <mat-icon>check</mat-icon>
             </span>

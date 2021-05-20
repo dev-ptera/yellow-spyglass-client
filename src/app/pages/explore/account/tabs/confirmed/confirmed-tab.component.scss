@@ -1,9 +1,38 @@
 @import '~@pxblue/colors/palette';
 
+.tab-transaction-list.sm {
+    .pxb-info-list-item .mat-list-item {
+        .pxb-info-list-item-icon-wrapper {
+            display: none;
+        }
+
+        .timestamps {
+            font-size: 0.875rem;
+
+            > span {
+                margin-left: 0;
+            }
+        }
+    }
+}
+
+.tab-transaction-list.md {
+    .pxb-info-list-item .mat-list-item {
+        .timestamps {
+            flex-direction: column;
+            text-align: right;
+        }
+    }
+}
+
 .tab-transaction-list {
     padding-top: 0px;
 
     .pxb-info-list-item {
+        .tag-row {
+            display: flex;
+            align-items: center;
+        }
         .address {
             word-break: break-all;
         }
@@ -21,11 +50,6 @@
             border: solid 1px map-get($pxb-black, 500);
             font-weight: 600;
             margin-right: 8px;
-            &.sm {
-                position: absolute;
-                top: 0px;
-                left: 0px;
-            }
         }
     }
     .pxb-info-list-item .pxb-info-list-item-subtitle-wrapper {
@@ -62,7 +86,7 @@
     }
     .amount {
         margin-left: 8px;
-        font-size: 0.75rem;
+        font-size: 0.875rem;
         &.receive {
             color: map-get($pxb-green, 500);
         }
@@ -72,18 +96,8 @@
     }
     .timestamps {
         display: flex;
-        &.md {
-            flex-direction: column;
-            text-align: right;
-        }
         > span {
             margin-left: 16px;
-        }
-        &.sm {
-            font-size: 0.875rem;
-            > span {
-                margin-left: 0;
-            }
         }
     }
 }

@@ -19,16 +19,9 @@
 }
 
 ::ng-deep {
-    .pxb-drawer-header-background {
-        background-image: url('../../assets/electric_circuit.svg');
-        background-position: -21%;
-        opacity: 0.1 !important;
-        background-size: 420% !important;
-    }
-
     .pxb-drawer-header-content {
         height: unset !important;
-        background-color: #43724a !important;
+        background-color: #45af45 !important;
     }
 
     .pxb-drawer-header {
