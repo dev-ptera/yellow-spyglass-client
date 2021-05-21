@@ -8,7 +8,7 @@
 }
 .hash-section {
     margin: 24px 0;
-    word-break: break-all;
+    word-break: break-word;
     div {
         display: flex;
         justify-content: left;
@@ -23,7 +23,6 @@
     }
     .hash-description {
         font-size: 12px;
-        word-break: break-word;
         color: map-get($pxb-gray, 500);
     }
 }

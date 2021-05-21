@@ -28,7 +28,7 @@ import {UtilService} from "@app/services/util/util.service";
                     <span class="mat-subheading-2">{{ block?.subtype }}</span>
                 </div>
                 <div class="hash-description">
-                    The type of transaction; can be "open", "send", "receive", or "change"
+                    Transaction type; can be "open", "send", "receive", or "change"
                 </div>
             </div>
             <div class="hash-section">
@@ -132,7 +132,7 @@ export class HashComponent {
 
     convertRawToBan(raw: string): string {
         return this._util.convertRawToBan(raw, {
-            precision: 5,
+            precision: 10,
             comma: true,
         }) + ' BANANO';
     }
