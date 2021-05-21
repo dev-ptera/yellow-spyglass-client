@@ -1,7 +1,7 @@
 <div class="explore-root">
     <div class="explore-body" responsive>
         <div class="explore-body-content">
-            <ng-container *ngIf="!searchedValue">
+            <ng-container *ngIf="!showBlock && !showAccount">
                 <div [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm" [style.marginBottom.px]="8">
                     Banano Explorer
                 </div>
@@ -79,7 +79,7 @@
             </ng-container>
 
             <app-account
-                *ngIf="searchedValue"
+                *ngIf="showAccount"
                 [accountOverview]="accountOverview"
                 [loading]="loading"
                 [address]="searchedValue"
@@ -87,6 +87,8 @@
                 (search)="search($event)"
             >
             </app-account>
+
+            <app-hash *ngIf="showBlock" [loading]="loading" [block]="blockResponse" [hash]="searchedValue"> </app-hash>
         </div>
     </div>
 </div>

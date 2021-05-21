@@ -1,0 +1,29 @@
+@import '~@pxblue/colors/palette';
+
+.hash-searched {
+    word-break: break-all;
+    line-height: 16px;
+    margin-right: 24px;
+    margin-bottom: 48px !important;
+}
+.hash-section {
+    margin: 24px 0;
+    word-break: break-all;
+    div {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .mat-headline {
+        margin-right: 16px;
+    }
+    .mat-subheading-2 {
+        color: map-get($pxb-black, 500);
+    }
+    .hash-description {
+        font-size: 12px;
+        word-break: break-word;
+        color: map-get($pxb-gray, 500);
+    }
+}

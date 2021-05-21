@@ -25,7 +25,7 @@
         "@angular/platform-browser": "~11.2.13",
         "@angular/platform-browser-dynamic": "~11.2.13",
         "@angular/router": "~11.2.13",
-        "@dev-ptera/nano-node-rpc": "^1.0.2",
+        "@dev-ptera/nano-node-rpc": "^1.1.0",
         "@pxblue/angular-components": "^4.3.0",
         "@pxblue/angular-themes": "^6.0.3",
         "@pxblue/colors": "^3.0.0",

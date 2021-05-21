@@ -6,8 +6,10 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute, NavigationStart, Router, RouterEvent } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-import { AccountOverviewDto } from '../../types';
 import { UtilService } from '../../services/util/util.service';
+import { AccountOverviewDto } from '@app/types/dto';
+import { BlocksInfoResponse } from '@dev-ptera/nano-node-rpc';
+import { Block } from '@app/types/dto/Block';
 
 @Component({
     selector: 'app-explore',
@@ -16,8 +18,6 @@ import { UtilService } from '../../services/util/util.service';
     encapsulation: ViewEncapsulation.None,
 })
 export class ExploreComponent {
-    pxbBlue = blue;
-    pxbWhite = white;
     searchFormControl: FormControl;
     idFieldActive: boolean;
     touchedIdField: boolean;
@@ -25,6 +25,10 @@ export class ExploreComponent {
     monkeySvg: string;
     searchedValue: string;
     accountOverview: AccountOverviewDto;
+    blockResponse: Block;
+
+    showAccount = false;
+    showBlock = false;
 
     sampleAddresses = [
         'ban_39qbrcfii4imaekkon7gqs1emssg7pfhiirfg7u85nh9rnf51zbmr84xrtbp',
@@ -38,7 +42,7 @@ export class ExploreComponent {
         'CB397ED6BC2728B370295EF980BC0AF91FE4F4059C52EE71B15C9F1EF0240254',
     ];
 
-    private destroyed$ = new Subject();
+    navigation$;
 
     constructor(
         public vp: ViewportService,
@@ -47,11 +51,8 @@ export class ExploreComponent {
         private readonly _activatedRoute: ActivatedRoute,
         private readonly _util: UtilService
     ) {
-        this._router.events
-            .pipe(
-                filter((event: RouterEvent) => event instanceof NavigationStart),
-                takeUntil(this.destroyed$)
-            )
+        this.navigation$ = this._router.events
+            .pipe(filter((event: RouterEvent) => event instanceof NavigationStart))
             .subscribe((event: NavigationStart) => {
                 this.searchViaParams(event.url.split('?')[1]);
             });
@@ -62,38 +63,57 @@ export class ExploreComponent {
         this.searchViaParams(window.location.search);
     }
 
+    ngOnDestroy(): void {
+        this.navigation$.unsubscribe();
+    }
+
     searchViaParams(params: string): void {
+        console.log('search via params');
         const urlParams = new URLSearchParams(params);
         const address = urlParams.get('address');
-        const hash = urlParams.get('transaction');
-        const searchValue = this.searchFormControl.value;
-        if (address && searchValue !== address) {
+        const hash = urlParams.get('hash');
+        console.log(address);
+        console.log(this.searchedValue);
+        if (address && this.searchedValue !== address) {
             this.search(address);
-        } else if (hash && searchValue !== hash) {
+        } else if (hash && this.searchedValue !== hash) {
             this.search(hash);
-        } else {
-            //  this.searchedValue = undefined;
-            //  this.accountOverview = undefined;
-            // this.confirmedTransactions = undefined;
+        }
+        if (!address && !hash) {
+            this.showBlock = false;
+            this.showAccount = false;
+            this.searchedValue = undefined;
         }
     }
 
     search(searchValue: string): void {
-        this.searchedValue = searchValue;
         this.loading = true;
+        this.searchedValue = searchValue;
         this.searchFormControl.setValue(searchValue);
+        this.showBlock = false;
+        this.showAccount = false;
         this.monkeySvg = undefined;
         this.accountOverview = undefined;
+        this.blockResponse = undefined;
+        if (searchValue.startsWith('ban_')) {
+            this._searchAccount(searchValue);
+        } else {
+            this._searchTransaction(searchValue);
+        }
+    }
+
+    private _searchAccount(address): void {
+        this.showAccount = true;
         const spin = new Promise((resolve) => setTimeout(resolve, 500));
 
         // Confirmed Transactions
-        Promise.all([this._apiService.accountOverview(searchValue), spin])
+        Promise.all([this._apiService.accountOverview(address), spin])
             .then(([accountOverview]) => {
                 this.loading = false;
                 this.accountOverview = accountOverview;
                 void this._router.navigate([], {
                     relativeTo: this._activatedRoute,
-                    queryParams: { address: searchValue },
+                    queryParams: { address },
                 });
             })
             .catch((err) => {
@@ -102,12 +122,32 @@ export class ExploreComponent {
             });
 
         // Monkey
-        Promise.all([this._apiService.monkey(searchValue), spin])
+        Promise.all([this._apiService.monkey(address), spin])
             .then(([data]) => {
                 this.monkeySvg = data;
             })
             .catch((err) => {
                 console.error(err);
+            });
+    }
+
+    private _searchTransaction(hash: string): void {
+        this.showBlock = true;
+        const spin = new Promise((resolve) => setTimeout(resolve, 500));
+
+        // Confirmed Transactions
+        Promise.all([this._apiService.block(hash), spin])
+            .then(([blockResponse]) => {
+                this.loading = false;
+                this.blockResponse = blockResponse;
+                void this._router.navigate([], {
+                    relativeTo: this._activatedRoute,
+                    queryParams: { hash },
+                });
+            })
+            .catch((err) => {
+                console.error(err);
+                this.loading = false;
             });
     }
 

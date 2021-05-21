@@ -19,16 +19,16 @@ export class UserMenuComponent {
     open: false;
     items = [
         {
-            title: 'Settings',
-            icon: 'settings',
+            title: 'Bookmarks',
+            icon: 'bookmarks',
         },
         {
-            title: 'Contact Us',
+            title: 'Theme',
             icon: 'mail',
         },
         {
-            title: 'Log Out',
-            icon: 'logout',
+            title: 'Language',
+            icon: 'mail',
         },
     ];
 }

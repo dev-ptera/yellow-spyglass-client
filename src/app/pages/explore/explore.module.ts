@@ -26,6 +26,7 @@ import { MatCardModule } from '@angular/material/card';
 import { PendingTabComponent } from '@app/pages/explore/account/tabs/pending/pending-tab.component';
 import { ConfirmedTabComponent } from '@app/pages/explore/account/tabs/confirmed/confirmed-tab.component';
 import { DelegatorsTabComponent } from '@app/pages/explore/account/tabs/delegators/delegators-tab.components';
+import { HashComponent } from '@app/pages/explore/hash/hash.component';
 
 @NgModule({
     declarations: [
@@ -33,6 +34,7 @@ import { DelegatorsTabComponent } from '@app/pages/explore/account/tabs/delegato
         ConfirmedTabComponent,
         DelegatorsTabComponent,
         ExploreComponent,
+        HashComponent,
         PendingTabComponent,
         SafeHtmlPipe,
         ResponsiveDirective,
@@ -65,6 +67,7 @@ import { DelegatorsTabComponent } from '@app/pages/explore/account/tabs/delegato
         ConfirmedTabComponent,
         DelegatorsTabComponent,
         ExploreComponent,
+        HashComponent,
         PendingTabComponent,
         SafeHtmlPipe,
         ResponsiveDirective,

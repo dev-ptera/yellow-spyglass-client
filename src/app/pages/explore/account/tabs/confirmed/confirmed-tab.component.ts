@@ -7,15 +7,14 @@ import {
     TemplateRef,
     ViewEncapsulation,
 } from '@angular/core';
-import {ConfirmedTransaction} from '@app/types/modal/ConfirmedTransaction';
-import {MonkeyCacheService} from "@app/services/monkey-cache/monkey-cache.service";
+import { ConfirmedTransaction } from '@app/types/modal/ConfirmedTransaction';
+import { MonkeyCacheService } from '@app/services/monkey-cache/monkey-cache.service';
 
 @Component({
     selector: 'account-confirmed-tab',
     template: `
         <ng-template [ngTemplateOutlet]="paginator"></ng-template>
         <mat-divider></mat-divider>
-        
 
         <mat-list class="tab-transaction-list" *ngIf="confirmedTransactions.length >= 0" responsive>
             <pxb-info-list-item
@@ -27,7 +26,10 @@ import {MonkeyCacheService} from "@app/services/monkey-cache/monkey-cache.servic
                 style="background-color: #fdfdfd; position: relative"
             >
                 <div class="large-monkey-wrapper" pxb-icon>
-                    <div *ngIf="monkeyCache.getMonkey(tx.address)" [innerHTML]="monkeyCache.getMonkey(tx.address) | safe"></div>
+                    <div
+                        *ngIf="monkeyCache.getMonkey(tx.address)"
+                        [innerHTML]="monkeyCache.getMonkey(tx.address) | safe"
+                    ></div>
                 </div>
                 <div pxb-title>
                     <div class="tag-row">
@@ -42,7 +44,7 @@ import {MonkeyCacheService} from "@app/services/monkey-cache/monkey-cache.servic
                         </span>
                     </div>
                 </div>
-                <div pxb-subtitle class="hash">{{ tx.hash }}</div>
+                <div pxb-subtitle class="hash" (click)="search.emit(tx.hash)">{{ tx.hash }}</div>
                 <div pxb-right-content>
                     <div class="timestamps">
                         <span>{{ tx.date }}</span>

@@ -1141,10 +1141,10 @@
     "@babel/helper-validator-identifier" "^7.14.0"
     to-fast-properties "^2.0.0"
 
-"@dev-ptera/nano-node-rpc@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@dev-ptera/nano-node-rpc/-/nano-node-rpc-1.0.2.tgz#8c5715f9c8014e44c6912201c3012cbbcc991099"
-  integrity sha512-uZhl8LNk8IgUBy1rwFN30kM7kpvZ4BVnL7v+ynl9o85sV/9eAJOalcIdTZDnE0gAHEaEeLda4D+oAAsD281fgQ==
+"@dev-ptera/nano-node-rpc@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@dev-ptera/nano-node-rpc/-/nano-node-rpc-1.1.0.tgz#e3e5c0e0b080a8e72f2e41f81d4f925af8864ee5"
+  integrity sha512-SbuQlmEDa8qwdI2SQ96k0k/uJOAZyZ8HbymshmpMEW6+72MgaC9ug6eBxoHf1eV1O05oV/uiB+g3Vu5c8C5hng==
   dependencies:
     axios "^0.21.1"
 

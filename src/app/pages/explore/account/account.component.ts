@@ -17,8 +17,8 @@ import { ConfirmedTransaction } from '@app/types/modal/ConfirmedTransaction';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { UtilService } from '@app/services/util/util.service';
 import { ApiService } from '@app/services/api/api.service';
-import { StateType } from '@app/types/modal/stateType';
-import {MonkeyCacheService} from "@app/services/monkey-cache/monkey-cache.service";
+import { MonkeyCacheService } from '@app/services/monkey-cache/monkey-cache.service';
+import { Subtype } from '@dev-ptera/nano-node-rpc';
 
 @Component({
     selector: 'app-account',
@@ -89,18 +89,17 @@ export class AccountComponent {
     private _prepareAccountOverview(accountOverview: AccountOverviewDto): void {
         const approxBalance = accountOverview.balanceRaw !== '0';
         const approxPending = accountOverview.pendingRaw !== '0';
-        this.confirmedBalance = this._util.numberWithCommas(this._rawToBan(accountOverview.balanceRaw, 2));
+        this.confirmedBalance = this._util.convertRawToBan(accountOverview.balanceRaw, { precision: 2, comma: true });
         if (approxBalance && this.confirmedBalance === '0') {
             this.confirmedBalance = '~0';
         }
-        this.pendingBalance = this._util.numberWithCommas(this._rawToBan(accountOverview.pendingRaw, 2));
+        this.pendingBalance = this._util.convertRawToBan(accountOverview.pendingRaw, { precision: 2, comma: true });
         if (approxPending && this.pendingBalance === '0') {
             this.pendingBalance = '~0';
         }
         const rep = accountOverview.representative;
         this.shortenedRep = `${rep.substr(0, 11)}...${rep.substr(rep.length - 6, rep.length)}`;
     }
-
 
     /**
      * Sorts delegators based on weight descending and formats RAW balance into BAN balance.
@@ -110,7 +109,9 @@ export class AccountComponent {
         for (const delegator of accountOverview.delegators) {
             this.delegators.push({
                 address: delegator.address,
-                weight: this._rawToBan(delegator.weightRaw, 3),
+                weight: this._util.convertRawToBan(delegator.weightRaw, {
+                    precision: 3
+                }),
             });
         }
         this.delegators.sort((a, b) => (Number(a.weight) < Number(b.weight) ? 1 : -1));
@@ -145,18 +146,21 @@ export class AccountComponent {
                 continue;
             }
             monkeyPromise.push(
-                this._apiService.monkey(addr).then((monkey: string) => {
-                    this._monkeyCache.addCache(addr, monkey);
-                    return Promise.resolve();
-                }).catch((err) => {
-                    console.error(err);
-                    return Promise.reject(err);
-                })
-            )
+                this._apiService
+                    .monkey(addr)
+                    .then((monkey: string) => {
+                        this._monkeyCache.addCache(addr, monkey);
+                        return Promise.resolve();
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                        return Promise.reject(err);
+                    })
+            );
         }
         void Promise.all(monkeyPromise).then(() => {
             this._ref.detectChanges();
-        })
+        });
     }
 
     /**
@@ -164,7 +168,11 @@ export class AccountComponent {
      */
     private _convertConfirmedTxDtoToModal(tx: ConfirmedTransactionDto): ConfirmedTransaction {
         return {
-            balance: this._sendReceiveRawToBan(tx.balanceRaw, tx.type),
+            balance: `${this._util.convertRawToBan(tx.balanceRaw, 
+                { precision: 5, 
+                    comma: true, 
+                    state: tx.type
+                })} BAN`,
             hash: tx.hash,
             type: tx.type,
             height: tx.height,
@@ -173,30 +181,6 @@ export class AccountComponent {
             date: this.formatDateString(tx.timestamp),
             time: this.formatTimeString(tx.timestamp),
         };
-    }
-
-    private _rawToBan(raw: string, precision = 10): string {
-        if (!raw || raw === '0') {
-            return '0';
-        }
-        return Number(rawToBan(raw))
-            .toFixed(precision)
-            .replace(/\.?0+$/, '');
-    }
-
-    private _sendReceiveRawToBan(raw: string, state: StateType): string {
-        if (!raw || raw === '0') {
-            return '0 BAN';
-        }
-        const modifier = state === 'receive' ? '+' : '-';
-        const ban = Number(rawToBan(raw))
-            .toFixed(10)
-            .replace(/\.?0+$/, '');
-        if (state) {
-            return `${modifier}${this._util.numberWithCommas(ban)} BAN`;
-        } else {
-            return `${this._util.numberWithCommas(ban)} BAN`;
-        }
     }
 
     renderQRCode(addr: string): void {

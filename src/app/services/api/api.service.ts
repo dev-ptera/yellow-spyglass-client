@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { AccountOverviewDto, ConfirmedTransactionDto } from '../../types';
-import { DelegatorDto } from '../../types/dto/DelegatorDto';
+import { AccountOverviewDto, ConfirmedTransactionDto } from '@app/types/dto';
+import { BlocksInfoResponse } from '@dev-ptera/nano-node-rpc';
+import { Block } from '@app/types/dto/Block';
 
 @Injectable({
     providedIn: 'root',
@@ -13,13 +14,17 @@ export class ApiService {
     constructor(private readonly _http: HttpClient) {}
 
     accountOverview(address: string): Promise<AccountOverviewDto> {
-        return this._http.get<AccountOverviewDto>(`${this.url}/account-overview?address=${address}`).toPromise();
+        return this._http.get<AccountOverviewDto>(`${this.url}/account-overview/${address}`).toPromise();
     }
 
     confirmedTransactions(address: string, offset: number): Promise<ConfirmedTransactionDto[]> {
         return this._http
             .get<ConfirmedTransactionDto[]>(`${this.url}/confirmed-transactions?address=${address}&offset=${offset}`)
             .toPromise();
+    }
+
+    block(hash: string): Promise<Block> {
+        return this._http.get<Block>(`${this.url}/block/${hash}`).toPromise();
     }
 
     monkey(address: string): Promise<string> {
