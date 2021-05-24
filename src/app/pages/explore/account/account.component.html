@@ -28,9 +28,7 @@
             </div>
             <div class="mat-subheading-2 account-address">
                 {{ address }}
-                <button mat-icon-button>
-                    <mat-icon>content_copy</mat-icon>
-                </button>
+                <app-copy-button [data]="address"></app-copy-button>
                 <app-bookmark-button [id]="address"></app-bookmark-button>
             </div>
             <div *ngIf="accountOverview?.opened" class="mat-subheading-2 account-representative">
