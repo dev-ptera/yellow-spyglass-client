@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {rawToBan} from "banano-unit-converter";
-import {Subtype} from "@dev-ptera/nano-node-rpc";
+import { rawToBan } from 'banano-unit-converter';
+import { Subtype } from '@dev-ptera/nano-node-rpc';
 
 @Injectable({
     providedIn: 'root',
@@ -12,12 +12,13 @@ export class UtilService {
         return parts.join('.');
     }
 
-
-    convertRawToBan(raw: string, params: {
-        precision: number,
-        comma?: boolean,
-        state?: Subtype
-    }
+    convertRawToBan(
+        raw: string,
+        params: {
+            precision: number;
+            comma?: boolean;
+            state?: Subtype;
+        }
     ): string {
         if (!raw || raw === '0') {
             return '0';

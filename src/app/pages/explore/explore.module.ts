@@ -27,10 +27,12 @@ import { PendingTabComponent } from '@app/pages/explore/account/tabs/pending/pen
 import { ConfirmedTabComponent } from '@app/pages/explore/account/tabs/confirmed/confirmed-tab.component';
 import { DelegatorsTabComponent } from '@app/pages/explore/account/tabs/delegators/delegators-tab.components';
 import { HashComponent } from '@app/pages/explore/hash/hash.component';
+import { BookmarkButtonComponent } from '../../components/bookmark-button/bookmark-button.component';
 
 @NgModule({
     declarations: [
         AccountComponent,
+        BookmarkButtonComponent,
         ConfirmedTabComponent,
         DelegatorsTabComponent,
         ExploreComponent,
@@ -64,6 +66,7 @@ import { HashComponent } from '@app/pages/explore/hash/hash.component';
     ],
     exports: [
         AccountComponent,
+        BookmarkButtonComponent,
         ConfirmedTabComponent,
         DelegatorsTabComponent,
         ExploreComponent,

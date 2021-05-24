@@ -1,12 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    EventEmitter,
-    Input,
-    Output,
-    TemplateRef,
-    ViewEncapsulation,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { Delegator } from '@app/types/modal/Delegator';
 
 @Component({
@@ -68,7 +60,6 @@ import { Delegator } from '@app/types/modal/Delegator';
 })
 export class DelegatorsTabComponent {
     @Input() delegators: Delegator[];
-    @Input() paginator: TemplateRef<any>;
     @Output() search: EventEmitter<string> = new EventEmitter<string>();
 
     shownDelegators = 50;

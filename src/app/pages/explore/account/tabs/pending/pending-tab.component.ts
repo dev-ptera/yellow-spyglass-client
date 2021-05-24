@@ -7,27 +7,32 @@ import {
     TemplateRef,
     ViewEncapsulation,
 } from '@angular/core';
-import { ViewportService } from '@app/services/viewport/viewport.service';
-import { ConfirmedTransaction } from '@app/types/modal/ConfirmedTransaction';
 import { PendingTransaction } from '@app/types/modal/PendingTransactionDto';
+import { MonkeyCacheService } from '@app/services/monkey-cache/monkey-cache.service';
 
 @Component({
     selector: 'account-pending-tab',
     template: `
-        <mat-list class="tab-transaction-list">
+        <mat-divider></mat-divider>
+
+        <mat-list class="tab-transaction-list" *ngIf="pendingTransactions.length >= 0" responsive>
             <pxb-info-list-item
                 *ngFor="let tx of pendingTransactions; trackBy: trackByFn"
                 [divider]="true"
                 [wrapTitle]="true"
                 [wrapSubtitle]="false"
-                style="background-color: white; position: relative"
+                [hidePadding]="true"
+                style="background-color: #fdfdfd; position: relative"
             >
-                <div pxb-icon>
-                    <div *ngIf="monkeySvg" [innerHTML]="monkeySvg | safe"></div>
+                <div class="large-monkey-wrapper" pxb-icon>
+                    <div
+                        *ngIf="monkeyCache.getMonkey(tx.address)"
+                        [innerHTML]="monkeyCache.getMonkey(tx.address) | safe"
+                    ></div>
                 </div>
                 <div pxb-title>
-                    <div>
-                        <pxb-list-item-tag [label]="'receive'" class="type receive"></pxb-list-item-tag>
+                    <div class="tag-row">
+                        <pxb-list-item-tag label="receive" class="type receive"></pxb-list-item-tag>
                         <span class="amount receive">{{ tx.balance }}</span>
                     </div>
                     <div>
@@ -37,9 +42,20 @@ import { PendingTransaction } from '@app/types/modal/PendingTransactionDto';
                         </span>
                     </div>
                 </div>
-                <div pxb-subtitle class="hash">{{ tx.hash }}</div>
+                <div pxb-subtitle class="hash" (click)="search.emit(tx.hash)">{{ tx.hash }}</div>
+                <div pxb-right-content>
+                    <div class="timestamps">
+                        <span>{{ tx.date }}</span>
+                        <span>{{ tx.time }}</span>
+                    </div>
+                </div>
             </pxb-info-list-item>
         </mat-list>
+        <div style="text-align: center; margin-top: 16px" *ngIf="pendingTxCount > shownPendingTransactions">
+            <button color="primary" style="padding: 8px 16px" mat-stroked-button (click)="fetchMorePending()">
+                Load more
+            </button>
+        </div>
 
         <pxb-empty-state
             class="account-empty-state"
@@ -50,17 +66,21 @@ import { PendingTransaction } from '@app/types/modal/PendingTransactionDto';
             <mat-icon pxb-empty-icon>paid</mat-icon>
         </pxb-empty-state>
     `,
-    changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     styleUrls: ['../confirmed/confirmed-tab.component.scss'],
 })
 export class PendingTabComponent {
     @Input() pendingTransactions: PendingTransaction[];
-    @Input() paginator: TemplateRef<any>;
+    @Input() pendingTxCount: number;
 
     @Output() search: EventEmitter<string> = new EventEmitter<string>();
+    shownPendingTransactions = 50;
 
-    constructor(public vp: ViewportService) {}
+    fetchMorePending(): void {
+        this.shownPendingTransactions += 50;
+    }
+
+    constructor(public monkeyCache: MonkeyCacheService) {}
 
     trackByFn(index) {
         return index;

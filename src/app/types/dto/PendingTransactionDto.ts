@@ -1,5 +1,6 @@
 export type PendingTransactionDto = {
-    balanceRaw?: string;
+    balanceRaw: string;
+    timestamp: number;
     hash: string;
     address: string;
 };

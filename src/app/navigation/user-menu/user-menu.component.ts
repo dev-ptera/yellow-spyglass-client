@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-user-menu',
@@ -6,7 +7,11 @@ import { Component } from '@angular/core';
         <pxb-user-menu [(open)]="open">
             <mat-icon pxb-avatar>more_vert</mat-icon>
             <mat-nav-list pxb-menu-body [style.paddingTop.px]="0">
-                <pxb-info-list-item *ngFor="let item of items" [dense]="true" (click)="open = false">
+                <pxb-info-list-item
+                    *ngFor="let item of items"
+                    [dense]="true"
+                    (click)="open = false; navigate(item.route)"
+                >
                     <mat-icon pxb-icon>{{ item.icon }}</mat-icon>
                     <div pxb-title>{{ item.title }}</div>
                 </pxb-info-list-item>
@@ -21,6 +26,7 @@ export class UserMenuComponent {
         {
             title: 'Bookmarks',
             icon: 'bookmarks',
+            route: 'bookmarks',
         },
         {
             title: 'Theme',
@@ -31,4 +37,12 @@ export class UserMenuComponent {
             icon: 'mail',
         },
     ];
+
+    constructor(private _router: Router) {}
+
+    navigate(route: string): void {
+        if (route) {
+            void this._router.navigate([route]);
+        }
+    }
 }

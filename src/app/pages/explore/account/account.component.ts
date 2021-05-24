@@ -19,6 +19,8 @@ import { UtilService } from '@app/services/util/util.service';
 import { ApiService } from '@app/services/api/api.service';
 import { MonkeyCacheService } from '@app/services/monkey-cache/monkey-cache.service';
 import { Subtype } from '@dev-ptera/nano-node-rpc';
+import { PendingTransaction } from '@app/types/modal';
+import { BookmarksService } from '@app/services/bookmarks/bookmarks.service';
 
 @Component({
     selector: 'app-account',
@@ -40,17 +42,21 @@ export class AccountComponent {
 
     delegators: Delegator[] = [];
 
-    // TODO!
-    pendingTransactions: PendingTransactionDto[] = [];
-
     confirmedTransactions: {
         all: ConfirmedTransaction[];
         display: ConfirmedTransaction[];
     };
 
+    pendingTransactions: {
+        all: PendingTransaction[];
+        display: PendingTransaction[];
+    };
+
     paginatorSize = 50;
-    currentPage = 0;
-    loadedPages: Set<number>;
+    confirmedTxPageIndex = 0;
+    pendingTxPageIndex = 0;
+    loadedConfirmedTxPages: Set<number>;
+    loadedPendingTxPages: Set<number>;
 
     constructor(
         public vp: ViewportService,
@@ -75,12 +81,14 @@ export class AccountComponent {
      * Converts DTO into displayable format.
      */
     private _prepareNewAccount(): void {
-        this.currentPage = 0;
-        this.loadedPages = new Set<number>().add(0);
+        this.confirmedTxPageIndex = 0;
+        this.pendingTxPageIndex = 0;
+        this.loadedConfirmedTxPages = new Set<number>().add(0);
+        this.loadedPendingTxPages = new Set<number>().add(0);
         this._prepareAccountOverview(this.accountOverview);
         this._prepareConfirmed(this.accountOverview);
+        this._preparePending(this.accountOverview);
         this._prepareDelegators(this.accountOverview);
-        this.pendingTransactions = this.accountOverview.pendingTransactions;
     }
 
     /**
@@ -110,7 +118,7 @@ export class AccountComponent {
             this.delegators.push({
                 address: delegator.address,
                 weight: this._util.convertRawToBan(delegator.weightRaw, {
-                    precision: 3
+                    precision: 3,
                 }),
             });
         }
@@ -135,7 +143,19 @@ export class AccountComponent {
         this.fetchMonkeys(this.confirmedTransactions.display);
     }
 
-    private fetchMonkeys(transactions: ConfirmedTransaction[] | PendingTransactionDto[]): void {
+    private _preparePending(accountOverview: AccountOverviewDto): void {
+        this.pendingTransactions = {
+            all: [],
+            display: [],
+        };
+        for (const pendingTx of accountOverview.pendingTransactions) {
+            this.pendingTransactions.all.push(this._convertPendingTxDtoToModal(pendingTx));
+        }
+        this.pendingTransactions.display = this.pendingTransactions.all;
+        this.fetchMonkeys(this.pendingTransactions.display);
+    }
+
+    private fetchMonkeys(transactions: ConfirmedTransaction[] | PendingTransaction[]): void {
         const addrSet = new Set<string>();
         for (const tx of transactions) {
             addrSet.add(tx.address);
@@ -168,16 +188,29 @@ export class AccountComponent {
      */
     private _convertConfirmedTxDtoToModal(tx: ConfirmedTransactionDto): ConfirmedTransaction {
         return {
-            balance: `${this._util.convertRawToBan(tx.balanceRaw, 
-                { precision: 5, 
-                    comma: true, 
-                    state: tx.type
-                })} BAN`,
+            balance: `${this._util.convertRawToBan(tx.balanceRaw, { precision: 5, comma: true, state: tx.type })} BAN`,
             hash: tx.hash,
             type: tx.type,
             height: tx.height,
             formatHeight: `#${this._util.numberWithCommas(tx.height)}`,
             address: tx.address || tx.newRepresentative,
+            date: this.formatDateString(tx.timestamp),
+            time: this.formatTimeString(tx.timestamp),
+        };
+    }
+
+    /**
+     * Converts a ConfirmedTransactionDto into a displayable format.
+     */
+    private _convertPendingTxDtoToModal(tx: PendingTransactionDto): PendingTransaction {
+        return {
+            balance: `${this._util.convertRawToBan(tx.balanceRaw, {
+                precision: 5,
+                comma: true,
+                state: 'receive',
+            })} BAN`,
+            hash: tx.hash,
+            address: tx.address,
             date: this.formatDateString(tx.timestamp),
             time: this.formatTimeString(tx.timestamp),
         };
@@ -213,15 +246,15 @@ export class AccountComponent {
     }
 
     changePage(e: PageEvent): void {
-        this.currentPage = e.pageIndex;
-        if (this.loadedPages.has(e.pageIndex)) {
+        this.confirmedTxPageIndex = e.pageIndex;
+        if (this.loadedConfirmedTxPages.has(e.pageIndex)) {
             this._setDisplayTx(this.confirmedTransactions, e.pageIndex);
             return;
         }
         this._apiService
             .confirmedTransactions(this.address, e.pageSize * e.pageIndex)
             .then((data: ConfirmedTransactionDto[]) => {
-                this.loadedPages.add(e.pageIndex);
+                this.loadedConfirmedTxPages.add(e.pageIndex);
                 for (const tx of data) {
                     this.confirmedTransactions.all.push(this._convertConfirmedTxDtoToModal(tx));
                 }

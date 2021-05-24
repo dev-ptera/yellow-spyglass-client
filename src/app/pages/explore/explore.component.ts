@@ -46,10 +46,10 @@ export class ExploreComponent {
 
     constructor(
         public vp: ViewportService,
-        private readonly _apiService: ApiService,
         private readonly _router: Router,
-        private readonly _activatedRoute: ActivatedRoute,
-        private readonly _util: UtilService
+        private readonly _util: UtilService,
+        private readonly _apiService: ApiService,
+        private readonly _activatedRoute: ActivatedRoute
     ) {
         this.navigation$ = this._router.events
             .pipe(filter((event: RouterEvent) => event instanceof NavigationStart))
@@ -68,12 +68,9 @@ export class ExploreComponent {
     }
 
     searchViaParams(params: string): void {
-        console.log('search via params');
         const urlParams = new URLSearchParams(params);
         const address = urlParams.get('address');
         const hash = urlParams.get('hash');
-        console.log(address);
-        console.log(this.searchedValue);
         if (address && this.searchedValue !== address) {
             this.search(address);
         } else if (hash && this.searchedValue !== hash) {

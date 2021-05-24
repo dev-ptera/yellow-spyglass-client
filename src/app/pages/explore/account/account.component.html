@@ -2,12 +2,12 @@
     <div *ngIf="monkeySvg" responsive class="account-monkey" [innerHTML]="monkeySvg | safe"></div>
 </ng-template>
 
-<ng-template #paginator>
+<ng-template #confirmedPaginator>
     <mat-paginator
         *ngIf="accountOverview.completedTxCount > 50"
         [length]="accountOverview.completedTxCount"
         [pageSize]="paginatorSize"
-        [pageIndex]="currentPage"
+        [pageIndex]="confirmedTxPageIndex"
         [disabled]="loading"
         (page)="changePage($event)"
     >
@@ -31,11 +31,9 @@
                 <button mat-icon-button>
                     <mat-icon>content_copy</mat-icon>
                 </button>
-                <button mat-icon-button>
-                    <mat-icon>bookmark</mat-icon>
-                </button>
+                <app-bookmark-button [id]="address"></app-bookmark-button>
             </div>
-            <div *ngIf="accountOverview" class="mat-subheading-2 account-representative">
+            <div *ngIf="accountOverview?.opened" class="mat-subheading-2 account-representative">
                 Represented by
                 <span class="link" (click)="search.emit(accountOverview.representative)">{{ shortenedRep }}</span>
             </div>
@@ -66,7 +64,7 @@
             </span>
         </ng-template>
         <account-confirmed-tab
-            [paginator]="paginator"
+            [paginator]="confirmedPaginator"
             [confirmedTransactions]="confirmedTransactions.display"
             (search)="search.emit($event)"
         ></account-confirmed-tab>
@@ -81,8 +79,8 @@
             </span>
         </ng-template>
         <account-pending-tab
-            [paginator]="paginator"
-            [pendingTransactions]="pendingTransactions"
+            [pendingTxCount]="accountOverview.pendingTxCount"
+            [pendingTransactions]="pendingTransactions.display"
             (search)="search.emit($event)"
         ></account-pending-tab>
     </mat-tab>
@@ -95,11 +93,7 @@
                 <mat-icon>how_to_vote</mat-icon>
             </span>
         </ng-template>
-        <account-delegators-tab
-            [paginator]="paginator"
-            [delegators]="delegators"
-            (search)="search.emit($event)"
-        ></account-delegators-tab>
+        <account-delegators-tab [delegators]="delegators" (search)="search.emit($event)"></account-delegators-tab>
     </mat-tab>
 
     <!-- Insights -->
