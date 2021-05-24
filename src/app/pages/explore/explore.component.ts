@@ -1,14 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { blue, white } from '@pxblue/colors';
 import { ViewportService } from '../../services/viewport/viewport.service';
 import { ApiService } from '../../services/api/api.service';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, NavigationStart, Router, RouterEvent } from '@angular/router';
-import { Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { UtilService } from '../../services/util/util.service';
 import { AccountOverviewDto } from '@app/types/dto';
-import { BlocksInfoResponse } from '@dev-ptera/nano-node-rpc';
 import { Block } from '@app/types/dto/Block';
 
 @Component({
@@ -59,6 +56,7 @@ export class ExploreComponent {
     }
 
     ngOnInit(): void {
+        console.log('on init');
         this.searchFormControl = new FormControl();
         this.searchViaParams(window.location.search);
     }

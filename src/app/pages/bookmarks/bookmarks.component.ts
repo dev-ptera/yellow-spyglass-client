@@ -51,7 +51,7 @@ import { FormControl } from '@angular/forms';
                             </button>
                             <button
                                 *ngIf="element.id === currentEditId"
-                                style="margin-right: 16px"
+                                style="margin-right: 16px; margin-bottom: 4px;"
                                 mat-flat-button
                                 color="primary"
                                 (click)="saveEdit(element.id)"
@@ -77,7 +77,7 @@ import { FormControl } from '@angular/forms';
                 title="No Bookmarks Found"
                 description="To add a bookmark, search an address or transaction hash and save it."
             >
-                <mat-icon pxb-empty-icon>event</mat-icon>
+                <mat-icon pxb-empty-icon>bookmarks</mat-icon>
             </pxb-empty-state>
         </div>
     `,

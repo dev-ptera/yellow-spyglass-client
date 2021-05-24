@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { PendingTransaction } from '@app/types/modal/PendingTransactionDto';
 import { MonkeyCacheService } from '@app/services/monkey-cache/monkey-cache.service';
+import { SearchService } from '@app/services/search/search.service';
 
 @Component({
     selector: 'account-pending-tab',
@@ -37,12 +38,12 @@ import { MonkeyCacheService } from '@app/services/monkey-cache/monkey-cache.serv
                     </div>
                     <div>
                         <span class="to-from">from</span>
-                        <span class="address" (click)="search.emit(tx.address)">
+                        <span class="address" (click)="searchService.emitSearch(tx.address)">
                             {{ ' ' + tx.address }}
                         </span>
                     </div>
                 </div>
-                <div pxb-subtitle class="hash" (click)="search.emit(tx.hash)">{{ tx.hash }}</div>
+                <div pxb-subtitle class="hash" (click)="searchService.emitSearch(tx.hash)">{{ tx.hash }}</div>
                 <div pxb-right-content>
                     <div class="timestamps">
                         <span>{{ tx.date }}</span>
@@ -73,14 +74,13 @@ export class PendingTabComponent {
     @Input() pendingTransactions: PendingTransaction[];
     @Input() pendingTxCount: number;
 
-    @Output() search: EventEmitter<string> = new EventEmitter<string>();
     shownPendingTransactions = 50;
 
     fetchMorePending(): void {
         this.shownPendingTransactions += 50;
     }
 
-    constructor(public monkeyCache: MonkeyCacheService) {}
+    constructor(public monkeyCache: MonkeyCacheService, public searchService: SearchService) {}
 
     trackByFn(index) {
         return index;

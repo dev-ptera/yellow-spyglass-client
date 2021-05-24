@@ -35,7 +35,9 @@
             </div>
             <div *ngIf="accountOverview?.opened" class="mat-subheading-2 account-representative">
                 Represented by
-                <span class="link" (click)="search.emit(accountOverview.representative)">{{ shortenedRep }}</span>
+                <span class="link" (click)="searchService.emitSearch(accountOverview.representative)">{{
+                    shortenedRep
+                }}</span>
             </div>
 
             <div class="account-summary-tags" responsive *ngIf="accountOverview">
@@ -66,7 +68,6 @@
         <account-confirmed-tab
             [paginator]="confirmedPaginator"
             [confirmedTransactions]="confirmedTransactions.display"
-            (search)="search.emit($event)"
         ></account-confirmed-tab>
     </mat-tab>
 
@@ -81,7 +82,6 @@
         <account-pending-tab
             [pendingTxCount]="accountOverview.pendingTxCount"
             [pendingTransactions]="pendingTransactions.display"
-            (search)="search.emit($event)"
         ></account-pending-tab>
     </mat-tab>
 
@@ -93,7 +93,7 @@
                 <mat-icon>how_to_vote</mat-icon>
             </span>
         </ng-template>
-        <account-delegators-tab [delegators]="delegators" (search)="search.emit($event)"></account-delegators-tab>
+        <account-delegators-tab [delegators]="delegators"></account-delegators-tab>
     </mat-tab>
 
     <!-- Insights -->

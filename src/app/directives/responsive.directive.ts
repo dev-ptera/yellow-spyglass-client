@@ -1,5 +1,5 @@
 import { Directive, ElementRef, OnDestroy, OnInit, Renderer2 } from '@angular/core';
-import { Breakpoint, ViewportService } from '../services/viewport/viewport.service';
+import { Breakpoint, ViewportService } from '@app/services/viewport/viewport.service';
 import { Subscription } from 'rxjs';
 
 @Directive({

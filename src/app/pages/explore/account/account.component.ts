@@ -2,14 +2,11 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    EventEmitter,
     Input,
-    Output,
     SimpleChanges,
     ViewEncapsulation,
 } from '@angular/core';
 import * as QRCode from 'qrcode';
-import { rawToBan } from 'banano-unit-converter';
 import { PageEvent } from '@angular/material/paginator';
 import { AccountOverviewDto, ConfirmedTransactionDto, PendingTransactionDto } from '@app/types/dto';
 import { Delegator } from '@app/types/modal/Delegator';
@@ -18,9 +15,8 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
 import { UtilService } from '@app/services/util/util.service';
 import { ApiService } from '@app/services/api/api.service';
 import { MonkeyCacheService } from '@app/services/monkey-cache/monkey-cache.service';
-import { Subtype } from '@dev-ptera/nano-node-rpc';
 import { PendingTransaction } from '@app/types/modal';
-import { BookmarksService } from '@app/services/bookmarks/bookmarks.service';
+import { SearchService } from '@app/services/search/search.service';
 
 @Component({
     selector: 'app-account',
@@ -34,7 +30,6 @@ export class AccountComponent {
     @Input() loading: boolean;
     @Input() address: string;
     @Input() monkeySvg: string;
-    @Output() search: EventEmitter<string> = new EventEmitter<string>();
 
     pendingBalance: string;
     confirmedBalance: string;
@@ -60,6 +55,7 @@ export class AccountComponent {
 
     constructor(
         public vp: ViewportService,
+        public searchService: SearchService,
         private readonly _util: UtilService,
         private readonly _apiService: ApiService,
         private readonly _ref: ChangeDetectorRef,
@@ -68,8 +64,7 @@ export class AccountComponent {
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.address && changes.address.currentValue) {
-            console.log('ADDRESS CHANGED RUNNING CD');
-            this.renderQRCode(this.address);
+            this._renderQRCode(this.address);
         }
         if (changes.accountOverview && changes.accountOverview.currentValue) {
             this._prepareNewAccount();
@@ -194,8 +189,8 @@ export class AccountComponent {
             height: tx.height,
             formatHeight: `#${this._util.numberWithCommas(tx.height)}`,
             address: tx.address || tx.newRepresentative,
-            date: this.formatDateString(tx.timestamp),
-            time: this.formatTimeString(tx.timestamp),
+            date: this._formatDateString(tx.timestamp),
+            time: this._formatTimeString(tx.timestamp),
         };
     }
 
@@ -211,12 +206,12 @@ export class AccountComponent {
             })} BAN`,
             hash: tx.hash,
             address: tx.address,
-            date: this.formatDateString(tx.timestamp),
-            time: this.formatTimeString(tx.timestamp),
+            date: this._formatDateString(tx.timestamp),
+            time: this._formatTimeString(tx.timestamp),
         };
     }
 
-    renderQRCode(addr: string): void {
+    private _renderQRCode(addr: string): void {
         this._ref.detectChanges();
         const canvas = document.getElementById('qr-code');
         QRCode.toCanvas(canvas, addr, function (error) {
@@ -224,7 +219,7 @@ export class AccountComponent {
         });
     }
 
-    formatDateString(timestamp: number): string {
+    private _formatDateString(timestamp: number): string {
         const date = new Date(timestamp * 1000);
         return (
             (date.getMonth() > 8 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1)) +
@@ -235,7 +230,7 @@ export class AccountComponent {
         );
     }
 
-    formatTimeString(timestamp: number): string {
+    private _formatTimeString(timestamp: number): string {
         const date = new Date(timestamp * 1000);
         return date.toTimeString().substr(0, 8);
     }

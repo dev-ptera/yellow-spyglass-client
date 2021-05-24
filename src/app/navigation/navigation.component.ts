@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { ViewportService } from '../services/viewport/viewport.service';
 import { DrawerStateService } from '../services/drawer-state/drawer-state.service';
 import { APP_NAV_ITEMS, NavItem, EXPLORER_NAV_GROUP, NETWORK_NAV_GROUP } from './nav-items';
+import { SearchService } from '@app/services/search/search.service';
 
 @Component({
     selector: 'app-navigation',
@@ -21,10 +22,25 @@ export class NavigationComponent {
 
     constructor(
         private readonly _router: Router,
+        private readonly _searchService: SearchService,
         private readonly _viewportService: ViewportService,
         private readonly _stateService: DrawerStateService
     ) {
         this._listenForRouteChanges();
+    }
+
+    ngOnInit(): void {
+        this._searchService.searchEvents().subscribe((searchValue: string) => {
+            if (searchValue.startsWith('ban_')) {
+                void this._router.navigate([APP_NAV_ITEMS.search.route], {
+                    queryParams: { address: searchValue },
+                });
+            } else {
+                void this._router.navigate([APP_NAV_ITEMS.search.route], {
+                    queryParams: { hash: searchValue },
+                });
+            }
+        });
     }
 
     navigate(url: string): void {

@@ -1,14 +1,7 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    EventEmitter,
-    Input,
-    Output,
-    TemplateRef,
-    ViewEncapsulation,
-} from '@angular/core';
+import { Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { ConfirmedTransaction } from '@app/types/modal/ConfirmedTransaction';
 import { MonkeyCacheService } from '@app/services/monkey-cache/monkey-cache.service';
+import { SearchService } from '@app/services/search/search.service';
 
 @Component({
     selector: 'account-confirmed-tab',
@@ -39,12 +32,12 @@ import { MonkeyCacheService } from '@app/services/monkey-cache/monkey-cache.serv
                     </div>
                     <div>
                         <span class="to-from">{{ tx.type === 'receive' ? ' from' : 'to' }}</span>
-                        <span class="address" (click)="search.emit(tx.address)">
+                        <span class="address" (click)="searchService.emitSearch(tx.address)">
                             {{ ' ' + tx.address }}
                         </span>
                     </div>
                 </div>
-                <div pxb-subtitle class="hash" (click)="search.emit(tx.hash)">{{ tx.hash }}</div>
+                <div pxb-subtitle class="hash" (click)="searchService.emitSearch(tx.hash)">{{ tx.hash }}</div>
                 <div pxb-right-content>
                     <div class="timestamps">
                         <span>{{ tx.date }}</span>
@@ -71,9 +64,7 @@ export class ConfirmedTabComponent {
     @Input() confirmedTransactions: ConfirmedTransaction[];
     @Input() paginator: TemplateRef<any>;
 
-    @Output() search: EventEmitter<string> = new EventEmitter<string>();
-
-    constructor(public monkeyCache: MonkeyCacheService) {}
+    constructor(public monkeyCache: MonkeyCacheService, public searchService: SearchService) {}
 
     trackByFn(index) {
         return index;

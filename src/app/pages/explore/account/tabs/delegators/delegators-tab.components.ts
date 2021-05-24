@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { Delegator } from '@app/types/modal/Delegator';
+import { SearchService } from '@app/services/search/search.service';
 
 @Component({
     selector: 'account-delegators-tab',
@@ -24,7 +25,7 @@ import { Delegator } from '@app/types/modal/Delegator';
                     [style.paddingBottom.px]="8"
                     class="account-delegator-address-cell"
                     *matCellDef="let element"
-                    (click)="search.emit(element.address)"
+                    (click)="searchService.emitSearch(element.address)"
                 >
                     {{ element.address }}
                 </td>
@@ -60,10 +61,11 @@ import { Delegator } from '@app/types/modal/Delegator';
 })
 export class DelegatorsTabComponent {
     @Input() delegators: Delegator[];
-    @Output() search: EventEmitter<string> = new EventEmitter<string>();
 
     shownDelegators = 50;
     columns = ['position', 'address', 'weight'];
+
+    constructor(public searchService: SearchService) {}
 
     getShownDelegators(): Delegator[] {
         if (this.delegators) {
