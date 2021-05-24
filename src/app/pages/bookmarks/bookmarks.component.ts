@@ -3,6 +3,7 @@ import { Bookmark } from '@app/types/modal';
 import { BookmarksService } from '@app/services/bookmarks/bookmarks.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { FormControl } from '@angular/forms';
+import { SearchService } from '@app/services/search/search.service';
 
 @Component({
     selector: 'app-bookmarks',
@@ -28,7 +29,9 @@ import { FormControl } from '@angular/forms';
                                 >
                                     <mat-icon>edit</mat-icon>
                                 </button>
-                                <span class="bookmarks-data">{{ element.alias }}</span>
+                                <span class="bookmarks-data" (click)="searchService.emitSearch(element.id)">
+                                    {{ element.alias }}
+                                </span>
                             </div>
                             <div class="bookmarks-data-cell" *ngIf="element.id === currentEditId">
                                 <mat-form-field appearance="outline" style="width: 100%">
@@ -90,7 +93,11 @@ export class BookmarksComponent {
     currentEditId: string;
     formControl: FormControl = new FormControl();
 
-    constructor(private _bookmarkService: BookmarksService, public vp: ViewportService) {}
+    constructor(
+        public vp: ViewportService,
+        public searchService: SearchService,
+        private _bookmarkService: BookmarksService
+    ) {}
 
     ngOnInit(): void {
         this.bookmarks = this._bookmarkService.getBookmarks();

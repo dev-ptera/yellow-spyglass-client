@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-import { BlocksInfoResponse } from '@dev-ptera/nano-node-rpc';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { Block } from '@app/types/dto/Block';
-import { rawToBan } from 'banano-unit-converter';
 import { UtilService } from '@app/services/util/util.service';
+import { SearchService } from '@app/services/search/search.service';
 
 @Component({
     selector: 'app-hash',
@@ -14,6 +13,7 @@ import { UtilService } from '@app/services/util/util.service';
         </div>
         <div class="mat-subheading-2 hash-searched">
             {{ hash }}
+            <app-copy-button [data]="hash"></app-copy-button>
             <app-bookmark-button [id]="hash"></app-bookmark-button>
         </div>
 
@@ -21,7 +21,9 @@ import { UtilService } from '@app/services/util/util.service';
             <div class="hash-section">
                 <div>
                     <span class="mat-headline">Block Account</span>
-                    <span class="mat-subheading-2">{{ block.blockAccount }}</span>
+                    <span class="mat-subheading-2 hash-link" (click)="search(block.blockAccount)">{{
+                        block.blockAccount
+                    }}</span>
                 </div>
                 <div class="hash-description">The account represented by this state block</div>
             </div>
@@ -43,7 +45,9 @@ import { UtilService } from '@app/services/util/util.service';
             <div class="hash-section" *ngIf="block.subtype !== 'change'">
                 <div>
                     <span class="mat-headline">{{ block.subtype === 'send' ? 'Recipient' : 'Sender' }}</span>
-                    <span class="mat-subheading-2">{{ block.contents.linkAsAccount }}</span>
+                    <span class="mat-subheading-2 hash-link" (click)="search(block.contents.linkAsAccount)">{{
+                        block.contents.linkAsAccount
+                    }}</span>
                 </div>
 
                 <div class="hash-description">
@@ -86,14 +90,16 @@ import { UtilService } from '@app/services/util/util.service';
             <div class="hash-section">
                 <div>
                     <span class="mat-headline">Representative</span>
-                    <span class="mat-subheading-2">{{ block.contents.representative }}</span>
+                    <span class="mat-subheading-2 hash-link" (click)="search(block.contents.representative)">{{
+                        block.contents.representative
+                    }}</span>
                 </div>
                 <div class="hash-description">The account's representative</div>
             </div>
             <div class="hash-section" *ngIf="block.subtype !== 'change'">
                 <div>
                     <span class="mat-headline">Previous Block</span>
-                    <span class="mat-subheading-2">
+                    <span class="mat-subheading-2 hash-link" (click)="search(block.contents.previous)">
                         {{ block.height === 1 ? 'This block opened the account' : block.contents.previous }}</span
                     >
                 </div>
@@ -102,9 +108,11 @@ import { UtilService } from '@app/services/util/util.service';
             <div class="hash-section">
                 <div>
                     <span class="mat-headline">Link</span>
-                    <span class="mat-subheading-2">{{ block.contents.link }}</span>
+                    <span class="mat-subheading-2 hash-link" (click)="search(block.contents.link)">{{
+                        block.contents.link
+                    }}</span>
                 </div>
-                <div class="hash-description">The destination address encoded in hex format</div>
+                <div class="hash-description">The corresponding block that started this transaction</div>
             </div>
             <div class="hash-section">
                 <div>
@@ -127,9 +135,12 @@ export class HashComponent {
     @Input() hash: string;
     @Input() block: Block;
     @Input() loading: boolean;
-    @Output() search: EventEmitter<string> = new EventEmitter<string>();
 
-    constructor(public vp: ViewportService, private _util: UtilService) {}
+    constructor(
+        public vp: ViewportService,
+        private _util: UtilService,
+        private readonly _searchService: SearchService
+    ) {}
 
     ngOnChanges(): void {
         console.log(this.block);
@@ -142,5 +153,9 @@ export class HashComponent {
                 comma: true,
             }) + ' BANANO'
         );
+    }
+
+    search(value: string): void {
+        this._searchService.emitSearch(value);
     }
 }

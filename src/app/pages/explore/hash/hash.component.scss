@@ -25,4 +25,10 @@
         font-size: 12px;
         color: map-get($pxb-gray, 500);
     }
+    .hash-link {
+        cursor: pointer;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }
