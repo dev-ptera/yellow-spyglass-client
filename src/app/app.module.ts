@@ -26,9 +26,9 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ExploreModule } from './pages/explore/explore.module';
 import { BookmarksComponent } from '@app/pages/bookmarks/bookmarks.component';
 import { MatTableModule } from '@angular/material/table';
-import {ComingSoonComponent} from "@app/pages/coming-soon/coming-soon.component";
-import {RepresentativesComponent} from "@app/pages/representatives/representatives.component";
-import {MatSortModule} from "@angular/material/sort";
+import { ComingSoonComponent } from '@app/pages/coming-soon/coming-soon.component';
+import { RepresentativesComponent } from '@app/pages/representatives/representatives.component';
+import { MatSortModule } from '@angular/material/sort';
 
 @Component({
     selector: 'app-root',
@@ -37,7 +37,14 @@ import {MatSortModule} from "@angular/material/sort";
 export class AppComponent {}
 
 @NgModule({
-    declarations: [AppComponent, BookmarksComponent, NavigationComponent, RepresentativesComponent, ComingSoonComponent, UserMenuComponent],
+    declarations: [
+        AppComponent,
+        BookmarksComponent,
+        NavigationComponent,
+        RepresentativesComponent,
+        ComingSoonComponent,
+        UserMenuComponent,
+    ],
     imports: [
         AppRoutingModule,
         BrowserAnimationsModule,

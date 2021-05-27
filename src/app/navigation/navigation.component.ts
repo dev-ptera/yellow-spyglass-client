@@ -82,9 +82,6 @@ export class NavigationComponent {
     private _listenForRouteChanges(): void {
         this.routeListener = this._router.events.subscribe((route) => {
             if (route instanceof NavigationEnd) {
-
-
-
                 switch (route.urlAfterRedirects.split('?')[0]) {
                     case `/${APP_NAV_ITEMS.search.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.search.title;
