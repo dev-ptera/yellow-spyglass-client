@@ -24,9 +24,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ExploreModule } from './pages/explore/explore.module';
-import { ComingSoonComponent } from './pages/coming-soon/coming-soon.component';
 import { BookmarksComponent } from '@app/pages/bookmarks/bookmarks.component';
 import { MatTableModule } from '@angular/material/table';
+import {ComingSoonComponent} from "@app/pages/coming-soon/coming-soon.component";
+import {RepresentativesComponent} from "@app/pages/representatives/representatives.component";
+import {MatSortModule} from "@angular/material/sort";
 
 @Component({
     selector: 'app-root',
@@ -35,7 +37,7 @@ import { MatTableModule } from '@angular/material/table';
 export class AppComponent {}
 
 @NgModule({
-    declarations: [AppComponent, BookmarksComponent, NavigationComponent, ComingSoonComponent, UserMenuComponent],
+    declarations: [AppComponent, BookmarksComponent, NavigationComponent, RepresentativesComponent, ComingSoonComponent, UserMenuComponent],
     imports: [
         AppRoutingModule,
         BrowserAnimationsModule,
@@ -59,6 +61,7 @@ export class AppComponent {}
         ReactiveFormsModule,
         UserMenuModule,
         MatTableModule,
+        MatSortModule,
     ],
     bootstrap: [AppComponent],
 })

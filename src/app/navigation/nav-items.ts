@@ -31,7 +31,7 @@ const networkNavItem: NavItem = {
 
 const representativesNavItem: NavItem = {
     title: 'Representatives',
-    route: 'coming-soon',
+    route: 'representatives',
     icon: 'how_to_vote',
 };
 
@@ -43,6 +43,7 @@ const nodeNavItem: NavItem = {
 
 export const APP_NAV_ITEMS = {
     search: searchNavItem,
+    representatives: representativesNavItem,
     page1: networkNavItem,
     page2: nodeNavItem,
 };

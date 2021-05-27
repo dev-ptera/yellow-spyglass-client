@@ -2,12 +2,14 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { APP_NAV_ITEMS } from './navigation/nav-items';
 import { ExploreComponent } from './pages/explore/explore.component';
-import { ComingSoonComponent } from './pages/coming-soon/coming-soon.component';
 import { BookmarksComponent } from '@app/pages/bookmarks/bookmarks.component';
+import {ComingSoonComponent} from "@app/pages/coming-soon/coming-soon.component";
+import {RepresentativesComponent} from "@app/pages/representatives/representatives.component";
 
 const routes: Routes = [
     { path: '', redirectTo: APP_NAV_ITEMS.search.route, pathMatch: 'full' },
     { path: APP_NAV_ITEMS.search.route, component: ExploreComponent },
+    { path: APP_NAV_ITEMS.representatives.route, component: RepresentativesComponent },
     { path: 'coming-soon', component: ComingSoonComponent },
     { path: 'bookmarks', component: BookmarksComponent },
 ];

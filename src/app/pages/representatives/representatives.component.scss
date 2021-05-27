@@ -1,0 +1,118 @@
+@import '~@pxblue/colors/palette';
+@import '~@pxblue/colors-branding/palette';
+:host {
+    display: flex;
+    flex: 1;
+}
+
+.representatives-title {
+    display: flex;
+    width: 100%;
+}
+
+.representatives-subtitle {
+    display: flex;
+    width: 100%;
+    text-align: left;
+}
+
+.representatives-root {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+    // TODO: move these paddings to a global style, shared
+    padding: 64px 64px 64px 64px;
+    &.md {
+      //  padding: 48px 48px 48px 48px; NOT GRID!
+    }
+    &.sm {
+        padding: 48px 20px 48px 20px;
+    }
+}
+
+.representatives-monitored-header {
+    margin-top: 48px;
+}
+.representatives-monitored-subtitle {
+    margin-bottom: 16px!important;
+}
+
+.representatives-all-header {
+    margin-top: 72px;
+}
+.representatives-all-subtitle {
+    margin-bottom: 16px!important;
+}
+
+
+.representatives-monitored-list {
+    width: 100%;
+    background-color: white;
+    .representatives-monitored-tags {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-top: -8px;
+        padding: 0 12px 8px 16px;
+        .pxb-list-item-tag {
+            margin-top: 4px;
+            margin-right: 4px;
+        }
+        .version {
+            color: map-get($pxb-gold, 500);
+            background-color: unset;
+            border: solid 1px map-get($pxb-gold, 500);
+        }
+        .weight {
+            color: map-get($brand-navy, 500);
+            background-color: unset;
+            border: solid 1px map-get($brand-navy, 500);
+        }
+        .delegators-count {
+            color: map-get($pxb-green, 500);
+            background-color: unset;
+            border: solid 1px map-get($pxb-green, 500);
+        }
+        .unchecked {
+            color: map-get($pxb-red, 900);
+            background-color: unset;
+            border: solid 1px map-get($pxb-red, 900);
+        }
+    }
+    .mat-list-item-content {
+        padding-bottom: 0!important;
+    }
+}
+
+.representatives-address-cell {
+    word-break: break-all;
+    cursor: pointer;
+    padding: 4px 16px 4px 16px!important;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+.representatives-weight-cell {
+    padding: 4px 8px 4px 0px!important;
+}
+
+.representatives-name-cell {
+    word-break: break-all;
+}
+
+.monitored-reps-table {
+    width: 100%;
+    * {
+        font-size: 15px!important;
+    }
+    &.md * {
+        font-size: 13px!important;
+    }
+
+}
+
+th.mat-sort-header-sorted {
+    color: black;
+}

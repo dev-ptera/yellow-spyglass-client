@@ -82,6 +82,9 @@ export class NavigationComponent {
     private _listenForRouteChanges(): void {
         this.routeListener = this._router.events.subscribe((route) => {
             if (route instanceof NavigationEnd) {
+
+
+
                 switch (route.urlAfterRedirects.split('?')[0]) {
                     case `/${APP_NAV_ITEMS.search.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.search.title;
@@ -91,6 +94,11 @@ export class NavigationComponent {
                     case `/${APP_NAV_ITEMS.page1.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.page1.title;
                         this._stateService.setSelectedItem(APP_NAV_ITEMS.page1.title);
+                        break;
+                    }
+                    case `/${APP_NAV_ITEMS.representatives.route}`: {
+                        this.toolbarTitle = APP_NAV_ITEMS.representatives.title;
+                        this._stateService.setSelectedItem(APP_NAV_ITEMS.representatives.title);
                         break;
                     }
                     case `/${APP_NAV_ITEMS.page2.route}`: {
