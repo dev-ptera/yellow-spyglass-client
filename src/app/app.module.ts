@@ -30,6 +30,8 @@ import { ComingSoonComponent } from '@app/pages/coming-soon/coming-soon.componen
 import { RepresentativesComponent } from '@app/pages/representatives/representatives.component';
 import { MatSortModule } from '@angular/material/sort';
 
+import { HighchartsChartModule } from 'highcharts-angular';
+
 @Component({
     selector: 'app-root',
     template: `<app-navigation></app-navigation>`,
@@ -69,6 +71,7 @@ export class AppComponent {}
         UserMenuModule,
         MatTableModule,
         MatSortModule,
+        HighchartsChartModule,
     ],
     bootstrap: [AppComponent],
 })

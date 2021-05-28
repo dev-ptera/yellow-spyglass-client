@@ -8,6 +8,7 @@
 .representatives-title {
     display: flex;
     width: 100%;
+    text-align: left;
 }
 
 .representatives-subtitle {
@@ -20,6 +21,8 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    text-align: left;
     width: 100%;
     box-sizing: border-box;
     // TODO: move these paddings to a global style, shared
@@ -29,6 +32,23 @@
     }
     &.sm {
         padding: 48px 20px 48px 20px;
+    }
+}
+
+.representatives-content {
+    width: 100%;
+    max-width: 1200px;
+}
+
+.representatives-chart {
+    margin: 0;
+    margin-top: 24px;
+    display: flex;
+    justify-content: left;
+    &.md,
+    &.sm {
+        margin-top: 0;
+        justify-content: center;
     }
 }
 
@@ -85,29 +105,41 @@
     }
 }
 
+.representatives-name-cell {
+    font-weight: 600;
+    word-break: break-word;
+    color: map-get($pxb-green, 900) !important;
+}
 .representatives-address-cell {
     word-break: break-all;
-    cursor: pointer;
     padding: 4px 16px 4px 16px !important;
-    &:hover {
-        text-decoration: underline;
-    }
 }
 .representatives-weight-cell {
     padding: 4px 8px 4px 0px !important;
 }
 
-.representatives-name-cell {
-    word-break: break-all;
+.representatives-clickable-cell {
+    cursor: pointer;
+    text-decoration: underline;
 }
 
-.monitored-reps-table {
+.monitored-reps-table,
+.all-reps-table {
     width: 100%;
     * {
         font-size: 15px !important;
     }
     &.md * {
         font-size: 13px !important;
+    }
+    .online .mat-cell {
+        color: map-get($pxb-green, 900);
+    }
+    .offline .mat-cell {
+        color: map-get($pxb-red, 900);
+    }
+    .uncheckedBlocks {
+        color: map-get($pxb-red, 900);
     }
 }
 

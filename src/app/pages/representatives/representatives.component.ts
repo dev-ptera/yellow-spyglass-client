@@ -6,6 +6,8 @@ import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import * as Highcharts from 'highcharts';
+import { Options } from 'highcharts';
 
 @Component({
     selector: 'app-representatives',
@@ -14,6 +16,7 @@ import { MatSort } from '@angular/material/sort';
     encapsulation: ViewEncapsulation.None,
 })
 export class RepresentativesComponent implements OnInit {
+    Highcharts: typeof Highcharts = Highcharts;
     loading = true;
     error = false;
 
@@ -21,6 +24,9 @@ export class RepresentativesComponent implements OnInit {
     representatives: RepresentativeDto[] = [];
     monitoredReps: MonitoredRepDto[] = [];
 
+    repsChart: Options;
+
+    allRepsDataSource;
     monitoredRepsDataSource;
     monitoredRepDisplayColumns = [
         'name',
@@ -31,8 +37,7 @@ export class RepresentativesComponent implements OnInit {
         'peers',
         'uncheckedBlocks',
     ];
-    allRepsDataSource;
-    allRepsDisplayColumns = ['address', 'delegatorsCount', 'weight', 'online'];
+    allRepsDisplayColumns = ['position', 'address', 'weight', 'weightPercent', 'online', 'delegatorsCount'];
 
     @ViewChild('sortAll') sortAll: MatSort;
     @ViewChild('sortMonitored') sortMonitored: MatSort;
@@ -43,7 +48,13 @@ export class RepresentativesComponent implements OnInit {
         private readonly _searchService: SearchService,
         private readonly _ref: ChangeDetectorRef,
         private readonly _api: ApiService
-    ) {}
+    ) {
+        this.vp.vpChange.subscribe(() => {
+            setTimeout(() => {
+                window.dispatchEvent(new Event('resize'));
+            });
+        });
+    }
 
     ngOnInit(): void {
         this._api
@@ -52,6 +63,7 @@ export class RepresentativesComponent implements OnInit {
                 this.representatives = data.representatives;
                 this.monitoredReps = data.monitoredReps;
                 this.onlineWeight = data.onlineWeight;
+                this.repsChart = this._createRepChart(this.representatives);
                 this.loading = false;
                 this.configureTables();
             })
@@ -71,23 +83,96 @@ export class RepresentativesComponent implements OnInit {
         this.allRepsDataSource.sort = this.sortAll;
     }
 
-    routeRepAddress(rep: MonitoredRepDto) {
-        this._searchService.emitSearch(rep.address);
-    }
-
     formatDelegatorsCount(count: number): string {
         return `${this._util.numberWithCommas(count)}`;
     }
 
-    formatPercent(weight: number): string {
+    formatWeightPercent(weight: number): string {
         return ((weight / this.onlineWeight) * 100).toFixed(3).replace(/\.?0+$/, '') + '%';
     }
 
     formatTableAddress(addr: string): string {
-        return `${addr.substr(0, 12)}...${addr.substr(addr.length - 6, addr.length)}`;
+        return `${addr.substr(0, 12)}...${this.vp.md ? '' : addr.substr(addr.length - 6, addr.length)}`;
+    }
+
+    formatBanWeight(weight: number): string {
+        return this._util.numberWithCommas(Math.round(weight));
     }
 
     trackByFn(index) {
         return index;
+    }
+
+    _createRepChart(reps: RepresentativeDto[]): Options {
+        const data = () => {
+            let allOthersWeight = this.onlineWeight;
+            const MAX_REPS = 5;
+            const shownReps = [];
+            let i = 1;
+            for (let rep of reps) {
+                if (i++ > MAX_REPS) {
+                    shownReps.push({
+                        name: 'All other reps',
+                        y: allOthersWeight,
+                    });
+                    return shownReps;
+                }
+                shownReps.push({
+                    name: this.formatChartAddress(rep.address),
+                    y: rep.weight,
+                });
+                allOthersWeight -= rep.weight;
+            }
+        };
+        return {
+            chart: {
+                backgroundColor: 'rgba(0,0,0,0)',
+            },
+            tooltip: {
+                enabled: false,
+            },
+            credits: {
+                enabled: false,
+            },
+            title: {
+                text: '',
+            },
+            plotOptions: {
+                pie: {
+                    showInLegend: false,
+                },
+            },
+            series: [
+                {
+                    name: 'Representatives',
+                    type: 'pie',
+                    colors: ['#FBDD11', '#1fb32e', '#eead4a', '#6eee99', '#ee4ac5', '#7F6CD9'],
+                    data: data(),
+                    dataLabels: {
+                        enabled: true,
+                        distance: this.vp.sm ? 10 : 20,
+                        style: {
+                            fontSize: this.vp.sm ? '12px' : '16px',
+                            fontWeight: '400',
+                            fontFamily: 'Open Sans',
+                            color: '#424e54',
+                        },
+                        format: '{point.name}<br/><strong>{point.percentage:.1f}%</strong>',
+                    },
+                },
+            ],
+        };
+    }
+
+    formatChartAddress(addr: string): string {
+        return `${addr.substr(0, 11)}...`;
+    }
+
+    openMonitoredRep(ip: string): void {
+        window.open(`http://${ip}`, '_blank');
+    }
+
+    routeRepAddress(rep: MonitoredRepDto) {
+        this._searchService.emitSearch(rep.address);
     }
 }
