@@ -46,20 +46,17 @@
         .height {
             font-size: 12px;
             background-color: unset;
-            color: map-get($pxb-black, 500);
-            border: solid 1px map-get($pxb-black, 500);
             font-weight: 600;
             margin-right: 8px;
         }
     }
     .pxb-info-list-item .pxb-info-list-item-subtitle-wrapper {
         font-size: 0.75rem;
-        color: map-get($pxb-black, 300);
     }
     .pxb-info-list-item-icon-wrapper > * {
-        height: 5rem !important;
-        width: 5rem !important;
-        font-size: 5rem !important;
+        height: 6rem !important;
+        width: 6rem !important;
+        font-size: 6rem !important;
     }
     .pxb-info-list-item-icon-wrapper {
         max-width: unset !important;

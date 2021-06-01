@@ -16,7 +16,7 @@ import { SearchService } from '@app/services/search/search.service';
                 [wrapTitle]="true"
                 [wrapSubtitle]="false"
                 [hidePadding]="true"
-                style="background-color: #fdfdfd; position: relative"
+                style="position: relative"
             >
                 <div class="large-monkey-wrapper" pxb-icon>
                     <div

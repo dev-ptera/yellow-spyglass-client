@@ -41,7 +41,14 @@ const nodeNavItem: NavItem = {
     icon: 'router',
 };
 
+const bookmarksNavItem: NavItem = {
+    title: 'Bookmarks',
+    route: 'bookmarks',
+    icon: 'bookmarks',
+};
+
 export const APP_NAV_ITEMS = {
+    bookmarks: bookmarksNavItem,
     search: searchNavItem,
     representatives: representativesNavItem,
     page1: networkNavItem,

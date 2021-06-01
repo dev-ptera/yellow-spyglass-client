@@ -1,0 +1,44 @@
+@import '~@pxblue/colors/palette';
+@import '~@angular/material/_theming.scss';
+
+$material-theme-primary: mat-palette($pxb-green, 800);
+$material-theme-accent: mat-palette($pxb-blue);
+$material-theme-warn: mat-palette($mat-deep-orange, A200);
+$dark-theme: map-merge(
+    mat-dark-theme($material-theme-primary, $material-theme-accent, $material-theme-warn),
+    (
+        foreground: (
+            text: map-get($pxb-black, 50),
+            secondary-text: map-get($pxb-black, 200),
+            hint-text: map-get($pxb-black, 200),
+            base: map-get($pxb-white, 50),
+            divider: rgba(map-get($pxb-black, 200), 0.36),
+            dividers: rgba(map-get($pxb-black, 200), 0.36),
+            disabled: rgba(map-get($pxb-black, 300), 0.36),
+            disabled-button: rgba(white, 0.3),
+            disabled-text: rgba(map-get($pxb-black, 300), 0.36),
+            elevation: map-get($pxb-darkBlack, 900),
+            icon: map-get($pxb-black, 50),
+            icons: map-get($pxb-black, 50),
+            slider-min: map-get($pxb-black, 50),
+            slider-off: rgba(white, 0.3),
+            slider-off-active: rgba(white, 0.3),
+        ),
+        background: (
+            status-bar: map-get($pxb-darkBlack, 900),
+            app-bar: map-get($pxb-darkBlack, 100),
+            background: map-get($pxb-darkBlack, 100),
+            hover: rgba(white, 0.04),
+            card: map-get($pxb-black, 900),
+            dialog: map-get($pxb-black, 900),
+            disabled-button: rgba(white, 0.12),
+            raised-button: map-get($pxb-black, 500),
+            focused-button: $light-focused,
+            selected-button: map_get($mat-grey, 900),
+            selected-disabled-button: map_get($mat-grey, 800),
+            disabled-button-toggle: black,
+            unselected-chip: map_get($mat-grey, 700),
+            disabled-list-option: black,
+        ),
+    )
+);

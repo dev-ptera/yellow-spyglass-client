@@ -1,0 +1,49 @@
+@mixin common($theme) {
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+
+    .mat-form-field {
+        line-height: 1.5 !important;
+    }
+
+    // Drawer
+    .pxb-drawer .pxb-drawer-nav-item-active-highlight {
+        background-color: #2bff0024 !important;
+    }
+
+    // hash.component.ts
+    .hash-searched {
+        color: map-get($foreground, secondary-text);
+    }
+    .hash-section {
+        .mat-subheading-2 {
+            color: map-get($foreground, secondary-text);
+        }
+        .hash-description {
+            font-size: 12px;
+            color: map-get($foreground, hint-text);
+        }
+    }
+
+    // explore.component.ts
+    .explore-root {
+        .mat-subheading-2 {
+            color: map-get($foreground, secondary-text);
+        }
+        .account-representative {
+            color: map-get($foreground, hint-text);
+        }
+        .pxb-info-list-item {
+            .pxb-info-list-item-subtitle-wrapper {
+                color: map-get($foreground, secondary-text);
+            }
+            .to-from {
+                color: map-get($foreground, hint-text);
+            }
+            .height {
+                color: map-get($foreground, hint-text);
+                border: solid 1px map-get($foreground, hint-text);
+            }
+        }
+    }
+}

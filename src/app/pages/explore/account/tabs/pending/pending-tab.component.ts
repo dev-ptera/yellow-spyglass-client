@@ -1,12 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    EventEmitter,
-    Input,
-    Output,
-    TemplateRef,
-    ViewEncapsulation,
-} from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { PendingTransaction } from '@app/types/modal/PendingTransactionDto';
 import { MonkeyCacheService } from '@app/services/monkey-cache/monkey-cache.service';
 import { SearchService } from '@app/services/search/search.service';

@@ -31,6 +31,8 @@ import { RepresentativesComponent } from '@app/pages/representatives/representat
 import { MatSortModule } from '@angular/material/sort';
 
 import { HighchartsChartModule } from 'highcharts-angular';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
     selector: 'app-root',
@@ -71,6 +73,8 @@ export class AppComponent {}
         UserMenuModule,
         MatTableModule,
         MatSortModule,
+        MatSlideToggleModule,
+        MatExpansionModule,
         HighchartsChartModule,
     ],
     bootstrap: [AppComponent],

@@ -1277,17 +1277,17 @@
     node-gyp "^7.1.0"
     read-package-json-fast "^2.0.1"
 
-"@pxblue/angular-components@^4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@pxblue/angular-components/-/angular-components-4.3.0.tgz#34e80485888becb02e56d3e41a90a8818d2d6be0"
-  integrity sha512-5evW0l7qA/9YT12A0FCc7IwL3DpOLF37rgwbuMmzK94fIXIzJ+WGWOYmQSCevzTK9i//r+3yAz4Jk2TDYQjiRg==
+"@pxblue/angular-components@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@pxblue/angular-components/-/angular-components-4.4.0.tgz#4bc0ce09b8996a6fd67923912d27483e8936c990"
+  integrity sha512-O8zZLcg7LlJTweeBoqdJ3+m8moRUeUpMONbf3dDOjr+iBVy2EurzgnvQyG92gxSpa7EWMtrGHMbb/2dbNYZyZQ==
   dependencies:
     tslib "^2.0.0"
 
-"@pxblue/angular-themes@^6.0.3":
-  version "6.0.3"
-  resolved "https://registry.yarnpkg.com/@pxblue/angular-themes/-/angular-themes-6.0.3.tgz#e502219dacaf0973bb2211277dfcf119fb40ebd6"
-  integrity sha512-yNjhRQZCRQI9n1a3mz81e75A5iv6NHesg0xhzONEI7Ondfgzj54ZZHiqs4n+IS2gNjKojNHZBmgGmJS+yeowIw==
+"@pxblue/angular-themes@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@pxblue/angular-themes/-/angular-themes-6.1.0.tgz#2ad747c948d0b62781238e3445c4f34c88223613"
+  integrity sha512-K0o5V6wRYjH7a+PfmHDKRGteqoYp3In9NVzLtIRZ2g7j9FQFs97bj2ZbcsxSVdBf+85mdKZwsPUYhz0Bzv46Tg==
   dependencies:
     "@fontsource/open-sans" "^4.1.0"
     "@pxblue/colors" "^3.0.0"

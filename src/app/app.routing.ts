@@ -10,8 +10,8 @@ const routes: Routes = [
     { path: '', redirectTo: APP_NAV_ITEMS.search.route, pathMatch: 'full' },
     { path: APP_NAV_ITEMS.search.route, component: ExploreComponent },
     { path: APP_NAV_ITEMS.representatives.route, component: RepresentativesComponent },
+    { path: APP_NAV_ITEMS.bookmarks.route, component: BookmarksComponent },
     { path: 'coming-soon', component: ComingSoonComponent },
-    { path: 'bookmarks', component: BookmarksComponent },
 ];
 @NgModule({
     imports: [RouterModule.forRoot(routes)],

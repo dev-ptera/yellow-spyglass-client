@@ -25,26 +25,32 @@
                 ></highcharts-chart>
             </div>
 
-            <div class="mat-headline representatives-monitored-header">Monitored Representatives</div>
+            <div class="mat-headline representatives-monitored-header">
+                Monitored Representatives ({{ monitoredReps.length }})
+            </div>
             <div class="mat-subheading-2 representatives-monitored-subtitle">
                 Online representatives that use the Nano Node Monitor tool are shown in the list below.
             </div>
-            <mat-list *ngIf="vp.sm" class="representatives-monitored-list">
+            <mat-list [style.paddingTop.px]="0" *ngIf="vp.sm" class="representatives-monitored-list">
                 <div *ngFor="let rep of monitoredReps; trackBy: trackByFn">
                     <pxb-info-list-item [hidePadding]="true" [dense]="false" [divider]="false">
                         <div pxb-title>
-                            <a [href]="'http://' + rep.ip" target="_blank">{{ rep.name }}</a>
+                            <span class="link" (click)="openMonitoredRep(rep.ip)">{{ rep.name }}</span>
                         </div>
                         <div pxb-subtitle (click)="routeRepAddress(rep)">{{ rep.address }}</div>
                         <div pxb-right-content></div>
                     </pxb-info-list-item>
                     <div class="representatives-monitored-tags" responsive>
+                        <pxb-list-item-tag
+                            class="weight"
+                            [label]="formatBanWeight(rep.weight) + ' BAN'"
+                        ></pxb-list-item-tag>
                         <pxb-list-item-tag class="version" [label]="rep.version"></pxb-list-item-tag>
                         <pxb-list-item-tag
                             class="delegators-count"
                             [label]="formatDelegatorsCount(rep.delegatorsCount) + ' Delegators'"
                         ></pxb-list-item-tag>
-                        <pxb-list-item-tag class="weight" [label]="formatWeightPercent(rep.weight)"></pxb-list-item-tag>
+                        <pxb-list-item-tag class="peers" [label]="rep.peers + ' peers'"></pxb-list-item-tag>
                         <pxb-list-item-tag
                             class="unchecked"
                             *ngIf="rep.uncheckedBlocks"
@@ -96,7 +102,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="weight">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Weight</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Weight (BAN)</th>
                     <td class="representatives-weight-cell" mat-cell *matCellDef="let element">
                         {{ formatBanWeight(element.weight) }} ({{ formatWeightPercent(element.weight) }})
                     </td>
@@ -123,7 +129,9 @@
                 <tr mat-row *matRowDef="let row; columns: monitoredRepDisplayColumns"></tr>
             </table>
 
-            <div class="mat-headline representatives-all-header">All Representatives</div>
+            <div class="mat-headline representatives-all-header">
+                All Representatives ({{ representatives.length }})
+            </div>
             <div class="mat-subheading-2 representatives-all-subtitle">
                 List of representatives with at least 100,000 BANANO weight delegators towards them.
             </div>
@@ -185,16 +193,10 @@
                 </ng-container>
 
                 <ng-container matColumnDef="weight">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Weight BAN</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Weight (BAN))</th>
                     <td class="representatives-weight-cell" mat-cell *matCellDef="let element">
                         {{ formatBanWeight(element.weight) }}
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="weightPercent">
-                    <th mat-header-cell *matHeaderCellDef>Weight %</th>
-                    <td class="representatives-weight-cell" mat-cell *matCellDef="let element">
-                        {{ formatWeightPercent(element.weight) }}
+                        ({{ formatWeightPercent(element.weight) }})
                     </td>
                 </ng-container>
 

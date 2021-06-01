@@ -1,0 +1,51 @@
+@import '~@angular/material/_theming.scss';
+
+$custom-typography: mat-typography-config(
+    $font-family: '"Open Sans", Arial, Helvetica, sans-serif;',
+    $display-4: mat-typography-level(6rem, 1.167, 300),
+    $display-3: mat-typography-level(3.75rem, 1.2, 300),
+    $display-2: mat-typography-level(3rem, 1.167, 400),
+    $display-1: mat-typography-level(2.125rem, 1.235, 400),
+    $headline: mat-typography-level(1.5rem, 1.334, 400),
+    $title: mat-typography-level(1.25rem, 1.6, 600),
+    $subheading-2: mat-typography-level(1rem, 1.75, 400),
+    $subheading-1: mat-typography-level(0.875rem, 1.57, 600),
+    $body-2: mat-typography-level(0.875rem, 1.43, 500),
+    $body-1: mat-typography-level(1rem, 1.5, 400),
+    $caption: mat-typography-level(0.75rem, 1.66, 400),
+    $button: mat-typography-level(0.875rem, 1, 600),
+    $input: mat-typography-level(inherit, 1.125, 400),
+);
+
+.mat-display-4,
+.mat-display-3,
+.mat-display-2 {
+    letter-spacing: 0;
+}
+
+.mat-display-4,
+.mat-display-3,
+.mat-display-2,
+.mat-display-1,
+.mat-headline,
+.mat-title,
+.mat-subheading-1,
+.mat-subheading-2,
+.mat-body-1,
+.mat-body-2,
+.mat-caption,
+.mat-button {
+    margin-bottom: 0;
+}
+
+.mat-body-2 {
+    font-weight: 600;
+}
+
+.mat-overline {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.125rem;
+    line-height: 2.66;
+    text-transform: uppercase;
+}

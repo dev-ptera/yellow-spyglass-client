@@ -37,7 +37,7 @@ export class RepresentativesComponent implements OnInit {
         'peers',
         'uncheckedBlocks',
     ];
-    allRepsDisplayColumns = ['position', 'address', 'weight', 'weightPercent', 'online', 'delegatorsCount'];
+    allRepsDisplayColumns = ['position', 'address', 'weight', 'online', 'delegatorsCount'];
 
     @ViewChild('sortAll') sortAll: MatSort;
     @ViewChild('sortMonitored') sortMonitored: MatSort;
@@ -104,25 +104,40 @@ export class RepresentativesComponent implements OnInit {
     }
 
     _createRepChart(reps: RepresentativeDto[]): Options {
-        const data = () => {
+        const onlineReps = () => {
             let allOthersWeight = this.onlineWeight;
             const MAX_REPS = 5;
             const shownReps = [];
-            let i = 1;
-            for (let rep of reps) {
-                if (i++ > MAX_REPS) {
-                    shownReps.push({
-                        name: 'All other reps',
-                        y: allOthersWeight,
-                    });
-                    return shownReps;
+
+            // Get Largest Reps
+            for (const rep of reps) {
+                if (!rep.online) {
+                    continue;
                 }
-                shownReps.push({
-                    name: this.formatChartAddress(rep.address),
-                    y: rep.weight,
-                });
+                if (shownReps.length < MAX_REPS) {
+                    shownReps.push({
+                        name: this.formatChartAddress(rep.address),
+                        y: rep.weight,
+                    });
+                }
+            }
+
+            // Calculate all other reps weight
+            let i = 1;
+            for (const rep of reps) {
+                if (!rep.online) {
+                    continue;
+                }
+                if (i++ >= shownReps.length) {
+                    break;
+                }
                 allOthersWeight -= rep.weight;
             }
+            shownReps.push({
+                name: 'Other Reps',
+                y: allOthersWeight,
+            });
+            return shownReps;
         };
         return {
             chart: {
@@ -147,7 +162,7 @@ export class RepresentativesComponent implements OnInit {
                     name: 'Representatives',
                     type: 'pie',
                     colors: ['#FBDD11', '#1fb32e', '#eead4a', '#6eee99', '#ee4ac5', '#7F6CD9'],
-                    data: data(),
+                    data: onlineReps(),
                     dataLabels: {
                         enabled: true,
                         distance: this.vp.sm ? 10 : 20,
