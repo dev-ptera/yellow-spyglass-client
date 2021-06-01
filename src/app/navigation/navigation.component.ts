@@ -6,6 +6,7 @@ import { ViewportService } from '../services/viewport/viewport.service';
 import { DrawerStateService } from '../services/drawer-state/drawer-state.service';
 import { APP_NAV_ITEMS, NavItem, EXPLORER_NAV_GROUP, NETWORK_NAV_GROUP } from './nav-items';
 import { SearchService } from '@app/services/search/search.service';
+import {ThemeService} from "@app/services/theme/theme.service";
 
 @Component({
     selector: 'app-navigation',
@@ -16,15 +17,17 @@ export class NavigationComponent {
     toolbarTitle: string;
     routeListener: Subscription;
     variant: DrawerLayoutVariantType;
+
+    navItems = APP_NAV_ITEMS;
     explorerNavGroup = EXPLORER_NAV_GROUP;
     networkNavGroup = NETWORK_NAV_GROUP;
-    searchValue: string;
 
     constructor(
         private readonly _router: Router,
         private readonly _searchService: SearchService,
         private readonly _viewportService: ViewportService,
-        private readonly _stateService: DrawerStateService
+        private readonly _stateService: DrawerStateService,
+        public themeService: ThemeService
     ) {
         this._listenForRouteChanges();
     }
@@ -103,6 +106,11 @@ export class NavigationComponent {
                         this._stateService.setSelectedItem(APP_NAV_ITEMS.page2.title);
                         break;
                     }
+                    case `/${APP_NAV_ITEMS.bookmarks.route}`: {
+                        this.toolbarTitle = APP_NAV_ITEMS.bookmarks.title;
+                        this._stateService.setSelectedItem(undefined);
+                        break;
+                    }
                     default: {
                         this.toolbarTitle = '';
                     }
@@ -119,5 +127,10 @@ export class NavigationComponent {
         }
         this.variant = this.isSmall() ? 'temporary' : 'persistent';
         return this.variant;
+    }
+
+
+    toggleTheme(): void {
+        this.themeService.setTheme(!this.themeService.isLightMode());
     }
 }

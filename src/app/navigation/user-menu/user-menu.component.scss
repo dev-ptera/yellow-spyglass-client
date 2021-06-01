@@ -1,6 +1,0 @@
-@import '~@pxblue/colors/palette';
-
-::ng-deep .pxb-user-menu-avatar {
-    background-color: unset !important;
-    color: map-get($pxb-white, 50) !important;
-}

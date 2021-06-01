@@ -50,7 +50,14 @@
             </button>
             <div responsive class="navigation-toolbar-title">{{ toolbarTitle }}</div>
             <pxb-spacer></pxb-spacer>
-            <app-user-menu></app-user-menu>
+            <button mat-icon-button [style.marginRight.px]="8" style="color: white"
+                    (click)="navigate(navItems.bookmarks.route)">
+                <mat-icon>bookmarks</mat-icon>
+            </button>
+            <button mat-icon-button (click)="toggleTheme()" style="color: white">
+                <mat-icon *ngIf="themeService.isLightMode()">dark_mode</mat-icon>
+                <mat-icon *ngIf="!themeService.isLightMode()">light_mode</mat-icon>
+            </button>
         </div>
         <router-outlet></router-outlet>
     </div>

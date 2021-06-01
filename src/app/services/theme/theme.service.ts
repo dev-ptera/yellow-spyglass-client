@@ -26,9 +26,11 @@ export class ThemeService {
         if (this.lightMode) {
             document.body.classList.remove('dark');
             document.body.classList.add('light');
+            localStorage.setItem(this.themeLocalStorageId, 'light');
         } else {
             document.body.classList.add('dark');
             document.body.classList.remove('light');
+            localStorage.setItem(this.themeLocalStorageId, 'dark');
         }
     }
 }
