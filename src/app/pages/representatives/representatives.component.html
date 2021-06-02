@@ -32,33 +32,21 @@
                 Online representatives that use the Nano Node Monitor tool are shown in the list below.
             </div>
             <mat-list [style.paddingTop.px]="0" *ngIf="vp.sm" class="representatives-monitored-list">
-                <div *ngFor="let rep of monitoredReps; trackBy: trackByFn">
-                    <pxb-info-list-item [hidePadding]="true" [dense]="false" [divider]="false">
-                        <div pxb-title>
-                            <span class="link" (click)="openMonitoredRep(rep.ip)">{{ rep.name }}</span>
-                        </div>
-                        <div pxb-subtitle (click)="routeRepAddress(rep)">{{ rep.address }}</div>
-                        <div pxb-right-content></div>
-                    </pxb-info-list-item>
-                    <div class="representatives-monitored-tags" responsive>
-                        <pxb-list-item-tag
-                            class="weight"
-                            [label]="formatBanWeight(rep.weight) + ' BAN'"
-                        ></pxb-list-item-tag>
-                        <pxb-list-item-tag class="version" [label]="rep.version"></pxb-list-item-tag>
-                        <pxb-list-item-tag
-                            class="delegators-count"
-                            [label]="numberWithCommas(rep.delegatorsCount) + ' Delegators'"
-                        ></pxb-list-item-tag>
-                        <pxb-list-item-tag class="peers" [label]="rep.peers + ' peers'"></pxb-list-item-tag>
-                        <pxb-list-item-tag
-                            class="unchecked"
-                            *ngIf="rep.uncheckedBlocks"
-                            label="Unchecked Blocks"
-                        ></pxb-list-item-tag>
+                <pxb-info-list-item
+                    *ngFor="let rep of monitoredReps; trackBy: trackByFn"
+                    [hidePadding]="true"
+                    [dense]="false"
+                    [wrapSubtitle]="true"
+                    [divider]="true"
+                >
+                    <div pxb-title>
+                        <span class="link" (click)="openMonitoredRep(rep.ip)">{{ rep.name }}</span>
                     </div>
-                    <mat-divider></mat-divider>
-                </div>
+                    <div pxb-info style="font-size: 0.875rem" class="link" (click)="routeRepAddress(rep)">
+                        {{ formatListAddress(rep.address) }}
+                    </div>
+                    <div pxb-subtitle style="font-size: 0.875rem">{{ formatInfoLine(rep) }}</div>
+                </pxb-info-list-item>
             </mat-list>
 
             <table
@@ -133,7 +121,7 @@
                 All Representatives ({{ representatives.length }})
             </div>
             <div class="mat-subheading-2 representatives-all-subtitle">
-                List of representatives with at least 100,000 BANANO weight delegators towards them.
+                List of representatives with at least 100,000 BANANO weight delegated towards them.
             </div>
             <mat-list *ngIf="vp.sm" class="representatives-all-list">
                 <div *ngFor="let rep of representatives; let i = index; trackBy: trackByFn">
@@ -141,13 +129,18 @@
                         <div pxb-left-content>
                             <span [style.width.px]="40">#{{ i }}</span>
                         </div>
-                        <div pxb-title (click)="routeRepAddress(rep)">{{ rep.address }}</div>
-                        <div pxb-subtitle>{{ rep.weight }} BANANO</div>
-                        <div pxb-right-content>
-                            <pxb-list-item-tag
-                                class="delegators-count"
-                                [label]="numberWithCommas(rep.delegatorsCount) + ' Delegators'"
-                            ></pxb-list-item-tag>
+                        <div
+                            pxb-title
+                            class="link"
+                            [class.offline]="!rep.online"
+                            [class.online]="rep.online"
+                            (click)="routeRepAddress(rep)"
+                        >
+                            {{ formatListAddress(rep.address) }}
+                        </div>
+                        <div pxb-subtitle>
+                            {{ numberWithCommas(rep.weight) }} BAN ·
+                            {{ numberWithCommas(rep.delegatorsCount) }} delegators
                         </div>
                     </pxb-info-list-item>
                     <mat-divider></mat-divider>

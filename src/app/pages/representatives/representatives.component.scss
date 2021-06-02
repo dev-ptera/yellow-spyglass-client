@@ -69,13 +69,25 @@ $peer-link-color: map-get($pxb-green, 900);
     margin-bottom: 16px !important;
 }
 
-.representatives-monitored-list {
-    width: 100%;
-    background-color: white;
-    .pxb-info-list-item-title-wrapper .link {
-        color: $peer-link-color;
+.representatives-monitored-list,
+.representatives-all-list {
+    .mat-list-item-content {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .pxb-info-list-item .link {
         text-decoration: underline;
         cursor: pointer;
+    }
+}
+
+.representatives-monitored-list {
+    width: 100%;
+
+    .pxb-info-list-item-info-wrapper * {
+        text-overflow: unset !important;
+        white-space: pre-wrap !important;
     }
 
     .representatives-monitored-tags {
@@ -112,9 +124,6 @@ $peer-link-color: map-get($pxb-green, 900);
             background-color: unset;
             border: solid 1px map-get($pxb-red, 900);
         }
-    }
-    .mat-list-item-content {
-        padding-bottom: 0 !important;
     }
 }
 

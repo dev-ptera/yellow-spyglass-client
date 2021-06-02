@@ -47,20 +47,31 @@ $lightForeground: map-get($light-theme, foreground);
 
 // representatives.component.ts
 .monitored-reps-table .unchecked-blocks {
-  color: map-get($pxb-red, 900);
+    color: map-get($pxb-red, 900);
 }
 .all-reps-table {
-  .offline .mat-cell {
-    color: map-get($pxb-red, 900);
-  }
-  .online .mat-cell {
+    .offline .mat-cell {
+        color: map-get($pxb-red, 900);
+    }
+    .online .mat-cell {
+        color: map-get($pxb-green, 900);
+    }
+}
+.representatives-monitored-list .pxb-info-list-item-title-wrapper .link {
     color: map-get($pxb-green, 900);
-  }
 }
 .representatives-name-cell {
-  color: map-get($pxb-green, 900) !important;
+    color: map-get($pxb-green, 900) !important;
+}
+.representatives-all-list {
+    .online {
+        color: map-get($pxb-green, 900) !important;
+    }
+    .offline {
+        color: map-get($pxb-red, 900);
+    }
 }
 .highcharts-label.highcharts-data-label text[style] {
-  color: map-get($lightForeground, text) !important;
-  fill: map-get($lightForeground, text) !important;
+    color: map-get($lightForeground, text) !important;
+    fill: map-get($lightForeground, text) !important;
 }

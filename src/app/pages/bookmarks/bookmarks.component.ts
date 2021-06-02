@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Bookmark } from '@app/types/modal';
 import { BookmarksService } from '@app/services/bookmarks/bookmarks.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';

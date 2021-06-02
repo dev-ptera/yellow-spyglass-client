@@ -46,4 +46,11 @@
             }
         }
     }
+
+    // representatives.component.ts
+    .representatives-root {
+        .mat-subheading-2 {
+            color: map-get($foreground, secondary-text);
+        }
+    }
 }

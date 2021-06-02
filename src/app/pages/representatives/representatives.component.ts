@@ -95,6 +95,10 @@ export class RepresentativesComponent implements OnInit {
         return `${addr.substr(0, 12)}...${this.vp.md ? '' : addr.substr(addr.length - 6, addr.length)}`;
     }
 
+    formatListAddress(addr: string): string {
+        return `${addr.substr(0, 12)}...${addr.substr(addr.length - 6, addr.length)}`;
+    }
+
     formatBanWeight(weight: number): string {
         return this._util.numberWithCommas(Math.round(weight));
     }
@@ -170,7 +174,7 @@ export class RepresentativesComponent implements OnInit {
                             fontSize: this.vp.sm ? '12px' : '16px',
                             fontWeight: '400',
                             fontFamily: 'Open Sans',
-                            textOutline: 'none'
+                            textOutline: 'none',
                         },
                         format: '{point.name}<br/><strong>{point.percentage:.1f}%</strong>',
                     },
@@ -189,5 +193,11 @@ export class RepresentativesComponent implements OnInit {
 
     routeRepAddress(rep: MonitoredRepDto) {
         this._searchService.emitSearch(rep.address);
+    }
+
+    formatInfoLine(rep: MonitoredRepDto): string {
+        return `${rep.version} · ${this.formatBanWeight(rep.weight)} BAN · ${this.numberWithCommas(
+            rep.delegatorsCount
+        )} delegators · ${this.numberWithCommas(rep.peers)} peers`;
     }
 }

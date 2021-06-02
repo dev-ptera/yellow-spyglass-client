@@ -6,7 +6,7 @@ import { ViewportService } from '../services/viewport/viewport.service';
 import { DrawerStateService } from '../services/drawer-state/drawer-state.service';
 import { APP_NAV_ITEMS, NavItem, EXPLORER_NAV_GROUP, NETWORK_NAV_GROUP } from './nav-items';
 import { SearchService } from '@app/services/search/search.service';
-import {ThemeService} from "@app/services/theme/theme.service";
+import { ThemeService } from '@app/services/theme/theme.service';
 
 @Component({
     selector: 'app-navigation',
@@ -128,7 +128,6 @@ export class NavigationComponent {
         this.variant = this.isSmall() ? 'temporary' : 'persistent';
         return this.variant;
     }
-
 
     toggleTheme(): void {
         this.themeService.setTheme(!this.themeService.isLightMode());
