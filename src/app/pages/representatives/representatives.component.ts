@@ -83,7 +83,7 @@ export class RepresentativesComponent implements OnInit {
         this.allRepsDataSource.sort = this.sortAll;
     }
 
-    formatDelegatorsCount(count: number): string {
+    numberWithCommas(count: number): string {
         return `${this._util.numberWithCommas(count)}`;
     }
 
@@ -170,7 +170,7 @@ export class RepresentativesComponent implements OnInit {
                             fontSize: this.vp.sm ? '12px' : '16px',
                             fontWeight: '400',
                             fontFamily: 'Open Sans',
-                            color: '#424e54',
+                            textOutline: 'none'
                         },
                         format: '{point.name}<br/><strong>{point.percentage:.1f}%</strong>',
                     },

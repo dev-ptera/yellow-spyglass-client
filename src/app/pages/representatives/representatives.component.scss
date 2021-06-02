@@ -121,7 +121,6 @@ $peer-link-color: map-get($pxb-green, 900);
 .representatives-name-cell {
     font-weight: 600;
     word-break: break-word;
-    color: $peer-link-color !important;
 }
 .representatives-address-cell {
     word-break: break-all;
@@ -144,15 +143,6 @@ $peer-link-color: map-get($pxb-green, 900);
     }
     &.md * {
         font-size: 13px !important;
-    }
-    .online .mat-cell {
-        color: $peer-link-color;
-    }
-    .offline .mat-cell {
-        color: map-get($pxb-red, 900);
-    }
-    .uncheckedBlocks {
-        color: map-get($pxb-red, 900);
     }
 }
 

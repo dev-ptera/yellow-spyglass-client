@@ -42,3 +42,25 @@ $light-theme: map-merge(
         ),
     )
 );
+
+$lightForeground: map-get($light-theme, foreground);
+
+// representatives.component.ts
+.monitored-reps-table .unchecked-blocks {
+  color: map-get($pxb-red, 900);
+}
+.all-reps-table {
+  .offline .mat-cell {
+    color: map-get($pxb-red, 900);
+  }
+  .online .mat-cell {
+    color: map-get($pxb-green, 900);
+  }
+}
+.representatives-name-cell {
+  color: map-get($pxb-green, 900) !important;
+}
+.highcharts-label.highcharts-data-label text[style] {
+  color: map-get($lightForeground, text) !important;
+  fill: map-get($lightForeground, text) !important;
+}

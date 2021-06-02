@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ViewEncapsulation } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import { Bookmark } from '@app/types/modal';
 import { BookmarksService } from '@app/services/bookmarks/bookmarks.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
@@ -86,7 +86,7 @@ import { SearchService } from '@app/services/search/search.service';
     `,
     styleUrls: ['./bookmarks.component.scss'],
 })
-export class BookmarksComponent {
+export class BookmarksComponent implements OnInit {
     bookmarks: Bookmark[];
     columns = ['data', 'actions'];
 

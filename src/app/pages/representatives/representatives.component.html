@@ -48,7 +48,7 @@
                         <pxb-list-item-tag class="version" [label]="rep.version"></pxb-list-item-tag>
                         <pxb-list-item-tag
                             class="delegators-count"
-                            [label]="formatDelegatorsCount(rep.delegatorsCount) + ' Delegators'"
+                            [label]="numberWithCommas(rep.delegatorsCount) + ' Delegators'"
                         ></pxb-list-item-tag>
                         <pxb-list-item-tag class="peers" [label]="rep.peers + ' peers'"></pxb-list-item-tag>
                         <pxb-list-item-tag
@@ -110,18 +110,18 @@
 
                 <ng-container matColumnDef="delegatorsCount">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Delegators</th>
-                    <td mat-cell *matCellDef="let element">{{ formatDelegatorsCount(element.delegatorsCount) }}</td>
+                    <td mat-cell *matCellDef="let element">{{ numberWithCommas(element.delegatorsCount) }}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="peers">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Peers</th>
-                    <td mat-cell *matCellDef="let element">{{ formatDelegatorsCount(element.peers) }}</td>
+                    <td mat-cell *matCellDef="let element">{{ numberWithCommas(element.peers) }}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="uncheckedBlocks">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Unchecked Blocks</th>
-                    <td mat-cell *matCellDef="let element" [class.uncheckedBlocks]="element.uncheckedBlocks">
-                        {{ formatDelegatorsCount(element.uncheckedBlocks) }}
+                    <td mat-cell *matCellDef="let element" [class.unchecked-blocks]="element.uncheckedBlocks">
+                        {{ numberWithCommas(element.uncheckedBlocks) }}
                     </td>
                 </ng-container>
 
@@ -146,7 +146,7 @@
                         <div pxb-right-content>
                             <pxb-list-item-tag
                                 class="delegators-count"
-                                [label]="formatDelegatorsCount(rep.delegatorsCount) + ' Delegators'"
+                                [label]="numberWithCommas(rep.delegatorsCount) + ' Delegators'"
                             ></pxb-list-item-tag>
                         </div>
                     </pxb-info-list-item>
@@ -202,7 +202,7 @@
 
                 <ng-container matColumnDef="delegatorsCount">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Delegators</th>
-                    <td mat-cell *matCellDef="let element">{{ formatDelegatorsCount(element.delegatorsCount) }}</td>
+                    <td mat-cell *matCellDef="let element">{{ numberWithCommas(element.delegatorsCount) }}</td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="allRepsDisplayColumns"></tr>
