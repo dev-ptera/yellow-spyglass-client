@@ -5,7 +5,7 @@ import { ExploreComponent } from './pages/explore/explore.component';
 import { BookmarksComponent } from '@app/pages/bookmarks/bookmarks.component';
 import { ComingSoonComponent } from '@app/pages/coming-soon/coming-soon.component';
 import { RepresentativesComponent } from '@app/pages/representatives/representatives.component';
-import {MonitorComponent} from "@app/pages/monitor/monitor.component";
+import { MonitorComponent } from '@app/pages/monitor/monitor.component';
 
 const routes: Routes = [
     { path: '', redirectTo: APP_NAV_ITEMS.search.route, pathMatch: 'full' },
