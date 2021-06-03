@@ -57,9 +57,6 @@ $darkForeground: map-get($dark-theme, foreground);
         color: map-get($pxb-green, 200);
     }
 }
-.representatives-monitored-list .pxb-info-list-item-title-wrapper .link {
-    color: map-get($pxb-green, 200);
-}
 .representatives-name-cell {
     color: map-get($pxb-green, 200) !important;
 }
@@ -78,4 +75,8 @@ $darkForeground: map-get($dark-theme, foreground);
 
 .link {
     color: map-get($pxb-green, 200);
+}
+
+.mat-drawer-backdrop.mat-drawer-shown {
+    background-color: #040404d1!important;
 }
