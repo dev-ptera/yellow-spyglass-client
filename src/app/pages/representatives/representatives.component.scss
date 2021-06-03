@@ -1,8 +1,6 @@
 @import '~@pxblue/colors/palette';
 @import '~@pxblue/colors-branding/palette';
 
-$peer-link-color: map-get($pxb-green, 900);
-
 :host {
     display: flex;
     flex: 1;
@@ -75,56 +73,10 @@ $peer-link-color: map-get($pxb-green, 900);
         padding-left: 0 !important;
         padding-right: 0 !important;
     }
-
-    .pxb-info-list-item .link {
-        text-decoration: underline;
-        cursor: pointer;
-    }
 }
 
 .representatives-monitored-list {
     width: 100%;
-
-    .pxb-info-list-item-info-wrapper * {
-        text-overflow: unset !important;
-        white-space: pre-wrap !important;
-    }
-
-    .representatives-monitored-tags {
-        display: flex;
-        flex-wrap: wrap;
-        margin-top: -12px;
-        padding: 0 12px 16px 16px;
-        .pxb-list-item-tag {
-            margin-top: 4px;
-            margin-right: 8px;
-        }
-        .version {
-            color: map-get($pxb-black, 500);
-            background-color: unset;
-            border: solid 1px map-get($pxb-black, 500);
-        }
-        .weight {
-            color: map-get($pxb-blue, 900);
-            background-color: unset;
-            border: solid 1px map-get($pxb-blue, 900);
-        }
-        .delegators-count {
-            color: map-get($brand-wine, 500);
-            background-color: unset;
-            border: solid 1px map-get($brand-wine, 500);
-        }
-        .peers {
-            color: map-get($brand-teal, 900);
-            background-color: unset;
-            border: solid 1px map-get($brand-teal, 900);
-        }
-        .unchecked {
-            color: map-get($pxb-red, 900);
-            background-color: unset;
-            border: solid 1px map-get($pxb-red, 900);
-        }
-    }
 }
 
 .representatives-name-cell {

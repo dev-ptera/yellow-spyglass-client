@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { AccountOverviewDto, ConfirmedTransactionDto, RepresentativesResponseDto } from '@app/types/dto';
+import {AccountOverviewDto, ConfirmedTransactionDto, MonitoredRepDto, RepresentativesResponseDto} from '@app/types/dto';
 import { Block } from '@app/types/dto/Block';
 
 @Injectable({
@@ -24,6 +24,10 @@ export class ApiService {
 
     block(hash: string): Promise<Block> {
         return this._http.get<Block>(`${this.url}/block/${hash}`).toPromise();
+    }
+
+    node(): Promise<MonitoredRepDto> {
+        return this._http.get<MonitoredRepDto>(`${this.url}/node`).toPromise();
     }
 
     monkey(address: string): Promise<string> {

@@ -40,6 +40,14 @@
     line-height: 1.25rem !important;
 }
 
+
+.link {
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
 // Why can't I use the branding color palettes for my theme?
 // $material-theme-primary: mat-palette($brand-trophy);
 

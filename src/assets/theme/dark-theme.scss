@@ -75,3 +75,7 @@ $darkForeground: map-get($dark-theme, foreground);
     color: map-get($darkForeground, text) !important;
     fill: map-get($darkForeground, text) !important;
 }
+
+.link {
+    color: map-get($pxb-green, 200);
+}

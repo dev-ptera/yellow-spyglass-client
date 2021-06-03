@@ -32,6 +32,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
+import {MonitorComponent} from "@app/pages/monitor/monitor.component";
 
 @Component({
     selector: 'app-root',
@@ -46,6 +47,7 @@ export class AppComponent {}
         NavigationComponent,
         RepresentativesComponent,
         ComingSoonComponent,
+        MonitorComponent,
     ],
     imports: [
         AppRoutingModule,

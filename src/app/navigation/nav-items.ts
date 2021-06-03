@@ -37,7 +37,7 @@ const representativesNavItem: NavItem = {
 
 const nodeNavItem: NavItem = {
     title: 'Node',
-    route: 'coming-soon',
+    route: 'monitor',
     icon: 'router',
 };
 
@@ -53,6 +53,7 @@ export const APP_NAV_ITEMS = {
     representatives: representativesNavItem,
     page1: networkNavItem,
     page2: nodeNavItem,
+    node: nodeNavItem,
 };
 
 export const EXPLORER_NAV_GROUP = [searchNavItem, distributionNavItem];
