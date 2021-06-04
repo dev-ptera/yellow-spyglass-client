@@ -11,9 +11,9 @@ const searchNavItem: NavItem = {
     icon: 'search',
 };
 
-const distributionNavItem: NavItem = {
-    title: 'Distribution',
-    route: 'coming-soon',
+const walletsNavItem: NavItem = {
+    title: 'Wallets',
+    route: 'wallets',
     icon: 'account_balance_wallet',
 };
 
@@ -51,10 +51,11 @@ export const APP_NAV_ITEMS = {
     bookmarks: bookmarksNavItem,
     search: searchNavItem,
     representatives: representativesNavItem,
+    wallets: walletsNavItem,
     page1: networkNavItem,
     page2: nodeNavItem,
     node: nodeNavItem,
 };
 
-export const EXPLORER_NAV_GROUP = [searchNavItem, distributionNavItem];
+export const EXPLORER_NAV_GROUP = [searchNavItem, walletsNavItem];
 export const NETWORK_NAV_GROUP = [networkNavItem, representativesNavItem, nodeNavItem];

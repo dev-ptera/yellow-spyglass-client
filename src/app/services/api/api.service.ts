@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import {
+    AccountDistributionStats,
     AccountOverviewDto,
     ConfirmedTransactionDto,
     MonitoredRepDto,
@@ -44,5 +45,9 @@ export class ApiService {
 
     representatives(): Promise<RepresentativesResponseDto> {
         return this._http.get<RepresentativesResponseDto>(`${this.url}/representatives`).toPromise();
+    }
+
+    bananoDistribution(): Promise<AccountDistributionStats> {
+        return this._http.get<AccountDistributionStats>(`${this.url}/accounts-distribution`).toPromise();
     }
 }

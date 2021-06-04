@@ -111,6 +111,11 @@ export class NavigationComponent {
                         this._stateService.setSelectedItem(undefined);
                         break;
                     }
+                    case `/${APP_NAV_ITEMS.wallets.route}`: {
+                        this.toolbarTitle = APP_NAV_ITEMS.wallets.title;
+                        this._stateService.setSelectedItem(undefined);
+                        break;
+                    }
                     default: {
                         this.toolbarTitle = '';
                     }

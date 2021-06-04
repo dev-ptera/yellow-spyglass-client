@@ -10,6 +10,8 @@
     flex: 1;
     flex-direction: column;
     padding: 64px 64px 64px 64px;
+    align-items: center;
+    text-align: left;
     box-sizing: border-box;
     width: 100%;
     &.md {
@@ -24,6 +26,11 @@
             text-decoration: underline;
         }
     }
+}
+
+.monitor-content {
+    width: 100%;
+    max-width: 1200px;
 }
 
 .monitor-section {

@@ -32,7 +32,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MonitorComponent } from '@app/pages/monitor/monitor.component';
+import { NodeMonitorComponent } from '@app/pages/node-monitor/node-monitor.component';
+import {WalletsComponent} from "@app/pages/wallets/wallets.component";
 
 @Component({
     selector: 'app-root',
@@ -44,10 +45,11 @@ export class AppComponent {}
     declarations: [
         AppComponent,
         BookmarksComponent,
-        NavigationComponent,
-        RepresentativesComponent,
         ComingSoonComponent,
-        MonitorComponent,
+        NavigationComponent,
+        NodeMonitorComponent,
+        RepresentativesComponent,
+        WalletsComponent,
     ],
     imports: [
         AppRoutingModule,
@@ -59,23 +61,23 @@ export class AppComponent {}
         ExploreModule,
         FlexLayoutModule,
         FormsModule,
+        HighchartsChartModule,
         HttpClientModule,
+        ListItemTagModule,
         MatButtonModule,
+        MatExpansionModule,
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
         MatProgressSpinnerModule,
+        MatSortModule,
+        MatSlideToggleModule,
         MatTabsModule,
         MatToolbarModule,
-        ListItemTagModule,
+        MatTableModule,
         RouterModule,
         ReactiveFormsModule,
         UserMenuModule,
-        MatTableModule,
-        MatSortModule,
-        MatSlideToggleModule,
-        MatExpansionModule,
-        HighchartsChartModule,
     ],
     bootstrap: [AppComponent],
 })
