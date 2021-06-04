@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import {
+    AccountBalance,
     AccountDistributionStats,
     AccountOverviewDto,
     ConfirmedTransactionDto,
@@ -49,5 +50,9 @@ export class ApiService {
 
     bananoDistribution(): Promise<AccountDistributionStats> {
         return this._http.get<AccountDistributionStats>(`${this.url}/accounts-distribution`).toPromise();
+    }
+
+    getAccountBalances(offset: number): Promise<AccountBalance[]> {
+        return this._http.get<AccountBalance[]>(`${this.url}/accounts-balance?offset=${offset}`).toPromise();
     }
 }

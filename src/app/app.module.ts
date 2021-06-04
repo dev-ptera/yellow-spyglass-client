@@ -34,6 +34,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { NodeMonitorComponent } from '@app/pages/node-monitor/node-monitor.component';
 import { WalletsComponent } from '@app/pages/wallets/wallets.component';
+import { MatBadgeModule } from '@angular/material/badge';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @Component({
     selector: 'app-root',
@@ -74,10 +76,12 @@ export class AppComponent {}
         MatSlideToggleModule,
         MatTabsModule,
         MatToolbarModule,
+        MatTooltipModule,
         MatTableModule,
         RouterModule,
         ReactiveFormsModule,
         UserMenuModule,
+        MatBadgeModule,
     ],
     bootstrap: [AppComponent],
 })

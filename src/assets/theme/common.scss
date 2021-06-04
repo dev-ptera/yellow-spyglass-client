@@ -47,6 +47,11 @@
         }
     }
 
+    // tabs confirmed.component.ts
+    .tab-transaction-list {
+        background-color: map-get($background, card);
+    }
+
     // representatives.component.ts
     .representatives-root {
         .mat-subheading-2 {

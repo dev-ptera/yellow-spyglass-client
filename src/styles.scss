@@ -1,4 +1,5 @@
 @import '~@angular/material/_theming.scss';
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css'; // Tooltip needs this theme to work?
 @import '~@pxblue/colors-branding/palette.scss';
 @import '~@pxblue/angular-themes/pxb-component-theme';
 @import '~@pxblue/angular-themes/margins';
@@ -6,6 +7,7 @@
 @import '~@pxblue/angular-themes/common';
 @import './assets/theme/typography';
 @import './assets/theme/common';
+
 
 @include reasonable-margins();
 @include mat-core($custom-typography);

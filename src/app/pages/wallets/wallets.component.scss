@@ -5,7 +5,6 @@
 
 .wallets-title {
     display: flex;
-    width: 100%;
     margin-bottom: 8px;
 }
 
@@ -59,9 +58,17 @@
     display: flex;
     width: 100%;
     justify-content: left;
+    margin-bottom: 72px;
     &.md,
     &.sm {
         margin-top: 0;
         justify-content: center;
+    }
+}
+.wallets-address-cell {
+    word-break: break-all;
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
     }
 }

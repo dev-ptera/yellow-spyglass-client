@@ -1,4 +1,5 @@
 /* Types sent to the client. */
+export * from './AccountBalance';
 export * from './AccountDistributionStats';
 export * from './AccountOverviewDto';
 export * from './ConfirmedTransactionDto';
