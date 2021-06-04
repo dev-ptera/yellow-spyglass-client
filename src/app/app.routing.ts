@@ -6,7 +6,7 @@ import { BookmarksComponent } from '@app/pages/bookmarks/bookmarks.component';
 import { ComingSoonComponent } from '@app/pages/coming-soon/coming-soon.component';
 import { RepresentativesComponent } from '@app/pages/representatives/representatives.component';
 import { NodeMonitorComponent } from '@app/pages/node-monitor/node-monitor.component';
-import {WalletsComponent} from "@app/pages/wallets/wallets.component";
+import { WalletsComponent } from '@app/pages/wallets/wallets.component';
 
 const routes: Routes = [
     { path: '', redirectTo: APP_NAV_ITEMS.search.route, pathMatch: 'full' },

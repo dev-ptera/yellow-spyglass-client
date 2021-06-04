@@ -33,7 +33,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { NodeMonitorComponent } from '@app/pages/node-monitor/node-monitor.component';
-import {WalletsComponent} from "@app/pages/wallets/wallets.component";
+import { WalletsComponent } from '@app/pages/wallets/wallets.component';
 
 @Component({
     selector: 'app-root',

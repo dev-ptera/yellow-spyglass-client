@@ -23,7 +23,9 @@ import { ApiService } from '@app/services/api/api.service';
                     <div class="monitor-section">
                         <div>
                             <span class="mat-headline">Address</span>
-                            <span class="mat-subheading-2 link" (click)="search(stats.address)">{{ stats.address }}</span>
+                            <span class="mat-subheading-2 link" (click)="search(stats.address)">{{
+                                stats.address
+                            }}</span>
                         </div>
                     </div>
                     <div class="monitor-section">
@@ -37,10 +39,10 @@ import { ApiService } from '@app/services/api/api.service';
                             <span class="mat-headline">Memory Usage</span>
                             <span class="mat-subheading-2">
                                 {{ formatMem(stats.usedMem) }} / {{ formatMem(stats.totalMem) }}GB
-                            <span class="mat-subheading-1" [style.marginLeft.px]="8">
-                                ({{ formatMemoryPercentage(stats.usedMem/stats.totalMem) }}%)
+                                <span class="mat-subheading-1" [style.marginLeft.px]="8">
+                                    ({{ formatMemoryPercentage(stats.usedMem / stats.totalMem) }}%)
+                                </span>
                             </span>
-                        </span>
                         </div>
                     </div>
                     <div class="monitor-section">
