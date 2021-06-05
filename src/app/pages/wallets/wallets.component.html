@@ -25,11 +25,11 @@
 
             <ng-template #paginator>
                 <app-paginator
-                        [pageSize]="pageSize"
-                        [maxElements]="totalAccounts"
-                        [(pageIndex)]="currentPage"
-                        (pageIndexChange)="loadAccountBalances($event)"
-                        [disableMove]="loadingNewAccountBalancePage"
+                    [pageSize]="pageSize"
+                    [maxElements]="totalAccounts"
+                    [(pageIndex)]="currentPage"
+                    (pageIndexChange)="loadAccountBalances($event)"
+                    [disableMove]="loadingNewAccountBalancePage"
                 ></app-paginator>
             </ng-template>
             <ng-template [ngTemplateOutlet]="paginator"></ng-template>
@@ -49,7 +49,7 @@
                             matBadgeSize="medium"
                             [matBadge]="element.repOnline ? undefined : '!'"
                         >
-                            #{{ i + 1 + currentPage*pageSize }}
+                            #{{ i + 1 + currentPage * pageSize }}
                         </span>
                     </td>
                 </ng-container>

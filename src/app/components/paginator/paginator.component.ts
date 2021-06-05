@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { UtilService } from '@app/services/util/util.service';
-import {ViewportService} from "@app/services/viewport/viewport.service";
+import { ViewportService } from '@app/services/viewport/viewport.service';
 
 @Component({
     selector: 'app-paginator',
