@@ -8,7 +8,6 @@
 @import './assets/theme/typography';
 @import './assets/theme/common';
 
-
 @include reasonable-margins();
 @include mat-core($custom-typography);
 

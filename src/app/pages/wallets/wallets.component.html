@@ -1,0 +1,82 @@
+<div class="wallets-root" responsive>
+    <div class="wallets-content">
+        <div class="wallets-title" [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm">
+            <ng-container *ngIf="!loading"> Banano Distribution Chart </ng-container>
+            <ng-container *ngIf="loading"> Loading </ng-container>
+        </div>
+
+        <div class="mat-subheading-2 wallets-subtitle">
+            The chart below showcases the distribution of banano among all opened banano accounts.
+        </div>
+
+        <ng-container *ngIf="!loading">
+            <div class="wallets-chart mat-elevation-z4" responsive>
+                <highcharts-chart
+                    [update]="true"
+                    [Highcharts]="Highcharts"
+                    [options]="distributionChart"
+                    style="pointer-events: none; width: 100%"
+                    [style.height.px]="vp.sm ? 300 : vp.md ? 350 : 400"
+                ></highcharts-chart>
+            </div>
+
+            <div class="wallets-title" [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm">All Accounts</div>
+            <div class="mat-subheading-2 wallets-subtitle">All banano accounts, sorted by balance.</div>
+
+            <ng-template #paginator>
+                <app-paginator
+                        [pageSize]="pageSize"
+                        [maxElements]="totalAccounts"
+                        [(pageIndex)]="currentPage"
+                        (pageIndexChange)="loadAccountBalances($event)"
+                        [disableMove]="loadingNewAccountBalancePage"
+                ></app-paginator>
+            </ng-template>
+            <ng-template [ngTemplateOutlet]="paginator"></ng-template>
+            <table
+                mat-table
+                *ngIf="accountBalances.length > 0"
+                [style.width.%]="100"
+                [dataSource]="accountBalances"
+                class="mat-elevation-z4"
+            >
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell [style.paddingRight.px]="16" *matCellDef="let element; let i = index">
+                        <span
+                            matBadgeColor="warn"
+                            matBadgeOverlap="false"
+                            matBadgeSize="medium"
+                            [matBadge]="element.repOnline ? undefined : '!'"
+                        >
+                            #{{ i + 1 + currentPage*pageSize }}
+                        </span>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="addr">
+                    <th mat-header-cell *matHeaderCellDef>Address</th>
+                    <td
+                        mat-cell
+                        [style.paddingTop.px]="8"
+                        [style.paddingBottom.px]="8"
+                        class="wallets-address-cell"
+                        *matCellDef="let element"
+                        (click)="searchService.emitSearch(element.addr)"
+                    >
+                        {{ element.addr }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="ban">
+                    <th mat-header-cell [style.paddingLeft.px]="16" *matHeaderCellDef>BANANO</th>
+                    <td mat-cell [style.paddingLeft.px]="16" *matCellDef="let element">
+                        {{ util.numberWithCommas(element.ban) }}
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                <tr mat-row *matRowDef="let row; columns: columns"></tr>
+            </table>
+            <ng-template [ngTemplateOutlet]="paginator"></ng-template>
+        </ng-container>
+    </div>
+</div>

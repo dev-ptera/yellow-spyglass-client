@@ -9,81 +9,7 @@ import { UtilService } from '@app/services/util/util.service';
 
 @Component({
     selector: 'app-wallets',
-    template: `
-        <div class="wallets-root" responsive>
-            <div class="wallets-content">
-                <div class="wallets-title" [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm">
-                    <ng-container *ngIf="!loading"> Banano Distribution Chart </ng-container>
-                    <ng-container *ngIf="loading"> Loading </ng-container>
-                </div>
-
-                <div class="mat-subheading-2 wallets-subtitle">
-                    The chart below showcases the distribution of banano among all opened banano accounts.
-                </div>
-
-                <ng-container *ngIf="!loading">
-                    <div class="wallets-chart mat-elevation-z4" responsive>
-                        <highcharts-chart
-                            [update]="true"
-                            [Highcharts]="Highcharts"
-                            [options]="distributionChart"
-                            style="pointer-events: none; width: 100%"
-                            [style.height.px]="vp.sm ? 300 : vp.md ? 350 : 400"
-                        ></highcharts-chart>
-                    </div>
-
-                    <div class="wallets-title" [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm">
-                        All Accounts
-                    </div>
-                    <div class="mat-subheading-2 wallets-subtitle">All banano accounts, sorted by balance.</div>
-
-                    <table
-                        mat-table
-                        *ngIf="accountBalances.length > 0"
-                        [style.width.%]="100"
-                        [dataSource]="accountBalances"
-                        class="mat-elevation-z4"
-                    >
-                        <ng-container matColumnDef="position">
-                            <th mat-header-cell *matHeaderCellDef></th>
-                            <td mat-cell [style.paddingRight.px]="16" *matCellDef="let element; let i = index">
-                                <span
-                                    matBadgeColor="warn"
-                                    matBadgeOverlap="false"
-                                    matBadgeSize="medium"
-                                    [matBadge]="element.repOnline ? undefined : '!'"
-                                >
-                                    #{{ i + 1 + offset }}
-                                </span>
-                            </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="addr">
-                            <th mat-header-cell *matHeaderCellDef>Address</th>
-                            <td
-                                mat-cell
-                                [style.paddingTop.px]="8"
-                                [style.paddingBottom.px]="8"
-                                class="wallets-address-cell"
-                                *matCellDef="let element"
-                                (click)="searchService.emitSearch(element.addr)"
-                            >
-                                {{ element.addr }}
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="ban">
-                            <th mat-header-cell [style.paddingLeft.px]="16" *matHeaderCellDef>BANANO</th>
-                            <td mat-cell [style.paddingLeft.px]="16" *matCellDef="let element">
-                                {{ util.numberWithCommas(element.ban) }}
-                            </td>
-                        </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="columns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: columns"></tr>
-                    </table>
-                </ng-container>
-            </div>
-        </div>
-    `,
+    templateUrl: 'wallets.component.html',
     styleUrls: ['./wallets.component.scss'],
 })
 export class WalletsComponent implements OnInit {
@@ -92,7 +18,10 @@ export class WalletsComponent implements OnInit {
     distributionChart: Options;
     accountBalances: AccountBalance[] = [];
     columns = ['position', 'addr', 'ban'];
-    offset = 0;
+    currentPage = 0;
+    totalAccounts: number;
+    loadingNewAccountBalancePage = false;
+    pageSize = 25;
 
     constructor(
         public util: UtilService,
@@ -112,10 +41,26 @@ export class WalletsComponent implements OnInit {
             .then((data) => {
                 this.distributionChart = this._createDistributionChart(data[0]);
                 this.accountBalances = data[1];
+                this.totalAccounts = data[0].totalAccounts;
                 this.loading = false;
             })
             .catch((err) => {
                 console.error(err);
+            });
+    }
+
+    loadAccountBalances(currPage: number): void {
+        this.currentPage = currPage;
+        this.loadingNewAccountBalancePage = true;
+        this._api
+            .getAccountBalances(currPage)
+            .then((data) => {
+                this.accountBalances = data;
+                this.loadingNewAccountBalancePage = false;
+            })
+            .catch((err) => {
+                console.error(err);
+                this.loadingNewAccountBalancePage = false;
             });
     }
 
@@ -196,7 +141,7 @@ export class WalletsComponent implements OnInit {
                             fontFamily: 'Open Sans',
                             textOutline: 'none',
                         },
-                    }
+                    },
                 },
             ],
         };

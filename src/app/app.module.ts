@@ -35,7 +35,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { NodeMonitorComponent } from '@app/pages/node-monitor/node-monitor.component';
 import { WalletsComponent } from '@app/pages/wallets/wallets.component';
 import { MatBadgeModule } from '@angular/material/badge';
-import {MatTooltipModule} from "@angular/material/tooltip";
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { PaginatorComponent } from './components/paginator/paginator.component';
 
 @Component({
     selector: 'app-root',
@@ -52,6 +53,7 @@ export class AppComponent {}
         NodeMonitorComponent,
         RepresentativesComponent,
         WalletsComponent,
+        PaginatorComponent,
     ],
     imports: [
         AppRoutingModule,

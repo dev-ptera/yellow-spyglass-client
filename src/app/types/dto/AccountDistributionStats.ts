@@ -11,4 +11,5 @@ export type AccountDistributionStats = {
     number1_000_000: number;
     number10_000_000: number;
     number100_000_000: number;
+    totalAccounts: number;
 };
