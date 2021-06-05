@@ -1,4 +1,4 @@
-<pxb-drawer-layout [variant]="getVariant()" (backdropClick)="closeDrawer()" width="295">
+<pxb-drawer-layout [variant]="getVariant()" (backdropClick)="closeDrawer()" width="295" responsive [class.open]="isOpen()">
     <pxb-drawer pxb-drawer [open]="isOpen()" [sideBorder]="true">
         <pxb-drawer-header>
             <button pxb-icon mat-icon-button (click)="toggleDrawerOpen()">

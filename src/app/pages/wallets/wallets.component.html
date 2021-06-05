@@ -5,7 +5,7 @@
             <ng-container *ngIf="loading"> Loading </ng-container>
         </div>
 
-        <div class="mat-subheading-2 wallets-subtitle">
+        <div class="mat-subheading-2 wallets-subtitle" [style.marginBottom.px]="48">
             The chart below showcases the distribution of banano among all opened banano accounts.
         </div>
 
@@ -21,7 +21,7 @@
             </div>
 
             <div class="wallets-title" [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm">All Accounts</div>
-            <div class="mat-subheading-2 wallets-subtitle">All banano accounts, sorted by balance.</div>
+            <div class="mat-subheading-2 wallets-subtitle" [style.marginBottom.px]="24">All banano accounts, sorted by balance.</div>
 
             <ng-template #paginator>
                 <app-paginator

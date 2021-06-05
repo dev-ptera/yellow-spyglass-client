@@ -54,3 +54,22 @@
 // How can I avoid copy pasting all this nonsense just to change some theme colors?
 
 // Mat Toolbar won't allow me to put background image in it?
+
+
+// Fix Safari scroll issue
+.sm.pxb-drawer-layout {
+    height: 100%!important;
+    &.open {
+        .mat-drawer {
+            position: fixed;
+        }
+    }
+    .navigation-app-header-container {
+        position: fixed;
+        width: 100vw;
+        box-sizing: border-box;
+    }
+    .navigation-drawer-content {
+        margin-top: 56px;
+    }
+}
