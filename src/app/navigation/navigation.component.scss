@@ -30,10 +30,11 @@
 }
 
 .navigation-app-header-container {
-    //position: sticky;
-    //position: -webkit-sticky;
+    position: sticky;
+    position: -webkit-sticky;
     background-size: contain;
-    background-image: url('../../assets/bg-footer.svg');
+    background-color: #45af45 !important;
+    //background-image: url('../../assets/bg-footer.svg');
     display: flex;
     align-items: center;
     padding: 0 24px;
