@@ -47,7 +47,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
     `,
 })
 export class PaginatorComponent {
-    @Input() pageIndex: number = 0;
+    @Input() pageIndex = 0;
     @Input() pageSize: number;
     @Input() maxElements: number;
     @Input() disableMove = false;

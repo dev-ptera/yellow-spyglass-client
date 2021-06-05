@@ -67,14 +67,13 @@ export class PendingTabComponent {
     @Input() pendingTxCount: number;
 
     shownPendingTransactions = 50;
+    constructor(public monkeyCache: MonkeyCacheService, public searchService: SearchService) {}
+
+    trackByFn(index: number): number {
+        return index;
+    }
 
     fetchMorePending(): void {
         this.shownPendingTransactions += 50;
-    }
-
-    constructor(public monkeyCache: MonkeyCacheService, public searchService: SearchService) {}
-
-    trackByFn(index) {
-        return index;
     }
 }

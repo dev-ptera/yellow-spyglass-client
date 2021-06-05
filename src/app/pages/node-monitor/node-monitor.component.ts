@@ -81,7 +81,7 @@ export class NodeMonitorComponent implements OnInit {
     @Input() loading = true;
 
     constructor(
-        private _api: ApiService,
+        private readonly _api: ApiService,
         public vp: ViewportService,
         public util: UtilService,
         private readonly _searchService: SearchService
@@ -112,7 +112,7 @@ export class NodeMonitorComponent implements OnInit {
         window.open(`http://${ip}`, '_blank');
     }
 
-    formatMemoryPercentage(num): number {
+    formatMemoryPercentage(num: number): number {
         return Number(num.toFixed(2)) * 100;
     }
 }

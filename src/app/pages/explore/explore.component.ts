@@ -56,7 +56,6 @@ export class ExploreComponent {
     }
 
     ngOnInit(): void {
-        console.log('on init');
         this.searchFormControl = new FormControl();
         this.searchViaParams(window.location.search);
     }

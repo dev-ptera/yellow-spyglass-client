@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { Block } from '@app/types/dto/Block';
 import { UtilService } from '@app/services/util/util.service';
@@ -138,21 +138,15 @@ export class HashComponent {
 
     constructor(
         public vp: ViewportService,
-        private _util: UtilService,
+        private readonly _util: UtilService,
         private readonly _searchService: SearchService
     ) {}
 
-    ngOnChanges(): void {
-        console.log(this.block);
-    }
-
     convertRawToBan(raw: string): string {
-        return (
-            this._util.convertRawToBan(raw, {
-                precision: 10,
-                comma: true,
-            }) + ' BANANO'
-        );
+        return `${this._util.convertRawToBan(raw, {
+            precision: 10,
+            comma: true,
+        })} BANANO`;
     }
 
     search(value: string): void {

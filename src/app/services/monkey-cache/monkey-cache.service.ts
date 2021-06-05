@@ -11,7 +11,7 @@ export class MonkeyCacheService {
         this.monkeyCache.set(address, monkey);
     }
 
-    getMonkey(address): string | undefined {
+    getMonkey(address: string): string | undefined {
         return this.monkeyCache.get(address);
     }
 }

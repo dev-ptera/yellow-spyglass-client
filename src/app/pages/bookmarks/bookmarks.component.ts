@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Bookmark } from '@app/types/modal';
 import { BookmarksService } from '@app/services/bookmarks/bookmarks.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
@@ -96,7 +96,7 @@ export class BookmarksComponent implements OnInit {
     constructor(
         public vp: ViewportService,
         public searchService: SearchService,
-        private _bookmarkService: BookmarksService
+        private readonly _bookmarkService: BookmarksService
     ) {}
 
     ngOnInit(): void {

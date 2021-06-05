@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 export type AccountDistributionStats = {
     number0_001: number;
     number0_01: number;

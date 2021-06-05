@@ -5,7 +5,7 @@ import { Bookmark } from '@app/types/modal';
     providedIn: 'root',
 })
 export class BookmarksService {
-    bookmark_id = 'YELLOW_SPYGLASS_BOOKMARKS';
+    bookmarkId = 'YELLOW_SPYGLASS_BOOKMARKS';
 
     bookmarkMap: Map<string, Bookmark> = new Map();
 
@@ -17,17 +17,17 @@ export class BookmarksService {
     }
 
     private _getBookmarksFromLocalStorage(): Bookmark[] {
-        const bookmarks = localStorage.getItem(this.bookmark_id) || '[]';
+        const bookmarks = localStorage.getItem(this.bookmarkId) || '[]';
         return JSON.parse(bookmarks);
     }
 
     private _setBookmarksToLocalStorage(): void {
-        localStorage.removeItem(this.bookmark_id);
-        localStorage.setItem(this.bookmark_id, JSON.stringify(this.getBookmarks()));
+        localStorage.removeItem(this.bookmarkId);
+        localStorage.setItem(this.bookmarkId, JSON.stringify(this.getBookmarks()));
     }
 
     getBookmarks(): Bookmark[] {
-        return Array.from(this.bookmarkMap.values()).sort(function (a, b) {
+        return Array.from(this.bookmarkMap.values()).sort((a: Bookmark, b: Bookmark) => {
             const textA = a.id.toUpperCase();
             const textB = b.id.toUpperCase();
             return textA < textB ? -1 : textA > textB ? 1 : 0;

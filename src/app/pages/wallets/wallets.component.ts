@@ -4,6 +4,7 @@ import { SearchService } from '@app/services/search/search.service';
 import { ApiService } from '@app/services/api/api.service';
 import { AccountBalance, AccountDistributionStats } from '@app/types/dto';
 import { Options } from 'highcharts';
+// eslint-disable-next-line no-duplicate-imports
 import * as Highcharts from 'highcharts';
 import { UtilService } from '@app/services/util/util.service';
 
@@ -25,7 +26,7 @@ export class WalletsComponent implements OnInit {
 
     constructor(
         public util: UtilService,
-        private _api: ApiService,
+        private readonly _api: ApiService,
         public vp: ViewportService,
         public searchService: SearchService
     ) {
@@ -64,7 +65,7 @@ export class WalletsComponent implements OnInit {
             });
     }
 
-    _createDistributionChart(data: AccountDistributionStats): Options {
+    private _createDistributionChart(data: AccountDistributionStats): Options {
         return {
             chart: {
                 type: 'column',

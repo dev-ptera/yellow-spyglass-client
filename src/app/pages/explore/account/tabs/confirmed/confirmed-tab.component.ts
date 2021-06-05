@@ -66,7 +66,7 @@ export class ConfirmedTabComponent {
 
     constructor(public monkeyCache: MonkeyCacheService, public searchService: SearchService) {}
 
-    trackByFn(index) {
+    trackByFn(index: number): number {
         return index;
     }
 }

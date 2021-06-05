@@ -70,9 +70,8 @@ export class DelegatorsTabComponent {
     getShownDelegators(): Delegator[] {
         if (this.delegators) {
             return this.delegators.slice(0, this.shownDelegators);
-        } else {
-            return [];
         }
+        return [];
     }
 
     increaseShownDelegators(): void {

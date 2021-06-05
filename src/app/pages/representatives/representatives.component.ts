@@ -7,6 +7,7 @@ import { UtilService } from '@app/services/util/util.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import * as Highcharts from 'highcharts';
+// eslint-disable-next-line no-duplicate-imports
 import { Options } from 'highcharts';
 
 @Component({
@@ -88,7 +89,7 @@ export class RepresentativesComponent implements OnInit {
     }
 
     formatWeightPercent(weight: number): string {
-        return ((weight / this.onlineWeight) * 100).toFixed(3).replace(/\.?0+$/, '') + '%';
+        return `${((weight / this.onlineWeight) * 100).toFixed(3).replace(/\.?0+$/, '')}%`;
     }
 
     formatTableAddress(addr: string): string {
@@ -103,12 +104,12 @@ export class RepresentativesComponent implements OnInit {
         return this._util.numberWithCommas(Math.round(weight));
     }
 
-    trackByFn(index) {
+    trackByFn(index: number): number {
         return index;
     }
 
-    _createRepChart(reps: RepresentativeDto[]): Options {
-        const onlineReps = () => {
+    private _createRepChart(reps: RepresentativeDto[]): Options {
+        const onlineReps = (): Array<{ name: string; y: number }> => {
             let allOthersWeight = this.onlineWeight;
             const MAX_REPS = 5;
             const shownReps = [];
@@ -191,7 +192,7 @@ export class RepresentativesComponent implements OnInit {
         window.open(`http://${ip}`, '_blank');
     }
 
-    routeRepAddress(rep: MonitoredRepDto) {
+    routeRepAddress(rep: MonitoredRepDto): void {
         this._searchService.emitSearch(rep.address);
     }
 

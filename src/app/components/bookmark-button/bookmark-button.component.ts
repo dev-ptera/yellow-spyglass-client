@@ -15,7 +15,7 @@ export class BookmarkButtonComponent {
     @Input() id: string;
     isBookmarked: boolean;
 
-    constructor(private _bookmarkService: BookmarksService) {}
+    constructor(private readonly _bookmarkService: BookmarksService) {}
 
     ngOnChanges(): void {
         this.checkIsBookmarked();

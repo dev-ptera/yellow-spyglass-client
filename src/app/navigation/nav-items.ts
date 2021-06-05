@@ -17,12 +17,6 @@ const walletsNavItem: NavItem = {
     icon: 'account_balance_wallet',
 };
 
-const knownAccountsNavItems: NavItem = {
-    title: 'Known Accounts',
-    route: 'coming-soon',
-    icon: 'account_balance_wallet',
-};
-
 const networkNavItem: NavItem = {
     title: 'Network',
     route: 'coming-soon',

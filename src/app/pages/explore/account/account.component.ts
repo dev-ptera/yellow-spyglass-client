@@ -135,7 +135,7 @@ export class AccountComponent {
             this.confirmedTransactions.all.push(this._convertConfirmedTxDtoToModal(confirmedTx));
         }
         this.confirmedTransactions.display = this.confirmedTransactions.all;
-        this.fetchMonkeys(this.confirmedTransactions.display);
+        this._fetchMonkeys(this.confirmedTransactions.display);
     }
 
     private _preparePending(accountOverview: AccountOverviewDto): void {
@@ -147,15 +147,15 @@ export class AccountComponent {
             this.pendingTransactions.all.push(this._convertPendingTxDtoToModal(pendingTx));
         }
         this.pendingTransactions.display = this.pendingTransactions.all;
-        this.fetchMonkeys(this.pendingTransactions.display);
+        this._fetchMonkeys(this.pendingTransactions.display);
     }
 
-    private fetchMonkeys(transactions: ConfirmedTransaction[] | PendingTransaction[]): void {
+    private _fetchMonkeys(transactions: ConfirmedTransaction[] | PendingTransaction[]): void {
         const addrSet = new Set<string>();
         for (const tx of transactions) {
             addrSet.add(tx.address);
         }
-        const monkeyPromise: Promise<void>[] = [];
+        const monkeyPromise: Array<Promise<void>> = [];
         for (const addr of addrSet.values()) {
             if (this._monkeyCache.getMonkey(addr)) {
                 continue;
@@ -214,20 +214,16 @@ export class AccountComponent {
     private _renderQRCode(addr: string): void {
         this._ref.detectChanges();
         const canvas = document.getElementById('qr-code');
-        QRCode.toCanvas(canvas, addr, function (error) {
+        QRCode.toCanvas(canvas, addr, (error) => {
             if (error) console.error(error);
         });
     }
 
     private _formatDateString(timestamp: number): string {
         const date = new Date(timestamp * 1000);
-        return (
-            (date.getMonth() > 8 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1)) +
-            '/' +
-            (date.getDate() > 9 ? date.getDate() : '0' + date.getDate()) +
-            '/' +
-            (this.vp.sm ? date.getFullYear().toString().substring(2, 4) : date.getFullYear() + '')
-        );
+        return `${date.getMonth() > 8 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`}/${
+            date.getDate() > 9 ? date.getDate() : `0${date.getDate()}`
+        }/${this.vp.sm ? date.getFullYear().toString().substring(2, 4) : `${date.getFullYear()}`}`;
     }
 
     private _formatTimeString(timestamp: number): string {
@@ -256,7 +252,7 @@ export class AccountComponent {
                 this.confirmedTransactions.all.sort((a, b) => (a.height < b.height ? 1 : -1));
                 // Debounce monkey fetch api?
                 this._setDisplayTx(this.confirmedTransactions, e.pageIndex);
-                this.fetchMonkeys(this.confirmedTransactions.display);
+                this._fetchMonkeys(this.confirmedTransactions.display);
                 this._ref.detectChanges();
             })
             .catch((err) => {

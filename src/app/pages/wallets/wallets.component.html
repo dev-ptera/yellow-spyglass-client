@@ -22,9 +22,9 @@
 
             <div class="wallets-title" [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm">All Accounts</div>
             <div class="mat-subheading-2 wallets-subtitle">All banano accounts, sorted by balance.</div>
-            <div class="mat-caption wallets-offline-rep-description" [style.marginBottom.px]="24">
-                Any account with an offline representative is marked with a warning flag. It
-                is encouraged that these accounts change their representative if their current rep is constantly offline.
+            <div [class.mat-subheading-2]="!vp.sm" [class.mat-caption]="vp.sm" [style.marginBottom.px]="24">
+                Any account with an offline representative is marked with a warning flag. It is encouraged that these
+                accounts change their representative if their current rep is constantly offline.
             </div>
             <ng-template #paginator>
                 <app-paginator

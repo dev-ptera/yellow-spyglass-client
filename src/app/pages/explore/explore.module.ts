@@ -20,7 +20,6 @@ import { SafeHtmlPipe } from '../../pipes/safe.pipe';
 import { MatBadgeModule } from '@angular/material/badge';
 import { ResponsiveDirective } from '../../directives/responsive.directive';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
-import { MatPaginatorIntlCustom } from '../../services/material/mat-paginator-itl.service';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { PendingTabComponent } from '@app/pages/explore/account/tabs/pending/pending-tab.component';
@@ -59,12 +58,6 @@ import { CopyButtonComponent } from '../../components/copy-button/copy-button.co
         MatTabsModule,
         MatTableModule,
         ReactiveFormsModule,
-    ],
-    providers: [
-        {
-            provide: MatPaginatorIntl,
-            useClass: MatPaginatorIntlCustom,
-        },
     ],
     exports: [
         AccountComponent,
