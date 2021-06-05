@@ -81,18 +81,18 @@ export class WalletsComponent implements OnInit {
             },
             xAxis: {
                 categories: [
-                    '> .001',
-                    '> .01',
-                    '> .1',
-                    '> 1',
-                    '> 10',
-                    '> 100',
-                    '> 1,000',
-                    '> 10,000',
-                    '> 100,000',
-                    '> 1,000,000',
-                    '> 10,000,000',
-                    '> 100,000,000',
+                    '.001 - .01',
+                    '.01 - .1',
+                    '.1 - 1',
+                    '1 - 10',
+                    '10 - 100',
+                    '100 - 1K',
+                    '1K - 10K',
+                    '10K - 100K',
+                    '100K - 1M',
+                    '1M - 10M',
+                    '10M - 100M',
+                    '100M - 1B',
                 ],
             },
             yAxis: {
@@ -117,7 +117,7 @@ export class WalletsComponent implements OnInit {
             },
             series: [
                 {
-                    name: 'Banano Amount',
+                    name: 'Opened Accounts',
                     type: 'bar',
                     color: '#FBDD11',
                     data: [

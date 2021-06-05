@@ -58,6 +58,7 @@
     width: 100%;
     justify-content: left;
     margin-bottom: 72px;
+    padding-top: 16px;
     &.md,
     &.sm {
         margin-top: 0;
@@ -70,4 +71,7 @@
     &:hover {
         text-decoration: underline;
     }
+}
+
+.wallets-offline-rep-description {
 }

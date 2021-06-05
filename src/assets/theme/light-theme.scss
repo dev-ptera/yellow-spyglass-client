@@ -76,3 +76,8 @@ $lightForeground: map-get($light-theme, foreground);
 .link {
     color: map-get($pxb-green, 900) !important;
 }
+
+//wallets.component.ts
+.highcharts-legend-item.highcharts-bar-series text[style] {
+    font-weight: 400 !important;
+}

@@ -44,6 +44,7 @@ $dark-theme: map-merge(
 );
 
 $darkForeground: map-get($dark-theme, foreground);
+$darkBackground: map-get($dark-theme, background);
 
 // representatives.component.ts
 .monitored-reps-table .unchecked-blocks {
@@ -68,9 +69,22 @@ $darkForeground: map-get($dark-theme, foreground);
         color: map-get($pxb-red, 200);
     }
 }
+
+// wallets.component.ts
+.wallets-chart {
+    background-color: map-get($darkBackground, card);
+}
 .highcharts-label.highcharts-data-label text[style] {
     color: map-get($darkForeground, text) !important;
     fill: map-get($darkForeground, text) !important;
+}
+.highcharts-legend-item.highcharts-bar-series text[style] {
+    font-weight: 400 !important;
+    color: map-get($darkForeground, secondary-text) !important;
+    fill: map-get($darkForeground, secondary-text) !important;
+}
+.highcharts-grid.highcharts-yaxis-grid .highcharts-grid-line {
+    stroke: #505050;
 }
 
 .link {

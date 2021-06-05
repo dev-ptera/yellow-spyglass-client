@@ -55,10 +55,9 @@
 
 // Mat Toolbar won't allow me to put background image in it?
 
-
 // Fix Safari scroll issue
 .sm.pxb-drawer-layout {
-    height: 100%!important;
+    height: 100% !important;
     &.open {
         .mat-drawer {
             position: fixed;

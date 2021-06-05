@@ -18,7 +18,7 @@
     <div class="account-title">
         <ng-template *ngIf="!vp.sm" [ngTemplateOutlet]="accountMonkey"></ng-template>
         <div>
-            <div [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm" [style.marginBottom.px]="8">
+            <div [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm" [style.marginBottom.px]="4">
                 <span *ngIf="loading">Loading</span>
                 <ng-container *ngIf="accountOverview?.delegatorsCount === 0">
                     <span *ngIf="accountOverview?.opened"> Account </span>
@@ -31,7 +31,7 @@
                 <app-copy-button [data]="address"></app-copy-button>
                 <app-bookmark-button [id]="address"></app-bookmark-button>
             </div>
-            <div *ngIf="accountOverview?.opened" class="mat-subheading-2 account-representative">
+            <div *ngIf="accountOverview?.opened" class="mat-caption account-representative">
                 Represented by
                 <span class="link" (click)="searchService.emitSearch(accountOverview.representative)">{{
                     shortenedRep
