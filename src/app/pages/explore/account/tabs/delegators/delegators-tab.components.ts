@@ -47,7 +47,7 @@ import { SearchService } from '@app/services/search/search.service';
         </div>
 
         <pxb-empty-state
-                responsive
+            responsive
             *ngIf="delegators.length === 0"
             class="account-empty-state"
             title="No Delegators"

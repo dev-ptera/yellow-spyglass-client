@@ -55,7 +55,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
         </mat-list>
 
         <pxb-empty-state
-                responsive
+            responsive
             *ngIf="confirmedTransactions.length === 0"
             class="account-empty-state"
             title="No Confirmed Transactions"

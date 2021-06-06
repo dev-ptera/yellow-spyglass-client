@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, ViewEncapsulation} from '@angular/core';
+import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { BookmarksService } from '@app/services/bookmarks/bookmarks.service';
 
 @Component({
