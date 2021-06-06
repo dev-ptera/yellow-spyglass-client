@@ -97,4 +97,8 @@
 .account-empty-state {
     padding: 48px;
     padding-top: 72px;
+    padding-bottom: 72px;
+    &.sm {
+        padding-bottom: 350px;
+    }
 }

@@ -2,8 +2,9 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'app-copy-button',
+    styleUrls: ['address-button.scss'],
     template: `
-        <button mat-icon-button (click)="copyToClipboard()">
+        <button mat-icon-button class="address-action-button" responsive (click)="copyToClipboard()">
             <mat-icon>content_copy</mat-icon>
         </button>
     `,

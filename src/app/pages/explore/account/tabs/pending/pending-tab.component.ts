@@ -57,6 +57,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
         </div>
 
         <pxb-empty-state
+                responsive
             class="account-empty-state"
             *ngIf="pendingTransactions.length === 0"
             title="No Pending Transactions"
