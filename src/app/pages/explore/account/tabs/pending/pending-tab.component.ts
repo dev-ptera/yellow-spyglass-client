@@ -2,6 +2,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { PendingTransaction } from '@app/types/modal/PendingTransactionDto';
 import { MonkeyCacheService } from '@app/services/monkey-cache/monkey-cache.service';
 import { SearchService } from '@app/services/search/search.service';
+import { ViewportService } from '@app/services/viewport/viewport.service';
 
 @Component({
     selector: 'account-pending-tab',
@@ -36,7 +37,12 @@ import { SearchService } from '@app/services/search/search.service';
                     </div>
                 </div>
                 <div pxb-subtitle class="hash" (click)="searchService.emitSearch(tx.hash)">{{ tx.hash }}</div>
-                <div pxb-right-content>
+                <div pxb-right-content class="right-content">
+                    <div
+                        class="small-monkey"
+                        *ngIf="monkeyCache.getMonkey(tx.address) && vp.sm"
+                        [innerHTML]="monkeyCache.getMonkey(tx.address) | safe"
+                    ></div>
                     <div class="timestamps">
                         <span>{{ tx.date }}</span>
                         <span>{{ tx.time }}</span>
@@ -67,7 +73,11 @@ export class PendingTabComponent {
     @Input() pendingTxCount: number;
 
     shownPendingTransactions = 50;
-    constructor(public monkeyCache: MonkeyCacheService, public searchService: SearchService) {}
+    constructor(
+        public monkeyCache: MonkeyCacheService,
+        public searchService: SearchService,
+        public vp: ViewportService
+    ) {}
 
     trackByFn(index: number): number {
         return index;

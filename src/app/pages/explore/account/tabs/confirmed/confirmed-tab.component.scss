@@ -2,6 +2,9 @@
 
 .tab-transaction-list.sm {
     .pxb-info-list-item .mat-list-item {
+        padding-top: 16px;
+        padding-bottom: 16px;
+
         .pxb-info-list-item-icon-wrapper {
             display: none;
         }
@@ -12,6 +15,18 @@
             > span {
                 margin-left: 0;
             }
+        }
+        .right-content {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+        .small-monkey {
+            height: 64px;
+            width: 64px;
+            margin-bottom: -6px;
         }
     }
 }
@@ -27,7 +42,6 @@
 
 .tab-transaction-list {
     padding-top: 0px;
-
     .pxb-info-list-item {
         .tag-row {
             display: flex;

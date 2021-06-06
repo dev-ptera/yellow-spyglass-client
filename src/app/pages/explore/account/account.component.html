@@ -41,12 +41,13 @@
             <div class="account-summary-tags" responsive *ngIf="accountOverview">
                 <ng-template *ngIf="vp.sm" [ngTemplateOutlet]="accountMonkey"></ng-template>
                 <div [style.marginTop.px]="vp.sm ? 16 : 0">
-                    <pxb-list-item-tag label="Representative Online"></pxb-list-item-tag>
-                    <pxb-list-item-tag [label]="confirmedBalance + ' BAN'" class="account-balance"> </pxb-list-item-tag>
+                    <pxb-list-item-tag [label]="confirmedBalance + ' BAN BALANCE'" class="account-balance">
+                    </pxb-list-item-tag>
                     <pxb-list-item-tag
-                        [label]="pendingBalance + ' PENDING'"
+                        [label]="pendingBalance + ' BAN PENDING'"
                         class="account-pending"
                     ></pxb-list-item-tag>
+                    <pxb-list-item-tag label="Representative Online"></pxb-list-item-tag>
                 </div>
             </div>
         </div>

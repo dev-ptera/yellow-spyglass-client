@@ -63,6 +63,11 @@
             position: fixed;
         }
     }
+    .mat-drawer-content {
+        /* MAGIC HAPPENS HERE */
+        transform: translate3d(0px, 0px, 0px);
+        display: contents;
+    }
     .navigation-app-header-container {
         position: fixed;
         width: 100vw;
