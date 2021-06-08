@@ -7,7 +7,6 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import * as QRCode from 'qrcode';
-import { PageEvent } from '@angular/material/paginator';
 import { AccountOverviewDto, ConfirmedTransactionDto, PendingTransactionDto } from '@app/types/dto';
 import { Delegator } from '@app/types/modal/Delegator';
 import { ConfirmedTransaction } from '@app/types/modal/ConfirmedTransaction';
@@ -238,22 +237,22 @@ export class AccountComponent {
         tx.display = tx.all.slice(pageIndex * pageSize, pageIndex * pageSize + pageSize);
     }
 
-    changePage(e: PageEvent): void {
-        this.confirmedTxPageIndex = e.pageIndex;
-        if (this.loadedConfirmedTxPages.has(e.pageIndex)) {
-            this._setDisplayTx(this.confirmedTransactions, e.pageIndex);
+    changePage(currPage: number): void {
+        this.confirmedTxPageIndex = currPage;
+        if (this.loadedConfirmedTxPages.has(currPage)) {
+            this._setDisplayTx(this.confirmedTransactions, currPage);
             return;
         }
         this._apiService
-            .confirmedTransactions(this.address, e.pageSize * e.pageIndex)
+            .confirmedTransactions(this.address, currPage * currPage)
             .then((data: ConfirmedTransactionDto[]) => {
-                this.loadedConfirmedTxPages.add(e.pageIndex);
+                this.loadedConfirmedTxPages.add(currPage);
                 for (const tx of data) {
                     this.confirmedTransactions.all.push(this._convertConfirmedTxDtoToModal(tx));
                 }
                 this.confirmedTransactions.all.sort((a, b) => (a.height < b.height ? 1 : -1));
                 // Debounce monkey fetch api?
-                this._setDisplayTx(this.confirmedTransactions, e.pageIndex);
+                this._setDisplayTx(this.confirmedTransactions, currPage);
                 this._fetchMonkeys(this.confirmedTransactions.display);
                 this._ref.detectChanges();
             })

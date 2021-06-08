@@ -53,7 +53,6 @@ export class AppComponent {}
         NodeMonitorComponent,
         RepresentativesComponent,
         WalletsComponent,
-        PaginatorComponent,
     ],
     imports: [
         AppRoutingModule,

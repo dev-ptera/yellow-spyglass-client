@@ -3,15 +3,15 @@
 </ng-template>
 
 <ng-template #confirmedPaginator>
-    <mat-paginator
+    <app-paginator
         *ngIf="accountOverview.completedTxCount > 50"
-        [length]="accountOverview.completedTxCount"
+        [maxElements]="accountOverview.completedTxCount"
         [pageSize]="paginatorSize"
         [pageIndex]="confirmedTxPageIndex"
-        [disabled]="loading"
-        (page)="changePage($event)"
+        [disableMove]="loading"
+        (pageIndexChange)="changePage($event)"
     >
-    </mat-paginator>
+    </app-paginator>
 </ng-template>
 
 <div class="account-header" responsive>

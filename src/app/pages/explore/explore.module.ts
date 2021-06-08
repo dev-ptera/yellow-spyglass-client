@@ -19,7 +19,6 @@ import { ExploreComponent } from './explore.component';
 import { SafeHtmlPipe } from '../../pipes/safe.pipe';
 import { MatBadgeModule } from '@angular/material/badge';
 import { ResponsiveDirective } from '../../directives/responsive.directive';
-import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { PendingTabComponent } from '@app/pages/explore/account/tabs/pending/pending-tab.component';
@@ -28,6 +27,7 @@ import { DelegatorsTabComponent } from '@app/pages/explore/account/tabs/delegato
 import { HashComponent } from '@app/pages/explore/hash/hash.component';
 import { BookmarkButtonComponent } from '../../components/bookmark-button/bookmark-button.component';
 import { CopyButtonComponent } from '../../components/copy-button/copy-button.component';
+import {PaginatorComponent} from "../../components/paginator/paginator.component";
 
 @NgModule({
     declarations: [
@@ -41,6 +41,7 @@ import { CopyButtonComponent } from '../../components/copy-button/copy-button.co
         PendingTabComponent,
         SafeHtmlPipe,
         ResponsiveDirective,
+        PaginatorComponent,
     ],
     imports: [
         CommonModule,
@@ -53,7 +54,6 @@ import { CopyButtonComponent } from '../../components/copy-button/copy-button.co
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
-        MatPaginatorModule,
         MatProgressSpinnerModule,
         MatTabsModule,
         MatTableModule,
@@ -70,6 +70,7 @@ import { CopyButtonComponent } from '../../components/copy-button/copy-button.co
         PendingTabComponent,
         SafeHtmlPipe,
         ResponsiveDirective,
+        PaginatorComponent,
     ],
 })
 export class ExploreModule {}

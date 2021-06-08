@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation} from '@angular/core';
 import { UtilService } from '@app/services/util/util.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 
@@ -46,7 +46,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
         </div>
     `,
 })
-export class PaginatorComponent {
+export class PaginatorComponent implements OnChanges {
     @Input() pageIndex = 0;
     @Input() pageSize: number;
     @Input() maxElements: number;
