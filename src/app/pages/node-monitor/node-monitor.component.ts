@@ -15,7 +15,7 @@ import { ApiService } from '@app/services/api/api.service';
                     <span *ngIf="!loading">Node Statistics</span>
                 </div>
                 <div class="mat-subheading-2" [style.marginBottom.px]="48">
-                    This explorer is powered by the
+                    This explorer is powered & maintained by the
                     <span class="link" (click)="openMonitoredRep(stats.ip)">batman representative</span>.
                 </div>
 
@@ -113,6 +113,6 @@ export class NodeMonitorComponent implements OnInit {
     }
 
     formatMemoryPercentage(num: number): number {
-        return Number(num.toFixed(2)) * 100;
+        return Math.round(Number(num.toFixed(2)) * 100);
     }
 }
