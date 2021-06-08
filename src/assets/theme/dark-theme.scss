@@ -101,7 +101,28 @@ $darkBackground: map-get($dark-theme, background);
     color: map-get($pxb-darkBlack, 500) !important;
 }
 
-
+// account.component.ts
+.account-summary-tags {
+    .account-pending {
+        background-color: map-get($darkBackground, background);
+        color: map-get($pxb-orange, 500);
+        border: solid 1px map-get($pxb-orange, 500);
+    }
+}
+.tab-transaction-list {
+    pxb-list-item-tag.type {
+        color: black !important;
+        &.send {
+            background-color: map-get($pxb-red, 200);
+        }
+        &.receive {
+            background-color: map-get($pxb-green, 200)
+        }
+        &.change {
+            background-color: map-get($pxb-blue, 200);
+        }
+    }
+}
 
 html, body {
     background-color: map-get($darkBackground, background) !important;

@@ -6,15 +6,16 @@
     [class.open]="isOpen()"
 >
     <pxb-drawer pxb-drawer [open]="isOpen()" [sideBorder]="true">
-        <pxb-drawer-header>
+        <pxb-drawer-header title="Yellow Spyglass" subtitle="Banano Explorer">
             <button pxb-icon mat-icon-button (click)="toggleDrawerOpen()">
                 <mat-icon>menu</mat-icon>
             </button>
+            <!--
             <div pxb-title-content class="navigation-drawer-header-content">
                 <div class="mat-overline" [style.marginTop.px]="8">Yellow Spyglass</div>
                 <img class="navigation-spyglass" responsive src="assets/spyglass.svg" />
                 <div class="mat-overline" [style.marginTop.px]="48">BANANO Explorer</div>
-            </div>
+            </div>-->
         </pxb-drawer-header>
         <pxb-drawer-body>
             <pxb-drawer-nav-group title="Accounts" [divider]="true">

@@ -17,6 +17,7 @@ import { ApiService } from '@app/services/api/api.service';
 import { MonkeyCacheService } from '@app/services/monkey-cache/monkey-cache.service';
 import { PendingTransaction } from '@app/types/modal';
 import { SearchService } from '@app/services/search/search.service';
+import {PriceService} from "@app/services/price/price.service";
 
 @Component({
     selector: 'app-account',
@@ -58,6 +59,7 @@ export class AccountComponent {
         public searchService: SearchService,
         private readonly _util: UtilService,
         private readonly _apiService: ApiService,
+        private readonly _priceService: PriceService,
         private readonly _ref: ChangeDetectorRef,
         private readonly _monkeyCache: MonkeyCacheService
     ) {}
@@ -258,5 +260,28 @@ export class AccountComponent {
             .catch((err) => {
                 console.error(err);
             });
+    }
+
+    getConfirmedBadge(): string {
+        return this._util.numberWithCommas(this.accountOverview.completedTxCount);
+    }
+
+    getPendingBadge(): string {
+        return this._util.numberWithCommas(this.accountOverview.pendingTxCount);
+    }
+
+    getDelegatorsBadge(): string {
+        return this._util.numberWithCommas(this.accountOverview.delegatorsCount);
+    }
+
+
+    formatUsdPrice(raw: string): number {
+        const ban = this._util.convertRawToBan(raw, { precision: 2, comma: false });
+        return Math.round(this._priceService.priceInUSD(Number(ban)));
+    }
+
+    formatBtcPrice(raw: string): string {
+        const ban = this._util.convertRawToBan(raw, { precision: 2, comma: false });
+        return `₿${this._util.numberWithCommas(this._priceService.priceInBitcoin(Number(ban)).toFixed(4))}`;
     }
 }

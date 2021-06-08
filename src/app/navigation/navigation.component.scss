@@ -1,10 +1,10 @@
-.navigation-app-header-container,
+/*.navigation-app-header-container,
 .navigation-drawer-header-content {
     height: 128px;
     &.sm {
         height: 64px;
     }
-}
+} */
 
 .navigation-app-header-container {
     position: relative;
@@ -18,7 +18,7 @@
 
 ::ng-deep {
     .pxb-drawer-header-content {
-        height: unset !important;
+     //   height: unset !important;
     }
 
     .pxb-drawer-header {

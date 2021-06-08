@@ -16,7 +16,6 @@
 
 <div class="account-header" responsive>
     <div class="account-title">
-        <ng-template *ngIf="!vp.sm" [ngTemplateOutlet]="accountMonkey"></ng-template>
         <div>
             <div [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm" [style.marginBottom.px]="4">
                 <span *ngIf="loading">Loading</span>
@@ -31,43 +30,60 @@
                 <app-copy-button [data]="address"></app-copy-button>
                 <app-bookmark-button [id]="address"></app-bookmark-button>
             </div>
-            <div *ngIf="accountOverview?.opened" class="mat-caption account-representative">
+            <div *ngIf="accountOverview?.opened"
+                 class="account-representative"
+                 [class.mat-caption]="vp.sm"
+                 [class.mat-subheading-2]="!vp.sm" responsive>
                 Represented by
-                <span class="link" (click)="searchService.emitSearch(accountOverview.representative)">{{
+                <span class="link" (click)="searchService.emitSearch(accountOverview.representative)" [style.marginLeft.px]="4">{{
                     shortenedRep
                 }}</span>
+
+                <span style="margin-left: 8px">
+                    <pxb-list-item-tag
+                            *ngIf="!accountOverview.isRepOnline"
+                            class="account-rep-offline"
+                            label="Offline"
+                    ></pxb-list-item-tag>
+                <pxb-list-item-tag
+                        *ngIf="accountOverview.isRepOnline"
+                        label="Online"
+                ></pxb-list-item-tag>
+                </span>
+
             </div>
 
             <div class="account-summary-tags" responsive *ngIf="accountOverview">
                 <ng-template *ngIf="vp.sm" [ngTemplateOutlet]="accountMonkey"></ng-template>
-                <div [style.marginTop.px]="vp.sm ? 16 : 0">
-                    <div class="account-balance">{{ confirmedBalance }} BAN</div>
-                    <pxb-list-item-tag
-                        [label]="pendingBalance + ' BAN PENDING'"
-                        class="account-pending"
-                    ></pxb-list-item-tag>
-                    <pxb-list-item-tag
-                        *ngIf="!accountOverview.isRepOnline"
-                        label="Representative Offline"
-                    ></pxb-list-item-tag>
-                    <pxb-list-item-tag
-                        *ngIf="accountOverview.isRepOnline"
-                        label="Representative Online"
-                    ></pxb-list-item-tag>
+
+
+                <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 0">
+                    <span [style.marginRight.px]="8">{{ confirmedBalance }} BAN</span>
+                    ·
+                    <span [style.marginRight.px]="8" [style.marginLeft.px]="8">{{ formatBtcPrice(accountOverview.balanceRaw) }}</span>
+                    ·
+                    <span [style.marginLeft.px]="8">{{ formatUsdPrice(accountOverview.balanceRaw) | currency }}</span>
+
                 </div>
             </div>
         </div>
     </div>
-    <canvas id="qr-code" [style.display]="loading || vp.sm ? 'none' : 'block'"></canvas>
+    <div style="display: flex; align-items: center">
+        <ng-template *ngIf="!vp.sm" [ngTemplateOutlet]="accountMonkey"></ng-template>
+        <canvas id="qr-code" [style.display]="loading || vp.sm ? 'none' : 'block'"></canvas>
+    </div>
 </div>
 
 <mat-tab-group *ngIf="!loading" class="account-tabs">
     <!-- Confirmed transactions -->
     <mat-tab>
         <ng-template mat-tab-label>
-            <span color="accent" matBadgeOverlap="false" [matBadge]="accountOverview.completedTxCount">
-                <!-- Completed <ng-container *ngIf="!vp.isLessThanMedium()">Transactions</ng-container> -->
-                <mat-icon>check</mat-icon>
+            <span color="accent" matBadgeOverlap="false" [matBadge]="getConfirmedBadge()">
+                <ng-container *ngIf="!vp.sm">
+                    Confirmed
+                    <ng-container *ngIf="!vp.md">Transactions</ng-container>
+                </ng-container>
+                <mat-icon *ngIf="vp.sm">check</mat-icon>
             </span>
         </ng-template>
         <account-confirmed-tab
@@ -79,9 +95,12 @@
     <!-- Pending transactions -->
     <mat-tab class="account-pending-tab">
         <ng-template mat-tab-label>
-            <span class="account-pending-badge" [matBadge]="accountOverview.pendingTxCount" matBadgeOverlap="false">
-                <!--Pending <ng-container *ngIf="!vp.isLessThanMedium()">Transactions</ng-container> -->
-                <mat-icon>pending</mat-icon>
+            <span class="account-pending-badge" [matBadge]="getPendingBadge()" matBadgeOverlap="false">
+                <ng-container *ngIf="!vp.sm">
+                    Pending
+                    <ng-container *ngIf="!vp.md">Transactions</ng-container>
+                </ng-container>
+                <mat-icon *ngIf="vp.sm">pending</mat-icon>
             </span>
         </ng-template>
         <account-pending-tab
@@ -93,9 +112,10 @@
     <!-- Delegators -->
     <mat-tab>
         <ng-template mat-tab-label>
-            <span class="account-delegators-badge" [matBadge]="accountOverview.delegatorsCount" matBadgeOverlap="false">
+            <span class="account-delegators-badge" [matBadge]="getDelegatorsBadge()" matBadgeOverlap="false">
                 <!-- Delegators -->
-                <mat-icon>how_to_vote</mat-icon>
+                <ng-container *ngIf="!vp.sm">Delegators</ng-container>
+                <mat-icon *ngIf="vp.sm">how_to_vote</mat-icon>
             </span>
         </ng-template>
         <account-delegators-tab [delegators]="delegators"></account-delegators-tab>
@@ -104,7 +124,8 @@
     <!-- Insights -->
     <mat-tab>
         <ng-template mat-tab-label>
-            <mat-icon>insights</mat-icon>
+            <ng-container *ngIf="!vp.sm">Insights</ng-container>
+            <mat-icon *ngIf="vp.sm">insights</mat-icon>
         </ng-template>
         <pxb-empty-state class="account-empty-state" title="Coming Soon" description="Feature in progress">
             <mat-icon pxb-empty-icon>how_to_vote</mat-icon>

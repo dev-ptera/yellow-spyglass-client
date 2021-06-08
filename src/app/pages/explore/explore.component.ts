@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import { ViewportService } from '../../services/viewport/viewport.service';
 import { ApiService } from '../../services/api/api.service';
 import { FormControl } from '@angular/forms';
@@ -14,7 +14,7 @@ import { Block } from '@app/types/dto/Block';
     styleUrls: ['./explore.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class ExploreComponent {
+export class ExploreComponent implements OnInit, OnDestroy{
     searchFormControl: FormControl;
     idFieldActive: boolean;
     touchedIdField: boolean;

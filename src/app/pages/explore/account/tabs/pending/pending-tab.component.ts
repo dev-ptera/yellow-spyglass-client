@@ -16,7 +16,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
                 [wrapTitle]="true"
                 [wrapSubtitle]="false"
                 [hidePadding]="true"
-                style="background-color: #fdfdfd; position: relative"
+                style="position: relative"
             >
                 <div class="large-monkey-wrapper" pxb-icon>
                     <div

@@ -18,13 +18,17 @@
     .account-representative {
         word-break: break-all;
         line-height: 16px;
-        margin-right: 24px;
     }
 
     .account-representative {
         color: map-get($pxb-gray, 500);
         margin-bottom: 16px;
-        margin-top: -4px;
+        margin-top: -2px;
+        &.sm {
+            margin-top: 4px;
+            marign-bottom: 0;
+        }
+        display: flex;
         .link {
             cursor: pointer;
             &:hover {

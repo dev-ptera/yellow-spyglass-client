@@ -81,3 +81,30 @@ $lightForeground: map-get($light-theme, foreground);
 .highcharts-legend-item.highcharts-bar-series text[style] {
     font-weight: 400 !important;
 }
+
+// account.component.ts
+.account-summary-tags {
+    .account-pending {
+        background-color: map-get($pxb-white, 50);
+        color: map-get($pxb-orange, 500);
+        border: solid 1px map-get($pxb-orange, 500);
+    }
+}
+.account-rep-offline {
+    background-color: map-get($pxb-red, 500);
+    color: map-get($pxb-white, 50);
+}
+.tab-transaction-list {
+    pxb-list-item-tag.type {
+        color: white !important;
+        &.send {
+            background-color: map-get($pxb-red, 500);
+        }
+        &.receive {
+            background-color: map-get($pxb-green, 900);
+        }
+        &.change {
+            background-color: map-get($pxb-blue, 500);
+        }
+    }
+}
