@@ -1,7 +1,7 @@
 @import '~@pxblue/colors/palette';
 @import '~@angular/material/_theming.scss';
 
-$material-theme-primary: mat-palette($pxb-green, 800);
+$material-theme-primary: mat-palette($pxb-green, 900);
 $material-theme-accent: mat-palette($pxb-blue);
 $material-theme-warn: mat-palette($pxb-red);
 $dark-theme: map-merge(
@@ -93,4 +93,16 @@ $darkBackground: map-get($dark-theme, background);
 
 .mat-drawer-backdrop.mat-drawer-shown {
     background-color: #040404d1 !important;
+}
+
+// Header
+.pxb-drawer-header-content,
+.navigation-app-header-container {
+    color: map-get($pxb-darkBlack, 500) !important;
+}
+
+
+
+html, body {
+    background-color: map-get($darkBackground, background) !important;
 }

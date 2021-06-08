@@ -45,12 +45,12 @@
         </pxb-drawer-body>
     </pxb-drawer>
     <div pxb-content class="navigation-drawer-content">
-        <div class="navigation-app-header-container mat-elevation-z2" responsive>
+        <mat-toolbar class="navigation-app-header-container mat-elevation-z2" color="primary" responsive>
             <button
                 mat-icon-button
                 *ngIf="variant === 'temporary'"
                 (click)="openDrawer()"
-                style="margin-right: 16px; margin-left: -16px; color: white"
+                style="margin-right: 16px; margin-left: -16px;"
             >
                 <mat-icon>menu</mat-icon>
             </button>
@@ -59,16 +59,15 @@
             <button
                 mat-icon-button
                 [style.marginRight.px]="12"
-                style="color: white"
                 (click)="navigate(navItems.bookmarks.route)"
             >
                 <mat-icon>bookmarks</mat-icon>
             </button>
-            <button mat-icon-button (click)="toggleTheme()" style="color: white">
+            <button mat-icon-button (click)="toggleTheme()">
                 <mat-icon *ngIf="themeService.isLightMode()">dark_mode</mat-icon>
                 <mat-icon *ngIf="!themeService.isLightMode()">light_mode</mat-icon>
             </button>
-        </div>
+        </mat-toolbar>
         <router-outlet></router-outlet>
     </div>
 </pxb-drawer-layout>

@@ -1,5 +1,3 @@
-@import '~@pxblue/colors/palette';
-
 .navigation-app-header-container,
 .navigation-drawer-header-content {
     height: 128px;
@@ -21,7 +19,6 @@
 ::ng-deep {
     .pxb-drawer-header-content {
         height: unset !important;
-        background-color: #45af45 !important;
     }
 
     .pxb-drawer-header {
@@ -33,8 +30,6 @@
     position: sticky;
     position: -webkit-sticky;
     background-size: contain;
-    background-color: #45af45 !important;
-    //background-image: url('../../assets/bg-footer.svg');
     display: flex;
     align-items: center;
     padding: 0 24px;
@@ -42,7 +37,6 @@
     z-index: 2;
     .navigation-toolbar-title {
         font-size: 24px;
-        color: white;
     }
 }
 
