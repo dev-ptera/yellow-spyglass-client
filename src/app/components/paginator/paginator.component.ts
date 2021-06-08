@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
 import { UtilService } from '@app/services/util/util.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 

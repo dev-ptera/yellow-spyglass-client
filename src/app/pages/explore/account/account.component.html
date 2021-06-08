@@ -30,40 +30,42 @@
                 <app-copy-button [data]="address"></app-copy-button>
                 <app-bookmark-button [id]="address"></app-bookmark-button>
             </div>
-            <div *ngIf="accountOverview?.opened"
-                 class="account-representative"
-                 [class.mat-caption]="vp.sm"
-                 [class.mat-subheading-2]="!vp.sm" responsive>
+            <div
+                *ngIf="accountOverview?.opened"
+                class="account-representative"
+                [class.mat-caption]="vp.sm"
+                [class.mat-subheading-2]="!vp.sm"
+                responsive
+            >
                 Represented by
-                <span class="link" (click)="searchService.emitSearch(accountOverview.representative)" [style.marginLeft.px]="4">{{
-                    shortenedRep
-                }}</span>
+                <span
+                    class="link"
+                    (click)="searchService.emitSearch(accountOverview.representative)"
+                    [style.marginLeft.px]="4"
+                    >{{ shortenedRep }}</span
+                >
 
                 <span style="margin-left: 8px">
                     <pxb-list-item-tag
-                            *ngIf="!accountOverview.isRepOnline"
-                            class="account-rep-offline"
-                            label="Offline"
+                        *ngIf="!accountOverview.isRepOnline"
+                        class="account-rep-offline"
+                        label="Offline"
                     ></pxb-list-item-tag>
-                <pxb-list-item-tag
-                        *ngIf="accountOverview.isRepOnline"
-                        label="Online"
-                ></pxb-list-item-tag>
+                    <pxb-list-item-tag *ngIf="accountOverview.isRepOnline" label="Online"></pxb-list-item-tag>
                 </span>
-
             </div>
 
             <div class="account-summary-tags" responsive *ngIf="accountOverview">
                 <ng-template *ngIf="vp.sm" [ngTemplateOutlet]="accountMonkey"></ng-template>
 
-
                 <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 0">
                     <span [style.marginRight.px]="8">{{ confirmedBalance }} BAN</span>
                     ·
-                    <span [style.marginRight.px]="8" [style.marginLeft.px]="8">{{ formatBtcPrice(accountOverview.balanceRaw) }}</span>
+                    <span [style.marginRight.px]="8" [style.marginLeft.px]="8">{{
+                        formatBtcPrice(accountOverview.balanceRaw)
+                    }}</span>
                     ·
                     <span [style.marginLeft.px]="8">{{ formatUsdPrice(accountOverview.balanceRaw) | currency }}</span>
-
                 </div>
             </div>
         </div>

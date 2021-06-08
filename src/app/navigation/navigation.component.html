@@ -51,17 +51,13 @@
                 mat-icon-button
                 *ngIf="variant === 'temporary'"
                 (click)="openDrawer()"
-                style="margin-right: 16px; margin-left: -16px;"
+                style="margin-right: 16px; margin-left: -16px"
             >
                 <mat-icon>menu</mat-icon>
             </button>
             <div responsive class="navigation-toolbar-title">{{ toolbarTitle }}</div>
             <pxb-spacer></pxb-spacer>
-            <button
-                mat-icon-button
-                [style.marginRight.px]="12"
-                (click)="navigate(navItems.bookmarks.route)"
-            >
+            <button mat-icon-button [style.marginRight.px]="12" (click)="navigate(navItems.bookmarks.route)">
                 <mat-icon>bookmarks</mat-icon>
             </button>
             <button mat-icon-button (click)="toggleTheme()">

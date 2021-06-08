@@ -16,7 +16,7 @@ import { ApiService } from '@app/services/api/api.service';
 import { MonkeyCacheService } from '@app/services/monkey-cache/monkey-cache.service';
 import { PendingTransaction } from '@app/types/modal';
 import { SearchService } from '@app/services/search/search.service';
-import {PriceService} from "@app/services/price/price.service";
+import { PriceService } from '@app/services/price/price.service';
 
 @Component({
     selector: 'app-account',
@@ -272,7 +272,6 @@ export class AccountComponent {
     getDelegatorsBadge(): string {
         return this._util.numberWithCommas(this.accountOverview.delegatorsCount);
     }
-
 
     formatUsdPrice(raw: string): number {
         const ban = this._util.convertRawToBan(raw, { precision: 2, comma: false });

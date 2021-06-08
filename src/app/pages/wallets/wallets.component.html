@@ -76,7 +76,12 @@
                     <td mat-cell style="padding: 8px 12px 8px 16px" *matCellDef="let element">
                         <div style="display: flex; align-items: center">
                             <!--<span [style.fontSize.px]="vp.sm ? 8 : 12">🍌</span>-->
-                            <img src="assets/banano-icon.svg" [width]="vp.sm ? 12 : 14" [height]="vp.sm ? 12 : 14" style="margin-right: 4px" />
+                            <img
+                                src="assets/banano-icon.svg"
+                                [width]="vp.sm ? 12 : 14"
+                                [height]="vp.sm ? 12 : 14"
+                                style="margin-right: 4px"
+                            />
                             {{ formatBanAmount(element.ban) }}
                         </div>
                         <div class="wallets-rich-list-conversion">

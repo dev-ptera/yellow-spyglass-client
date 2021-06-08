@@ -27,7 +27,7 @@ import { DelegatorsTabComponent } from '@app/pages/explore/account/tabs/delegato
 import { HashComponent } from '@app/pages/explore/hash/hash.component';
 import { BookmarkButtonComponent } from '../../components/bookmark-button/bookmark-button.component';
 import { CopyButtonComponent } from '../../components/copy-button/copy-button.component';
-import {PaginatorComponent} from "../../components/paginator/paginator.component";
+import { PaginatorComponent } from '../../components/paginator/paginator.component';
 
 @NgModule({
     declarations: [

@@ -116,7 +116,7 @@ $darkBackground: map-get($dark-theme, background);
             background-color: map-get($pxb-red, 200);
         }
         &.receive {
-            background-color: map-get($pxb-green, 200)
+            background-color: map-get($pxb-green, 200);
         }
         &.change {
             background-color: map-get($pxb-blue, 200);
@@ -124,6 +124,7 @@ $darkBackground: map-get($dark-theme, background);
     }
 }
 
-html, body {
+html,
+body {
     background-color: map-get($darkBackground, background) !important;
 }
