@@ -6,7 +6,7 @@ import {
     AccountDistributionStats,
     AccountOverviewDto,
     ConfirmedTransactionDto,
-    MonitoredRepDto,
+    MonitoredRepDto, PriceData,
     RepresentativesResponseDto,
 } from '@app/types/dto';
 import { Block } from '@app/types/dto/Block';
@@ -54,5 +54,9 @@ export class ApiService {
 
     getAccountBalances(offset: number): Promise<AccountBalance[]> {
         return this._http.get<AccountBalance[]>(`${this.url}/accounts-balance?offset=${offset}`).toPromise();
+    }
+
+    getPriceInfo(): Promise<PriceData> {
+        return this._http.get<PriceData>(`${this.url}/price`).toPromise();
     }
 }

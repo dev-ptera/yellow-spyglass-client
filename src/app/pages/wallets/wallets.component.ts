@@ -7,6 +7,7 @@ import { Options } from 'highcharts';
 // eslint-disable-next-line no-duplicate-imports
 import * as Highcharts from 'highcharts';
 import { UtilService } from '@app/services/util/util.service';
+import {PriceService} from "@app/services/price/price.service";
 
 @Component({
     selector: 'app-wallets',
@@ -28,7 +29,8 @@ export class WalletsComponent implements OnInit {
         public util: UtilService,
         private readonly _api: ApiService,
         public vp: ViewportService,
-        public searchService: SearchService
+        public searchService: SearchService,
+        private readonly _priceService: PriceService
     ) {
         this.vp.vpChange.subscribe(() => {
             setTimeout(() => {
@@ -63,6 +65,19 @@ export class WalletsComponent implements OnInit {
                 console.error(err);
                 this.loadingNewAccountBalancePage = false;
             });
+    }
+
+    formatBanAmount(ban: number): string {
+        return `${this.util.numberWithCommas(ban.toFixed(ban > 10000 ? 0 : 2))} `;
+    }
+
+    formatUsdPrice(ban: number): number {
+        return Math.round(this._priceService.priceInUSD(ban));
+    }
+
+    formatBtcPrice(ban: number): string {
+        return `₿${this.util.numberWithCommas(
+            this._priceService.priceInBitcoin(ban).toFixed(2))}`;
     }
 
     private _createDistributionChart(data: AccountDistributionStats): Options {

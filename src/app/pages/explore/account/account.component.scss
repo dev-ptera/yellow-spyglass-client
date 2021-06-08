@@ -64,9 +64,8 @@
         margin-right: 16px;
     }
     .account-balance {
-        background-color: map-get($pxb-white, 50);
-        color: map-get($pxb-green, 700);
-        border: solid 1px map-get($pxb-green, 700);
+        margin-bottom: 8px;
+        font-size: 18px;
     }
     .account-pending {
         background-color: map-get($pxb-white, 50);

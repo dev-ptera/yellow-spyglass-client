@@ -11,6 +11,7 @@ export type AccountOverviewDto = {
     pendingTxCount: number;
     delegatorsCount: number;
     representative: string;
+    isRepOnline: boolean;
     confirmedTransactions: ConfirmedTransactionDto[];
     pendingTransactions: PendingTransactionDto[];
     delegators: DelegatorDto[];

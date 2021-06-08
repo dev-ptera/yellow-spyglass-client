@@ -1,7 +1,7 @@
 <div class="wallets-root" responsive>
     <div class="wallets-content">
         <div class="wallets-title" [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm">
-            <ng-container *ngIf="!loading"> Banano Distribution Chart </ng-container>
+            <ng-container *ngIf="!loading"> BAN Distribution Chart </ng-container>
             <ng-container *ngIf="loading"> Loading </ng-container>
         </div>
 
@@ -42,10 +42,11 @@
                 [style.width.%]="100"
                 [dataSource]="accountBalances"
                 class="wallets-rich-list-table mat-elevation-z4"
+                responsive
             >
                 <ng-container matColumnDef="position">
                     <th mat-header-cell *matHeaderCellDef></th>
-                    <td mat-cell [style.paddingRight.px]="16" *matCellDef="let element; let i = index">
+                    <td mat-cell [style.paddingRight.px]="12" *matCellDef="let element; let i = index">
                         <span
                             matBadgeColor="warn"
                             matBadgeOverlap="false"
@@ -61,8 +62,8 @@
                     <th mat-header-cell *matHeaderCellDef>Address</th>
                     <td
                         mat-cell
-                        [style.paddingTop.px]="8"
-                        [style.paddingBottom.px]="8"
+                        [style.paddingTop.px]="12"
+                        [style.paddingBottom.px]="12"
                         class="wallets-address-cell"
                         *matCellDef="let element"
                         (click)="searchService.emitSearch(element.addr)"
@@ -71,9 +72,18 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="ban">
-                    <th mat-header-cell [style.paddingLeft.px]="16" *matHeaderCellDef>BANANO</th>
-                    <td mat-cell [style.paddingLeft.px]="16" *matCellDef="let element">
-                        {{ util.numberWithCommas(element.ban) }}
+                    <th mat-header-cell [style.paddingLeft.px]="16" *matHeaderCellDef>Amount</th>
+                    <td mat-cell style="padding: 8px 12px 8px 16px" *matCellDef="let element">
+                        <div style="display: flex; align-items: center">
+                            <!--<span [style.fontSize.px]="vp.sm ? 8 : 12">🍌</span>-->
+                            <img src="assets/banano-icon.svg" width="12" height="12" style="margin-right: 4px" />
+                            {{ formatBanAmount(element.ban) }} </div>
+                        <div class="wallets-rich-list-conversion">
+                            <div>
+                                {{ formatUsdPrice(element.ban) | currency  }} ·
+                                {{ formatBtcPrice(element.ban) }}
+                            </div>
+                        </div>
                     </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="columns"></tr>

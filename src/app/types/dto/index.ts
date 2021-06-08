@@ -8,5 +8,6 @@ export * from './DelegatorDto';
 export * from './ConfirmedTransactionDto';
 export * from './MonitoredRepDto';
 export * from './PendingTransactionDto';
+export * from './PriceData';
 export * from './RepresentativeDto';
 export * from './RepresentativesResponseDto';
