@@ -3,7 +3,7 @@
 
 $material-theme-primary: mat-palette($pxb-green, 800);
 $material-theme-accent: mat-palette($pxb-blue);
-$material-theme-warn: mat-palette($mat-deep-orange, A200);
+$material-theme-warn: mat-palette($pxb-red);
 $light-theme: map-merge(
     mat-light-theme($material-theme-primary, $material-theme-accent, $material-theme-warn),
     (

@@ -6,7 +6,8 @@ import {
     AccountDistributionStats,
     AccountOverviewDto,
     ConfirmedTransactionDto,
-    MonitoredRepDto, PriceData,
+    MonitoredRepDto,
+    PriceData,
     RepresentativesResponseDto,
 } from '@app/types/dto';
 import { Block } from '@app/types/dto/Block';

@@ -7,7 +7,7 @@ import { Options } from 'highcharts';
 // eslint-disable-next-line no-duplicate-imports
 import * as Highcharts from 'highcharts';
 import { UtilService } from '@app/services/util/util.service';
-import {PriceService} from "@app/services/price/price.service";
+import { PriceService } from '@app/services/price/price.service';
 
 @Component({
     selector: 'app-wallets',
@@ -76,8 +76,7 @@ export class WalletsComponent implements OnInit {
     }
 
     formatBtcPrice(ban: number): string {
-        return `₿${this.util.numberWithCommas(
-            this._priceService.priceInBitcoin(ban).toFixed(2))}`;
+        return `₿${this.util.numberWithCommas(this._priceService.priceInBitcoin(ban).toFixed(2))}`;
     }
 
     private _createDistributionChart(data: AccountDistributionStats): Options {

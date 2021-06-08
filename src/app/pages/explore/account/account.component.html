@@ -46,8 +46,14 @@
                         [label]="pendingBalance + ' BAN PENDING'"
                         class="account-pending"
                     ></pxb-list-item-tag>
-                    <pxb-list-item-tag *ngIf="!accountOverview.isRepOnline" label="Representative Offline"></pxb-list-item-tag>
-                    <pxb-list-item-tag *ngIf="accountOverview.isRepOnline" label="Representative Online"></pxb-list-item-tag>
+                    <pxb-list-item-tag
+                        *ngIf="!accountOverview.isRepOnline"
+                        label="Representative Offline"
+                    ></pxb-list-item-tag>
+                    <pxb-list-item-tag
+                        *ngIf="accountOverview.isRepOnline"
+                        label="Representative Online"
+                    ></pxb-list-item-tag>
                 </div>
             </div>
         </div>
