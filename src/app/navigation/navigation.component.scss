@@ -1,10 +1,6 @@
-/*.navigation-app-header-container,
-.navigation-drawer-header-content {
+.navigation-drawer-header-content.sm {
     height: 128px;
-    &.sm {
-        height: 64px;
-    }
-} */
+}
 
 .navigation-app-header-container {
     position: relative;
@@ -16,14 +12,11 @@
     bottom: -26px;
 }
 
-::ng-deep {
-    .pxb-drawer-header-content {
-        //   height: unset !important;
-    }
-
-    .pxb-drawer-header {
-        background-color: unset !important;
-    }
+::ng-deep .sm .pxb-drawer-header-content {
+    height: unset !important;
+}
+::ng-deep .pxb-drawer-header {
+    background-color: unset !important;
 }
 
 .navigation-app-header-container {

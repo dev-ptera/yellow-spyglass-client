@@ -36,6 +36,7 @@ export class AccountComponent {
     shortenedRep: string;
 
     delegators: Delegator[] = [];
+    weightSum = 0;
 
     confirmedTransactions: {
         all: ConfirmedTransaction[];
@@ -111,6 +112,7 @@ export class AccountComponent {
     private _prepareDelegators(accountOverview: AccountOverviewDto): void {
         this.delegators = [];
         for (const delegator of accountOverview.delegators) {
+            this.weightSum += Number(this._util.convertRawToBan(delegator.weightRaw, { precision: 6, comma: false }));
             this.delegators.push({
                 address: delegator.address,
                 weight: this._util.convertRawToBan(delegator.weightRaw, {
@@ -275,7 +277,11 @@ export class AccountComponent {
 
     formatUsdPrice(raw: string): number {
         const ban = this._util.convertRawToBan(raw, { precision: 2, comma: false });
-        return Math.round(this._priceService.priceInUSD(Number(ban)));
+        const price = this._priceService.priceInUSD(Number(ban));
+        if (price > 100000) {
+            return Math.round(price);
+        }
+        return price;
     }
 
     formatBtcPrice(raw: string): string {

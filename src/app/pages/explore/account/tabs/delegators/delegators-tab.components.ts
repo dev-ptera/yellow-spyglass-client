@@ -1,10 +1,15 @@
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { Delegator } from '@app/types/modal/Delegator';
 import { SearchService } from '@app/services/search/search.service';
+import { UtilService } from '@app/services/util/util.service';
 
 @Component({
     selector: 'account-delegators-tab',
     template: `
+        <div class="account-delegator-weight">
+            <span class="account-delegator-weight-sum" responsive>{{ formattedWeight }}</span>
+            <span class="account-delegator-weight-sum-description" responsive>BAN Delegated Weight</span>
+        </div>
         <table
             mat-table
             *ngIf="delegators.length > 0"
@@ -60,13 +65,20 @@ import { SearchService } from '@app/services/search/search.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
-export class DelegatorsTabComponent {
+export class DelegatorsTabComponent implements OnChanges {
     @Input() delegators: Delegator[];
+    @Input() weightSum: number;
 
     shownDelegators = 50;
     columns = ['position', 'address', 'weight'];
 
-    constructor(public searchService: SearchService) {}
+    formattedWeight: string;
+
+    constructor(public searchService: SearchService, private readonly _util: UtilService) {}
+
+    ngOnChanges(): void {
+        this.formattedWeight = this._util.numberWithCommas(this.weightSum.toFixed(2));
+    }
 
     getShownDelegators(): Delegator[] {
         if (this.delegators) {

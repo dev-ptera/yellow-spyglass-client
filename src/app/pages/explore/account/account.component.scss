@@ -14,6 +14,10 @@
         display: flex;
         align-items: center;
     }
+    .account-address {
+        display: flex;
+        align-items: center;
+    }
     .account-address,
     .account-representative {
         word-break: break-all;
@@ -23,12 +27,11 @@
     .account-representative {
         color: map-get($pxb-gray, 500);
         margin-bottom: 16px;
-        margin-top: -2px;
-        &.sm {
-            margin-top: 4px;
-            marign-bottom: 0;
-        }
+        margin-top: 16px;
         display: flex;
+        &.sm {
+            margin-bottom: 8px;
+        }
         .link {
             cursor: pointer;
             &:hover {
@@ -44,6 +47,36 @@
             width: 100px;
             min-width: 100px;
             margin-right: 16px;
+        }
+    }
+
+    .account-balance {
+        .account-ban-amount {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .account-btc-amount {
+            font-size: 18px;
+        }
+        .account-usd-amount {
+            font-size: 18px;
+        }
+    }
+    .account-balance.sm {
+        display: flex;
+        flex: 1 1 0px;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        .account-ban-amount {
+            font-size: 18px;
+            margin-bottom: -4px;
+        }
+        .account-btc-amount {
+            font-size: 14px;
+        }
+        .account-usd-amount {
+            font-size: 14px;
         }
     }
 }

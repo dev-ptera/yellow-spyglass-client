@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DrawerLayoutVariantType } from '@pxblue/angular-components';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -13,7 +13,7 @@ import { ThemeService } from '@app/services/theme/theme.service';
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.scss'],
 })
-export class NavigationComponent {
+export class NavigationComponent implements OnInit {
     toolbarTitle: string;
     routeListener: Subscription;
     variant: DrawerLayoutVariantType;
@@ -23,11 +23,12 @@ export class NavigationComponent {
     networkNavGroup = NETWORK_NAV_GROUP;
 
     constructor(
+        public vp: ViewportService,
+        public themeService: ThemeService,
         private readonly _router: Router,
         private readonly _searchService: SearchService,
         private readonly _viewportService: ViewportService,
-        private readonly _stateService: DrawerStateService,
-        public themeService: ThemeService
+        private readonly _stateService: DrawerStateService
     ) {
         this._listenForRouteChanges();
     }

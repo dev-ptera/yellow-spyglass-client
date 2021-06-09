@@ -5,3 +5,27 @@
         text-decoration: underline;
     }
 }
+
+.account-delegator-weight {
+    height: 56px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+
+    .account-delegator-weight-sum {
+        font-size: 24px;
+        font-weight: 600;
+        margin-right: 8px;
+        &.sm {
+            font-size: 18px;
+        }
+    }
+
+    .account-delegator-weight-sum-description {
+        font-weight: 400;
+        font-size: 16px;
+        &.sm {
+            font-size: 14px;
+        }
+    }
+}

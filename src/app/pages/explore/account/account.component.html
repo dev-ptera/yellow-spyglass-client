@@ -16,7 +16,7 @@
 
 <div class="account-header" responsive>
     <div class="account-title">
-        <div>
+        <div [style.width.%]="100">
             <div [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm" [style.marginBottom.px]="4">
                 <span *ngIf="loading">Loading</span>
                 <ng-container *ngIf="accountOverview?.delegatorsCount === 0">
@@ -27,8 +27,10 @@
             </div>
             <div class="mat-subheading-2 account-address">
                 {{ address }}
-                <app-copy-button [data]="address"></app-copy-button>
-                <app-bookmark-button [id]="address"></app-bookmark-button>
+                <div style="display: flex">
+                    <app-copy-button [data]="address"></app-copy-button>
+                    <app-bookmark-button [id]="address"></app-bookmark-button>
+                </div>
             </div>
             <div
                 *ngIf="accountOverview?.opened"
@@ -58,14 +60,30 @@
             <div class="account-summary-tags" responsive *ngIf="accountOverview">
                 <ng-template *ngIf="vp.sm" [ngTemplateOutlet]="accountMonkey"></ng-template>
 
-                <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 0">
-                    <span [style.marginRight.px]="8">{{ confirmedBalance }} BAN</span>
-                    ·
-                    <span [style.marginRight.px]="8" [style.marginLeft.px]="8">{{
-                        formatBtcPrice(accountOverview.balanceRaw)
-                    }}</span>
-                    ·
-                    <span [style.marginLeft.px]="8">{{ formatUsdPrice(accountOverview.balanceRaw) | currency }}</span>
+                <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 0" responsive>
+                    <ng-container *ngIf="!vp.sm">
+                        <span class="account-ban-amount" [style.marginRight.px]="8">{{ confirmedBalance }} BAN</span>
+                        ·
+                        <span class="account-btc-amount" style="margin: 0 8px">
+                            {{ formatBtcPrice(accountOverview.balanceRaw) }}</span
+                        >
+                        ·
+                        <span class="account-usd-amount" [style.marginLeft.px]="8">
+                            {{ formatUsdPrice(accountOverview.balanceRaw) | currency }}
+                        </span>
+                    </ng-container>
+                    <ng-container *ngIf="vp.sm">
+                        <div class="account-ban-amount">{{ confirmedBalance }} BAN</div>
+                        <div>
+                            <span class="account-btc-amount" [style.marginRight.px]="4">{{
+                                formatBtcPrice(accountOverview.balanceRaw)
+                            }}</span>
+                            |
+                            <span class="account-usd-amount" [style.marginLeft.px]="4">{{
+                                formatUsdPrice(accountOverview.balanceRaw) | currency
+                            }}</span>
+                        </div>
+                    </ng-container>
                 </div>
             </div>
         </div>
@@ -120,7 +138,7 @@
                 <mat-icon *ngIf="vp.sm">how_to_vote</mat-icon>
             </span>
         </ng-template>
-        <account-delegators-tab [delegators]="delegators"></account-delegators-tab>
+        <account-delegators-tab [delegators]="delegators" [weightSum]="weightSum"></account-delegators-tab>
     </mat-tab>
 
     <!-- Insights -->
