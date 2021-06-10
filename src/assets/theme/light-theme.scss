@@ -1,7 +1,7 @@
 @import '~@pxblue/colors/palette';
 @import '~@angular/material/_theming.scss';
 
-$material-theme-primary: mat-palette($pxb-green, 800);
+$material-theme-primary: mat-palette($pxb-green, 700);
 $material-theme-accent: mat-palette($pxb-blue);
 $material-theme-warn: mat-palette($pxb-red);
 $light-theme: map-merge(

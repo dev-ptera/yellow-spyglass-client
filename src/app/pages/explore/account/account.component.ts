@@ -37,6 +37,7 @@ export class AccountComponent {
 
     delegators: Delegator[] = [];
     weightSum = 0;
+    readonly txPerPage = 50;
 
     confirmedTransactions: {
         all: ConfirmedTransaction[];
@@ -246,7 +247,7 @@ export class AccountComponent {
             return;
         }
         this._apiService
-            .confirmedTransactions(this.address, currPage * currPage)
+            .confirmedTransactions(this.address, currPage * this.txPerPage, this.txPerPage)
             .then((data: ConfirmedTransactionDto[]) => {
                 this.loadedConfirmedTxPages.add(currPage);
                 for (const tx of data) {

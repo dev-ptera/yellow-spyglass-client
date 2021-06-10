@@ -1,4 +1,4 @@
-export type PriceData = {
+export type PriceDataDto = {
     bananoPriceUsd: number;
     bitcoinPriceUsd: number;
 };

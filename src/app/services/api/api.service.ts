@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import {
-    AccountBalance,
-    AccountDistributionStats,
+    AccountBalanceDto,
+    AccountDistributionStatsDto,
     AccountOverviewDto,
+    BlockDto,
     ConfirmedTransactionDto,
     MonitoredRepDto,
-    PriceData,
+    PriceDataDto,
     RepresentativesResponseDto,
 } from '@app/types/dto';
-import { Block } from '@app/types/dto/Block';
 
 @Injectable({
     providedIn: 'root',
@@ -24,14 +24,16 @@ export class ApiService {
         return this._http.get<AccountOverviewDto>(`${this.url}/account-overview/${address}`).toPromise();
     }
 
-    confirmedTransactions(address: string, offset: number): Promise<ConfirmedTransactionDto[]> {
+    confirmedTransactions(address: string, offset: number, pageSize: number): Promise<ConfirmedTransactionDto[]> {
         return this._http
-            .get<ConfirmedTransactionDto[]>(`${this.url}/confirmed-transactions?address=${address}&offset=${offset}`)
+            .get<ConfirmedTransactionDto[]>(
+                `${this.url}/confirmed-transactions?address=${address}&offset=${offset}&size=${pageSize}`
+            )
             .toPromise();
     }
 
-    block(hash: string): Promise<Block> {
-        return this._http.get<Block>(`${this.url}/block/${hash}`).toPromise();
+    block(hash: string): Promise<BlockDto> {
+        return this._http.get<BlockDto>(`${this.url}/block/${hash}`).toPromise();
     }
 
     node(): Promise<MonitoredRepDto> {
@@ -49,15 +51,17 @@ export class ApiService {
         return this._http.get<RepresentativesResponseDto>(`${this.url}/representatives`).toPromise();
     }
 
-    bananoDistribution(): Promise<AccountDistributionStats> {
-        return this._http.get<AccountDistributionStats>(`${this.url}/accounts-distribution`).toPromise();
+    bananoDistribution(): Promise<AccountDistributionStatsDto> {
+        return this._http.get<AccountDistributionStatsDto>(`${this.url}/accounts-distribution`).toPromise();
     }
 
-    getAccountBalances(offset: number): Promise<AccountBalance[]> {
-        return this._http.get<AccountBalance[]>(`${this.url}/accounts-balance?offset=${offset}`).toPromise();
+    getAccountBalances(offset: number, pageSize: number): Promise<AccountBalanceDto[]> {
+        return this._http
+            .get<AccountBalanceDto[]>(`${this.url}/accounts-balance?offset=${offset}&size=${pageSize}`)
+            .toPromise();
     }
 
-    getPriceInfo(): Promise<PriceData> {
-        return this._http.get<PriceData>(`${this.url}/price`).toPromise();
+    getPriceInfo(): Promise<PriceDataDto> {
+        return this._http.get<PriceDataDto>(`${this.url}/price`).toPromise();
     }
 }

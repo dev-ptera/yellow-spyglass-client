@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '@app/services/api/api.service';
-import { PriceData } from '@app/types/dto';
+import { PriceDataDto } from '@app/types/dto';
 
 @Injectable({
     providedIn: 'root',
 })
 export class PriceService {
-    priceData: PriceData;
+    priceData: PriceDataDto;
 
     constructor(private readonly _api: ApiService) {
         this.refreshPriceData();
@@ -18,7 +18,7 @@ export class PriceService {
     refreshPriceData(): void {
         this._api
             .getPriceInfo()
-            .then((data: PriceData) => {
+            .then((data: PriceDataDto) => {
                 this.priceData = data;
             })
             .catch((err) => {

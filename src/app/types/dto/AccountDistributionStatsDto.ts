@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-export type AccountDistributionStats = {
+export type AccountDistributionStatsDto = {
     number0_001: number;
     number0_01: number;
     number0_1: number;

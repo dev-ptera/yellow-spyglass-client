@@ -6,7 +6,7 @@ import { ActivatedRoute, NavigationStart, Router, RouterEvent } from '@angular/r
 import { filter } from 'rxjs/operators';
 import { UtilService } from '../../services/util/util.service';
 import { AccountOverviewDto } from '@app/types/dto';
-import { Block } from '@app/types/dto/Block';
+import { BlockDto } from '@app/types/dto/BlockDto';
 
 @Component({
     selector: 'app-explore',
@@ -22,7 +22,7 @@ export class ExploreComponent implements OnInit, OnDestroy {
     monkeySvg: string;
     searchedValue: string;
     accountOverview: AccountOverviewDto;
-    blockResponse: Block;
+    blockResponse: BlockDto;
 
     showAccount = false;
     showBlock = false;

@@ -1,6 +1,6 @@
 import { Subtype } from '@dev-ptera/nano-node-rpc';
 
-export type Block = {
+export type BlockDto = {
     blockAccount: string;
     amount: string;
     balance: string;

@@ -1,13 +1,13 @@
 /* Types sent to the client. */
-export * from './AccountBalance';
-export * from './AccountDistributionStats';
+export * from './AccountBalanceDto';
+export * from './AccountDistributionStatsDto';
 export * from './AccountOverviewDto';
 export * from './ConfirmedTransactionDto';
-export * from './Block';
+export * from './BlockDto';
 export * from './DelegatorDto';
 export * from './ConfirmedTransactionDto';
 export * from './MonitoredRepDto';
+export * from './PriceDataDto';
 export * from './PendingTransactionDto';
-export * from './PriceData';
 export * from './RepresentativeDto';
 export * from './RepresentativesResponseDto';

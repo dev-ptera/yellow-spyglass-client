@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { SearchService } from '@app/services/search/search.service';
 import { ApiService } from '@app/services/api/api.service';
-import { AccountBalance, AccountDistributionStats } from '@app/types/dto';
 import { Options } from 'highcharts';
 // eslint-disable-next-line no-duplicate-imports
 import * as Highcharts from 'highcharts';
 import { UtilService } from '@app/services/util/util.service';
 import { PriceService } from '@app/services/price/price.service';
+import { AccountBalanceDto, AccountDistributionStatsDto } from '@app/types/dto';
 
 @Component({
     selector: 'app-wallets',
@@ -18,12 +18,12 @@ export class WalletsComponent implements OnInit {
     Highcharts: typeof Highcharts = Highcharts;
     loading = true;
     distributionChart: Options;
-    accountBalances: AccountBalance[] = [];
+    accountBalances: AccountBalanceDto[] = [];
     columns = ['position', 'addr', 'ban'];
     currentPage = 0;
     totalAccounts: number;
     loadingNewAccountBalancePage = false;
-    pageSize = 25;
+    readonly pageSize = 25;
 
     constructor(
         public util: UtilService,
@@ -40,7 +40,7 @@ export class WalletsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        Promise.all([this._api.bananoDistribution(), this._api.getAccountBalances(0)])
+        Promise.all([this._api.bananoDistribution(), this._api.getAccountBalances(0, this.pageSize)])
             .then((data) => {
                 this.distributionChart = this._createDistributionChart(data[0]);
                 this.accountBalances = data[1];
@@ -55,8 +55,9 @@ export class WalletsComponent implements OnInit {
     loadAccountBalances(currPage: number): void {
         this.currentPage = currPage;
         this.loadingNewAccountBalancePage = true;
+        const offset = currPage * this.pageSize;
         this._api
-            .getAccountBalances(currPage)
+            .getAccountBalances(offset, this.pageSize)
             .then((data) => {
                 this.accountBalances = data;
                 this.loadingNewAccountBalancePage = false;
@@ -79,7 +80,7 @@ export class WalletsComponent implements OnInit {
         return `₿${this.util.numberWithCommas(this._priceService.priceInBitcoin(ban).toFixed(2))}`;
     }
 
-    private _createDistributionChart(data: AccountDistributionStats): Options {
+    private _createDistributionChart(data: AccountDistributionStatsDto): Options {
         return {
             chart: {
                 type: 'column',

@@ -1,6 +1,6 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
-import { Block } from '@app/types/dto/Block';
+import { BlockDto } from '@app/types/dto/BlockDto';
 import { UtilService } from '@app/services/util/util.service';
 import { SearchService } from '@app/services/search/search.service';
 
@@ -133,7 +133,7 @@ import { SearchService } from '@app/services/search/search.service';
 })
 export class HashComponent {
     @Input() hash: string;
-    @Input() block: Block;
+    @Input() block: BlockDto;
     @Input() loading: boolean;
 
     constructor(

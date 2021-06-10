@@ -3,6 +3,7 @@ import { ConfirmedTransaction } from '@app/types/modal/ConfirmedTransaction';
 import { MonkeyCacheService } from '@app/services/monkey-cache/monkey-cache.service';
 import { SearchService } from '@app/services/search/search.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
+import { PaginatorComponent } from '@app/components/paginator/paginator.component';
 
 @Component({
     selector: 'account-confirmed-tab',
@@ -69,7 +70,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
 })
 export class ConfirmedTabComponent {
     @Input() confirmedTransactions: ConfirmedTransaction[];
-    @Input() paginator: TemplateRef<any>;
+    @Input() paginator: TemplateRef<PaginatorComponent>;
 
     constructor(
         public monkeyCache: MonkeyCacheService,
