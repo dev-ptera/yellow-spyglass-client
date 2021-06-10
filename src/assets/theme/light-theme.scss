@@ -95,16 +95,33 @@ $lightForeground: map-get($light-theme, foreground);
     color: map-get($pxb-white, 50);
 }
 .tab-transaction-list {
+    .hash, .to-from {
+        color: map-get($pxb-gray, 300);
+    }
+    .height {
+        color: map-get($lightForeground, text);
+        border: solid 1px map-get($lightForeground, text);
+    }
     pxb-list-item-tag.type {
         color: white !important;
         &.send {
-            background-color: map-get($pxb-red, 500);
+            background-color: map-get($pxb-red, 300);
         }
         &.receive {
-            background-color: map-get($pxb-green, 900);
+            background-color: map-get($pxb-green, 800);
         }
         &.change {
             background-color: map-get($pxb-blue, 500);
         }
     }
+    .amount.send {
+        color: map-get($pxb-red, 500);
+    }
+    .amount.receive {
+        color: map-get($pxb-green, 500);
+    }
+}
+
+.bookmarked-button {
+    color: map-get($pxb-red, 300);
 }

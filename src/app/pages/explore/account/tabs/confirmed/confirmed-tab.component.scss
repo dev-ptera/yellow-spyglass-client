@@ -79,31 +79,12 @@
     }
 
     .to-from {
-        color: map-get($pxb-black, 500);
         font-weight: 200;
-    }
-
-    pxb-list-item-tag.type {
-        color: white !important;
-        &.send {
-            background-color: map-get($pxb-red, 500);
-        }
-        &.receive {
-            background-color: map-get($pxb-green, 500);
-        }
-        &.change {
-            background-color: map-get($pxb-blue, 500);
-        }
     }
     .amount {
         margin-left: 8px;
-        font-size: 0.875rem;
-        &.receive {
-            color: map-get($pxb-green, 500);
-        }
-        &.send {
-            color: map-get($pxb-red, 500);
-        }
+        font-size: 1rem;
+        font-weight: 600;
     }
     .timestamps {
         display: flex;

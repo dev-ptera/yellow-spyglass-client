@@ -6,7 +6,7 @@ import { BookmarksService } from '@app/services/bookmarks/bookmarks.service';
     styleUrls: ['../copy-button/address-button.scss'],
     template: `
         <button mat-icon-button (click)="toggleBookmark()" class="address-action-button" responsive>
-            <mat-icon *ngIf="isBookmarked">favorite</mat-icon>
+            <mat-icon *ngIf="isBookmarked" class="bookmarked-button">favorite</mat-icon>
             <mat-icon *ngIf="!isBookmarked">favorite_border</mat-icon>
         </button>
     `,

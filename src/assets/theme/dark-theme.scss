@@ -110,6 +110,10 @@ $darkBackground: map-get($dark-theme, background);
     }
 }
 .tab-transaction-list {
+    .height {
+        color: map-get($darkForeground, text);
+        border: solid 1px map-get($darkForeground, text);
+    }
     pxb-list-item-tag.type {
         color: black !important;
         &.send {
@@ -122,9 +126,20 @@ $darkBackground: map-get($dark-theme, background);
             background-color: map-get($pxb-blue, 200);
         }
     }
+    .amount.send {
+        color: map-get($pxb-red, 200);
+    }
+    .amount.receive {
+        color: map-get($pxb-green, 200);
+    }
 }
 
 html,
 body {
     background-color: map-get($darkBackground, background) !important;
+}
+
+
+.bookmarked-button {
+    color: map-get($pxb-red, 300);
 }

@@ -26,6 +26,9 @@
     }
 
     // explore.component.ts
+    .account-tabs {
+        background-color: map-get($background, card);
+    }
     .explore-root {
         .mat-subheading-2 {
             color: map-get($foreground, secondary-text);
@@ -36,13 +39,6 @@
         .pxb-info-list-item {
             .pxb-info-list-item-subtitle-wrapper {
                 color: map-get($foreground, secondary-text);
-            }
-            .to-from {
-                color: map-get($foreground, hint-text);
-            }
-            .height {
-                color: map-get($foreground, hint-text);
-                border: solid 1px map-get($foreground, hint-text);
             }
         }
     }
