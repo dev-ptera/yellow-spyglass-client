@@ -6,7 +6,7 @@ import { UtilService } from '@app/services/util/util.service';
 @Component({
     selector: 'account-delegators-tab',
     template: `
-        <div class="account-delegator-weight">
+        <div class="account-delegator-weight" *ngIf="weightSum !== 0">
             <span class="account-delegator-weight-sum" responsive>{{ formattedWeight }}</span>
             <span class="account-delegator-weight-sum-description" responsive>BAN Delegated Weight</span>
         </div>
