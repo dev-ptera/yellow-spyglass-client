@@ -46,14 +46,14 @@
             >
                 <ng-container matColumnDef="position">
                     <th mat-header-cell *matHeaderCellDef></th>
-                    <td mat-cell [style.paddingRight.px]="12" *matCellDef="let element; let i = index">
+                    <td mat-cell [style.paddingRight.px]="20" [style.paddingLeft.px]="vp.sm ? 16 : 'inherit'"  *matCellDef="let element; let i = index">
                         <span
                             matBadgeColor="warn"
                             matBadgeOverlap="false"
                             [matBadgeSize]="vp.sm ? 'small' : 'medium'"
                             [matBadge]="element.repOnline ? undefined : '!'"
                         >
-                            #{{ i + 1 + currentPage * pageSize }}
+                            #{{ formatIndex(i + 1 + currentPage * pageSize )}}
                         </span>
                     </td>
                 </ng-container>
@@ -73,13 +73,13 @@
                 </ng-container>
                 <ng-container matColumnDef="ban">
                     <th mat-header-cell [style.paddingLeft.px]="16" *matHeaderCellDef>Amount</th>
-                    <td mat-cell style="padding: 8px 12px 8px 16px" *matCellDef="let element">
+                    <td mat-cell style="padding: 8px 16px 8px 16px" *matCellDef="let element">
                         <div style="display: flex; align-items: center">
                             <!--<span [style.fontSize.px]="vp.sm ? 8 : 12">🍌</span>-->
                             <img
-                                src="assets/banano-icon.svg"
-                                [width]="vp.sm ? 12 : 14"
-                                [height]="vp.sm ? 12 : 14"
+                                src="assets/banano-mark.svg"
+                                [width]="vp.sm ? 16 : 20"
+                                [height]="vp.sm ? 16 : 20"
                                 style="margin-right: 4px"
                             />
                             {{ formatBanAmount(element.ban) }}
