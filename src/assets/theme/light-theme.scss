@@ -95,7 +95,8 @@ $lightForeground: map-get($light-theme, foreground);
     color: map-get($pxb-white, 50);
 }
 .tab-transaction-list {
-    .hash, .to-from {
+    .hash,
+    .to-from {
         color: map-get($pxb-gray, 300);
     }
     .height {

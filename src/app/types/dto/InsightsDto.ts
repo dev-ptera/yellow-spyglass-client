@@ -1,12 +1,14 @@
 export type InsightsDto = {
     data: Array<{
-        raw: string;
+        balance: number;
         height: number;
     }>;
     maxAmountReceivedHash: string;
-    maxAmountReceivedRaw: string;
+    maxAmountReceivedBan: number;
     maxAmountSentHash: string;
-    maxAmountSentRaw: string;
-    maxBalanceRaw: string;
+    maxAmountSentBan: number;
     maxBalanceHash: string;
+    maxBalanceBan: number;
+    //   mostCommonSender: string;
+    //   mostCommonRecipient: string;
 };

@@ -3,6 +3,7 @@ import {
     ChangeDetectorRef,
     Component,
     Input,
+    OnChanges,
     SimpleChanges,
     ViewEncapsulation,
 } from '@angular/core';
@@ -17,6 +18,8 @@ import { MonkeyCacheService } from '@app/services/monkey-cache/monkey-cache.serv
 import { PendingTransaction } from '@app/types/modal';
 import { SearchService } from '@app/services/search/search.service';
 import { PriceService } from '@app/services/price/price.service';
+import { InsightsDto } from '@app/types/dto/InsightsDto';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
     selector: 'app-account',
@@ -25,7 +28,7 @@ import { PriceService } from '@app/services/price/price.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
-export class AccountComponent {
+export class AccountComponent implements OnChanges {
     @Input() accountOverview: AccountOverviewDto;
     @Input() loading: boolean;
     @Input() address: string;
@@ -34,6 +37,7 @@ export class AccountComponent {
     pendingBalance: string;
     confirmedBalance: string;
     shortenedRep: string;
+    insights: InsightsDto;
 
     delegators: Delegator[] = [];
     weightSum = 0;
@@ -83,6 +87,7 @@ export class AccountComponent {
         this.pendingTxPageIndex = 0;
         this.loadedConfirmedTxPages = new Set<number>().add(0);
         this.loadedPendingTxPages = new Set<number>().add(0);
+        this.insights = undefined;
         this._prepareAccountOverview(this.accountOverview);
         this._prepareConfirmed(this.accountOverview);
         this._preparePending(this.accountOverview);
@@ -288,5 +293,18 @@ export class AccountComponent {
     formatBtcPrice(raw: string): string {
         const ban = this._util.convertRawToBan(raw, { precision: 2, comma: false });
         return `₿${this._util.numberWithCommas(this._priceService.priceInBitcoin(Number(ban)).toFixed(4))}`;
+    }
+
+    fetchInsights(event: MatTabChangeEvent): void {
+        if (!this.insights && event.index === 3) {
+            this._apiService
+                .getInsights(this.address)
+                .then((data) => {
+                    this.insights = data;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        }
     }
 }

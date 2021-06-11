@@ -94,7 +94,7 @@
     </div>
 </div>
 
-<mat-tab-group *ngIf="!loading" class="account-tabs mat-elevation-z4">
+<mat-tab-group *ngIf="!loading" class="account-tabs mat-elevation-z4" (selectedTabChange)="this.fetchInsights($event)">
     <!-- Confirmed transactions -->
     <mat-tab>
         <ng-template mat-tab-label>
@@ -147,8 +147,6 @@
             <ng-container *ngIf="!vp.sm">Insights</ng-container>
             <mat-icon *ngIf="vp.sm">insights</mat-icon>
         </ng-template>
-        <pxb-empty-state class="account-empty-state" title="Coming Soon" description="Feature in progress">
-            <mat-icon pxb-empty-icon>how_to_vote</mat-icon>
-        </pxb-empty-state>
+        <account-insights-tab [insights]="insights"></account-insights-tab>
     </mat-tab>
 </mat-tab-group>

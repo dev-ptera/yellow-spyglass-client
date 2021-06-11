@@ -28,6 +28,8 @@ import { HashComponent } from '@app/pages/explore/hash/hash.component';
 import { BookmarkButtonComponent } from '../../components/bookmark-button/bookmark-button.component';
 import { CopyButtonComponent } from '../../components/copy-button/copy-button.component';
 import { PaginatorComponent } from '../../components/paginator/paginator.component';
+import { InsightsTabComponent } from '@app/pages/explore/account/tabs/insights/insights-tab.components';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 @NgModule({
     declarations: [
@@ -42,6 +44,7 @@ import { PaginatorComponent } from '../../components/paginator/paginator.compone
         SafeHtmlPipe,
         ResponsiveDirective,
         PaginatorComponent,
+        InsightsTabComponent,
     ],
     imports: [
         CommonModule,
@@ -58,6 +61,7 @@ import { PaginatorComponent } from '../../components/paginator/paginator.compone
         MatTabsModule,
         MatTableModule,
         ReactiveFormsModule,
+        HighchartsChartModule,
     ],
     exports: [
         AccountComponent,

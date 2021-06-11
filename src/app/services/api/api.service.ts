@@ -11,6 +11,7 @@ import {
     PriceDataDto,
     RepresentativesResponseDto,
 } from '@app/types/dto';
+import { InsightsDto } from '@app/types/dto/InsightsDto';
 
 @Injectable({
     providedIn: 'root',
@@ -63,5 +64,9 @@ export class ApiService {
 
     getPriceInfo(): Promise<PriceDataDto> {
         return this._http.get<PriceDataDto>(`${this.url}/price`).toPromise();
+    }
+
+    getInsights(address: string): Promise<InsightsDto> {
+        return this._http.get<InsightsDto>(`${this.url}/insights/${address}`).toPromise();
     }
 }
