@@ -134,13 +134,19 @@ $darkBackground: map-get($dark-theme, background);
     pxb-list-item-tag.type {
         color: black !important;
         &.send {
-            background-color: map-get($pxb-red, 200);
+            border: solid 1px map-get($pxb-red, 200);
+            background-color: unset;
+            color: map-get($pxb-red, 200)!important;
         }
         &.receive {
-            background-color: map-get($pxb-green, 200);
+            border: solid 1px map-get($pxb-green, 200);
+            background-color: unset;
+            color: map-get($pxb-green, 200)!important;
         }
         &.change {
-            background-color: map-get($pxb-blue, 200);
+            border: solid 1px map-get($pxb-blue, 200);
+            background-color: unset;
+            color: map-get($pxb-blue, 200)!important;
         }
     }
     .amount.send {
