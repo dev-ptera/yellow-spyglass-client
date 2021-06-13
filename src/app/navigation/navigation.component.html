@@ -62,7 +62,7 @@
             <button mat-icon-button [style.marginRight.px]="12" (click)="navigate(navItems.bookmarks.route)">
                 <mat-icon>bookmarks</mat-icon>
             </button>
-            <button mat-icon-button (click)="toggleTheme()">
+            <button mat-icon-button (click)="toggleTheme()" [style.marginRight.px]="-8">
                 <mat-icon *ngIf="themeService.isLightMode()">dark_mode</mat-icon>
                 <mat-icon *ngIf="!themeService.isLightMode()">light_mode</mat-icon>
             </button>

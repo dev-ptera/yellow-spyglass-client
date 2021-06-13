@@ -1,14 +1,14 @@
 @import '~@pxblue/colors/palette';
 @import '~@angular/material/_theming.scss';
 
-$material-theme-primary: mat-palette($pxb-green, 700);
+$material-theme-primary: mat-palette($pxb-green, 200);
 $material-theme-accent: mat-palette($pxb-blue);
 $material-theme-warn: mat-palette($pxb-red);
 $dark-theme: map-merge(
     mat-dark-theme($material-theme-primary, $material-theme-accent, $material-theme-warn),
     (
         foreground: (
-            text: map-get($pxb-black, 50),
+            text: map-get($pxb-black, 100),
             secondary-text: map-get($pxb-black, 200),
             hint-text: map-get($pxb-black, 200),
             base: map-get($pxb-white, 50),
@@ -45,6 +45,16 @@ $dark-theme: map-merge(
 
 $darkForeground: map-get($dark-theme, foreground);
 $darkBackground: map-get($dark-theme, background);
+
+// MIXINS? TODO
+
+// Drawer
+.pxb-drawer .pxb-drawer-nav-item-active-highlight {
+    background-color: #2bff0024 !important;
+}
+.navigation-app-header-container {
+    background-color: map-get($pxb-green, 700) !important;
+}
 
 // representatives.component.ts
 .monitored-reps-table .unchecked-blocks {
@@ -102,6 +112,9 @@ $darkBackground: map-get($dark-theme, background);
 }
 
 // account.component.ts
+.account-rep-online, .account-rep-offline {
+    color: map-get($darkBackground, background)!important;
+}
 .account-summary-tags {
     .account-pending {
         background-color: map-get($darkBackground, background);
@@ -113,6 +126,10 @@ $darkBackground: map-get($dark-theme, background);
     .height {
         color: map-get($darkForeground, text);
         border: solid 1px map-get($darkForeground, text);
+    }
+    .hash,
+    .to-from {
+        color: map-get($pxb-gray, 400);
     }
     pxb-list-item-tag.type {
         color: black !important;
@@ -142,3 +159,6 @@ body {
 .bookmarked-button {
     color: map-get($pxb-red, 300);
 }
+
+
+//

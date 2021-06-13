@@ -30,12 +30,17 @@ import { CopyButtonComponent } from '../../components/copy-button/copy-button.co
 import { PaginatorComponent } from '../../components/paginator/paginator.component';
 import { InsightsTabComponent } from '@app/pages/explore/account/tabs/insights/insights-tab.components';
 import { HighchartsChartModule } from 'highcharts-angular';
+import {QrButtonComponent} from "@app/components/qr-button/qr-button.component";
+import {QrDialogComponent} from "@app/components/qr-dialog/qr-dialog.component";
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
     declarations: [
         AccountComponent,
         BookmarkButtonComponent,
         CopyButtonComponent,
+        QrButtonComponent,
+        QrDialogComponent,
         ConfirmedTabComponent,
         DelegatorsTabComponent,
         ExploreComponent,
@@ -46,6 +51,9 @@ import { HighchartsChartModule } from 'highcharts-angular';
         PaginatorComponent,
         InsightsTabComponent,
     ],
+    entryComponents: [
+        QrDialogComponent,
+    ],
     imports: [
         CommonModule,
         EmptyStateModule,
@@ -54,6 +62,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
         MatBadgeModule,
         MatButtonModule,
         MatCardModule,
+        MatDialogModule,
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
@@ -66,6 +75,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
     exports: [
         AccountComponent,
         BookmarkButtonComponent,
+        QrButtonComponent,
         CopyButtonComponent,
         ConfirmedTabComponent,
         DelegatorsTabComponent,

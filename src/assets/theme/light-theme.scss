@@ -45,6 +45,12 @@ $light-theme: map-merge(
 
 $lightForeground: map-get($light-theme, foreground);
 
+
+// Drawer
+.pxb-drawer .pxb-drawer-nav-item-active-highlight {
+    background-color: #2bff0024 !important;
+}
+
 // representatives.component.ts
 .monitored-reps-table .unchecked-blocks {
     color: map-get($pxb-red, 900);
@@ -97,7 +103,7 @@ $lightForeground: map-get($light-theme, foreground);
 .tab-transaction-list {
     .hash,
     .to-from {
-        color: map-get($pxb-gray, 300);
+        color: map-get($pxb-gray, 500);
     }
     .height {
         color: map-get($lightForeground, text);

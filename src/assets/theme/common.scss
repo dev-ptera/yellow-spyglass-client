@@ -2,15 +2,6 @@
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
 
-    .mat-form-field {
-        line-height: 1.5 !important;
-    }
-
-    // Drawer
-    .pxb-drawer .pxb-drawer-nav-item-active-highlight {
-        background-color: #2bff0024 !important;
-    }
-
     // hash.component.ts
     .hash-searched {
         color: map-get($foreground, secondary-text);

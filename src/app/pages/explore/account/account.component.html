@@ -27,8 +27,9 @@
             </div>
             <div class="mat-subheading-2 account-address">
                 {{ address }}
-                <div style="display: flex">
+                <div style="display: flex" [style.marginLeft.px]="vp.sm ? 4 : 0">
                     <app-copy-button [data]="address"></app-copy-button>
+                    <app-qr-button *ngIf="vp.sm || vp.md" [address]="address"></app-qr-button>
                     <app-bookmark-button [id]="address"></app-bookmark-button>
                 </div>
             </div>
@@ -53,7 +54,7 @@
                         class="account-rep-offline"
                         label="Offline"
                     ></pxb-list-item-tag>
-                    <pxb-list-item-tag *ngIf="accountOverview.isRepOnline" label="Online"></pxb-list-item-tag>
+                    <pxb-list-item-tag class="account-rep-online" *ngIf="accountOverview.isRepOnline" label="Online"></pxb-list-item-tag>
                 </span>
             </div>
 
@@ -90,7 +91,7 @@
     </div>
     <div style="display: flex; align-items: center">
         <ng-template *ngIf="!vp.sm" [ngTemplateOutlet]="accountMonkey"></ng-template>
-        <canvas id="qr-code" [style.display]="loading || vp.sm ? 'none' : 'block'"></canvas>
+        <canvas id="qr-code" [style.display]="loading || vp.sm || vp.md ? 'none' : 'block'"></canvas>
     </div>
 </div>
 
