@@ -46,14 +46,19 @@
             >
                 <ng-container matColumnDef="position">
                     <th mat-header-cell *matHeaderCellDef></th>
-                    <td mat-cell [style.paddingRight.px]="20" [style.paddingLeft.px]="vp.sm ? 16 : 'inherit'"  *matCellDef="let element; let i = index">
+                    <td
+                        mat-cell
+                        [style.paddingRight.px]="20"
+                        [style.paddingLeft.px]="vp.sm ? 16 : 'inherit'"
+                        *matCellDef="let element; let i = index"
+                    >
                         <span
                             matBadgeColor="warn"
                             matBadgeOverlap="false"
                             [matBadgeSize]="vp.sm ? 'small' : 'medium'"
                             [matBadge]="element.repOnline ? undefined : '!'"
                         >
-                            #{{ formatIndex(i + 1 + currentPage * pageSize )}}
+                            #{{ formatIndex(i + 1 + currentPage * pageSize) }}
                         </span>
                     </td>
                 </ng-container>

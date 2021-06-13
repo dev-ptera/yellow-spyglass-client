@@ -1,6 +1,6 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import {QrDialogComponent} from "@app/components/qr-dialog/qr-dialog.component";
-import {MatDialog} from "@angular/material/dialog";
+import { QrDialogComponent } from '@app/components/qr-dialog/qr-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-qr-button',
@@ -20,8 +20,8 @@ export class QrButtonComponent {
     openDialog(): void {
         this.dialog.open(QrDialogComponent, {
             data: {
-                address: this.address
-            }
+                address: this.address,
+            },
         });
     }
 }

@@ -67,7 +67,7 @@ export class InsightsTabComponent implements OnChanges {
             },
             tooltip: {
                 enabled: true,
-                valuePrefix: 'sup'
+                valuePrefix: 'sup',
             },
             credits: {
                 enabled: false,
@@ -77,7 +77,7 @@ export class InsightsTabComponent implements OnChanges {
             },
             xAxis: {
                 visible: false,
-              /*  tickmarkPlacement: 'on',
+                /*  tickmarkPlacement: 'on',
                 tickAmount: dataPoints.length,
                 min: 1,
                 max: dataPoints[dataPoints.length-1].height,

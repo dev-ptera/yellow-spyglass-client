@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, ViewEncapsulation
 import { Delegator } from '@app/types/modal/Delegator';
 import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
-import {ViewportService} from "@app/services/viewport/viewport.service";
+import { ViewportService } from '@app/services/viewport/viewport.service';
 
 @Component({
     selector: 'account-delegators-tab',
@@ -11,12 +11,7 @@ import {ViewportService} from "@app/services/viewport/viewport.service";
             <span class="account-delegator-weight-sum" responsive>{{ formattedWeight }}</span>
             <span class="account-delegator-weight-sum-description" responsive>BAN Delegated Weight</span>
         </div>
-        <table
-            mat-table
-            *ngIf="delegators.length > 0"
-            [style.width.%]="100"
-            [dataSource]="getShownDelegators()"
-        >
+        <table mat-table *ngIf="delegators.length > 0" [style.width.%]="100" [dataSource]="getShownDelegators()">
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
                 <td mat-cell [style.paddingRight.px]="16" *matCellDef="let element; let i = index">#{{ i + 1 }}</td>
@@ -42,10 +37,12 @@ import {ViewportService} from "@app/services/viewport/viewport.service";
             <tr mat-header-row *matHeaderRowDef="columns"></tr>
             <tr mat-row *matRowDef="let row; columns: columns"></tr>
         </table>
-        <div *ngIf="delegators.length > 0"
-             [style.paddingLeft.px]="16" 
-             [style.fontSize.px]="vp.sm ? 10 : 14"
-             style="margin: 16px 0;">
+        <div
+            *ngIf="delegators.length > 0"
+            [style.paddingLeft.px]="16"
+            [style.fontSize.px]="vp.sm ? 10 : 14"
+            style="margin: 16px 0;"
+        >
             *Accounts with a 0 BANANO balance have been removed from the total delegators count.
         </div>
         <div style="text-align: center; margin-top: 16px" *ngIf="delegators.length > shownDelegators">
@@ -77,10 +74,7 @@ export class DelegatorsTabComponent implements OnChanges {
 
     formattedWeight: string;
 
-    constructor(
-        public vp: ViewportService,
-        public searchService: SearchService,
-        private readonly _util: UtilService) {}
+    constructor(public vp: ViewportService, public searchService: SearchService, private readonly _util: UtilService) {}
 
     ngOnChanges(): void {
         this.formattedWeight = this._util.numberWithCommas(this.weightSum.toFixed(2));

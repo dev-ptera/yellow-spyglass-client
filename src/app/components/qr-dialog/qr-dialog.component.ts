@@ -1,7 +1,7 @@
-import {AfterViewInit, Component, Inject, ViewEncapsulation} from '@angular/core';
+import { AfterViewInit, Component, Inject, ViewEncapsulation } from '@angular/core';
 
 import * as QRCode from 'qrcode';
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-qr-dialog',
@@ -14,7 +14,7 @@ import {MAT_DIALOG_DATA} from "@angular/material/dialog";
     encapsulation: ViewEncapsulation.None,
 })
 export class QrDialogComponent implements AfterViewInit {
-    constructor(@Inject(MAT_DIALOG_DATA) public data: {  address: string }) {}
+    constructor(@Inject(MAT_DIALOG_DATA) public data: { address: string }) {}
 
     ngAfterViewInit(): void {
         const canvas = document.getElementById('qr-code-dialog');

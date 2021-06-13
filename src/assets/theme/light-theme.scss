@@ -45,7 +45,6 @@ $light-theme: map-merge(
 
 $lightForeground: map-get($light-theme, foreground);
 
-
 // Drawer
 .pxb-drawer .pxb-drawer-nav-item-active-highlight {
     background-color: #2bff0024 !important;

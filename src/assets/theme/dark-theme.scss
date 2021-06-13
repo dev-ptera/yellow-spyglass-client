@@ -112,8 +112,9 @@ $darkBackground: map-get($dark-theme, background);
 }
 
 // account.component.ts
-.account-rep-online, .account-rep-offline {
-    color: map-get($darkBackground, background)!important;
+.account-rep-online,
+.account-rep-offline {
+    color: map-get($darkBackground, background) !important;
 }
 .account-summary-tags {
     .account-pending {
@@ -136,17 +137,17 @@ $darkBackground: map-get($dark-theme, background);
         &.send {
             border: solid 1px map-get($pxb-red, 200);
             background-color: unset;
-            color: map-get($pxb-red, 200)!important;
+            color: map-get($pxb-red, 200) !important;
         }
         &.receive {
             border: solid 1px map-get($pxb-green, 200);
             background-color: unset;
-            color: map-get($pxb-green, 200)!important;
+            color: map-get($pxb-green, 200) !important;
         }
         &.change {
             border: solid 1px map-get($pxb-blue, 200);
             background-color: unset;
-            color: map-get($pxb-blue, 200)!important;
+            color: map-get($pxb-blue, 200) !important;
         }
     }
     .amount.send {
@@ -165,6 +166,5 @@ body {
 .bookmarked-button {
     color: map-get($pxb-red, 300);
 }
-
 
 //
