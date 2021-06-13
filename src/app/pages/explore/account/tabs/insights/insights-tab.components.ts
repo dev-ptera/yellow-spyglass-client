@@ -17,7 +17,7 @@ import * as Highcharts from 'highcharts';
                     [Highcharts]="Highcharts"
                     [options]="accountHistoryChart"
                     style="pointer-events: none; width: 100%; height: 100%;"
-                    [style.height.px]="vp.sm ? 300 : vp.md ? 550 : 700"
+                    [style.height.px]="vp.sm ? 300 : vp.md ? 350 : 450"
                 ></highcharts-chart>
             </div>
         </div>
@@ -66,7 +66,8 @@ export class InsightsTabComponent implements OnChanges {
                 backgroundColor: 'rgba(0,0,0,0)',
             },
             tooltip: {
-                enabled: false,
+                enabled: true,
+                valuePrefix: 'sup'
             },
             credits: {
                 enabled: false,
@@ -74,25 +75,23 @@ export class InsightsTabComponent implements OnChanges {
             title: {
                 text: '',
             },
-            xAxis: {},
+            xAxis: {
+                visible: false,
+              /*  tickmarkPlacement: 'on',
+                tickAmount: dataPoints.length,
+                min: 1,
+                max: dataPoints[dataPoints.length-1].height,
+                startOnTick: true,
+
+               */
+            },
             yAxis: {
                 min: 0,
                 title: {
                     text: '',
                 },
                 labels: {
-                    enabled: false,
-                },
-            },
-            plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0,
-                },
-                series: {
-                    dataLabels: {
-                        enabled: true,
-                    },
+                    enabled: true,
                 },
             },
             series: [
@@ -101,7 +100,9 @@ export class InsightsTabComponent implements OnChanges {
                     type: 'spline',
                     color: '#FBDD11',
                     data: chartData,
+                    pointPlacement: 'on',
                     dataLabels: {
+                        enabled: false,
                         style: {
                             fontSize: '12px',
                             fontWeight: '400',
