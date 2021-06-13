@@ -9,6 +9,8 @@ export type InsightsDto = {
     maxAmountSentBan: number;
     maxBalanceHash: string;
     maxBalanceBan: number;
-    //   mostCommonSender: string;
-    //   mostCommonRecipient: string;
+    mostCommonSenderAddress: string;
+    mostCommonSenderTxCount: number;
+    mostCommonRecipientAddress: string;
+    mostCommonRecipientTxCount: number;
 };

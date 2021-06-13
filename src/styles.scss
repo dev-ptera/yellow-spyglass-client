@@ -89,3 +89,8 @@
 .pxb-info-list-item-content .pxb-info-list-item-title-wrapper {
     font-weight: 400 !important;
 }
+
+// Disable mat tab list pagination.
+.mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
+    display: none !important;
+}

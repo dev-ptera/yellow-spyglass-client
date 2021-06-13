@@ -33,6 +33,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { QrButtonComponent } from '@app/components/qr-button/qr-button.component';
 import { QrDialogComponent } from '@app/components/qr-dialog/qr-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ErrorComponent } from '@app/components/error/error.component';
 
 @NgModule({
     declarations: [
@@ -50,6 +51,7 @@ import { MatDialogModule } from '@angular/material/dialog';
         ResponsiveDirective,
         PaginatorComponent,
         InsightsTabComponent,
+        ErrorComponent,
     ],
     entryComponents: [QrDialogComponent],
     imports: [

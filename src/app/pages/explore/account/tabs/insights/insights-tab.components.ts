@@ -11,6 +11,7 @@ import * as Highcharts from 'highcharts';
     selector: 'account-insights-tab',
     template: `
         <div class="insights-root" *ngIf="insights">
+            <div class="mat-headline" [style.marginBottom.px]="16">Account Balance Over Time</div>
             <div class="insights-chart" responsive>
                 <highcharts-chart
                     [update]="true"
@@ -20,16 +21,87 @@ import * as Highcharts from 'highcharts';
                     [style.height.px]="vp.sm ? 300 : vp.md ? 350 : 450"
                 ></highcharts-chart>
             </div>
+            <div class="insights-section">
+                <div>
+                    <span class="mat-headline">Max BAN Received</span>
+                    <span class="mat-subheading-2"> {{ formatBan(insights.maxAmountReceivedBan) }} BAN </span>
+                </div>
+                <div class="insights-description insights-link" (click)="search(insights.maxAmountReceivedHash)">
+                    {{ insights.maxAmountReceivedHash }}
+                </div>
+            </div>
+            <div class="insights-section">
+                <div>
+                    <span class="mat-headline">Max BAN Sent</span>
+                    <span class="mat-subheading-2"> {{ formatBan(insights.maxAmountSentBan) }} BAN </span>
+                </div>
+                <div class="insights-description insights-link" (click)="search(insights.maxAmountSentHash)">
+                    {{ insights.maxAmountSentHash }}
+                </div>
+            </div>
+            <div class="insights-section">
+                <div>
+                    <span class="mat-headline">Account Max Balance</span>
+                    <span class="mat-subheading-2"> {{ formatBan(insights.maxBalanceBan) }} BAN </span>
+                </div>
+                <div class="insights-description insights-link" (click)="search(insights.maxBalanceHash)">
+                    {{ insights.maxBalanceHash }}
+                </div>
+            </div>
+            <div class="insights-section">
+                <div>
+                    <span class="mat-headline">Most Common Recipient</span>
+                    <span
+                        *ngIf="insights.mostCommonRecipientAddress"
+                        class="mat-subheading-2"
+                        (click)="search(insights.mostCommonRecipientAddress)"
+                    >
+                        {{ insights.mostCommonRecipientAddress }}
+                    </span>
+                    <span *ngIf="!insights.mostCommonRecipientAddress">N/A</span>
+                </div>
+                <div *ngIf="insights.mostCommonRecipientAddress" class="insights-description insights-link">
+                    Account sent BAN
+                    <strong style="margin: 0 4px"> {{ insights.mostCommonRecipientTxCount }} </strong> times to the
+                    above recipient.
+                </div>
+                <div *ngIf="!insights.mostCommonRecipientAddress" class="insights-description">
+                    This account has never sent any BAN.
+                </div>
+            </div>
+            <div class="insights-section">
+                <div>
+                    <span class="mat-headline">Most Common Sender</span>
+                    <span class="mat-subheading-2" (click)="search(insights.mostCommonSenderAddress)">
+                        {{ insights.mostCommonSenderAddress }}
+                    </span>
+                </div>
+                <div class="insights-description insights-link">
+                    Account received BAN
+                    <strong style="margin: 0 4px"> {{ insights.mostCommonSenderTxCount }} </strong> times from above
+                    sender.
+                </div>
+            </div>
         </div>
         <pxb-empty-state
-            *ngIf="!insights"
+            *ngIf="!error && !insights && !disabled"
+            responsive
+            class="account-empty-state"
+            title="Loading"
+            description="One second, counting them 'nanners.  Larger accounts will take longer."
+        >
+            <mat-icon pxb-empty-icon>pending</mat-icon>
+        </pxb-empty-state>
+        <pxb-empty-state
+            *ngIf="disabled"
             responsive
             class="account-empty-state"
             title="No Insights"
-            description="This account has too many transactions to analyze.  Please view an account with less activity."
+            description="This account has too many transactions to analyze.  Please select an account with less activity."
         >
-            <mat-icon pxb-empty-icon>how_to_vote</mat-icon>
+            <mat-icon pxb-empty-icon>disc_full</mat-icon>
         </pxb-empty-state>
+        <app-error *ngIf="error"></app-error>
     `,
     styleUrls: ['insights-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -37,11 +109,17 @@ import * as Highcharts from 'highcharts';
 })
 export class InsightsTabComponent implements OnChanges {
     @Input() insights: InsightsDto;
+    @Input() error: boolean;
+    @Input() disabled: boolean;
 
     Highcharts: typeof Highcharts = Highcharts;
     accountHistoryChart: Options;
 
-    constructor(public searchService: SearchService, public vp: ViewportService, private readonly _util: UtilService) {
+    constructor(
+        private readonly _searchService: SearchService,
+        public vp: ViewportService,
+        private readonly _util: UtilService
+    ) {
         this.vp.vpChange.subscribe(() => {
             setTimeout(() => {
                 window.dispatchEvent(new Event('resize'));
@@ -53,6 +131,14 @@ export class InsightsTabComponent implements OnChanges {
         if (this.insights) {
             this.accountHistoryChart = this._createAccountHistoryChart(this.insights.data);
         }
+    }
+
+    search(value: string): void {
+        this._searchService.emitSearch(value);
+    }
+
+    formatBan(ban: number): string {
+        return this._util.numberWithCommas(ban);
     }
 
     private _createAccountHistoryChart(dataPoints: Array<{ balance: number; height: number }>): Options {
@@ -96,7 +182,7 @@ export class InsightsTabComponent implements OnChanges {
             },
             series: [
                 {
-                    name: 'Account Balance',
+                    name: 'Balance (BAN)',
                     type: 'spline',
                     color: '#FBDD11',
                     data: chartData,

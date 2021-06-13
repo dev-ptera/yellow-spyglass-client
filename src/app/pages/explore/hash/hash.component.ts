@@ -37,7 +37,7 @@ import { SearchService } from '@app/services/search/search.service';
             <div class="hash-section">
                 <div>
                     <span class="mat-headline">Amount</span>
-                    <span class="mat-subheading-2">{{ block.amount }} RAW, {{ convertRawToBan(block.amount) }}</span>
+                    <span class="mat-subheading-2">{{ block.amount }} RAW | {{ convertRawToBan(block.amount) }}</span>
                 </div>
                 <div class="hash-description">Amount of BANANO sent in this transaction</div>
             </div>
@@ -62,7 +62,7 @@ import { SearchService } from '@app/services/search/search.service';
             <div class="hash-section">
                 <div>
                     <span class="mat-headline">Balance</span>
-                    <span class="mat-subheading-2">{{ block.balance }} RAW, {{ convertRawToBan(block.balance) }}</span>
+                    <span class="mat-subheading-2">{{ block.balance }} RAW | {{ convertRawToBan(block.balance) }}</span>
                 </div>
                 <div class="hash-description">Block account balance once this transaction is confirmed</div>
             </div>
@@ -146,7 +146,7 @@ export class HashComponent {
         return `${this._util.convertRawToBan(raw, {
             precision: 10,
             comma: true,
-        })} BANANO`;
+        })} BAN`;
     }
 
     search(value: string): void {

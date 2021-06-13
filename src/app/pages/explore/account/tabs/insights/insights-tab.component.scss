@@ -6,3 +6,25 @@
     display: flex;
     justify-content: center;
 }
+.insights-section {
+    margin: 24px 0;
+    word-break: break-word;
+    div {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .mat-headline {
+        margin-right: 16px;
+    }
+    .insights-description {
+        font-size: 12px;
+    }
+    .insights-link {
+        cursor: pointer;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

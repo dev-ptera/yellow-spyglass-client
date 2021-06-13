@@ -38,6 +38,9 @@ export class AccountComponent implements OnChanges {
     confirmedBalance: string;
     shortenedRep: string;
     insights: InsightsDto;
+    insightsDisabled: boolean;
+    loadingInsights: boolean;
+    hasInsightsError: boolean;
 
     delegators: Delegator[] = [];
     weightSum = 0;
@@ -88,6 +91,8 @@ export class AccountComponent implements OnChanges {
         this.loadedConfirmedTxPages = new Set<number>().add(0);
         this.loadedPendingTxPages = new Set<number>().add(0);
         this.insights = undefined;
+        this.loadingInsights = false;
+        this.insightsDisabled = this.accountOverview.completedTxCount > 50_000;
         this._prepareAccountOverview(this.accountOverview);
         this._prepareConfirmed(this.accountOverview);
         this._preparePending(this.accountOverview);
@@ -296,14 +301,18 @@ export class AccountComponent implements OnChanges {
     }
 
     fetchInsights(event: MatTabChangeEvent): void {
-        if (!this.insights && event.index === 3) {
+        if (!this.insights && !this.loadingInsights && !this.insightsDisabled && event.index === 3) {
+            this.loadingInsights = true;
             this._apiService
                 .getInsights(this.address)
                 .then((data) => {
                     this.insights = data;
+                    this.loadingInsights = false;
                 })
                 .catch((err) => {
                     console.error(err);
+                    this.loadingInsights = false;
+                    this.hasInsightsError = true;
                 });
         }
     }
