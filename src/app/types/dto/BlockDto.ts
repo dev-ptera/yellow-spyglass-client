@@ -8,6 +8,7 @@ export type BlockDto = {
     timestamp: number;
     confirmed: boolean;
     subtype: Subtype;
+    sourceAccount: string;
     contents: {
         type: 'state';
         account: string;
