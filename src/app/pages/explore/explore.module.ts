@@ -85,6 +85,7 @@ import { ErrorComponent } from '@app/components/error/error.component';
         SafeHtmlPipe,
         ResponsiveDirective,
         PaginatorComponent,
+        ErrorComponent,
     ],
 })
 export class ExploreModule {}
