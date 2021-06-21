@@ -1,6 +1,8 @@
 # YellowSpyglassClient
 
-![Yellow Spyglass]('https://raw.githubusercontent.com/dev-ptera/yellow-spyglass-client/master/src/assets/logo.PNG');
+<div style="width: 100%; text-align: center">
+    <img width="100%" style="max-width: 600px" alt="Yellow Spyglass" src="./logo.png">
+</div>
 
 View the Yellow Spyglass [here](https://www.yellowspyglass.com/).
 
@@ -8,6 +10,7 @@ This is a [BANANO](https://banano.cc/) network explorer, written in Angular.
 
 It currently supports the following pages & features:
 
+### Pages
 - Explore
   - See address history & block hash information
 - Wallets
@@ -21,6 +24,19 @@ It currently supports the following pages & features:
 - Node
   - Information about the node running the Yellow Spyglass.
     
+### Features
+- Bookmarks
+  - Quickly save hashes or addresses for future reference
+- Themes
+    - Currently supports a light and dark mode
+- Representative Insights
+    - Easily see which representatives are online/offline
+- Rich List Insights
+    - Quickly see if top banano holders are voting for online reps
+- Account Insights
+    - Generate a high-level chart of an account balance over time + account stats
+    
+
 
 ## Development server
 
