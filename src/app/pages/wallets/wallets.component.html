@@ -12,11 +12,11 @@
 <ng-template #bodyContent>
     <div class="wallets-chart mat-elevation-z4" responsive>
         <highcharts-chart
-                [update]="true"
-                [Highcharts]="Highcharts"
-                [options]="distributionChart"
-                style="pointer-events: none; width: 100%"
-                [style.height.px]="vp.sm ? 300 : vp.md ? 350 : 400"
+            [update]="true"
+            [Highcharts]="Highcharts"
+            [options]="distributionChart"
+            style="pointer-events: none; width: 100%"
+            [style.height.px]="vp.sm ? 300 : vp.md ? 350 : 400"
         ></highcharts-chart>
     </div>
 
@@ -28,35 +28,35 @@
     </div>
     <ng-template #paginator>
         <app-paginator
-                [pageSize]="pageSize"
-                [maxElements]="totalAccounts"
-                [(pageIndex)]="currentPage"
-                (pageIndexChange)="loadAccountBalances($event)"
-                [disableMove]="loadingNewAccountBalancePage"
+            [pageSize]="pageSize"
+            [maxElements]="totalAccounts"
+            [(pageIndex)]="currentPage"
+            (pageIndexChange)="loadAccountBalances($event)"
+            [disableMove]="loadingNewAccountBalancePage"
         ></app-paginator>
     </ng-template>
     <ng-template [ngTemplateOutlet]="paginator"></ng-template>
     <table
-            mat-table
-            *ngIf="accountBalances.length > 0"
-            [style.width.%]="100"
-            [dataSource]="accountBalances"
-            class="wallets-rich-list-table mat-elevation-z4"
-            responsive
+        mat-table
+        *ngIf="accountBalances.length > 0"
+        [style.width.%]="100"
+        [dataSource]="accountBalances"
+        class="wallets-rich-list-table mat-elevation-z4"
+        responsive
     >
         <ng-container matColumnDef="position">
             <th mat-header-cell *matHeaderCellDef></th>
             <td
-                    mat-cell
-                    [style.paddingRight.px]="20"
-                    [style.paddingLeft.px]="vp.sm ? 16 : 'inherit'"
-                    *matCellDef="let element; let i = index"
+                mat-cell
+                [style.paddingRight.px]="20"
+                [style.paddingLeft.px]="vp.sm ? 16 : 'inherit'"
+                *matCellDef="let element; let i = index"
             >
                 <span
-                        matBadgeColor="warn"
-                        matBadgeOverlap="false"
-                        [matBadgeSize]="vp.sm ? 'small' : 'medium'"
-                        [matBadge]="element.repOnline ? undefined : '!'"
+                    matBadgeColor="warn"
+                    matBadgeOverlap="false"
+                    [matBadgeSize]="vp.sm ? 'small' : 'medium'"
+                    [matBadge]="element.repOnline ? undefined : '!'"
                 >
                     #{{ formatIndex(i + 1 + currentPage * pageSize) }}
                 </span>
@@ -66,12 +66,12 @@
         <ng-container matColumnDef="addr">
             <th mat-header-cell *matHeaderCellDef>Address</th>
             <td
-                    mat-cell
-                    [style.paddingTop.px]="12"
-                    [style.paddingBottom.px]="12"
-                    class="wallets-address-cell"
-                    *matCellDef="let element"
-                    (click)="searchService.emitSearch(element.addr)"
+                mat-cell
+                [style.paddingTop.px]="12"
+                [style.paddingBottom.px]="12"
+                class="wallets-address-cell"
+                *matCellDef="let element"
+                (click)="searchService.emitSearch(element.addr)"
             >
                 {{ element.addr }}
             </td>
@@ -82,10 +82,10 @@
                 <div style="display: flex; align-items: center">
                     <!--<span [style.fontSize.px]="vp.sm ? 8 : 12">🍌</span>-->
                     <img
-                            src="assets/banano-mark.svg"
-                            [width]="vp.sm ? 16 : 20"
-                            [height]="vp.sm ? 16 : 20"
-                            style="margin-right: 4px"
+                        src="assets/banano-mark.svg"
+                        [width]="vp.sm ? 16 : 20"
+                        [height]="vp.sm ? 16 : 20"
+                        style="margin-right: 4px"
                     />
                     {{ formatBanAmount(element.ban) }}
                 </div>

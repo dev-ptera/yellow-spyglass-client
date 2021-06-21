@@ -8,7 +8,7 @@ import * as Highcharts from 'highcharts';
 import { UtilService } from '@app/services/util/util.service';
 import { PriceService } from '@app/services/price/price.service';
 import { AccountBalanceDto, AccountDistributionStatsDto } from '@app/types/dto';
-import {OnlineRepsService} from "@app/services/online-reps/online-reps.service";
+import { OnlineRepsService } from '@app/services/online-reps/online-reps.service';
 
 @Component({
     selector: 'app-wallets',
@@ -33,7 +33,7 @@ export class WalletsComponent implements OnInit {
         public vp: ViewportService,
         public searchService: SearchService,
         private readonly _priceService: PriceService,
-        private readonly _onlineRepsService: OnlineRepsService,
+        private readonly _onlineRepsService: OnlineRepsService
     ) {
         this.vp.vpChange.subscribe(() => {
             setTimeout(() => {

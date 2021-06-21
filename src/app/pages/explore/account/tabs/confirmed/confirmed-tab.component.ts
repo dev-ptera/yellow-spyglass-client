@@ -4,7 +4,7 @@ import { MonkeyCacheService } from '@app/services/monkey-cache/monkey-cache.serv
 import { SearchService } from '@app/services/search/search.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { PaginatorComponent } from '@app/components/paginator/paginator.component';
-import {UtilService} from "@app/services/util/util.service";
+import { UtilService } from '@app/services/util/util.service';
 
 @Component({
     selector: 'account-confirmed-tab',
@@ -35,8 +35,11 @@ import {UtilService} from "@app/services/util/util.service";
                     </div>
                     <div>
                         <span class="to-from">{{ tx.type === 'receive' ? ' from ' : 'to ' }}</span>
-                        <span class="address" (click)="searchService.emitSearch(tx.address)"
-                            [innerHTML]="util.formatHtmlAddress(tx.address)">
+                        <span
+                            class="address"
+                            (click)="searchService.emitSearch(tx.address)"
+                            [innerHTML]="util.formatHtmlAddress(tx.address)"
+                        >
                         </span>
                     </div>
                 </div>

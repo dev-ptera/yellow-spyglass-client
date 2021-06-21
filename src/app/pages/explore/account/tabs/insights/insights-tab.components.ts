@@ -53,14 +53,14 @@ import * as Highcharts from 'highcharts';
                     <span class="mat-headline">Most Common Recipient</span>
                     <span
                         *ngIf="insights.mostCommonRecipientAddress"
-                        class="mat-subheading-2"
+                        class="mat-subheading-2  insights-link"
                         (click)="search(insights.mostCommonRecipientAddress)"
                     >
                         {{ insights.mostCommonRecipientAddress }}
                     </span>
                     <span *ngIf="!insights.mostCommonRecipientAddress">N/A</span>
                 </div>
-                <div *ngIf="insights.mostCommonRecipientAddress" class="insights-description insights-link">
+                <div *ngIf="insights.mostCommonRecipientAddress" class="insights-description">
                     Account sent BAN
                     <strong style="margin: 0 4px"> {{ insights.mostCommonRecipientTxCount }} </strong> times to the
                     above recipient.
@@ -72,11 +72,11 @@ import * as Highcharts from 'highcharts';
             <div class="insights-section">
                 <div>
                     <span class="mat-headline">Most Common Sender</span>
-                    <span class="mat-subheading-2" (click)="search(insights.mostCommonSenderAddress)">
+                    <span class="mat-subheading-2  insights-link" (click)="search(insights.mostCommonSenderAddress)">
                         {{ insights.mostCommonSenderAddress }}
                     </span>
                 </div>
-                <div class="insights-description insights-link">
+                <div class="insights-description">
                     Account received BAN
                     <strong style="margin: 0 4px"> {{ insights.mostCommonSenderTxCount }} </strong> times from above
                     sender.

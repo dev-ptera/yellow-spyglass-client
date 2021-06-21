@@ -15,12 +15,12 @@
     </div>
     <div class="representatives-chart" responsive>
         <highcharts-chart
-                [update]="true"
-                [Highcharts]="Highcharts"
-                [options]="repsChart"
-                style="pointer-events: none;%"
-                [style.width.px]="vp.sm ? 350 : vp.md ? 650 : 800"
-                [style.height.px]="vp.sm ? 200 : vp.md ? 350 : 400"
+            [update]="true"
+            [Highcharts]="Highcharts"
+            [options]="repsChart"
+            style="pointer-events: none;%"
+            [style.width.px]="vp.sm ? 350 : vp.md ? 650 : 800"
+            [style.height.px]="vp.sm ? 200 : vp.md ? 350 : 400"
         ></highcharts-chart>
     </div>
 
@@ -32,11 +32,11 @@
     </div>
     <mat-list [style.paddingTop.px]="0" *ngIf="vp.sm" class="representatives-monitored-list">
         <pxb-info-list-item
-                *ngFor="let rep of monitoredReps; trackBy: trackByFn"
-                [hidePadding]="true"
-                [dense]="false"
-                [wrapSubtitle]="true"
-                [divider]="true"
+            *ngFor="let rep of monitoredReps; trackBy: trackByFn"
+            [hidePadding]="true"
+            [dense]="false"
+            [wrapSubtitle]="true"
+            [divider]="true"
         >
             <div pxb-title>
                 <span class="link" (click)="openMonitoredRep(rep.ip)">{{ rep.name }}</span>
@@ -49,21 +49,21 @@
     </mat-list>
 
     <table
-            mat-table
-            [hidden]="vp.sm"
-            responsive
-            [dataSource]="monitoredRepsDataSource"
-            #sortMonitored="matSort"
-            matSort
-            class="mat-elevation-z4 monitored-reps-table"
+        mat-table
+        [hidden]="vp.sm"
+        responsive
+        [dataSource]="monitoredRepsDataSource"
+        #sortMonitored="matSort"
+        matSort
+        class="mat-elevation-z4 monitored-reps-table"
     >
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
             <td
-                    class="representatives-name-cell representatives-clickable-cell"
-                    mat-cell
-                    *matCellDef="let element"
-                    (click)="openMonitoredRep(element.ip)"
+                class="representatives-name-cell representatives-clickable-cell"
+                mat-cell
+                *matCellDef="let element"
+                (click)="openMonitoredRep(element.ip)"
             >
                 {{ element.name }}
             </td>
@@ -72,10 +72,10 @@
         <ng-container matColumnDef="address">
             <th [style.paddingLeft.px]="16" mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
             <td
-                    class="representatives-address-cell representatives-clickable-cell"
-                    mat-cell
-                    *matCellDef="let element"
-                    (click)="routeRepAddress(element)"
+                class="representatives-address-cell representatives-clickable-cell"
+                mat-cell
+                *matCellDef="let element"
+                (click)="routeRepAddress(element)"
             >
                 {{ formatTableAddress(element.address) }}
             </td>
@@ -127,11 +127,11 @@
                     <span [style.width.px]="40">#{{ i }}</span>
                 </div>
                 <div
-                        pxb-title
-                        class="link"
-                        [class.offline]="!rep.online"
-                        [class.online]="rep.online"
-                        (click)="routeRepAddress(rep)"
+                    pxb-title
+                    class="link"
+                    [class.offline]="!rep.online"
+                    [class.online]="rep.online"
+                    (click)="routeRepAddress(rep)"
                 >
                     {{ formatListAddress(rep.address) }}
                 </div>
@@ -144,13 +144,13 @@
     </mat-list>
 
     <table
-            mat-table
-            [hidden]="vp.sm"
-            responsive
-            [dataSource]="allRepsDataSource"
-            #sortAll="matSort"
-            matSort
-            class="mat-elevation-z4 all-reps-table"
+        mat-table
+        [hidden]="vp.sm"
+        responsive
+        [dataSource]="allRepsDataSource"
+        #sortAll="matSort"
+        matSort
+        class="mat-elevation-z4 all-reps-table"
     >
         <ng-container matColumnDef="position">
             <th mat-header-cell *matHeaderCellDef>Num.</th>
@@ -160,10 +160,10 @@
         <ng-container matColumnDef="address">
             <th [style.paddingLeft.px]="16" mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
             <td
-                    mat-cell
-                    class="representatives-clickable-cell"
-                    *matCellDef="let element"
-                    (click)="routeRepAddress(element)"
+                mat-cell
+                class="representatives-clickable-cell"
+                *matCellDef="let element"
+                (click)="routeRepAddress(element)"
             >
                 {{ formatTableAddress(element.address) }}
             </td>
@@ -172,10 +172,10 @@
         <ng-container matColumnDef="online">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
             <td
-                    class="representatives-online-cell"
-                    mat-cell
-                    *matCellDef="let element"
-                    [style.color.red]="!element.online"
+                class="representatives-online-cell"
+                mat-cell
+                *matCellDef="let element"
+                [style.color.red]="!element.online"
             >
                 {{ element.online ? 'Online' : 'Offline' }}
             </td>
@@ -196,10 +196,10 @@
 
         <tr mat-header-row *matHeaderRowDef="allRepsDisplayColumns"></tr>
         <tr
-                mat-row
-                *matRowDef="let row; columns: allRepsDisplayColumns"
-                [class.online]="row.online"
-                [class.offline]="!row.online"
+            mat-row
+            *matRowDef="let row; columns: allRepsDisplayColumns"
+            [class.online]="row.online"
+            [class.offline]="!row.online"
         ></tr>
     </table>
 </ng-template>

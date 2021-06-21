@@ -36,7 +36,7 @@ import { NodeMonitorComponent } from '@app/pages/node-monitor/node-monitor.compo
 import { WalletsComponent } from '@app/pages/wallets/wallets.component';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import {KnownAccountsComponent} from "@app/pages/known-accounts/known-accounts.component";
+import { KnownAccountsComponent } from '@app/pages/known-accounts/known-accounts.component';
 
 @Component({
     selector: 'app-root',

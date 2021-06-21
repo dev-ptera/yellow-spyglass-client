@@ -50,10 +50,12 @@ $darkBackground: map-get($dark-theme, background);
 
 // Drawer
 .pxb-drawer .pxb-drawer-nav-item-active-highlight {
-    background-color: #2bff0024 !important;
+    background-color: rgba(30, 99, 15, 0.14) !important;
 }
+.mat-toolbar.mat-primary,
 .navigation-app-header-container {
-    background-color: map-get($pxb-green, 700) !important;
+    background-color: map-get($brand-pine, 700) !important;
+    color: white !important;
 }
 
 // representatives.component.ts

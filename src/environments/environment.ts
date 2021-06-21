@@ -4,7 +4,8 @@
 
 export const environment = {
     production: false,
-    api: 'http://localhost:3000/yellowspyglass',
+    api: 'http://192.168.1.233:3000/yellowspyglass',
+    richListApi: 'https://api.yellowspyglass.com/yellowspyglass',
 };
 
 /*

@@ -6,19 +6,19 @@
     flex: 1;
 }
 
-.representatives-title {
+.known-accounts-title {
     display: flex;
     width: 100%;
     text-align: left;
 }
 
-.representatives-subtitle {
+.known-accounts-subtitle {
     display: flex;
     width: 100%;
     text-align: left;
 }
 
-.representatives-root {
+.known-accounts-root {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -36,71 +36,22 @@
     }
 }
 
-.representatives-content {
+.known-accounts-content {
     width: 100%;
     max-width: 1200px;
 }
 
-.representatives-chart {
-    margin: 0;
-    margin-top: 24px;
-    display: flex;
-    justify-content: left;
-    &.md,
-    &.sm {
-        margin-top: 0;
-        justify-content: center;
-    }
-}
-
-.representatives-monitored-header {
-    margin-top: 56px;
-}
-.representatives-monitored-subtitle {
-    margin-bottom: 16px !important;
-}
-
-.representatives-all-header {
-    margin-top: 72px;
-}
-.representatives-all-subtitle {
-    margin-bottom: 16px !important;
-}
-
-.representatives-monitored-list,
-.representatives-all-list {
-    .mat-list-item-content {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-    }
-}
-
-.representatives-monitored-list {
-    width: 100%;
-}
-
-.representatives-name-cell {
-    font-weight: 600;
-    word-break: break-word;
-}
-.representatives-address-cell {
+.known-accounts-address-cell {
     word-break: break-all;
-    padding: 4px 16px 4px 16px !important;
-}
-.representatives-weight-cell {
-    padding: 4px 8px 4px 0px !important;
-}
-
-.representatives-clickable-cell {
     cursor: pointer;
     &:hover {
         text-decoration: underline;
     }
 }
 
-.monitored-reps-table,
-.all-reps-table {
+.known-accounts-table {
     width: 100%;
+    margin-top: 56px;
     * {
         font-size: 15px;
     }

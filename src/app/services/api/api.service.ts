@@ -6,7 +6,8 @@ import {
     AccountDistributionStatsDto,
     AccountOverviewDto,
     BlockDto,
-    ConfirmedTransactionDto, KnownAccountDto,
+    ConfirmedTransactionDto,
+    KnownAccountDto,
     MonitoredRepDto,
     PriceDataDto,
     RepresentativesResponseDto,
@@ -18,6 +19,7 @@ import { InsightsDto } from '@app/types/dto/InsightsDto';
 })
 export class ApiService {
     url = environment.api;
+    richListUrl = environment.richListApi;
 
     constructor(private readonly _http: HttpClient) {}
 
@@ -52,13 +54,14 @@ export class ApiService {
         return this._http.get<RepresentativesResponseDto>(`${this.url}/representatives`).toPromise();
     }
 
+    /* Rich List is too expensive operation to run non-locally; default to production. */
     bananoDistribution(): Promise<AccountDistributionStatsDto> {
-        return this._http.get<AccountDistributionStatsDto>(`${this.url}/accounts-distribution`).toPromise();
+        return this._http.get<AccountDistributionStatsDto>(`${this.richListUrl}/accounts-distribution`).toPromise();
     }
 
     getAccountBalances(offset: number, pageSize: number): Promise<AccountBalanceDto[]> {
         return this._http
-            .get<AccountBalanceDto[]>(`${this.url}/accounts-balance?offset=${offset}&size=${pageSize}`)
+            .get<AccountBalanceDto[]>(`${this.richListUrl}/accounts-balance?offset=${offset}&size=${pageSize}`)
             .toPromise();
     }
 
