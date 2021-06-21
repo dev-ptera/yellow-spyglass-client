@@ -16,7 +16,7 @@ export class KnownAccountsComponent implements OnInit {
     accountsDataSource;
     loading = true;
     error = false;
-    displayedColumns = ['alias', 'tag', 'owner',  'address'];
+    displayedColumns = ['alias', 'tag', 'owner', 'address'];
     @ViewChild('sort') sort: MatSort;
 
     constructor(
@@ -48,7 +48,6 @@ export class KnownAccountsComponent implements OnInit {
         if (this.vp.sm) {
             return `${addr.substr(0, 11)}...`;
         }
-        return `${addr.substr(0, 11)}...${addr.substr(addr.length-6, addr.length)}`;
-
+        return `${addr.substr(0, 11)}...${addr.substr(addr.length - 6, addr.length)}`;
     }
 }
