@@ -1,7 +1,7 @@
 # YellowSpyglassClient
 
 <div style="width: 100%; text-align: center">
-    <img width="300px" alt="Yellow Spyglass" src="./logo.png">
+    <img width="400px" alt="Yellow Spyglass" src="./logo.png">
 </div>
 
 View the Yellow Spyglass [here](https://www.yellowspyglass.com/).
