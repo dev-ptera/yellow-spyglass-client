@@ -1,15 +1,22 @@
 <ng-template #titleContent>
     <div class="wallets-title" [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm">
-        <ng-container *ngIf="!loading"> BAN Distribution Chart </ng-container>
+        <ng-container *ngIf="!loading"> Wallets </ng-container>
         <ng-container *ngIf="loading"> Loading </ng-container>
+    </div>
+    <div class="mat-subheading-2 wallets-subtitle" [style.marginBottom.px]="48">
+        See account distribution statistics and the list of the top banano holders.
+    </div>
+</ng-template>
+
+<ng-template #bodyContent>
+
+    <div class="wallets-title mat-headline">
+        BAN Distribution Chart
     </div>
 
     <div class="mat-subheading-2 wallets-subtitle" [style.marginBottom.px]="48">
         The chart below showcases the distribution of banano among all opened banano accounts.
     </div>
-</ng-template>
-
-<ng-template #bodyContent>
     <div class="wallets-chart mat-elevation-z4" responsive>
         <highcharts-chart
             [update]="true"
@@ -20,7 +27,7 @@
         ></highcharts-chart>
     </div>
 
-    <div class="wallets-title" [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm">All Accounts</div>
+    <div class="wallets-title mat-headline">All Accounts</div>
     <div class="mat-subheading-2 wallets-subtitle">All banano accounts, sorted by balance.</div>
     <div [class.mat-subheading-2]="!vp.sm" [class.mat-caption]="vp.sm" [style.marginBottom.px]="24">
         Any account with an offline representative is marked with a warning flag. It is encouraged that these accounts
