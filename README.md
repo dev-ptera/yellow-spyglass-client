@@ -1,6 +1,6 @@
 # YellowSpyglassClient
 
-![Yellow Spyglass]('./src/assets/logo.PNG');
+![Yellow Spyglass]('https://raw.githubusercontent.com/dev-ptera/yellow-spyglass-client/master/src/assets/logo.PNG');
 
 View the Yellow Spyglass [here](https://www.yellowspyglass.com/).
 
