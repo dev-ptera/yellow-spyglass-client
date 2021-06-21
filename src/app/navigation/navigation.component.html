@@ -7,13 +7,13 @@
 >
     <pxb-drawer pxb-drawer [open]="isOpen()" [sideBorder]="true">
         <pxb-drawer-header
-            [title]="vp.sm ? undefined : 'Yellow Spyglass'"
-            [subtitle]="vp.sm ? undefined : 'Banano Explorer'"
+            [title]="variant === 'temporary' ? undefined : 'Yellow Spyglass'"
+            [subtitle]="variant === 'temporary' ? undefined : 'Banano Explorer'"
         >
             <button pxb-icon mat-icon-button (click)="toggleDrawerOpen()">
                 <mat-icon>menu</mat-icon>
             </button>
-            <div *ngIf="vp.sm" pxb-title-content class="navigation-drawer-header-content" responsive>
+            <div *ngIf="variant === 'temporary'" pxb-title-content class="navigation-drawer-header-content" responsive>
                 <div class="mat-overline" [style.marginTop.px]="8">Yellow Spyglass</div>
                 <img class="navigation-spyglass" responsive src="assets/spyglass.svg" />
                 <div class="mat-overline" [style.marginTop.px]="48">BANANO Explorer</div>

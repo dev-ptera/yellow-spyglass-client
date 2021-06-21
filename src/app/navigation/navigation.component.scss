@@ -1,4 +1,4 @@
-.navigation-drawer-header-content.sm {
+.navigation-drawer-header-content.md {
     height: 128px;
 }
 
@@ -12,7 +12,7 @@
     bottom: -26px;
 }
 
-::ng-deep .sm .pxb-drawer-header-content {
+::ng-deep .md .pxb-drawer-header-content {
     height: unset !important;
 }
 ::ng-deep .pxb-drawer-header {

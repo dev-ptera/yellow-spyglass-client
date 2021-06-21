@@ -114,12 +114,12 @@ export class NavigationComponent implements OnInit {
                     }
                     case `/${APP_NAV_ITEMS.wallets.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.wallets.title;
-                        this._stateService.setSelectedItem(undefined);
+                        this._stateService.setSelectedItem(APP_NAV_ITEMS.wallets.title);
                         break;
                     }
                     case `/${APP_NAV_ITEMS.knownAccounts.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.knownAccounts.title;
-                        this._stateService.setSelectedItem(undefined);
+                        this._stateService.setSelectedItem(APP_NAV_ITEMS.knownAccounts.title);
                         break;
                     }
                     default: {
