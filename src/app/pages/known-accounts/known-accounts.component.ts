@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import { ApiService } from '@app/services/api/api.service';
 import { KnownAccountDto } from '@app/types/dto';
 import { SearchService } from '@app/services/search/search.service';
@@ -16,10 +16,11 @@ export class KnownAccountsComponent implements OnInit {
     accountsDataSource;
     loading = true;
     error = false;
-    displayedColumns = ['alias', 'tag', 'owner', 'address'];
+    displayedColumns = ['alias', 'type', 'owner', 'address'];
     @ViewChild('sort') sort: MatSort;
 
     constructor(
+        private readonly _ref: ChangeDetectorRef,
         private readonly _api: ApiService,
         private readonly _searchService: SearchService,
         public vp: ViewportService
@@ -31,6 +32,7 @@ export class KnownAccountsComponent implements OnInit {
             .then((data: KnownAccountDto[]) => {
                 this.loading = false;
                 this.accountsDataSource = new MatTableDataSource(data);
+                this._ref.detectChanges();
                 this.accountsDataSource.sort = this.sort;
             })
             .catch((err) => {
