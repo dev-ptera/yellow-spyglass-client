@@ -18,6 +18,7 @@ import {OnlineRepsService} from "@app/services/online-reps/online-reps.service";
 export class WalletsComponent implements OnInit {
     Highcharts: typeof Highcharts = Highcharts;
     loading = true;
+    error = false;
     distributionChart: Options;
     accountBalances: AccountBalanceDto[] = [];
     columns = ['position', 'addr', 'ban'];
@@ -50,6 +51,7 @@ export class WalletsComponent implements OnInit {
                 this.loading = false;
             })
             .catch((err) => {
+                this.error = true;
                 console.error(err);
             });
     }

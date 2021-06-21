@@ -7,7 +7,6 @@ import { filter } from 'rxjs/operators';
 import { UtilService } from '../../services/util/util.service';
 import { AccountOverviewDto } from '@app/types/dto';
 import { BlockDto } from '@app/types/dto/BlockDto';
-import { InsightsDto } from '@app/types/dto/InsightsDto';
 
 @Component({
     selector: 'app-explore',

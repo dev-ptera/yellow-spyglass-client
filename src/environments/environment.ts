@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    api: 'http://192.168.1.231:3000/yellowspyglass',
+    api: 'http://localhost:3000/yellowspyglass',
 };
 
 /*

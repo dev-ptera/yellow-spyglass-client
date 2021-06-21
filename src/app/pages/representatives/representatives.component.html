@@ -1,212 +1,215 @@
+<ng-template #titleContent>
+    <div class="representatives-title" [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm">
+        <ng-container *ngIf="!loading">Representatives</ng-container>
+        <ng-container *ngIf="loading">Loading</ng-container>
+    </div>
+    <div class="mat-subheading-2 representatives-subtitle">
+        Representatives process transactions on the BANANO network. See all representatives below.
+    </div>
+</ng-template>
+
+<ng-template #bodyContent>
+    <div class="mat-headline representatives-monitored-header">Weight Distribution</div>
+    <div class="mat-subheading-2 representatives-monitored-subtitle">
+        Online voting weight allocation between the largest representatives.
+    </div>
+    <div class="representatives-chart" responsive>
+        <highcharts-chart
+                [update]="true"
+                [Highcharts]="Highcharts"
+                [options]="repsChart"
+                style="pointer-events: none;%"
+                [style.width.px]="vp.sm ? 350 : vp.md ? 650 : 800"
+                [style.height.px]="vp.sm ? 200 : vp.md ? 350 : 400"
+        ></highcharts-chart>
+    </div>
+
+    <div class="mat-headline representatives-monitored-header">
+        Monitored Representatives ({{ monitoredReps.length }})
+    </div>
+    <div class="mat-subheading-2 representatives-monitored-subtitle">
+        Online representatives that use the Nano Node Monitor tool are shown in the list below.
+    </div>
+    <mat-list [style.paddingTop.px]="0" *ngIf="vp.sm" class="representatives-monitored-list">
+        <pxb-info-list-item
+                *ngFor="let rep of monitoredReps; trackBy: trackByFn"
+                [hidePadding]="true"
+                [dense]="false"
+                [wrapSubtitle]="true"
+                [divider]="true"
+        >
+            <div pxb-title>
+                <span class="link" (click)="openMonitoredRep(rep.ip)">{{ rep.name }}</span>
+            </div>
+            <div pxb-info style="font-size: 0.875rem" class="link" (click)="routeRepAddress(rep)">
+                {{ formatListAddress(rep.address) }}
+            </div>
+            <div pxb-subtitle style="font-size: 0.875rem">{{ formatInfoLine(rep) }}</div>
+        </pxb-info-list-item>
+    </mat-list>
+
+    <table
+            mat-table
+            [hidden]="vp.sm"
+            responsive
+            [dataSource]="monitoredRepsDataSource"
+            #sortMonitored="matSort"
+            matSort
+            class="mat-elevation-z4 monitored-reps-table"
+    >
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+            <td
+                    class="representatives-name-cell representatives-clickable-cell"
+                    mat-cell
+                    *matCellDef="let element"
+                    (click)="openMonitoredRep(element.ip)"
+            >
+                {{ element.name }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="address">
+            <th [style.paddingLeft.px]="16" mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
+            <td
+                    class="representatives-address-cell representatives-clickable-cell"
+                    mat-cell
+                    *matCellDef="let element"
+                    (click)="routeRepAddress(element)"
+            >
+                {{ formatTableAddress(element.address) }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="version">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Version</th>
+            <td class="representatives-weight-cell" mat-cell *matCellDef="let element">
+                {{ element.version }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="weight">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Weight (BAN)</th>
+            <td class="representatives-weight-cell" mat-cell *matCellDef="let element">
+                {{ formatBanWeight(element.weight) }} ({{ formatWeightPercent(element.weight) }})
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="delegatorsCount">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Delegators</th>
+            <td mat-cell *matCellDef="let element">{{ numberWithCommas(element.delegatorsCount) }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="peers">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Peers</th>
+            <td mat-cell *matCellDef="let element">{{ numberWithCommas(element.peers) }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="uncheckedBlocks">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Unchecked Blocks</th>
+            <td mat-cell *matCellDef="let element" [class.unchecked-blocks]="element.uncheckedBlocks">
+                {{ numberWithCommas(element.uncheckedBlocks) }}
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="monitoredRepDisplayColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: monitoredRepDisplayColumns"></tr>
+    </table>
+
+    <div class="mat-headline representatives-all-header">All Representatives ({{ representatives.length }})</div>
+    <div class="mat-subheading-2 representatives-all-subtitle">
+        List of representatives with at least 100,000 BANANO weight delegated towards them.
+    </div>
+    <mat-list *ngIf="vp.sm" class="representatives-all-list">
+        <div *ngFor="let rep of representatives; let i = index; trackBy: trackByFn">
+            <pxb-info-list-item [hidePadding]="true" [dense]="true" [divider]="true">
+                <div pxb-left-content>
+                    <span [style.width.px]="40">#{{ i }}</span>
+                </div>
+                <div
+                        pxb-title
+                        class="link"
+                        [class.offline]="!rep.online"
+                        [class.online]="rep.online"
+                        (click)="routeRepAddress(rep)"
+                >
+                    {{ formatListAddress(rep.address) }}
+                </div>
+                <div pxb-subtitle>
+                    {{ numberWithCommas(rep.weight) }} BAN · {{ numberWithCommas(rep.delegatorsCount) }} delegators
+                </div>
+            </pxb-info-list-item>
+            <mat-divider></mat-divider>
+        </div>
+    </mat-list>
+
+    <table
+            mat-table
+            [hidden]="vp.sm"
+            responsive
+            [dataSource]="allRepsDataSource"
+            #sortAll="matSort"
+            matSort
+            class="mat-elevation-z4 all-reps-table"
+    >
+        <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef>Num.</th>
+            <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="address">
+            <th [style.paddingLeft.px]="16" mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
+            <td
+                    mat-cell
+                    class="representatives-clickable-cell"
+                    *matCellDef="let element"
+                    (click)="routeRepAddress(element)"
+            >
+                {{ formatTableAddress(element.address) }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="online">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+            <td
+                    class="representatives-online-cell"
+                    mat-cell
+                    *matCellDef="let element"
+                    [style.color.red]="!element.online"
+            >
+                {{ element.online ? 'Online' : 'Offline' }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="weight">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Weight (BAN))</th>
+            <td class="representatives-weight-cell" mat-cell *matCellDef="let element">
+                {{ formatBanWeight(element.weight) }}
+                ({{ formatWeightPercent(element.weight) }})
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="delegatorsCount">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Delegators</th>
+            <td mat-cell *matCellDef="let element">{{ numberWithCommas(element.delegatorsCount) }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="allRepsDisplayColumns"></tr>
+        <tr
+                mat-row
+                *matRowDef="let row; columns: allRepsDisplayColumns"
+                [class.online]="row.online"
+                [class.offline]="!row.online"
+        ></tr>
+    </table>
+</ng-template>
+
 <div class="representatives-root" responsive>
     <div class="representatives-content">
-        <div class="representatives-title" [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm">
-            <ng-container *ngIf="!loading">Representatives</ng-container>
-            <ng-container *ngIf="loading">Loading</ng-container>
-        </div>
-
-        <div class="mat-subheading-2 representatives-subtitle">
-            Representatives process transactions on the BANANO network. See all representatives below.
-        </div>
-
-        <ng-container *ngIf="!loading && !error">
-            <div class="mat-headline representatives-monitored-header">Weight Distribution</div>
-            <div class="mat-subheading-2 representatives-monitored-subtitle">
-                Online voting weight allocation between the largest representatives.
-            </div>
-            <div class="representatives-chart" responsive>
-                <highcharts-chart
-                    [update]="true"
-                    [Highcharts]="Highcharts"
-                    [options]="repsChart"
-                    style="pointer-events: none;%"
-                    [style.width.px]="vp.sm ? 350 : vp.md ? 650 : 800"
-                    [style.height.px]="vp.sm ? 200 : vp.md ? 350 : 400"
-                ></highcharts-chart>
-            </div>
-
-            <div class="mat-headline representatives-monitored-header">
-                Monitored Representatives ({{ monitoredReps.length }})
-            </div>
-            <div class="mat-subheading-2 representatives-monitored-subtitle">
-                Online representatives that use the Nano Node Monitor tool are shown in the list below.
-            </div>
-            <mat-list [style.paddingTop.px]="0" *ngIf="vp.sm" class="representatives-monitored-list">
-                <pxb-info-list-item
-                    *ngFor="let rep of monitoredReps; trackBy: trackByFn"
-                    [hidePadding]="true"
-                    [dense]="false"
-                    [wrapSubtitle]="true"
-                    [divider]="true"
-                >
-                    <div pxb-title>
-                        <span class="link" (click)="openMonitoredRep(rep.ip)">{{ rep.name }}</span>
-                    </div>
-                    <div pxb-info style="font-size: 0.875rem" class="link" (click)="routeRepAddress(rep)">
-                        {{ formatListAddress(rep.address) }}
-                    </div>
-                    <div pxb-subtitle style="font-size: 0.875rem">{{ formatInfoLine(rep) }}</div>
-                </pxb-info-list-item>
-            </mat-list>
-
-            <table
-                mat-table
-                [hidden]="vp.sm"
-                responsive
-                [dataSource]="monitoredRepsDataSource"
-                #sortMonitored="matSort"
-                matSort
-                class="mat-elevation-z4 monitored-reps-table"
-            >
-                <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-                    <td
-                        class="representatives-name-cell representatives-clickable-cell"
-                        mat-cell
-                        *matCellDef="let element"
-                        (click)="openMonitoredRep(element.ip)"
-                    >
-                        {{ element.name }}
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="address">
-                    <th [style.paddingLeft.px]="16" mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
-                    <td
-                        class="representatives-address-cell representatives-clickable-cell"
-                        mat-cell
-                        *matCellDef="let element"
-                        (click)="routeRepAddress(element)"
-                    >
-                        {{ formatTableAddress(element.address) }}
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="version">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Version</th>
-                    <td class="representatives-weight-cell" mat-cell *matCellDef="let element">
-                        {{ element.version }}
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="weight">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Weight (BAN)</th>
-                    <td class="representatives-weight-cell" mat-cell *matCellDef="let element">
-                        <div>{{ formatBanWeight(element.weight) }}</div>
-                        <div [style.fontSize.px]="vp.md ? 9 : 11">{{ formatWeightPercent(element.weight) }}</div>
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="delegatorsCount">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Delegators</th>
-                    <td mat-cell *matCellDef="let element">{{ numberWithCommas(element.delegatorsCount) }}</td>
-                </ng-container>
-
-                <ng-container matColumnDef="peers">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Peers</th>
-                    <td mat-cell *matCellDef="let element">{{ numberWithCommas(element.peers) }}</td>
-                </ng-container>
-
-                <ng-container matColumnDef="uncheckedBlocks">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Unchecked Blocks</th>
-                    <td mat-cell *matCellDef="let element" [class.unchecked-blocks]="element.uncheckedBlocks">
-                        {{ numberWithCommas(element.uncheckedBlocks) }}
-                    </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="monitoredRepDisplayColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: monitoredRepDisplayColumns"></tr>
-            </table>
-
-            <div class="mat-headline representatives-all-header">
-                All Representatives ({{ representatives.length }})
-            </div>
-            <div class="mat-subheading-2 representatives-all-subtitle">
-                List of representatives with at least 100,000 BANANO weight delegated towards them, sorted by voting weight.
-            </div>
-            <mat-list *ngIf="vp.sm" class="representatives-all-list">
-                <div *ngFor="let rep of representatives; let i = index; trackBy: trackByFn">
-                    <pxb-info-list-item [hidePadding]="true" [dense]="true" [divider]="true">
-                        <div pxb-left-content>
-                            <span [style.width.px]="40">#{{ i }}</span>
-                        </div>
-                        <div
-                            pxb-title
-                            class="link"
-                            [class.offline]="!rep.online"
-                            [class.online]="rep.online"
-                            (click)="routeRepAddress(rep)"
-                        >
-                            {{ formatListAddress(rep.address) }}
-                        </div>
-                        <div pxb-subtitle>
-                            {{ numberWithCommas(rep.weight) }} BAN ·
-                            {{ numberWithCommas(rep.delegatorsCount) }} delegators
-                        </div>
-                    </pxb-info-list-item>
-                    <mat-divider></mat-divider>
-                </div>
-            </mat-list>
-
-            <table
-                mat-table
-                [hidden]="vp.sm"
-                responsive
-                [dataSource]="allRepsDataSource"
-                #sortAll="matSort"
-                matSort
-                class="mat-elevation-z4 all-reps-table"
-            >
-                <ng-container matColumnDef="position">
-                    <th mat-header-cell *matHeaderCellDef>Num.</th>
-                    <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
-                </ng-container>
-
-                <ng-container matColumnDef="address">
-                    <th [style.paddingLeft.px]="16" mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
-                    <td
-                        mat-cell
-                        class="representatives-clickable-cell"
-                        *matCellDef="let element"
-                        (click)="routeRepAddress(element)"
-                    >
-                        {{ formatTableAddress(element.address) }}
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="online">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-                    <td
-                        class="representatives-online-cell"
-                        mat-cell
-                        *matCellDef="let element"
-                        [style.color.red]="!element.online"
-                    >
-                        {{ element.online ? 'Online' : 'Offline' }}
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="weight">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Weight (BAN)</th>
-                    <td class="representatives-weight-cell" mat-cell *matCellDef="let element">
-                        <div>{{ formatBanWeight(element.weight) }}</div>
-                        <div [style.fontSize.px]="vp.md ? 9 : 11">{{ formatWeightPercent(element.weight) }}</div>
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="delegatorsCount">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Delegators</th>
-                    <td mat-cell *matCellDef="let element">{{ numberWithCommas(element.delegatorsCount) }}</td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="allRepsDisplayColumns"></tr>
-                <tr
-                    mat-row
-                    *matRowDef="let row; columns: allRepsDisplayColumns"
-                    [class.online]="row.online"
-                    [class.offline]="!row.online"
-                ></tr>
-            </table>
+        <app-error *ngIf="error"></app-error>
+        <ng-container *ngIf="!error">
+            <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
+            <ng-template *ngIf="!loading" [ngTemplateOutlet]="bodyContent"></ng-template>
         </ng-container>
     </div>
 </div>
