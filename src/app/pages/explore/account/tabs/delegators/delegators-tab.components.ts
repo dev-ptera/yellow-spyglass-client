@@ -45,7 +45,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
         >
             *Accounts with a 0 BANANO balance have been removed from the total delegators count.
         </div>
-        <div style="text-align: center; margin-top: 16px" *ngIf="delegators.length > shownDelegators">
+        <div style="text-align: center; margin: 16px 0" *ngIf="delegators.length > shownDelegators">
             <button color="primary" style="padding: 8px 16px" mat-stroked-button (click)="increaseShownDelegators()">
                 Load more
             </button>

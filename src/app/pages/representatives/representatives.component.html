@@ -92,7 +92,8 @@
                 <ng-container matColumnDef="weight">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Weight (BAN)</th>
                     <td class="representatives-weight-cell" mat-cell *matCellDef="let element">
-                        {{ formatBanWeight(element.weight) }} ({{ formatWeightPercent(element.weight) }})
+                        <div>{{ formatBanWeight(element.weight) }}</div>
+                        <div [style.fontSize.px]="vp.md ? 9 : 11">{{ formatWeightPercent(element.weight) }}</div>
                     </td>
                 </ng-container>
 
@@ -121,7 +122,7 @@
                 All Representatives ({{ representatives.length }})
             </div>
             <div class="mat-subheading-2 representatives-all-subtitle">
-                List of representatives with at least 100,000 BANANO weight delegated towards them.
+                List of representatives with at least 100,000 BANANO weight delegated towards them, sorted by voting weight.
             </div>
             <mat-list *ngIf="vp.sm" class="representatives-all-list">
                 <div *ngFor="let rep of representatives; let i = index; trackBy: trackByFn">
@@ -186,10 +187,10 @@
                 </ng-container>
 
                 <ng-container matColumnDef="weight">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Weight (BAN))</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Weight (BAN)</th>
                     <td class="representatives-weight-cell" mat-cell *matCellDef="let element">
-                        {{ formatBanWeight(element.weight) }}
-                        ({{ formatWeightPercent(element.weight) }})
+                        <div>{{ formatBanWeight(element.weight) }}</div>
+                        <div [style.fontSize.px]="vp.md ? 9 : 11">{{ formatWeightPercent(element.weight) }}</div>
                     </td>
                 </ng-container>
 

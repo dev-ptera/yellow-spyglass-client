@@ -1,0 +1,50 @@
+<div class="known-accounts-root" responsive>
+    <div class="known-accounts-content">
+        <div class="known-accounts-title" [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm">
+            <ng-container *ngIf="!loading">Known Accounts</ng-container>
+            <ng-container *ngIf="loading">Loading</ng-container>
+        </div>
+
+        <div class="mat-subheading-2 known-accounts-subtitle">
+            Known Accounts, maintained by Kirby
+        </div>
+        <table
+            mat-table
+            responsive
+            [dataSource]="accountsDataSource"
+            #sort="matSort"
+            matSort
+            class="mat-elevation-z4 monitored-reps-table"
+        >
+
+            <ng-container matColumnDef="address">
+                <th mat-header-cell *matHeaderCellDef >Address</th>
+                <td
+                    class="known-accounts-address-cell known-accounts-clickable-cell"
+                    mat-cell
+                    *matCellDef="let element"
+                    (click)="routeRepAddress(element.address)"
+                >
+                    {{ element.address }}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="alias">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Alias</th>
+                <td class="known-accounts-weight-cell" mat-cell *matCellDef="let element">
+                    {{ element.alias }}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="tag">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+                <td class="known-accounts-weight-cell" mat-cell *matCellDef="let element">
+                    {{ element.type }}
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+    </div>
+</div>

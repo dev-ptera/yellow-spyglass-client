@@ -117,6 +117,11 @@ export class NavigationComponent implements OnInit {
                         this._stateService.setSelectedItem(undefined);
                         break;
                     }
+                    case `/${APP_NAV_ITEMS.knownAccounts.route}`: {
+                        this.toolbarTitle = APP_NAV_ITEMS.knownAccounts.title;
+                        this._stateService.setSelectedItem(undefined);
+                        break;
+                    }
                     default: {
                         this.toolbarTitle = '';
                     }

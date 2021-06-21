@@ -6,7 +6,7 @@
         </div>
 
         <div class="mat-subheading-2 wallets-subtitle" [style.marginBottom.px]="48">
-            The chart below showcases the distribution of banano among all opened banano accounts.
+            The chart below showcases the distribution of banano among all opened accounts.
         </div>
 
         <ng-container *ngIf="!loading">
@@ -56,7 +56,7 @@
                             matBadgeColor="warn"
                             matBadgeOverlap="false"
                             [matBadgeSize]="vp.sm ? 'small' : 'medium'"
-                            [matBadge]="element.repOnline ? undefined : '!'"
+                            [matBadge]="isRepOnline(element.representative) ? undefined : '!'"
                         >
                             #{{ formatIndex(i + 1 + currentPage * pageSize) }}
                         </span>

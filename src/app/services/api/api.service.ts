@@ -6,7 +6,7 @@ import {
     AccountDistributionStatsDto,
     AccountOverviewDto,
     BlockDto,
-    ConfirmedTransactionDto,
+    ConfirmedTransactionDto, KnownAccountDto,
     MonitoredRepDto,
     PriceDataDto,
     RepresentativesResponseDto,
@@ -68,5 +68,13 @@ export class ApiService {
 
     getInsights(address: string): Promise<InsightsDto> {
         return this._http.get<InsightsDto>(`${this.url}/insights/${address}`).toPromise();
+    }
+
+    getOnlineReps(): Promise<string[]> {
+        return this._http.get<string[]>(`${this.url}/online-reps`).toPromise();
+    }
+
+    getKnownAccounts(): Promise<KnownAccountDto[]> {
+        return this._http.get<KnownAccountDto[]>(`${this.url}/known-accounts`).toPromise();
     }
 }

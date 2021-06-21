@@ -17,6 +17,12 @@ const walletsNavItem: NavItem = {
     icon: 'account_balance_wallet',
 };
 
+const knownAccountsNavItem: NavItem = {
+    title: 'Known Accounts',
+    route: 'known-accounts',
+    icon: 'fingerprint',
+};
+
 const networkNavItem: NavItem = {
     title: 'Network',
     route: 'coming-soon',
@@ -42,6 +48,7 @@ const bookmarksNavItem: NavItem = {
 };
 
 export const APP_NAV_ITEMS = {
+    knownAccounts: knownAccountsNavItem,
     bookmarks: bookmarksNavItem,
     search: searchNavItem,
     representatives: representativesNavItem,
@@ -51,5 +58,5 @@ export const APP_NAV_ITEMS = {
     node: nodeNavItem,
 };
 
-export const EXPLORER_NAV_GROUP = [searchNavItem, walletsNavItem];
+export const EXPLORER_NAV_GROUP = [searchNavItem, walletsNavItem, knownAccountsNavItem];
 export const NETWORK_NAV_GROUP = [networkNavItem, representativesNavItem, nodeNavItem];

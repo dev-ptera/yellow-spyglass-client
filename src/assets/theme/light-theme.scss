@@ -55,10 +55,10 @@ $lightForeground: map-get($light-theme, foreground);
     color: map-get($pxb-red, 900);
 }
 .all-reps-table {
-    .offline .mat-cell {
+    .offline .representatives-online-cell {
         color: map-get($pxb-red, 900);
     }
-    .online .mat-cell {
+    .online .representatives-online-cell {
         color: map-get($pxb-green, 900);
     }
 }
@@ -111,7 +111,7 @@ $lightForeground: map-get($light-theme, foreground);
     pxb-list-item-tag.type {
         color: white !important;
         &.send {
-            background-color: map-get($pxb-red, 300);
+            background-color: map-get($pxb-red, 500);
         }
         &.receive {
             background-color: map-get($pxb-green, 800);

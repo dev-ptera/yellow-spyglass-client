@@ -8,6 +8,7 @@ import * as Highcharts from 'highcharts';
 import { UtilService } from '@app/services/util/util.service';
 import { PriceService } from '@app/services/price/price.service';
 import { AccountBalanceDto, AccountDistributionStatsDto } from '@app/types/dto';
+import {OnlineRepsService} from "@app/services/online-reps/online-reps.service";
 
 @Component({
     selector: 'app-wallets',
@@ -30,7 +31,8 @@ export class WalletsComponent implements OnInit {
         private readonly _api: ApiService,
         public vp: ViewportService,
         public searchService: SearchService,
-        private readonly _priceService: PriceService
+        private readonly _priceService: PriceService,
+        private readonly _onlineRepsService: OnlineRepsService,
     ) {
         this.vp.vpChange.subscribe(() => {
             setTimeout(() => {
@@ -82,6 +84,10 @@ export class WalletsComponent implements OnInit {
 
     formatBtcPrice(ban: number): string {
         return `₿${this.util.numberWithCommas(this._priceService.priceInBitcoin(ban).toFixed(2))}`;
+    }
+
+    isRepOnline(rep: string): boolean {
+        return this._onlineRepsService.onlineReps.has(rep);
     }
 
     private _createDistributionChart(data: AccountDistributionStatsDto): Options {

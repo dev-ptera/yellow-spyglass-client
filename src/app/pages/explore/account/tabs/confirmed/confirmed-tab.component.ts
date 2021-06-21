@@ -4,6 +4,7 @@ import { MonkeyCacheService } from '@app/services/monkey-cache/monkey-cache.serv
 import { SearchService } from '@app/services/search/search.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { PaginatorComponent } from '@app/components/paginator/paginator.component';
+import {UtilService} from "@app/services/util/util.service";
 
 @Component({
     selector: 'account-confirmed-tab',
@@ -33,9 +34,9 @@ import { PaginatorComponent } from '@app/components/paginator/paginator.componen
                         <span *ngIf="tx.type !== 'change'" [class]="'amount ' + tx.type">{{ tx.balance }}</span>
                     </div>
                     <div>
-                        <span class="to-from">{{ tx.type === 'receive' ? ' from' : 'to' }}</span>
-                        <span class="address" (click)="searchService.emitSearch(tx.address)">
-                            {{ ' ' + tx.address }}
+                        <span class="to-from">{{ tx.type === 'receive' ? ' from ' : 'to ' }}</span>
+                        <span class="address" (click)="searchService.emitSearch(tx.address)"
+                            [innerHTML]="util.formatHtmlAddress(tx.address)">
                         </span>
                     </div>
                 </div>
@@ -75,7 +76,8 @@ export class ConfirmedTabComponent {
     constructor(
         public monkeyCache: MonkeyCacheService,
         public searchService: SearchService,
-        public vp: ViewportService
+        public vp: ViewportService,
+        public util: UtilService
     ) {}
 
     trackByFn(index: number): number {
