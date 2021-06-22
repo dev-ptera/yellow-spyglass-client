@@ -8,6 +8,7 @@ import { EmptyStateModule } from '@pxblue/angular-components';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AppCommonModule } from '@app/common/app-common.module';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
     declarations: [BookmarksComponent],
@@ -20,6 +21,7 @@ import { AppCommonModule } from '@app/common/app-common.module';
         MatIconModule,
         MatTableModule,
         ReactiveFormsModule,
+        MatInputModule,
     ],
     exports: [BookmarksComponent],
 })

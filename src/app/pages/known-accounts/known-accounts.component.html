@@ -31,9 +31,10 @@
         </ng-container>
 
         <ng-container matColumnDef="address">
-            <th mat-header-cell *matHeaderCellDef>Address</th>
+            <th mat-header-cell *matHeaderCellDef style="padding: 0 12px 0 0">Address</th>
             <td
                 class="known-accounts-address-cell"
+                style="padding: 0 12px 0 0"
                 mat-cell
                 *matCellDef="let element"
                 (click)="routeRepAddress(element.address)"
