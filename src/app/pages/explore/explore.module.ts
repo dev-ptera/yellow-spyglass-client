@@ -16,9 +16,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 // app
 import { AccountComponent } from './account/account.component';
 import { ExploreComponent } from './explore.component';
-import { SafeHtmlPipe } from '../../pipes/safe.pipe';
 import { MatBadgeModule } from '@angular/material/badge';
-import { ResponsiveDirective } from '../../directives/responsive.directive';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { PendingTabComponent } from '@app/pages/explore/account/tabs/pending/pending-tab.component';
@@ -29,7 +27,7 @@ import { InsightsTabComponent } from '@app/pages/explore/account/tabs/insights/i
 import { HighchartsChartModule } from 'highcharts-angular';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ComponentsModule } from '@app/components/components.module';
+import { AppCommonModule } from '@app/common/app-common.module';
 
 @NgModule({
     declarations: [
@@ -39,14 +37,12 @@ import { ComponentsModule } from '@app/components/components.module';
         ExploreComponent,
         HashComponent,
         PendingTabComponent,
-        SafeHtmlPipe,
-        ResponsiveDirective,
         InsightsTabComponent,
     ],
     imports: [
+        AppCommonModule,
         BrowserAnimationsModule,
         CommonModule,
-        ComponentsModule,
         EmptyStateModule,
         InfoListItemModule,
         ListItemTagModule,

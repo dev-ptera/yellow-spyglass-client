@@ -5,11 +5,11 @@ import { MatSortModule } from '@angular/material/sort';
 import { RepresentativesComponent } from '@app/pages/representatives/representatives.component';
 import { InfoListItemModule } from '@pxblue/angular-components';
 import { HighchartsChartModule } from 'highcharts-angular';
-import { ComponentsModule } from '@app/components/components.module';
+import { AppCommonModule } from '@app/common/app-common.module';
 
 @NgModule({
     declarations: [RepresentativesComponent],
-    imports: [CommonModule, ComponentsModule, HighchartsChartModule, InfoListItemModule, MatSortModule, MatTableModule],
+    imports: [CommonModule, AppCommonModule, HighchartsChartModule, InfoListItemModule, MatSortModule, MatTableModule],
     exports: [RepresentativesComponent],
 })
 export class RepresentativesModule {}

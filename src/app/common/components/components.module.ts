@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 
-// app
-import { BookmarkButtonComponent } from '@app/components/bookmark-button/bookmark-button.component';
-import { CopyButtonComponent } from '@app/components/copy-button/copy-button.component';
-import { QrButtonComponent } from '@app/components/qr-button/qr-button.component';
-import { QrDialogComponent } from '@app/components/qr-dialog/qr-dialog.component';
-import { PaginatorComponent } from '@app/components/paginator/paginator.component';
-import { ErrorComponent } from '@app/components/error/error.component';
+import { BookmarkButtonComponent } from './bookmark-button/bookmark-button.component';
+import { CopyButtonComponent } from './copy-button/copy-button.component';
+import { QrButtonComponent } from './qr-button/qr-button.component';
+import { QrDialogComponent } from './qr-dialog/qr-dialog.component';
+import { PaginatorComponent } from './paginator/paginator.component';
+import { ErrorComponent } from './error/error.component';
 import { MatIconModule } from '@angular/material/icon';
 import { EmptyStateModule, SpacerModule } from '@pxblue/angular-components';
 import { CommonModule } from '@angular/common';

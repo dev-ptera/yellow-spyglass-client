@@ -6,10 +6,12 @@ import { RouterModule } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
+import { AppCommonModule } from '@app/common/app-common.module';
 
 @NgModule({
     declarations: [NavigationComponent],
     imports: [
+        AppCommonModule,
         BrowserAnimationsModule,
         CommonModule,
         DrawerLayoutModule,

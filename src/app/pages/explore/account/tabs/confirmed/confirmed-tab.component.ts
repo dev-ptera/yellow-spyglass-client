@@ -3,7 +3,7 @@ import { ConfirmedTransaction } from '@app/types/modal/ConfirmedTransaction';
 import { MonkeyCacheService } from '@app/services/monkey-cache/monkey-cache.service';
 import { SearchService } from '@app/services/search/search.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
-import { PaginatorComponent } from '@app/components/paginator/paginator.component';
+import { PaginatorComponent } from '../../../../../common/components/paginator/paginator.component';
 import { UtilService } from '@app/services/util/util.service';
 
 @Component({

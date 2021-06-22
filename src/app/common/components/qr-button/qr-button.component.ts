@@ -1,5 +1,5 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { QrDialogComponent } from '@app/components/qr-dialog/qr-dialog.component';
+import { QrDialogComponent } from '../qr-dialog/qr-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({

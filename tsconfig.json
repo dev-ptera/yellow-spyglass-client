@@ -5,10 +5,8 @@
     "baseUrl": "./src",
     "paths": {
       "@angular/*": [ "../node_modules/@angular/*" ],
-      "@app/components/*": ["app/components/*"],
-      "@app/directives/*": ["app/directives/*"],
+      "@app/common/*": ["app/common/*"],
       "@app/pages/*": ["app/pages/*"],
-      "@app/pipes/*": ["app/pipes/*"],
       "@app/services/*": ["app/services/*"],
       "@app/types/*": ["app/types/*"],
     },
