@@ -40,6 +40,8 @@ export class ResponsiveDirective implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.vpSubscription.unsubscribe();
+        if (this.vpSubscription) {
+            this.vpSubscription.unsubscribe();
+        }
     }
 }
