@@ -7,23 +7,25 @@ import { SearchService } from '@app/services/search/search.service';
 @Component({
     selector: 'app-hash',
     template: `
-        <div [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm" [style.marginBottom.px]="8">
-            <span *ngIf="loading">Loading</span>
-            <span *ngIf="!loading">State Block</span>
-        </div>
-        <div class="mat-subheading-2 hash-searched">
-            {{ hash }}
-            <app-copy-button [data]="hash"></app-copy-button>
-            <app-bookmark-button [id]="hash"></app-bookmark-button>
-        </div>
+        <ng-template #titleContent>
+            <div [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm" [style.marginBottom.px]="8">
+                <span *ngIf="loading">Loading</span>
+                <span *ngIf="!loading">State Block</span>
+            </div>
+            <div class="mat-subheading-2 hash-searched">
+                {{ hash }}
+                <app-copy-button [data]="hash"></app-copy-button>
+                <app-bookmark-button [id]="hash"></app-bookmark-button>
+            </div>
+        </ng-template>
 
-        <ng-container *ngIf="!loading && block">
+        <ng-template #bodyContent>
             <div class="hash-section">
                 <div>
                     <span class="mat-headline">Block Account</span>
-                    <span class="mat-subheading-2 hash-link" (click)="search(block.blockAccount)">{{
-                        block.blockAccount
-                    }}</span>
+                    <span class="mat-subheading-2 hash-link" (click)="search(block.blockAccount)">
+                        {{ block.blockAccount }}
+                    </span>
                 </div>
                 <div class="hash-description">The account represented by this state block</div>
             </div>
@@ -126,6 +128,12 @@ import { SearchService } from '@app/services/search/search.service';
                     <span class="mat-subheading-2">{{ block.contents.work }}</span>
                 </div>
             </div>
+        </ng-template>
+
+        <app-error *ngIf="error"></app-error>
+        <ng-container *ngIf="!error">
+            <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
+            <ng-template *ngIf="!loading" [ngTemplateOutlet]="bodyContent"></ng-template>
         </ng-container>
     `,
     styleUrls: ['./hash.component.scss'],
@@ -135,6 +143,7 @@ export class HashComponent {
     @Input() hash: string;
     @Input() block: BlockDto;
     @Input() loading: boolean;
+    @Input() error: boolean;
 
     constructor(
         public vp: ViewportService,

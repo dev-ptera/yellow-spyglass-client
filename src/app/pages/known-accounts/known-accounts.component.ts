@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ApiService } from '@app/services/api/api.service';
 import { KnownAccountDto } from '@app/types/dto';
 import { SearchService } from '@app/services/search/search.service';
@@ -16,7 +16,8 @@ export class KnownAccountsComponent implements OnInit {
     accountsDataSource;
     loading = true;
     error = false;
-    displayedColumns = ['alias', 'type', 'owner', 'address'];
+    displayedColumns = ['alias', 'address', 'type', 'owner'];
+    displayColumnsMobile = ['alias', 'type', 'owner'];
     @ViewChild('sort') sort: MatSort;
 
     constructor(

@@ -33,16 +33,10 @@
                     </button>
                 </div>
 
-                <div
-                    class="mat-headline"
-                    [style.marginTop.px]="72"
-                    [style.marginBottom.px]="8"
-                >
-                    Getting Started?
-                </div>
+                <div class="mat-headline" [style.marginTop.px]="72" [style.marginBottom.px]="8">Getting Started?</div>
                 <div class="mat-subheading-2">
                     Below are some sample accounts and transactions to help get familiar with how things work around
-                    here
+                    here.
                 </div>
                 <div [style.marginTop.px]="32">
                     <div class="mat-subheading-1" [style.marginBottom.px]="16">Sample Addresses</div>
@@ -81,12 +75,20 @@
                 *ngIf="showAccount"
                 [accountOverview]="accountOverview"
                 [loading]="loading"
+                [error]="error"
                 [address]="searchedValue"
                 [monkeySvg]="monkeySvg"
             >
             </app-account>
 
-            <app-hash *ngIf="showBlock" [loading]="loading" [block]="blockResponse" [hash]="searchedValue"> </app-hash>
+            <app-hash
+                *ngIf="showBlock"
+                [loading]="loading"
+                [error]="error"
+                [block]="blockResponse"
+                [hash]="searchedValue"
+            >
+            </app-hash>
         </div>
     </div>
 </div>

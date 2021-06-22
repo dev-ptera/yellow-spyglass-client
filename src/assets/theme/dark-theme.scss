@@ -8,7 +8,7 @@ $dark-theme: map-merge(
     mat-dark-theme($material-theme-primary, $material-theme-accent, $material-theme-warn),
     (
         foreground: (
-            text: map-get($pxb-black, 100),
+            text: map-get($pxb-black, 50),
             secondary-text: map-get($pxb-black, 200),
             hint-text: map-get($pxb-black, 200),
             base: map-get($pxb-white, 50),
@@ -78,7 +78,7 @@ $darkBackground: map-get($dark-theme, background);
         color: map-get($pxb-green, 200) !important;
     }
     .offline {
-        color: map-get($pxb-red, 200);
+        color: map-get($pxb-red, 200) !important;
     }
 }
 
@@ -114,9 +114,15 @@ $darkBackground: map-get($dark-theme, background);
 }
 
 // account.component.ts
-.account-rep-online,
 .account-rep-offline {
-    color: map-get($darkBackground, background) !important;
+    border: solid 1px map-get($pxb-red, 200);
+    background-color: unset !important;
+    color: map-get($pxb-red, 200) !important;
+}
+.account-rep-online {
+    border: solid 1px map-get($pxb-green, 200);
+    background-color: unset !important;
+    color: map-get($pxb-green, 200) !important;
 }
 .account-summary-tags {
     .account-pending {

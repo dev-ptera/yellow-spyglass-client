@@ -19,6 +19,7 @@ export class ExploreComponent implements OnInit, OnDestroy {
     idFieldActive: boolean;
     touchedIdField: boolean;
     loading: boolean;
+    error: boolean;
     monkeySvg: string;
     searchedValue: string;
     accountOverview: AccountOverviewDto;
@@ -82,6 +83,7 @@ export class ExploreComponent implements OnInit, OnDestroy {
 
     search(searchValue: string): void {
         this.loading = true;
+        this.error = false;
         this.searchedValue = searchValue;
         this.searchFormControl.setValue(searchValue);
         this.showBlock = false;
@@ -113,6 +115,7 @@ export class ExploreComponent implements OnInit, OnDestroy {
             .catch((err) => {
                 console.error(err);
                 this.loading = false;
+                this.error = true;
             });
 
         // Monkey
@@ -142,6 +145,7 @@ export class ExploreComponent implements OnInit, OnDestroy {
             .catch((err) => {
                 console.error(err);
                 this.loading = false;
+                this.error = true;
             });
     }
 

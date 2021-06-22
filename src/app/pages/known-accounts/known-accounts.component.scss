@@ -63,3 +63,10 @@
 th.mat-sort-header-sorted {
     color: black;
 }
+
+.known-accounts-cell-link {
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+}

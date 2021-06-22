@@ -41,10 +41,10 @@
             <div pxb-title>
                 <span class="link" (click)="openMonitoredRep(rep.ip)">{{ rep.name }}</span>
             </div>
-            <div pxb-info style="font-size: 0.875rem" class="link" (click)="routeRepAddress(rep)">
+            <div pxb-subtitle style="font-size: 0.875rem">{{ formatInfoLine(rep) }}</div>
+            <div pxb-info style="font-size: 0.875rem" (click)="routeRepAddress(rep)">
                 {{ formatListAddress(rep.address) }}
             </div>
-            <div pxb-subtitle style="font-size: 0.875rem">{{ formatInfoLine(rep) }}</div>
         </pxb-info-list-item>
     </mat-list>
 

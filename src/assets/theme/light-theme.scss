@@ -65,14 +65,16 @@ $lightForeground: map-get($light-theme, foreground);
 .representatives-name-cell {
     color: map-get($pxb-green, 900) !important;
 }
+
 .representatives-all-list {
     .online {
         color: map-get($pxb-green, 900) !important;
     }
     .offline {
-        color: map-get($pxb-red, 900);
+        color: map-get($pxb-red, 900) !important;
     }
 }
+
 .highcharts-label.highcharts-data-label text[style] {
     color: map-get($lightForeground, text) !important;
     fill: map-get($lightForeground, text) !important;
@@ -96,8 +98,8 @@ $lightForeground: map-get($light-theme, foreground);
     }
 }
 .account-rep-offline {
-    background-color: map-get($pxb-red, 500);
-    color: map-get($pxb-white, 50);
+    background-color: map-get($pxb-red, 500) !important;
+    color: map-get($pxb-white, 50) !important;
 }
 .tab-transaction-list {
     .hash,

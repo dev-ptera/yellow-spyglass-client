@@ -20,6 +20,7 @@ import { SearchService } from '@app/services/search/search.service';
 import { PriceService } from '@app/services/price/price.service';
 import { InsightsDto } from '@app/types/dto/InsightsDto';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { OnlineRepsService } from '@app/services/online-reps/online-reps.service';
 
 @Component({
     selector: 'app-account',
@@ -31,6 +32,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 export class AccountComponent implements OnChanges {
     @Input() accountOverview: AccountOverviewDto;
     @Input() loading: boolean;
+    @Input() error: boolean;
     @Input() address: string;
     @Input() monkeySvg: string;
 
@@ -69,7 +71,8 @@ export class AccountComponent implements OnChanges {
         private readonly _apiService: ApiService,
         private readonly _priceService: PriceService,
         private readonly _ref: ChangeDetectorRef,
-        private readonly _monkeyCache: MonkeyCacheService
+        private readonly _monkeyCache: MonkeyCacheService,
+        public onlineRepService: OnlineRepsService
     ) {}
 
     ngOnChanges(changes: SimpleChanges): void {

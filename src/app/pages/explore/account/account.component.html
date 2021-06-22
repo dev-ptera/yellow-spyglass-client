@@ -14,144 +14,172 @@
     </app-paginator>
 </ng-template>
 
-<div class="account-header" responsive>
-    <div class="account-title">
-        <div [style.width.%]="100">
-            <div [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm" [style.marginBottom.px]="4">
-                <span *ngIf="loading">Loading</span>
-                <ng-container *ngIf="accountOverview?.delegatorsCount === 0">
-                    <span *ngIf="accountOverview?.opened"> Account </span>
-                    <span *ngIf="!accountOverview?.opened"> Unopened Account </span>
-                </ng-container>
-                <span *ngIf="accountOverview?.delegatorsCount > 0">Representative</span>
-            </div>
-            <div class="mat-subheading-2 account-address">
-                {{ address }}
-                <div style="display: flex" [style.marginLeft.px]="vp.sm ? 4 : 0">
-                    <app-copy-button [data]="address"></app-copy-button>
-                    <app-qr-button *ngIf="vp.sm || vp.md" [address]="address"></app-qr-button>
-                    <app-bookmark-button [id]="address"></app-bookmark-button>
+<ng-template #headerContent>
+    <div class="account-header" responsive>
+        <div class="account-title">
+            <div [style.width.%]="100">
+                <div [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm" [style.marginBottom.px]="4">
+                    <span *ngIf="loading">Loading</span>
+                    <ng-container *ngIf="accountOverview?.delegatorsCount === 0">
+                        <span *ngIf="accountOverview?.opened"> Account </span>
+                        <span *ngIf="!accountOverview?.opened"> Unopened Account </span>
+                    </ng-container>
+                    <span *ngIf="accountOverview?.delegatorsCount > 0">
+                        Representative
+                        <pxb-list-item-tag
+                            *ngIf="!onlineRepService.onlineReps.has(address)"
+                            class="account-rep-offline"
+                            label="Offline"
+                        ></pxb-list-item-tag>
+                        <pxb-list-item-tag
+                            class="account-rep-online"
+                            *ngIf="onlineRepService.onlineReps.has(address)"
+                            label="Online"
+                        ></pxb-list-item-tag>
+                    </span>
                 </div>
-            </div>
-            <div
-                *ngIf="accountOverview?.opened"
-                class="account-representative"
-                [class.mat-caption]="vp.sm"
-                [class.mat-subheading-2]="!vp.sm"
-                responsive
-            >
-                Represented by
-                <span
-                    (click)="searchService.emitSearch(accountOverview.representative)"
-                    [style.marginLeft.px]="4"
-                    >{{ shortenedRep }}</span
+                <div class="mat-subheading-2 account-address">
+                    {{ address }}
+                    <div style="display: flex" [style.marginLeft.px]="vp.sm ? 4 : 0">
+                        <app-copy-button [data]="address"></app-copy-button>
+                        <app-qr-button [address]="address"></app-qr-button>
+                        <app-bookmark-button [id]="address"></app-bookmark-button>
+                    </div>
+                </div>
+                <div
+                    *ngIf="accountOverview?.opened"
+                    class="account-representative"
+                    [class.mat-caption]="vp.sm"
+                    [class.mat-subheading-2]="!vp.sm"
+                    responsive
                 >
+                    Represented by
+                    <span
+                        (click)="searchService.emitSearch(accountOverview.representative)"
+                        [style.marginLeft.px]="4"
+                        class="account-representative-address"
+                        >{{ shortenedRep }}</span
+                    >
 
-                <span style="margin-left: 8px">
-                    <pxb-list-item-tag
-                        *ngIf="!accountOverview.isRepOnline"
-                        class="account-rep-offline"
-                        label="Offline"
-                    ></pxb-list-item-tag>
-                    <pxb-list-item-tag
-                        class="account-rep-online"
-                        *ngIf="accountOverview.isRepOnline"
-                        label="Online"
-                    ></pxb-list-item-tag>
-                </span>
-            </div>
+                    <span style="margin-left: 8px">
+                        <pxb-list-item-tag
+                            *ngIf="!accountOverview.isRepOnline"
+                            class="account-rep-offline"
+                            label="Offline"
+                        ></pxb-list-item-tag>
+                        <pxb-list-item-tag
+                            class="account-rep-online"
+                            *ngIf="accountOverview.isRepOnline"
+                            label="Online"
+                        ></pxb-list-item-tag>
+                    </span>
+                </div>
 
-            <div class="account-summary-tags" responsive *ngIf="accountOverview">
-                <ng-template *ngIf="vp.sm" [ngTemplateOutlet]="accountMonkey"></ng-template>
+                <div class="account-summary-tags" responsive *ngIf="accountOverview">
+                    <ng-template *ngIf="vp.sm" [ngTemplateOutlet]="accountMonkey"></ng-template>
 
-                <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 0" responsive>
-                    <ng-container *ngIf="!vp.sm">
-                        <span class="account-ban-amount" [style.marginRight.px]="8">{{ confirmedBalance }} BAN</span>
-                        ·
-                        <span class="account-btc-amount" style="margin: 0 8px">
-                            {{ formatBtcPrice(accountOverview.balanceRaw) }}</span
-                        >
-                        ·
-                        <span class="account-usd-amount" [style.marginLeft.px]="8">
-                            {{ formatUsdPrice(accountOverview.balanceRaw) | currency }}
-                        </span>
-                    </ng-container>
-                    <ng-container *ngIf="vp.sm">
-                        <div class="account-ban-amount">{{ confirmedBalance }} BAN</div>
-                        <div>
-                            <span class="account-btc-amount" [style.marginRight.px]="4">{{
-                                formatBtcPrice(accountOverview.balanceRaw)
-                            }}</span>
-                            |
-                            <span class="account-usd-amount" [style.marginLeft.px]="4">{{
-                                formatUsdPrice(accountOverview.balanceRaw) | currency
-                            }}</span>
-                        </div>
-                    </ng-container>
+                    <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 0" responsive>
+                        <ng-container *ngIf="!vp.sm">
+                            <span class="account-ban-amount" [style.marginRight.px]="8"
+                                >{{ confirmedBalance }} BAN</span
+                            >
+                            ·
+                            <span class="account-btc-amount" style="margin: 0 8px">
+                                {{ formatBtcPrice(accountOverview.balanceRaw) }}</span
+                            >
+                            ·
+                            <span class="account-usd-amount" [style.marginLeft.px]="8">
+                                {{ formatUsdPrice(accountOverview.balanceRaw) | currency }}
+                            </span>
+                        </ng-container>
+                        <ng-container *ngIf="vp.sm">
+                            <div class="account-ban-amount">{{ confirmedBalance }} BAN</div>
+                            <div>
+                                <span class="account-btc-amount" [style.marginRight.px]="4">{{
+                                    formatBtcPrice(accountOverview.balanceRaw)
+                                }}</span>
+                                |
+                                <span class="account-usd-amount" [style.marginLeft.px]="4">{{
+                                    formatUsdPrice(accountOverview.balanceRaw) | currency
+                                }}</span>
+                            </div>
+                        </ng-container>
+                    </div>
                 </div>
             </div>
         </div>
+        <div style="display: flex; align-items: center">
+            <ng-template *ngIf="!vp.sm" [ngTemplateOutlet]="accountMonkey"></ng-template>
+        </div>
     </div>
-    <div style="display: flex; align-items: center">
-        <ng-template *ngIf="!vp.sm" [ngTemplateOutlet]="accountMonkey"></ng-template>
-        <canvas id="qr-code" [style.display]="loading || vp.sm || vp.md ? 'none' : 'block'"></canvas>
-    </div>
-</div>
+</ng-template>
 
-<mat-tab-group *ngIf="!loading" class="account-tabs mat-elevation-z4" (selectedTabChange)="this.fetchInsights($event)">
-    <!-- Confirmed transactions -->
-    <mat-tab>
-        <ng-template mat-tab-label>
-            <span color="accent" matBadgeOverlap="false" [matBadge]="getConfirmedBadge()">
-                <ng-container *ngIf="!vp.sm">
-                    Confirmed
-                    <ng-container *ngIf="!vp.md">Transactions</ng-container>
-                </ng-container>
-                <mat-icon *ngIf="vp.sm">check</mat-icon>
-            </span>
-        </ng-template>
-        <account-confirmed-tab
-            [paginator]="confirmedPaginator"
-            [confirmedTransactions]="confirmedTransactions.display"
-        ></account-confirmed-tab>
-    </mat-tab>
+<ng-template #bodyContent>
+    <mat-tab-group
+        *ngIf="!loading"
+        class="account-tabs mat-elevation-z4"
+        (selectedTabChange)="this.fetchInsights($event)"
+    >
+        <!-- Confirmed transactions -->
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <span color="accent" matBadgeOverlap="false" [matBadge]="getConfirmedBadge()">
+                    <ng-container *ngIf="!vp.sm">
+                        Confirmed
+                        <ng-container *ngIf="!vp.md">Transactions</ng-container>
+                    </ng-container>
+                    <mat-icon *ngIf="vp.sm">check</mat-icon>
+                </span>
+            </ng-template>
+            <account-confirmed-tab
+                [paginator]="confirmedPaginator"
+                [confirmedTransactions]="confirmedTransactions.display"
+            ></account-confirmed-tab>
+        </mat-tab>
 
-    <!-- Pending transactions -->
-    <mat-tab class="account-pending-tab">
-        <ng-template mat-tab-label>
-            <span class="account-pending-badge" [matBadge]="getPendingBadge()" matBadgeOverlap="false">
-                <ng-container *ngIf="!vp.sm">
-                    Pending
-                    <ng-container *ngIf="!vp.md">Transactions</ng-container>
-                </ng-container>
-                <mat-icon *ngIf="vp.sm">pending</mat-icon>
-            </span>
-        </ng-template>
-        <account-pending-tab
-            [pendingTxCount]="accountOverview.pendingTxCount"
-            [pendingTransactions]="pendingTransactions.display"
-        ></account-pending-tab>
-    </mat-tab>
+        <!-- Pending transactions -->
+        <mat-tab class="account-pending-tab">
+            <ng-template mat-tab-label>
+                <span class="account-pending-badge" [matBadge]="getPendingBadge()" matBadgeOverlap="false">
+                    <ng-container *ngIf="!vp.sm">
+                        Pending
+                        <ng-container *ngIf="!vp.md">Transactions</ng-container>
+                    </ng-container>
+                    <mat-icon *ngIf="vp.sm">pending</mat-icon>
+                </span>
+            </ng-template>
+            <account-pending-tab
+                [pendingTxCount]="accountOverview.pendingTxCount"
+                [pendingTransactions]="pendingTransactions.display"
+            ></account-pending-tab>
+        </mat-tab>
 
-    <!-- Delegators -->
-    <mat-tab>
-        <ng-template mat-tab-label>
-            <span class="account-delegators-badge" [matBadge]="getDelegatorsBadge()" matBadgeOverlap="false">
-                <!-- Delegators -->
-                <ng-container *ngIf="!vp.sm">Delegators</ng-container>
-                <mat-icon *ngIf="vp.sm">how_to_vote</mat-icon>
-            </span>
-        </ng-template>
-        <account-delegators-tab [delegators]="delegators" [weightSum]="weightSum"></account-delegators-tab>
-    </mat-tab>
+        <!-- Delegators -->
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <span class="account-delegators-badge" [matBadge]="getDelegatorsBadge()" matBadgeOverlap="false">
+                    <!-- Delegators -->
+                    <ng-container *ngIf="!vp.sm">Delegators</ng-container>
+                    <mat-icon *ngIf="vp.sm">how_to_vote</mat-icon>
+                </span>
+            </ng-template>
+            <account-delegators-tab [delegators]="delegators" [weightSum]="weightSum"></account-delegators-tab>
+        </mat-tab>
 
-    <!-- Insights -->
-    <mat-tab>
-        <ng-template mat-tab-label>
-            <ng-container *ngIf="!vp.sm">Insights</ng-container>
-            <mat-icon *ngIf="vp.sm">insights</mat-icon>
-        </ng-template>
-        <account-insights-tab [insights]="insights" [error]="hasInsightsError" [disabled]="insightsDisabled">
-        </account-insights-tab>
-    </mat-tab>
-</mat-tab-group>
+        <!-- Insights -->
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <ng-container *ngIf="!vp.sm">Insights</ng-container>
+                <mat-icon *ngIf="vp.sm">insights</mat-icon>
+            </ng-template>
+            <account-insights-tab [insights]="insights" [error]="hasInsightsError" [disabled]="insightsDisabled">
+            </account-insights-tab>
+        </mat-tab>
+    </mat-tab-group>
+</ng-template>
+
+<app-error *ngIf="error"></app-error>
+<ng-container *ngIf="!error">
+    <ng-template [ngTemplateOutlet]="headerContent"></ng-template>
+    <ng-template *ngIf="!loading" [ngTemplateOutlet]="bodyContent"></ng-template>
+</ng-container>

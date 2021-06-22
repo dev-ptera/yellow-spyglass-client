@@ -17,11 +17,21 @@
     .account-address {
         display: flex;
         align-items: center;
+        cursor: pointer;
+        &:hover {
+            text-decoration: underline;
+        }
     }
     .account-address,
     .account-representative {
         word-break: break-all;
         line-height: 16px;
+    }
+    .account-representative-address {
+        cursor: pointer;
+        &:hover {
+            text-decoration: underline;
+        }
     }
 
     .account-representative {
@@ -133,10 +143,5 @@
 }
 
 .account-empty-state {
-    padding: 48px;
-    padding-top: 72px;
-    padding-bottom: 72px;
-    &.sm {
-        padding-bottom: 350px;
-    }
+    padding: 72px 48px;
 }
