@@ -62,7 +62,9 @@ export class ExploreComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.navigation$.unsubscribe();
+        if (this.navigation$) {
+            this.navigation$.unsubscribe();
+        }
     }
 
     searchViaParams(params: string): void {

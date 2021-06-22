@@ -44,6 +44,7 @@ $light-theme: map-merge(
 );
 
 $lightForeground: map-get($light-theme, foreground);
+$lightBackground: map-get($light-theme, background);
 
 // Drawer
 .pxb-drawer .pxb-drawer-nav-item-active-highlight {
@@ -85,6 +86,9 @@ $lightForeground: map-get($light-theme, foreground);
 }
 
 //wallets.component.ts
+.wallets-chart {
+    background: map-get($lightBackground, card);
+}
 .highcharts-legend-item.highcharts-bar-series text[style] {
     font-weight: 400 !important;
 }

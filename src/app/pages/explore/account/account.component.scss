@@ -17,13 +17,18 @@
     .account-address {
         display: flex;
         align-items: center;
-        cursor: pointer;
-        &:hover {
-            text-decoration: underline;
+        .account-address-link {
+            margin-right: 8px;
+            cursor: pointer;
+            &:hover {
+                text-decoration: underline;
+            }
         }
     }
     .account-address,
     .account-representative {
+        display: flex;
+        align-items: center;
         word-break: break-all;
         line-height: 16px;
     }

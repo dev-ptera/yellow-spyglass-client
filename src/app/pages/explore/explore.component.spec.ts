@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ExploreComponent } from './explore.component';
 import { ExploreModule } from './explore.module';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ExploreComponent', () => {
     let component: ExploreComponent;
@@ -9,7 +11,7 @@ describe('ExploreComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [ExploreModule],
+            imports: [ExploreModule, RouterTestingModule, HttpClientTestingModule],
         }).compileComponents();
     });
 

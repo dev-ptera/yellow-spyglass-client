@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RepresentativesComponent } from './representatives.component';
-import { RepresentativesModule } from '@app/pages/representatives/representatives.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { WalletsModule } from '@app/pages/wallets/wallets.module';
+import { WalletsComponent } from '@app/pages/wallets/wallets.component';
 
-describe('RepresentativesComponent', () => {
-    let component: RepresentativesComponent;
-    let fixture: ComponentFixture<RepresentativesComponent>;
+describe('WalletsComponent', () => {
+    let component: WalletsComponent;
+    let fixture: ComponentFixture<WalletsComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [RepresentativesModule, HttpClientTestingModule],
+            imports: [WalletsModule, HttpClientTestingModule],
         }).compileComponents();
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(RepresentativesComponent);
+        fixture = TestBed.createComponent(WalletsComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

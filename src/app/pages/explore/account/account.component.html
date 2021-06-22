@@ -39,7 +39,7 @@
                     </span>
                 </div>
                 <div class="mat-subheading-2 account-address">
-                    {{ address }}
+                    <span class="account-address-link"> {{ address }}</span>
                     <div style="display: flex" [style.marginLeft.px]="vp.sm ? 4 : 0">
                         <app-copy-button [data]="address"></app-copy-button>
                         <app-qr-button [address]="address"></app-qr-button>
@@ -60,19 +60,18 @@
                         class="account-representative-address"
                         >{{ shortenedRep }}</span
                     >
-
-                    <span style="margin-left: 8px">
-                        <pxb-list-item-tag
-                            *ngIf="!accountOverview.isRepOnline"
-                            class="account-rep-offline"
-                            label="Offline"
-                        ></pxb-list-item-tag>
-                        <pxb-list-item-tag
-                            class="account-rep-online"
-                            *ngIf="accountOverview.isRepOnline"
-                            label="Online"
-                        ></pxb-list-item-tag>
-                    </span>
+                    <pxb-list-item-tag
+                        *ngIf="!accountOverview.isRepOnline"
+                        [style.marginLeft.px]="8"
+                        class="account-rep-offline"
+                        label="Offline"
+                    ></pxb-list-item-tag>
+                    <pxb-list-item-tag
+                        *ngIf="accountOverview.isRepOnline"
+                        class="account-rep-online"
+                        [style.marginLeft.px]="8"
+                        label="Online"
+                    ></pxb-list-item-tag>
                 </div>
 
                 <div class="account-summary-tags" responsive *ngIf="accountOverview">

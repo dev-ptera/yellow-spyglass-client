@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RepresentativesComponent } from './representatives.component';
-import { RepresentativesModule } from '@app/pages/representatives/representatives.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NodeMonitorComponent } from '@app/pages/node-monitor/node-monitor.component';
+import { NodeMonitorModule } from '@app/pages/node-monitor/node-monitor.module';
 
-describe('RepresentativesComponent', () => {
-    let component: RepresentativesComponent;
-    let fixture: ComponentFixture<RepresentativesComponent>;
+describe('NodeMonitorComponent', () => {
+    let component: NodeMonitorComponent;
+    let fixture: ComponentFixture<NodeMonitorComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [RepresentativesModule, HttpClientTestingModule],
+            imports: [NodeMonitorModule, HttpClientTestingModule],
         }).compileComponents();
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(RepresentativesComponent);
+        fixture = TestBed.createComponent(NodeMonitorComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

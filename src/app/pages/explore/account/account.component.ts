@@ -7,7 +7,7 @@ import {
     SimpleChanges,
     ViewEncapsulation,
 } from '@angular/core';
-import * as QRCode from 'qrcode';
+// import * as QRCode from 'qrcode';
 import { AccountOverviewDto, ConfirmedTransactionDto, PendingTransactionDto } from '@app/types/dto';
 import { Delegator } from '@app/types/modal/Delegator';
 import { ConfirmedTransaction } from '@app/types/modal/ConfirmedTransaction';
@@ -76,9 +76,11 @@ export class AccountComponent implements OnChanges {
     ) {}
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes.address && changes.address.currentValue) {
+        /*  if (changes.address && changes.address.currentValue) {
             this._renderQRCode(this.address);
         }
+
+       */
         if (changes.accountOverview && changes.accountOverview.currentValue) {
             this._prepareNewAccount();
         }
@@ -228,13 +230,13 @@ export class AccountComponent implements OnChanges {
         };
     }
 
-    private _renderQRCode(addr: string): void {
+    /* private _renderQRCode(addr: string): void {
         this._ref.detectChanges();
         const canvas = document.getElementById('qr-code');
         QRCode.toCanvas(canvas, addr, (error) => {
             if (error) console.error(error);
         });
-    }
+    } */
 
     private _formatDateString(timestamp: number): string {
         const date = new Date(timestamp * 1000);

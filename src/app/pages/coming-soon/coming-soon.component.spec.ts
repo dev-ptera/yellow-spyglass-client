@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ComingSoonComponent } from './coming-soon.component';
-import { AppModule } from '../../app.module';
+import { ComingSoonModule } from '@app/pages/coming-soon/coming-soon.module';
 
 describe('ComingSoonComponent', () => {
     let component: ComingSoonComponent;
@@ -9,7 +9,7 @@ describe('ComingSoonComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [AppModule],
+            imports: [ComingSoonModule],
         }).compileComponents();
     });
 

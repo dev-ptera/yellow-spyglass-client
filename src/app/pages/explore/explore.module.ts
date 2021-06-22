@@ -25,23 +25,15 @@ import { PendingTabComponent } from '@app/pages/explore/account/tabs/pending/pen
 import { ConfirmedTabComponent } from '@app/pages/explore/account/tabs/confirmed/confirmed-tab.component';
 import { DelegatorsTabComponent } from '@app/pages/explore/account/tabs/delegators/delegators-tab.components';
 import { HashComponent } from '@app/pages/explore/hash/hash.component';
-import { BookmarkButtonComponent } from '../../components/bookmark-button/bookmark-button.component';
-import { CopyButtonComponent } from '../../components/copy-button/copy-button.component';
-import { PaginatorComponent } from '../../components/paginator/paginator.component';
 import { InsightsTabComponent } from '@app/pages/explore/account/tabs/insights/insights-tab.components';
 import { HighchartsChartModule } from 'highcharts-angular';
-import { QrButtonComponent } from '@app/components/qr-button/qr-button.component';
-import { QrDialogComponent } from '@app/components/qr-dialog/qr-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { ErrorComponent } from '@app/components/error/error.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ComponentsModule } from '@app/components/components.module';
 
 @NgModule({
     declarations: [
         AccountComponent,
-        BookmarkButtonComponent,
-        CopyButtonComponent,
-        QrButtonComponent,
-        QrDialogComponent,
         ConfirmedTabComponent,
         DelegatorsTabComponent,
         ExploreComponent,
@@ -49,13 +41,12 @@ import { ErrorComponent } from '@app/components/error/error.component';
         PendingTabComponent,
         SafeHtmlPipe,
         ResponsiveDirective,
-        PaginatorComponent,
         InsightsTabComponent,
-        ErrorComponent,
     ],
-    entryComponents: [QrDialogComponent],
     imports: [
+        BrowserAnimationsModule,
         CommonModule,
+        ComponentsModule,
         EmptyStateModule,
         InfoListItemModule,
         ListItemTagModule,
@@ -74,18 +65,11 @@ import { ErrorComponent } from '@app/components/error/error.component';
     ],
     exports: [
         AccountComponent,
-        BookmarkButtonComponent,
-        QrButtonComponent,
-        CopyButtonComponent,
         ConfirmedTabComponent,
         DelegatorsTabComponent,
         ExploreComponent,
         HashComponent,
         PendingTabComponent,
-        SafeHtmlPipe,
-        ResponsiveDirective,
-        PaginatorComponent,
-        ErrorComponent,
     ],
 })
 export class ExploreModule {}
