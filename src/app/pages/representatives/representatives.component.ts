@@ -20,12 +20,26 @@ export class RepresentativesComponent implements OnInit {
     Highcharts: typeof Highcharts = Highcharts;
     loading = true;
     error = false;
+    pieChartColors = [
+        '#FBDD11',
+        '#1fb32e',
+        '#eead4a',
+        '#6eee99',
+        '#ee4ac5',
+        '#6b54db',
+        '#d92d2d',
+        '#1d9eef',
+        '#8d8881',
+        '#75c915',
+        '#0d7f87',
+    ];
 
     onlineWeight: number;
     representatives: RepresentativeDto[] = [];
     monitoredReps: MonitoredRepDto[] = [];
 
     repsChart: Options;
+    chartShownReps: Array<{ name: string, address: string }> = [];
 
     allRepsDataSource;
     monitoredRepsDataSource;
@@ -109,9 +123,9 @@ export class RepresentativesComponent implements OnInit {
     }
 
     private _createRepChart(reps: RepresentativeDto[]): Options {
-        const onlineReps = (): Array<{ name: string; y: number }> => {
+        const onlineReps = (): Array<{ name: string; y: number, address: string }> => {
             let allOthersWeight = this.onlineWeight;
-            const MAX_REPS = 5;
+            const MAX_REPS = 7;
             const shownReps = [];
 
             // Get Largest Reps
@@ -122,6 +136,7 @@ export class RepresentativesComponent implements OnInit {
                 if (shownReps.length < MAX_REPS) {
                     shownReps.push({
                         name: this.formatChartAddress(rep.address),
+                        address: rep.address,
                         y: rep.weight,
                     });
                 }
@@ -140,10 +155,12 @@ export class RepresentativesComponent implements OnInit {
             }
             shownReps.push({
                 name: 'Other Reps',
+                address: undefined,
                 y: allOthersWeight,
             });
             return shownReps;
         };
+        this.chartShownReps = onlineReps();
         return {
             chart: {
                 backgroundColor: 'rgba(0,0,0,0)',
@@ -157,27 +174,43 @@ export class RepresentativesComponent implements OnInit {
             title: {
                 text: '',
             },
+            legend: {
+                enabled: false,
+
+                // TODO: Mobile styles
+                /*
+                align: this.vp.sm ? 'center' : 'right',
+                layout: 'vertical',
+                verticalAlign: 'top',
+                x: 0,
+                y: 0,
+                itemStyle: {
+                    fontWeight: "400",
+                    padding: "16px"
+                }
+                 */
+            },
             plotOptions: {
                 pie: {
-                    showInLegend: false,
+                    showInLegend: true,
                 },
             },
             series: [
                 {
                     name: 'Representatives',
                     type: 'pie',
-                    colors: ['#FBDD11', '#1fb32e', '#eead4a', '#6eee99', '#ee4ac5', '#7F6CD9'],
-                    data: onlineReps(),
+                    colors: this.pieChartColors,
+                    data: this.chartShownReps,
                     dataLabels: {
                         enabled: true,
-                        distance: this.vp.sm ? 10 : 20,
+                        distance: 30,
                         style: {
                             fontSize: this.vp.sm ? '12px' : '16px',
                             fontWeight: '400',
                             fontFamily: 'Open Sans',
                             textOutline: 'none',
                         },
-                        format: '{point.name}<br/><strong>{point.percentage:.1f}%</strong>',
+                        format: '<strong>{point.percentage:.1f}%</strong>',
                     },
                 },
             ],
@@ -192,8 +225,10 @@ export class RepresentativesComponent implements OnInit {
         window.open(`http://${ip}`, '_blank');
     }
 
-    routeRepAddress(rep: MonitoredRepDto): void {
-        this._searchService.emitSearch(rep.address);
+    routeRepAddress(address: string): void {
+        if (address) {
+            this._searchService.emitSearch(address);
+        }
     }
 
     formatInfoLine(rep: MonitoredRepDto): string {

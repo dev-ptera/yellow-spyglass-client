@@ -13,15 +13,24 @@
     <div class="mat-subheading-2 representatives-monitored-subtitle">
         Online voting weight allocation between the largest representatives.
     </div>
-    <div class="representatives-chart" responsive>
-        <highcharts-chart
-            [update]="true"
-            [Highcharts]="Highcharts"
-            [options]="repsChart"
-            style="pointer-events: none;%"
-            [style.width.px]="vp.sm ? 350 : vp.md ? 650 : 800"
-            [style.height.px]="vp.sm ? 200 : vp.md ? 350 : 400"
-        ></highcharts-chart>
+    <div class="representatives-chart-container" responsive>
+        <div class="representatives-chart" responsive>
+            <highcharts-chart
+                [update]="true"
+                [Highcharts]="Highcharts"
+                [options]="repsChart"
+                style="pointer-events: none;"
+                [style.width.px]="vp.sm ? 350 : vp.md ? 650 : 800"
+                [style.height.px]="vp.sm ? 280 : vp.md ? 350 : 400"
+            ></highcharts-chart>
+        </div>
+        <div class="representatives-legend">
+            <div *ngFor="let rep of chartShownReps; let i = index;" class="representatives-legend-entry">
+                <div class="representatives-legend-color" [style.backgroundColor]="pieChartColors[i]"></div>
+                <div class="representatives-legend-address representatives-clickable-cell"
+                     (click)="routeRepAddress(rep.address)">{{rep.name}}</div>
+            </div>
+        </div>
     </div>
 
     <div class="mat-headline representatives-monitored-header">
@@ -42,7 +51,7 @@
                 <span class="link" (click)="openMonitoredRep(rep.ip)">{{ rep.name }}</span>
             </div>
             <div pxb-subtitle style="font-size: 0.875rem">{{ formatInfoLine(rep) }}</div>
-            <div pxb-info style="font-size: 0.875rem" (click)="routeRepAddress(rep)">
+            <div pxb-info style="font-size: 0.875rem" (click)="routeRepAddress(rep.address)">
                 {{ formatListAddress(rep.address) }}
             </div>
         </pxb-info-list-item>
@@ -75,7 +84,7 @@
                 class="representatives-address-cell representatives-clickable-cell"
                 mat-cell
                 *matCellDef="let element"
-                (click)="routeRepAddress(element)"
+                (click)="routeRepAddress(element.address)"
             >
                 {{ formatTableAddress(element.address) }}
             </td>
@@ -131,7 +140,7 @@
                     class="link"
                     [class.offline]="!rep.online"
                     [class.online]="rep.online"
-                    (click)="routeRepAddress(rep)"
+                    (click)="routeRepAddress(rep.address)"
                 >
                     {{ formatListAddress(rep.address) }}
                 </div>
@@ -163,7 +172,7 @@
                 mat-cell
                 class="representatives-clickable-cell"
                 *matCellDef="let element"
-                (click)="routeRepAddress(element)"
+                (click)="routeRepAddress(element.address)"
             >
                 {{ formatTableAddress(element.address) }}
             </td>

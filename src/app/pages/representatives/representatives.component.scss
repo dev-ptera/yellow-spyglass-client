@@ -35,12 +35,23 @@
         padding: 48px 20px 48px 20px;
     }
 }
-
 .representatives-content {
     width: 100%;
     max-width: 1200px;
 }
 
+.representatives-chart-container {
+    display: flex;
+    &.md {
+        flex-direction: column;
+        .representatives-legend {
+            margin-top: 24px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    }
+}
 .representatives-chart {
     margin: 0;
     margin-top: 24px;
@@ -50,6 +61,21 @@
     &.sm {
         margin-top: 0;
         justify-content: center;
+    }
+}
+
+.representatives-legend {
+    .representatives-legend-entry {
+        width: 155px;
+        padding: 4px 0px;
+        display: flex;
+        align-items: center;
+    }
+    .representatives-legend-color {
+        width: 12px;
+        height: 12px;
+        border-radius: 100%;
+        margin-right: 16px;
     }
 }
 
