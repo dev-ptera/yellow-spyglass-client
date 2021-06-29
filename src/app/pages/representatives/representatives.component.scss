@@ -77,6 +77,9 @@
         border-radius: 100%;
         margin-right: 16px;
     }
+    .representatives-legend-others {
+        pointer-events: none;
+    }
 }
 
 .representatives-monitored-header {

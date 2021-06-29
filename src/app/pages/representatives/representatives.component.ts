@@ -176,8 +176,6 @@ export class RepresentativesComponent implements OnInit {
             },
             legend: {
                 enabled: false,
-
-                // TODO: Mobile styles
                 /*
                 align: this.vp.sm ? 'center' : 'right',
                 layout: 'vertical',

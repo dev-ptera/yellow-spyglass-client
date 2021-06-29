@@ -21,14 +21,18 @@
                 [options]="repsChart"
                 style="pointer-events: none"
                 [style.width.px]="vp.sm ? 350 : vp.md ? 650 : 800"
-                [style.height.px]="vp.sm ? 280 : vp.md ? 350 : 400"
+                [style.height.px]="vp.sm ? 270 : vp.md ? 350 : 400"
             ></highcharts-chart>
         </div>
         <div class="representatives-legend">
-            <div *ngFor="let rep of chartShownReps; let i = index" class="representatives-legend-entry">
+            <div
+                *ngFor="let rep of chartShownReps; let i = index; let last = last"
+                class="representatives-legend-entry"
+            >
                 <div class="representatives-legend-color" [style.backgroundColor]="pieChartColors[i]"></div>
                 <div
                     class="representatives-legend-address representatives-clickable-cell"
+                    [class.representatives-legend-others]="last"
                     (click)="routeRepAddress(rep.address)"
                 >
                     {{ rep.name }}
@@ -137,7 +141,7 @@
         <div *ngFor="let rep of representatives; let i = index; trackBy: trackByFn">
             <pxb-info-list-item [hidePadding]="true" [dense]="true" [divider]="true">
                 <div pxb-left-content>
-                    <span [style.width.px]="40">#{{ i+1 }}</span>
+                    <span [style.width.px]="40">#{{ i + 1 }}</span>
                 </div>
                 <div
                     pxb-title
