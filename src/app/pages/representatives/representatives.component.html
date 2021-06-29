@@ -137,7 +137,7 @@
         <div *ngFor="let rep of representatives; let i = index; trackBy: trackByFn">
             <pxb-info-list-item [hidePadding]="true" [dense]="true" [divider]="true">
                 <div pxb-left-content>
-                    <span [style.width.px]="40">#{{ i }}</span>
+                    <span [style.width.px]="40">#{{ i+1 }}</span>
                 </div>
                 <div
                     pxb-title
