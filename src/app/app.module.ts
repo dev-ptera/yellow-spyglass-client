@@ -10,7 +10,6 @@ import { RepresentativesModule } from '@app/pages/representatives/representative
 import { WalletsModule } from '@app/pages/wallets/wallets.module';
 import { NavigationModule } from './navigation/navigation.module';
 import { ComingSoonModule } from '@app/pages/coming-soon/coming-soon.module';
-import { AppCommonModule } from '@app/common/app-common.module';
 
 @Component({
     selector: 'app-root',

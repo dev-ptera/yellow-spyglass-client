@@ -19,16 +19,20 @@
                 [update]="true"
                 [Highcharts]="Highcharts"
                 [options]="repsChart"
-                style="pointer-events: none;"
+                style="pointer-events: none"
                 [style.width.px]="vp.sm ? 350 : vp.md ? 650 : 800"
                 [style.height.px]="vp.sm ? 280 : vp.md ? 350 : 400"
             ></highcharts-chart>
         </div>
         <div class="representatives-legend">
-            <div *ngFor="let rep of chartShownReps; let i = index;" class="representatives-legend-entry">
+            <div *ngFor="let rep of chartShownReps; let i = index" class="representatives-legend-entry">
                 <div class="representatives-legend-color" [style.backgroundColor]="pieChartColors[i]"></div>
-                <div class="representatives-legend-address representatives-clickable-cell"
-                     (click)="routeRepAddress(rep.address)">{{rep.name}}</div>
+                <div
+                    class="representatives-legend-address representatives-clickable-cell"
+                    (click)="routeRepAddress(rep.address)"
+                >
+                    {{ rep.name }}
+                </div>
             </div>
         </div>
     </div>

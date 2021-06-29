@@ -39,7 +39,7 @@ export class RepresentativesComponent implements OnInit {
     monitoredReps: MonitoredRepDto[] = [];
 
     repsChart: Options;
-    chartShownReps: Array<{ name: string, address: string }> = [];
+    chartShownReps: Array<{ name: string; address: string }> = [];
 
     allRepsDataSource;
     monitoredRepsDataSource;
@@ -123,7 +123,7 @@ export class RepresentativesComponent implements OnInit {
     }
 
     private _createRepChart(reps: RepresentativeDto[]): Options {
-        const onlineReps = (): Array<{ name: string; y: number, address: string }> => {
+        const onlineReps = (): Array<{ name: string; y: number; address: string }> => {
             let allOthersWeight = this.onlineWeight;
             const MAX_REPS = 7;
             const shownReps = [];
