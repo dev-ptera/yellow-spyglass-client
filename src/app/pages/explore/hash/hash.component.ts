@@ -45,11 +45,17 @@ import { SearchService } from '@app/services/search/search.service';
             </div>
 
             <div class="hash-section" *ngIf="block.subtype !== 'change'">
-                <div>
-                    <span class="mat-headline">{{ block.subtype === 'send' ? 'Recipient' : 'Sender' }}</span>
+                <div *ngIf="block.subtype === 'send'">
+                    <span class="mat-headline">Recipient</span>
+                    <span class="mat-subheading-2 hash-link" (click)="search(block.contents.linkAsAccount)">{{
+                        block.contents.linkAsAccount
+                    }}</span>
+                </div>
+                <div *ngIf="block.subtype === 'receive'">
+                    <span class="mat-headline">Sender</span>
                     <span class="mat-subheading-2 hash-link" (click)="search(block.sourceAccount)">{{
                         block.sourceAccount
-                    }}</span>
+                        }}</span>
                 </div>
 
                 <div class="hash-description">
