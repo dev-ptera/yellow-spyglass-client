@@ -21,7 +21,7 @@
                 [options]="repsChart"
                 style="pointer-events: none"
                 [style.width.px]="vp.sm ? 350 : vp.md ? 650 : 800"
-                [style.height.px]="vp.sm ? 270 : vp.md ? 350 : 400"
+                [style.height.px]="vp.sm ? 270 : vp.md ? 300 : 350"
             ></highcharts-chart>
         </div>
         <div class="representatives-legend">
@@ -56,7 +56,7 @@
             [divider]="true"
         >
             <div pxb-title>
-                <span class="link" (click)="openMonitoredRep(rep.ip)">{{ rep.name }}</span>
+                <span class="link primary" (click)="openMonitoredRep(rep.ip)">{{ rep.name }}</span>
             </div>
             <div pxb-subtitle style="font-size: 0.875rem">{{ formatInfoLine(rep) }}</div>
             <div pxb-info style="font-size: 0.875rem" (click)="routeRepAddress(rep.address)">
@@ -139,13 +139,13 @@
     </div>
     <mat-list *ngIf="vp.sm" class="representatives-all-list">
         <div *ngFor="let rep of representatives; let i = index; trackBy: trackByFn">
-            <pxb-info-list-item [hidePadding]="true" [dense]="true" [divider]="true">
+            <pxb-info-list-item [hidePadding]="true" [dense]="false" [divider]="true">
                 <div pxb-left-content>
                     <span [style.width.px]="40">#{{ i + 1 }}</span>
                 </div>
                 <div
                     pxb-title
-                    class="link"
+                    class="link primary"
                     [class.offline]="!rep.online"
                     [class.online]="rep.online"
                     (click)="routeRepAddress(rep.address)"
@@ -189,7 +189,8 @@
         <ng-container matColumnDef="online">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
             <td
-                class="representatives-online-cell"
+                class="representatives-online-cell mat-overline"
+                style="font-size: 11px"
                 mat-cell
                 *matCellDef="let element"
                 [style.color.red]="!element.online"

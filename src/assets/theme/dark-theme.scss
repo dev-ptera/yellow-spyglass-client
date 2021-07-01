@@ -1,5 +1,8 @@
 @import '~@pxblue/colors/palette';
 @import '~@angular/material/_theming.scss';
+@import 'src/app/pages/wallets/wallets.component.scss';
+@import 'src/app/pages/representatives/representatives.component.scss';
+@import 'src/app/pages/explore/account/account.component.scss';
 
 $material-theme-primary: mat-palette($pxb-green, 200);
 $material-theme-accent: mat-palette($pxb-blue);
@@ -43,12 +46,18 @@ $dark-theme: map-merge(
     )
 );
 
-$darkForeground: map-get($dark-theme, foreground);
-$darkBackground: map-get($dark-theme, background);
+$theme-foreground: map-get($dark-theme, foreground);
+$theme-background: map-get($dark-theme, background);
 
-// MIXINS? TODO
+$primary-green: map-get($pxb-green, 200);
+$warn-red: map-get($pxb-red, 200);
 
-// Drawer
+html,
+body {
+    background-color: map-get($theme-background, background) !important;
+}
+
+/* Navigation */
 .pxb-drawer .pxb-drawer-nav-item-active-highlight {
     background-color: rgba(30, 99, 15, 0.14) !important;
 }
@@ -57,122 +66,80 @@ $darkBackground: map-get($dark-theme, background);
     background-color: map-get($brand-pine, 700) !important;
     color: white !important;
 }
-
-// representatives.component.ts
-.monitored-reps-table .unchecked-blocks {
-    color: map-get($pxb-red, 200);
-}
-.all-reps-table {
-    .offline .representatives-online-cell {
-        color: map-get($pxb-red, 200);
-    }
-    .online .representatives-online-cell {
-        color: map-get($pxb-green, 200);
-    }
-}
-.representatives-name-cell {
-    color: map-get($pxb-green, 200) !important;
-}
-.representatives-all-list {
-    .online {
-        color: map-get($pxb-green, 200) !important;
-    }
-    .offline {
-        color: map-get($pxb-red, 200) !important;
-    }
-}
-
-// wallets.component.ts
-.wallets-chart {
-    background-color: map-get($darkBackground, card);
-}
-.highcharts-label.highcharts-data-label text[style] {
-    color: map-get($darkForeground, text) !important;
-    fill: map-get($darkForeground, text) !important;
-}
-.highcharts-legend-item.highcharts-bar-series text[style] {
-    font-weight: 400 !important;
-    color: map-get($darkForeground, secondary-text) !important;
-    fill: map-get($darkForeground, secondary-text) !important;
-}
-.highcharts-grid.highcharts-yaxis-grid .highcharts-grid-line {
-    stroke: #505050;
-}
-
-.link {
-    color: map-get($pxb-green, 200);
-}
-
-.mat-drawer-backdrop.mat-drawer-shown {
-    background-color: #040404d1 !important;
-}
-
-// Header
 .pxb-drawer-header-content,
 .navigation-app-header-container {
     color: map-get($pxb-darkBlack, 500) !important;
-}
-
-// account.component.ts
-.account-rep-offline {
-    border: solid 1px map-get($pxb-red, 200);
-    background-color: unset !important;
-    color: map-get($pxb-red, 200) !important;
-}
-.account-rep-online {
-    border: solid 1px map-get($pxb-green, 200);
-    background-color: unset !important;
-    color: map-get($pxb-green, 200) !important;
-}
-.account-summary-tags {
-    .account-pending {
-        background-color: map-get($darkBackground, background);
-        color: map-get($pxb-orange, 500);
-        border: solid 1px map-get($pxb-orange, 500);
-    }
-}
-.tab-transaction-list {
-    .height {
-        color: map-get($darkForeground, text);
-        border: solid 1px map-get($darkForeground, text);
-    }
-    .hash,
-    .to-from {
-        color: map-get($pxb-gray, 400);
-    }
-    pxb-list-item-tag.type {
-        color: black !important;
-        &.send {
-            border: solid 1px map-get($pxb-red, 200);
-            background-color: unset;
-            color: map-get($pxb-red, 200) !important;
-        }
-        &.receive {
-            border: solid 1px map-get($pxb-green, 200);
-            background-color: unset;
-            color: map-get($pxb-green, 200) !important;
-        }
-        &.change {
-            border: solid 1px map-get($pxb-blue, 200);
-            background-color: unset;
-            color: map-get($pxb-blue, 200) !important;
-        }
-    }
-    .amount.send {
-        color: map-get($pxb-red, 200);
-    }
-    .amount.receive {
-        color: map-get($pxb-green, 200);
-    }
-}
-
-html,
-body {
-    background-color: map-get($darkBackground, background) !important;
 }
 
 .bookmarked-button {
     color: map-get($pxb-red, 300);
 }
 
-//
+.primary {
+    color: $primary-green !important;
+}
+
+/* Representative Page */
+$online-color: $primary-green;
+$offline-color: $warn-red;
+@include representatives-theme($online-color, $offline-color);
+
+/* Wallets Page */
+$grid-stroke-color: map-get($pxb-gray, 800);
+@include wallets-theme($theme-foreground, $theme-background, $grid-stroke-color);
+.mat-drawer-backdrop.mat-drawer-shown {
+    background-color: #040404d1 !important;
+}
+.pxb-list-item-tag-content .pxb-list-item-tag-label {
+    font-weight: 400 !important;
+}
+/* Account Page */
+@mixin repOnlineTag {
+    border: solid 1px $primary-green;
+    background-color: unset !important;
+    color: $primary-green !important;
+}
+@mixin repOfflineTag {
+    border: solid 1px $warn-red;
+    background-color: unset !important;
+    color: $warn-red !important;
+}
+@mixin heightTag {
+    color: map-get($theme-foreground, text);
+    border: solid 1px map-get($theme-foreground, text);
+}
+@mixin sendTag {
+    border: solid 1px $warn-red;
+    background-color: unset;
+    color: $warn-red !important;
+}
+@mixin receiveTag {
+    border: solid 1px $primary-green;
+    background-color: unset;
+    color: $primary-green !important;
+    font-weight: 400;
+}
+@mixin changeTag {
+    border: solid 1px map-get($pxb-blue, 200);
+    background-color: unset;
+    color: map-get($pxb-blue, 200) !important;
+    font-weight: 400;
+}
+@mixin sendAmount {
+    color: $warn-red;
+}
+@mixin receiveAmount {
+    color: $primary-green;
+}
+$hashColor: map-get($pxb-gray, 400);
+@include account-theme(
+    repOnlineTag,
+    repOfflineTag,
+    heightTag,
+    receiveTag,
+    sendTag,
+    changeTag,
+    receiveAmount,
+    sendAmount,
+    $hashColor
+);

@@ -42,7 +42,9 @@
 
 .representatives-chart-container {
     display: flex;
+    align-items: center;
     &.md {
+        justify-content: center;
         flex-direction: column;
         .representatives-legend {
             margin-top: 24px;
@@ -57,8 +59,10 @@
     margin-top: 24px;
     display: flex;
     justify-content: left;
+    margin-right: -24px;
     &.md,
     &.sm {
+        margin-right: 0px;
         margin-top: 0;
         justify-content: center;
     }
@@ -136,8 +140,38 @@
     &.md * {
         font-size: 13px;
     }
+    th.mat-header-cell:last-of-type,
+    td.mat-cell:last-of-type,
+    td.mat-footer-cell:last-of-type {
+        padding-right: 0 !important;
+    }
 }
 
 th.mat-sort-header-sorted {
     color: black;
+}
+
+@mixin representatives-theme($online-color, $offline-color) {
+    .representatives-name-cell {
+        color: $online-color !important;
+    }
+    .monitored-reps-table .unchecked-blocks {
+        color: $offline-color;
+    }
+    .all-reps-table {
+        .offline .representatives-online-cell {
+            color: $offline-color;
+        }
+        .online .representatives-online-cell {
+            color: $online-color;
+        }
+    }
+    .representatives-all-list {
+        .online {
+            color: $online-color !important;
+        }
+        .offline {
+            color: $offline-color !important;
+        }
+    }
 }

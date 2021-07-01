@@ -1,5 +1,10 @@
 @import '~@pxblue/colors/palette';
+@import '~@pxblue/colors-branding/palette';
+
 @import '~@angular/material/_theming.scss';
+@import 'src/app/pages/wallets/wallets.component.scss';
+@import 'src/app/pages/representatives/representatives.component.scss';
+@import 'src/app/pages/explore/account/account.component.scss';
 
 $material-theme-primary: mat-palette($pxb-green, 700);
 $material-theme-accent: mat-palette($pxb-blue);
@@ -42,98 +47,78 @@ $light-theme: map-merge(
         ),
     )
 );
+$theme-foreground: map-get($light-theme, foreground);
+$theme-background: map-get($light-theme, background);
 
-$lightForeground: map-get($light-theme, foreground);
-$lightBackground: map-get($light-theme, background);
+$primary-green: map-get($pxb-green, 800);
+$warn-red: map-get($pxb-red, 500);
 
-// Drawer
+html,
+body {
+    background-color: map-get($theme-background, background) !important;
+}
+
+/* Navigation */
 .pxb-drawer .pxb-drawer-nav-item-active-highlight {
     background-color: #2bff0024 !important;
-}
-
-// representatives.component.ts
-.monitored-reps-table .unchecked-blocks {
-    color: map-get($pxb-red, 900);
-}
-.all-reps-table {
-    .offline .representatives-online-cell {
-        color: map-get($pxb-red, 900);
-    }
-    .online .representatives-online-cell {
-        color: map-get($pxb-green, 900);
-    }
-}
-.representatives-name-cell {
-    color: map-get($pxb-green, 900) !important;
-}
-
-.representatives-all-list {
-    .online {
-        color: map-get($pxb-green, 900) !important;
-    }
-    .offline {
-        color: map-get($pxb-red, 900) !important;
-    }
-}
-
-.highcharts-label.highcharts-data-label text[style] {
-    color: map-get($lightForeground, text) !important;
-    fill: map-get($lightForeground, text) !important;
-}
-
-.link {
-    color: map-get($pxb-green, 900) !important;
-}
-
-//wallets.component.ts
-.wallets-chart {
-    background: map-get($lightBackground, card);
-}
-.highcharts-legend-item.highcharts-bar-series text[style] {
-    font-weight: 400 !important;
-}
-
-// account.component.ts
-.account-summary-tags {
-    .account-pending {
-        background-color: map-get($pxb-white, 50);
-        color: map-get($pxb-orange, 500);
-        border: solid 1px map-get($pxb-orange, 500);
-    }
-}
-.account-rep-offline {
-    background-color: map-get($pxb-red, 500) !important;
-    color: map-get($pxb-white, 50) !important;
-}
-.tab-transaction-list {
-    .hash,
-    .to-from {
-        color: map-get($pxb-gray, 500);
-    }
-    .height {
-        color: map-get($lightForeground, text);
-        border: solid 1px map-get($lightForeground, text);
-    }
-    pxb-list-item-tag.type {
-        color: white !important;
-        &.send {
-            background-color: map-get($pxb-red, 500);
-        }
-        &.receive {
-            background-color: map-get($pxb-green, 800);
-        }
-        &.change {
-            background-color: map-get($pxb-blue, 500);
-        }
-    }
-    .amount.send {
-        color: map-get($pxb-red, 500);
-    }
-    .amount.receive {
-        color: map-get($pxb-green, 500);
-    }
 }
 
 .bookmarked-button {
     color: map-get($pxb-red, 300);
 }
+
+.primary {
+    color: $primary-green !important;
+}
+
+/* Representative Page */
+$online-color: $primary-green;
+$offline-color: $warn-red;
+@include representatives-theme($online-color, $offline-color);
+
+/* Wallets Page */
+$grid-stroke-color: map-get($pxb-gray, 100);
+@include wallets-theme($theme-foreground, $theme-background, $grid-stroke-color);
+.mat-drawer-backdrop.mat-drawer-shown {
+    background-color: #040404d1 !important;
+}
+
+/* Account Page */
+@mixin repOnlineTag {
+    background-color: $primary-green !important;
+}
+@mixin repOfflineTag {
+    background-color: $warn-red !important;
+}
+@mixin heightTag {
+    color: map-get($theme-foreground, text);
+    border: solid 1px map-get($theme-foreground, text);
+    font-weight: 600 !important;
+}
+@mixin sendTag {
+    background-color: $warn-red !important;
+}
+@mixin receiveTag {
+    background-color: map-get($brand-emerald, 500) !important;
+}
+@mixin changeTag {
+    background-color: map-get($pxb-blue, 500) !important;
+}
+@mixin sendAmount {
+    color: $warn-red;
+}
+@mixin receiveAmount {
+    color: map-get($brand-emerald, 500);
+}
+$hashColor: map-get($pxb-gray, 400);
+@include account-theme(
+    repOnlineTag,
+    repOfflineTag,
+    heightTag,
+    receiveTag,
+    sendTag,
+    changeTag,
+    receiveAmount,
+    sendAmount,
+    $hashColor
+);

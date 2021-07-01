@@ -23,7 +23,7 @@ import { SearchService } from '@app/services/search/search.service';
             <div class="hash-section">
                 <div>
                     <span class="mat-headline">Block Account</span>
-                    <span class="mat-subheading-2 hash-link" (click)="search(block.blockAccount)">
+                    <span class="mat-subheading-2 link" (click)="search(block.blockAccount)">
                         {{ block.blockAccount }}
                     </span>
                 </div>
@@ -47,15 +47,15 @@ import { SearchService } from '@app/services/search/search.service';
             <div class="hash-section" *ngIf="block.subtype !== 'change'">
                 <div *ngIf="block.subtype === 'send'">
                     <span class="mat-headline">Recipient</span>
-                    <span class="mat-subheading-2 hash-link" (click)="search(block.contents.linkAsAccount)">{{
-                        block.contents.linkAsAccount
-                    }}</span>
+                    <span class="mat-subheading-2 link" (click)="search(block.contents.linkAsAccount)">
+                        {{ block.contents.linkAsAccount }}
+                    </span>
                 </div>
                 <div *ngIf="block.subtype === 'receive'">
                     <span class="mat-headline">Sender</span>
-                    <span class="mat-subheading-2 hash-link" (click)="search(block.sourceAccount)">{{
-                        block.sourceAccount
-                        }}</span>
+                    <span class="mat-subheading-2 link" (click)="search(block.sourceAccount)">
+                        {{ block.sourceAccount }}
+                    </span>
                 </div>
 
                 <div class="hash-description">
@@ -98,7 +98,7 @@ import { SearchService } from '@app/services/search/search.service';
             <div class="hash-section">
                 <div>
                     <span class="mat-headline">Representative</span>
-                    <span class="mat-subheading-2 hash-link" (click)="search(block.contents.representative)">{{
+                    <span class="mat-subheading-2 link" (click)="search(block.contents.representative)">{{
                         block.contents.representative
                     }}</span>
                 </div>
@@ -107,7 +107,7 @@ import { SearchService } from '@app/services/search/search.service';
             <div class="hash-section" *ngIf="block.subtype !== 'change'">
                 <div>
                     <span class="mat-headline">Previous Block</span>
-                    <span class="mat-subheading-2 hash-link" (click)="search(block.contents.previous)">
+                    <span class="mat-subheading-2 link" (click)="search(block.contents.previous)">
                         {{ block.height === 1 ? 'This block opened the account' : block.contents.previous }}</span
                     >
                 </div>
@@ -116,7 +116,7 @@ import { SearchService } from '@app/services/search/search.service';
             <div class="hash-section">
                 <div>
                     <span class="mat-headline">Link</span>
-                    <span class="mat-subheading-2 hash-link" (click)="search(block.contents.link)">{{
+                    <span class="mat-subheading-2 link" (click)="search(block.contents.link)">{{
                         block.contents.link
                     }}</span>
                 </div>

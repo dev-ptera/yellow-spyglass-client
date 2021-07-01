@@ -47,12 +47,6 @@
         &.sm {
             margin-bottom: 8px;
         }
-        .link {
-            cursor: pointer;
-            &:hover {
-                text-decoration: underline;
-            }
-        }
     }
 
     .account-monkey {
@@ -149,4 +143,49 @@
 
 .account-empty-state {
     padding: 72px 48px;
+}
+
+@mixin account-theme(
+    $repOnlineTag,
+    $repOfflineTag,
+    $heightTag,
+    $receiveTag,
+    $sendTag,
+    $changeTag,
+    $receiveAmount,
+    $sendAmount,
+    $hashColor
+) {
+    .account-rep-online {
+        @include repOnlineTag();
+    }
+    .account-rep-offline {
+        @include repOfflineTag();
+    }
+    .tab-transaction-list {
+        .height {
+            @include heightTag();
+        }
+        .hash,
+        .to-from {
+            color: $hashColor;
+        }
+        pxb-list-item-tag.type {
+            &.send {
+                @include sendTag();
+            }
+            &.receive {
+                @include receiveTag();
+            }
+            &.change {
+                @include changeTag();
+            }
+        }
+        .amount.send {
+            @include sendAmount();
+        }
+        .amount.receive {
+            @include receiveAmount();
+        }
+    }
 }

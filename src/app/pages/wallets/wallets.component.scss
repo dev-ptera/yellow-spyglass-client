@@ -79,3 +79,21 @@
 .sm .wallets-rich-list-conversion {
     font-size: 11px;
 }
+
+@mixin wallets-theme($foreground, $background, $chart-grid) {
+    .wallets-chart {
+        background-color: map-get($background, card);
+    }
+    .highcharts-label.highcharts-data-label text[style] {
+        color: map-get($foreground, text) !important;
+        fill: map-get($foreground, text) !important;
+    }
+    .highcharts-legend-item.highcharts-bar-series text[style] {
+        font-weight: 400 !important;
+        color: map-get($foreground, secondary-text) !important;
+        fill: map-get($foreground, secondary-text) !important;
+    }
+    .highcharts-grid.highcharts-yaxis-grid .highcharts-grid-line {
+        stroke: $chart-grid;
+    }
+}
