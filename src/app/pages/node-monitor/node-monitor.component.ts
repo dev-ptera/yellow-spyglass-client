@@ -15,7 +15,7 @@ import { ApiService } from '@app/services/api/api.service';
             </div>
             <div class="mat-subheading-2" [style.marginBottom.px]="48">
                 This explorer is powered & maintained by the
-                <span class="link" (click)="openMonitoredRep(stats.ip)">batman representative</span>.
+                <span class="link primary" (click)="openMonitoredRep(stats.ip)">batman representative</span>.
             </div>
         </ng-template>
 
@@ -23,7 +23,9 @@ import { ApiService } from '@app/services/api/api.service';
             <div class="monitor-section">
                 <div>
                     <span class="mat-headline">Address</span>
-                    <span class="mat-subheading-2 link" (click)="search(stats.address)">{{ stats.address }}</span>
+                    <span class="mat-subheading-2 link primary" (click)="search(stats.address)">{{
+                        stats.address
+                    }}</span>
                 </div>
             </div>
             <div class="monitor-section">

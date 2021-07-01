@@ -127,21 +127,17 @@ export class AccountComponent implements OnChanges {
      */
     private _prepareDelegators(accountOverview: AccountOverviewDto): void {
         this.delegators = [];
+        this.weightSum = accountOverview.delegatorsWeightSum;
         for (const delegator of accountOverview.delegators) {
-            this.weightSum += Number(this._util.convertRawToBan(delegator.weightRaw, { precision: 6, comma: false }));
             this.delegators.push({
                 address: delegator.address,
-                weight: this._util.convertRawToBan(delegator.weightRaw, {
-                    precision: 3,
-                }),
+                weight:
+                    !delegator.weightBan || delegator.weightBan < 0.01
+                        ? '~0'
+                        : this._util.numberWithCommas(
+                              delegator.weightBan.toFixed(delegator.weightBan > 100000 ? 0 : 2)
+                          ),
             });
-        }
-        this.delegators.sort((a, b) => (Number(a.weight) < Number(b.weight) ? 1 : -1));
-        for (const delegator of this.delegators) {
-            delegator.weight = this._util.numberWithCommas(delegator.weight);
-            if (delegator.weight === '0') {
-                delegator.weight = '~0';
-            }
         }
     }
 

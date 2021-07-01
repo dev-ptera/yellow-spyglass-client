@@ -15,4 +15,5 @@ export type AccountOverviewDto = {
     confirmedTransactions: ConfirmedTransactionDto[];
     pendingTransactions: PendingTransactionDto[];
     delegators: DelegatorDto[];
+    delegatorsWeightSum: number;
 };

@@ -21,7 +21,7 @@
                     <button
                         responsive
                         class="explore-search-button"
-                        mat-flat-button
+                        mat-stroked-button
                         color="primary"
                         [disabled]="loading || !searchFormControl.value"
                         (click)="search(searchFormControl.value)"
@@ -42,7 +42,7 @@
                     <div class="mat-subheading-1" [style.marginBottom.px]="16">Sample Addresses</div>
                     <div>
                         <button
-                            mat-flat-button
+                            mat-stroked-button
                             color="primary"
                             *ngFor="let addr of sampleAddresses"
                             [style.marginRight.px]="32"
@@ -58,7 +58,7 @@
                     <div class="mat-subheading-1" [style.marginBottom.px]="16">Sample Transactions</div>
                     <div>
                         <button
-                            mat-flat-button
+                            mat-stroked-button
                             color="primary"
                             *ngFor="let tx of sampleTransactions"
                             [style.marginRight.px]="32"

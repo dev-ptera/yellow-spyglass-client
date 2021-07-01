@@ -1277,10 +1277,10 @@
     node-gyp "^7.1.0"
     read-package-json-fast "^2.0.1"
 
-"@pxblue/angular-components@^4.4.0":
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/@pxblue/angular-components/-/angular-components-4.4.0.tgz#4bc0ce09b8996a6fd67923912d27483e8936c990"
-  integrity sha512-O8zZLcg7LlJTweeBoqdJ3+m8moRUeUpMONbf3dDOjr+iBVy2EurzgnvQyG92gxSpa7EWMtrGHMbb/2dbNYZyZQ==
+"@pxblue/angular-components@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@pxblue/angular-components/-/angular-components-4.5.0.tgz#c76d7cf99a1d7d35c0c77f551673b5160cd5b494"
+  integrity sha512-W68Mu1aZaPnsriXeHViyiP2OjrWlG32tO/G4NlaOON68quF76qQPkuNddHE40hNn/d1ZGubE2ZjR/RBvqCUVdg==
   dependencies:
     tslib "^2.0.0"
 
@@ -1292,10 +1292,10 @@
     "@fontsource/open-sans" "^4.1.0"
     "@pxblue/colors" "^3.0.0"
 
-"@pxblue/colors-branding@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@pxblue/colors-branding/-/colors-branding-3.0.1.tgz#03d7b48b2c4bc1551a601f8bb96068f79ffd3517"
-  integrity sha512-iLJHgTBMkTiKWCOaFwclEzMZ4F6bIv1fBCKzuINZsJhmxFJ6KzbFjzehIdnI7/npJzQIVXWRy+L6126C84aLSQ==
+"@pxblue/colors-branding@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@pxblue/colors-branding/-/colors-branding-3.1.0.tgz#9d71b4035095001c6f72e984b7fc55eba8af4473"
+  integrity sha512-Heqw5Ph6e7x+Jk+WnNYbJgvDW6PITroVg7+sNqsxJcW7ESZnzfeT2cvAa/lfw56zhTuP76t2YH6NswaXMnu5mA==
   dependencies:
     "@pxblue/types" "^1.0.0"
 
@@ -1303,6 +1303,13 @@
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@pxblue/colors/-/colors-3.0.0.tgz#080fb5cfd5a08fea018ece7cac8022ed38f7878f"
   integrity sha512-rMFW4an1V9M5KX4BiNzrbbaYe2fic4o9iGL8/bPYvITbeiwgAapyFX0VbMIoo8XKlIbNaxyn7oWnrxzI/tp8Rw==
+  dependencies:
+    "@pxblue/types" "^2.0.0"
+
+"@pxblue/colors@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pxblue/colors/-/colors-3.0.1.tgz#4f89fc9ed10d754eac1ea699b722f5ac8c723173"
+  integrity sha512-3iROA/tvf7BiXRA4R9DobWeEE4Tg7bFgFWNuLzqqwHBEz/uI/J83XTW913g/wba9V5IAVt2DYAQFb/qbqYyjKQ==
   dependencies:
     "@pxblue/types" "^2.0.0"
 
@@ -6110,7 +6117,6 @@ minipass-fetch@^1.3.0, minipass-fetch@^1.3.2:
   resolved "https://registry.yarnpkg.com/minipass-fetch/-/minipass-fetch-1.3.3.tgz#34c7cea038c817a8658461bf35174551dce17a0a"
   integrity sha512-akCrLDWfbdAWkMLBxJEeWTdNsjML+dt5YgOI4gJ53vuO0vrmYQkUPxa6j6V65s9CcePIr2SSWqjT2EcrNseryQ==
   dependencies:
-    encoding "^0.1.12"
     minipass "^3.1.0"
     minipass-sized "^1.0.3"
     minizlib "^2.0.0"
