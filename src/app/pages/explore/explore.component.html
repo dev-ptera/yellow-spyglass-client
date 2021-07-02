@@ -1,12 +1,24 @@
 <div class="explore-root">
-    <div class="explore-body" responsive>
+    <div class="explore-body" [class.explore-home]="!showBlock && !showAccount" responsive>
         <div class="explore-body-content">
-            <ng-container *ngIf="!showBlock && !showAccount">
-                <div [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm" [style.marginBottom.px]="8">
-                    Banano Explorer
+            <mat-card class="mat-elevation-z4" [style.padding.px]="vp.sm ? 36 : 48" *ngIf="!showBlock && !showAccount">
+                <div
+                    [class.mat-display-2]="!vp.sm"
+                    [class.mat-display-1]="vp.sm"
+                    [style.marginBottom.px]="8"
+                    style="text-align: center; font-weight: 600; margin-bottom: 8px"
+                >
+                    Yellow Spyglass
                 </div>
-                <div class="mat-subheading-2">Search a Banano address or a transaction hash below.</div>
-                <div class="explore-search-bar">
+                <div class="mat-subheading-2" style="text-align: center; font-style: italic">
+                    Explore the open seas of the banano network
+                </div>
+                <div style="text-align: center" [style.height.px]="vp.sm ? 275 : 400">
+                    <img [style.width.px]="vp.sm ? 275 : 400" src="assets/pirate-monkey.png" />
+                </div>
+                <div class="mat-headline" [style.marginBottom.px]="8" [style.marginTop.px]="-16">Explore</div>
+                <div class="mat-subheading-2">Search a banano address or a transaction hash below.</div>
+                <div class="explore-search-bar" responsive>
                     <mat-form-field appearance="outline">
                         <mat-label>Address</mat-label>
                         <input
@@ -21,7 +33,7 @@
                     <button
                         responsive
                         class="explore-search-button"
-                        mat-stroked-button
+                        mat-flat-button
                         color="primary"
                         [disabled]="loading || !searchFormControl.value"
                         (click)="search(searchFormControl.value)"
@@ -35,7 +47,7 @@
 
                 <div class="mat-headline" [style.marginTop.px]="72" [style.marginBottom.px]="8">Getting Started?</div>
                 <div class="mat-subheading-2">
-                    Below are some sample accounts and transactions to help get familiar with how things work around
+                    Below are some sample accounts and transactions to help you get familiar with how things work around
                     here.
                 </div>
                 <div [style.marginTop.px]="32">
@@ -69,7 +81,7 @@
                         </button>
                     </div>
                 </div>
-            </ng-container>
+            </mat-card>
 
             <app-account
                 *ngIf="showAccount"

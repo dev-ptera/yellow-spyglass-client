@@ -93,6 +93,7 @@ export class ExploreComponent implements OnInit, OnDestroy {
         this.monkeySvg = undefined;
         this.accountOverview = undefined;
         this.blockResponse = undefined;
+        window.scrollTo(0, 0);
         if (searchValue.startsWith('ban_')) {
             this._searchAccount(searchValue);
         } else {
