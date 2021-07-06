@@ -53,8 +53,7 @@ export const APP_NAV_ITEMS = {
     search: searchNavItem,
     representatives: representativesNavItem,
     wallets: walletsNavItem,
-    page1: networkNavItem,
-    page2: nodeNavItem,
+    network: networkNavItem,
     node: nodeNavItem,
 };
 

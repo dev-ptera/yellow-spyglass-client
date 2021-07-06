@@ -17,7 +17,7 @@ const routes: Routes = [
     { path: APP_NAV_ITEMS.node.route, component: NodeMonitorComponent },
     { path: APP_NAV_ITEMS.wallets.route, component: WalletsComponent },
     { path: APP_NAV_ITEMS.knownAccounts.route, component: KnownAccountsComponent },
-    { path: 'coming-soon', component: ComingSoonComponent },
+    { path: APP_NAV_ITEMS.network.route, component: ComingSoonComponent },
 ];
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
