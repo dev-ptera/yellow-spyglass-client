@@ -1,6 +1,9 @@
-import { RepresentativeDto } from './RepresentativeDto';
+export type MonitoredRepDto = {
+    address: string;
+    weight: number;
+    online: boolean;
+    delegatorsCount: number;
 
-export type MonitoredRepDto = RepresentativeDto & {
     /* Optional (populated from node-monitor) */
     protocolVersion?: string;
     representative?: string;

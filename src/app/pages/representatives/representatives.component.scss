@@ -122,6 +122,12 @@
 }
 .representatives-weight-cell {
     padding: 4px 8px 4px 0px !important;
+    .representatives-weight-percentage {
+        font-size: 12px !important;
+        &.md {
+            font-size: 11px !important;
+        }
+    }
 }
 
 .representatives-clickable-cell {

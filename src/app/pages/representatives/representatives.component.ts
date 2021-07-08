@@ -52,7 +52,7 @@ export class RepresentativesComponent implements OnInit {
         'peers',
         'uncheckedBlocks',
     ];
-    allRepsDisplayColumns = ['position', 'address', 'weight', 'online', 'delegatorsCount'];
+    allRepsDisplayColumns = ['position', 'address', 'weight', 'delegatorsCount', 'online', 'uptimePercentMonth'];
 
     @ViewChild('sortAll') sortAll: MatSort;
     @ViewChild('sortMonitored') sortMonitored: MatSort;
@@ -215,6 +215,10 @@ export class RepresentativesComponent implements OnInit {
         };
     }
 
+    formatVersion(version: string): string {
+        return version.replace('BANANO', '');
+    }
+
     formatChartAddress(addr: string): string {
         return `${addr.substr(0, 11)}...`;
     }
@@ -230,7 +234,7 @@ export class RepresentativesComponent implements OnInit {
     }
 
     formatInfoLine(rep: MonitoredRepDto): string {
-        return `${rep.version} · ${this.formatBanWeight(rep.weight)} BAN · ${this.numberWithCommas(
+        return `${this.formatVersion(rep.version)} · ${this.numberWithCommas(
             rep.delegatorsCount
         )} delegators · ${this.numberWithCommas(rep.peers)} peers`;
     }

@@ -3,5 +3,9 @@ export type RepresentativeDto = {
     weight: number;
     online: boolean;
     delegatorsCount: number;
-    creationDate?: number;
+    uptimePercentDay: number;
+    uptimePercentWeek: number;
+    uptimePercentMonth: number;
+    uptimePercentSemiAnnual: number;
+    uptimePercentYear: number;
 };
