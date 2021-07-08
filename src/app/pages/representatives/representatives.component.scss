@@ -102,6 +102,10 @@
 
 .representatives-monitored-list,
 .representatives-all-list {
+    .pxb-info-list-item-content .mat-list-item-content {
+        min-height: 5rem!important;
+    }
+
     .mat-list-item-content {
         padding-left: 0 !important;
         padding-right: 0 !important;

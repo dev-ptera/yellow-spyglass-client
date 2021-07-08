@@ -52,7 +52,6 @@
             *ngFor="let rep of monitoredReps; trackBy: trackByFn"
             [hidePadding]="true"
             [dense]="false"
-            [wrapSubtitle]="true"
             [divider]="true"
         >
             <div pxb-title>
@@ -145,7 +144,7 @@
     <div class="mat-subheading-2 representatives-all-subtitle">
         List of representatives with at least 100,000 BANANO weight delegated towards them.
     </div>
-    <mat-list *ngIf="vp.sm" class="representatives-all-list">
+    <mat-list *ngIf="vp.sm" class="representatives-all-list" [style.paddingTop.px]="0">
         <div *ngFor="let rep of representatives; let i = index; trackBy: trackByFn">
             <pxb-info-list-item [hidePadding]="true" [dense]="false" [divider]="true">
                 <div pxb-left-content>
@@ -162,8 +161,8 @@
                 </div>
                 <div pxb-subtitle>{{ numberWithCommas(rep.delegatorsCount) }} delegators</div>
                 <div pxb-info>
+                    <span style="font-size: 12px">
                     {{ rep.uptimePercentMonth }}%
-                    <span style="font-size: 11px">
                         (M) · {{ rep.uptimePercentWeek }}% (W) · {{ rep.uptimePercentDay }}% (D)
                     </span>
                 </div>
