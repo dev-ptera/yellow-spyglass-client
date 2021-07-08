@@ -94,10 +94,10 @@ export class ExploreComponent implements OnInit, OnDestroy {
         this.accountOverview = undefined;
         this.blockResponse = undefined;
         window.scrollTo(0, 0);
-        if (searchValue.startsWith('ban_')) {
-            this._searchAccount(searchValue);
+        if (searchValue.toLowerCase().startsWith('ban_')) {
+            this._searchAccount(searchValue.toLowerCase());
         } else {
-            this._searchTransaction(searchValue);
+            this._searchTransaction(searchValue.toUpperCase());
         }
     }
 
