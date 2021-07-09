@@ -32,15 +32,7 @@
         //  padding: 48px 48px 48px 48px; NOT GRID!
     }
     &.sm {
-        padding: 48px 0px 48px 0px;
-        .representatives-section-header-info {
-            padding: 0 20px 4px 20px;
-            box-sizing: border-box;
-        }
-        .mat-list-item-content {
-            padding-left: 20px !important;
-            padding-right: 20px !important;
-        }
+        padding: 48px 20px 48px 20px;
     }
 }
 .representatives-content {
@@ -111,7 +103,7 @@
 .representatives-monitored-list,
 .representatives-all-list {
     .pxb-info-list-item-content .mat-list-item-content {
-        min-height: 5rem !important;
+        min-height: 5.5rem !important;
     }
 
     .mat-list-item-content {

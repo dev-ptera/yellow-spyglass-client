@@ -1,21 +1,17 @@
 <ng-template #titleContent>
-    <div class="representatives-section-header-info">
-        <div class="representatives-title" [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm">
-            <ng-container *ngIf="!loading">Representatives</ng-container>
-            <ng-container *ngIf="loading">Loading</ng-container>
-        </div>
-        <div class="mat-subheading-2 representatives-subtitle">
-            Representatives process transactions on the BANANO network. See all representatives below.
-        </div>
+    <div class="representatives-title" [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm">
+        <ng-container *ngIf="!loading">Representatives</ng-container>
+        <ng-container *ngIf="loading">Loading</ng-container>
+    </div>
+    <div class="mat-subheading-2 representatives-subtitle">
+        Representatives process transactions on the BANANO network. See all representatives below.
     </div>
 </ng-template>
 
 <ng-template #bodyContent>
-    <div class="representatives-section-header-info">
-        <div class="mat-headline representatives-monitored-header">Weight Distribution</div>
-        <div class="mat-subheading-2 representatives-monitored-subtitle">
-            Online voting weight allocation between the largest representatives.
-        </div>
+    <div class="mat-headline representatives-monitored-header">Weight Distribution</div>
+    <div class="mat-subheading-2 representatives-monitored-subtitle">
+        Online voting weight allocation between the largest representatives.
     </div>
     <div class="representatives-chart-container" responsive>
         <div class="representatives-chart" responsive>
@@ -45,13 +41,11 @@
         </div>
     </div>
 
-    <div class="representatives-section-header-info">
-        <div class="mat-headline representatives-monitored-header">
-            Monitored Representatives ({{ monitoredReps.length }})
-        </div>
-        <div class="mat-subheading-2 representatives-monitored-subtitle">
-            Online representatives that use the Nano Node Monitor tool are shown in the list below.
-        </div>
+    <div class="mat-headline representatives-monitored-header">
+        Monitored Representatives ({{ monitoredReps.length }})
+    </div>
+    <div class="mat-subheading-2 representatives-monitored-subtitle">
+        Online representatives that use the Nano Node Monitor tool are shown in the list below.
     </div>
     <mat-list [style.paddingTop.px]="0" *ngIf="vp.sm" class="representatives-monitored-list">
         <mat-divider></mat-divider>
@@ -147,27 +141,19 @@
         <tr mat-row *matRowDef="let row; columns: monitoredRepDisplayColumns"></tr>
     </table>
 
-    <div class="representatives-section-header-info">
-        <div class="mat-headline representatives-all-header">All Representatives ({{ representatives.length }})</div>
-        <div class="mat-subheading-2 representatives-all-subtitle">
-            List of representatives with at least 100,000 BANANO weight delegated towards them.
-        </div>
+    <div class="mat-headline representatives-all-header">All Representatives ({{ representatives.length }})</div>
+    <div class="mat-subheading-2 representatives-all-subtitle">
+        List of representatives with at least 100,000 BANANO weight delegated towards them.
     </div>
     <mat-list *ngIf="vp.sm" class="representatives-all-list" [style.paddingTop.px]="0">
         <mat-divider></mat-divider>
         <div *ngFor="let rep of representatives; let i = index; trackBy: trackByFn">
             <pxb-info-list-item [hidePadding]="true" [dense]="false" [divider]="true">
-                <div pxb-left-content>
-                    <span [style.width.px]="32" style="font-size: 14px">#{{ i + 1 }}</span>
-                </div>
-                <div
-                    pxb-title
-                    class="link primary"
-                    [class.offline]="!rep.online"
-                    [class.online]="rep.online"
-                    (click)="routeRepAddress(rep.address)"
-                >
-                    {{ formatListAddress(rep.address) }}
+                <div pxb-title style="padding-right: 16px" (click)="routeRepAddress(rep.address)">
+                    <span [style.fontSize.px]="20"> #{{ i + 1 }}</span> ·
+                    <span class="link" [class.offline]="!rep.online" [class.online]="rep.online">
+                        {{ rep.address }}
+                    </span>
                 </div>
                 <div pxb-subtitle>{{ numberWithCommas(rep.delegatorsCount) }} delegators</div>
                 <div pxb-info>
