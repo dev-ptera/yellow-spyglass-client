@@ -144,9 +144,9 @@ export class InsightsTabComponent implements OnChanges {
 
     getErrorDescription(): string {
         if (this.unopened) {
-            return "This account needs to receive a block before it can be analyzed.";
+            return 'This account needs to receive a block before it can be analyzed.';
         }
-        return "This account has too many transactions to analyze.  Please select an account with less activity.";
+        return 'This account has too many transactions to analyze.  Please select an account with less activity.';
     }
 
     private _createAccountHistoryChart(dataPoints: Array<{ balance: number; height: number }>): Options {
