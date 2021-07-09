@@ -53,25 +53,34 @@
                     [class.mat-subheading-2]="!vp.sm"
                     responsive
                 >
-                    Represented by
-                    <span
-                        (click)="searchService.emitSearch(accountOverview.representative)"
-                        [style.marginLeft.px]="4"
-                        class="account-representative-address"
-                        >{{ shortenedRep }}</span
+                    <ng-container *ngIf="accountOverview.representative !== address">
+                        Represented by
+
+                        <span
+                            (click)="searchService.emitSearch(accountOverview.representative)"
+                            [style.marginLeft.px]="4"
+                            class="account-representative-address"
+                        >
+                        {{ shortenedRep }}
+                    </span
                     >
-                    <pxb-list-item-tag
-                        *ngIf="!accountOverview.isRepOnline"
-                        [style.marginLeft.px]="8"
-                        class="account-rep-offline"
-                        label="Offline"
-                    ></pxb-list-item-tag>
-                    <pxb-list-item-tag
-                        *ngIf="accountOverview.isRepOnline"
-                        class="account-rep-online"
-                        [style.marginLeft.px]="8"
-                        label="Online"
-                    ></pxb-list-item-tag>
+                        <pxb-list-item-tag
+                            *ngIf="!accountOverview.isRepOnline"
+                            [style.marginLeft.px]="8"
+                            class="account-rep-offline"
+                            label="Offline"
+                        ></pxb-list-item-tag>
+                        <pxb-list-item-tag
+                            *ngIf="accountOverview.isRepOnline"
+                            class="account-rep-online"
+                            [style.marginLeft.px]="8"
+                            label="Online"
+                        ></pxb-list-item-tag>
+                    </ng-container>
+                    <div *ngIf="accountOverview.representative === address"
+                         class="mat-overline" style="margin-top: -8px">
+                        Self-Represented
+                    </div>
                 </div>
 
                 <div class="account-summary-tags" responsive *ngIf="accountOverview">
