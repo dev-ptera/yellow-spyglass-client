@@ -87,7 +87,8 @@ body {
 /* Representative Page */
 $online-color: $primary-green;
 $offline-color: $warn-red;
-@include representatives-theme($online-color, $offline-color);
+$list-bg-color: map-get($theme-background, card);
+@include representatives-theme($online-color, $offline-color, $list-bg-color);
 
 /* Wallets Page */
 $grid-stroke-color: map-get($pxb-gray, 800);

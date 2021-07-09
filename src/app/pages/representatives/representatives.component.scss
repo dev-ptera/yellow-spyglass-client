@@ -32,7 +32,15 @@
         //  padding: 48px 48px 48px 48px; NOT GRID!
     }
     &.sm {
-        padding: 48px 20px 48px 20px;
+        padding: 48px 0px 48px 0px;
+        .representatives-section-header-info {
+            padding: 0 20px 4px 20px;
+            box-sizing: border-box;
+        }
+        .mat-list-item-content {
+            padding-left: 20px !important;
+            padding-right: 20px !important;
+        }
     }
 }
 .representatives-content {
@@ -103,7 +111,7 @@
 .representatives-monitored-list,
 .representatives-all-list {
     .pxb-info-list-item-content .mat-list-item-content {
-        min-height: 5rem!important;
+        min-height: 5rem !important;
     }
 
     .mat-list-item-content {
@@ -161,7 +169,7 @@ th.mat-sort-header-sorted {
     color: black;
 }
 
-@mixin representatives-theme($online-color, $offline-color) {
+@mixin representatives-theme($online-color, $offline-color, $list-bg-color) {
     .representatives-name-cell {
         color: $online-color !important;
     }
@@ -183,5 +191,9 @@ th.mat-sort-header-sorted {
         .offline {
             color: $offline-color !important;
         }
+    }
+    .representatives-all-list,
+    .representatives-monitored-list {
+        //  background-color: $list-bg-color;
     }
 }
