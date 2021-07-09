@@ -4,12 +4,14 @@ import { BookmarksService } from '@app/services/bookmarks/bookmarks.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { FormControl } from '@angular/forms';
 import { SearchService } from '@app/services/search/search.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteBookmarkDialog } from '@app/pages/bookmarks/delete-bookmark-dialog.component';
 
 @Component({
     selector: 'app-bookmarks',
     template: `
         <div class="bookmarks-root" responsive>
-            <ng-container *ngIf="bookmarks.length > 0">
+            <div class="bookmarks-body" *ngIf="bookmarks.length > 0">
                 <div class="bookmarks-title" [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm">
                     Bookmarks
                 </div>
@@ -48,7 +50,7 @@ import { SearchService } from '@app/services/search/search.service';
                                 *ngIf="element.id !== currentEditId"
                                 mat-stroked-button
                                 color="warn"
-                                (click)="removeBookmark(element.id)"
+                                (click)="openDeleteDialog(element.id, element.alias)"
                             >
                                 Delete
                             </button>
@@ -64,7 +66,7 @@ import { SearchService } from '@app/services/search/search.service';
                             <button
                                 *ngIf="element.id === currentEditId"
                                 mat-stroked-button
-                                color="accent"
+                                color="primary"
                                 (click)="cancelEdit()"
                             >
                                 Cancel
@@ -74,14 +76,16 @@ import { SearchService } from '@app/services/search/search.service';
                     <tr mat-header-row *matHeaderRowDef="columns"></tr>
                     <tr mat-row *matRowDef="let row; columns: columns"></tr>
                 </table>
-            </ng-container>
-            <pxb-empty-state
-                *ngIf="bookmarks.length === 0"
-                title="No Bookmarks Found"
-                description="To add a bookmark, search an address or transaction hash and save it."
-            >
-                <mat-icon pxb-empty-icon>bookmarks</mat-icon>
-            </pxb-empty-state>
+            </div>
+            <div style="display: flex; height: 100%; align-items: center">
+                <pxb-empty-state
+                    *ngIf="bookmarks.length === 0"
+                    title="No Bookmarks Found"
+                    description="To add a bookmark, search an address or transaction hash and save it."
+                >
+                    <mat-icon pxb-empty-icon>bookmarks</mat-icon>
+                </pxb-empty-state>
+            </div>
         </div>
     `,
     styleUrls: ['./bookmarks.component.scss'],
@@ -96,6 +100,7 @@ export class BookmarksComponent implements OnInit {
     constructor(
         public vp: ViewportService,
         public searchService: SearchService,
+        private readonly _dialog: MatDialog,
         private readonly _bookmarkService: BookmarksService
     ) {}
 
@@ -103,9 +108,19 @@ export class BookmarksComponent implements OnInit {
         this.bookmarks = this._bookmarkService.getBookmarks();
     }
 
-    removeBookmark(id: string): void {
-        this._bookmarkService.removeBookmark(id);
-        this.bookmarks = this._bookmarkService.getBookmarks();
+    openDeleteDialog(id: string, alias: string): void {
+        const dialogRef = this._dialog.open(DeleteBookmarkDialog, {
+            data: {
+                alias,
+            },
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+                this._bookmarkService.removeBookmark(id);
+                this.bookmarks = this._bookmarkService.getBookmarks();
+            }
+        });
     }
 
     enableEditBookmark(id: string): void {

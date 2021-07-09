@@ -9,9 +9,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AppCommonModule } from '@app/common/app-common.module';
 import { MatInputModule } from '@angular/material/input';
+import { DeleteBookmarkDialog } from '@app/pages/bookmarks/delete-bookmark-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-    declarations: [BookmarksComponent],
+    declarations: [BookmarksComponent, DeleteBookmarkDialog],
+    entryComponents: [DeleteBookmarkDialog],
     imports: [
         AppCommonModule,
         CommonModule,
@@ -20,9 +23,10 @@ import { MatInputModule } from '@angular/material/input';
         MatFormFieldModule,
         MatIconModule,
         MatTableModule,
-        ReactiveFormsModule,
         MatInputModule,
+        MatDialogModule,
+        ReactiveFormsModule,
     ],
-    exports: [BookmarksComponent],
+    exports: [BookmarksComponent, DeleteBookmarkDialog],
 })
 export class BookmarksModule {}
