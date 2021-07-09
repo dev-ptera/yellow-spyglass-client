@@ -97,7 +97,7 @@ import * as Highcharts from 'highcharts';
             responsive
             class="account-empty-state"
             title="No Insights"
-            description="This account has too many transactions to analyze.  Please select an account with less activity."
+            [description]="getErrorDescription()"
         >
             <mat-icon pxb-empty-icon>disc_full</mat-icon>
         </pxb-empty-state>
@@ -111,6 +111,7 @@ export class InsightsTabComponent implements OnChanges {
     @Input() insights: InsightsDto;
     @Input() error: boolean;
     @Input() disabled: boolean;
+    @Input() unopened: boolean;
 
     Highcharts: typeof Highcharts = Highcharts;
     accountHistoryChart: Options;
@@ -139,6 +140,13 @@ export class InsightsTabComponent implements OnChanges {
 
     formatBan(ban: number): string {
         return this._util.numberWithCommas(ban);
+    }
+
+    getErrorDescription(): string {
+        if (this.unopened) {
+            return "This account needs to receive a block before it can be analyzed.";
+        }
+        return "This account has too many transactions to analyze.  Please select an account with less activity.";
     }
 
     private _createAccountHistoryChart(dataPoints: Array<{ balance: number; height: number }>): Options {

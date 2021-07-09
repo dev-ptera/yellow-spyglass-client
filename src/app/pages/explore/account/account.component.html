@@ -182,7 +182,11 @@
                 <ng-container *ngIf="!vp.sm">Insights</ng-container>
                 <mat-icon *ngIf="vp.sm">insights</mat-icon>
             </ng-template>
-            <account-insights-tab [insights]="insights" [error]="hasInsightsError" [disabled]="insightsDisabled">
+            <account-insights-tab
+                [insights]="insights"
+                [error]="hasInsightsError"
+                [unopened]="!accountOverview?.opened"
+                [disabled]="insightsDisabled">
             </account-insights-tab>
         </mat-tab>
     </mat-tab-group>

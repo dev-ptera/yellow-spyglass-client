@@ -97,7 +97,7 @@ export class AccountComponent implements OnChanges {
         this.loadedPendingTxPages = new Set<number>().add(0);
         this.insights = undefined;
         this.loadingInsights = false;
-        this.insightsDisabled = this.accountOverview.completedTxCount > 50_000;
+        this.insightsDisabled = this.accountOverview.completedTxCount > 50_000 || !this.accountOverview.opened
         this._prepareAccountOverview(this.accountOverview);
         this._prepareConfirmed(this.accountOverview);
         this._preparePending(this.accountOverview);
