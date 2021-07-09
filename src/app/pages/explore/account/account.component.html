@@ -61,9 +61,8 @@
                             [style.marginLeft.px]="4"
                             class="account-representative-address"
                         >
-                        {{ shortenedRep }}
-                    </span
-                    >
+                            {{ shortenedRep }}
+                        </span>
                         <pxb-list-item-tag
                             *ngIf="!accountOverview.isRepOnline"
                             [style.marginLeft.px]="8"
@@ -77,8 +76,11 @@
                             label="Online"
                         ></pxb-list-item-tag>
                     </ng-container>
-                    <div *ngIf="accountOverview.representative === address"
-                         class="mat-overline" style="margin-top: -8px">
+                    <div
+                        *ngIf="accountOverview.representative === address"
+                        class="mat-overline"
+                        style="margin-top: -8px"
+                    >
                         Self-Represented
                     </div>
                 </div>
