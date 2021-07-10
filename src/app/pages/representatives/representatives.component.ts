@@ -75,7 +75,7 @@ export class RepresentativesComponent implements OnInit {
         this._api
             .representatives()
             .then((data: RepresentativesResponseDto) => {
-                this.representatives = data.representatives;
+                this.representatives = data.thresholdReps;
                 this.monitoredReps = data.monitoredReps;
                 this.onlineWeight = data.onlineWeight;
                 this.repsChart = this._createRepChart(this.representatives);
