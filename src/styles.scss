@@ -48,6 +48,16 @@
     }
 }
 
+.mat-simple-snackbar {
+    justify-content: center !important;
+}
+.mat-snack-bar-handset {
+    justify-content: center;
+    .mat-snack-bar-container {
+        //  width: unset!important;
+    }
+}
+
 // Why can't I use the branding color palettes for my theme?
 // $material-theme-primary: mat-palette($brand-trophy);
 

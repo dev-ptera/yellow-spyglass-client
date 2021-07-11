@@ -1,11 +1,13 @@
-import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { BookmarksService } from '@app/services/bookmarks/bookmarks.service';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-bookmark-button',
     styleUrls: ['../copy-button/address-button.scss'],
     template: `
-        <button mat-icon-button (click)="toggleBookmark()" class="address-action-button" responsive>
+        <button mat-icon-button class="address-action-button" (click)="toggleBookmark()" responsive>
             <mat-icon *ngIf="isBookmarked" class="bookmarked-button">favorite</mat-icon>
             <mat-icon *ngIf="!isBookmarked">favorite_border</mat-icon>
         </button>
@@ -16,7 +18,9 @@ export class BookmarkButtonComponent implements OnChanges {
     @Input() id: string;
     isBookmarked: boolean;
 
-    constructor(private readonly _bookmarkService: BookmarksService) {}
+    @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
+
+    constructor(private readonly _bookmarkService: BookmarksService, private readonly _snackBar: MatSnackBar) {}
 
     ngOnChanges(): void {
         this.checkIsBookmarked();
@@ -36,5 +40,9 @@ export class BookmarkButtonComponent implements OnChanges {
             });
         }
         this.isBookmarked = !this.isBookmarked;
+        this._snackBar.open(this.isBookmarked ? 'Added Bookmark' : 'Removed Bookmark', undefined, {
+            panelClass: 'mat-subheader2',
+            duration: 1250,
+        });
     }
 }

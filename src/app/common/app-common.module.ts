@@ -12,6 +12,7 @@ import { QrButtonComponent } from '@app/common/components/qr-button/qr-button.co
 import { QrDialogComponent } from '@app/common/components/qr-dialog/qr-dialog.component';
 import { PaginatorComponent } from '@app/common/components/paginator/paginator.component';
 import { ErrorComponent } from '@app/common/components/error/error.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,7 @@ import { ErrorComponent } from '@app/common/components/error/error.component';
         ResponsiveDirective,
         SafeHtmlPipe,
     ],
-    imports: [CommonModule, EmptyStateModule, MatButtonModule, MatIconModule, SpacerModule],
+    imports: [CommonModule, EmptyStateModule, MatButtonModule, MatIconModule, MatSnackBarModule, SpacerModule],
     entryComponents: [QrDialogComponent],
     exports: [
         BookmarkButtonComponent,
