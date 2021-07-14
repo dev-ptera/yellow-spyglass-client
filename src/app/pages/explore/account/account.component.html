@@ -64,13 +64,13 @@
                             {{ shortenedRep }}
                         </span>
                         <pxb-list-item-tag
-                            *ngIf="!accountOverview.isRepOnline"
+                            *ngIf="!onlineRepService.onlineReps.has(accountOverview.representative)"
                             [style.marginLeft.px]="8"
                             class="account-rep-offline"
                             label="Offline"
                         ></pxb-list-item-tag>
                         <pxb-list-item-tag
-                            *ngIf="accountOverview.isRepOnline"
+                            *ngIf="onlineRepService.onlineReps.has(accountOverview.representative)"
                             class="account-rep-online"
                             [style.marginLeft.px]="8"
                             label="Online"
