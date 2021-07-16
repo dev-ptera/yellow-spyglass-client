@@ -1,0 +1,114 @@
+.network-root {
+    display: flex;
+    flex: 1;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 64px 64px 64px;
+    box-sizing: border-box;
+    width: 100%;
+    &.md {
+        padding: 48px 48px 48px 48px;
+    }
+    &.sm {
+        padding: 48px 20px 48px 20px;
+    }
+
+    .mat-subheading-2 {
+        line-height: 24px;
+    }
+
+    .network-body {
+        max-width: 1000px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap-reverse;
+        &.sm {
+            justify-content: center;
+            padding-left: 4px;
+            padding-right: 4px;
+        }
+        .network-section-title {
+            margin-bottom: 8px;
+        }
+        .network-chart-subtitle {
+            margin-bottom: 24px;
+        }
+        .mat-card {
+            box-sizing: border-box;
+            width: 475px;
+            margin: 12px;
+            &.md {
+                width: 47%;
+            }
+            &.sm {
+                width: 100%;
+                max-width: 450px;
+            }
+        }
+
+        .network-nakamoto {
+            height: 48px;
+            width: 48px;
+            line-height: 48px;
+            font-size: 36px;
+            border-radius: 50%;
+            color: white;
+            background-color: #4cbf4b;
+            display: block;
+        }
+    }
+
+    table {
+        font-size: 15px;
+        &.sm {
+            font-size: 13px;
+        }
+    }
+    table.network-distribution-table,
+    table.network-consensus-table {
+        margin-top: 32px;
+        margin-bottom: 32px !important;
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 4px;
+        th {
+            height: 48px;
+            line-height: 48px;
+            padding: 8px;
+        }
+        tr {
+            height: 36px;
+        }
+        td,
+        th {
+            //    border: solid 1px #eef0f0;
+        }
+        tr td {
+            text-align: right;
+            padding-right: 16px;
+            padding-left: 16px;
+            position: relative;
+        }
+        tr td:first-of-type {
+            text-align: left;
+        }
+    }
+    table.sm tr td {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+    .network-consensus-table .status {
+        font-size: 12px;
+        font-weight: 600;
+        position: absolute;
+        right: 8px;
+        top: 8px;
+        &.online {
+            color: #4cbf4b;
+        }
+        &.offline {
+            color: #d22f2fdb;
+        }
+    }
+}

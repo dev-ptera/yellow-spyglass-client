@@ -1,23 +1,23 @@
 export type ConsensusStatsDto = {
     allReps: {
-        onlineTotal: number;
+        onlineAmount: number;
         onlinePercent: number;
-        offlineTotal: number;
+        offlineAmount: number;
         offlinePercent;
     };
     noRep: {
-        total: number;
+        amount: number;
         percent: number;
     };
     official: {
-        onlineTotal: number;
-        offlineTotal: number;
+        onlineAmount: number;
+        offlineAmount: number;
         onlinePercent: number;
         offlinePercent: number;
     };
     unofficial: {
-        onlineTotal: number;
-        offlineTotal: number;
+        onlineAmount: number;
+        offlineAmount: number;
         onlinePercent: number;
         offlinePercent: number;
     };

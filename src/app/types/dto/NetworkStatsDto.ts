@@ -1,11 +1,11 @@
 import { ConsensusStatsDto } from './ConsensusStatsDto';
-import { DistributionStatsDto } from './DistributionStatsDto';
-import { Quorum } from '../model';
+import { SupplyDto } from './SupplyDto';
+import { QuorumDto } from './QuorumDto';
 
 export type NetworkStatsDto = {
     consensus: ConsensusStatsDto;
-    distribution: DistributionStatsDto;
-    quorum: Quorum;
+    supply: SupplyDto;
+    quorum: QuorumDto;
     nakamotoCoefficient: number;
-    repWeights: number[];
+    // repWeights: number[];
 };

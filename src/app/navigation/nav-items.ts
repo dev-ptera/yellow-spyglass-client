@@ -25,7 +25,7 @@ const knownAccountsNavItem: NavItem = {
 
 const networkNavItem: NavItem = {
     title: 'Network',
-    route: 'coming-soon',
+    route: 'network',
     icon: 'share',
 };
 

@@ -9,6 +9,7 @@ import {
     ConfirmedTransactionDto,
     KnownAccountDto,
     MonitoredRepDto,
+    NetworkStatsDto,
     PriceDataDto,
     RepresentativesResponseDto,
 } from '@app/types/dto';
@@ -96,5 +97,9 @@ export class ApiService {
 
     getKnownAccounts(): Promise<KnownAccountDto[]> {
         return this._http.get<KnownAccountDto[]>(`${this.url}/known-accounts`).pipe(timeout(FAST_MS)).toPromise();
+    }
+
+    getNetworkStats(): Promise<NetworkStatsDto> {
+        return this._http.get<NetworkStatsDto>(`${this.url}/network-stats`).pipe(timeout(FAST_MS)).toPromise();
     }
 }
