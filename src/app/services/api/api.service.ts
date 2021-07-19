@@ -99,6 +99,15 @@ export class ApiService {
         return this._http.get<KnownAccountDto[]>(`${this.url}/known-accounts`).pipe(timeout(FAST_MS)).toPromise();
     }
 
+    megaphone(hasOfflineRep: string[], hasLargeRep: string[]): Promise<void> {
+        return this._http
+            .post<void>(`${this.url}/megaphone`, {
+                hasOfflineRep,
+                hasLargeRep,
+            })
+            .toPromise();
+    }
+
     getNetworkStats(): Promise<NetworkStatsDto> {
         return this._http.get<NetworkStatsDto>(`${this.url}/network-stats`).pipe(timeout(FAST_MS)).toPromise();
     }
