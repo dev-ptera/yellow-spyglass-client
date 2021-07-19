@@ -97,4 +97,11 @@ export class ApiService {
     getKnownAccounts(): Promise<KnownAccountDto[]> {
         return this._http.get<KnownAccountDto[]>(`${this.url}/known-accounts`).pipe(timeout(FAST_MS)).toPromise();
     }
+
+    megaphone(hasOfflineRep: string[], hasLargeRep: string[]): Promise<void> {
+        return this._http.post<void>(`${this.url}/megaphone`, {
+            hasOfflineRep,
+            hasLargeRep
+        }).toPromise();
+    }
 }

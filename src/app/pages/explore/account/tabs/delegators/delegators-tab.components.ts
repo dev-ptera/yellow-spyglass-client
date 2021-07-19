@@ -1,8 +1,17 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Input,
+    OnChanges,
+    ViewEncapsulation
+} from '@angular/core';
 import { Delegator } from '@app/types/modal/Delegator';
 import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
+import { environment } from "environments/environment";
+import {MegaphoneService} from "@app/services/megaphone/megaphone.service";
 
 @Component({
     selector: 'account-delegators-tab',
@@ -10,11 +19,33 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
         <div class="account-delegator-weight" *ngIf="weightSum !== 0">
             <span class="account-delegator-weight-sum" responsive>{{ formattedWeight }}</span>
             <span class="account-delegator-weight-sum-description" responsive>BAN Delegated Weight</span>
+            <ng-container *ngIf="isMegaphone">
+                <pxb-spacer></pxb-spacer>
+                <button mat-flat-button color="primary" (click)="toot()" style="margin-right: 24px" [disabled]="megaSuccess">
+                    <ng-container *ngIf="!megaSuccess">Use Megaphone</ng-container>
+                    <ng-container *ngIf="megaSuccess">All is Good</ng-container>
+                </button>
+            </ng-container>
         </div>
         <table mat-table *ngIf="delegators.length > 0" [style.width.%]="100" [dataSource]="getShownDelegators()">
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
                 <td mat-cell [style.paddingRight.px]="16" *matCellDef="let element; let i = index">#{{ i + 1 }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="megaphone">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                <td mat-cell *matCellDef="let element">
+                    <div style="display: flex" *ngIf="!megaphone.hasAddress(element.address)">
+                        <button mat-stroked-button color="accent"
+                                (click)="megaphone.addAddress(element.address, 1)" [style.marginRight.px]="8">Offline</button>
+                        <button mat-stroked-button color="accent"
+                                (click)="megaphone.addAddress(element.address, 2)" [style.marginRight.px]="16">Large</button>
+                    </div>
+                    <ng-container *ngIf="megaphone.hasAddress(element.address)">
+                        <button mat-stroked-button color="warn" (click)="megaphone.removeAddress(element.address)">Exclude</button>
+                    </ng-container>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="address">
@@ -70,11 +101,17 @@ export class DelegatorsTabComponent implements OnChanges {
     @Input() weightSum: number;
 
     shownDelegators = 50;
-    columns = ['position', 'address', 'weight'];
+    isMegaphone = environment.megaphone;
+    columns = this.isMegaphone ?  ['position', 'megaphone', 'address', 'weight'] : ['position', 'address', 'weight'];
 
     formattedWeight: string;
+    megaSuccess: boolean;
 
-    constructor(public vp: ViewportService, public searchService: SearchService, private readonly _util: UtilService) {}
+    constructor(public vp: ViewportService,
+                public searchService: SearchService,
+                public megaphone: MegaphoneService,
+                private readonly _ref: ChangeDetectorRef,
+                private readonly _util: UtilService) {}
 
     ngOnChanges(): void {
         this.formattedWeight = this._util.numberWithCommas(this.weightSum.toFixed(2));
@@ -89,5 +126,15 @@ export class DelegatorsTabComponent implements OnChanges {
 
     increaseShownDelegators(): void {
         this.shownDelegators += 100;
+    }
+
+    toot(): void {
+        this.megaphone.toot().then(() => {
+            this.megaSuccess = true;
+            this.megaphone.reset();
+            this._ref.detectChanges();
+        }).catch((err) => {
+            console.error(err);
+        })
     }
 }

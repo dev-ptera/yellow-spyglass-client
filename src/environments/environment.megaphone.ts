@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-    megaphone: false,
+    megaphone: true,
     production: false,
     api: 'http://192.168.1.235:3000/yellowspyglass',
     /*TODO: THIS IS NOT REQUIRED ANYMORE. API LOCALHOST READS FROM BACKUP RICHLIST FILE. */
