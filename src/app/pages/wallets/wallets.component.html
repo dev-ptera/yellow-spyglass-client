@@ -73,18 +73,31 @@
             </td>
         </ng-container>
 
-
         <ng-container matColumnDef="megaphone">
             <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
             <td mat-cell *matCellDef="let element">
                 <div style="display: flex" *ngIf="!megaphone.hasAddress(element.addr)">
-                    <button mat-stroked-button color="accent"
-                            (click)="megaphone.addAddress(element.addr, 1)" [style.marginRight.px]="8">Offline</button>
-                    <button mat-stroked-button color="accent"
-                            (click)="megaphone.addAddress(element.addr, 2)" [style.marginRight.px]="16">Large</button>
+                    <button
+                        mat-stroked-button
+                        color="accent"
+                        (click)="megaphone.addAddress(element.addr, 1)"
+                        [style.marginRight.px]="8"
+                    >
+                        Offline
+                    </button>
+                    <button
+                        mat-stroked-button
+                        color="accent"
+                        (click)="megaphone.addAddress(element.addr, 2)"
+                        [style.marginRight.px]="16"
+                    >
+                        Large
+                    </button>
                 </div>
                 <ng-container *ngIf="megaphone.hasAddress(element.addr)">
-                    <button mat-stroked-button color="warn" (click)="megaphone.removeAddress(element.addr)">Exclude</button>
+                    <button mat-stroked-button color="warn" (click)="megaphone.removeAddress(element.addr)">
+                        Exclude
+                    </button>
                 </ng-container>
             </td>
         </ng-container>

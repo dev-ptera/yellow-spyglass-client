@@ -5,7 +5,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { MatTableModule } from '@angular/material/table';
 import { MatBadgeModule } from '@angular/material/badge';
 import { AppCommonModule } from '@app/common/app-common.module';
-import {MatButtonModule} from "@angular/material/button";
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
     declarations: [WalletsComponent],

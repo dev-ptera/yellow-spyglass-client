@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {ApiService} from "@app/services/api/api.service";
+import { ApiService } from '@app/services/api/api.service';
 
 // eslint-disable-next-line no-shadow
 enum REASON {
@@ -12,7 +12,6 @@ enum REASON {
 })
 // Toot a specific message to select addresses
 export class MegaphoneService {
-
     hasOfflineRep = new Set<string>();
     hasLargeRep = new Set<string>();
 
@@ -43,8 +42,10 @@ export class MegaphoneService {
 
     toot(): Promise<void> {
         return new Promise((resolve, reject) => {
-            this._api.megaphone(Array.from(this.hasOfflineRep), Array.from(this.hasLargeRep))
-                .then(resolve).catch(reject)
-        })
+            this._api
+                .megaphone(Array.from(this.hasOfflineRep), Array.from(this.hasLargeRep))
+                .then(resolve)
+                .catch(reject);
+        });
     }
 }

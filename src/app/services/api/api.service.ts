@@ -99,9 +99,11 @@ export class ApiService {
     }
 
     megaphone(hasOfflineRep: string[], hasLargeRep: string[]): Promise<void> {
-        return this._http.post<void>(`${this.url}/megaphone`, {
-            hasOfflineRep,
-            hasLargeRep
-        }).toPromise();
+        return this._http
+            .post<void>(`${this.url}/megaphone`, {
+                hasOfflineRep,
+                hasLargeRep,
+            })
+            .toPromise();
     }
 }

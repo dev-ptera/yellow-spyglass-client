@@ -4,14 +4,14 @@ import {
     Component,
     Input,
     OnChanges,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from '@angular/core';
 import { Delegator } from '@app/types/modal/Delegator';
 import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
-import { environment } from "environments/environment";
-import {MegaphoneService} from "@app/services/megaphone/megaphone.service";
+import { environment } from 'environments/environment';
+import { MegaphoneService } from '@app/services/megaphone/megaphone.service';
 
 @Component({
     selector: 'account-delegators-tab',
@@ -21,7 +21,13 @@ import {MegaphoneService} from "@app/services/megaphone/megaphone.service";
             <span class="account-delegator-weight-sum-description" responsive>BAN Delegated Weight</span>
             <ng-container *ngIf="isMegaphone">
                 <pxb-spacer></pxb-spacer>
-                <button mat-flat-button color="primary" (click)="toot()" style="margin-right: 24px" [disabled]="megaSuccess">
+                <button
+                    mat-flat-button
+                    color="primary"
+                    (click)="toot()"
+                    style="margin-right: 24px"
+                    [disabled]="megaSuccess"
+                >
                     <ng-container *ngIf="!megaSuccess">Use Megaphone</ng-container>
                     <ng-container *ngIf="megaSuccess">All is Good</ng-container>
                 </button>
@@ -37,13 +43,27 @@ import {MegaphoneService} from "@app/services/megaphone/megaphone.service";
                 <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
                 <td mat-cell *matCellDef="let element">
                     <div style="display: flex" *ngIf="!megaphone.hasAddress(element.address)">
-                        <button mat-stroked-button color="accent"
-                                (click)="megaphone.addAddress(element.address, 1)" [style.marginRight.px]="8">Offline</button>
-                        <button mat-stroked-button color="accent"
-                                (click)="megaphone.addAddress(element.address, 2)" [style.marginRight.px]="16">Large</button>
+                        <button
+                            mat-stroked-button
+                            color="accent"
+                            (click)="megaphone.addAddress(element.address, 1)"
+                            [style.marginRight.px]="8"
+                        >
+                            Offline
+                        </button>
+                        <button
+                            mat-stroked-button
+                            color="accent"
+                            (click)="megaphone.addAddress(element.address, 2)"
+                            [style.marginRight.px]="16"
+                        >
+                            Large
+                        </button>
                     </div>
                     <ng-container *ngIf="megaphone.hasAddress(element.address)">
-                        <button mat-stroked-button color="warn" (click)="megaphone.removeAddress(element.address)">Exclude</button>
+                        <button mat-stroked-button color="warn" (click)="megaphone.removeAddress(element.address)">
+                            Exclude
+                        </button>
                     </ng-container>
                 </td>
             </ng-container>
@@ -102,16 +122,18 @@ export class DelegatorsTabComponent implements OnChanges {
 
     shownDelegators = 50;
     isMegaphone = environment.megaphone;
-    columns = this.isMegaphone ?  ['position', 'megaphone', 'address', 'weight'] : ['position', 'address', 'weight'];
+    columns = this.isMegaphone ? ['position', 'megaphone', 'address', 'weight'] : ['position', 'address', 'weight'];
 
     formattedWeight: string;
     megaSuccess: boolean;
 
-    constructor(public vp: ViewportService,
-                public searchService: SearchService,
-                public megaphone: MegaphoneService,
-                private readonly _ref: ChangeDetectorRef,
-                private readonly _util: UtilService) {}
+    constructor(
+        public vp: ViewportService,
+        public searchService: SearchService,
+        public megaphone: MegaphoneService,
+        private readonly _ref: ChangeDetectorRef,
+        private readonly _util: UtilService
+    ) {}
 
     ngOnChanges(): void {
         this.formattedWeight = this._util.numberWithCommas(this.weightSum.toFixed(2));
@@ -129,12 +151,15 @@ export class DelegatorsTabComponent implements OnChanges {
     }
 
     toot(): void {
-        this.megaphone.toot().then(() => {
-            this.megaSuccess = true;
-            this.megaphone.reset();
-            this._ref.detectChanges();
-        }).catch((err) => {
-            console.error(err);
-        })
+        this.megaphone
+            .toot()
+            .then(() => {
+                this.megaSuccess = true;
+                this.megaphone.reset();
+                this._ref.detectChanges();
+            })
+            .catch((err) => {
+                console.error(err);
+            });
     }
 }
