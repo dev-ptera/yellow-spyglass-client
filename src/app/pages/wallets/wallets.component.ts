@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { SearchService } from '@app/services/search/search.service';
 import { ApiService } from '@app/services/api/api.service';
@@ -9,6 +9,8 @@ import { UtilService } from '@app/services/util/util.service';
 import { PriceService } from '@app/services/price/price.service';
 import { AccountBalanceDto, AccountDistributionStatsDto } from '@app/types/dto';
 import { OnlineRepsService } from '@app/services/online-reps/online-reps.service';
+import {MegaphoneService} from "@app/services/megaphone/megaphone.service";
+import {environment} from "../../../environments/environment";
 
 @Component({
     selector: 'app-wallets',
@@ -21,19 +23,23 @@ export class WalletsComponent implements OnInit {
     error = false;
     distributionChart: Options;
     accountBalances: AccountBalanceDto[] = [];
-    columns = ['position', 'addr', 'ban'];
+    isMegaphone = environment.megaphone;
+    columns = this.isMegaphone ?   ['position', 'megaphone', 'addr', 'ban'] : ['position', 'addr', 'ban'];
     currentPage = 0;
     totalAccounts: number;
     loadingNewAccountBalancePage = false;
+    megaSuccess: boolean;
     readonly pageSize = 25;
 
     constructor(
         public util: UtilService,
         private readonly _api: ApiService,
         public vp: ViewportService,
+        public megaphone: MegaphoneService,
         public searchService: SearchService,
         private readonly _priceService: PriceService,
-        private readonly _onlineRepsService: OnlineRepsService
+        private readonly _onlineRepsService: OnlineRepsService,
+        private readonly _ref: ChangeDetectorRef,
     ) {
         this.vp.vpChange.subscribe(() => {
             setTimeout(() => {
@@ -90,6 +96,16 @@ export class WalletsComponent implements OnInit {
 
     isRepOnline(rep: string): boolean {
         return this._onlineRepsService.onlineReps.has(rep);
+    }
+
+    toot(): void {
+        this.megaphone.toot().then(() => {
+            this.megaSuccess = true;
+            this.megaphone.reset();
+            this._ref.detectChanges();
+        }).catch((err) => {
+            console.error(err);
+        })
     }
 
     private _createDistributionChart(data: AccountDistributionStatsDto): Options {

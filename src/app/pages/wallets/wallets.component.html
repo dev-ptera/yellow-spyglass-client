@@ -40,6 +40,12 @@
         ></app-paginator>
     </ng-template>
     <ng-template [ngTemplateOutlet]="paginator"></ng-template>
+    <ng-container *ngIf="isMegaphone">
+        <button mat-flat-button color="primary" (click)="toot()" style="margin-right: 24px" [disabled]="megaSuccess">
+            <ng-container *ngIf="!megaSuccess">Use Megaphone</ng-container>
+            <ng-container *ngIf="megaSuccess">All is Good</ng-container>
+        </button>
+    </ng-container>
     <table
         mat-table
         *ngIf="accountBalances.length > 0"
@@ -64,6 +70,22 @@
                 >
                     #{{ formatIndex(i + 1 + currentPage * pageSize) }}
                 </span>
+            </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="megaphone">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+            <td mat-cell *matCellDef="let element">
+                <div style="display: flex" *ngIf="!megaphone.hasAddress(element.addr)">
+                    <button mat-stroked-button color="accent"
+                            (click)="megaphone.addAddress(element.addr, 1)" [style.marginRight.px]="8">Offline</button>
+                    <button mat-stroked-button color="accent"
+                            (click)="megaphone.addAddress(element.addr, 2)" [style.marginRight.px]="16">Large</button>
+                </div>
+                <ng-container *ngIf="megaphone.hasAddress(element.addr)">
+                    <button mat-stroked-button color="warn" (click)="megaphone.removeAddress(element.addr)">Exclude</button>
+                </ng-container>
             </td>
         </ng-container>
 
