@@ -65,7 +65,7 @@
             font-size: 13px;
         }
     }
-    table.network-distribution-table,
+    table.network-supply-table,
     table.network-consensus-table {
         margin-top: 32px;
         margin-bottom: 32px !important;
@@ -111,4 +111,9 @@
             color: #d22f2fdb;
         }
     }
+
+    .highcharts-background {
+        fill: none;
+    }
+
 }

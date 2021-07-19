@@ -1,11 +1,11 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 // eslint-disable-next-line no-duplicate-imports
 import * as Highcharts from 'highcharts';
-import { Options } from 'highcharts';
+import {Options} from 'highcharts';
 import HC_bullet from 'highcharts/modules/bullet';
-import { ViewportService } from '@app/services/viewport/viewport.service';
-import { ApiService } from '@app/services/api/api.service';
-import { ConsensusStatsDto, NetworkStatsDto, QuorumDto, SupplyDto } from '@app/types/dto';
+import {ViewportService} from '@app/services/viewport/viewport.service';
+import {ApiService} from '@app/services/api/api.service';
+import {ConsensusStatsDto, NetworkStatsDto, QuorumDto, SupplyDto} from '@app/types/dto';
 
 HC_bullet(Highcharts);
 
@@ -13,6 +13,7 @@ HC_bullet(Highcharts);
     selector: 'app-page-one',
     templateUrl: './network.component.html',
     styleUrls: ['./network.component.scss'],
+    encapsulation: ViewEncapsulation.None,
 })
 export class NetworkComponent implements OnInit {
     Highcharts: typeof Highcharts = Highcharts;
@@ -88,7 +89,7 @@ export class NetworkComponent implements OnInit {
                     dataLabels: {
                         enabled: true,
                         distance: 10,
-                        style: { fontSize: '14px', fontWeight: '400', fontFamily: 'Open Sans', color: '#424e54' },
+                        style: { fontSize: '14px', fontWeight: '400', fontFamily: 'Open Sans', color: '#424e54', textOutline: 'none' },
                         format: '{point.name}: <br/><strong>{point.percentage:.1f}%</strong>',
                     },
                 },
@@ -131,7 +132,7 @@ export class NetworkComponent implements OnInit {
                     dataLabels: {
                         enabled: true,
                         distance: 25,
-                        style: { fontSize: '14px', fontWeight: '400', fontFamily: 'Open Sans', color: '#424e54' },
+                        style: { fontSize: '14px', fontWeight: '400', fontFamily: 'Open Sans', color: '#424e54', textOutline: 'none' },
                         format: '{point.name}: <br/><strong>{point.percentage:.1f}%</strong>',
                     },
                 },

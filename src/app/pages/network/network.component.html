@@ -4,7 +4,7 @@
     <div *ngIf="!loading && !error" class="network-body" responsive>
         <mat-card responsive>
             <div class="network-section-title" [class.mat-display-2]="!vp.sm" [class.mat-headline]="vp.sm">Supply</div>
-            <div class="mat-subheading-2 network-chart-subtitle">How much banano has been distributed?</div>
+            <div class="mat-subheading-2 network-chart-subtitle">How much banano is circulating?</div>
             <div style="display: flex; justify-content: center">
                 <highcharts-chart
                     [update]="true"
@@ -12,6 +12,7 @@
                     [options]="supplyChartOptions"
                     style="pointer-events: none"
                     [style.height.px]="vp.sm ? 140 : 200"
+                    [style.marginBottom.px]="vp.sm ? 0 : 50"
                     [style.width.px]="vp.sm ? 320 : vp.md ? 440 : 500"
                 ></highcharts-chart>
             </div>
@@ -47,9 +48,7 @@
                 Vote weight
             </div>
             <div class="mat-subheading-2 network-chart-subtitle">
-                How is all
-                <ng-container *ngIf="vp.sm">rep</ng-container>
-                <ng-container *ngIf="!vp.sm">representative</ng-container> voting weight allocated?
+                How is network voting weight allocated?
             </div>
             <div style="display: flex; justify-content: center">
                 <highcharts-chart
@@ -71,7 +70,7 @@
                 <tr>
                     <td>
                         Official
-                        <span class="status online">[online]</span>
+                        <span class="status online mat-overline">online</span>
                     </td>
                     <td>{{ consensus.official.onlineAmount | appComma }}</td>
                     <td>{{ consensus.official.onlinePercent | appPercent }}</td>
@@ -79,7 +78,7 @@
                 <tr>
                     <td>
                         Unofficial
-                        <span class="status online">[online]</span>
+                        <span class="status online mat-overline">online</span>
                     </td>
                     <td>{{ consensus.unofficial.onlineAmount | appComma }}</td>
                     <td>{{ consensus.unofficial.onlinePercent | appPercent }}</td>
@@ -87,7 +86,7 @@
                 <tr>
                     <td>
                         Official
-                        <span class="status offline">[offline]</span>
+                        <span class="status offline mat-overline">offline</span>
                     </td>
                     <td>{{ consensus.official.offlineAmount | appComma }}</td>
                     <td>{{ consensus.official.offlinePercent | appPercent }}</td>
@@ -95,7 +94,7 @@
                 <tr>
                     <td>
                         Unofficial
-                        <span class="status offline">[offline]</span>
+                        <span class="status offline mat-overline">offline</span>
                     </td>
                     <td>{{ consensus.unofficial.offlineAmount | appComma }}</td>
                     <td>{{ consensus.unofficial.offlinePercent | appPercent }}</td>
@@ -125,12 +124,12 @@
             <div class="mat-subheading-2" *ngIf="nakamotoCoefficient === 1">
                 It only takes <strong>one</strong> entity to stall the network.
             </div>
-            <div class="mat-subheading-1" style="margin-top: 16px">
+            <div class="mat-subheading-1" style="margin-top: 16px; margin-bottom: 16px">
                 *Official
                 <ng-container *ngIf="!vp.sm">representatives</ng-container>
                 <ng-container *ngIf="vp.sm">reps</ng-container>
                 are counted as a single entity. See the full representative list
-                <a href="https://creeper.banano.cc/network" target="_blank">here</a>.
+                <a href="https://www.yellowspyglass.com/representatives" target="_blank">here</a>.
             </div>
         </mat-card>
     </div>
