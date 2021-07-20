@@ -9,7 +9,6 @@ import { NodeMonitorModule } from '@app/pages/node-monitor/node-monitor.module';
 import { RepresentativesModule } from '@app/pages/representatives/representatives.module';
 import { WalletsModule } from '@app/pages/wallets/wallets.module';
 import { NavigationModule } from './navigation/navigation.module';
-import { ComingSoonModule } from '@app/pages/coming-soon/coming-soon.module';
 import { NetworkModule } from '@app/pages/network/network.module';
 
 @Component({
@@ -23,7 +22,6 @@ export class AppComponent {}
     imports: [
         AppRoutingModule,
         BookmarksModule,
-        ComingSoonModule,
         ExploreModule,
         HttpClientModule,
         KnownAccountsModule,

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EmptyStateModule } from '@pxblue/angular-components';
+import {EmptyStateModule, SpacerModule} from '@pxblue/angular-components';
 import { MatIconModule } from '@angular/material/icon';
 import { AppCommonModule } from '@app/common/app-common.module';
 import { NetworkComponent } from '@app/pages/network/network.component';
@@ -32,6 +32,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
         MatCardModule,
         MatIconModule,
         MatRippleModule,
+        SpacerModule
     ],
     exports: [NetworkComponent],
 })

@@ -2,6 +2,61 @@
     <app-error *ngIf="error"></app-error>
 
     <div *ngIf="!loading && !error" class="network-body" responsive>
+
+        <mat-card responsive>
+            <div class="network-section-title" [class.mat-display-2]="!vp.sm" [class.mat-headline]="vp.sm">
+                Protocol
+            </div>
+            <div class="mat-subheading-2 network-chart-subtitle">
+                What protocol version are nodes running?
+            </div>
+            <table class="network-peer-version-table" responsive>
+                <tr>
+                    <th>Version</th>
+                    <th>Amount</th>
+                    <th>Percentage</th>
+                </tr>
+
+                <tr *ngFor="let peerVersion of peerVersions">
+                    <td>{{peerVersion.version}}</td>
+                    <td>{{peerVersion.count}}</td>
+                    <td>{{calcPeerVersionPercentage(peerVersion.count)}}%</td>
+                </tr>
+            </table>
+
+        </mat-card>
+
+        <mat-card responsive>
+            <div class="network-section-title" [class.mat-display-2]="!vp.sm" [class.mat-headline]="vp.sm">
+                Quorum
+            </div>
+            <div class="mat-subheading-2 network-chart-subtitle">
+                How much banano is needed to achieve consensus?
+            </div>
+            <table class="network-quorum-table" responsive>
+                <tr>
+                    <th></th>
+                    <th>Amount</th>
+                </tr>
+                <tr>
+                    <td>Online Stake Total</td>
+                    <td>{{  quorum.onlineStakeTotal | appComma }} BAN</td>
+                </tr>
+                <tr>
+                    <td>Online Weight Percent</td>
+                    <td>{{quorum.onlineWeightQuorumPercent}}%</td>
+                </tr>
+                <tr>
+                    <td>Delta</td>
+                    <td>{{ quorum.quorumDelta | appComma }} BAN</td>
+                </tr>
+                <tr>
+                    <td>Online Weight Min</td>
+                    <td>{{ quorum.onlineWeightMinimum | appComma }} BAN</td>
+                </tr>
+            </table>
+        </mat-card>
+
         <mat-card responsive>
             <div class="network-section-title" [class.mat-display-2]="!vp.sm" [class.mat-headline]="vp.sm">Supply</div>
             <div class="mat-subheading-2 network-chart-subtitle">How much banano is circulating?</div>
@@ -38,6 +93,7 @@
                     <td>{{ supply.circulatingPercent | appPercent }}</td>
                 </tr>
             </table>
+            <pxb-spacer></pxb-spacer>
             <div class="mat-subheading-1">
                 <strong>{{ supply.burnedAmount | appComma }}</strong> banano has been burned.
             </div>

@@ -5,7 +5,7 @@ import {Options} from 'highcharts';
 import HC_bullet from 'highcharts/modules/bullet';
 import {ViewportService} from '@app/services/viewport/viewport.service';
 import {ApiService} from '@app/services/api/api.service';
-import {ConsensusStatsDto, NetworkStatsDto, QuorumDto, SupplyDto} from '@app/types/dto';
+import {ConsensusStatsDto, NetworkStatsDto, PeerVersionsDto, QuorumDto, SupplyDto} from '@app/types/dto';
 
 HC_bullet(Highcharts);
 
@@ -26,8 +26,10 @@ export class NetworkComponent implements OnInit {
 
     consensus: ConsensusStatsDto;
     supply: SupplyDto;
-    QuorumDto: QuorumDto;
+    peerVersions: PeerVersionsDto[];
+    quorum: QuorumDto;
     nakamotoCoefficient: number;
+    totalNumberOfPeers = 0;
 
     constructor(
         public vp: ViewportService,
@@ -47,10 +49,12 @@ export class NetworkComponent implements OnInit {
             .then((response: NetworkStatsDto) => {
                 this.consensus = response.consensus;
                 this.supply = response.supply;
-                this.QuorumDto = response.quorum;
+                this.quorum = response.quorum;
+                this.peerVersions = response.peerVersions;
                 this.nakamotoCoefficient = response.nakamotoCoefficient;
                 this.consensusChartOptions = this._createConsensusChart(response.consensus);
                 this.supplyChartOptions = this._createsupplyChart(response.supply);
+                this.peerVersions.map((version) => { this.totalNumberOfPeers += version.count});
                 this.loading = false;
             })
             .catch((err) => {
@@ -58,6 +62,10 @@ export class NetworkComponent implements OnInit {
                 this.error = true;
                 this.loading = false;
             });
+    }
+
+    calcPeerVersionPercentage(count: number): any {
+        return Math.round(count / this.totalNumberOfPeers * 100);
     }
 
     private _createsupplyChart(supply: SupplyDto): Options {
@@ -127,7 +135,7 @@ export class NetworkComponent implements OnInit {
                 {
                     name: 'Consensus',
                     type: 'pie',
-                    colors: ['#FBDD11', '#4CBF4B', 'red', 'gray'],
+                    colors: ['#FBDD11', '#4CBF4B', 'red', 'gray', 'pink'],
                     data,
                     dataLabels: {
                         enabled: true,

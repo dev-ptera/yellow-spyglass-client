@@ -18,6 +18,11 @@
         line-height: 24px;
     }
 
+    .mat-card {
+        display: flex;
+        flex-direction: column;
+    }
+
     .network-body {
         max-width: 1000px;
         display: flex;
@@ -48,11 +53,12 @@
         }
 
         .network-nakamoto {
-            height: 48px;
-            width: 48px;
-            line-height: 48px;
+            height: 56px;
+            width: 56px;
+            line-height: 56px;
             font-size: 36px;
             border-radius: 50%;
+            margin: 8px 0;
             color: white;
             background-color: #4cbf4b;
             display: block;
@@ -66,8 +72,10 @@
         }
     }
     table.network-supply-table,
+    table.network-quorum-table,
+    table.network-peer-version-table,
     table.network-consensus-table {
-        margin-top: 32px;
+        margin-top: 16px;
         margin-bottom: 32px !important;
         width: 100%;
         border-collapse: collapse;
