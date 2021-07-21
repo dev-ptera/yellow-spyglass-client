@@ -1,192 +1,210 @@
-<div class="network-root">
-    <app-error *ngIf="error"></app-error>
+<ng-template #titleContent>
+    <div responsive class="network-title-container">
+        <div [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm">
+            <ng-container *ngIf="!loading">Network</ng-container>
+            <ng-container *ngIf="loading">Loading</ng-container>
+        </div>
+        <div class="mat-subheading-2 network-subtitle">
+            Various network stats regarding the banano network.
+        </div>
+    </div>
+</ng-template>
 
-    <div *ngIf="!loading && !error" class="network-body" responsive>
 
-        <mat-card responsive>
-            <div class="network-section-title" [class.mat-display-2]="!vp.sm" [class.mat-headline]="vp.sm">
-                Protocol
-            </div>
-            <div class="mat-subheading-2 network-chart-subtitle">
-                What protocol version are nodes running?
-            </div>
-            <table class="network-peer-version-table" responsive>
-                <tr>
-                    <th>Version</th>
-                    <th>Amount</th>
-                    <th>Percentage</th>
-                </tr>
+<ng-template #bodyContent>
+    <mat-card responsive [class.mat-elevation-z0]="vp.sm">
+        <div class="section-title mat-headline">
+            Protocol
+        </div>
+        <div class="mat-subheading-2 section-subtitle">
+            What protocol version are nodes running?
+        </div>
+        <table class="network-peer-version-table" responsive [style.marginTop.px]="0">
+            <tr>
+                <th>Version</th>
+                <th>Amount</th>
+                <th>Percentage</th>
+            </tr>
 
-                <tr *ngFor="let peerVersion of peerVersions">
-                    <td>{{peerVersion.version}}</td>
-                    <td>{{peerVersion.count}}</td>
-                    <td>{{calcPeerVersionPercentage(peerVersion.count)}}%</td>
-                </tr>
-            </table>
+            <tr *ngFor="let peerVersion of peerVersions">
+                <td>{{peerVersion.version}}</td>
+                <td>{{peerVersion.count}}</td>
+                <td>{{calcPeerVersionPercentage(peerVersion.count)}}%</td>
+            </tr>
+        </table>
 
-        </mat-card>
+    </mat-card>
 
-        <mat-card responsive>
-            <div class="network-section-title" [class.mat-display-2]="!vp.sm" [class.mat-headline]="vp.sm">
-                Quorum
-            </div>
-            <div class="mat-subheading-2 network-chart-subtitle">
-                How much banano is needed to achieve consensus?
-            </div>
-            <table class="network-quorum-table" responsive>
-                <tr>
-                    <th></th>
-                    <th>Amount</th>
-                </tr>
-                <tr>
-                    <td>Online Stake Total</td>
-                    <td>{{  quorum.onlineStakeTotal | appComma }} BAN</td>
-                </tr>
-                <tr>
-                    <td>Online Weight Percent</td>
-                    <td>{{quorum.onlineWeightQuorumPercent}}%</td>
-                </tr>
-                <tr>
-                    <td>Delta</td>
-                    <td>{{ quorum.quorumDelta | appComma }} BAN</td>
-                </tr>
-                <tr>
-                    <td>Online Weight Min</td>
-                    <td>{{ quorum.onlineWeightMinimum | appComma }} BAN</td>
-                </tr>
-            </table>
-        </mat-card>
+    <mat-card responsive  [class.mat-elevation-z0]="vp.sm">
+        <div class="section-title mat-headline" >
+            Quorum
+        </div>
+        <div class="mat-subheading-2 section-subtitle">
+            How much banano is needed to achieve consensus?
+        </div>
+        <table class="network-quorum-table" responsive [style.marginTop.px]="0">
+            <tr>
+                <th></th>
+                <th>Amount</th>
+            </tr>
+            <tr>
+                <td>Current online stake total</td>
+                <td>{{  quorum.onlineStakeTotal | appComma }} BAN</td>
+            </tr>
+            <tr>
+                <td>Online weight quorum percent</td>
+                <td>{{quorum.onlineWeightQuorumPercent}}%</td>
+            </tr>
+            <tr>
+                <td>Delta</td>
+                <td>{{ quorum.quorumDelta | appComma }} BAN</td>
+            </tr>
+            <tr>
+                <td>Minimum online weight</td>
+                <td>{{ quorum.onlineWeightMinimum | appComma }} BAN</td>
+            </tr>
+        </table>
+    </mat-card>
 
-        <mat-card responsive>
-            <div class="network-section-title" [class.mat-display-2]="!vp.sm" [class.mat-headline]="vp.sm">Supply</div>
-            <div class="mat-subheading-2 network-chart-subtitle">How much banano is circulating?</div>
-            <div style="display: flex; justify-content: center">
-                <highcharts-chart
-                    [update]="true"
-                    [Highcharts]="Highcharts"
-                    [options]="supplyChartOptions"
-                    style="pointer-events: none"
-                    [style.height.px]="vp.sm ? 140 : 200"
-                    [style.marginBottom.px]="vp.sm ? 0 : 50"
-                    [style.width.px]="vp.sm ? 320 : vp.md ? 440 : 500"
-                ></highcharts-chart>
-            </div>
-            <table class="network-supply-table" responsive>
-                <tr>
-                    <th>Description</th>
-                    <th>Amount</th>
-                    <th>Percent</th>
-                </tr>
-                <tr>
-                    <td>Total Supply</td>
-                    <td>{{ supply.totalAmount | appComma }}</td>
-                    <td>100%</td>
-                </tr>
-                <tr>
-                    <td>Team Banano Funds</td>
-                    <td>{{ supply.devFundAmount | appComma }}</td>
-                    <td>{{ supply.devFundPercent | appPercent }}</td>
-                </tr>
-                <tr>
-                    <td>Circulating Supply</td>
-                    <td>{{ supply.circulatingAmount | appComma }}</td>
-                    <td>{{ supply.circulatingPercent | appPercent }}</td>
-                </tr>
-            </table>
-            <pxb-spacer></pxb-spacer>
-            <div class="mat-subheading-1">
-                <strong>{{ supply.burnedAmount | appComma }}</strong> banano has been burned.
-            </div>
-        </mat-card>
+    <mat-card responsive  [class.mat-elevation-z0]="vp.sm">
+        <div class="section-title mat-headline">Supply</div>
+        <div class="mat-subheading-2 section-subtitle">How much banano is circulating?</div>
+        <div style="display: flex; justify-content: center">
+            <highcharts-chart
+                [update]="true"
+                [Highcharts]="Highcharts"
+                [options]="supplyChartOptions"
+                style="pointer-events: none"
+                [style.height.px]="vp.sm ? 140 : 200"
+                [style.marginBottom.px]="vp.sm ? 0 : 50"
+                [style.width.px]="vp.sm ? 320 : vp.md ? 440 : 500"
+            ></highcharts-chart>
+        </div>
+        <table class="network-supply-table" responsive>
+            <tr>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Percent</th>
+            </tr>
+            <tr>
+                <td>Total Supply</td>
+                <td>{{ supply.totalAmount | appComma }}</td>
+                <td>100%</td>
+            </tr>
+            <tr>
+                <td>Team Banano Funds</td>
+                <td>{{ supply.devFundAmount | appComma }}</td>
+                <td>{{ supply.devFundPercent | appPercent }}</td>
+            </tr>
+            <tr>
+                <td>Circulating Supply</td>
+                <td>{{ supply.circulatingAmount | appComma }}</td>
+                <td>{{ supply.circulatingPercent | appPercent }}</td>
+            </tr>
+        </table>
+        <pxb-spacer></pxb-spacer>
+        <div class="mat-subheading-1">
+            <strong>{{ supply.burnedAmount | appComma }}</strong> banano has been burned.
+        </div>
+    </mat-card>
 
-        <mat-card responsive>
-            <div class="network-section-title" [class.mat-display-2]="!vp.sm" [class.mat-headline]="vp.sm">
-                Vote weight
-            </div>
-            <div class="mat-subheading-2 network-chart-subtitle">
-                How is network voting weight allocated?
-            </div>
-            <div style="display: flex; justify-content: center">
-                <highcharts-chart
-                    [update]="true"
-                    [Highcharts]="Highcharts"
-                    [options]="consensusChartOptions"
-                    style="pointer-events: none"
-                    [style.height.px]="250"
-                    [style.width.px]="vp.sm ? 250 : vp.md ? 440 : 500"
-                ></highcharts-chart>
-            </div>
+    <mat-card responsive  [class.mat-elevation-z0]="vp.sm">
+        <div class="section-title mat-headline" >
+            Vote weight
+        </div>
+        <div class="mat-subheading-2 section-subtitle">
+            How is network voting weight allocated?
+        </div>
+        <div style="display: flex; justify-content: center">
+            <highcharts-chart
+                [update]="true"
+                [Highcharts]="Highcharts"
+                [options]="consensusChartOptions"
+                style="pointer-events: none"
+                [style.height.px]="vp.sm ? 220 : 250"
+                [style.width.px]="vp.sm ? 300 : vp.md ? 440 : 500"
+            ></highcharts-chart>
+        </div>
 
-            <table class="network-consensus-table" responsive>
-                <tr>
-                    <th>Representatives</th>
-                    <th>Amount</th>
-                    <th>Percent</th>
-                </tr>
-                <tr>
-                    <td>
-                        Official
-                        <span class="status online mat-overline">online</span>
-                    </td>
-                    <td>{{ consensus.official.onlineAmount | appComma }}</td>
-                    <td>{{ consensus.official.onlinePercent | appPercent }}</td>
-                </tr>
-                <tr>
-                    <td>
-                        Unofficial
-                        <span class="status online mat-overline">online</span>
-                    </td>
-                    <td>{{ consensus.unofficial.onlineAmount | appComma }}</td>
-                    <td>{{ consensus.unofficial.onlinePercent | appPercent }}</td>
-                </tr>
-                <tr>
-                    <td>
-                        Official
-                        <span class="status offline mat-overline">offline</span>
-                    </td>
-                    <td>{{ consensus.official.offlineAmount | appComma }}</td>
-                    <td>{{ consensus.official.offlinePercent | appPercent }}</td>
-                </tr>
-                <tr>
-                    <td>
-                        Unofficial
-                        <span class="status offline mat-overline">offline</span>
-                    </td>
-                    <td>{{ consensus.unofficial.offlineAmount | appComma }}</td>
-                    <td>{{ consensus.unofficial.offlinePercent | appPercent }}</td>
-                </tr>
-                <tr>
-                    <td>No Rep</td>
-                    <td>{{ consensus.noRep.amount | appComma }}</td>
-                    <td>{{ consensus.noRep.percent | appPercent }}</td>
-                </tr>
-            </table>
-        </mat-card>
+        <table class="network-consensus-table" responsive>
+            <tr>
+                <th>Representatives</th>
+                <th>Amount</th>
+                <th>Percent</th>
+            </tr>
+            <tr>
+                <td>
+                    Official (core team)
+                    <span class="status online mat-overline">online</span>
+                </td>
+                <td>{{ consensus.official.onlineAmount | appComma }}</td>
+                <td>{{ consensus.official.onlinePercent | appPercent }}</td>
+            </tr>
+            <tr>
+                <td>
+                    Unofficial
+                    <span class="status online mat-overline">online</span>
+                </td>
+                <td>{{ consensus.unofficial.onlineAmount | appComma }}</td>
+                <td>{{ consensus.unofficial.onlinePercent | appPercent }}</td>
+            </tr>
+            <tr>
+                <td>
+                    Official
+                    <span class="status offline mat-overline">offline</span>
+                </td>
+                <td>{{ consensus.official.offlineAmount | appComma }}</td>
+                <td>{{ consensus.official.offlinePercent | appPercent }}</td>
+            </tr>
+            <tr>
+                <td>
+                    Unofficial
+                    <span class="status offline mat-overline">offline</span>
+                </td>
+                <td>{{ consensus.unofficial.offlineAmount | appComma }}</td>
+                <td>{{ consensus.unofficial.offlinePercent | appPercent }}</td>
+            </tr>
+            <tr>
+                <td>No Rep</td>
+                <td>{{ consensus.noRep.amount | appComma }}</td>
+                <td>{{ consensus.noRep.percent | appPercent }}</td>
+            </tr>
+        </table>
+    </mat-card>
 
-        <mat-card responsive style="width: 100%">
-            <div class="network-section-title" [class.mat-display-2]="!vp.sm" [class.mat-headline]="vp.sm">
-                Nakamoto Coefficient
+    <mat-card responsive style="width: 100%"  [class.mat-elevation-z0]="vp.sm">
+        <div class="section-title mat-headline">
+            Nakamoto Coefficient
+        </div>
+        <div class="mat-subheading-2 section-subtitle">What is the minimum number of entities required to attack the network?</div>
+        <div style="display: flex; justify-content: center; margin: 16px 0; text-align: center">
+            <div class="network-nakamoto">
+                {{ nakamotoCoefficient }}
             </div>
-            <div class="mat-subheading-2">What is the minimum number of entities required to attack the network?</div>
-            <div style="display: flex; justify-content: center; margin: 16px 0">
-                <div class="network-nakamoto">
-                    {{ nakamotoCoefficient }}
-                </div>
-            </div>
-            <div class="mat-subheading-2" *ngIf="nakamotoCoefficient > 1" [style.marginTop.px]="vp.sm ? 36 : 0">
-                The <strong>{{ nakamotoCoefficient }}</strong> largest entities could potentially collude together to
-                achieve >50% of the online voting weight and stall the network.
-            </div>
-            <div class="mat-subheading-2" *ngIf="nakamotoCoefficient === 1">
-                It only takes <strong>one</strong> entity to stall the network.
-            </div>
-            <div class="mat-subheading-1" style="margin-top: 16px; margin-bottom: 16px">
-                *Official
-                <ng-container *ngIf="!vp.sm">representatives</ng-container>
-                <ng-container *ngIf="vp.sm">reps</ng-container>
-                are counted as a single entity. See the full representative list
-                <a href="https://www.yellowspyglass.com/representatives" target="_blank">here</a>.
-            </div>
-        </mat-card>
+        </div>
+        <div class="mat-subheading-2" *ngIf="nakamotoCoefficient > 1" [style.marginTop.px]="vp.sm ? 36 : 0">
+            The <strong>{{ nakamotoCoefficient }}</strong> largest entities could potentially collude together to
+            achieve >50% of the online voting weight and stall the network.
+        </div>
+        <div class="mat-subheading-2" *ngIf="nakamotoCoefficient === 1">
+            It only takes <strong>one</strong> entity to stall the network.
+        </div>
+        <div class="mat-subheading-1" style="margin-top: 16px; margin-bottom: 16px">
+            *Official
+            <ng-container *ngIf="!vp.sm">representatives</ng-container>
+            <ng-container *ngIf="vp.sm">reps</ng-container>
+            are counted as a single entity. See the full representative list
+            <a href="https://www.yellowspyglass.com/representatives" target="_blank">here</a>.
+        </div>
+    </mat-card>
+</ng-template>
+
+<div class="network-root" responsive>
+    <div class="network-content">
+        <app-error *ngIf="error"></app-error>
+        <ng-container *ngIf="!error">
+            <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
+            <ng-template *ngIf="!loading" [ngTemplateOutlet]="bodyContent"></ng-template>
+        </ng-container>
     </div>
 </div>

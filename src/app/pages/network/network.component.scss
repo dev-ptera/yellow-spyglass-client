@@ -11,11 +11,22 @@
         padding: 48px 48px 48px 48px;
     }
     &.sm {
-        padding: 48px 20px 48px 20px;
+        padding: 24px 0px 48px 0px;
     }
+    .network-title-container {
+        text-align: left;
+        &.sm {
+            padding: 0 16px;
+        }
+    }
+
 
     .mat-subheading-2 {
         line-height: 24px;
+    }
+
+    .network-subtitle {
+        margin-bottom: 32px;
     }
 
     .mat-card {
@@ -23,32 +34,30 @@
         flex-direction: column;
     }
 
-    .network-body {
-        max-width: 1000px;
+    .section-subtitle {
+        margin-bottom: 8px;
+    }
+
+    .network-content {
+        max-width: 1200px;
         display: flex;
         justify-content: space-between;
-        flex-wrap: wrap-reverse;
+        flex-wrap: wrap;
         &.sm {
             justify-content: center;
-            padding-left: 4px;
-            padding-right: 4px;
-        }
-        .network-section-title {
-            margin-bottom: 8px;
-        }
-        .network-chart-subtitle {
-            margin-bottom: 24px;
         }
         .mat-card {
+            text-align: left;
             box-sizing: border-box;
-            width: 475px;
-            margin: 12px;
-            &.md {
-                width: 47%;
-            }
+            width: 100%;
+            margin: 12px 0px;
+            padding: 24px 32px;
             &.sm {
-                width: 100%;
-                max-width: 450px;
+                max-width: 550px;
+                margin: 8px;
+                margin-left: 0;
+                margin-right: 0;
+                padding: 16px 16px;
             }
         }
 
@@ -67,17 +76,26 @@
 
     table {
         font-size: 15px;
+        .mat-overline {
+            font-size: 9px!important;
+            line-height: 9px!important;
+            margin-top: 4px;
+        }
         &.sm {
             font-size: 13px;
+            box-sizing: border-box;
         }
     }
+    table.network-peer-version-table,
+    table.network-quorum-table {
+        margin-top: 16px;
+    }
+
     table.network-supply-table,
     table.network-quorum-table,
     table.network-peer-version-table,
     table.network-consensus-table {
-        margin-top: 16px;
         margin-bottom: 32px !important;
-        width: 100%;
         border-collapse: collapse;
         border-radius: 4px;
         th {
@@ -97,6 +115,10 @@
             padding-right: 16px;
             padding-left: 16px;
             position: relative;
+            border: solid 1px #d4d4d4;
+            -moz-border-radius:10px;
+            -webkit-border-radius:10px;
+            border-radius:10px
         }
         tr td:first-of-type {
             text-align: left;
