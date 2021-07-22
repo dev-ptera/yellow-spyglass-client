@@ -309,11 +309,13 @@ export class AccountComponent implements OnChanges {
                 .then((data) => {
                     this.insights = data;
                     this.loadingInsights = false;
+                    this._ref.detectChanges();
                 })
                 .catch((err) => {
                     console.error(err);
                     this.loadingInsights = false;
                     this.hasInsightsError = true;
+                    this._ref.detectChanges();
                 });
         }
     }
