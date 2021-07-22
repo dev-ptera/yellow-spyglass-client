@@ -17,7 +17,6 @@
         text-align: left;
     }
 
-
     .mat-subheading-2 {
         line-height: 24px;
     }
@@ -77,8 +76,8 @@
     table {
         font-size: 15px;
         .mat-overline {
-            font-size: 9px!important;
-            line-height: 9px!important;
+            font-size: 9px !important;
+            line-height: 9px !important;
             margin-top: 4px;
         }
         &.sm {
@@ -116,9 +115,9 @@
             padding-left: 16px;
             position: relative;
             border: solid 1px #d4d4d4;
-            -moz-border-radius:10px;
-            -webkit-border-radius:10px;
-            border-radius:10px
+            -moz-border-radius: 10px;
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
         }
         tr td:first-of-type {
             text-align: left;
@@ -145,5 +144,4 @@
     .highcharts-background {
         fill: none;
     }
-
 }

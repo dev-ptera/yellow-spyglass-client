@@ -144,6 +144,9 @@
 .monitored-reps-table,
 .all-reps-table {
     width: 100%;
+    .pxb-list-item-tag-label {
+        font-size: 0.625rem !important;
+    }
     * {
         font-size: 15px;
     }

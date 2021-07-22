@@ -4,21 +4,16 @@
             <ng-container *ngIf="!loading">Network</ng-container>
             <ng-container *ngIf="loading">Loading</ng-container>
         </div>
-        <div class="mat-subheading-2 network-subtitle">
-            Various network stats regarding the banano network.
-        </div>
+        <div class="mat-subheading-2 network-subtitle">Various network stats regarding the banano network.</div>
     </div>
 </ng-template>
 
-
 <ng-template #bodyContent>
-
-
-    <mat-card responsive style="width: 100%"  [class.mat-elevation-z0]="vp.sm">
-        <div class="section-title mat-headline">
-            Nakamoto Coefficient
+    <mat-card responsive style="width: 100%" [class.mat-elevation-z0]="vp.sm">
+        <div class="section-title mat-headline">Nakamoto Coefficient</div>
+        <div class="mat-subheading-2 section-subtitle">
+            What is the minimum number of entities required to attack the network?
         </div>
-        <div class="mat-subheading-2 section-subtitle">What is the minimum number of entities required to attack the network?</div>
         <div style="display: flex; justify-content: center; margin: 16px 0; text-align: center">
             <div class="network-nakamoto">
                 {{ nakamotoCoefficient }}
@@ -40,7 +35,7 @@
         </div>
     </mat-card>
 
-    <mat-card responsive  [class.mat-elevation-z0]="vp.sm">
+    <mat-card responsive [class.mat-elevation-z0]="vp.sm">
         <div class="section-title mat-headline">Supply</div>
         <div class="mat-subheading-2 section-subtitle">How much banano is circulating?</div>
         <div style="display: flex; justify-content: center">
@@ -82,13 +77,9 @@
         </div>
     </mat-card>
 
-    <mat-card responsive  [class.mat-elevation-z0]="vp.sm">
-        <div class="section-title mat-headline" >
-            Vote weight
-        </div>
-        <div class="mat-subheading-2 section-subtitle">
-            How is network voting weight allocated?
-        </div>
+    <mat-card responsive [class.mat-elevation-z0]="vp.sm">
+        <div class="section-title mat-headline">Vote weight</div>
+        <div class="mat-subheading-2 section-subtitle">How is network voting weight allocated?</div>
         <div style="display: flex; justify-content: center">
             <highcharts-chart
                 [update]="true"
@@ -146,14 +137,9 @@
         </table>
     </mat-card>
 
-
     <mat-card responsive [class.mat-elevation-z0]="vp.sm">
-        <div class="section-title mat-headline">
-            Protocol
-        </div>
-        <div class="mat-subheading-2 section-subtitle">
-            What protocol version are nodes running?
-        </div>
+        <div class="section-title mat-headline">Protocol</div>
+        <div class="mat-subheading-2 section-subtitle">What protocol version are nodes running?</div>
         <table class="network-peer-version-table" responsive [style.marginTop.px]="0">
             <tr>
                 <th>Version</th>
@@ -162,30 +148,25 @@
             </tr>
 
             <tr *ngFor="let peerVersion of peerVersions">
-                <td>{{peerVersion.version}}</td>
-                <td>{{peerVersion.count}}</td>
-                <td>{{calcPeerVersionPercentage(peerVersion.count)}}%</td>
+                <td>{{ peerVersion.version }}</td>
+                <td>{{ peerVersion.count }}</td>
+                <td>{{ calcPeerVersionPercentage(peerVersion.count) }}%</td>
             </tr>
         </table>
-
     </mat-card>
 
-    <mat-card responsive  [class.mat-elevation-z0]="vp.sm">
-        <div class="section-title mat-headline" >
-            Quorum
-        </div>
-        <div class="mat-subheading-2 section-subtitle">
-            How much banano is needed to achieve consensus?
-        </div>
+    <mat-card responsive [class.mat-elevation-z0]="vp.sm">
+        <div class="section-title mat-headline">Quorum</div>
+        <div class="mat-subheading-2 section-subtitle">How much banano is needed to achieve consensus?</div>
         <!-- Make this a list that has STAT as title, description as subtitle, icon and metric. -->
         <table class="network-quorum-table" responsive [style.marginTop.px]="16">
             <tr>
                 <td>Current online stake total</td>
-                <td>{{  quorum.onlineStakeTotal | appComma }} BAN</td>
+                <td>{{ quorum.onlineStakeTotal | appComma }} BAN</td>
             </tr>
             <tr>
                 <td>Online weight quorum percent</td>
-                <td>{{quorum.onlineWeightQuorumPercent}}%</td>
+                <td>{{ quorum.onlineWeightQuorumPercent }}%</td>
             </tr>
             <tr>
                 <td>Delta (number which quorum is achieved)</td>
@@ -197,7 +178,6 @@
             </tr>
         </table>
     </mat-card>
-
 </ng-template>
 
 <div class="network-root" responsive>

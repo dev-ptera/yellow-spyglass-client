@@ -193,7 +193,14 @@
                 *matCellDef="let element"
                 (click)="routeRepAddress(element.address)"
             >
-                {{ formatTableAddress(element.address) }}
+                <div style="display: flex; align-items: center">
+                    <pxb-list-item-tag
+                        *ngIf="element.principal"
+                        label="Principal"
+                        style="margin-right: 12px"
+                    ></pxb-list-item-tag>
+                    {{ formatTableAddress(element.address) }}
+                </div>
             </td>
         </ng-container>
 

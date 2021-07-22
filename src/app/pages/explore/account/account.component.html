@@ -25,7 +25,8 @@
                         <span *ngIf="!accountOverview?.opened"> Unopened Account </span>
                     </ng-container>
                     <span *ngIf="accountOverview?.delegatorsCount > 0">
-                        Representative
+                        <ng-container *ngIf="!accountOverview?.principal"> Representative </ng-container>
+                        <ng-container *ngIf="accountOverview?.principal"> Principal Rep </ng-container>
                         <pxb-list-item-tag
                             *ngIf="!onlineRepService.onlineReps.has(address)"
                             class="account-rep-offline"
