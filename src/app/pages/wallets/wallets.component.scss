@@ -27,7 +27,7 @@
         padding: 48px 48px 48px 48px;
     }
     &.sm {
-        padding: 48px 20px 48px 20px;
+        padding: 48px 16px 48px 16px;
     }
 }
 
@@ -51,6 +51,30 @@
     }
 }
 
+.wallets-rich-list-table {
+    .mat-cell {
+        font-size: 16px!important;
+    }
+    &.sm .mat-cell {
+        font-size: 13px!important;
+    }
+
+    .wallets-table-alias {
+        font-weight: 600;
+        font-size: 14px!important;
+    }
+    &.sm .wallets-table-alias {
+        font-size: 12px!important;
+    }
+
+    .wallets-rich-list-conversion {
+        font-size: 14px!important;
+    }
+    &.sm .wallets-rich-list-conversion {
+        font-size: 11px!important;
+    }
+}
+
 .wallets-chart {
     margin: 0;
     margin-top: 24px;
@@ -71,13 +95,6 @@
     &:hover {
         text-decoration: underline;
     }
-}
-
-.wallets-rich-list-conversion {
-    font-size: 14px;
-}
-.sm .wallets-rich-list-conversion {
-    font-size: 11px;
 }
 
 @mixin wallets-theme($foreground, $background, $chart-grid) {

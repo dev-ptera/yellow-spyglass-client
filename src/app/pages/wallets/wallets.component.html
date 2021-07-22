@@ -112,6 +112,9 @@
                 *matCellDef="let element"
                 (click)="searchService.emitSearch(element.addr)"
             >
+                <div *ngIf="aliasService.aliases.get(element.addr)" class="wallets-table-alias">
+                    {{ aliasService.aliases.get(element.addr)}}
+                </div>
                 {{ element.addr }}
             </td>
         </ng-container>

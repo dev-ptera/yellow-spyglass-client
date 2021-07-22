@@ -15,7 +15,8 @@ import { NetworkModule } from '@app/pages/network/network.module';
     selector: 'app-root',
     template: `<app-navigation></app-navigation>`,
 })
-export class AppComponent {}
+export class AppComponent {
+}
 
 @NgModule({
     declarations: [AppComponent],

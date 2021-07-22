@@ -11,6 +11,7 @@ import { AccountBalanceDto, AccountDistributionStatsDto } from '@app/types/dto';
 import { OnlineRepsService } from '@app/services/online-reps/online-reps.service';
 import { MegaphoneService } from '@app/services/megaphone/megaphone.service';
 import { environment } from '../../../environments/environment';
+import {AliasService} from "@app/services/alias/alias.service";
 
 @Component({
     selector: 'app-wallets',
@@ -37,6 +38,7 @@ export class WalletsComponent implements OnInit {
         public vp: ViewportService,
         public megaphone: MegaphoneService,
         public searchService: SearchService,
+        public aliasService: AliasService,
         private readonly _priceService: PriceService,
         private readonly _onlineRepsService: OnlineRepsService,
         private readonly _ref: ChangeDetectorRef

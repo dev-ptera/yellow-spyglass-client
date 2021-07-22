@@ -4,7 +4,7 @@ import { environment } from '../../../environments/environment';
 import {
     AccountBalanceDto,
     AccountDistributionStatsDto,
-    AccountOverviewDto,
+    AccountOverviewDto, AliasDto,
     BlockDto,
     ConfirmedTransactionDto,
     KnownAccountDto,
@@ -93,6 +93,10 @@ export class ApiService {
 
     getOnlineReps(): Promise<string[]> {
         return this._http.get<string[]>(`${this.url}/online-reps`).pipe(timeout(FAST_MS)).toPromise();
+    }
+
+    getAliases(): Promise<AliasDto[]> {
+        return this._http.get<AliasDto[]>(`${this.url}/aliases`).pipe(timeout(FAST_MS)).toPromise();
     }
 
     getKnownAccounts(): Promise<KnownAccountDto[]> {
