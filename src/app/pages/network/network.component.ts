@@ -1,11 +1,11 @@
-import {ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
 // eslint-disable-next-line no-duplicate-imports
 import * as Highcharts from 'highcharts';
-import {Options} from 'highcharts';
+import { Options } from 'highcharts';
 import HC_bullet from 'highcharts/modules/bullet';
-import {ViewportService} from '@app/services/viewport/viewport.service';
-import {ApiService} from '@app/services/api/api.service';
-import {ConsensusStatsDto, NetworkStatsDto, PeerVersionsDto, QuorumDto, SupplyDto} from '@app/types/dto';
+import { ViewportService } from '@app/services/viewport/viewport.service';
+import { ApiService } from '@app/services/api/api.service';
+import { ConsensusStatsDto, NetworkStatsDto, PeerVersionsDto, QuorumDto, SupplyDto } from '@app/types/dto';
 
 HC_bullet(Highcharts);
 
@@ -54,7 +54,9 @@ export class NetworkComponent implements OnInit {
                 this.nakamotoCoefficient = response.nakamotoCoefficient;
                 this.consensusChartOptions = this._createConsensusChart(response.consensus);
                 this.supplyChartOptions = this._createSupplyChart(response.supply);
-                this.peerVersions.map((version) => { this.totalNumberOfPeers += version.count});
+                this.peerVersions.map((version) => {
+                    this.totalNumberOfPeers += version.count;
+                });
                 this.loading = false;
             })
             .catch((err) => {
@@ -65,7 +67,7 @@ export class NetworkComponent implements OnInit {
     }
 
     calcPeerVersionPercentage(count: number): any {
-        return Math.round(count / this.totalNumberOfPeers * 100);
+        return Math.round((count / this.totalNumberOfPeers) * 100);
     }
 
     private _createSupplyChart(supply: SupplyDto): Options {
@@ -97,7 +99,13 @@ export class NetworkComponent implements OnInit {
                     dataLabels: {
                         enabled: true,
                         distance: 10,
-                        style: { fontSize: this.vp.sm ? '12px' : '14px', fontWeight: '400', fontFamily: 'Open Sans', color: '#424e54', textOutline: 'none' },
+                        style: {
+                            fontSize: this.vp.sm ? '12px' : '14px',
+                            fontWeight: '400',
+                            fontFamily: 'Open Sans',
+                            color: '#424e54',
+                            textOutline: 'none',
+                        },
                         format: '{point.name}: <br/><strong>{point.percentage:.1f}%</strong>',
                     },
                 },
@@ -140,7 +148,13 @@ export class NetworkComponent implements OnInit {
                     dataLabels: {
                         enabled: true,
                         distance: 25,
-                        style: { fontSize: this.vp.sm ? '12px' : '14px', fontWeight: '400', fontFamily: 'Open Sans', color: '#424e54', textOutline: 'none' },
+                        style: {
+                            fontSize: this.vp.sm ? '12px' : '14px',
+                            fontWeight: '400',
+                            fontFamily: 'Open Sans',
+                            color: '#424e54',
+                            textOutline: 'none',
+                        },
                         format: '{point.name}: <br/><strong>{point.percentage:.1f}%</strong>',
                     },
                 },
