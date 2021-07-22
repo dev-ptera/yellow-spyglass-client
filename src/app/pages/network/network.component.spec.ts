@@ -1,15 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NetworkComponent } from './network.component';
-import { ComingSoonModule } from '@app/pages/coming-soon/coming-soon.module';
+import { NetworkModule } from '@app/pages/network/network.module';
 
-describe('ComingSoonComponent', () => {
+describe('NetworkComponent', () => {
     let component: NetworkComponent;
     let fixture: ComponentFixture<NetworkComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [ComingSoonModule],
+            imports: [NetworkModule],
         }).compileComponents();
     });
 

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {EmptyStateModule, SpacerModule} from '@pxblue/angular-components';
+import { EmptyStateModule, SpacerModule } from '@pxblue/angular-components';
 import { MatIconModule } from '@angular/material/icon';
 import { AppCommonModule } from '@app/common/app-common.module';
 import { NetworkComponent } from '@app/pages/network/network.component';
@@ -12,7 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
 import { HighchartsChartModule } from 'highcharts-angular';
-import {MatDividerModule} from "@angular/material/divider";
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
     declarations: [NetworkComponent],
@@ -34,7 +34,7 @@ import {MatDividerModule} from "@angular/material/divider";
         MatIconModule,
         MatRippleModule,
         MatDividerModule,
-        SpacerModule
+        SpacerModule,
     ],
     exports: [NetworkComponent],
 })
