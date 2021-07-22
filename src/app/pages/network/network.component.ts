@@ -53,7 +53,7 @@ export class NetworkComponent implements OnInit {
                 this.peerVersions = response.peerVersions;
                 this.nakamotoCoefficient = response.nakamotoCoefficient;
                 this.consensusChartOptions = this._createConsensusChart(response.consensus);
-                this.supplyChartOptions = this._createsupplyChart(response.supply);
+                this.supplyChartOptions = this._createSupplyChart(response.supply);
                 this.peerVersions.map((version) => { this.totalNumberOfPeers += version.count});
                 this.loading = false;
             })
@@ -68,7 +68,7 @@ export class NetworkComponent implements OnInit {
         return Math.round(count / this.totalNumberOfPeers * 100);
     }
 
-    private _createsupplyChart(supply: SupplyDto): Options {
+    private _createSupplyChart(supply: SupplyDto): Options {
         return {
             tooltip: {
                 enabled: false,
@@ -97,7 +97,7 @@ export class NetworkComponent implements OnInit {
                     dataLabels: {
                         enabled: true,
                         distance: 10,
-                        style: { fontSize: '14px', fontWeight: '400', fontFamily: 'Open Sans', color: '#424e54', textOutline: 'none' },
+                        style: { fontSize: this.vp.sm ? '12px' : '14px', fontWeight: '400', fontFamily: 'Open Sans', color: '#424e54', textOutline: 'none' },
                         format: '{point.name}: <br/><strong>{point.percentage:.1f}%</strong>',
                     },
                 },
@@ -140,7 +140,7 @@ export class NetworkComponent implements OnInit {
                     dataLabels: {
                         enabled: true,
                         distance: 25,
-                        style: { fontSize: '14px', fontWeight: '400', fontFamily: 'Open Sans', color: '#424e54', textOutline: 'none' },
+                        style: { fontSize: this.vp.sm ? '12px' : '14px', fontWeight: '400', fontFamily: 'Open Sans', color: '#424e54', textOutline: 'none' },
                         format: '{point.name}: <br/><strong>{point.percentage:.1f}%</strong>',
                     },
                 },

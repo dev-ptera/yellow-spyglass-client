@@ -11,13 +11,10 @@
         padding: 48px 48px 48px 48px;
     }
     &.sm {
-        padding: 24px 0px 48px 0px;
+        padding: 24px 16px 48px 16px;
     }
     .network-title-container {
         text-align: left;
-        &.sm {
-            padding: 0 16px;
-        }
     }
 
 
@@ -26,7 +23,7 @@
     }
 
     .network-subtitle {
-        margin-bottom: 32px;
+        margin-bottom: 48px;
     }
 
     .mat-card {
@@ -36,6 +33,7 @@
 
     .section-subtitle {
         margin-bottom: 8px;
+        margin-top: 8px;
     }
 
     .network-content {
@@ -49,11 +47,13 @@
         .mat-card {
             text-align: left;
             box-sizing: border-box;
-            width: 100%;
             margin: 12px 0px;
             padding: 24px 32px;
+            width: 48%;
+            &.md {
+                width: 100%;
+            }
             &.sm {
-                max-width: 550px;
                 margin: 8px;
                 margin-left: 0;
                 margin-right: 0;

@@ -12,58 +12,32 @@
 
 
 <ng-template #bodyContent>
-    <mat-card responsive [class.mat-elevation-z0]="vp.sm">
+
+
+    <mat-card responsive style="width: 100%"  [class.mat-elevation-z0]="vp.sm">
         <div class="section-title mat-headline">
-            Protocol
+            Nakamoto Coefficient
         </div>
-        <div class="mat-subheading-2 section-subtitle">
-            What protocol version are nodes running?
+        <div class="mat-subheading-2 section-subtitle">What is the minimum number of entities required to attack the network?</div>
+        <div style="display: flex; justify-content: center; margin: 16px 0; text-align: center">
+            <div class="network-nakamoto">
+                {{ nakamotoCoefficient }}
+            </div>
         </div>
-        <table class="network-peer-version-table" responsive [style.marginTop.px]="0">
-            <tr>
-                <th>Version</th>
-                <th>Amount</th>
-                <th>Percentage</th>
-            </tr>
-
-            <tr *ngFor="let peerVersion of peerVersions">
-                <td>{{peerVersion.version}}</td>
-                <td>{{peerVersion.count}}</td>
-                <td>{{calcPeerVersionPercentage(peerVersion.count)}}%</td>
-            </tr>
-        </table>
-
-    </mat-card>
-
-    <mat-card responsive  [class.mat-elevation-z0]="vp.sm">
-        <div class="section-title mat-headline" >
-            Quorum
+        <div class="mat-subheading-2" *ngIf="nakamotoCoefficient > 1" [style.marginTop.px]="vp.sm ? 36 : 0">
+            The <strong>{{ nakamotoCoefficient }}</strong> largest entities could potentially collude together to
+            achieve >50% of the online voting weight and stall the network.
         </div>
-        <div class="mat-subheading-2 section-subtitle">
-            How much banano is needed to achieve consensus?
+        <div class="mat-subheading-2" *ngIf="nakamotoCoefficient === 1">
+            It only takes <strong>one</strong> entity to stall the network.
         </div>
-        <table class="network-quorum-table" responsive [style.marginTop.px]="0">
-            <tr>
-                <th></th>
-                <th>Amount</th>
-            </tr>
-            <tr>
-                <td>Current online stake total</td>
-                <td>{{  quorum.onlineStakeTotal | appComma }} BAN</td>
-            </tr>
-            <tr>
-                <td>Online weight quorum percent</td>
-                <td>{{quorum.onlineWeightQuorumPercent}}%</td>
-            </tr>
-            <tr>
-                <td>Delta</td>
-                <td>{{ quorum.quorumDelta | appComma }} BAN</td>
-            </tr>
-            <tr>
-                <td>Minimum online weight</td>
-                <td>{{ quorum.onlineWeightMinimum | appComma }} BAN</td>
-            </tr>
-        </table>
+        <div class="mat-caption" style="margin-top: 4px; margin-bottom: 16px">
+            *Official
+            <ng-container *ngIf="!vp.sm">representatives</ng-container>
+            <ng-container *ngIf="vp.sm">reps</ng-container>
+            are counted as a single entity. See the full representative list
+            <a href="https://www.yellowspyglass.com/representatives" target="_blank">here</a>.
+        </div>
     </mat-card>
 
     <mat-card responsive  [class.mat-elevation-z0]="vp.sm">
@@ -134,7 +108,7 @@
             </tr>
             <tr>
                 <td>
-                    Official (core team)
+                    Official <ng-container *ngIf="!vp.sm && !vp.md">(core team)</ng-container>
                     <span class="status online mat-overline">online</span>
                 </td>
                 <td>{{ consensus.official.onlineAmount | appComma }}</td>
@@ -172,31 +146,58 @@
         </table>
     </mat-card>
 
-    <mat-card responsive style="width: 100%"  [class.mat-elevation-z0]="vp.sm">
+
+    <mat-card responsive [class.mat-elevation-z0]="vp.sm">
         <div class="section-title mat-headline">
-            Nakamoto Coefficient
+            Protocol
         </div>
-        <div class="mat-subheading-2 section-subtitle">What is the minimum number of entities required to attack the network?</div>
-        <div style="display: flex; justify-content: center; margin: 16px 0; text-align: center">
-            <div class="network-nakamoto">
-                {{ nakamotoCoefficient }}
-            </div>
+        <div class="mat-subheading-2 section-subtitle">
+            What protocol version are nodes running?
         </div>
-        <div class="mat-subheading-2" *ngIf="nakamotoCoefficient > 1" [style.marginTop.px]="vp.sm ? 36 : 0">
-            The <strong>{{ nakamotoCoefficient }}</strong> largest entities could potentially collude together to
-            achieve >50% of the online voting weight and stall the network.
-        </div>
-        <div class="mat-subheading-2" *ngIf="nakamotoCoefficient === 1">
-            It only takes <strong>one</strong> entity to stall the network.
-        </div>
-        <div class="mat-subheading-1" style="margin-top: 16px; margin-bottom: 16px">
-            *Official
-            <ng-container *ngIf="!vp.sm">representatives</ng-container>
-            <ng-container *ngIf="vp.sm">reps</ng-container>
-            are counted as a single entity. See the full representative list
-            <a href="https://www.yellowspyglass.com/representatives" target="_blank">here</a>.
-        </div>
+        <table class="network-peer-version-table" responsive [style.marginTop.px]="0">
+            <tr>
+                <th>Version</th>
+                <th>Amount</th>
+                <th>Percentage</th>
+            </tr>
+
+            <tr *ngFor="let peerVersion of peerVersions">
+                <td>{{peerVersion.version}}</td>
+                <td>{{peerVersion.count}}</td>
+                <td>{{calcPeerVersionPercentage(peerVersion.count)}}%</td>
+            </tr>
+        </table>
+
     </mat-card>
+
+    <mat-card responsive  [class.mat-elevation-z0]="vp.sm">
+        <div class="section-title mat-headline" >
+            Quorum
+        </div>
+        <div class="mat-subheading-2 section-subtitle">
+            How much banano is needed to achieve consensus?
+        </div>
+        <!-- Make this a list that has STAT as title, description as subtitle, icon and metric. -->
+        <table class="network-quorum-table" responsive [style.marginTop.px]="16">
+            <tr>
+                <td>Current online stake total</td>
+                <td>{{  quorum.onlineStakeTotal | appComma }} BAN</td>
+            </tr>
+            <tr>
+                <td>Online weight quorum percent</td>
+                <td>{{quorum.onlineWeightQuorumPercent}}%</td>
+            </tr>
+            <tr>
+                <td>Delta (number which quorum is achieved)</td>
+                <td>{{ quorum.quorumDelta | appComma }} BAN</td>
+            </tr>
+            <tr>
+                <td>Minimum online weight</td>
+                <td>{{ quorum.onlineWeightMinimum | appComma }} BAN</td>
+            </tr>
+        </table>
+    </mat-card>
+
 </ng-template>
 
 <div class="network-root" responsive>
