@@ -4,7 +4,8 @@ import { environment } from '../../../environments/environment';
 import {
     AccountBalanceDto,
     AccountDistributionStatsDto,
-    AccountOverviewDto, AliasDto,
+    AccountOverviewDto,
+    AliasDto,
     BlockDto,
     ConfirmedTransactionDto,
     KnownAccountDto,

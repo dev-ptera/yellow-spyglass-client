@@ -11,7 +11,7 @@ import { AccountBalanceDto, AccountDistributionStatsDto } from '@app/types/dto';
 import { OnlineRepsService } from '@app/services/online-reps/online-reps.service';
 import { MegaphoneService } from '@app/services/megaphone/megaphone.service';
 import { environment } from '../../../environments/environment';
-import {AliasService} from "@app/services/alias/alias.service";
+import { AliasService } from '@app/services/alias/alias.service';
 
 @Component({
     selector: 'app-wallets',
