@@ -28,6 +28,7 @@
                             (focus)="touchedIdField = true; idFieldActive = true"
                             (blur)="idFieldActive = false"
                             [formControl]="searchFormControl"
+                            (keyup.enter)="search(searchFormControl.value)"
                         />
                     </mat-form-field>
                     <button
