@@ -34,7 +34,12 @@
                     [class.representatives-legend-others]="last"
                     (click)="routeRepAddress(rep.address)"
                 >
-                    {{ rep.name }}
+                    <ng-container *ngIf="aliasService.has(rep.address)">
+                        {{ aliasService.get(rep.address) }}
+                    </ng-container>
+                    <ng-container *ngIf="!aliasService.has(rep.address)">
+                        {{ rep.name }}
+                    </ng-container>
                 </div>
             </div>
         </div>
@@ -190,15 +195,22 @@
                 mat-cell
                 class="representatives-clickable-cell"
                 *matCellDef="let element"
-                (click)="routeRepAddress(element.address)"
             >
                 <div style="display: flex; align-items: center">
                     <pxb-list-item-tag
                         *ngIf="element.principal"
                         label="Principal"
-                        style="margin-right: 12px"
+                        style="margin-right: 24px"
                     ></pxb-list-item-tag>
-                    {{ formatTableAddress(element.address) }}
+                    <div style="display: flex; flex-direction: column; justify-content: center">
+                        <div *ngIf="aliasService.has(element.address)" class="representatives-table-alias primary" style="margin-bottom: -2px">
+                            {{aliasService.get(element.address)}}
+                        </div>
+                        <span class="address" (click)="routeRepAddress(element.address)">
+                        {{ formatTableAddress(element.address) }}
+                    </span>
+                    </div>
+
                 </div>
             </td>
         </ng-container>

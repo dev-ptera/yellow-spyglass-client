@@ -105,12 +105,13 @@
                 [style.paddingBottom.px]="12"
                 class="wallets-address-cell"
                 *matCellDef="let element"
-                (click)="searchService.emitSearch(element.addr)"
             >
-                <div *ngIf="aliasService.aliases.get(element.addr)" class="wallets-table-alias">
-                    {{ aliasService.aliases.get(element.addr) }}
+                <div *ngIf="aliasService.has(element.addr)" class="wallets-table-alias primary" style="margin-bottom: -2px">
+                    {{ aliasService.get(element.addr) }}
                 </div>
-                {{ element.addr }}
+                <span class="address" (click)="searchService.emitSearch(element.addr)">
+                    {{ element.addr }}
+                </span>
             </td>
         </ng-container>
         <ng-container matColumnDef="ban">

@@ -9,6 +9,7 @@ import { MatSort } from '@angular/material/sort';
 import * as Highcharts from 'highcharts';
 // eslint-disable-next-line no-duplicate-imports
 import { Options } from 'highcharts';
+import {AliasService} from "@app/services/alias/alias.service";
 
 @Component({
     selector: 'app-representatives',
@@ -59,6 +60,7 @@ export class RepresentativesComponent implements OnInit {
 
     constructor(
         public vp: ViewportService,
+        public aliasService: AliasService,
         private readonly _util: UtilService,
         private readonly _searchService: SearchService,
         private readonly _ref: ChangeDetectorRef,

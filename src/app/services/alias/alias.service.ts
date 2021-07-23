@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 })
 /** Fetches account aliases on initialization. */
 export class AliasService {
-    aliases: Map<string, string>;
+    private readonly aliases: Map<string, string>;
 
     constructor(private readonly _api: ApiService) {
         this.aliases = new Map<string, string>();
@@ -25,5 +25,13 @@ export class AliasService {
             .catch((err) => {
                 console.error(err);
             });
+    }
+
+    has(address: string): boolean {
+        return this.aliases.has(address);
+    }
+
+    get(address: string): string {
+        return this.aliases.get(address);
     }
 }

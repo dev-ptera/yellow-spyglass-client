@@ -58,9 +58,12 @@
 }
 .wallets-address-cell {
     word-break: break-all;
-    cursor: pointer;
-    &:hover {
-        text-decoration: underline;
+    padding-right: 8px;
+    .address {
+        cursor: pointer;
+        &:hover {
+            text-decoration: underline;
+        }
     }
 }
 
