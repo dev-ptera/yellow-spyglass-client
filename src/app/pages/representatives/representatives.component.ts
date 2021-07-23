@@ -9,7 +9,7 @@ import { MatSort } from '@angular/material/sort';
 import * as Highcharts from 'highcharts';
 // eslint-disable-next-line no-duplicate-imports
 import { Options } from 'highcharts';
-import {AliasService} from "@app/services/alias/alias.service";
+import { AliasService } from '@app/services/alias/alias.service';
 
 @Component({
     selector: 'app-representatives',

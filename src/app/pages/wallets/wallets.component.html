@@ -106,7 +106,11 @@
                 class="wallets-address-cell"
                 *matCellDef="let element"
             >
-                <div *ngIf="aliasService.has(element.addr)" class="wallets-table-alias primary" style="margin-bottom: -2px">
+                <div
+                    *ngIf="aliasService.has(element.addr)"
+                    class="wallets-table-alias primary"
+                    style="margin-bottom: -2px"
+                >
                     {{ aliasService.get(element.addr) }}
                 </div>
                 <span class="address" (click)="searchService.emitSearch(element.addr)">

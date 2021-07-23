@@ -191,11 +191,7 @@
 
         <ng-container matColumnDef="address">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
-            <td
-                mat-cell
-                class="representatives-clickable-cell"
-                *matCellDef="let element"
-            >
+            <td mat-cell class="representatives-clickable-cell" *matCellDef="let element">
                 <div style="display: flex; align-items: center">
                     <pxb-list-item-tag
                         *ngIf="element.principal"
@@ -203,14 +199,17 @@
                         style="margin-right: 24px"
                     ></pxb-list-item-tag>
                     <div style="display: flex; flex-direction: column; justify-content: center">
-                        <div *ngIf="aliasService.has(element.address)" class="representatives-table-alias primary" style="margin-bottom: -2px">
-                            {{aliasService.get(element.address)}}
+                        <div
+                            *ngIf="aliasService.has(element.address)"
+                            class="representatives-table-alias primary"
+                            style="margin-bottom: -2px"
+                        >
+                            {{ aliasService.get(element.address) }}
                         </div>
                         <span class="address" (click)="routeRepAddress(element.address)">
-                        {{ formatTableAddress(element.address) }}
-                    </span>
+                            {{ formatTableAddress(element.address) }}
+                        </span>
                     </div>
-
                 </div>
             </td>
         </ng-container>
