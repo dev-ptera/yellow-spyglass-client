@@ -10,8 +10,10 @@ import * as Highcharts from 'highcharts';
 @Component({
     selector: 'account-insights-tab',
     template: `
-        <div class="insights-root" *ngIf="insights">
-            <div class="mat-headline" [style.marginBottom.px]="16">Account Balance Over Time</div>
+        <div class="insights-root" *ngIf="insights" responsive>
+            <div class="app-section-title" [style.marginBottom.px]="16" [style.marginLeft.px]="vp.sm ? 12 : 24">
+                Account Balance Over Time
+            </div>
             <div class="insights-chart" responsive>
                 <highcharts-chart
                     [update]="true"
@@ -23,60 +25,60 @@ import * as Highcharts from 'highcharts';
             </div>
             <div class="insights-section">
                 <div>
-                    <span class="mat-headline">Max BAN Received</span>
-                    <span class="mat-subheading-2"> {{ formatBan(insights.maxAmountReceivedBan) }} BAN </span>
+                    <span class="app-section-title">Max BAN Received</span>
+                    <span class="app-section-subtitle"> {{ formatBan(insights.maxAmountReceivedBan) }} BAN </span>
                 </div>
-                <div class="insights-description insights-link" (click)="search(insights.maxAmountReceivedHash)">
+                <div class="app-caption link" (click)="search(insights.maxAmountReceivedHash)">
                     {{ insights.maxAmountReceivedHash }}
                 </div>
             </div>
             <div class="insights-section">
                 <div>
-                    <span class="mat-headline">Max BAN Sent</span>
-                    <span class="mat-subheading-2"> {{ formatBan(insights.maxAmountSentBan) }} BAN </span>
+                    <span class="app-section-title">Max BAN Sent</span>
+                    <span class="app-section-subtitle"> {{ formatBan(insights.maxAmountSentBan) }} BAN </span>
                 </div>
-                <div class="insights-description insights-link" (click)="search(insights.maxAmountSentHash)">
+                <div class="app-caption link" (click)="search(insights.maxAmountSentHash)">
                     {{ insights.maxAmountSentHash }}
                 </div>
             </div>
             <div class="insights-section">
                 <div>
-                    <span class="mat-headline">Account Max Balance</span>
-                    <span class="mat-subheading-2"> {{ formatBan(insights.maxBalanceBan) }} BAN </span>
+                    <span class="app-section-title">Account Max Balance</span>
+                    <span class="app-section-subtitle"> {{ formatBan(insights.maxBalanceBan) }} BAN </span>
                 </div>
-                <div class="insights-description insights-link" (click)="search(insights.maxBalanceHash)">
+                <div class="app-caption link" (click)="search(insights.maxBalanceHash)">
                     {{ insights.maxBalanceHash }}
                 </div>
             </div>
             <div class="insights-section">
                 <div>
-                    <span class="mat-headline">Most Common Recipient</span>
+                    <span class="app-section-title">Most Common Recipient</span>
                     <span
                         *ngIf="insights.mostCommonRecipientAddress"
-                        class="mat-subheading-2  insights-link"
+                        class="app-section-subtitle  link"
                         (click)="search(insights.mostCommonRecipientAddress)"
                     >
                         {{ insights.mostCommonRecipientAddress }}
                     </span>
                     <span *ngIf="!insights.mostCommonRecipientAddress">N/A</span>
                 </div>
-                <div *ngIf="insights.mostCommonRecipientAddress" class="insights-description">
+                <div *ngIf="insights.mostCommonRecipientAddress" class="app-caption">
                     Account sent BAN
                     <strong style="margin: 0 4px"> {{ insights.mostCommonRecipientTxCount }} </strong> times to the
                     above recipient.
                 </div>
-                <div *ngIf="!insights.mostCommonRecipientAddress" class="insights-description">
+                <div *ngIf="!insights.mostCommonRecipientAddress" class="app-caption">
                     This account has never sent any BAN.
                 </div>
             </div>
             <div class="insights-section">
                 <div>
-                    <span class="mat-headline">Most Common Sender</span>
-                    <span class="mat-subheading-2  insights-link" (click)="search(insights.mostCommonSenderAddress)">
+                    <span class="app-section-title">Most Common Sender</span>
+                    <span class="app-section-subtitle  link" (click)="search(insights.mostCommonSenderAddress)">
                         {{ insights.mostCommonSenderAddress }}
                     </span>
                 </div>
-                <div class="insights-description">
+                <div class="app-caption">
                     Account received BAN
                     <strong style="margin: 0 4px"> {{ insights.mostCommonSenderTxCount }} </strong> times from above
                     sender.

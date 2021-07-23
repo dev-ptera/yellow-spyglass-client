@@ -45,7 +45,7 @@ import { UtilService } from '@app/services/util/util.service';
                         *ngIf="monkeyCache.getMonkey(tx.address) && vp.sm"
                         [innerHTML]="monkeyCache.getMonkey(tx.address) | safe"
                     ></div>
-                    <div class="timestamps">
+                    <div class="timestamps" [style.marginRight.px]="vp.sm ? 0 : 12">
                         <span>{{ tx.date }}</span>
                         <span>{{ tx.time }}</span>
                     </div>

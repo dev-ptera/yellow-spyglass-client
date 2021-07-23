@@ -2,12 +2,17 @@
     padding: 32px 16px;
 }
 .insights-chart {
-    box-sizing: border-box;
     display: flex;
     justify-content: center;
+    box-sizing: border-box;
+}
+.sm {
+    .insights-section {
+        margin: 24px 12px;
+    }
 }
 .insights-section {
-    margin: 24px 0;
+    margin: 24px;
     word-break: break-word;
     div {
         display: flex;
@@ -15,16 +20,10 @@
         align-items: center;
         flex-wrap: wrap;
     }
-    .mat-headline {
+    .app-section-title {
         margin-right: 16px;
     }
-    .insights-description {
-        font-size: 12px;
-    }
-    .insights-link {
-        cursor: pointer;
-        &:hover {
-            text-decoration: underline;
-        }
+    .app-section-subtitle {
+        margin-bottom: 0;
     }
 }
