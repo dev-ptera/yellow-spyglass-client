@@ -2,9 +2,7 @@
 
 .hash-searched {
     word-break: break-all;
-    line-height: 16px;
     margin-right: 24px;
-    margin-bottom: 48px !important;
 }
 .hash-section {
     margin: 24px 0;
@@ -15,8 +13,11 @@
         align-items: center;
         flex-wrap: wrap;
     }
-    .mat-headline {
+    .app-section-title {
         margin-right: 16px;
+    }
+    .app-section-subtitle {
+        margin-bottom: 0;
     }
     .hash-description {
         font-size: 12px;

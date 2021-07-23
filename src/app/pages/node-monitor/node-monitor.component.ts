@@ -9,11 +9,11 @@ import { ApiService } from '@app/services/api/api.service';
     selector: 'app-monitor',
     template: `
         <ng-template #titleContent>
-            <div [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm" [style.marginBottom.px]="8">
+            <div class="app-page-title">
                 <span *ngIf="loading">Loading</span>
                 <span *ngIf="!loading">Node Statistics</span>
             </div>
-            <div class="mat-subheading-2" [style.marginBottom.px]="48">
+            <div class="app-page-subtitle">
                 This explorer is powered & maintained by the
                 <span class="link primary" (click)="openMonitoredRep(stats.ip)">batman representative</span>.
             </div>
@@ -22,22 +22,22 @@ import { ApiService } from '@app/services/api/api.service';
         <ng-template #bodyContent>
             <div class="monitor-section">
                 <div>
-                    <span class="mat-headline">Address</span>
-                    <span class="mat-subheading-2 link primary" (click)="search(stats.address)">{{
+                    <span class="app-section-title">Address</span>
+                    <span class="app-section-subtitle link primary" (click)="search(stats.address)">{{
                         stats.address
                     }}</span>
                 </div>
             </div>
             <div class="monitor-section">
                 <div>
-                    <span class="mat-headline">Version</span>
-                    <span class="mat-subheading-2">{{ stats.version }}</span>
+                    <span class="app-section-title">Version</span>
+                    <span class="app-section-subtitle">{{ stats.version }}</span>
                 </div>
             </div>
             <div class="monitor-section">
                 <div>
-                    <span class="mat-headline">Memory Usage</span>
-                    <span class="mat-subheading-2">
+                    <span class="app-section-title">Memory Usage</span>
+                    <span class="app-section-subtitle">
                         {{ formatMem(stats.usedMem) }} / {{ formatMem(stats.totalMem) }}GB
                         <span class="mat-subheading-1" [style.marginLeft.px]="8">
                             ({{ formatMemoryPercentage(stats.usedMem / stats.totalMem) }}%)
@@ -47,32 +47,32 @@ import { ApiService } from '@app/services/api/api.service';
             </div>
             <div class="monitor-section">
                 <div>
-                    <span class="mat-headline">Current Block</span>
-                    <span class="mat-subheading-2">{{ util.numberWithCommas(stats.currentBlock) }}</span>
+                    <span class="app-section-title">Current Block</span>
+                    <span class="app-section-subtitle">{{ util.numberWithCommas(stats.currentBlock) }}</span>
                 </div>
             </div>
             <div class="monitor-section">
                 <div>
-                    <span class="mat-headline">Unchecked Blocks</span>
-                    <span class="mat-subheading-2">{{ util.numberWithCommas(stats.uncheckedBlocks) }}</span>
+                    <span class="app-section-title">Unchecked Blocks</span>
+                    <span class="app-section-subtitle">{{ util.numberWithCommas(stats.uncheckedBlocks) }}</span>
                 </div>
             </div>
             <div class="monitor-section">
                 <div>
-                    <span class="mat-headline">Location</span>
-                    <span class="mat-subheading-2">{{ stats.location }}</span>
+                    <span class="app-section-title">Location</span>
+                    <span class="app-section-subtitle">{{ stats.location }}</span>
                 </div>
             </div>
             <div class="monitor-section">
                 <div>
-                    <span class="mat-headline">Peers</span>
-                    <span class="mat-subheading-2">{{ stats.peers }}</span>
+                    <span class="app-section-title">Peers</span>
+                    <span class="app-section-subtitle">{{ stats.peers }}</span>
                 </div>
             </div>
         </ng-template>
 
-        <div class="monitor-root" responsive>
-            <div class="monitor-content">
+        <div class="app-page-root" responsive>
+            <div class="app-page-content">
                 <app-error *ngIf="error"></app-error>
                 <ng-container *ngIf="!error">
                     <ng-template [ngTemplateOutlet]="titleContent"></ng-template>

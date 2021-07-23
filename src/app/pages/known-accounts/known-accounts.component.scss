@@ -3,41 +3,6 @@
     flex: 1;
 }
 
-.known-accounts-title {
-    display: flex;
-    width: 100%;
-    text-align: left;
-}
-
-.known-accounts-subtitle {
-    display: flex;
-    width: 100%;
-    text-align: left;
-}
-
-.known-accounts-root {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: left;
-    width: 100%;
-    box-sizing: border-box;
-    // TODO: move these paddings to a global style, shared
-    padding: 64px 64px 64px 64px;
-    &.md {
-        //  padding: 48px 48px 48px 48px; NOT GRID!
-    }
-    &.sm {
-        padding: 48px 16px 48px 16px;
-    }
-}
-
-.known-accounts-content {
-    width: 100%;
-    max-width: 1200px;
-}
-
 .known-accounts-address-cell {
     word-break: break-all;
     cursor: pointer;

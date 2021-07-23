@@ -1,17 +1,17 @@
 <ng-template #titleContent>
-    <div responsive class="network-title-container">
-        <div [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm">
+    <div responsive>
+        <div class="app-page-title">
             <ng-container *ngIf="!loading">Network</ng-container>
             <ng-container *ngIf="loading">Loading</ng-container>
         </div>
-        <div class="mat-subheading-2 network-subtitle">Various network stats regarding the banano network.</div>
+        <div class="app-page-subtitle">Various network stats regarding the banano network.</div>
     </div>
 </ng-template>
 
 <ng-template #bodyContent>
     <mat-card responsive style="width: 100%">
-        <div class="section-title mat-headline">Nakamoto Coefficient</div>
-        <div class="mat-subheading-2 section-subtitle">
+        <div class="app-section-title">Nakamoto Coefficient</div>
+        <div class="app-section-subtitle" style="margin-bottom: 0px">
             What is the minimum number of entities required to attack the network?
         </div>
         <div style="display: flex; justify-content: center; margin: 16px 0; text-align: center">
@@ -26,8 +26,8 @@
         <div class="mat-subheading-2" *ngIf="nakamotoCoefficient === 1">
             It only takes <strong>one</strong> entity to stall the network.
         </div>
-        <div class="mat-caption" style="margin-top: 4px; margin-bottom: 16px">
-            *Official
+        <div class="app-caption" style="margin-top: 4px; margin-bottom: 16px">
+            Official
             <ng-container *ngIf="!vp.sm">representatives</ng-container>
             <ng-container *ngIf="vp.sm">reps</ng-container>
             are counted as a single entity. See the full representative list
@@ -36,8 +36,8 @@
     </mat-card>
 
     <mat-card responsive>
-        <div class="section-title mat-headline">Supply</div>
-        <div class="mat-subheading-2 section-subtitle">How much banano is circulating?</div>
+        <div class="app-section-title">Supply</div>
+        <div class="app-section-subtitle">How much banano is circulating?</div>
         <div style="display: flex; justify-content: center">
             <highcharts-chart
                 [update]="true"
@@ -72,14 +72,14 @@
             </tr>
         </table>
         <pxb-spacer></pxb-spacer>
-        <div class="mat-subheading-1">
+        <div class="mat-subheading-2">
             <strong>{{ supply.burnedAmount | appComma }}</strong> banano has been burned.
         </div>
     </mat-card>
 
     <mat-card responsive>
-        <div class="section-title mat-headline">Vote weight</div>
-        <div class="mat-subheading-2 section-subtitle">How is network voting weight allocated?</div>
+        <div class="app-section-title">Vote weight</div>
+        <div class="app-section-subtitle">How is network voting weight allocated?</div>
         <div style="display: flex; justify-content: center">
             <highcharts-chart
                 [update]="true"
@@ -138,8 +138,8 @@
     </mat-card>
 
     <mat-card responsive>
-        <div class="section-title mat-headline">Protocol</div>
-        <div class="mat-subheading-2 section-subtitle">What protocol version are nodes running?</div>
+        <div class="app-section-title">Protocol</div>
+        <div class="app-section-subtitle">What protocol version are nodes running?</div>
         <table class="network-peer-version-table" responsive [style.marginTop.px]="0">
             <tr>
                 <th>Version</th>
@@ -156,8 +156,8 @@
     </mat-card>
 
     <mat-card responsive>
-        <div class="section-title mat-headline">Quorum</div>
-        <div class="mat-subheading-2 section-subtitle">How much banano is needed to achieve consensus?</div>
+        <div class="app-section-title">Quorum</div>
+        <div class="app-section-subtitle">How much banano is needed to achieve consensus?</div>
         <!-- Make this a list that has STAT as title, description as subtitle, icon and metric. -->
         <table class="network-quorum-table" responsive [style.marginTop.px]="16">
             <tr>
@@ -180,8 +180,8 @@
     </mat-card>
 </ng-template>
 
-<div class="network-root" responsive>
-    <div class="network-content">
+<div class="network-root app-page-root" responsive>
+    <div class="app-page-content">
         <app-error *ngIf="error"></app-error>
         <ng-container *ngIf="!error">
             <ng-template [ngTemplateOutlet]="titleContent"></ng-template>

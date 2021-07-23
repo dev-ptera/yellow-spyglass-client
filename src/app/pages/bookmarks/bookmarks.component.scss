@@ -3,41 +3,6 @@
     flex: 1;
 }
 
-.bookmarks-title {
-    display: flex;
-    width: 100%;
-    margin-bottom: 8px;
-}
-
-.bookmarks-subtitle {
-    display: flex;
-    width: 100%;
-    margin-bottom: 48px;
-    text-align: left;
-}
-
-.bookmarks-root {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    box-sizing: border-box;
-    // TODO: move these paddings to a global style, shared
-    padding: 64px 64px 64px 64px;
-    &.md {
-        padding: 48px 48px 48px 48px;
-    }
-    &.sm {
-        padding: 48px 16px 48px 16px;
-    }
-}
-
-.bookmarks-body {
-    width: 100%;
-    max-width: 1200px;
-}
-
 .bookmarks-data-cell {
     display: flex;
     align-items: center;

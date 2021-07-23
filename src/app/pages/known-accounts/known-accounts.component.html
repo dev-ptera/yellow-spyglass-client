@@ -1,9 +1,9 @@
 <ng-template #titleContent>
-    <div class="known-accounts-title" [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm">
+    <div class="app-page-title">
         <ng-container *ngIf="!loading">Known Accounts</ng-container>
         <ng-container *ngIf="loading">Loading</ng-container>
     </div>
-    <div class="mat-subheading-2 known-accounts-subtitle">
+    <div class="app-page-subtitlee">
         A list of known accounts, including exchanges, games, faucets, representatives & more.
     </div>
 </ng-template>
@@ -63,8 +63,8 @@
     </table>
 </ng-template>
 
-<div class="known-accounts-root" responsive>
-    <div class="known-accounts-content">
+<div class="app-page-root" responsive>
+    <div class="app-page-content">
         <app-error *ngIf="error"></app-error>
         <ng-container *ngIf="!error">
             <ng-template [ngTemplateOutlet]="titleContent"></ng-template>

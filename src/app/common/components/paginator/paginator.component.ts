@@ -21,7 +21,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
                 </button>
             </ng-container>
             <pxb-spacer></pxb-spacer>
-            <div [style.fontSize.px]="vp.sm ? 14 : 16">
+            <div [style.fontSize.px]="vp.sm ? 13 : 16">
                 Showing
                 <strong>{{ getCurrPageMin() }}</strong>
                 to

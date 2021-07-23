@@ -47,6 +47,9 @@
         text-decoration: underline;
     }
 }
+.sm .link:hover {
+    text-decoration: none !important;
+}
 
 .mat-simple-snackbar {
     justify-content: center !important;
@@ -103,4 +106,70 @@
 // Disable mat tab list pagination.
 .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
     display: none !important;
+}
+
+/* Common styles for padding, font-sizes, etc. */
+.app-page-root {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    // TODO: move these paddings to a global style, shared
+    padding: 64px 64px 64px 64px;
+    &.md {
+        padding: 48px 48px 48px 48px;
+    }
+    &.sm {
+        padding: 40px 16px 48px 16px;
+    }
+}
+
+.app-page-content {
+    width: 100%;
+    max-width: 1200px;
+}
+.app-page-title {
+    font-size: 48px;
+    display: flex;
+    width: 100%;
+    margin-bottom: 8px;
+}
+.app-page-subtitle {
+    width: 100%;
+    font-size: 16px;
+    margin-bottom: 48px;
+    text-align: left;
+}
+.app-section-title {
+    font-size: 20px;
+}
+.app-section-subtitle {
+    margin-bottom: 32px;
+    font-size: 16px;
+}
+.app-caption {
+    font-size: 14px;
+}
+.sm {
+    .app-page-title {
+        font-size: 28px;
+        margin-bottom: 4px;
+    }
+    .app-page-subtitle {
+        font-size: 14px;
+        margin-bottom: 32px;
+        text-align: left;
+    }
+    .app-section-title {
+        font-size: 20px;
+    }
+    .app-section-subtitle {
+        margin-bottom: 24px;
+        font-size: 14px;
+    }
+    .app-caption {
+        font-size: 12px;
+    }
 }

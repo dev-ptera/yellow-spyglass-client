@@ -8,11 +8,11 @@ import { SearchService } from '@app/services/search/search.service';
     selector: 'app-hash',
     template: `
         <ng-template #titleContent>
-            <div [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm" [style.marginBottom.px]="8">
+            <div class="app-page-title">
                 <span *ngIf="loading">Loading</span>
                 <span *ngIf="!loading">State Block</span>
             </div>
-            <div class="mat-subheading-2 hash-searched">
+            <div class="app-page-subtitle hash-searched">
                 {{ hash }}
                 <app-copy-button [data]="hash"></app-copy-button>
                 <app-bookmark-button [id]="hash"></app-bookmark-button>
@@ -22,8 +22,8 @@ import { SearchService } from '@app/services/search/search.service';
         <ng-template #bodyContent>
             <div class="hash-section">
                 <div>
-                    <span class="mat-headline">Block Account</span>
-                    <span class="mat-subheading-2 link" (click)="search(block.blockAccount)">
+                    <span class="app-section-title">Block Account</span>
+                    <span class="app-section-subtitle link" (click)="search(block.blockAccount)">
                         {{ block.blockAccount }}
                     </span>
                 </div>
@@ -31,29 +31,31 @@ import { SearchService } from '@app/services/search/search.service';
             </div>
             <div class="hash-section">
                 <div>
-                    <span class="mat-headline">Subtype</span>
-                    <span class="mat-subheading-2">{{ block.subtype }}</span>
+                    <span class="app-section-title">Subtype</span>
+                    <span class="app-section-subtitle">{{ block.subtype }}</span>
                 </div>
                 <div class="hash-description">Transaction type; can be "send", "receive", or "change"</div>
             </div>
             <div class="hash-section">
                 <div>
-                    <span class="mat-headline">Amount</span>
-                    <span class="mat-subheading-2">{{ block.amount }} RAW | {{ convertRawToBan(block.amount) }}</span>
+                    <span class="app-section-title">Amount</span>
+                    <span class="app-section-subtitle"
+                        >{{ block.amount }} RAW | {{ convertRawToBan(block.amount) }}</span
+                    >
                 </div>
                 <div class="hash-description">Amount of BANANO sent in this transaction</div>
             </div>
 
             <div class="hash-section" *ngIf="block.subtype !== 'change'">
                 <div *ngIf="block.subtype === 'send'">
-                    <span class="mat-headline">Recipient</span>
-                    <span class="mat-subheading-2 link" (click)="search(block.contents.linkAsAccount)">
+                    <span class="app-section-title">Recipient</span>
+                    <span class="app-section-subtitle link" (click)="search(block.contents.linkAsAccount)">
                         {{ block.contents.linkAsAccount }}
                     </span>
                 </div>
                 <div *ngIf="block.subtype === 'receive'">
-                    <span class="mat-headline">Sender</span>
-                    <span class="mat-subheading-2 link" (click)="search(block.sourceAccount)">
+                    <span class="app-section-title">Sender</span>
+                    <span class="app-section-subtitle link" (click)="search(block.sourceAccount)">
                         {{ block.sourceAccount }}
                     </span>
                 </div>
@@ -69,36 +71,38 @@ import { SearchService } from '@app/services/search/search.service';
             </div>
             <div class="hash-section">
                 <div>
-                    <span class="mat-headline">Balance</span>
-                    <span class="mat-subheading-2">{{ block.balance }} RAW | {{ convertRawToBan(block.balance) }}</span>
+                    <span class="app-section-title">Balance</span>
+                    <span class="app-section-subtitle"
+                        >{{ block.balance }} RAW | {{ convertRawToBan(block.balance) }}</span
+                    >
                 </div>
                 <div class="hash-description">Block account balance once this transaction is confirmed</div>
             </div>
             <div class="hash-section">
                 <div>
-                    <span class="mat-headline">Height</span>
-                    <span class="mat-subheading-2">{{ block.height }}</span>
+                    <span class="app-section-title">Height</span>
+                    <span class="app-section-subtitle">{{ block.height }}</span>
                 </div>
                 <div class="hash-description">Transaction number of this account</div>
             </div>
             <div class="hash-section">
                 <div>
-                    <span class="mat-headline">Timestamp</span>
-                    <span class="mat-subheading-2">{{ block.timestamp }}</span>
+                    <span class="app-section-title">Timestamp</span>
+                    <span class="app-section-subtitle">{{ block.timestamp }}</span>
                 </div>
                 <div class="hash-description">The date and time this block was discovered</div>
             </div>
             <div class="hash-section">
                 <div>
-                    <span class="mat-headline">Confirmed</span>
-                    <span class="mat-subheading-2">{{ block.confirmed }}</span>
+                    <span class="app-section-title">Confirmed</span>
+                    <span class="app-section-subtitle">{{ block.confirmed }}</span>
                 </div>
                 <div class="hash-description">Whether or not this block is confirmed</div>
             </div>
             <div class="hash-section">
                 <div>
-                    <span class="mat-headline">Representative</span>
-                    <span class="mat-subheading-2 link" (click)="search(block.contents.representative)">{{
+                    <span class="app-section-title">Representative</span>
+                    <span class="app-section-subtitle link" (click)="search(block.contents.representative)">{{
                         block.contents.representative
                     }}</span>
                 </div>
@@ -106,8 +110,8 @@ import { SearchService } from '@app/services/search/search.service';
             </div>
             <div class="hash-section" *ngIf="block.subtype !== 'change'">
                 <div>
-                    <span class="mat-headline">Previous Block</span>
-                    <span class="mat-subheading-2 link" (click)="search(block.contents.previous)">
+                    <span class="app-section-title">Previous Block</span>
+                    <span class="app-section-subtitle link" (click)="search(block.contents.previous)">
                         {{ block.height === 1 ? 'This block opened the account' : block.contents.previous }}</span
                     >
                 </div>
@@ -115,8 +119,8 @@ import { SearchService } from '@app/services/search/search.service';
             </div>
             <div class="hash-section">
                 <div>
-                    <span class="mat-headline">Link</span>
-                    <span class="mat-subheading-2 link" (click)="search(block.contents.link)">{{
+                    <span class="app-section-title">Link</span>
+                    <span class="app-section-subtitle link" (click)="search(block.contents.link)">{{
                         block.contents.link
                     }}</span>
                 </div>
@@ -124,14 +128,14 @@ import { SearchService } from '@app/services/search/search.service';
             </div>
             <div class="hash-section">
                 <div>
-                    <span class="mat-headline">Signature</span>
-                    <span class="mat-subheading-2">{{ block.contents.signature }}</span>
+                    <span class="app-section-title">Signature</span>
+                    <span class="app-section-subtitle">{{ block.contents.signature }}</span>
                 </div>
             </div>
             <div class="hash-section">
                 <div>
-                    <span class="mat-headline">Work</span>
-                    <span class="mat-subheading-2">{{ block.contents.work }}</span>
+                    <span class="app-section-title">Work</span>
+                    <span class="app-section-subtitle">{{ block.contents.work }}</span>
                 </div>
             </div>
         </ng-template>

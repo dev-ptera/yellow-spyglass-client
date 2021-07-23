@@ -1,18 +1,16 @@
 <ng-template #titleContent>
-    <div class="representatives-title" [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm">
+    <div class="app-page-title">
         <ng-container *ngIf="!loading">Representatives</ng-container>
         <ng-container *ngIf="loading">Loading</ng-container>
     </div>
-    <div class="mat-subheading-2 representatives-subtitle">
+    <div class="app-page-subtitle">
         Representatives process transactions on the BANANO network. See all representatives below.
     </div>
 </ng-template>
 
 <ng-template #bodyContent>
-    <div class="mat-headline representatives-monitored-header">Weight Distribution</div>
-    <div class="mat-subheading-2 representatives-monitored-subtitle">
-        Online voting weight allocation between the largest representatives.
-    </div>
+    <div class="app-section-title">Weight Distribution</div>
+    <div class="app-section-subtitle">Online voting weight allocation between the largest representatives.</div>
     <div class="representatives-chart-container" responsive>
         <div class="representatives-chart" responsive>
             <highcharts-chart
@@ -28,6 +26,7 @@
             <div
                 *ngFor="let rep of chartShownReps; let i = index; let last = last"
                 class="representatives-legend-entry"
+                [style.fontSize.px]="vp.sm ? 12 : 15"
             >
                 <div class="representatives-legend-color" [style.backgroundColor]="pieChartColors[i]"></div>
                 <div
@@ -41,10 +40,10 @@
         </div>
     </div>
 
-    <div class="mat-headline representatives-monitored-header">
+    <div class="app-section-title" [style.marginTop.px]="56">
         Monitored Representatives ({{ monitoredReps.length }})
     </div>
-    <div class="mat-subheading-2 representatives-monitored-subtitle">
+    <div class="app-section-subtitle">
         Online representatives that use the Nano Node Monitor tool are shown in the list below.
     </div>
     <mat-list [style.paddingTop.px]="0" *ngIf="vp.sm" class="representatives-monitored-list">
@@ -141,8 +140,8 @@
         <tr mat-row *matRowDef="let row; columns: monitoredRepDisplayColumns"></tr>
     </table>
 
-    <div class="mat-headline representatives-all-header">All Representatives ({{ representatives.length }})</div>
-    <div class="mat-subheading-2 representatives-all-subtitle">
+    <div class="app-section-title" [style.marginTop.px]="72">All Representatives ({{ representatives.length }})</div>
+    <div class="app-section-subtitle">
         List of representatives with at least 100,000 BANANO weight delegated towards them.
     </div>
     <mat-list *ngIf="vp.sm" class="representatives-all-list" [style.paddingTop.px]="0">
@@ -258,8 +257,8 @@
     </table>
 </ng-template>
 
-<div class="representatives-root" responsive>
-    <div class="representatives-content">
+<div class="app-page-root" responsive>
+    <div class="app-page-content">
         <app-error *ngIf="error"></app-error>
         <ng-container *ngIf="!error">
             <ng-template [ngTemplateOutlet]="titleContent"></ng-template>

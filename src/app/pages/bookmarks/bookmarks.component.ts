@@ -10,13 +10,11 @@ import { DeleteBookmarkDialog } from '@app/pages/bookmarks/delete-bookmark-dialo
 @Component({
     selector: 'app-bookmarks',
     template: `
-        <div class="bookmarks-root" responsive>
-            <div class="bookmarks-body" *ngIf="bookmarks.length > 0">
-                <div class="bookmarks-title" [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm">
-                    Bookmarks
-                </div>
+        <div class="app-page-root" responsive>
+            <div class="app-page-content" *ngIf="bookmarks.length > 0">
+                <div class="app-page-title">Bookmarks</div>
 
-                <div class="mat-subheading-2 bookmarks-subtitle">
+                <div class="app-page-subtitle">
                     Bookmarks allow you to quickly save addresses or transactions. Manage your bookmarks below.
                 </div>
                 <table mat-table [style.width.%]="100" [dataSource]="bookmarks" class="mat-elevation-z4">

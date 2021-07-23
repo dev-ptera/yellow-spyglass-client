@@ -1,34 +1,10 @@
-@import '~@pxblue/colors/palette';
-
 :host {
     display: flex;
     flex: 1;
 }
 
-.monitor-root {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    padding: 64px 64px 64px 64px;
-    align-items: center;
-    text-align: left;
-    box-sizing: border-box;
-    width: 100%;
-    &.md {
-        padding: 48px 48px 48px 48px;
-    }
-    &.sm {
-        padding: 48px 16px 48px 16px;
-    }
-}
-
-.monitor-content {
-    width: 100%;
-    max-width: 1200px;
-}
-
 .monitor-section {
-    margin: 36px 0;
+    margin: 24px 0;
     word-break: break-word;
     div {
         display: flex;
@@ -36,13 +12,7 @@
         justify-content: left;
         flex-wrap: wrap;
     }
-    .mat-headline {
-        margin-right: 16px;
-    }
-    .mat-subheading-2 {
-        line-height: unset;
-    }
-    .monitor-description {
-        font-size: 12px;
+    .app-section-subtitle {
+        margin-bottom: 0px;
     }
 }

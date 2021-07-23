@@ -6,7 +6,7 @@
                     [class.mat-display-2]="!vp.sm"
                     [class.mat-display-1]="vp.sm"
                     [style.marginBottom.px]="8"
-                    style="text-align: center; font-weight: 600; margin-bottom: 8px"
+                    style="text-align: center; font-weight: 300; margin-bottom: 8px"
                 >
                     Yellow Spyglass
                 </div>
@@ -16,8 +16,8 @@
                 <div style="text-align: center" [style.height.px]="vp.sm ? 275 : 400">
                     <img [style.width.px]="vp.sm ? 275 : 400" src="assets/pirate-monkey.png" />
                 </div>
-                <div class="mat-headline" [style.marginBottom.px]="8" [style.marginTop.px]="-16">Explore</div>
-                <div class="mat-subheading-2">Search a banano address or a transaction hash below.</div>
+                <div class="app-section-title" [style.marginBottom.px]="8" [style.marginTop.px]="-16">Explore</div>
+                <div class="app-section-subtitle">Search a banano address or a transaction hash below.</div>
                 <div class="explore-search-bar" responsive>
                     <mat-form-field appearance="outline">
                         <mat-label>Address or Hash</mat-label>
@@ -46,8 +46,10 @@
                     </button>
                 </div>
 
-                <div class="mat-headline" [style.marginTop.px]="72" [style.marginBottom.px]="8">Getting Started?</div>
-                <div class="mat-subheading-2">
+                <div class="app-section-title" [style.marginTop.px]="72" [style.marginBottom.px]="8">
+                    Getting Started?
+                </div>
+                <div class="app-section-subtitle">
                     Below are some sample accounts and transactions to help you get familiar with how things work around
                     here.
                 </div>
