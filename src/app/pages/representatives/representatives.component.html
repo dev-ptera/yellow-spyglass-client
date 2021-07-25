@@ -51,28 +51,17 @@
     <div class="app-section-subtitle">
         Online representatives that use the Nano Node Monitor tool are shown in the list below.
     </div>
-    <mat-list [style.paddingTop.px]="0" *ngIf="vp.sm" class="representatives-monitored-list">
-        <mat-divider></mat-divider>
-        <pxb-info-list-item
-            *ngFor="let rep of monitoredReps; trackBy: trackByFn"
-            [hidePadding]="true"
-            [dense]="false"
-            [divider]="true"
-        >
-            <div pxb-title>
-                <span class="link primary" (click)="openMonitoredRep(rep.ip)">{{ rep.name }}</span>
-            </div>
-            <div pxb-subtitle style="font-size: 0.875rem">{{ formatInfoLine(rep) }}</div>
-            <div pxb-info style="font-size: 0.875rem" (click)="routeRepAddress(rep.address)">
-                {{ formatListAddress(rep.address) }}
-            </div>
-            <div pxb-right-content style="display: flex; flex-direction: column; align-items: flex-end">
-                <div style="font-size: 14px">{{ formatBanWeight(rep.weight) }} BAN</div>
-                <div style="font-size: 12px">{{ formatWeightPercent(rep.weight) }} weight</div>
-            </div>
-        </pxb-info-list-item>
-    </mat-list>
+    <ng-template *ngIf="!vp.sm" [ngTemplateOutlet]="monitoredRepTable"></ng-template>
+    <ng-template *ngIf="vp.sm" [ngTemplateOutlet]="monitoredRepList"></ng-template>
+    <div class="app-section-title" [style.marginTop.px]="72">All Representatives ({{ representatives.length }})</div>
+    <div class="app-section-subtitle">
+        List of representatives with at least 100,000 BANANO weight delegated towards them.
+    </div>
+    <ng-template *ngIf="!vp.sm" [ngTemplateOutlet]="allRepsTable"></ng-template>
+    <ng-template *ngIf="vp.sm" [ngTemplateOutlet]="allRepsList"></ng-template>
+</ng-template>
 
+<ng-template #monitoredRepTable>
     <table
         mat-table
         [hidden]="vp.sm"
@@ -138,37 +127,33 @@
         <tr mat-header-row *matHeaderRowDef="monitoredRepDisplayColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: monitoredRepDisplayColumns"></tr>
     </table>
+</ng-template>
 
-    <div class="app-section-title" [style.marginTop.px]="72">All Representatives ({{ representatives.length }})</div>
-    <div class="app-section-subtitle">
-        List of representatives with at least 100,000 BANANO weight delegated towards them.
-    </div>
-    <mat-list *ngIf="vp.sm" class="representatives-all-list" [style.paddingTop.px]="0">
+<ng-template #monitoredRepList>
+    <mat-list [style.paddingTop.px]="0" *ngIf="vp.sm" class="representatives-monitored-list">
         <mat-divider></mat-divider>
-        <div *ngFor="let rep of representatives; let i = index; trackBy: trackByFn">
-            <pxb-info-list-item [hidePadding]="true" [dense]="false" [divider]="true">
-                <div pxb-title style="padding-right: 16px" (click)="routeRepAddress(rep.address)">
-                    <span [style.fontSize.px]="20"> #{{ i + 1 }}</span> ·
-                    <span class="link" [class.offline]="!rep.online" [class.online]="rep.online">
-                        {{ rep.address }}
-                    </span>
-                </div>
-                <div pxb-subtitle>{{ numberWithCommas(rep.delegatorsCount) }} delegators</div>
-                <div pxb-info>
-                    <span style="font-size: 12px">
-                        {{ rep.uptimePercentMonth }}% (M) · {{ rep.uptimePercentWeek }}% (W) ·
-                        {{ rep.uptimePercentDay }}% (D)
-                    </span>
-                </div>
-
-                <div pxb-right-content style="display: flex; flex-direction: column; align-items: flex-end">
-                    <div style="font-size: 14px">{{ formatBanWeight(rep.weight) }} BAN</div>
-                    <div style="font-size: 12px">{{ formatWeightPercent(rep.weight) }} weight</div>
-                </div>
-            </pxb-info-list-item>
-        </div>
+        <pxb-info-list-item
+            *ngFor="let rep of monitoredReps; trackBy: trackByFn"
+            [hidePadding]="true"
+            [dense]="false"
+            [divider]="true"
+        >
+            <div pxb-title>
+                <span class="link primary" (click)="openMonitoredRep(rep.ip)">{{ rep.name }}</span>
+            </div>
+            <div pxb-subtitle style="font-size: 0.875rem">{{ formatInfoLine(rep) }}</div>
+            <div pxb-info style="font-size: 0.875rem" (click)="routeRepAddress(rep.address)">
+                {{ formatListAddress(rep.address) }}
+            </div>
+            <div pxb-right-content style="display: flex; flex-direction: column; align-items: flex-end">
+                <div style="font-size: 14px">{{ formatBanWeight(rep.weight) }} BAN</div>
+                <div style="font-size: 12px">{{ formatWeightPercent(rep.weight) }} weight</div>
+            </div>
+        </pxb-info-list-item>
     </mat-list>
+</ng-template>
 
+<ng-template #allRepsTable>
     <table
         mat-table
         [hidden]="vp.sm"
@@ -254,12 +239,41 @@
 
         <tr mat-header-row *matHeaderRowDef="allRepsDisplayColumns"></tr>
         <tr
+            style="height: 56px;"
             mat-row
             *matRowDef="let row; columns: allRepsDisplayColumns"
             [class.online]="row.online"
             [class.offline]="!row.online"
         ></tr>
     </table>
+</ng-template>
+
+<ng-template #allRepsList>
+    <mat-list *ngIf="vp.sm" class="representatives-all-list" [style.paddingTop.px]="0">
+        <mat-divider></mat-divider>
+        <div *ngFor="let rep of representatives; let i = index; trackBy: trackByFn">
+            <pxb-info-list-item [hidePadding]="true" [dense]="false" [divider]="true">
+                <div pxb-title style="padding-right: 16px" (click)="routeRepAddress(rep.address)">
+                    <span [style.fontSize.px]="20"> #{{ i + 1 }}</span> ·
+                    <span class="link" [class.offline]="!rep.online" [class.online]="rep.online">
+                        {{ rep.address }}
+                    </span>
+                </div>
+                <div pxb-subtitle>{{ numberWithCommas(rep.delegatorsCount) }} delegators</div>
+                <div pxb-info>
+                    <span style="font-size: 12px">
+                        {{ rep.uptimePercentMonth }}% (M) · {{ rep.uptimePercentWeek }}% (W) ·
+                        {{ rep.uptimePercentDay }}% (D)
+                    </span>
+                </div>
+
+                <div pxb-right-content style="display: flex; flex-direction: column; align-items: flex-end">
+                    <div style="font-size: 14px">{{ formatBanWeight(rep.weight) }} BAN</div>
+                    <div style="font-size: 12px">{{ formatWeightPercent(rep.weight) }} weight</div>
+                </div>
+            </pxb-info-list-item>
+        </div>
+    </mat-list>
 </ng-template>
 
 <div class="app-page-root" responsive>
