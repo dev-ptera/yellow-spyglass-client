@@ -61,7 +61,7 @@
                     matBadgeColor="warn"
                     matBadgeOverlap="false"
                     [matBadgeSize]="vp.sm ? 'small' : 'medium'"
-                    [matBadge]="isRepOnline(element.representative) ? undefined : '!'"
+                    [matBadge]="showWarningBadge(element.representative) ? undefined : '!'"
                 >
                     #{{ formatIndex(i + 1 + currentPage * pageSize) }}
                 </span>
@@ -72,14 +72,6 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
             <td mat-cell *matCellDef="let element">
                 <div style="display: flex" *ngIf="!megaphone.hasAddress(element.addr)">
-                    <button
-                        mat-stroked-button
-                        color="accent"
-                        (click)="megaphone.addAddress(element.addr, 1)"
-                        [style.marginRight.px]="8"
-                    >
-                        Offline
-                    </button>
                     <button
                         mat-stroked-button
                         color="accent"

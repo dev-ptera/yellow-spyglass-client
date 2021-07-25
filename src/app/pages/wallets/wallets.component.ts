@@ -96,7 +96,15 @@ export class WalletsComponent implements OnInit {
         return `₿${this.util.numberWithCommas(this._priceService.priceInBitcoin(ban).toFixed(2))}`;
     }
 
-    isRepOnline(rep: string): boolean {
+    showWarningBadge(rep: string): boolean {
+        if (this.isMegaphone) {
+            const largeReps = new Set<string>();
+            largeReps.add('ban_1bananobh5rat99qfgt1ptpieie5swmoth87thi74qgbfrij7dcgjiij94xr')
+            largeReps.add('ban_1ka1ium4pfue3uxtntqsrib8mumxgazsjf58gidh1xeo5te3whsq8z476goo')
+            largeReps.add('ban_1fomoz167m7o38gw4rzt7hz67oq6itejpt4yocrfywujbpatd711cjew8gjj')
+            largeReps.add('ban_1cake36ua5aqcq1c5i3dg7k8xtosw7r9r7qbbf5j15sk75csp9okesz87nfn');
+            return !largeReps.has(rep);
+        }
         return this._onlineRepsService.onlineReps.has(rep);
     }
 
