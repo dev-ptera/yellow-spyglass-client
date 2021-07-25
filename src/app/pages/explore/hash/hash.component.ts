@@ -88,7 +88,7 @@ import { SearchService } from '@app/services/search/search.service';
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Timestamp</span>
-                    <span class="app-section-subtitle">{{ block.timestamp }}</span>
+                    <span class="app-section-subtitle">{{ convertUnixToDate(block.timestamp) }}</span>
                 </div>
                 <div class="hash-description">The date and time this block was discovered</div>
             </div>
@@ -111,7 +111,11 @@ import { SearchService } from '@app/services/search/search.service';
             <div class="hash-section" *ngIf="block.subtype !== 'change'">
                 <div>
                     <span class="app-section-title">Previous Block</span>
-                    <span class="app-section-subtitle link" (click)="search(block.contents.previous)">
+                    <span
+                        class="app-section-subtitle"
+                        [class.link]="block.height !== 1"
+                        (click)="search(block.contents.previous)"
+                    >
                         {{ block.height === 1 ? 'This block opened the account' : block.contents.previous }}</span
                     >
                 </div>
@@ -168,7 +172,13 @@ export class HashComponent {
         })} BAN`;
     }
 
+    convertUnixToDate(time: number): string {
+        return `${new Date(time * 1000).toLocaleDateString()} ${new Date(time * 1000).toLocaleTimeString()}`;
+    }
+
     search(value: string): void {
-        this._searchService.emitSearch(value);
+        if (value !== '0000000000000000000000000000000000000000000000000000000000000000') {
+            this._searchService.emitSearch(value);
+        }
     }
 }
