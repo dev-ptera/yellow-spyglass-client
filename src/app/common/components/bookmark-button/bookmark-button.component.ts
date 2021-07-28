@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnChanges, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { BookmarksService } from '@app/services/bookmarks/bookmarks.service';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
