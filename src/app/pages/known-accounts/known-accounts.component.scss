@@ -3,14 +3,6 @@
     flex: 1;
 }
 
-.known-accounts-address-cell {
-    word-break: break-all;
-    cursor: pointer;
-    &:hover {
-        text-decoration: underline;
-    }
-}
-
 .known-accounts-table {
     width: 100%;
     margin-top: 56px;

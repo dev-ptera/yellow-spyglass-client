@@ -16,8 +16,7 @@ export class KnownAccountsComponent implements OnInit {
     accountsDataSource;
     loading = true;
     error = false;
-    displayedColumns = ['alias', 'address', 'type', 'owner'];
-    displayColumnsMobile = ['alias', 'type', 'owner'];
+    displayedColumns = ['alias', 'type', 'owner'];
     @ViewChild('sort') sort: MatSort;
 
     constructor(
@@ -45,12 +44,5 @@ export class KnownAccountsComponent implements OnInit {
 
     routeRepAddress(address: string): void {
         this._searchService.emitSearch(address);
-    }
-
-    formatAddress(addr: string): string {
-        if (this.vp.sm) {
-            return `${addr.substr(0, 11)}...`;
-        }
-        return `${addr.substr(0, 11)}...${addr.substr(addr.length - 6, addr.length)}`;
     }
 }
