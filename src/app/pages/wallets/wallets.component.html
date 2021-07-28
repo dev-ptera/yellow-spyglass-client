@@ -61,7 +61,7 @@
                     matBadgeColor="warn"
                     matBadgeOverlap="false"
                     [matBadgeSize]="vp.sm ? 'small' : 'medium'"
-                    [matBadge]="showWarningBadge(element.representative) ? undefined : '!'"
+                    [matBadge]="showWarningBadge(element.representative) ? '!' : undefined"
                 >
                     #{{ formatIndex(i + 1 + currentPage * pageSize) }}
                 </span>
@@ -71,7 +71,7 @@
         <ng-container matColumnDef="megaphone">
             <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
             <td mat-cell *matCellDef="let element">
-                <div style="display: flex" *ngIf="!megaphone.hasAddress(element.addr) || showWarningBadge(element.representative)">
+                <div style="display: flex" *ngIf="!megaphone.hasAddress(element.addr) && showWarningBadge(element.representative)">
                     <button
                         mat-stroked-button
                         color="accent"
@@ -105,9 +105,10 @@
                 >
                     {{ aliasService.get(element.addr) }}
                 </div>
-                <span class="address" (click)="searchService.emitSearch(element.addr)">
+                <a [routerLink]="'/search'" [queryParams]="{ address: element.addr }" class="address" style="color: inherit; text-decoration: none"
+                    (click)="searchAddress($event, element.addr)">
                     {{ element.addr }}
-                </span>
+                </a>
             </td>
         </ng-container>
         <ng-container matColumnDef="ban">

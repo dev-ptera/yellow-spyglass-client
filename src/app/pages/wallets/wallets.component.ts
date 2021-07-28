@@ -103,9 +103,9 @@ export class WalletsComponent implements OnInit {
             largeReps.add('ban_1ka1ium4pfue3uxtntqsrib8mumxgazsjf58gidh1xeo5te3whsq8z476goo')
             largeReps.add('ban_1fomoz167m7o38gw4rzt7hz67oq6itejpt4yocrfywujbpatd711cjew8gjj')
             largeReps.add('ban_1cake36ua5aqcq1c5i3dg7k8xtosw7r9r7qbbf5j15sk75csp9okesz87nfn');
-            return !largeReps.has(rep);
+            return largeReps.has(rep);
         }
-        return this._onlineRepsService.onlineReps.has(rep);
+        return !this._onlineRepsService.onlineReps.has(rep);
     }
 
     toot(): void {
@@ -119,6 +119,12 @@ export class WalletsComponent implements OnInit {
             .catch((err) => {
                 console.error(err);
             });
+    }
+
+    searchAddress(e: any, addr: string): void {
+        if (!e.ctrlKey) {
+            this.searchService.emitSearch(addr);
+        }
     }
 
     private _createDistributionChart(data: AccountDistributionStatsDto): Options {
