@@ -6,6 +6,7 @@ import { RepresentativesComponent } from '@app/pages/representatives/representat
 import { InfoListItemModule, ListItemTagModule } from '@pxblue/angular-components';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { AppCommonModule } from '@app/common/app-common.module';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
     declarations: [RepresentativesComponent],
@@ -17,6 +18,7 @@ import { AppCommonModule } from '@app/common/app-common.module';
         MatSortModule,
         MatTableModule,
         ListItemTagModule,
+        MatCardModule,
     ],
     exports: [RepresentativesComponent],
 })

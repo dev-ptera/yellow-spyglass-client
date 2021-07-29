@@ -1,5 +1,4 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { BookmarksService } from '@app/services/bookmarks/bookmarks.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

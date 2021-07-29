@@ -55,6 +55,13 @@
     margin-bottom: 16px !important;
 }
 
+.representatives-all-list {
+    .mat-list-base .mat-list-item.pxb-info-list-item-content .mat-list-item-content,
+    .pxb-info-list-item-content .mat-list-item-content {
+        height: unset !important;
+    }
+}
+
 .representatives-monitored-list,
 .representatives-all-list {
     .pxb-info-list-item-content .mat-list-item-content {
@@ -134,7 +141,7 @@ th.mat-sort-header-sorted {
             color: $online-color;
         }
     }
-    .representatives-all-list {
+    .representatives-all-reps-card {
         .online {
             color: $online-color !important;
         }
@@ -142,8 +149,7 @@ th.mat-sort-header-sorted {
             color: $offline-color !important;
         }
     }
-    .representatives-all-list,
-    .representatives-monitored-list {
-        //  background-color: $list-bg-color;
+    .list-divider {
+        background-color: #f7f8f8 !important;
     }
 }

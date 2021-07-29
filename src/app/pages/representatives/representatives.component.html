@@ -130,27 +130,29 @@
 </ng-template>
 
 <ng-template #monitoredRepList>
-    <mat-list [style.paddingTop.px]="0" *ngIf="vp.sm" class="representatives-monitored-list">
-        <mat-divider></mat-divider>
-        <pxb-info-list-item
-            *ngFor="let rep of monitoredReps; trackBy: trackByFn"
-            [hidePadding]="true"
-            [dense]="false"
-            [divider]="true"
-        >
-            <div pxb-title>
-                <span class="link primary" (click)="openMonitoredRep(rep.ip)">{{ rep.name }}</span>
-            </div>
-            <div pxb-subtitle style="font-size: 0.875rem">{{ formatInfoLine(rep) }}</div>
-            <div pxb-info style="font-size: 0.875rem" (click)="routeRepAddress(rep.address)">
-                {{ formatListAddress(rep.address) }}
-            </div>
-            <div pxb-right-content style="display: flex; flex-direction: column; align-items: flex-end">
-                <div style="font-size: 14px">{{ formatBanWeight(rep.weight) }} BAN</div>
-                <div style="font-size: 12px">{{ formatWeightPercent(rep.weight) }} weight</div>
-            </div>
-        </pxb-info-list-item>
-    </mat-list>
+    <mat-card style="padding: 0 12px">
+        <mat-list [style.paddingTop.px]="0" *ngIf="vp.sm" class="representatives-monitored-list">
+            <mat-divider></mat-divider>
+            <pxb-info-list-item
+                *ngFor="let rep of monitoredReps; trackBy: trackByFn"
+                [hidePadding]="true"
+                [dense]="false"
+                [divider]="true"
+            >
+                <div pxb-title>
+                    <span class="link primary" (click)="openMonitoredRep(rep.ip)">{{ rep.name }}</span>
+                </div>
+                <div pxb-subtitle style="font-size: 0.875rem">{{ formatInfoLine(rep) }}</div>
+                <div pxb-info style="font-size: 0.875rem" (click)="routeRepAddress(rep.address)">
+                    {{ formatListAddress(rep.address) }}
+                </div>
+                <div pxb-right-content style="display: flex; flex-direction: column; align-items: flex-end">
+                    <div style="font-size: 14px">{{ formatBanWeight(rep.weight) }} BAN</div>
+                    <div style="font-size: 12px">{{ formatWeightPercent(rep.weight) }} weight</div>
+                </div>
+            </pxb-info-list-item>
+        </mat-list>
+    </mat-card>
 </ng-template>
 
 <ng-template #allRepsTable>
@@ -165,7 +167,7 @@
     >
         <ng-container matColumnDef="position">
             <th mat-header-cell *matHeaderCellDef>Num.</th>
-            <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+            <td mat-cell *matCellDef="let element; let i = index">#{{ i + 1 }}</td>
         </ng-container>
 
         <ng-container matColumnDef="address">
@@ -248,31 +250,53 @@
 </ng-template>
 
 <ng-template #allRepsList>
-    <mat-list *ngIf="vp.sm" class="representatives-all-list" [style.paddingTop.px]="0">
-        <mat-divider></mat-divider>
-        <div *ngFor="let rep of representatives; let i = index; trackBy: trackByFn">
-            <pxb-info-list-item [hidePadding]="true" [dense]="false" [divider]="true">
-                <div pxb-title style="padding-right: 16px" (click)="routeRepAddress(rep.address)">
-                    <span [style.fontSize.px]="20"> #{{ i + 1 }}</span> ·
-                    <span class="link" [class.offline]="!rep.online" [class.online]="rep.online">
-                        {{ rep.address }}
-                    </span>
-                </div>
-                <div pxb-subtitle>{{ numberWithCommas(rep.delegatorsCount) }} delegators</div>
-                <div pxb-info>
-                    <span style="font-size: 12px">
-                        {{ rep.uptimePercentMonth }}% (M) · {{ rep.uptimePercentWeek }}% (W) ·
-                        {{ rep.uptimePercentDay }}% (D)
-                    </span>
-                </div>
-
-                <div pxb-right-content style="display: flex; flex-direction: column; align-items: flex-end">
-                    <div style="font-size: 14px">{{ formatBanWeight(rep.weight) }} BAN</div>
-                    <div style="font-size: 12px">{{ formatWeightPercent(rep.weight) }} weight</div>
-                </div>
-            </pxb-info-list-item>
+    <mat-card
+        style="padding: 12px 12px; margin-bottom: 8px"
+        *ngFor="let rep of representatives; let i = index; trackBy: trackByFn"
+        class="representatives-all-reps-card"
+    >
+        <div style="align-items: center; display: flex; margin-bottom: 8px">
+            <span [style.fontSize.px]="16" style="margin-right: 16px; font-weight: 600"> #{{ i + 1 }}</span>
+            <pxb-list-item-tag *ngIf="rep.principal" label="Principal"></pxb-list-item-tag>
+            <pxb-spacer></pxb-spacer>
+            <span
+                class="mat-overline"
+                style="font-size: 11px; line-height: 11px"
+                [class.online]="rep.online"
+                [class.offline]="!rep.online"
+            >
+                {{ rep.online ? 'Online' : 'Offline' }}
+            </span>
         </div>
-    </mat-list>
+
+        <span
+            *ngIf="aliasService.has(rep.address)"
+            class="primary"
+            style="font-size: 14px; font-weight: 600"
+            (click)="routeRepAddress(rep.address)"
+        >
+            {{ aliasService.get(rep.address) }}
+        </span>
+        <div style="font-size: 14px; word-break: break-all; margin-bottom: 8px" (click)="routeRepAddress(rep.address)">
+            {{ rep.address }}
+        </div>
+        <mat-divider></mat-divider>
+        <div style="display: flex; justify-content: space-between; font-size: 12px; padding-top: 8px">
+            <div>
+                <div>{{ numberWithCommas(rep.delegatorsCount) }} Delegators</div>
+                <div>
+                    {{ rep.uptimePercentMonth }}% /
+                    <span style="font-size: 10px"> {{ rep.uptimePercentWeek }}% / {{ rep.uptimePercentDay }}% </span>
+                    Uptime
+                    <span style="font-size: 10px">(m/w/d)</span>
+                </div>
+            </div>
+            <div>
+                <div>{{ formatBanWeight(rep.weight) }} BAN</div>
+                <div>{{ formatWeightPercent(rep.weight) }} weight</div>
+            </div>
+        </div>
+    </mat-card>
 </ng-template>
 
 <div class="app-page-root" responsive>
