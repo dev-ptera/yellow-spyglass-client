@@ -126,7 +126,7 @@ th.mat-sort-header-sorted {
     color: black;
 }
 
-@mixin representatives-theme($online-color, $offline-color, $list-bg-color) {
+@mixin representatives-theme($online-color, $offline-color, $rep-card-border-color) {
     .representatives-name-cell {
         color: $online-color !important;
     }
@@ -142,6 +142,7 @@ th.mat-sort-header-sorted {
         }
     }
     .representatives-all-reps-card {
+        border: solid 1px $rep-card-border-color;
         .online {
             color: $online-color !important;
         }
