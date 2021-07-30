@@ -257,7 +257,7 @@
         class="representatives-all-reps-card mat-elevation-z0"
         [class.online]="rep.online" [class.offline]="!rep.online"
     >
-        <div style="align-items: center; display: flex; margin-bottom: 8px">
+        <div style="align-items: center; display: flex; margin-bottom: 12px">
             <span [style.fontSize.px]="16" style="margin-right: 16px; font-weight: 600"> #{{ i + 1 }}</span>
             <pxb-list-item-tag *ngIf="rep.principal" label="Principal"></pxb-list-item-tag>
             <pxb-spacer></pxb-spacer>
@@ -283,7 +283,7 @@
             {{ rep.address }}
         </div>
         <mat-divider></mat-divider>
-        <div style="display: flex; justify-content: space-between; font-size: 12px; padding-top: 8px">
+        <div style="display: flex; justify-content: space-between; font-size: 12px; padding-top: 12px">
             <div>
                 <div>{{ numberWithCommas(rep.delegatorsCount) }} Delegators</div>
                 <div>

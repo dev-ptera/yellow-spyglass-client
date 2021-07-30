@@ -1,8 +1,10 @@
 .network-root {
+
     .app-page-content {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
+        max-width: 1200px;
     }
 
     .mat-card {
