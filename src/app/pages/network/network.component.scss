@@ -63,23 +63,17 @@
         border-collapse: collapse;
         border-radius: 4px;
         th {
-            height: 48px;
-            line-height: 48px;
+            height: 24px;
+            line-height: 24px;
             padding: 8px;
         }
         tr {
             height: 36px;
         }
-        td,
-        th {
-            //    border: solid 1px #eef0f0;
-        }
         tr td {
-            text-align: right;
             padding-right: 16px;
             padding-left: 16px;
             position: relative;
-            border: solid 1px rgba(111, 111, 111, 0.51);
             -moz-border-radius: 10px;
             -webkit-border-radius: 10px;
             border-radius: 10px;
@@ -98,15 +92,21 @@
         position: absolute;
         right: 8px;
         top: 8px;
-        &.online {
-            color: #4cbf4b;
-        }
-        &.offline {
-            color: #d22f2fdb;
-        }
     }
 
     .highcharts-background {
         fill: none;
+    }
+}
+
+@mixin network-theme($table-border-color) {
+    table.network-supply-table,
+    table.network-quorum-table,
+    table.network-peer-version-table,
+    table.network-consensus-table {
+        tr {
+            height: 36px;
+            border-bottom: $table-border-color
+        }
     }
 }

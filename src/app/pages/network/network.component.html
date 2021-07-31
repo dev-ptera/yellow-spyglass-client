@@ -21,11 +21,12 @@
                 {{ nakamotoCoefficient }}
             </div>
         </div>
-        <div class="mat-subheading-2" *ngIf="nakamotoCoefficient > 1" [style.marginTop.px]="vp.sm ? 36 : 0">
+        <div class="app-section-subtitle" *ngIf="nakamotoCoefficient > 1"
+             [style.marginTop.px]="vp.sm ? 36 : 0" style="margin-bottom: 0">
             The <strong>{{ nakamotoCoefficient }}</strong> largest entities could potentially collude together to
             achieve >50% of the online voting weight and stall the network.
         </div>
-        <div class="mat-subheading-2" *ngIf="nakamotoCoefficient === 1">
+        <div class="app-section-subtitle" *ngIf="nakamotoCoefficient === 1" style="margin-bottom: 0">
             It only takes <strong>one</strong> entity to stall the network.
         </div>
         <div class="app-caption" style="margin-top: 4px; margin-bottom: 16px">
@@ -33,7 +34,7 @@
             <ng-container *ngIf="!vp.sm">representatives</ng-container>
             <ng-container *ngIf="vp.sm">reps</ng-container>
             are counted as a single entity. See the full representative list
-            <a href="https://www.yellowspyglass.com/representatives" target="_blank">here</a>.
+            <a href="https://www.yellowspyglass.com/representatives" target="_blank" class="primary">here</a>.
         </div>
     </mat-card>
 
@@ -74,7 +75,7 @@
             </tr>
         </table>
         <pxb-spacer></pxb-spacer>
-        <div class="mat-subheading-2">
+        <div class="app-section-subtitle" style="margin-bottom: 0">
             <strong>{{ supply.burnedAmount | appComma }}</strong> banano has been burned.
         </div>
     </mat-card>
@@ -102,7 +103,7 @@
             <tr>
                 <td>
                     Official <ng-container *ngIf="!vp.sm && !vp.md">(core team)</ng-container>
-                    <span class="status online mat-overline">online</span>
+                    <span class="status mat-overline primary">online</span>
                 </td>
                 <td>{{ consensus.official.onlineAmount | appComma }}</td>
                 <td>{{ consensus.official.onlinePercent | appPercent }}</td>
@@ -110,7 +111,7 @@
             <tr>
                 <td>
                     Unofficial
-                    <span class="status online mat-overline">online</span>
+                    <span class="status mat-overline primary">online</span>
                 </td>
                 <td>{{ consensus.unofficial.onlineAmount | appComma }}</td>
                 <td>{{ consensus.unofficial.onlinePercent | appPercent }}</td>
@@ -118,7 +119,7 @@
             <tr>
                 <td>
                     Official
-                    <span class="status offline mat-overline">offline</span>
+                    <span class="status mat-overline warn">offline</span>
                 </td>
                 <td>{{ consensus.official.offlineAmount | appComma }}</td>
                 <td>{{ consensus.official.offlinePercent | appPercent }}</td>
@@ -126,7 +127,7 @@
             <tr>
                 <td>
                     Unofficial
-                    <span class="status offline mat-overline">offline</span>
+                    <span class="status mat-overline warn">offline</span>
                 </td>
                 <td>{{ consensus.unofficial.offlineAmount | appComma }}</td>
                 <td>{{ consensus.unofficial.offlinePercent | appPercent }}</td>
@@ -171,7 +172,7 @@
                 <td>{{ quorum.onlineWeightQuorumPercent }}%</td>
             </tr>
             <tr>
-                <td>Delta (number which quorum is achieved)</td>
+                <td>Delta <span class="app-caption">(number which quorum is achieved)</span></td>
                 <td>{{ quorum.quorumDelta | appComma }} BAN</td>
             </tr>
             <tr>

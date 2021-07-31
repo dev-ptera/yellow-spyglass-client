@@ -5,6 +5,7 @@
 @import 'src/app/pages/wallets/wallets.component.scss';
 @import 'src/app/pages/representatives/representatives.component.scss';
 @import 'src/app/pages/explore/account/account.component.scss';
+@import 'src/app/pages/network/network.component.scss';
 
 $material-theme-primary: mat-palette($pxb-green, 700);
 $material-theme-accent: mat-palette($pxb-blue);
@@ -130,3 +131,7 @@ $hashColor: map-get($pxb-gray, 400);
     sendAmount,
     $hashColor
 );
+
+
+$network-table-border: solid 1px map-get($theme-foreground, divider);
+@include network-theme($network-table-border);

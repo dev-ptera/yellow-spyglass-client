@@ -9,7 +9,7 @@
 <ng-template #bodyContent>
     <div class="app-section-title">BAN Distribution Chart</div>
     <div class="app-section-subtitle">The chart below shows the distribution of banano among all opened accounts.</div>
-    <div class="wallets-chart mat-elevation-z4" responsive>
+    <mat-card class="wallets-chart mat-elevation-z4" responsive>
         <highcharts-chart
             [update]="true"
             [Highcharts]="Highcharts"
@@ -17,7 +17,7 @@
             style="pointer-events: none; width: 100%"
             [style.height.px]="vp.sm ? 300 : vp.md ? 350 : 400"
         ></highcharts-chart>
-    </div>
+    </mat-card>
 
     <div class="app-section-title">All Accounts</div>
     <div class="app-section-subtitle" [style.marginBottom.px]="4">All banano accounts, sorted by balance.</div>

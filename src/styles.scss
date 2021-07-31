@@ -91,6 +91,11 @@
     }
 }
 
+.app-page-root,
+.explore-body {
+    min-height: 100vh;
+}
+
 .mat-form-field {
     line-height: 1.5 !important;
 }

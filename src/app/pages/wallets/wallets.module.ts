@@ -7,6 +7,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { AppCommonModule } from '@app/common/app-common.module';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
     declarations: [WalletsComponent],
@@ -18,6 +19,7 @@ import { RouterModule } from '@angular/router';
         MatTableModule,
         MatButtonModule,
         RouterModule,
+        MatCardModule,
     ],
     exports: [WalletsComponent],
 })
