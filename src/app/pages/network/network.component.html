@@ -21,8 +21,12 @@
                 {{ nakamotoCoefficient }}
             </div>
         </div>
-        <div class="app-section-subtitle" *ngIf="nakamotoCoefficient > 1"
-             [style.marginTop.px]="vp.sm ? 36 : 0" style="margin-bottom: 0">
+        <div
+            class="app-section-subtitle"
+            *ngIf="nakamotoCoefficient > 1"
+            [style.marginTop.px]="vp.sm ? 36 : 0"
+            style="margin-bottom: 0"
+        >
             The <strong>{{ nakamotoCoefficient }}</strong> largest entities could potentially collude together to
             achieve >50% of the online voting weight and stall the network.
         </div>

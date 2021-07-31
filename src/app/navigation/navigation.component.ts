@@ -25,7 +25,6 @@ export class NavigationComponent implements OnInit {
 
     constructor(
         public vp: ViewportService,
-        public themeService: ThemeService,
         private readonly _title: Title,
         private readonly _meta: Meta,
         private readonly _router: Router,
@@ -183,9 +182,5 @@ export class NavigationComponent implements OnInit {
         }
         this.variant = this.isSmall() ? 'temporary' : 'persistent';
         return this.variant;
-    }
-
-    toggleTheme(): void {
-        this.themeService.setTheme(!this.themeService.isLightMode());
     }
 }

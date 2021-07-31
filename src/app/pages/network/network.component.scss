@@ -1,5 +1,4 @@
 .network-root {
-
     .app-page-content {
         display: flex;
         justify-content: space-between;
@@ -62,17 +61,20 @@
         margin-bottom: 32px !important;
         border-collapse: collapse;
         border-radius: 4px;
+        th,
+        tr,
+        td {
+            padding: 8px;
+        }
+
         th {
             height: 24px;
             line-height: 24px;
-            padding: 8px;
         }
         tr {
             height: 36px;
         }
         tr td {
-            padding-right: 16px;
-            padding-left: 16px;
             position: relative;
             -moz-border-radius: 10px;
             -webkit-border-radius: 10px;
@@ -82,10 +84,12 @@
             text-align: left;
         }
     }
-    table.sm tr td {
-        padding-left: 8px;
-        padding-right: 8px;
+
+    table.network-consensus-table,
+    table.network-supply-table {
+        margin-top: 16px;
     }
+
     .network-consensus-table .status {
         font-size: 12px;
         font-weight: 600;
@@ -106,7 +110,7 @@
     table.network-consensus-table {
         tr {
             height: 36px;
-            border-bottom: $table-border-color
+            border-bottom: $table-border-color;
         }
     }
 }

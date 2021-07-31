@@ -58,6 +58,11 @@ body {
     background-color: map-get($theme-background, background) !important;
 }
 
+.pxb-user-menu-avatar {
+    color: map-get($theme-foreground, text) !important;
+    background: unset !important;
+}
+
 /* Navigation */
 .pxb-drawer .pxb-drawer-nav-item-active-highlight {
     background-color: rgba(30, 99, 15, 0.14) !important;
@@ -88,7 +93,7 @@ body {
 .mat-table,
 .mat-tab-group,
 .mat-card {
-    box-shadow: none!important;
+    box-shadow: none !important;
     border: solid 1px map-get($theme-foreground, divider);
     border-radius: 4px;
 }

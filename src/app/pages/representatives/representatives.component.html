@@ -252,10 +252,11 @@
 <ng-template #allRepsList>
     <mat-card
         class=""
-        style="padding: 12px 12px; margin-bottom: 8px;"
+        style="padding: 12px 12px; margin-bottom: 8px"
         *ngFor="let rep of representatives; let i = index; trackBy: trackByFn"
         class="representatives-all-reps-card mat-elevation-z0"
-        [class.online]="rep.online" [class.offline]="!rep.online"
+        [class.online]="rep.online"
+        [class.offline]="!rep.online"
     >
         <div style="align-items: center; display: flex; margin-bottom: 12px">
             <span [style.fontSize.px]="16" style="margin-right: 16px; font-weight: 600"> #{{ i + 1 }}</span>

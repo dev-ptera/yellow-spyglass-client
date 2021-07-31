@@ -1,0 +1,14 @@
+.app-user-menu {
+    margin-right: -8px;
+    .pxb-drawer-header-icon-wrapper {
+        display: none !important;
+    }
+}
+.cdk-overlay-pane {
+    .pxb-drawer-header-icon-wrapper {
+        display: none !important;
+    }
+    .mat-toolbar.mat-toolbar-single-row {
+        background-color: unset !important;
+    }
+}
