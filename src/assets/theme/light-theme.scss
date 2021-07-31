@@ -79,6 +79,10 @@ body {
     color: $primary-green !important;
 }
 
+.warn {
+    color: $warn-red !important;
+}
+
 /* Representative Page */
 $online-color: $primary-green;
 $offline-color: $warn-red;
