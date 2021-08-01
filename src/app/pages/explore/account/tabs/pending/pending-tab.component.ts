@@ -50,11 +50,14 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
                 </div>
             </pxb-info-list-item>
         </mat-list>
+
+        <!--
         <div style="text-align: center; margin-top: 16px" *ngIf="pendingTxCount > shownPendingTransactions">
             <button color="primary" style="padding: 8px 16px" mat-stroked-button (click)="fetchMorePending()">
                 Load more
             </button>
         </div>
+        -->
 
         <pxb-empty-state
             responsive

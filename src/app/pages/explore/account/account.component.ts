@@ -49,20 +49,17 @@ export class AccountComponent implements OnChanges {
     readonly txPerPage = 50;
 
     confirmedTransactions: {
-        all: ConfirmedTransaction[];
+        all: Map<number, ConfirmedTransaction[]>;
         display: ConfirmedTransaction[];
     };
 
     pendingTransactions: {
-        all: PendingTransaction[];
         display: PendingTransaction[];
+        // TODO: Support loading more than 50 pending Tx.
     };
 
     paginatorSize = 50;
     confirmedTxPageIndex = 0;
-    pendingTxPageIndex = 0;
-    loadedConfirmedTxPages: Set<number>;
-    loadedPendingTxPages: Set<number>;
 
     constructor(
         public vp: ViewportService,
@@ -76,11 +73,6 @@ export class AccountComponent implements OnChanges {
     ) {}
 
     ngOnChanges(changes: SimpleChanges): void {
-        /*  if (changes.address && changes.address.currentValue) {
-            this._renderQRCode(this.address);
-        }
-
-       */
         if (changes.accountOverview && changes.accountOverview.currentValue) {
             this._prepareNewAccount();
         }
@@ -92,9 +84,6 @@ export class AccountComponent implements OnChanges {
      */
     private _prepareNewAccount(): void {
         this.confirmedTxPageIndex = 0;
-        this.pendingTxPageIndex = 0;
-        this.loadedConfirmedTxPages = new Set<number>().add(0);
-        this.loadedPendingTxPages = new Set<number>().add(0);
         this.insights = undefined;
         this.loadingInsights = false;
         this.insightsDisabled = this.accountOverview.completedTxCount > 50_000 || !this.accountOverview.opened;
@@ -143,25 +132,28 @@ export class AccountComponent implements OnChanges {
 
     private _prepareConfirmed(accountOverview: AccountOverviewDto): void {
         this.confirmedTransactions = {
-            all: [],
+            all: new Map<number, ConfirmedTransaction[]>(),
             display: [],
         };
+
+        const converted = [];
         for (const confirmedTx of accountOverview.confirmedTransactions) {
-            this.confirmedTransactions.all.push(this._convertConfirmedTxDtoToModal(confirmedTx));
+            converted.push(this._convertConfirmedTxDtoToModal(confirmedTx));
         }
-        this.confirmedTransactions.display = this.confirmedTransactions.all;
+        this.confirmedTransactions.all.set(0, converted);
+        this.confirmedTransactions.display = converted;
         this._fetchMonkeys(this.confirmedTransactions.display);
     }
 
     private _preparePending(accountOverview: AccountOverviewDto): void {
         this.pendingTransactions = {
-            all: [],
             display: [],
         };
+        const converted = [];
         for (const pendingTx of accountOverview.pendingTransactions) {
-            this.pendingTransactions.all.push(this._convertPendingTxDtoToModal(pendingTx));
+            converted.push(this._convertPendingTxDtoToModal(pendingTx));
         }
-        this.pendingTransactions.display = this.pendingTransactions.all;
+        this.pendingTransactions.display = converted;
         this._fetchMonkeys(this.pendingTransactions.display);
     }
 
@@ -246,27 +238,22 @@ export class AccountComponent implements OnChanges {
         return date.toTimeString().substr(0, 8);
     }
 
-    private _setDisplayTx(tx: { display: any[]; all: any[] }, pageIndex: number): void {
-        const pageSize = this.paginatorSize;
-        tx.display = tx.all.slice(pageIndex * pageSize, pageIndex * pageSize + pageSize);
-    }
-
     changePage(currPage: number): void {
         this.confirmedTxPageIndex = currPage;
-        if (this.loadedConfirmedTxPages.has(currPage)) {
-            this._setDisplayTx(this.confirmedTransactions, currPage);
+        const preloadedPage = this.confirmedTransactions.all.get(currPage);
+        if (preloadedPage) {
+            this.confirmedTransactions.display = preloadedPage;
             return;
         }
         this._apiService
             .confirmedTransactions(this.address, currPage * this.txPerPage, this.txPerPage)
             .then((data: ConfirmedTransactionDto[]) => {
-                this.loadedConfirmedTxPages.add(currPage);
+                const converted = [];
                 for (const tx of data) {
-                    this.confirmedTransactions.all.push(this._convertConfirmedTxDtoToModal(tx));
+                    converted.push(this._convertConfirmedTxDtoToModal(tx));
                 }
-                this.confirmedTransactions.all.sort((a, b) => (a.height < b.height ? 1 : -1));
-                // Debounce monkey fetch api?
-                this._setDisplayTx(this.confirmedTransactions, currPage);
+                this.confirmedTransactions.all.set(currPage, converted);
+                this.confirmedTransactions.display = converted;
                 this._fetchMonkeys(this.confirmedTransactions.display);
                 this._ref.detectChanges();
             })

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } 
 import { UtilService } from '@app/services/util/util.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 
+/** Paginator component.  Pages start at index 0. */
 @Component({
     selector: 'app-paginator',
     encapsulation: ViewEncapsulation.None,

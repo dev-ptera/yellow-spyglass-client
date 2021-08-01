@@ -6,7 +6,6 @@ import { ViewportService } from '../services/viewport/viewport.service';
 import { DrawerStateService } from '../services/drawer-state/drawer-state.service';
 import { APP_NAV_ITEMS, NavItem, EXPLORER_NAV_GROUP, NETWORK_NAV_GROUP } from './nav-items';
 import { SearchService } from '@app/services/search/search.service';
-import { ThemeService } from '@app/services/theme/theme.service';
 import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
@@ -84,7 +83,7 @@ export class NavigationComponent implements OnInit {
         return this._viewportService.isMedium() || this._viewportService.isSmall();
     }
 
-    private makeTitle(page: string): string {
+    private _makeTitle(page: string): string {
         return `Yellow Spyglass | ${page}`;
     }
 
@@ -97,7 +96,7 @@ export class NavigationComponent implements OnInit {
                     case `/${APP_NAV_ITEMS.search.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.search.title;
                         this._stateService.setSelectedItem(APP_NAV_ITEMS.search.title);
-                        this._title.setTitle(this.makeTitle('Explore'));
+                        this._title.setTitle(this._makeTitle('Explore'));
                         this._meta.updateTag({
                             name: 'description',
                             content:
@@ -108,7 +107,7 @@ export class NavigationComponent implements OnInit {
                     case `/${APP_NAV_ITEMS.representatives.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.representatives.title;
                         this._stateService.setSelectedItem(APP_NAV_ITEMS.representatives.title);
-                        this._title.setTitle(this.makeTitle('Representatives'));
+                        this._title.setTitle(this._makeTitle('Representatives'));
                         this._meta.updateTag({
                             name: 'description',
                             content: 'Search banano representatives, online offline reps, voting weight distribution',
@@ -118,7 +117,7 @@ export class NavigationComponent implements OnInit {
                     case `/${APP_NAV_ITEMS.network.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.network.title;
                         this._stateService.setSelectedItem(APP_NAV_ITEMS.network.title);
-                        this._title.setTitle(this.makeTitle('Network'));
+                        this._title.setTitle(this._makeTitle('Network'));
                         this._meta.updateTag({
                             name: 'description',
                             content: 'Banano network status, confirmation quorum, online representatives',
@@ -128,7 +127,7 @@ export class NavigationComponent implements OnInit {
                     case `/${APP_NAV_ITEMS.bookmarks.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.bookmarks.title;
                         this._stateService.setSelectedItem(undefined);
-                        this._title.setTitle(this.makeTitle('Bookmarks'));
+                        this._title.setTitle(this._makeTitle('Bookmarks'));
                         this._meta.updateTag({
                             name: 'description',
                             content: 'Save and name address or transaction hashes as bookmarks',
@@ -138,7 +137,7 @@ export class NavigationComponent implements OnInit {
                     case `/${APP_NAV_ITEMS.node.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.node.title;
                         this._stateService.setSelectedItem(APP_NAV_ITEMS.node.title);
-                        this._title.setTitle(this.makeTitle('Node'));
+                        this._title.setTitle(this._makeTitle('Node'));
                         this._meta.updateTag({
                             name: 'description',
                             content: 'Node status for the Yellow Spyglass explorer; batman representative',
@@ -148,7 +147,7 @@ export class NavigationComponent implements OnInit {
                     case `/${APP_NAV_ITEMS.wallets.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.wallets.title;
                         this._stateService.setSelectedItem(APP_NAV_ITEMS.wallets.title);
-                        this._title.setTitle(this.makeTitle('Wallets'));
+                        this._title.setTitle(this._makeTitle('Wallets'));
                         this._meta.updateTag({
                             name: 'description',
                             content: 'See banano distribution by account, top banano holders, rich list',
@@ -158,7 +157,7 @@ export class NavigationComponent implements OnInit {
                     case `/${APP_NAV_ITEMS.knownAccounts.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.knownAccounts.title;
                         this._stateService.setSelectedItem(APP_NAV_ITEMS.knownAccounts.title);
-                        this._title.setTitle(this.makeTitle('Known Accounts'));
+                        this._title.setTitle(this._makeTitle('Known Accounts'));
                         this._meta.updateTag({
                             name: 'description',
                             content:
