@@ -4,7 +4,11 @@
         <ng-container *ngIf="loading">Loading</ng-container>
     </div>
     <div class="app-page-subtitle">
-        A list of known accounts including exchanges, games, faucets, representatives & more.
+        <div>A list of known accounts including exchanges, games, faucets, representatives & more.</div>
+        <div>
+            Accounts with custom vanity MonKeys can be seen
+            <span (click)="routeVanityAddresses()" class="primary link">here</span>.
+        </div>
     </div>
 </ng-template>
 

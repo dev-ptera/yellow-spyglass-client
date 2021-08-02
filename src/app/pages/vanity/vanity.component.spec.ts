@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { KnownAccountsComponent } from '@app/pages/known-accounts/known-accounts.component';
-import { KnownAccountsModule } from '@app/pages/known-accounts/known-accounts.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { VanityComponent } from '@app/pages/vanity/vanity.component';
+import { VanityModule } from '@app/pages/vanity/vanity.module';
 import { RouterTestingModule } from '@angular/router/testing';
 
-describe('KnownAccountsComponent', () => {
-    let component: KnownAccountsComponent;
-    let fixture: ComponentFixture<KnownAccountsComponent>;
+describe('VanityComponent', () => {
+    let component: VanityComponent;
+    let fixture: ComponentFixture<VanityComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [KnownAccountsModule, HttpClientTestingModule, RouterTestingModule],
+            imports: [VanityModule, HttpClientTestingModule, RouterTestingModule],
         }).compileComponents();
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(KnownAccountsComponent);
+        fixture = TestBed.createComponent(VanityComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

@@ -1,0 +1,42 @@
+<ng-template #titleContent>
+    <div responsive>
+        <div class="app-page-title">
+            <ng-container *ngIf="!loading">Vanity MonKeys</ng-container>
+            <ng-container *ngIf="loading">Loading</ng-container>
+        </div>
+        <div class="app-page-subtitle">A showcase of accounts with custom vanity MonKeys.</div>
+    </div>
+</ng-template>
+
+<ng-template #bodyContent>
+    <div style="display: flex; justify-content: center; flex-wrap: wrap">
+        <mat-card
+            *ngFor="let address of vanityAddresses"
+            [style.maxWidth.px]="vp.sm ? 300 : 410"
+            [style.margin.px]="vp.sm ? 8 : 16"
+        >
+            <ng-container *ngIf="aliasService.has(address)">
+                <div mat-card-title (click)="search(address)" class="link">{{ aliasService.get(address) }}</div>
+                <div mat-card-subtitle (click)="search(address)" style="word-wrap: break-word" class="link">
+                    {{ address }}
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!aliasService.has(address)">
+                <div mat-card-title (click)="search(address)" style="word-wrap: break-word" class="link">
+                    {{ address }}
+                </div>
+            </ng-container>
+            <div *ngIf="monkeyCache.getMonkey(address)" [innerHTML]="monkeyCache.getMonkey(address) | safe"></div>
+        </mat-card>
+    </div>
+</ng-template>
+
+<div class="vanity-root app-page-root" responsive>
+    <div class="app-page-content">
+        <app-error *ngIf="error"></app-error>
+        <ng-container *ngIf="!error">
+            <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
+            <ng-template *ngIf="!loading" [ngTemplateOutlet]="bodyContent"></ng-template>
+        </ng-container>
+    </div>
+</div>

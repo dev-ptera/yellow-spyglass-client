@@ -10,6 +10,7 @@ import { RepresentativesModule } from '@app/pages/representatives/representative
 import { WalletsModule } from '@app/pages/wallets/wallets.module';
 import { NavigationModule } from './navigation/navigation.module';
 import { NetworkModule } from '@app/pages/network/network.module';
+import { VanityModule } from '@app/pages/vanity/vanity.module';
 
 @Component({
     selector: 'app-root',
@@ -30,6 +31,7 @@ export class AppComponent {}
         NodeMonitorModule,
         RepresentativesModule,
         RouterModule,
+        VanityModule,
         WalletsModule,
     ],
     bootstrap: [AppComponent],

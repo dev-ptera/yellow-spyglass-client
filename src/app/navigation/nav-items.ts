@@ -47,6 +47,12 @@ const bookmarksNavItem: NavItem = {
     icon: 'bookmarks',
 };
 
+const vanityNavItem: NavItem = {
+    title: 'Vanity MonKeys',
+    route: 'vanity',
+    icon: undefined,
+};
+
 export const APP_NAV_ITEMS = {
     knownAccounts: knownAccountsNavItem,
     bookmarks: bookmarksNavItem,
@@ -55,6 +61,7 @@ export const APP_NAV_ITEMS = {
     wallets: walletsNavItem,
     network: networkNavItem,
     node: nodeNavItem,
+    vanity: vanityNavItem,
 };
 
 export const EXPLORER_NAV_GROUP = [searchNavItem, walletsNavItem, knownAccountsNavItem];

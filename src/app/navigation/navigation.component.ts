@@ -165,6 +165,16 @@ export class NavigationComponent implements OnInit {
                         });
                         break;
                     }
+                    case `/${APP_NAV_ITEMS.vanity.route}`: {
+                        this.toolbarTitle = APP_NAV_ITEMS.vanity.title;
+                        this._stateService.setSelectedItem(APP_NAV_ITEMS.vanity.title);
+                        this._title.setTitle(this._makeTitle('Vanity MonKeys'));
+                        this._meta.updateTag({
+                            name: 'description',
+                            content: 'Banano addresses with custom vanity monKeys.',
+                        });
+                        break;
+                    }
                     default: {
                         this.toolbarTitle = '';
                     }

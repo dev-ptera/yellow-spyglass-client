@@ -5,6 +5,8 @@ import { SearchService } from '@app/services/search/search.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { APP_NAV_ITEMS } from '../../navigation/nav-items';
 
 @Component({
     selector: 'app-known-accounts',
@@ -23,6 +25,7 @@ export class KnownAccountsComponent implements OnInit {
         private readonly _ref: ChangeDetectorRef,
         private readonly _api: ApiService,
         private readonly _searchService: SearchService,
+        private readonly _router: Router,
         public vp: ViewportService
     ) {}
 
@@ -40,6 +43,10 @@ export class KnownAccountsComponent implements OnInit {
                 this.error = true;
                 this.loading = false;
             });
+    }
+
+    routeVanityAddresses(): void {
+        void this._router.navigate([APP_NAV_ITEMS.vanity.route]);
     }
 
     routeRepAddress(address: string): void {

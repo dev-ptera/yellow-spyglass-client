@@ -8,6 +8,7 @@ import { NodeMonitorComponent } from '@app/pages/node-monitor/node-monitor.compo
 import { WalletsComponent } from '@app/pages/wallets/wallets.component';
 import { KnownAccountsComponent } from '@app/pages/known-accounts/known-accounts.component';
 import { NetworkComponent } from '@app/pages/network/network.component';
+import { VanityComponent } from '@app/pages/vanity/vanity.component';
 
 const routes: Routes = [
     { path: '', redirectTo: APP_NAV_ITEMS.search.route, pathMatch: 'full' },
@@ -18,6 +19,7 @@ const routes: Routes = [
     { path: APP_NAV_ITEMS.wallets.route, component: WalletsComponent },
     { path: APP_NAV_ITEMS.knownAccounts.route, component: KnownAccountsComponent },
     { path: APP_NAV_ITEMS.network.route, component: NetworkComponent },
+    { path: APP_NAV_ITEMS.vanity.route, component: VanityComponent },
 ];
 @NgModule({
     imports: [RouterModule.forRoot(routes)],

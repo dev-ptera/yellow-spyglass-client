@@ -218,14 +218,6 @@ export class AccountComponent implements OnChanges {
         };
     }
 
-    /* private _renderQRCode(addr: string): void {
-        this._ref.detectChanges();
-        const canvas = document.getElementById('qr-code');
-        QRCode.toCanvas(canvas, addr, (error) => {
-            if (error) console.error(error);
-        });
-    } */
-
     private _formatDateString(timestamp: number): string {
         const date = new Date(timestamp * 1000);
         return `${date.getMonth() > 8 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`}/${
