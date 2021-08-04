@@ -31,12 +31,14 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
                     </div>
                     <div>
                         <span class="to-from">from</span>
-                        <span class="address" (click)="searchService.emitSearch(tx.address)">
+                        <span class="address link" (click)="searchService.emitSearch(tx.address)">
                             {{ ' ' + tx.address }}
                         </span>
                     </div>
                 </div>
-                <div pxb-subtitle class="hash" (click)="searchService.emitSearch(tx.hash)">{{ tx.hash }}</div>
+                <div pxb-subtitle class="hash">
+                    <span class="link" (click)="searchService.emitSearch(tx.hash)">{{ tx.hash }}</span>
+                </div>
                 <div pxb-right-content class="right-content">
                     <div
                         class="small-monkey"

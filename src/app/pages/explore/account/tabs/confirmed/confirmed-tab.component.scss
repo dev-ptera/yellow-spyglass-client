@@ -51,12 +51,6 @@
         }
         .address,
         .hash {
-            cursor: pointer;
-            &:hover {
-                text-decoration: underline;
-            }
-        }
-        .hash {
             font-weight: 400;
         }
         .height {
