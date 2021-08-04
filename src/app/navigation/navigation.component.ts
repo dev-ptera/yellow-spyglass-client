@@ -92,6 +92,10 @@ export class NavigationComponent implements OnInit {
         this.routeListener = this._router.events.subscribe((route) => {
             if (route instanceof NavigationEnd) {
                 window.scrollTo(0, 0);
+                const drawerContent = document.getElementsByClassName('mat-sidenav-content')[0];
+                if (drawerContent) {
+                    drawerContent.scroll(0,0);
+                }
                 switch (route.urlAfterRedirects.split('?')[0]) {
                     case `/${APP_NAV_ITEMS.search.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.search.title;
