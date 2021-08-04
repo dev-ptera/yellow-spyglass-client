@@ -35,7 +35,9 @@ import { UtilService } from '@app/services/util/util.service';
                     </div>
                     <div>
                         <span class="to-from">{{ tx.type === 'receive' ? ' from ' : 'to ' }}</span>
-                        <span class="address link" (click)="searchService.emitSearch(tx.address)">{{ tx.address }} </span>
+                        <span class="address link" (click)="searchService.emitSearch(tx.address)"
+                            >{{ tx.address }}
+                        </span>
                     </div>
                 </div>
                 <div pxb-subtitle class="hash">
