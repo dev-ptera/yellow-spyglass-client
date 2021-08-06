@@ -110,7 +110,8 @@ body {
 $online-color: $primary-green;
 $offline-color: $warn-red;
 $rep-border-color: map-get($theme-foreground, divider);
-@include representatives-theme($online-color, $offline-color, $rep-border-color);
+$table-address-color: map-get($theme-foreground, secondary-text);
+@include representatives-theme($online-color, $offline-color, $rep-border-color, $table-address-color);
 
 /* Wallets Page */
 $grid-stroke-color: map-get($pxb-gray, 800);
@@ -121,6 +122,7 @@ $grid-stroke-color: map-get($pxb-gray, 800);
 .pxb-list-item-tag-content .pxb-list-item-tag-label {
     font-weight: 400 !important;
 }
+
 /* Account Page */
 @mixin repOnlineTag {
     border: solid 1px $primary-green;

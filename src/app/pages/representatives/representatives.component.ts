@@ -47,7 +47,6 @@ export class RepresentativesComponent implements OnInit {
     monitoredRepsDataSource;
     monitoredRepDisplayColumns = [
         'name',
-        'address',
         'version',
         'delegatorsCount',
         'weight',

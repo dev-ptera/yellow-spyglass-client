@@ -78,10 +78,6 @@
     width: 100%;
 }
 
-.representatives-name-cell {
-    font-weight: 600;
-    word-break: break-word;
-}
 .representatives-address-cell {
     word-break: break-all;
     padding: 4px 16px 4px 16px !important;
@@ -126,9 +122,9 @@ th.mat-sort-header-sorted {
     color: black;
 }
 
-@mixin representatives-theme($online-color, $offline-color, $rep-card-border-color) {
-    .representatives-name-cell {
-        color: $online-color !important;
+@mixin representatives-theme($online-color, $offline-color, $rep-card-border-color, $table-address-color) {
+    .monitored-reps-table-address {
+        color: $table-address-color!important;
     }
     .monitored-reps-table .unchecked-blocks {
         color: $offline-color;
