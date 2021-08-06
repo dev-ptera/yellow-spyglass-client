@@ -19,6 +19,7 @@ import { AliasService } from '@app/services/alias/alias.service';
 })
 export class RepresentativesComponent implements OnInit {
     Highcharts: typeof Highcharts = Highcharts;
+    showOfflineRepsFilter = true;
     loading = true;
     error = false;
     pieChartColors = [
@@ -54,6 +55,7 @@ export class RepresentativesComponent implements OnInit {
         'uncheckedBlocks',
     ];
     allRepsDisplayColumns = ['position', 'address', 'weight', 'delegatorsCount', 'online', 'uptimePercentMonth'];
+    allRepsFilteredList = [];
 
     @ViewChild('sortAll') sortAll: MatSort;
     @ViewChild('sortMonitored') sortMonitored: MatSort;
@@ -83,6 +85,7 @@ export class RepresentativesComponent implements OnInit {
                 this.repsChart = this._createRepChart(this.representatives);
                 this.loading = false;
                 this.configureTables();
+                this.updateAllRepsList();
             })
             .catch((err) => {
                 console.error(err);
@@ -122,6 +125,16 @@ export class RepresentativesComponent implements OnInit {
 
     trackByFn(index: number): number {
         return index;
+    }
+
+    /** This is only used on mobile viewports. */
+    updateAllRepsList(): void {
+        if (this.showOfflineRepsFilter) {
+            this.allRepsFilteredList = this.representatives;
+            return;
+        }
+        this.allRepsFilteredList = [];
+        this.representatives.map((rep) => (rep.online ? this.allRepsFilteredList.push(rep) : undefined));
     }
 
     private _createRepChart(reps: RepresentativeDto[]): Options {

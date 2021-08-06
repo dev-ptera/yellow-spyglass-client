@@ -29,11 +29,7 @@
                 [style.fontSize.px]="vp.sm ? 12 : 15"
             >
                 <div class="representatives-legend-color" [style.backgroundColor]="pieChartColors[i]"></div>
-                <div
-                    class="link"
-                    [class.representatives-legend-others]="last"
-                    (click)="routeRepAddress(rep.address)"
-                >
+                <div class="link" [class.representatives-legend-others]="last" (click)="routeRepAddress(rep.address)">
                     <ng-container *ngIf="aliasService.has(rep.address)">
                         {{ aliasService.get(rep.address) }}
                     </ng-container>
@@ -250,10 +246,18 @@
 </ng-template>
 
 <ng-template #allRepsList>
+    <mat-slide-toggle
+        color="primary"
+        class="app-section-subtitle"
+        [(ngModel)]="showOfflineRepsFilter"
+        (change)="updateAllRepsList()"
+    >
+        Show offline representatives
+    </mat-slide-toggle>
     <mat-card
         class=""
         style="padding: 12px 12px; margin-bottom: 8px"
-        *ngFor="let rep of representatives; let i = index; trackBy: trackByFn"
+        *ngFor="let rep of allRepsFilteredList; let i = index; trackBy: trackByFn"
         class="representatives-all-reps-card mat-elevation-z0"
         [class.online]="rep.online"
         [class.offline]="!rep.online"
