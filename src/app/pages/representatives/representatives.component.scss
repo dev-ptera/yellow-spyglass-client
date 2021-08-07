@@ -122,9 +122,18 @@ th.mat-sort-header-sorted {
     color: black;
 }
 
-@mixin representatives-theme($online-color, $offline-color, $rep-card-border-color, $table-address-color) {
+@mixin representatives-theme(
+    $online-color,
+    $offline-color,
+    $rep-card-border-color,
+    $monitored-reps-table-address-color,
+    $principalTag
+) {
+    .principal-tag {
+        @include principalTag();
+    }
     .monitored-reps-table-address {
-        color: $table-address-color!important;
+        color: $monitored-reps-table-address-color !important;
     }
     .monitored-reps-table .unchecked-blocks {
         color: $offline-color;
@@ -145,8 +154,5 @@ th.mat-sort-header-sorted {
         .offline {
             color: $offline-color !important;
         }
-    }
-    .list-divider {
-        background-color: #f7f8f8 !important;
     }
 }

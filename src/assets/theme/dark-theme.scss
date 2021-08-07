@@ -111,7 +111,12 @@ $online-color: $primary-green;
 $offline-color: $warn-red;
 $rep-border-color: map-get($theme-foreground, divider);
 $table-address-color: map-get($theme-foreground, secondary-text);
-@include representatives-theme($online-color, $offline-color, $rep-border-color, $table-address-color);
+@mixin principalTag {
+    border: solid 1px $primary-green;
+    background-color: unset !important;
+    color: $primary-green !important;
+}
+@include representatives-theme($online-color, $offline-color, $rep-border-color, $table-address-color, principalTag);
 
 /* Wallets Page */
 $grid-stroke-color: map-get($pxb-gray, 800);

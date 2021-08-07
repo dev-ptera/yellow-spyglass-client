@@ -37,7 +37,7 @@ export class RepresentativesComponent implements OnInit {
     ];
 
     onlineWeight: number;
-    representatives: RepresentativeDto[] = [];
+    unfilteredAllReps: RepresentativeDto[] = [];
     monitoredReps: MonitoredRepDto[] = [];
 
     repsChart: Options;
@@ -45,16 +45,10 @@ export class RepresentativesComponent implements OnInit {
 
     allRepsDataSource;
     monitoredRepsDataSource;
-    monitoredRepDisplayColumns = [
-        'name',
-        'version',
-        'delegatorsCount',
-        'weight',
-        'peers',
-        'uncheckedBlocks',
-    ];
+    monitoredRepDisplayColumns = ['name', 'version', 'delegatorsCount', 'weight', 'peers', 'uncheckedBlocks'];
     allRepsDisplayColumns = ['position', 'address', 'weight', 'delegatorsCount', 'online', 'uptimePercentMonth'];
-    allRepsFilteredList = [];
+    filteredAllReps = [];
+    onlineRepsCount = 0;
 
     @ViewChild('sortAll') sortAll: MatSort;
     @ViewChild('sortMonitored') sortMonitored: MatSort;
@@ -78,13 +72,14 @@ export class RepresentativesComponent implements OnInit {
         this._api
             .representatives()
             .then((data: RepresentativesResponseDto) => {
-                this.representatives = data.thresholdReps;
+                this.unfilteredAllReps = data.thresholdReps;
                 this.monitoredReps = data.monitoredReps;
                 this.onlineWeight = data.onlineWeight;
-                this.repsChart = this._createRepChart(this.representatives);
+                this.repsChart = this._createRepChart(this.unfilteredAllReps);
                 this.loading = false;
-                this.configureTables();
+                data.thresholdReps.map((rep) => (rep.online ? this.onlineRepsCount++ : undefined));
                 this.updateAllRepsList();
+                this.configureTables();
             })
             .catch((err) => {
                 console.error(err);
@@ -96,7 +91,7 @@ export class RepresentativesComponent implements OnInit {
     configureTables(): void {
         this._ref.detectChanges();
         this.monitoredRepsDataSource = new MatTableDataSource(this.monitoredReps);
-        this.allRepsDataSource = new MatTableDataSource(this.representatives);
+        this.allRepsDataSource = new MatTableDataSource(this.filteredAllReps);
         this._ref.detectChanges();
         this.monitoredRepsDataSource.sort = this.sortMonitored;
         this.allRepsDataSource.sort = this.sortAll;
@@ -108,10 +103,6 @@ export class RepresentativesComponent implements OnInit {
 
     formatWeightPercent(weight: number): string {
         return `${((weight / this.onlineWeight) * 100).toFixed(3).replace(/\.?0+$/, '')}%`;
-    }
-
-    formatTableAddress(addr: string): string {
-        return `${addr.substr(0, 12)}...${this.vp.md ? '' : addr.substr(addr.length - 6, addr.length)}`;
     }
 
     formatListAddress(addr: string): string {
@@ -129,11 +120,14 @@ export class RepresentativesComponent implements OnInit {
     /** This is only used on mobile viewports. */
     updateAllRepsList(): void {
         if (this.showOfflineRepsFilter) {
-            this.allRepsFilteredList = this.representatives;
-            return;
+            this.filteredAllReps = this.unfilteredAllReps;
+        } else {
+            this.filteredAllReps = [];
+            this.unfilteredAllReps.map((rep) => (rep.online ? this.filteredAllReps.push(rep) : undefined));
         }
-        this.allRepsFilteredList = [];
-        this.representatives.map((rep) => (rep.online ? this.allRepsFilteredList.push(rep) : undefined));
+        if (!this.vp.sm) {
+            this.configureTables();
+        }
     }
 
     private _createRepChart(reps: RepresentativeDto[]): Options {
