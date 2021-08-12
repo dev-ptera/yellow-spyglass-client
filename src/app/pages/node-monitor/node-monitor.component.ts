@@ -20,59 +20,112 @@ import { ApiService } from '@app/services/api/api.service';
         </ng-template>
 
         <ng-template #bodyContent>
-            <div class="monitor-section">
-                <div>
-                    <span class="app-section-title">Address</span>
-                    <span class="app-section-subtitle link primary" (click)="search(stats.address)">{{
-                        stats.address
-                    }}</span>
-                </div>
-            </div>
-            <div class="monitor-section">
-                <div>
-                    <span class="app-section-title">Version</span>
-                    <span class="app-section-subtitle">{{ stats.version }}</span>
-                </div>
-            </div>
-            <div class="monitor-section">
-                <div>
-                    <span class="app-section-title">Memory Usage</span>
-                    <span class="app-section-subtitle">
-                        {{ formatMem(stats.usedMem) }} / {{ formatMem(stats.totalMem) }}GB
-                        <span class="mat-subheading-1" [style.marginLeft.px]="8">
-                            ({{ formatMemoryPercentage(stats.usedMem / stats.totalMem) }}%)
-                        </span>
-                    </span>
-                </div>
-            </div>
-            <div class="monitor-section">
-                <div>
-                    <span class="app-section-title">Current Block</span>
-                    <span class="app-section-subtitle">{{ util.numberWithCommas(stats.currentBlock) }}</span>
-                </div>
-            </div>
-            <div class="monitor-section">
-                <div>
-                    <span class="app-section-title">Unchecked Blocks</span>
-                    <span class="app-section-subtitle">{{ util.numberWithCommas(stats.uncheckedBlocks) }}</span>
-                </div>
-            </div>
-            <div class="monitor-section">
-                <div>
-                    <span class="app-section-title">Location</span>
-                    <span class="app-section-subtitle">{{ stats.location }}</span>
-                </div>
-            </div>
-            <div class="monitor-section">
-                <div>
-                    <span class="app-section-title">Peers</span>
-                    <span class="app-section-subtitle">{{ stats.peers }}</span>
-                </div>
-            </div>
+            <mat-card>
+                <div class="primary node-monitor-section-title">Node</div>
+                <mat-divider></mat-divider>
+                <mat-list [style.paddingTop.px]="0">
+                    <pxb-info-list-item [wrapSubtitle]="true" divider="full">
+                        <div pxb-icon>
+                            <mat-icon>how_to_vote</mat-icon>
+                        </div>
+                        <div pxb-title>Address</div>
+                        <div pxb-subtitle>
+                            <span class="link primary" (click)="search(stats.address)">{{ stats.address }}</span>
+                        </div>
+                    </pxb-info-list-item>
+                    <pxb-info-list-item>
+                        <div pxb-icon>
+                            <mat-icon>browser_updated</mat-icon>
+                        </div>
+                        <div pxb-title>Version</div>
+                        <div pxb-subtitle>{{ stats.version }}</div>
+                    </pxb-info-list-item>
+                </mat-list>
+            </mat-card>
+            <mat-card>
+                <div class="primary node-monitor-section-title">Block Count</div>
+                <mat-divider></mat-divider>
+                <mat-list [style.paddingTop.px]="0">
+                    <pxb-info-list-item divider="full">
+                        <div pxb-icon>
+                            <mat-icon>check_circle</mat-icon>
+                        </div>
+                        <div pxb-title>Current Block</div>
+                        <div pxb-subtitle>
+                            {{ util.numberWithCommas(stats.currentBlock) }}
+                        </div>
+                    </pxb-info-list-item>
+                    <pxb-info-list-item divider="full">
+                        <div pxb-icon>
+                            <mat-icon>check_circle</mat-icon>
+                        </div>
+                        <div pxb-title>Cemented Blocks</div>
+                        <div pxb-subtitle>
+                            {{ util.numberWithCommas(stats.cementedBlocks) }}
+                        </div>
+                    </pxb-info-list-item>
+                    <pxb-info-list-item>
+                        <div pxb-icon>
+                            <mat-icon>running_with_errors</mat-icon>
+                        </div>
+                        <div pxb-title>Unchecked Blocks</div>
+                        <div pxb-subtitle>
+                            {{ util.numberWithCommas(stats.uncheckedBlocks) }}
+                        </div>
+                    </pxb-info-list-item>
+                </mat-list>
+            </mat-card>
+            <mat-card>
+                <div class="primary node-monitor-section-title">System Resources</div>
+                <mat-divider></mat-divider>
+                <mat-list [style.paddingTop.px]="0">
+                    <pxb-info-list-item>
+                        <div pxb-icon>
+                            <mat-icon>memory</mat-icon>
+                        </div>
+                        <div pxb-title>Memory Usage</div>
+                        <div pxb-subtitle>
+                            {{ formatMem(stats.usedMem) }} / {{ formatMem(stats.totalMem) }}GB
+                            <span class="mat-subheading-1" [style.marginLeft.px]="8">
+                                ({{ formatMemoryPercentage(stats.usedMem / stats.totalMem) }}%)
+                            </span>
+                        </div>
+                    </pxb-info-list-item>
+                </mat-list>
+            </mat-card>
+            <mat-card>
+                <div class="primary node-monitor-section-title">Connectivity</div>
+                <mat-divider></mat-divider>
+                <mat-list [style.paddingTop.px]="0">
+                    <pxb-info-list-item divider="full">
+                        <div pxb-icon>
+                            <mat-icon>account_circle</mat-icon>
+                        </div>
+                        <div pxb-title>Peers</div>
+                        <div pxb-subtitle>{{ stats.peers }}</div>
+                    </pxb-info-list-item>
+                    <pxb-info-list-item divider="full">
+                        <div pxb-icon>
+                            <mat-icon>timer</mat-icon>
+                        </div>
+                        <div pxb-title>Uptime</div>
+                        <div pxb-subtitle>{{ formatUptime(stats.nodeUptimeStartup) }}</div>
+                    </pxb-info-list-item>
+                    <pxb-info-list-item>
+                        <div pxb-icon>
+                            <mat-icon>place</mat-icon>
+                        </div>
+                        <div pxb-title>Location</div>
+                        <div pxb-subtitle>
+                            {{ stats.location }}
+                        </div>
+                    </pxb-info-list-item>
+                </mat-list>
+            </mat-card>
         </ng-template>
 
         <div class="app-page-root" responsive>
-            <div class="app-page-content">
+            <div class="app-page-content node-monitor-content">
                 <app-error *ngIf="error"></app-error>
                 <ng-container *ngIf="!error">
                     <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
@@ -116,6 +169,10 @@ export class NodeMonitorComponent implements OnInit {
 
     search(value: string): void {
         this._searchService.emitSearch(value);
+    }
+
+    formatUptime(seconds: number): string {
+        return `~ ${Math.round(seconds / 60 / 60 / 24)} days`;
     }
 
     openMonitoredRep(ip: string): void {
