@@ -343,7 +343,7 @@
                 [dense]="false"
                 divider="full"
             >
-                <div pxb-left-content style="width: 32px">#{{ i + 1 }}</div>
+                <div pxb-left-content style="width: 32px"  [style.marginLeft.px]="vp.sm ? 0 : 16">#{{ i + 1 }}</div>
                 <div pxb-title class="primary">{{ aliasService.get(rep.address) }}</div>
                 <div pxb-subtitle style="font-size: 0.875rem">{{ formatMicroRepInfoList(rep) }}</div>
                 <div pxb-info>
@@ -351,7 +351,7 @@
                         formatMicroListAddress(rep.address)
                     }}</span>
                 </div>
-                <div pxb-right-content style="display: flex; flex-direction: column; align-items: flex-end">
+                <div pxb-right-content style="display: flex; flex-direction: column; align-items: flex-end" [style.marginRight.px]="vp.sm ? 0 : 16">
                     <div style="font-size: 0.875rem">{{ formatBanWeight(rep.weight) }} BAN</div>
                     <div style="font-size: 0.75rem">{{ formatWeightPercent(rep.weight) }} weight</div>
                 </div>
