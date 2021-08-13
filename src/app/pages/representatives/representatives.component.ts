@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { ApiService } from '@app/services/api/api.service';
-import { MonitoredRepDto, RepresentativeDto, RepresentativesResponseDto } from '@app/types/dto';
+import { MicroRepresentativeDto, MonitoredRepDto, RepresentativeDto, RepresentativesResponseDto } from '@app/types/dto';
 import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -37,18 +37,20 @@ export class RepresentativesComponent implements OnInit {
     ];
 
     onlineWeight: number;
-    unfilteredAllReps: RepresentativeDto[] = [];
+    unfilteredLargeReps: RepresentativeDto[] = [];
     monitoredReps: MonitoredRepDto[] = [];
 
     repsChart: Options;
     chartShownReps: Array<{ name: string; address: string }> = [];
 
-    allRepsDataSource;
+    largeRepsDataSource;
     monitoredRepsDataSource;
     monitoredRepDisplayColumns = ['name', 'version', 'delegatorsCount', 'weight', 'peers', 'uncheckedBlocks'];
-    allRepsDisplayColumns = ['position', 'address', 'weight', 'delegatorsCount', 'online', 'uptimePercentMonth'];
-    filteredAllReps = [];
-    onlineRepsCount = 0;
+    largeRepsDisplayColumns = ['position', 'address', 'weight', 'delegatorsCount', 'online', 'uptimePercentMonth'];
+    filteredLargeReps: RepresentativeDto[] = [];
+    microReps: MicroRepresentativeDto[] = [];
+    onlineLargeRepsCount = 0;
+    onlineMicroRepsCount = 0;
 
     @ViewChild('sortAll') sortAll: MatSort;
     @ViewChild('sortMonitored') sortMonitored: MatSort;
@@ -72,13 +74,15 @@ export class RepresentativesComponent implements OnInit {
         this._api
             .representatives()
             .then((data: RepresentativesResponseDto) => {
-                this.unfilteredAllReps = data.thresholdReps;
+                this.unfilteredLargeReps = data.thresholdReps;
                 this.monitoredReps = data.monitoredReps;
                 this.onlineWeight = data.onlineWeight;
-                this.repsChart = this._createRepChart(this.unfilteredAllReps);
+                this.microReps = data.microReps;
+                this.repsChart = this._createRepChart(this.unfilteredLargeReps);
                 this.loading = false;
-                data.thresholdReps.map((rep) => (rep.online ? this.onlineRepsCount++ : undefined));
-                this.updateAllRepsList();
+                data.thresholdReps.map((rep) => (rep.online ? this.onlineLargeRepsCount++ : undefined));
+                data.microReps.map(() => this.onlineMicroRepsCount++);
+                this.updateLargeRepsList();
                 this.configureTables();
             })
             .catch((err) => {
@@ -91,22 +95,14 @@ export class RepresentativesComponent implements OnInit {
     configureTables(): void {
         this._ref.detectChanges();
         this.monitoredRepsDataSource = new MatTableDataSource(this.monitoredReps);
-        this.allRepsDataSource = new MatTableDataSource(this.filteredAllReps);
+        this.largeRepsDataSource = new MatTableDataSource(this.filteredLargeReps);
         this._ref.detectChanges();
         this.monitoredRepsDataSource.sort = this.sortMonitored;
-        this.allRepsDataSource.sort = this.sortAll;
+        this.largeRepsDataSource.sort = this.sortAll;
     }
 
     numberWithCommas(count: number): string {
         return `${this._util.numberWithCommas(count)}`;
-    }
-
-    formatWeightPercent(weight: number): string {
-        return `${((weight / this.onlineWeight) * 100).toFixed(3).replace(/\.?0+$/, '')}%`;
-    }
-
-    formatListAddress(addr: string): string {
-        return `${addr.substr(0, 12)}...${addr.substr(addr.length - 6, addr.length)}`;
     }
 
     formatBanWeight(weight: number): string {
@@ -118,12 +114,12 @@ export class RepresentativesComponent implements OnInit {
     }
 
     /** This is only used on mobile viewports. */
-    updateAllRepsList(): void {
+    updateLargeRepsList(): void {
         if (this.showOfflineRepsFilter) {
-            this.filteredAllReps = this.unfilteredAllReps;
+            this.filteredLargeReps = this.unfilteredLargeReps;
         } else {
-            this.filteredAllReps = [];
-            this.unfilteredAllReps.map((rep) => (rep.online ? this.filteredAllReps.push(rep) : undefined));
+            this.filteredLargeReps = [];
+            this.unfilteredLargeReps.map((rep) => (rep.online ? this.filteredLargeReps.push(rep) : undefined));
         }
         if (!this.vp.sm) {
             this.configureTables();
@@ -223,14 +219,6 @@ export class RepresentativesComponent implements OnInit {
         };
     }
 
-    formatVersion(version: string): string {
-        return version.replace('BANANO', '');
-    }
-
-    formatChartAddress(addr: string): string {
-        return `${addr.substr(0, 11)}...`;
-    }
-
     openMonitoredRep(ip: string): void {
         window.open(`http://${ip}`, '_blank');
     }
@@ -241,9 +229,36 @@ export class RepresentativesComponent implements OnInit {
         }
     }
 
-    formatInfoLine(rep: MonitoredRepDto): string {
+    formatVersion(version: string): string {
+        if (version) {
+            return version.replace('BANANO', '');
+        }
+        return '';
+    }
+
+    formatChartAddress(addr: string): string {
+        return `${addr.substr(0, 11)}...`;
+    }
+
+    formatMonitoredRepInfoLine(rep: MonitoredRepDto): string {
         return `${this.formatVersion(rep.version)} · ${this.numberWithCommas(
             rep.delegatorsCount
         )} delegators · ${this.numberWithCommas(rep.peers)} peers`;
+    }
+
+    formatMicroRepInfoList(rep: MicroRepresentativeDto): string {
+        return `${this.numberWithCommas(rep.delegatorsCount)} delegators`;
+    }
+
+    formatWeightPercent(weight: number): string {
+        return `${((weight / this.onlineWeight) * 100).toFixed(3).replace(/\.?0+$/, '')}%`;
+    }
+
+    formatMonitoredListAddress(addr: string): string {
+        return `${addr.substr(0, 12)}...${addr.substr(addr.length - 6, addr.length)}`;
+    }
+
+    formatMicroListAddress(addr: string): string {
+        return this.vp.sm ? this.formatMonitoredListAddress(addr) : addr;
     }
 }

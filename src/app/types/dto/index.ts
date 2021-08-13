@@ -9,6 +9,7 @@ export * from './ConsensusStatsDto';
 export * from './DelegatorDto';
 export * from './InsightsDto';
 export * from './KnownAccountDto';
+export * from './MicroRepresentativeDto';
 export * from './MonitoredRepDto';
 export * from './NetworkStatsDto';
 export * from './PeerVersionsDto';
