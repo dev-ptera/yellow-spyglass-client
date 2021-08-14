@@ -12,19 +12,19 @@ $dark-theme: map-merge(
     mat-dark-theme($material-theme-primary, $material-theme-accent, $material-theme-warn),
     (
         foreground: (
-            text: map-get($pxb-black, 50),
+            text: map-get($pxb-black, 100),
             secondary-text: map-get($pxb-black, 200),
             hint-text: map-get($pxb-black, 200),
-            base: map-get($pxb-white, 50),
+            base: map-get($pxb-white, 100),
             divider: rgba(map-get($pxb-black, 200), 0.36),
             dividers: rgba(map-get($pxb-black, 200), 0.36),
             disabled: rgba(map-get($pxb-black, 300), 0.36),
             disabled-button: rgba(white, 0.3),
             disabled-text: rgba(map-get($pxb-black, 300), 0.36),
             elevation: map-get($pxb-darkBlack, 900),
-            icon: map-get($pxb-black, 50),
-            icons: map-get($pxb-black, 50),
-            slider-min: map-get($pxb-black, 50),
+            icon: map-get($pxb-black, 100),
+            icons: map-get($pxb-black, 100),
+            slider-min: map-get($pxb-black, 100),
             slider-off: rgba(white, 0.3),
             slider-off-active: rgba(white, 0.3),
         ),
@@ -36,7 +36,7 @@ $dark-theme: map-merge(
             card: map-get($pxb-black, 900),
             dialog: map-get($pxb-black, 900),
             disabled-button: rgba(white, 0.12),
-            raised-button: map-get($pxb-black, 500),
+            raised-button: map-get($pxb-black, 1000),
             focused-button: $light-focused,
             selected-button: map_get($mat-grey, 900),
             selected-disabled-button: map_get($mat-grey, 800),
@@ -52,6 +52,7 @@ $theme-background: map-get($dark-theme, background);
 
 $primary-green: map-get($pxb-green, 200);
 $warn-red: map-get($pxb-red, 200);
+$tag-opacity: .06;
 
 html,
 body {
@@ -70,11 +71,11 @@ body {
 .mat-toolbar.mat-primary,
 .navigation-app-header-container {
     background-color: map-get($brand-pine, 700) !important;
-    color: white !important;
+    color: map-get($theme-foreground, text) !important;
 }
 .pxb-drawer-header-content,
 .navigation-app-header-container {
-    color: map-get($pxb-darkBlack, 500) !important;
+    color: map-get($pxb-darkBlack, 1000) !important;
 }
 
 .bookmarked-button {
@@ -106,18 +107,6 @@ body {
     //  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%232ca618' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
 }
 
-/* Representative Page */
-$online-color: $primary-green;
-$offline-color: $warn-red;
-$rep-border-color: map-get($theme-foreground, divider);
-$table-address-color: map-get($theme-foreground, secondary-text);
-@mixin principalTag {
-    border: solid 1px $primary-green;
-    background-color: unset !important;
-    color: $primary-green !important;
-}
-@include representatives-theme($online-color, $offline-color, $rep-border-color, $table-address-color, principalTag);
-
 /* Wallets Page */
 $grid-stroke-color: map-get($pxb-gray, 800);
 @include wallets-theme($theme-foreground, $theme-background, $grid-stroke-color);
@@ -140,23 +129,24 @@ $grid-stroke-color: map-get($pxb-gray, 800);
     color: $warn-red !important;
 }
 @mixin heightTag {
-    color: map-get($theme-foreground, text);
-    border: solid 1px map-get($theme-foreground, text);
+    color: map-get($theme-foreground, secondary-text);
+    background-color: rgba(map-get($theme-foreground, secondary-text), $tag-opacity) !important;
+    border: solid 1px map-get($theme-foreground, secondary-text) !important;
 }
 @mixin sendTag {
     border: solid 1px $warn-red;
-    background-color: unset;
+    background-color: rgba($warn-red, $tag-opacity) !important;
     color: $warn-red !important;
 }
 @mixin receiveTag {
     border: solid 1px $primary-green;
-    background-color: unset;
+    background-color: rgba($primary-green, $tag-opacity) !important;
     color: $primary-green !important;
     font-weight: 400;
 }
 @mixin changeTag {
     border: solid 1px map-get($pxb-blue, 200);
-    background-color: unset;
+    background-color: rgba(map-get($pxb-blue, 200), $tag-opacity) !important;
     color: map-get($pxb-blue, 200) !important;
     font-weight: 400;
 }
@@ -179,5 +169,20 @@ $hashColor: map-get($pxb-gray, 400);
     $hashColor
 );
 
+
+
+/* Representative Page */
+$online-color: $primary-green;
+$offline-color: $warn-red;
+$rep-border-color: map-get($theme-foreground, divider);
+$table-address-color: map-get($theme-foreground, text);
+@mixin principalTag {
+    border: solid 1px $primary-green;
+    background-color: rgba($primary-green, $tag-opacity) !important;
+    color: $primary-green !important;
+}
+@include representatives-theme($online-color, $offline-color, $rep-border-color, $table-address-color, receiveTag);
+
+/* Network Page */
 $network-table-border: solid 1px map-get($theme-foreground, divider);
 @include network-theme($network-table-border);
