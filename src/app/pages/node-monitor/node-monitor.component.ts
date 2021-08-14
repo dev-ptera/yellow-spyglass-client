@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { UtilService } from '@app/services/util/util.service';
 import { SearchService } from '@app/services/search/search.service';
-import { MonitoredRepDto } from '@app/types/dto';
+import { HostNodeStatsDto } from '@app/types/dto';
 import { ApiService } from '@app/services/api/api.service';
 
 @Component({
@@ -79,7 +79,7 @@ import { ApiService } from '@app/services/api/api.service';
                 <div class="primary node-monitor-section-title">System Resources</div>
                 <mat-divider></mat-divider>
                 <mat-list [style.paddingTop.px]="0">
-                    <pxb-info-list-item>
+                    <pxb-info-list-item divider="full">
                         <div pxb-icon>
                             <mat-icon>memory</mat-icon>
                         </div>
@@ -90,6 +90,13 @@ import { ApiService } from '@app/services/api/api.service';
                                 ({{ formatMemoryPercentage(stats.usedMem / stats.totalMem) }}%)
                             </span>
                         </div>
+                    </pxb-info-list-item>
+                    <pxb-info-list-item>
+                        <div pxb-icon>
+                            <mat-icon>storage</mat-icon>
+                        </div>
+                        <div pxb-title>Ledger Size</div>
+                        <div pxb-subtitle>{{ util.numberWithCommas(stats.ledgerSizeMb) }} MB</div>
                     </pxb-info-list-item>
                 </mat-list>
             </mat-card>
@@ -138,7 +145,7 @@ import { ApiService } from '@app/services/api/api.service';
     encapsulation: ViewEncapsulation.None,
 })
 export class NodeMonitorComponent implements OnInit {
-    stats: MonitoredRepDto;
+    stats: HostNodeStatsDto;
     loading = true;
     error = false;
 
@@ -152,7 +159,7 @@ export class NodeMonitorComponent implements OnInit {
     ngOnInit(): void {
         this._api
             .node()
-            .then((stats: MonitoredRepDto) => {
+            .then((stats: HostNodeStatsDto) => {
                 this.stats = stats;
                 this.loading = false;
             })

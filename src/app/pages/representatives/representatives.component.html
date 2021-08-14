@@ -76,7 +76,7 @@
         <span class="app-caption">({{ onlineMicroRepsCount }})</span>
     </div>
     <div class="app-section-subtitle">
-        Small online representatives with less than 100,000 BANANO weight delegated towards them.
+        Online representatives with less than 100,000 BANANO weight delegated towards them.
     </div>
     <ng-template [ngTemplateOutlet]="microRepsList"></ng-template>
 </ng-template>
@@ -343,7 +343,7 @@
                 [dense]="false"
                 divider="full"
             >
-                <div pxb-left-content style="width: 32px"  [style.marginLeft.px]="vp.sm ? 0 : 16">#{{ i + 1 }}</div>
+                <div pxb-left-content style="width: 32px" [style.marginLeft.px]="vp.sm ? 0 : 16">#{{ i + 1 }}</div>
                 <div pxb-title class="primary">{{ aliasService.get(rep.address) }}</div>
                 <div pxb-subtitle style="font-size: 0.875rem">{{ formatMicroRepInfoList(rep) }}</div>
                 <div pxb-info>
@@ -351,7 +351,11 @@
                         formatMicroListAddress(rep.address)
                     }}</span>
                 </div>
-                <div pxb-right-content style="display: flex; flex-direction: column; align-items: flex-end" [style.marginRight.px]="vp.sm ? 0 : 16">
+                <div
+                    pxb-right-content
+                    style="display: flex; flex-direction: column; align-items: flex-end"
+                    [style.marginRight.px]="vp.sm ? 0 : 16"
+                >
                     <div style="font-size: 0.875rem">{{ formatBanWeight(rep.weight) }} BAN</div>
                     <div style="font-size: 0.75rem">{{ formatWeightPercent(rep.weight) }} weight</div>
                 </div>
