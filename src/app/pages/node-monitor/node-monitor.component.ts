@@ -91,12 +91,19 @@ import { ApiService } from '@app/services/api/api.service';
                             </span>
                         </div>
                     </pxb-info-list-item>
+                    <pxb-info-list-item divider="full">
+                        <div pxb-icon>
+                            <mat-icon>download</mat-icon>
+                        </div>
+                        <div pxb-title>Ledger Size</div>
+                        <div pxb-subtitle>{{ util.numberWithCommas(stats.ledgerSizeMb) }} MB</div>
+                    </pxb-info-list-item>
                     <pxb-info-list-item>
                         <div pxb-icon>
                             <mat-icon>storage</mat-icon>
                         </div>
-                        <div pxb-title>Ledger Size</div>
-                        <div pxb-subtitle>{{ util.numberWithCommas(stats.ledgerSizeMb) }} MB</div>
+                        <div pxb-title>Available Disk Space</div>
+                        <div pxb-subtitle>{{ formatAvailableSpace(stats.availableDiskSpaceGb) }} GB</div>
                     </pxb-info-list-item>
                 </mat-list>
             </mat-card>
@@ -188,5 +195,9 @@ export class NodeMonitorComponent implements OnInit {
 
     formatMemoryPercentage(num: number): number {
         return Math.round(Number(num.toFixed(2)) * 100);
+    }
+
+    formatAvailableSpace(gb: number): string {
+        return this.util.numberWithCommas(gb.toFixed(2));
     }
 }
