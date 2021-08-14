@@ -52,7 +52,7 @@ $theme-background: map-get($dark-theme, background);
 
 $primary-green: map-get($pxb-green, 200);
 $warn-red: map-get($pxb-red, 200);
-$tag-opacity: .06;
+$tag-opacity: 0.06;
 
 html,
 body {
@@ -168,8 +168,6 @@ $hashColor: map-get($pxb-gray, 400);
     sendAmount,
     $hashColor
 );
-
-
 
 /* Representative Page */
 $online-color: $primary-green;
