@@ -30,7 +30,7 @@ import { ApiService } from '@app/services/api/api.service';
                         </div>
                         <div pxb-title>Address</div>
                         <div pxb-subtitle>
-                            <span class="link primary" (click)="search(stats.address)">{{ stats.address }}</span>
+                            <span class="link" (click)="search(stats.address)">{{ stats.address }}</span>
                         </div>
                     </pxb-info-list-item>
                     <pxb-info-list-item>
