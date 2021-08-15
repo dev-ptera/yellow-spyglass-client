@@ -48,19 +48,43 @@
         </pxb-drawer-body>
     </pxb-drawer>
     <div pxb-content class="navigation-drawer-content">
-        <mat-toolbar class="navigation-app-header-container mat-elevation-z2" color="primary" responsive>
-            <button
-                mat-icon-button
-                *ngIf="variant === 'temporary'"
-                (click)="openDrawer()"
-                style="margin-right: 16px; margin-left: -16px"
-            >
-                <mat-icon>menu</mat-icon>
-            </button>
-            <div responsive class="navigation-toolbar-title">{{ toolbarTitle }}</div>
-            <pxb-spacer></pxb-spacer>
-            <app-user-menu></app-user-menu>
-        </mat-toolbar>
+        <div class="toolbar-container">
+            <mat-toolbar class="navigation-app-header-container mat-elevation-z2" color="primary" responsive>
+                <button
+                    mat-icon-button
+                    *ngIf="variant === 'temporary'"
+                    (click)="openDrawer()"
+                    style="margin-right: 16px; margin-left: -16px"
+                >
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <div responsive class="navigation-toolbar-title">{{ toolbarTitle }}</div>
+                <pxb-spacer></pxb-spacer>
+
+                <button data-cy="search-btn" mat-icon-button (click)="openSearch()" style="margin-right: 8px">
+                    <mat-icon>search</mat-icon>
+                </button>
+                <app-user-menu></app-user-menu>
+            </mat-toolbar>
+            <mat-toolbar class="search-header" [class.active]="toggleSearch" responsive>
+                <mat-toolbar-row style="padding: 0 16px">
+                    <button class="search-icon" mat-icon-button disabled style="margin-left: -8px">
+                        <mat-icon style="color: red">search</mat-icon>
+                    </button>
+                    <input
+                        class="search-control"
+                        type="text"
+                        placeholder="Search"
+                        [(ngModel)]="searchText"
+                        #searchBar
+                    />
+                    <button mat-icon-button (click)="searchClose()" data-cy="search-close-btn" style="margin-right: -8px">
+                        <mat-icon style="color: black">close</mat-icon>
+                    </button>
+                </mat-toolbar-row>
+            </mat-toolbar>
+        </div>
+
         <router-outlet></router-outlet>
     </div>
 </pxb-drawer-layout>

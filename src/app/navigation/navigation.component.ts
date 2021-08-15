@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { DrawerLayoutVariantType } from '@pxblue/angular-components';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -21,6 +21,9 @@ export class NavigationComponent implements OnInit {
     navItems = APP_NAV_ITEMS;
     explorerNavGroup = EXPLORER_NAV_GROUP;
     networkNavGroup = NETWORK_NAV_GROUP;
+    @ViewChild('searchBar', {}) searchBar: ElementRef;
+    searchText = '';
+    toggleSearch = false;
 
     constructor(
         public vp: ViewportService,
@@ -85,6 +88,19 @@ export class NavigationComponent implements OnInit {
 
     private _makeTitle(page: string): string {
         return `Yellow Spyglass | ${page}`;
+    }
+
+
+
+    openSearch(): void {
+        this.toggleSearch = true;
+        // focus the input after the animation completes to avoid a jerky transition
+        setTimeout(() => this.searchBar.nativeElement.focus(), 250);
+    }
+
+    searchClose(): void {
+        this.searchText = '';
+        this.toggleSearch = false;
     }
 
     // Observes route changes and determines which PXB Auth page to show via route name.
