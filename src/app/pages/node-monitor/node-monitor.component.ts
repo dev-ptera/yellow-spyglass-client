@@ -98,7 +98,7 @@ import { ApiService } from '@app/services/api/api.service';
                         <div pxb-title>Ledger Size</div>
                         <div pxb-subtitle>
                             {{ formatLedgerSize(stats.ledgerSizeMb) }} GB
-                            <span style="margin-left: 8px">({{ formatLedgerPercent() }} of available disk space)</span>
+                            <span style="margin-left: 8px">({{ formatLedgerPercent() }} of disk space)</span>
                         </div>
                     </pxb-info-list-item>
                     <pxb-info-list-item>
