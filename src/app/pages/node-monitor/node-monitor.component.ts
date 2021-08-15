@@ -96,7 +96,10 @@ import { ApiService } from '@app/services/api/api.service';
                             <mat-icon>download</mat-icon>
                         </div>
                         <div pxb-title>Ledger Size</div>
-                        <div pxb-subtitle>{{ util.numberWithCommas(stats.ledgerSizeMb) }} MB</div>
+                        <div pxb-subtitle>
+                            {{ formatLedgerSize(stats.ledgerSizeMb) }} GB
+                            <span style="margin-left: 8px">({{ formatLedgerPercent() }} of available disk space)</span>
+                        </div>
                     </pxb-info-list-item>
                     <pxb-info-list-item>
                         <div pxb-icon>
@@ -189,8 +192,14 @@ export class NodeMonitorComponent implements OnInit {
         return `~ ${Math.round(seconds / 60 / 60 / 24)} days`;
     }
 
-    openMonitoredRep(ip: string): void {
-        window.open(`http://${ip}`, '_blank');
+    formatLedgerSize(mb: number): string {
+        return this.util.numberWithCommas((mb / 1024).toFixed(2));
+    }
+
+    formatLedgerPercent(): string {
+        const ledger = this.stats.ledgerSizeMb;
+        const disk = this.stats.availableDiskSpaceGb * 1024;
+        return `${((ledger / (ledger + disk)) * 100).toFixed(2)}%`;
     }
 
     formatMemoryPercentage(num: number): number {
@@ -199,5 +208,9 @@ export class NodeMonitorComponent implements OnInit {
 
     formatAvailableSpace(gb: number): string {
         return this.util.numberWithCommas(gb.toFixed(2));
+    }
+
+    openMonitoredRep(ip: string): void {
+        window.open(`http://${ip}`, '_blank');
     }
 }
