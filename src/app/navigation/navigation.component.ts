@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DrawerLayoutVariantType } from '@pxblue/angular-components';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -14,16 +14,16 @@ import { Meta, Title } from '@angular/platform-browser';
     styleUrls: ['./navigation.component.scss'],
 })
 export class NavigationComponent implements OnInit {
+    @ViewChild('searchBar') searchBar: ElementRef;
+
+    appbarSearchText = '';
     toolbarTitle: string;
+    toggleSearch = false;
     routeListener: Subscription;
     variant: DrawerLayoutVariantType;
 
-    navItems = APP_NAV_ITEMS;
     explorerNavGroup = EXPLORER_NAV_GROUP;
     networkNavGroup = NETWORK_NAV_GROUP;
-    @ViewChild('searchBar', {}) searchBar: ElementRef;
-    searchText = '';
-    toggleSearch = false;
 
     constructor(
         public vp: ViewportService,
@@ -59,6 +59,13 @@ export class NavigationComponent implements OnInit {
         return this._stateService.getDrawerOpen();
     }
 
+    appbarSearch(event: any): void {
+        if (event.key === 'Enter') {
+            this._searchService.emitSearch(this.appbarSearchText);
+            this.closeSearch();
+        }
+    }
+
     selectItem(navItem: NavItem): void {
         this.navigate(navItem.route);
         if (this.isSmall()) {
@@ -70,6 +77,10 @@ export class NavigationComponent implements OnInit {
         this._stateService.setDrawerOpen(!this._stateService.getDrawerOpen());
     }
 
+    getSelectedItem(): string {
+        return this._stateService.getSelectedItem();
+    }
+
     closeDrawer(): void {
         this._stateService.setDrawerOpen(false);
     }
@@ -77,33 +88,32 @@ export class NavigationComponent implements OnInit {
     openDrawer(): void {
         this._stateService.setDrawerOpen(true);
     }
+    openSearch(): void {
+        this.toggleSearch = true;
+        // focus the input after the animation completes to avoid a jerky transition
+        setTimeout(() => this.searchBar.nativeElement.focus(), 300);
+    }
 
-    getSelectedItem(): string {
-        return this._stateService.getSelectedItem();
+    closeSearch(): void {
+        this.appbarSearchText = '';
+        this.toggleSearch = false;
     }
 
     isSmall(): boolean {
         return this._viewportService.isMedium() || this._viewportService.isSmall();
     }
 
-    private _makeTitle(page: string): string {
-        return `Yellow Spyglass | ${page}`;
+    getVariant(): DrawerLayoutVariantType {
+        if (this.variant === 'persistent' && this.isSmall()) {
+            this._stateService.setDrawerOpen(false);
+        } else if (this.variant === 'temporary' && !this.isSmall()) {
+            this._stateService.setDrawerOpen(true);
+        }
+        this.variant = this.isSmall() ? 'temporary' : 'persistent';
+        return this.variant;
     }
 
-
-
-    openSearch(): void {
-        this.toggleSearch = true;
-        // focus the input after the animation completes to avoid a jerky transition
-        setTimeout(() => this.searchBar.nativeElement.focus(), 250);
-    }
-
-    searchClose(): void {
-        this.searchText = '';
-        this.toggleSearch = false;
-    }
-
-    // Observes route changes and determines which PXB Auth page to show via route name.
+    // Observes route changes and changes app title & sets selected item
     private _listenForRouteChanges(): void {
         this.routeListener = this._router.events.subscribe((route) => {
             if (route instanceof NavigationEnd) {
@@ -203,13 +213,7 @@ export class NavigationComponent implements OnInit {
         });
     }
 
-    getVariant(): DrawerLayoutVariantType {
-        if (this.variant === 'persistent' && this.isSmall()) {
-            this._stateService.setDrawerOpen(false);
-        } else if (this.variant === 'temporary' && !this.isSmall()) {
-            this._stateService.setDrawerOpen(true);
-        }
-        this.variant = this.isSmall() ? 'temporary' : 'persistent';
-        return this.variant;
+    private _makeTitle(page: string): string {
+        return `Yellow Spyglass | ${page}`;
     }
 }

@@ -2,7 +2,7 @@
     height: 128px;
 }
 
-.navigation-app-header-container {
+.navigation-app-bar {
     position: relative;
 }
 
@@ -19,7 +19,7 @@
     background-color: unset !important;
 }
 
-.navigation-app-header-container {
+.navigation-app-bar {
     position: sticky;
     position: -webkit-sticky;
     background-size: contain;
@@ -42,29 +42,21 @@
     min-height: 100vh;
 }
 
-
-
-.toolbar-container {
+.navigation-app-bar-container {
     position: sticky;
     top: 0;
     overflow-x: hidden;
-}
-.main-header {
-    transition: opacity 250ms ease-in-out;
-
-    &.hidden {
-        opacity: 0;
-    }
+    z-index: 2;
 }
 
-.search-header {
+.navigation-search-bar {
     position: absolute;
     top: 0;
     right: 0;
     width: 0%;
     background: white;
     transition: width 250ms ease-in-out;
-    z-index: 999;
+    z-index: 3;
     &.sm {
         position: fixed;
     }

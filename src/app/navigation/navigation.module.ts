@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { AppCommonModule } from '@app/common/app-common.module';
 import { AppUserMenuComponent } from './user-menu/user-menu.component';
-import {FormsModule} from "@angular/forms";
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [NavigationComponent, AppUserMenuComponent],

@@ -69,23 +69,31 @@ body {
     background-color: rgba(30, 99, 15, 0.14) !important;
 }
 .mat-toolbar.mat-primary,
-.navigation-app-header-container {
+.navigation-app-bar {
     background-color: map-get($brand-pine, 700) !important;
     color: map-get($theme-foreground, text) !important;
 }
-.pxb-drawer-header-content,
-.navigation-app-header-container {
-    color: map-get($pxb-darkBlack, 1000) !important;
+.navigation-search-bar {
+    background-color: map-get($theme-background, card) !important;
+    input {
+        background-color: map-get($theme-background, card) !important;
+    }
+    mat-toolbar-row {
+        border-bottom: solid 1px map-get($theme-foreground, divider);
+    }
+    mat-icon,
+    input {
+        color: map-get($theme-foreground, text) !important;
+    }
 }
 
+/* General */
 .bookmarked-button {
     color: map-get($pxb-red, 300);
 }
-
 .primary {
     color: $primary-green !important;
 }
-
 .warn {
     color: $warn-red !important;
 }
@@ -97,6 +105,11 @@ body {
     box-shadow: none !important;
     border: solid 1px map-get($theme-foreground, divider);
     border-radius: 4px;
+}
+.pxb-drawer-body-content {
+    box-shadow: none !important;
+    border-right: solid 1px map-get($theme-foreground, divider);
+    border-radius: 0px;
 }
 
 .app-page-root,

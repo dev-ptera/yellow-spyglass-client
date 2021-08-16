@@ -75,15 +75,27 @@ body {
 .pxb-drawer .pxb-drawer-nav-item-active-highlight {
     background-color: #2bff0024 !important;
 }
+.navigation-search-bar {
+    background-color: map-get($theme-background, card) !important;
+    input {
+        background-color: map-get($theme-background, card) !important;
+    }
+    mat-toolbar-row {
+        border-bottom: solid 1px map-get($theme-foreground, divider);
+    }
+    mat-icon,
+    input {
+        color: map-get($theme-foreground, text) !important;
+    }
+}
 
+/* General */
 .bookmarked-button {
     color: map-get($pxb-red, 300);
 }
-
 .primary {
     color: $primary-green !important;
 }
-
 .warn {
     color: $warn-red !important;
 }
