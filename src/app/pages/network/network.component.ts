@@ -6,6 +6,7 @@ import HC_bullet from 'highcharts/modules/bullet';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { ApiService } from '@app/services/api/api.service';
 import { ConsensusStatsDto, NetworkStatsDto, PeerVersionsDto, QuorumDto, SupplyDto } from '@app/types/dto';
+import { Router } from '@angular/router';
 
 HC_bullet(Highcharts);
 
@@ -33,6 +34,7 @@ export class NetworkComponent implements OnInit {
 
     constructor(
         public vp: ViewportService,
+        private readonly _router: Router,
         private readonly _apiService: ApiService,
         private readonly _ref: ChangeDetectorRef
     ) {
@@ -68,6 +70,10 @@ export class NetworkComponent implements OnInit {
 
     calcPeerVersionPercentage(count: number): any {
         return Math.round((count / this.totalNumberOfPeers) * 100);
+    }
+
+    goRepsPage(): void {
+        void this._router.navigate(['/representatives']);
     }
 
     private _createSupplyChart(supply: SupplyDto): Options {

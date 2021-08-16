@@ -38,7 +38,7 @@
             <ng-container *ngIf="!vp.sm">representatives</ng-container>
             <ng-container *ngIf="vp.sm">reps</ng-container>
             are counted as a single entity. See the full representative list
-            <a href="https://www.yellowspyglass.com/representatives" target="_blank" class="primary">here</a>.
+            <span class="link primary" (click)="goRepsPage()">here</span>.
         </div>
     </mat-card>
 
