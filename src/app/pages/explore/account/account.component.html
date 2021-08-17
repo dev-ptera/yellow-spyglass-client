@@ -20,24 +20,26 @@
             <div [style.width.%]="100">
                 <div [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm" [style.marginBottom.px]="4">
                     <span *ngIf="loading">Loading</span>
-                    <ng-container *ngIf="accountOverview?.delegatorsCount === 0">
-                        <span *ngIf="accountOverview?.opened"> Account </span>
-                        <span *ngIf="!accountOverview?.opened"> Unopened Account </span>
+                    <ng-container *ngIf="!loading">
+                        <ng-container *ngIf="!isRepresentative()">
+                            <span *ngIf="accountOverview.opened"> Account </span>
+                            <span *ngIf="!accountOverview.opened"> Unopened Account </span>
+                        </ng-container>
+                        <span *ngIf="isRepresentative()">
+                            <ng-container *ngIf="!accountOverview.principal"> Representative </ng-container>
+                            <ng-container *ngIf="accountOverview.principal"> Principal Rep </ng-container>
+                            <pxb-list-item-tag
+                                *ngIf="!onlineRepService.onlineReps.has(address)"
+                                class="account-rep-offline"
+                                label="Offline"
+                            ></pxb-list-item-tag>
+                            <pxb-list-item-tag
+                                class="account-rep-online"
+                                *ngIf="onlineRepService.onlineReps.has(address)"
+                                label="Online"
+                            ></pxb-list-item-tag>
+                        </span>
                     </ng-container>
-                    <span *ngIf="accountOverview?.delegatorsCount > 0">
-                        <ng-container *ngIf="!accountOverview?.principal"> Representative </ng-container>
-                        <ng-container *ngIf="accountOverview?.principal"> Principal Rep </ng-container>
-                        <pxb-list-item-tag
-                            *ngIf="!onlineRepService.onlineReps.has(address)"
-                            class="account-rep-offline"
-                            label="Offline"
-                        ></pxb-list-item-tag>
-                        <pxb-list-item-tag
-                            class="account-rep-online"
-                            *ngIf="onlineRepService.onlineReps.has(address)"
-                            label="Online"
-                        ></pxb-list-item-tag>
-                    </span>
                 </div>
                 <div class="mat-subheading-2 account-address">
                     <span class="account-address-link"> {{ address }}</span>

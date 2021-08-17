@@ -254,6 +254,10 @@ export class AccountComponent implements OnChanges {
             });
     }
 
+    isRepresentative(): boolean {
+        return this.accountOverview && this.accountOverview.opened && this.accountOverview.delegators.length > 0;
+    }
+
     getConfirmedBadge(): string {
         return this._util.numberWithCommas(this.accountOverview.completedTxCount);
     }
