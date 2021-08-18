@@ -92,6 +92,11 @@
     }
 }
 
+.mat-table{
+    border-radius: 4px;
+    overflow:hidden !important;
+}
+
 .app-page-root,
 .explore-body {
     min-height: 100vh;

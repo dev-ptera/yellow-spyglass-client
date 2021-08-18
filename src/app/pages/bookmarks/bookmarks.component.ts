@@ -17,7 +17,7 @@ import { DeleteBookmarkDialog } from '@app/pages/bookmarks/delete-bookmark-dialo
                 <div class="app-page-subtitle">
                     Bookmarks allow you to quickly save addresses or transactions. Manage your bookmarks below.
                 </div>
-                <table mat-table [style.width.%]="100" [dataSource]="bookmarks" class="mat-elevation-z4">
+                <table mat-table [style.width.%]="100" [dataSource]="bookmarks" class="mat-elevation-z2">
                     <ng-container matColumnDef="data">
                         <th mat-header-cell *matHeaderCellDef>Bookmark</th>
                         <td mat-cell [style.paddingTop.px]="8" [style.paddingBottom.px]="8" *matCellDef="let element">
