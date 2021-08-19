@@ -94,6 +94,9 @@ body {
 .primary {
     color: $primary-green !important;
 }
+.intermediary {
+    color: map-get($pxb-yellow, 500);
+}
 .warn {
     color: $warn-red !important;
 }
@@ -188,9 +191,10 @@ $offline-color: $warn-red;
 $rep-border-color: map-get($theme-foreground, divider);
 $table-address-color: map-get($theme-foreground, text);
 @mixin principalTag {
-    border: solid 1px $primary-green;
-    background-color: rgba($primary-green, $tag-opacity) !important;
-    color: $primary-green !important;
+    $tag: map-get($pxb-yellow, 500);
+    border: solid 1px $tag;
+    background-color: rgba($tag, $tag-opacity) !important;
+    color: $tag !important;
 }
 @include representatives-theme($online-color, $offline-color, $rep-border-color, $table-address-color, receiveTag);
 

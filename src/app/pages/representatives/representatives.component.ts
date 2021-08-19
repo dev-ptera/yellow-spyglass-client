@@ -19,7 +19,7 @@ import { AliasService } from '@app/services/alias/alias.service';
 })
 export class RepresentativesComponent implements OnInit {
     Highcharts: typeof Highcharts = Highcharts;
-    showOfflineRepsFilter = true;
+    showOfflineRepsFilter = false;
     loading = true;
     error = false;
     pieChartColors = [
@@ -46,11 +46,13 @@ export class RepresentativesComponent implements OnInit {
     largeRepsDataSource;
     monitoredRepsDataSource;
     monitoredRepDisplayColumns = ['name', 'version', 'delegatorsCount', 'weight', 'peers', 'uncheckedBlocks'];
-    largeRepsDisplayColumns = ['position', 'address', 'weight', 'delegatorsCount', 'online', 'uptimePercentMonth'];
+    largeRepsDisplayColumnsLg = ['position', 'address', 'online',  'weight',  'percentWeight', 'delegatorsCount', 'uptimePercentMonth'];
+    largeRepsDisplayColumnsMd = ['position', 'address', 'online',  'weight',  'percentWeight', 'uptimePercentMonth'];
     filteredLargeReps: RepresentativeDto[] = [];
     microReps: MicroRepresentativeDto[] = [];
     onlineLargeRepsCount = 0;
     onlineMicroRepsCount = 0;
+    largeRepsTableHeader: Element;
 
     @ViewChild('sortAll') sortAll: MatSort;
     @ViewChild('sortMonitored') sortMonitored: MatSort;
@@ -99,6 +101,7 @@ export class RepresentativesComponent implements OnInit {
         this._ref.detectChanges();
         this.monitoredRepsDataSource.sort = this.sortMonitored;
         this.largeRepsDataSource.sort = this.sortAll;
+        this.largeRepsTableHeader = document.getElementById('large-reps-table').firstChild as HTMLElement;
     }
 
     numberWithCommas(count: number): string {
@@ -207,7 +210,7 @@ export class RepresentativesComponent implements OnInit {
                         enabled: true,
                         distance: 30,
                         style: {
-                            fontSize: this.vp.sm ? '12px' : '16px',
+                            fontSize: this.vp.sm ? '12px' : '14px',
                             fontWeight: '400',
                             fontFamily: 'Open Sans',
                             textOutline: 'none',
@@ -251,7 +254,11 @@ export class RepresentativesComponent implements OnInit {
     }
 
     formatWeightPercent(weight: number): string {
-        return `${((weight / this.onlineWeight) * 100).toFixed(3).replace(/\.?0+$/, '')}%`;
+        return `${((weight / this.onlineWeight) * 100).toFixed(1).replace(/\.?0+$/, '')}`;
+    }
+
+    isLargeRep(weight: number): boolean {
+        return weight / this.onlineWeight * 100 > 5;
     }
 
     formatMonitoredListAddress(addr: string): string {
@@ -260,5 +267,9 @@ export class RepresentativesComponent implements OnInit {
 
     formatMicroListAddress(addr: string): string {
         return this.vp.sm ? this.formatMonitoredListAddress(addr) : addr;
+    }
+
+    shortenAddress(addr: string): string {
+        return `${addr.substr(0, 12)}...${addr.substr(addr.length - 6, addr.length)}`;
     }
 }
