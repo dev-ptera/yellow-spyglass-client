@@ -6,6 +6,14 @@
         max-width: 1200px;
     }
 
+    .status-icon {
+        $size: 14px;
+        font-size: $size;
+        height: $size;
+        width: $size;
+        margin-right: 4px;
+    }
+
     .mat-card {
         display: flex;
         flex-direction: column;

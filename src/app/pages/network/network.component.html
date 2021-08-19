@@ -106,38 +106,41 @@
             </tr>
             <tr>
                 <td>
-                    Official <ng-container *ngIf="!vp.sm && !vp.md">(core team)</ng-container>
-                    <span class="status mat-overline primary">online</span>
+                    <mat-icon class="status-icon primary">check</mat-icon>
+                    Official Online
                 </td>
                 <td>{{ consensus.official.onlineAmount | appComma }}</td>
                 <td>{{ consensus.official.onlinePercent | appPercent }}</td>
             </tr>
             <tr>
                 <td>
-                    Unofficial
-                    <span class="status mat-overline primary">online</span>
+                    <mat-icon class="status-icon primary">check</mat-icon>
+                    Unofficial Online
                 </td>
                 <td>{{ consensus.unofficial.onlineAmount | appComma }}</td>
                 <td>{{ consensus.unofficial.onlinePercent | appPercent }}</td>
             </tr>
             <tr>
                 <td>
-                    Official
-                    <span class="status mat-overline warn">offline</span>
+                    <mat-icon class="status-icon warn">priority_high</mat-icon>
+                    Official Offline
                 </td>
                 <td>{{ consensus.official.offlineAmount | appComma }}</td>
                 <td>{{ consensus.official.offlinePercent | appPercent }}</td>
             </tr>
             <tr>
                 <td>
-                    Unofficial
-                    <span class="status mat-overline warn">offline</span>
+                    <mat-icon class="status-icon warn">priority_high</mat-icon>
+                    Unofficial Offline
                 </td>
                 <td>{{ consensus.unofficial.offlineAmount | appComma }}</td>
                 <td>{{ consensus.unofficial.offlinePercent | appPercent }}</td>
             </tr>
             <tr>
-                <td>No Rep</td>
+                <td>
+                    <mat-icon class="status-icon warn">priority_high</mat-icon>
+                    No Rep
+                </td>
                 <td>{{ consensus.noRep.amount | appComma }}</td>
                 <td>{{ consensus.noRep.percent | appPercent }}</td>
             </tr>
