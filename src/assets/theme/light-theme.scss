@@ -96,6 +96,9 @@ body {
 .primary {
     color: $primary-green !important;
 }
+.intermediary {
+    color: map-get($brand-rust, 500);
+}
 .warn {
     color: $warn-red !important;
 }
