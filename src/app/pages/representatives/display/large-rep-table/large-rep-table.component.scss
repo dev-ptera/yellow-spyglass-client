@@ -1,0 +1,71 @@
+:host {
+    display: flex;
+    flex: 1;
+}
+
+.representatives-chart-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 72px;
+    &.md {
+        justify-content: center;
+        flex-direction: column;
+        .representatives-legend {
+            margin-top: 24px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    }
+}
+.representatives-chart {
+    margin: 0;
+    margin-top: 24px;
+    display: flex;
+    justify-content: left;
+    margin-right: -24px;
+    &.md,
+    &.sm {
+        margin-right: 0px;
+        margin-top: 0;
+        justify-content: center;
+    }
+}
+
+.representatives-legend {
+    .representatives-legend-entry {
+        padding: 8px 8px;
+        display: flex;
+        align-items: center;
+    }
+    .representatives-legend-color {
+        width: 12px;
+        height: 12px;
+        border-radius: 100%;
+        margin-right: 16px;
+    }
+    .representatives-legend-others {
+        pointer-events: none;
+    }
+}
+
+.monitored-reps-table,
+.all-reps-table {
+    width: 100%;
+    .pxb-list-item-tag-label {
+        font-size: 0.625rem !important;
+    }
+    * {
+        font-size: 15px;
+    }
+    th.mat-header-cell:last-of-type,
+    td.mat-cell:last-of-type,
+    td.mat-footer-cell:last-of-type {
+        padding-right: 0 !important;
+    }
+}
+
+th.mat-sort-header-sorted {
+    color: black;
+}

@@ -1,22 +1,8 @@
-<!--<pxb-drawer-layout
-    [variant]="getVariant()"
-    (backdropClick)="closeDrawer()"
-    width="280"
-    responsive
-    [class.open]="isOpen()"
->
-    <pxb-drawer pxb-drawer [open]="isOpen()" [sideBorder]="true" [openOnHover]="false" >
-        <pxb-drawer-header
-            [title]="variant === 'temporary' ? undefined : 'Yellow Spyglass'"
-            [subtitle]="variant === 'temporary' ? undefined : 'Banano Explorer'"
-        >
-            <button pxb-icon mat-icon-button (click)="toggleDrawerOpen()">
-                <mat-icon>menu</mat-icon>
-            </button>
-            <div *ngIf="variant === 'temporary'" pxb-title-content class="navigation-drawer-header-content" responsive>
-                <div class="mat-overline" [style.marginTop.px]="8">Yellow Spyglass</div>
-                <img class="navigation-spyglass" responsive src="assets/spyglass.svg" />
-                <div class="mat-overline" [style.marginTop.px]="48">BANANO Explorer</div>
+<pxb-drawer-layout variant="temporary" (backdropClick)="closeDrawer()" width="280" responsive [class.open]="isOpen()">
+    <pxb-drawer pxb-drawer [open]="isOpen()" [sideBorder]="true" [openOnHover]="false">
+        <pxb-drawer-header>
+            <div pxb-title-content class="navigation-drawer-header-content">
+                <img height="180" src="assets/pirate-monkey.png" style="margin-top: -15px"/>
             </div>
         </pxb-drawer-header>
         <pxb-drawer-body>
@@ -48,55 +34,48 @@
         </pxb-drawer-body>
     </pxb-drawer>
     <div pxb-content class="navigation-drawer-content">
-
-
+        <div class="navigation-app-bar-container">
+            <mat-toolbar class="navigation-app-bar mat-elevation-z2" color="primary" responsive>
+                <div style="display: flex; width: 100%; align-items: center">
+                    <button mat-icon-button (click)="openDrawer()" style="margin-right: 16px;">
+                        <mat-icon>menu</mat-icon>
+                    </button>
+                   <!-- <img src="assets/spyglass.svg" style="width: 120px; margin-right: 16px; margin-left: 24px" /> -->
+                    <div responsive class="navigation-toolbar-title">
+                        Yellow Spyglass
+                    </div>
+                    <pxb-spacer></pxb-spacer>
+                    <button data-cy="search-btn" mat-icon-button (click)="openSearch()" style="margin-right: 16px">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                    <app-user-menu style="margin-right: 8px"></app-user-menu>
+                </div>
+            </mat-toolbar>
+            <mat-toolbar class="navigation-search-bar" [class.active]="toggleSearch" responsive>
+                <mat-toolbar-row style="padding: 0 16px" style="display: flex; width: 100%;">
+                    <button mat-icon-button disabled style="margin-left: -8px">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                    <input
+                        class="search-control"
+                        type="text"
+                        tabindex="0"
+                        autocapitalize="none"
+                        placeholder="Search Address or Transaction Hash"
+                        [(ngModel)]="appbarSearchText"
+                        (keyup)="appbarSearch($event)"
+                        #searchBar
+                    />
+                    <button
+                        mat-icon-button
+                        (click)="closeSearch()"
+                        data-cy="search-close-btn"
+                    >
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-toolbar-row>
+            </mat-toolbar>
+        </div>
+        <router-outlet></router-outlet>
     </div>
 </pxb-drawer-layout>
--->
-<div class="navigation-app-bar-container">
-    <mat-toolbar class="navigation-app-bar mat-elevation-z2" color="primary" responsive>
-        <div style="max-width: 1250px; display: flex; width: 100%">
-            <button
-                mat-icon-button
-                *ngIf="variant === 'temporary'"
-                (click)="openDrawer()"
-                style="margin-right: 16px; margin-left: -16px"
-            >
-                <mat-icon>menu</mat-icon>
-            </button>
-            <div responsive class="navigation-toolbar-title">Yellow Spyglass</div>
-            <pxb-spacer></pxb-spacer>
-            <button data-cy="search-btn" mat-icon-button (click)="openSearch()" style="margin-right: 16px">
-                <mat-icon>search</mat-icon>
-            </button>
-            <app-user-menu></app-user-menu>
-        </div>
-
-    </mat-toolbar>
-    <mat-toolbar class="navigation-search-bar" [class.active]="toggleSearch" responsive >
-        <mat-toolbar-row style="padding: 0 16px" style="max-width: 1250px; display: flex; width: 100%">
-            <button mat-icon-button disabled style="margin-left: -8px">
-                <mat-icon>search</mat-icon>
-            </button>
-            <input
-                class="search-control"
-                type="text"
-                tabindex="0"
-                autocapitalize="none"
-                placeholder="Search Address or Transaction Hash"
-                [(ngModel)]="appbarSearchText"
-                (keyup)="appbarSearch($event)"
-                #searchBar
-            />
-            <button
-                mat-icon-button
-                (click)="closeSearch()"
-                data-cy="search-close-btn"
-                style="margin-right: -8px"
-            >
-                <mat-icon>close</mat-icon>
-            </button>
-        </mat-toolbar-row>
-    </mat-toolbar>
-</div>
-<router-outlet></router-outlet>

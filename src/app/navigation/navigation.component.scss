@@ -1,12 +1,10 @@
-.navigation-drawer-header-content.md {
-    height: 128px;
+.navigation-drawer-header-content {
+    height: 128px !important;
+    width: 100%;
+    justify-content: center;
+    display: flex;
 }
 
-.navigation-app-bar {
-    position: relative;
-    display: flex;
-    justify-content: center;
-}
 
 .navigation-spyglass {
     width: 180px;
@@ -14,7 +12,7 @@
     bottom: -26px;
 }
 
-::ng-deep .md .pxb-drawer-header-content {
+::ng-deep .pxb-drawer-header-content {
     height: unset !important;
 }
 ::ng-deep .pxb-drawer-header {
@@ -22,15 +20,13 @@
 }
 
 .navigation-app-bar {
-    position: sticky;
-    position: -webkit-sticky;
-    background-size: contain;
     display: flex;
-    align-items: center;
+    justify-content: center;
     padding: 0 24px;
     top: 0;
     z-index: 2;
     .navigation-toolbar-title {
+        font-family: pirateFont, "Open Sans", "Arial";
         font-size: 24px;
         &.sm {
             font-size: 20px;
@@ -45,8 +41,6 @@
 }
 
 .navigation-app-bar-container {
-    position: sticky;
-    top: 0;
     overflow-x: hidden;
     z-index: 2;
 }
@@ -56,13 +50,8 @@
     top: 0;
     right: 0;
     width: 0%;
-    background: white;
     transition: width 250ms ease-in-out;
     z-index: 3;
-    &.sm {
-        position: fixed;
-    }
-
     &.active {
         width: 100%;
     }

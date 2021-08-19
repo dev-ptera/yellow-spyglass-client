@@ -1,5 +1,5 @@
 <ng-template #titleContent>
-    <div class="app-page-title">
+    <div class="app-page-title" >
         <ng-container *ngIf="!loading">Representatives</ng-container>
         <ng-container *ngIf="loading">Loading</ng-container>
     </div>
@@ -51,11 +51,11 @@
         >
         software are shown in the list below.
     </div>
-    <ng-template *ngIf="!vp.sm" [ngTemplateOutlet]="monitoredRepTable"></ng-template>
-    <ng-template *ngIf="vp.sm" [ngTemplateOutlet]="monitoredRepList"></ng-template>
+    <app-monitored-rep-table *ngIf="!vp.sm" [monitoredReps]="monitoredReps" [onlineWeight]="onlineWeight"></app-monitored-rep-table>
+    <app-monitored-rep-list *ngIf="vp.sm" [monitoredReps]="monitoredReps" [onlineWeight]="onlineWeight"></app-monitored-rep-list>
     <div class="app-section-title" [style.marginTop.px]="72">
         Large Representatives
-        <span class="app-caption">({{ onlineLargeRepsCount }} of {{ unfilteredLargeReps.length }} online)</span>
+        <span class="app-caption">({{ onlineLargeRepsCount }} of {{ allLargeReps.length }} online)</span>
     </div>
     <div class="app-section-subtitle">
         List of representatives with at least 100,000 BANANO weight delegated towards them.
@@ -64,12 +64,16 @@
         color="primary"
         class="app-section-subtitle"
         [(ngModel)]="showOfflineRepsFilter"
-        (change)="updateLargeRepsList()"
+        (change)="filterLargeRepsByStatus()"
     >
         Show offline representatives
     </mat-slide-toggle>
-    <ng-template *ngIf="!vp.sm" [ngTemplateOutlet]="largeRepsTable"></ng-template>
-    <ng-template *ngIf="vp.sm" [ngTemplateOutlet]="largeRepsList"></ng-template>
+    <app-large-rep-table
+        *ngIf="!vp.sm"
+        [onlineWeight]="onlineWeight"
+        [shownReps]="shownLargeReps"
+    ></app-large-rep-table>
+    <app-large-rep-cards *ngIf="vp.sm" [onlineWeight]="onlineWeight" [shownReps]="shownLargeReps"></app-large-rep-cards>
 
     <div class="app-section-title" [style.marginTop.px]="72">
         Micro Representatives
@@ -79,261 +83,6 @@
         Online representatives with less than 100,000 BANANO weight delegated towards them.
     </div>
     <ng-template [ngTemplateOutlet]="microRepsList"></ng-template>
-</ng-template>
-
-<ng-template #monitoredRepTable>
-    <table
-        mat-table
-        [hidden]="vp.sm"
-        responsive
-        [dataSource]="monitoredRepsDataSource"
-        #sortMonitored="matSort"
-        matSort
-        class="mat-elevation-z2 monitored-reps-table"
-        id="large-reps-table"
-    >
-        <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Representative</th>
-            <td
-                class="representatives-name-cell"
-                mat-cell
-                *matCellDef="let element"
-                style="padding-top: 8px; padding-bottom: 8px"
-            >
-                <span class="link primary" style="font-weight: 600" (click)="openMonitoredRep(element.ip)">
-                    {{ element.name }}
-                </span>
-                <br />
-                <span
-                    class="link monitored-reps-table-address"
-                    (click)="routeRepAddress(element.address)"
-                    style="padding-right: 24px; margin-top: -4px; word-break: break-word"
-                    [style.fontSize.px]="vp.md ? 13 : 14"
-                >
-                    {{ element.address }}
-                </span>
-            </td>
-        </ng-container>
-
-        <ng-container matColumnDef="version">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Version</th>
-            <td class="representatives-weight-cell" mat-cell *matCellDef="let element">
-                {{ formatVersion(element.version) }}
-            </td>
-        </ng-container>
-
-        <ng-container matColumnDef="weight">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Weight (BAN)</th>
-            <td class="representatives-weight-cell" mat-cell *matCellDef="let element">
-                {{ formatBanWeight(element.weight) }}
-                <br />
-                <span class="representatives-weight-percentage" responsive
-                    >({{ formatWeightPercent(element.weight) }}%)</span
-                >
-            </td>
-        </ng-container>
-
-        <ng-container matColumnDef="delegatorsCount">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Delegators</th>
-            <td mat-cell *matCellDef="let element">{{ numberWithCommas(element.delegatorsCount) }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="peers">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Peers</th>
-            <td mat-cell *matCellDef="let element">{{ numberWithCommas(element.peers) }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="uncheckedBlocks">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Unchecked<br />Blocks</th>
-            <td mat-cell *matCellDef="let element" [class.unchecked-blocks]="element.uncheckedBlocks">
-                {{ numberWithCommas(element.uncheckedBlocks) }}
-            </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="monitoredRepDisplayColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: monitoredRepDisplayColumns"></tr>
-    </table>
-</ng-template>
-
-<ng-template #monitoredRepList>
-    <mat-card style="padding: 0 12px">
-        <mat-list [style.paddingTop.px]="0" class="representatives-monitored-list">
-            <pxb-info-list-item
-                *ngFor="let rep of monitoredReps; trackBy: trackByFn"
-                [hidePadding]="true"
-                [dense]="false"
-                divider="full"
-            >
-                <div pxb-title>
-                    <span class="link primary" (click)="openMonitoredRep(rep.ip)">{{ rep.name }}</span>
-                </div>
-                <div pxb-subtitle style="font-size: 0.875rem">{{ formatMonitoredRepInfoLine(rep) }}</div>
-                <div pxb-info style="font-size: 0.875rem" (click)="routeRepAddress(rep.address)">
-                    {{ formatMonitoredListAddress(rep.address) }}
-                </div>
-                <div pxb-right-content style="display: flex; flex-direction: column; align-items: flex-end">
-                    <div style="font-size: 0.875rem">{{ formatBanWeight(rep.weight) }} BAN</div>
-                    <div style="font-size: 0.75rem">{{ formatWeightPercent(rep.weight) }} weight</div>
-                </div>
-            </pxb-info-list-item>
-        </mat-list>
-    </mat-card>
-</ng-template>
-
-<ng-template #largeRepsTable>
-    <table
-        mat-table
-        [hidden]="vp.sm"
-        responsive
-        [dataSource]="largeRepsDataSource"
-        #sortAll="matSort"
-        matSort
-        class="mat-elevation-z2 all-reps-table"
-    >
-        <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let i = index" style="padding-right: 12px">{{ i + 1 }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="address">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Representative</th>
-            <td mat-cell *matCellDef="let element">
-                <div style="display: flex; flex-direction: column; justify-content: center">
-                    <div style="display: flex; align-items: center">
-                        <pxb-list-item-tag
-                            *ngIf="element.principal"
-                            class="principal-tag"
-                            label="Principal"
-                            style="margin-right: 12px"
-                        ></pxb-list-item-tag>
-                        <span class="link" style="font-weight: 600" (click)="routeRepAddress(element.address)">
-                            <div *ngIf="aliasService.get(element.address)"
-                                 style="white-space: nowrap; text-overflow: ellipsis; max-width: 220px; overflow: hidden">
-                                {{ aliasService.get(element.address) }}
-                            </div>
-                            <ng-container *ngIf="!aliasService.get(element.address)">
-                                {{ shortenAddress(element.address) }}
-                            </ng-container>
-                        </span>
-                    </div>
-                </div>
-            </td>
-        </ng-container>
-
-        <ng-container matColumnDef="weight">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Weight</th>
-            <td mat-cell *matCellDef="let element">
-                {{ formatBanWeight(element.weight) }}
-            </td>
-        </ng-container>
-
-        <ng-container matColumnDef="percentWeight">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>%</th>
-            <td mat-cell *matCellDef="let element" [class.warn]="isLargeRep(element.weight)">
-                {{ formatWeightPercent(element.weight) }}<span style="font-size: 11px; font-weight: 200; margin-left: 2px">%</span>
-            </td>
-        </ng-container>
-
-        <ng-container matColumnDef="delegatorsCount">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Delegators</th>
-            <td mat-cell *matCellDef="let element">{{ numberWithCommas(element.delegatorsCount) }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="uptimePercentMonth">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                <div style="text-align: left">
-                    Uptime
-                    <ng-container *ngIf="!vp.md">
-                        <br />
-                        <div style="font-size: 10px; margin-top: -4px">month · week · day</div>
-                    </ng-container>
-                </div>
-            </th>
-            <td mat-cell *matCellDef="let element">
-                <span
-                    [class.warn]="element.uptimePercentMonth <= 50"
-                    [class.intermediary]="element.uptimePercentMonth > 50 && element.uptimePercentMonth <= 95"
-                    [class.primary]="element.uptimePercentMonth > 95">
-                    {{ element.uptimePercentMonth }}%
-                </span>
-                <span *ngIf="!vp.md" style="font-size: 11px">· {{ element.uptimePercentWeek }}% · {{ element.uptimePercentDay }}% </span>
-            </td>
-        </ng-container>
-
-        <ng-container matColumnDef="online">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-            <td
-                mat-cell
-                class="representatives-online-cell"
-                *matCellDef="let element"
-                [style.color.red]="!element.online"
-            >
-                <mat-icon style="font-size: 1.5rem" [class.primary]="element.online" [class.warn]="!element.online">
-                    {{ element.online ? 'check' : 'priority_high' }}</mat-icon>
-            </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="vp.md ? largeRepsDisplayColumnsMd : largeRepsDisplayColumnsLg"></tr>
-        <tr
-            mat-row
-            style="height: 48px"
-            *matRowDef="let row; columns: vp.md ? largeRepsDisplayColumnsMd : largeRepsDisplayColumnsLg"
-        ></tr>
-    </table>
-</ng-template>
-
-<ng-template #largeRepsList>
-    <mat-card
-        style="padding: 12px 12px; margin-bottom: 8px"
-        *ngFor="let rep of filteredLargeReps; let i = index; trackBy: trackByFn"
-        class="representatives-all-reps-card mat-elevation-z0"
-    >
-        <div style="align-items: center; display: flex; margin-bottom: 8px">
-            <span [style.fontSize.px]="16" style="margin-right: 16px; font-weight: 600"> #{{ i + 1 }}</span>
-            <pxb-list-item-tag *ngIf="rep.principal" label="Principal" class="principal-tag"></pxb-list-item-tag>
-            <pxb-spacer></pxb-spacer>
-            <span
-                class="mat-overline"
-                style="font-size: 11px; display: flex; align-items: center"
-                [class.online]="rep.online"
-                [class.offline]="!rep.online"
-            >
-                <span style="margin-right: 12px">{{ rep.online ? '' : 'Offline' }}</span>
-                <mat-icon style="font-size: 1.5rem">{{ rep.online ? 'check_circle' : 'error' }}</mat-icon>
-            </span>
-        </div>
-
-        <span
-            *ngIf="aliasService.has(rep.address)"
-            class="primary"
-            style="font-size: 0.875rem; font-weight: 600"
-            (click)="routeRepAddress(rep.address)"
-        >
-            {{ aliasService.get(rep.address) }}
-        </span>
-        <div
-            style="font-size: 0.875rem; word-break: break-all; margin-bottom: 8px"
-            (click)="routeRepAddress(rep.address)"
-        >
-            {{ rep.address }}
-        </div>
-        <mat-divider></mat-divider>
-        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; padding-top: 12px">
-            <div>
-                <div>{{ numberWithCommas(rep.delegatorsCount) }} Delegators</div>
-                <div>
-                    {{ rep.uptimePercentMonth }}% /
-                    <span style="font-size: 10px"> {{ rep.uptimePercentWeek }}% / {{ rep.uptimePercentDay }}% </span>
-                    Uptime
-                    <span style="font-size: 10px">(m/w/d)</span>
-                </div>
-            </div>
-            <div>
-                <div>{{ formatBanWeight(rep.weight) }} BAN</div>
-                <div>{{ formatWeightPercent(rep.weight) }} weight</div>
-            </div>
-        </div>
-    </mat-card>
 </ng-template>
 
 <ng-template #microRepsList>

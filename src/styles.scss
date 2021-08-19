@@ -11,6 +11,11 @@
 @include reasonable-margins();
 @include mat-core($custom-typography);
 
+@font-face {
+    font-family: pirateFont;
+    src: url('~assets/font/Freebooter-6yn1.ttf');
+}
+
 .light {
     @import './assets/theme/light-theme';
     @include common($light-theme);
@@ -70,7 +75,7 @@
 // Mat Toolbar won't allow me to put background image in it?
 
 // Fix Safari scroll issue
-.sm.pxb-drawer-layout {
+.pxb-drawer-layout {
     height: 100% !important;
     &.open {
         .mat-drawer {
@@ -87,14 +92,11 @@
         width: 100vw;
         box-sizing: border-box;
     }
-    .navigation-drawer-content {
-        margin-top: 56px;
-    }
 }
 
-.mat-table{
+.mat-table {
     border-radius: 4px;
-    overflow:hidden !important;
+    overflow: hidden !important;
 }
 
 .app-page-root,
@@ -129,12 +131,12 @@
     width: 100%;
     box-sizing: border-box;
     // TODO: move these paddings to a global style, shared
-    padding: 64px 64px 64px 64px;
+    padding: 128px 64px 64px 64px;
     &.md {
-        padding: 48px 48px 48px 48px;
+        padding: 114px 48px 48px 48px;
     }
     &.sm {
-        padding: 40px 16px 48px 16px;
+        padding: 96px 16px 48px 16px;
     }
 }
 
@@ -147,6 +149,7 @@
     display: flex;
     width: 100%;
     margin-bottom: 8px;
+    font-family: pirateFont;
 }
 .app-page-subtitle {
     width: 100%;
@@ -156,6 +159,7 @@
 }
 .app-section-title {
     font-size: 20px;
+    // font-family: pirateFont; // too much?
 }
 .app-section-subtitle {
     margin-bottom: 32px;

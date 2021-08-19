@@ -20,7 +20,6 @@ export class NavigationComponent implements OnInit {
     toolbarTitle: string;
     toggleSearch = false;
     routeListener: Subscription;
-    variant: DrawerLayoutVariantType;
 
     explorerNavGroup = EXPLORER_NAV_GROUP;
     networkNavGroup = NETWORK_NAV_GROUP;
@@ -68,9 +67,7 @@ export class NavigationComponent implements OnInit {
 
     selectItem(navItem: NavItem): void {
         this.navigate(navItem.route);
-        if (this.isSmall()) {
-            this._stateService.setDrawerOpen(false);
-        }
+        this._stateService.setDrawerOpen(false);
     }
 
     toggleDrawerOpen(): void {
@@ -101,16 +98,6 @@ export class NavigationComponent implements OnInit {
 
     isSmall(): boolean {
         return this._viewportService.isMedium() || this._viewportService.isSmall();
-    }
-
-    getVariant(): DrawerLayoutVariantType {
-        if (this.variant === 'persistent' && this.isSmall()) {
-            this._stateService.setDrawerOpen(false);
-        } else if (this.variant === 'temporary' && !this.isSmall()) {
-            this._stateService.setDrawerOpen(true);
-        }
-        this.variant = this.isSmall() ? 'temporary' : 'persistent';
-        return this.variant;
     }
 
     // Observes route changes and changes app title & sets selected item

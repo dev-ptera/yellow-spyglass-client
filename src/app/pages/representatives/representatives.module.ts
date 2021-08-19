@@ -9,9 +9,13 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { AppCommonModule } from '@app/common/app-common.module';
 import { RepresentativesComponent } from '@app/pages/representatives/representatives.component';
 import { FormsModule } from '@angular/forms';
+import { LargeRepTableComponent } from '@app/pages/representatives/display/large-rep-table/large-rep-table.component';
+import { LargeRepCardsComponent } from '@app/pages/representatives/display/large-rep-cards/large-rep-cards.component';
+import {MonitoredRepTableComponent} from "@app/pages/representatives/display/monitored-rep-table/monitored-rep-table.component";
+import {MonitoredRepListComponent} from "@app/pages/representatives/display/monitored-rep-list/monitored-rep-list.component";
 
 @NgModule({
-    declarations: [RepresentativesComponent],
+    declarations: [RepresentativesComponent, LargeRepTableComponent, LargeRepCardsComponent,MonitoredRepListComponent, MonitoredRepTableComponent],
     imports: [
         AppCommonModule,
         CommonModule,
@@ -24,6 +28,6 @@ import { FormsModule } from '@angular/forms';
         MatSlideToggleModule,
         FormsModule,
     ],
-    exports: [RepresentativesComponent],
+    exports: [RepresentativesComponent, LargeRepTableComponent, LargeRepCardsComponent,MonitoredRepListComponent, MonitoredRepTableComponent],
 })
 export class RepresentativesModule {}

@@ -70,7 +70,7 @@ body {
 }
 .mat-toolbar.mat-primary,
 .navigation-app-bar {
-    background-color: map-get($brand-pine, 700) !important;
+    background-color: map-get($pxb-black, 800) !important;
     color: map-get($theme-foreground, text) !important;
 }
 .navigation-search-bar {

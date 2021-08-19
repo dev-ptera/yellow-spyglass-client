@@ -1,16 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ViewportService } from '../viewport/viewport.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class DrawerStateService {
-    private drawerOpen: boolean;
+    private drawerOpen = false;
     private selectedItem: string;
-
-    constructor(viewportService: ViewportService) {
-        this.drawerOpen = !viewportService.isMedium() && !viewportService.isSmall();
-    }
 
     setDrawerOpen(drawerOpen: boolean): void {
         this.drawerOpen = drawerOpen;

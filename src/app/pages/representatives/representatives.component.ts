@@ -4,10 +4,9 @@ import { ApiService } from '@app/services/api/api.service';
 import { MicroRepresentativeDto, MonitoredRepDto, RepresentativeDto, RepresentativesResponseDto } from '@app/types/dto';
 import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
-import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import * as Highcharts from 'highcharts';
 // eslint-disable-next-line no-duplicate-imports
+import * as Highcharts from 'highcharts';
 import { Options } from 'highcharts';
 import { AliasService } from '@app/services/alias/alias.service';
 
@@ -37,7 +36,7 @@ export class RepresentativesComponent implements OnInit {
     ];
 
     onlineWeight: number;
-    unfilteredLargeReps: RepresentativeDto[] = [];
+    allLargeReps: RepresentativeDto[] = [];
     monitoredReps: MonitoredRepDto[] = [];
 
     repsChart: Options;
@@ -46,13 +45,21 @@ export class RepresentativesComponent implements OnInit {
     largeRepsDataSource;
     monitoredRepsDataSource;
     monitoredRepDisplayColumns = ['name', 'version', 'delegatorsCount', 'weight', 'peers', 'uncheckedBlocks'];
-    largeRepsDisplayColumnsLg = ['position', 'address', 'online',  'weight',  'percentWeight', 'delegatorsCount', 'uptimePercentMonth'];
-    largeRepsDisplayColumnsMd = ['position', 'address', 'online',  'weight',  'percentWeight', 'uptimePercentMonth'];
+    largeRepsDisplayColumnsLg = [
+        'position',
+        'address',
+        'online',
+        'weight',
+        'percentWeight',
+        'delegatorsCount',
+        'uptimePercentMonth',
+    ];
+    largeRepsDisplayColumnsMd = ['position', 'address', 'online', 'weight', 'percentWeight', 'uptimePercentMonth'];
     filteredLargeReps: RepresentativeDto[] = [];
     microReps: MicroRepresentativeDto[] = [];
     onlineLargeRepsCount = 0;
     onlineMicroRepsCount = 0;
-    largeRepsTableHeader: Element;
+    shownLargeReps: RepresentativeDto[] = [];
 
     @ViewChild('sortAll') sortAll: MatSort;
     @ViewChild('sortMonitored') sortMonitored: MatSort;
@@ -76,32 +83,21 @@ export class RepresentativesComponent implements OnInit {
         this._api
             .representatives()
             .then((data: RepresentativesResponseDto) => {
-                this.unfilteredLargeReps = data.thresholdReps;
+                this.allLargeReps = data.thresholdReps;
                 this.monitoredReps = data.monitoredReps;
                 this.onlineWeight = data.onlineWeight;
                 this.microReps = data.microReps;
-                this.repsChart = this._createRepChart(this.unfilteredLargeReps);
+                this.repsChart = this._createRepChart(this.allLargeReps);
                 this.loading = false;
                 data.thresholdReps.map((rep) => (rep.online ? this.onlineLargeRepsCount++ : undefined));
                 data.microReps.map(() => this.onlineMicroRepsCount++);
-                this.updateLargeRepsList();
-                this.configureTables();
+                this.filterLargeRepsByStatus();
             })
             .catch((err) => {
                 console.error(err);
                 this.loading = false;
                 this.error = true;
             });
-    }
-
-    configureTables(): void {
-        this._ref.detectChanges();
-        this.monitoredRepsDataSource = new MatTableDataSource(this.monitoredReps);
-        this.largeRepsDataSource = new MatTableDataSource(this.filteredLargeReps);
-        this._ref.detectChanges();
-        this.monitoredRepsDataSource.sort = this.sortMonitored;
-        this.largeRepsDataSource.sort = this.sortAll;
-        this.largeRepsTableHeader = document.getElementById('large-reps-table').firstChild as HTMLElement;
     }
 
     numberWithCommas(count: number): string {
@@ -116,16 +112,12 @@ export class RepresentativesComponent implements OnInit {
         return index;
     }
 
-    /** This is only used on mobile viewports. */
-    updateLargeRepsList(): void {
+    filterLargeRepsByStatus(): void {
+        this.shownLargeReps = [];
         if (this.showOfflineRepsFilter) {
-            this.filteredLargeReps = this.unfilteredLargeReps;
+            this.shownLargeReps = this.allLargeReps;
         } else {
-            this.filteredLargeReps = [];
-            this.unfilteredLargeReps.map((rep) => (rep.online ? this.filteredLargeReps.push(rep) : undefined));
-        }
-        if (!this.vp.sm) {
-            this.configureTables();
+            this.allLargeReps.map((rep) => (rep.online ? this.shownLargeReps.push(rep) : undefined));
         }
     }
 
@@ -258,7 +250,7 @@ export class RepresentativesComponent implements OnInit {
     }
 
     isLargeRep(weight: number): boolean {
-        return weight / this.onlineWeight * 100 > 5;
+        return (weight / this.onlineWeight) * 100 > 5;
     }
 
     formatMonitoredListAddress(addr: string): string {
