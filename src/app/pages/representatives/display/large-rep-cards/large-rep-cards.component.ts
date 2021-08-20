@@ -9,7 +9,7 @@ import { AliasService } from '@app/services/alias/alias.service';
     selector: 'app-large-rep-cards',
     template: `
         <mat-card
-            style="padding: 12px 12px; margin-bottom: 8px"
+            style="padding: 12px 12px; margin-bottom: 12px"
             *ngFor="let rep of shownReps; let i = index; trackBy: trackByFn"
             class="representatives-all-reps-card mat-elevation-z0"
         >
@@ -20,11 +20,13 @@ import { AliasService } from '@app/services/alias/alias.service';
                 <span
                     class="mat-overline"
                     style="font-size: 11px; display: flex; align-items: center"
-                    [class.online]="rep.online"
-                    [class.offline]="!rep.online"
+                    [class.primary]="rep.online"
+                    [class.warn]="!rep.online"
                 >
                     <span style="margin-right: 12px">{{ rep.online ? '' : 'Offline' }}</span>
-                    <mat-icon style="font-size: 1.5rem">{{ rep.online ? 'check' : 'priority_high' }}</mat-icon>
+                    <mat-icon style="font-size: 1.5rem">{{
+                        rep.online ? 'check_circle_outline' : 'error_outline'
+                    }}</mat-icon>
                 </span>
             </div>
 
@@ -62,7 +64,6 @@ import { AliasService } from '@app/services/alias/alias.service';
             </div>
         </mat-card>
     `,
-    styleUrls: ['./large-rep-cards.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
 export class LargeRepCardsComponent {
@@ -82,7 +83,7 @@ export class LargeRepCardsComponent {
     }
 
     formatWeightPercent(weight: number): string {
-        return `${((weight / this.onlineWeight) * 100).toFixed(1).replace(/\.?0+$/, '')}`;
+        return `${((weight / this.onlineWeight) * 100).toFixed(3).replace(/\.?0+$/, '')}%`;
     }
 
     formatBanWeight(weight: number): string {

@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
-import { MicroRepresentativeDto, MonitoredRepDto, RepresentativeDto } from '@app/types/dto';
+import { MicroRepresentativeDto, RepresentativeDto } from '@app/types/dto';
 import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
 import { AliasService } from '@app/services/alias/alias.service';
@@ -16,7 +16,9 @@ import { AliasService } from '@app/services/alias/alias.service';
                     [dense]="false"
                     divider="full"
                 >
-                    <div pxb-left-content style="width: 32px" [style.marginLeft.px]="vp.sm ? 0 : 16">#{{ i + 1 }}</div>
+                    <div pxb-left-content style="width: 32px; font-weight: 600" [style.marginLeft.px]="vp.sm ? 0 : 16">
+                        #{{ i + 1 }}
+                    </div>
                     <div pxb-title class="primary">{{ aliasService.get(rep.address) }}</div>
                     <div pxb-subtitle style="font-size: 0.875rem">{{ formatMicroRepInfoList(rep) }}</div>
                     <div pxb-info>
@@ -69,7 +71,7 @@ export class MicroRepListComponent {
     }
 
     formatWeightPercent(weight: number): string {
-        return `${((weight / this.onlineWeight) * 100).toFixed(1).replace(/\.?0+$/, '')}`;
+        return `${((weight / this.onlineWeight) * 100).toFixed(4).replace(/\.?0+$/, '')}%`;
     }
 
     formatMonitoredListAddress(addr: string): string {

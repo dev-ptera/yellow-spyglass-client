@@ -10,7 +10,7 @@ import { AliasService } from '@app/services/alias/alias.service';
     selector: 'app-monitored-rep-list',
     template: `
         <mat-card style="padding: 0 12px">
-            <mat-list [style.paddingTop.px]="0" class="representatives-monitored-list">
+            <mat-list [style.paddingTop.px]="0" class="monitored-rep-list">
                 <pxb-info-list-item
                     *ngFor="let rep of monitoredReps; trackBy: trackByFn"
                     [hidePadding]="true"
@@ -18,7 +18,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                     divider="full"
                 >
                     <div pxb-title>
-                        <span class="link primary" (click)="openMonitoredRep(rep.ip)">{{ rep.name }}</span>
+                        <div class="link primary" (click)="openMonitoredRep(rep.ip)">{{ rep.name }}</div>
                     </div>
                     <div pxb-subtitle style="font-size: 0.875rem">{{ formatMonitoredRepInfoLine(rep) }}</div>
                     <div pxb-info style="font-size: 0.875rem" (click)="routeRepAddress(rep.address)">
@@ -32,7 +32,14 @@ import { AliasService } from '@app/services/alias/alias.service';
             </mat-list>
         </mat-card>
     `,
-    styleUrls: ['./monitored-rep-list.component.scss'],
+    styles: [
+        `
+            .monitored-rep-list .mat-list-item-content {
+                padding: 12px 0 12px 0 !important;
+                height: unset !important;
+            }
+        `,
+    ],
     encapsulation: ViewEncapsulation.None,
 })
 export class MonitoredRepListComponent {
@@ -72,7 +79,7 @@ export class MonitoredRepListComponent {
     }
 
     formatWeightPercent(weight: number): string {
-        return `${((weight / this.onlineWeight) * 100).toFixed(1).replace(/\.?0+$/, '')}`;
+        return `${((weight / this.onlineWeight) * 100).toFixed(3).replace(/\.?0+$/, '')}%`;
     }
 
     formatMonitoredListAddress(addr: string): string {

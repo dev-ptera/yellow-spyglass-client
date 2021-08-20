@@ -8,9 +8,6 @@ import { BlockDto } from '@app/types/dto/BlockDto';
 import { ApiService } from '@app/services/api/api.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 
-// @ts-ignore
-const Wave = require('assets/waves/wave1.svg');
-
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
@@ -27,7 +24,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     searchedValue: string;
     accountOverview: AccountOverviewDto;
     blockResponse: BlockDto;
-    svgWave = Wave;
 
     showAccount = false;
     showBlock = false;
@@ -39,39 +35,15 @@ export class HomeComponent implements OnInit, OnDestroy {
         private readonly _util: UtilService,
         private readonly _apiService: ApiService,
         private readonly _activatedRoute: ActivatedRoute
-    ) {
-        this.navigation$ = this._router.events
-            .pipe(filter((event: RouterEvent) => event instanceof NavigationStart))
-            .subscribe((event: NavigationStart) => {
-                this.searchViaParams(event.url.split('?')[1]);
-            });
-    }
+    ) {}
 
     ngOnInit(): void {
         this.searchFormControl = new FormControl();
-        console.log(this.svgWave);
-        this.searchViaParams(window.location.search);
     }
 
     ngOnDestroy(): void {
         if (this.navigation$) {
             this.navigation$.unsubscribe();
-        }
-    }
-
-    searchViaParams(params: string): void {
-        const urlParams = new URLSearchParams(params);
-        const address = urlParams.get('address');
-        const hash = urlParams.get('hash');
-        if (address && this.searchedValue !== address) {
-            this.search(address);
-        } else if (hash && this.searchedValue !== hash) {
-            this.search(hash);
-        }
-        if (!address && !hash) {
-            this.showBlock = false;
-            this.showAccount = false;
-            this.searchedValue = undefined;
         }
     }
 

@@ -59,4 +59,12 @@
             }
         }
     }
+    .home-get-started {
+        margin-top: 32px;
+        opacity: 0.4;
+        cursor: pointer;
+        &:hover {
+            opacity: 1;
+        }
+    }
 }

@@ -13,6 +13,7 @@ import { ThemeService } from '@app/services/theme/theme.service';
                     <mat-icon pxb-icon>bookmarks</mat-icon>
                     <div pxb-title>Bookmarks</div>
                 </pxb-info-list-item>
+                <!--
                 <div>
                     <mat-divider></mat-divider>
                     <div style="padding: 8px 16px 8px 16px; font-weight: 600">Themes</div>
@@ -25,7 +26,7 @@ import { ThemeService } from '@app/services/theme/theme.service';
                         <mat-icon pxb-icon>dark_mode</mat-icon>
                         <div pxb-title>Dark Theme</div>
                     </pxb-info-list-item>
-                </div>
+                </div> -->
             </mat-nav-list>
         </pxb-user-menu>
     `,

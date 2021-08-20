@@ -14,6 +14,7 @@ import { LargeRepCardsComponent } from '@app/pages/representatives/display/large
 import { MonitoredRepTableComponent } from '@app/pages/representatives/display/monitored-rep-table/monitored-rep-table.component';
 import { MonitoredRepListComponent } from '@app/pages/representatives/display/monitored-rep-list/monitored-rep-list.component';
 import { MicroRepListComponent } from '@app/pages/representatives/display/micro-rep-list/micro-rep-list.component';
+import { WeightChartComponent } from '@app/pages/representatives/display/weight-chart/weight-chart.component';
 
 @NgModule({
     declarations: [
@@ -23,6 +24,7 @@ import { MicroRepListComponent } from '@app/pages/representatives/display/micro-
         MonitoredRepListComponent,
         MonitoredRepTableComponent,
         MicroRepListComponent,
+        WeightChartComponent,
     ],
     imports: [
         AppCommonModule,
@@ -43,6 +45,7 @@ import { MicroRepListComponent } from '@app/pages/representatives/display/micro-
         MonitoredRepListComponent,
         MonitoredRepTableComponent,
         MicroRepListComponent,
+        WeightChartComponent,
     ],
 })
 export class RepresentativesModule {}

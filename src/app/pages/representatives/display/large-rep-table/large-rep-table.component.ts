@@ -84,8 +84,8 @@ import { AliasService } from '@app/services/alias/alias.service';
                 </th>
                 <td mat-cell *matCellDef="let element">
                     <span
-                        [class.warn]="element.uptimePercentMonth <= 50"
-                        [class.intermediary]="element.uptimePercentMonth > 50 && element.uptimePercentMonth <= 95"
+                        [class.warn]="element.uptimePercentMonth <= 80"
+                        [class.intermediary]="element.uptimePercentMonth > 80 && element.uptimePercentMonth <= 95"
                         [class.primary]="element.uptimePercentMonth > 95"
                     >
                         {{ element.uptimePercentMonth }}%

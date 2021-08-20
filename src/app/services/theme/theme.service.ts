@@ -9,7 +9,8 @@ export class ThemeService {
     lightMode: boolean;
 
     constructor() {
-        this.lightMode = localStorage.getItem(this.themeLocalStorageId) !== 'dark'; // Use light by default.
+        // this.lightMode = localStorage.getItem(this.themeLocalStorageId) !== 'light'; // Use DARK by default.
+        this.lightMode = false; // TODO: Add back a good light theme
         this._toggleTheme();
     }
 
