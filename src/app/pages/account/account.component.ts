@@ -1,13 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Input,
-    OnChanges,
-    SimpleChanges,
-    ViewEncapsulation,
-} from '@angular/core';
-// import * as QRCode from 'qrcode';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { AccountOverviewDto, ConfirmedTransactionDto, PendingTransactionDto } from '@app/types/dto';
 import { Delegator } from '@app/types/modal/Delegator';
 import { ConfirmedTransaction } from '@app/types/modal/ConfirmedTransaction';
@@ -21,6 +12,9 @@ import { PriceService } from '@app/services/price/price.service';
 import { InsightsDto } from '@app/types/dto/InsightsDto';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { OnlineRepsService } from '@app/services/online-reps/online-reps.service';
+import { NavigationEnd, Router } from '@angular/router';
+import { APP_NAV_ITEMS } from '../../navigation/nav-items';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-account',
@@ -29,17 +23,17 @@ import { OnlineRepsService } from '@app/services/online-reps/online-reps.service
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
-export class AccountComponent implements OnChanges {
-    @Input() accountOverview: AccountOverviewDto;
-    @Input() loading: boolean;
-    @Input() error: boolean;
-    @Input() address: string;
-    @Input() monkeySvg: string;
+export class AccountComponent implements OnDestroy {
+    loading: boolean;
+    error: boolean;
+    address: string;
+    monkeySvg: string;
 
     pendingBalance: string;
     confirmedBalance: string;
     shortenedRep: string;
     insights: InsightsDto;
+    accountOverview: AccountOverviewDto;
     insightsDisabled: boolean;
     loadingInsights: boolean;
     hasInsightsError: boolean;
@@ -60,22 +54,77 @@ export class AccountComponent implements OnChanges {
 
     paginatorSize = 50;
     confirmedTxPageIndex = 0;
+    routeListener: Subscription;
 
     constructor(
         public vp: ViewportService,
         public searchService: SearchService,
+        private readonly _router: Router,
         private readonly _util: UtilService,
         private readonly _apiService: ApiService,
         private readonly _priceService: PriceService,
         private readonly _ref: ChangeDetectorRef,
         private readonly _monkeyCache: MonkeyCacheService,
         public onlineRepService: OnlineRepsService
-    ) {}
+    ) {
+        this.routeListener = this._router.events.subscribe((route) => {
+            if (route instanceof NavigationEnd) {
+                this._searchAccount(this._router.url.split('/')[2]);
+            }
+        });
+    }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes.accountOverview && changes.accountOverview.currentValue) {
-            this._prepareNewAccount();
+    ngOnDestroy(): void {
+        if (this.routeListener) {
+            this.routeListener.unsubscribe();
         }
+    }
+
+    search(searchValue: string): void {
+        this.loading = true;
+        this.error = false;
+        this.monkeySvg = undefined;
+        this.accountOverview = undefined;
+        window.scrollTo(0, 0);
+        if (searchValue.toLowerCase().startsWith('ban_')) {
+            this._searchAccount(searchValue.toLowerCase());
+        } else {
+            void this._router.navigate([`${APP_NAV_ITEMS.hash.route}/${searchValue}`]);
+        }
+    }
+
+    /** Given a ban address, searches for account. */
+    private _searchAccount(address): void {
+        this.address = address;
+        this.monkeySvg = '';
+        this.loading = true;
+        this.error = false;
+        this._ref.detectChanges();
+
+        const spin = new Promise((resolve) => setTimeout(resolve, 500));
+
+        // Confirmed Transactions
+        Promise.all([this._apiService.accountOverview(address), spin])
+            .then(([accountOverview]) => {
+                this.loading = false;
+                this.accountOverview = accountOverview;
+                this._prepareNewAccount();
+                void this._router.navigate([`${APP_NAV_ITEMS.account.route}/${address}`]);
+            })
+            .catch((err) => {
+                console.error(err);
+                this.loading = false;
+                this.error = true;
+            });
+
+        // Monkey
+        Promise.all([this._apiService.monkey(address), spin])
+            .then(([data]) => {
+                this.monkeySvg = data;
+            })
+            .catch((err) => {
+                console.error(err);
+            });
     }
 
     /**
@@ -202,7 +251,7 @@ export class AccountComponent implements OnChanges {
     }
 
     /**
-     * Converts a ConfirmedTransactionDto into a displayable format.
+     * Converts a PendingTransactionDto into a displayable format.
      */
     private _convertPendingTxDtoToModal(tx: PendingTransactionDto): PendingTransaction {
         return {

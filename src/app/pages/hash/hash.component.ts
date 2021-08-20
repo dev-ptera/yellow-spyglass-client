@@ -1,8 +1,11 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { BlockDto } from '@app/types/dto/BlockDto';
 import { UtilService } from '@app/services/util/util.service';
 import { SearchService } from '@app/services/search/search.service';
+import { Subscription } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
+import { ApiService } from '@app/services/api/api.service';
 
 @Component({
     selector: 'app-hash',
@@ -144,26 +147,70 @@ import { SearchService } from '@app/services/search/search.service';
             </div>
         </ng-template>
 
-        <app-error *ngIf="error"></app-error>
-        <ng-container *ngIf="!error">
-            <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
-            <ng-template *ngIf="!loading" [ngTemplateOutlet]="bodyContent"></ng-template>
-        </ng-container>
+        <div class="hash-root app-page-root" responsive>
+            <div class="app-page-content">
+                <app-error *ngIf="error"></app-error>
+                <ng-container *ngIf="!error">
+                    <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
+                    <ng-template *ngIf="!loading" [ngTemplateOutlet]="bodyContent"></ng-template>
+                </ng-container>
+            </div>
+        </div>
     `,
     styleUrls: ['./hash.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class HashComponent {
-    @Input() hash: string;
-    @Input() block: BlockDto;
-    @Input() loading: boolean;
-    @Input() error: boolean;
+export class HashComponent implements OnDestroy {
+    hash: string;
+    block: BlockDto;
+    loading: boolean;
+    error: boolean;
+
+    routeListener: Subscription;
 
     constructor(
         public vp: ViewportService,
+        private readonly _router: Router,
+        private readonly _apiService: ApiService,
         private readonly _util: UtilService,
+        private readonly _ref: ChangeDetectorRef,
         private readonly _searchService: SearchService
-    ) {}
+    ) {
+        this.routeListener = this._router.events.subscribe((route) => {
+            if (route instanceof NavigationEnd) {
+                this._searchHash(this._router.url.split('/')[2]);
+            }
+        });
+    }
+
+    ngOnDestroy(): void {
+        if (this.routeListener) {
+            this.routeListener.unsubscribe();
+        }
+    }
+
+    private _searchHash(hash: string): void {
+        this.hash = hash;
+        this.block = undefined;
+        this.loading = true;
+        this.error = false;
+
+        this._ref.detectChanges();
+
+        const spin = new Promise((resolve) => setTimeout(resolve, 500));
+
+        // Confirmed Transactions
+        Promise.all([this._apiService.block(hash), spin])
+            .then(([blockResponse]) => {
+                this.loading = false;
+                this.block = blockResponse;
+            })
+            .catch((err) => {
+                console.error(err);
+                this.loading = false;
+                this.error = true;
+            });
+    }
 
     convertRawToBan(raw: string): string {
         return `${this._util.convertRawToBan(raw, {

@@ -5,12 +5,6 @@ export type NavItem = {
     icon: string;
 };
 
-const searchNavItem: NavItem = {
-    title: 'Explore',
-    route: 'search',
-    icon: 'search',
-};
-
 const walletsNavItem: NavItem = {
     title: 'Wallets',
     route: 'wallets',
@@ -20,7 +14,7 @@ const walletsNavItem: NavItem = {
 const homeNavItem: NavItem = {
     title: 'Home',
     route: '',
-    icon: '',
+    icon: 'search',
 };
 
 const knownAccountsNavItem: NavItem = {
@@ -59,17 +53,28 @@ const vanityNavItem: NavItem = {
     icon: undefined,
 };
 
+export const hashNavItem = {
+    title: 'Block Hash',
+    route: 'hash',
+};
+
+export const accountNavItem = {
+    title: 'Account',
+    route: 'account',
+};
+
 export const APP_NAV_ITEMS = {
     home: homeNavItem,
     knownAccounts: knownAccountsNavItem,
     bookmarks: bookmarksNavItem,
-    search: searchNavItem,
     representatives: representativesNavItem,
     wallets: walletsNavItem,
     network: networkNavItem,
     node: nodeNavItem,
     vanity: vanityNavItem,
+    hash: hashNavItem,
+    account: accountNavItem,
 };
 
-export const EXPLORER_NAV_GROUP = [searchNavItem, walletsNavItem, knownAccountsNavItem];
+export const EXPLORER_NAV_GROUP = [homeNavItem, walletsNavItem, knownAccountsNavItem];
 export const NETWORK_NAV_GROUP = [networkNavItem, representativesNavItem, nodeNavItem];

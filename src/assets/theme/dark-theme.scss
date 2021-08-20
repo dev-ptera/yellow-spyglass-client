@@ -54,6 +54,12 @@ $primary-green: map-get($pxb-green, 200);
 $warn-red: map-get($pxb-red, 200);
 $tag-opacity: 0.06;
 
+.mat-badge {
+    .mat-badge-content {
+        background: map-get($pxb-black, 100) !important;
+    }
+}
+
 html,
 body {
     background-color: map-get($theme-background, background) !important;

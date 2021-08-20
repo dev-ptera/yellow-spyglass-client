@@ -38,7 +38,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                         style="padding-right: 24px; margin-top: -4px; word-break: break-word"
                         [style.fontSize.px]="vp.md ? 13 : 14"
                     >
-                        {{ element.address }}
+                        {{ formatAddress(element.address) }}
                     </span>
                 </td>
             </ng-container>
@@ -51,12 +51,12 @@ import { AliasService } from '@app/services/alias/alias.service';
             </ng-container>
 
             <ng-container matColumnDef="weight">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Weight (BAN)</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Weight</th>
                 <td class="representatives-weight-cell" mat-cell *matCellDef="let element">
                     {{ formatBanWeight(element.weight) }}
                     <br />
-                    <span class="representatives-weight-percentage" responsive
-                        >({{ formatWeightPercent(element.weight) }}%)</span
+                    <span style="font-size: 12px"
+                        >{{ formatWeightPercent(element.weight) }}<span style="font-size: 10px">%</span></span
                     >
                 </td>
             </ng-container>
@@ -142,5 +142,12 @@ export class MonitoredRepTableComponent implements OnChanges {
 
     openMonitoredRep(ip: string): void {
         window.open(`http://${ip}`, '_blank');
+    }
+
+    formatAddress(addr: string): string {
+        if (this.vp.md) {
+            return `${addr.substr(0, 12)}...${addr.substr(addr.length - 6, addr.length)}`;
+        }
+        return addr;
     }
 }

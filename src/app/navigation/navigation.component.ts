@@ -39,13 +39,9 @@ export class NavigationComponent implements OnInit {
     ngOnInit(): void {
         this._searchService.searchEvents().subscribe((searchValue: string) => {
             if (searchValue.startsWith('ban_')) {
-                void this._router.navigate([APP_NAV_ITEMS.search.route], {
-                    queryParams: { address: searchValue },
-                });
+                void this._router.navigate([`${APP_NAV_ITEMS.account.route}/${searchValue}`]);
             } else {
-                void this._router.navigate([APP_NAV_ITEMS.search.route], {
-                    queryParams: { hash: searchValue },
-                });
+                void this._router.navigate([`${APP_NAV_ITEMS.hash.route}/${searchValue}`]);
             }
         });
     }
@@ -74,10 +70,6 @@ export class NavigationComponent implements OnInit {
         this._stateService.setDrawerOpen(false);
     }
 
-    toggleDrawerOpen(): void {
-        this._stateService.setDrawerOpen(!this._stateService.getDrawerOpen());
-    }
-
     getSelectedItem(): string {
         return this._stateService.getSelectedItem();
     }
@@ -89,6 +81,7 @@ export class NavigationComponent implements OnInit {
     openDrawer(): void {
         this._stateService.setDrawerOpen(true);
     }
+
     openSearch(): void {
         this.toggleSearch = true;
         // focus the input after the animation completes to avoid a jerky transition
@@ -98,10 +91,6 @@ export class NavigationComponent implements OnInit {
     closeSearch(): void {
         this.appbarSearchText = '';
         this.toggleSearch = false;
-    }
-
-    isSmall(): boolean {
-        return this._viewportService.isMedium() || this._viewportService.isSmall();
     }
 
     // Observes route changes and changes app title & sets selected item
@@ -114,9 +103,9 @@ export class NavigationComponent implements OnInit {
                     drawerContent.scroll(0, 0);
                 }
                 switch (route.urlAfterRedirects.split('?')[0]) {
-                    case `/${APP_NAV_ITEMS.search.route}`: {
-                        this.toolbarTitle = APP_NAV_ITEMS.search.title;
-                        this._stateService.setSelectedItem(APP_NAV_ITEMS.search.title);
+                    case `/${APP_NAV_ITEMS.home.route}`: {
+                        this.toolbarTitle = APP_NAV_ITEMS.home.title;
+                        this._stateService.setSelectedItem(APP_NAV_ITEMS.home.title);
                         this._title.setTitle(this._makeTitle('Explore'));
                         this._meta.updateTag({
                             name: 'description',

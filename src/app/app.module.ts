@@ -11,6 +11,8 @@ import { NavigationModule } from './navigation/navigation.module';
 import { NetworkModule } from '@app/pages/network/network.module';
 import { VanityModule } from '@app/pages/vanity/vanity.module';
 import { HomeModule } from '@app/pages/home/home.module';
+import { AccountModule } from '@app/pages/account/account.module';
+import { HashModule } from '@app/pages/hash/hash.module';
 
 @Component({
     selector: 'app-root',
@@ -21,8 +23,10 @@ export class AppComponent {}
 @NgModule({
     declarations: [AppComponent],
     imports: [
+        AccountModule,
         AppRoutingModule,
         BookmarksModule,
+        HashModule,
         HttpClientModule,
         HomeModule,
         KnownAccountsModule,

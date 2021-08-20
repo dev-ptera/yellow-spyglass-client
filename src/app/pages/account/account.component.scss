@@ -123,16 +123,6 @@
 }
 
 .account-tabs {
-    .account-pending-badge {
-        .mat-badge-content {
-            background: map-get($pxb-orange, 500);
-        }
-    }
-    .account-delegators-badge {
-        .mat-badge-content {
-            background-color: map-get($pxb-blue, 500);
-        }
-    }
     .mat-badge-content {
         min-width: 22px;
         width: unset !important;

@@ -1,23 +1,25 @@
-.hash-searched {
-    word-break: break-all;
-    margin-right: 24px;
-}
-.hash-section {
-    margin: 24px 0;
-    word-break: break-word;
-    div {
-        display: flex;
-        justify-content: left;
-        align-items: center;
-        flex-wrap: wrap;
+.hash-root {
+    .hash-searched {
+        word-break: break-all;
+        margin-right: 24px;
     }
-    .app-section-title {
-        margin-right: 16px;
-    }
-    .app-section-subtitle {
-        margin-bottom: 0;
-    }
-    .hash-description {
-        font-size: 12px;
+    .hash-section {
+        margin: 24px 0;
+        word-break: break-word;
+        div {
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .app-section-title {
+            margin-right: 16px;
+        }
+        .app-section-subtitle {
+            margin-bottom: 0;
+        }
+        .hash-description {
+            font-size: 12px;
+        }
     }
 }

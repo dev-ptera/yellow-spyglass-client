@@ -88,7 +88,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                         [class.intermediary]="element.uptimePercentMonth > 80 && element.uptimePercentMonth <= 95"
                         [class.primary]="element.uptimePercentMonth > 95"
                     >
-                        {{ element.uptimePercentMonth }}%
+                        {{ element.uptimePercentMonth }}<span style="font-size: 11px">% </span>
                     </span>
                     <span *ngIf="!vp.md" style="font-size: 11px"
                         >· {{ element.uptimePercentWeek }}% · {{ element.uptimePercentDay }}%

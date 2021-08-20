@@ -18,7 +18,7 @@
     <div class="account-header" responsive>
         <div class="account-title">
             <div [style.width.%]="100">
-                <div [class.mat-display-2]="!vp.sm" [class.mat-display-1]="vp.sm" [style.marginBottom.px]="4">
+                <div class="app-page-title" [style.marginBottom.px]="4">
                     <span *ngIf="loading">Loading</span>
                     <ng-container *ngIf="!loading">
                         <ng-container *ngIf="!isRepresentative()">
@@ -136,7 +136,7 @@
         <!-- Confirmed transactions -->
         <mat-tab>
             <ng-template mat-tab-label>
-                <span color="accent" matBadgeOverlap="false" [matBadge]="getConfirmedBadge()">
+                <span matBadgeOverlap="false" [matBadge]="getConfirmedBadge()">
                     <ng-container *ngIf="!vp.sm">
                         Confirmed
                         <ng-container *ngIf="!vp.md">Transactions</ng-container>
@@ -153,7 +153,7 @@
         <!-- Pending transactions -->
         <mat-tab class="account-pending-tab">
             <ng-template mat-tab-label>
-                <span class="account-pending-badge" [matBadge]="getPendingBadge()" matBadgeOverlap="false">
+                <span [matBadge]="getPendingBadge()" matBadgeOverlap="false">
                     <ng-container *ngIf="!vp.sm">
                         Pending
                         <ng-container *ngIf="!vp.md">Transactions</ng-container>
@@ -170,7 +170,7 @@
         <!-- Delegators -->
         <mat-tab>
             <ng-template mat-tab-label>
-                <span class="account-delegators-badge" [matBadge]="getDelegatorsBadge()" matBadgeOverlap="false">
+                <span [matBadge]="getDelegatorsBadge()" matBadgeOverlap="false">
                     <!-- Delegators -->
                     <ng-container *ngIf="!vp.sm">Delegators</ng-container>
                     <mat-icon *ngIf="vp.sm">how_to_vote</mat-icon>
@@ -196,8 +196,14 @@
     </mat-tab-group>
 </ng-template>
 
-<app-error *ngIf="error"></app-error>
-<ng-container *ngIf="!error">
-    <ng-template [ngTemplateOutlet]="headerContent"></ng-template>
-    <ng-template *ngIf="!loading" [ngTemplateOutlet]="bodyContent"></ng-template>
-</ng-container>
+<div class="vanity-root app-page-root" responsive>
+    <div class="app-page-content">
+        <app-error *ngIf="error"></app-error>
+        <ng-container *ngIf="!error">
+            <ng-template [ngTemplateOutlet]="headerContent"></ng-template>
+            <ng-template *ngIf="!loading" [ngTemplateOutlet]="bodyContent"></ng-template>
+        </ng-container>
+    </div>
+</div>
+
+<app-wave [waveNumber]="16"></app-wave>
