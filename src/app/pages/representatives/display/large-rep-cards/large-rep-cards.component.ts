@@ -26,7 +26,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                     <span style="margin-right: 12px">{{ rep.online ? '' : 'Offline' }}</span>
                     <mat-icon style="font-size: 1.5rem">{{
                         rep.online ? 'check_circle_outline' : 'error_outline'
-                    }}</mat-icon>
+                        }}</mat-icon>
                 </span>
             </div>
 
@@ -42,7 +42,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                 style="font-size: 0.875rem; word-break: break-all; margin-bottom: 8px"
                 (click)="routeRepAddress(rep.address)"
             >
-                {{ shortenAddress(rep.address) }}
+                {{ formatAddress(rep.address) }}
             </div>
             <mat-divider></mat-divider>
             <div style="display: flex; justify-content: space-between; font-size: 0.75rem; padding-top: 12px">
@@ -94,8 +94,8 @@ export class LargeRepCardsComponent {
         return index;
     }
 
-    shortenAddress(addr: string): string {
-        return `${addr.substr(0, 12)}...${addr.substr(addr.length - 6, addr.length)}`;
+    formatAddress(addr: string): string {
+        return this._util.shortenAddress(addr);
     }
 
     routeRepAddress(address: string): void {

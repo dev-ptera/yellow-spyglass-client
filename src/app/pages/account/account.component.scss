@@ -50,8 +50,11 @@
     }
 
     .account-monkey {
-        width: 180px;
+        width: 200px;
         min-width: 150px;
+        &.md {
+            width: 180px;
+        }
         &.sm {
             width: 100px;
             min-width: 100px;

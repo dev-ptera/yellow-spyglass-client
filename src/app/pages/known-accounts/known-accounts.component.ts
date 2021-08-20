@@ -7,6 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { APP_NAV_ITEMS } from '../../navigation/nav-items';
+import {UtilService} from "@app/services/util/util.service";
 
 @Component({
     selector: 'app-known-accounts',
@@ -26,6 +27,7 @@ export class KnownAccountsComponent implements OnInit {
         private readonly _api: ApiService,
         private readonly _searchService: SearchService,
         private readonly _router: Router,
+        private readonly _util: UtilService,
         public vp: ViewportService
     ) {}
 
@@ -47,6 +49,10 @@ export class KnownAccountsComponent implements OnInit {
 
     routeVanityAddresses(): void {
         void this._router.navigate([APP_NAV_ITEMS.vanity.route]);
+    }
+
+    formatAddr(addr: string): string {
+        return this.vp.md ? this._util.shortenAddress(addr) : addr;
     }
 
     routeRepAddress(address: string): void {

@@ -48,4 +48,8 @@ export class UtilService {
         const last6 = addr.substring(addr.length - 7, addr.length);
         return `${ban}<strong>${first7}</strong>${middle}${last6}`;
     }
+
+    shortenAddress(addr: string): string {
+        return `${addr.substr(0, 12)}...${addr.substr(addr.length - 6, addr.length)}`;
+    }
 }

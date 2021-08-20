@@ -23,8 +23,8 @@ import { AliasService } from '@app/services/alias/alias.service';
                     <div pxb-subtitle style="font-size: 0.875rem">{{ formatMicroRepInfoList(rep) }}</div>
                     <div pxb-info>
                         <span class="link" (click)="routeRepAddress(rep.address)">{{
-                            formatMicroListAddress(rep.address)
-                        }}</span>
+                            formatAddress(rep.address)
+                            }}</span>
                     </div>
                     <div
                         pxb-right-content
@@ -60,10 +60,6 @@ export class MicroRepListComponent {
         return `${this._util.numberWithCommas(count)}`;
     }
 
-    formatBanWeight(weight: number): string {
-        return this._util.numberWithCommas(Math.round(weight));
-    }
-
     routeRepAddress(address: string): void {
         if (address) {
             this._searchService.emitSearch(address);
@@ -74,12 +70,12 @@ export class MicroRepListComponent {
         return `${((weight / this.onlineWeight) * 100).toFixed(4).replace(/\.?0+$/, '')}%`;
     }
 
-    formatMonitoredListAddress(addr: string): string {
-        return `${addr.substr(0, 12)}...${addr.substr(addr.length - 6, addr.length)}`;
+    formatAddress(addr: string): string {
+        return this.vp.sm ? this._util.shortenAddress(addr) : addr;
     }
 
-    formatMicroListAddress(addr: string): string {
-        return this.vp.sm ? this.formatMonitoredListAddress(addr) : addr;
+    formatBanWeight(weight: number): string {
+        return this._util.numberWithCommas(Math.round(weight));
     }
 
     formatMicroRepInfoList(rep: MicroRepresentativeDto): string {

@@ -44,7 +44,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                                     {{ aliasService.get(element.address) }}
                                 </div>
                                 <ng-container *ngIf="!aliasService.get(element.address)">
-                                    {{ shortenAddress(element.address) }}
+                                    {{ formatAddress(element.address) }}
                                 </ng-container>
                             </span>
                         </div>
@@ -77,7 +77,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                     <div style="text-align: left">
                         Uptime
                         <ng-container *ngIf="!vp.md">
-                            <br />
+                            <br/>
                             <div style="font-size: 10px; margin-top: -4px">month · week · day</div>
                         </ng-container>
                     </div>
@@ -91,7 +91,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                         {{ element.uptimePercentMonth }}<span style="font-size: 11px">% </span>
                     </span>
                     <span *ngIf="!vp.md" style="font-size: 11px"
-                        >· {{ element.uptimePercentWeek }}% · {{ element.uptimePercentDay }}%
+                    >· {{ element.uptimePercentWeek }}% · {{ element.uptimePercentDay }}%
                     </span>
                 </td>
             </ng-container>
@@ -160,12 +160,17 @@ export class LargeRepTableComponent implements OnChanges {
         this.largeRepsDataSource.sort = this.sortAll;
     }
 
-    numberWithCommas(count: number): string {
-        return `${this._util.numberWithCommas(count)}`;
-    }
 
     formatBanWeight(weight: number): string {
         return this._util.numberWithCommas(Math.round(weight));
+    }
+
+    formatWeightPercent(weight: number): string {
+        return `${((weight / this.onlineWeight) * 100).toFixed(2).replace(/\.?0+$/, '')}`;
+    }
+
+    formatAddress(addr: string): string {
+        return this._util.shortenAddress(addr);
     }
 
     routeRepAddress(address: string): void {
@@ -174,15 +179,11 @@ export class LargeRepTableComponent implements OnChanges {
         }
     }
 
-    formatWeightPercent(weight: number): string {
-        return `${((weight / this.onlineWeight) * 100).toFixed(2).replace(/\.?0+$/, '')}`;
+    numberWithCommas(count: number): string {
+        return `${this._util.numberWithCommas(count)}`;
     }
 
     isLargeRep(weight: number): boolean {
         return (weight / this.onlineWeight) * 100 > 2;
-    }
-
-    shortenAddress(addr: string): string {
-        return `${addr.substr(0, 12)}...${addr.substr(addr.length - 6, addr.length)}`;
     }
 }

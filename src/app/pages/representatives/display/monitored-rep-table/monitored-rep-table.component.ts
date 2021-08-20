@@ -119,10 +119,6 @@ export class MonitoredRepTableComponent implements OnChanges {
         return `${this._util.numberWithCommas(count)}`;
     }
 
-    formatBanWeight(weight: number): string {
-        return this._util.numberWithCommas(Math.round(weight));
-    }
-
     routeRepAddress(address: string): void {
         if (address) {
             this._searchService.emitSearch(address);
@@ -131,6 +127,15 @@ export class MonitoredRepTableComponent implements OnChanges {
 
     formatWeightPercent(weight: number): string {
         return `${((weight / this.onlineWeight) * 100).toFixed(2).replace(/\.?0+$/, '')}`;
+    }
+
+    formatBanWeight(weight: number): string {
+        return this._util.numberWithCommas(Math.round(weight));
+    }
+
+
+    formatAddress(addr: string): string {
+        return this.vp.md ? this._util.shortenAddress(addr) : addr;
     }
 
     formatVersion(version: string): string {
@@ -142,12 +147,5 @@ export class MonitoredRepTableComponent implements OnChanges {
 
     openMonitoredRep(ip: string): void {
         window.open(`http://${ip}`, '_blank');
-    }
-
-    formatAddress(addr: string): string {
-        if (this.vp.md) {
-            return `${addr.substr(0, 12)}...${addr.substr(addr.length - 6, addr.length)}`;
-        }
-        return addr;
     }
 }

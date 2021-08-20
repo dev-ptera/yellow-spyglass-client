@@ -20,9 +20,9 @@ import { AliasService } from '@app/services/alias/alias.service';
                     <div pxb-title>
                         <div class="link primary" (click)="openMonitoredRep(rep.ip)">{{ rep.name }}</div>
                     </div>
-                    <div pxb-subtitle style="font-size: 0.875rem">{{ formatMonitoredRepInfoLine(rep) }}</div>
+                    <div pxb-subtitle style="font-size: 0.875rem">{{ formatInfoLine(rep) }}</div>
                     <div pxb-info style="font-size: 0.875rem" (click)="routeRepAddress(rep.address)">
-                        {{ formatMonitoredListAddress(rep.address) }}
+                        {{ formatAddress(rep.address) }}
                     </div>
                     <div pxb-right-content style="display: flex; flex-direction: column; align-items: flex-end">
                         <div style="font-size: 0.875rem">{{ formatBanWeight(rep.weight) }} BAN</div>
@@ -64,10 +64,6 @@ export class MonitoredRepListComponent {
         return `${this._util.numberWithCommas(count)}`;
     }
 
-    formatBanWeight(weight: number): string {
-        return this._util.numberWithCommas(Math.round(weight));
-    }
-
     routeRepAddress(address: string): void {
         if (address) {
             this._searchService.emitSearch(address);
@@ -82,8 +78,12 @@ export class MonitoredRepListComponent {
         return `${((weight / this.onlineWeight) * 100).toFixed(3).replace(/\.?0+$/, '')}%`;
     }
 
-    formatMonitoredListAddress(addr: string): string {
-        return `${addr.substr(0, 12)}...${addr.substr(addr.length - 6, addr.length)}`;
+    formatAddress(addr: string): string {
+        return this._util.shortenAddress(addr);
+    }
+
+    formatBanWeight(weight: number): string {
+        return this._util.numberWithCommas(Math.round(weight));
     }
 
     formatVersion(version: string): string {
@@ -93,7 +93,7 @@ export class MonitoredRepListComponent {
         return '';
     }
 
-    formatMonitoredRepInfoLine(rep: MonitoredRepDto): string {
+    formatInfoLine(rep: MonitoredRepDto): string {
         return `${this.formatVersion(rep.version)} · ${this.numberWithCommas(
             rep.delegatorsCount
         )} delegators · ${this.numberWithCommas(rep.peers)} peers`;
