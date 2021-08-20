@@ -1,0 +1,62 @@
+.home-root {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    .home-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+        margin-top: 15vh;
+    }
+
+    .home-title {
+        margin-bottom: 8px;
+        text-align: center;
+        font-weight: 300;
+        margin-bottom: 8px;
+        font-family: pirateFont;
+        font-size: 140px;
+    }
+    .home-spyglass-svg {
+        margin-top: 4px;
+        position: relative;
+        width: 168px;
+        left: 282px;
+        margin-top: -124px;
+        margin-bottom: -19px;
+    }
+
+    .home-search-bar {
+        display: flex;
+        max-width: 500px;
+        width: 100%;
+        margin-top: 36px;
+        &.sm {
+            flex-direction: column;
+        }
+        mat-form-field {
+            width: 100%;
+            margin-right: 16px;
+            .mat-form-field-wrapper {
+                margin: 0;
+                padding: 0;
+            }
+        }
+        .home-search-button {
+            width: 140px;
+            &.sm {
+                margin-top: 8px;
+                height: 36px;
+                width: 100%;
+            }
+            .home-loading {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    }
+}
