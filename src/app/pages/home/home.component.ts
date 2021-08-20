@@ -1,20 +1,23 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { ViewportService } from '../../services/viewport/viewport.service';
-import { ApiService } from '../../services/api/api.service';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, NavigationStart, Router, RouterEvent } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { UtilService } from '../../services/util/util.service';
+import { UtilService } from '@app/services/util/util.service';
 import { AccountOverviewDto } from '@app/types/dto';
 import { BlockDto } from '@app/types/dto/BlockDto';
+import { ApiService } from '@app/services/api/api.service';
+import { ViewportService } from '@app/services/viewport/viewport.service';
+
+// @ts-ignore
+const Wave = require('assets/waves/wave1.svg');
 
 @Component({
-    selector: 'app-explore',
-    templateUrl: './explore.component.html',
-    styleUrls: ['./explore.component.scss'],
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class ExploreComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy {
     searchFormControl: FormControl;
     idFieldActive: boolean;
     touchedIdField: boolean;
@@ -24,22 +27,10 @@ export class ExploreComponent implements OnInit, OnDestroy {
     searchedValue: string;
     accountOverview: AccountOverviewDto;
     blockResponse: BlockDto;
+    svgWave = Wave;
 
     showAccount = false;
     showBlock = false;
-
-    sampleAddresses = [
-        'ban_39qbrcfii4imaekkon7gqs1emssg7pfhiirfg7u85nh9rnf51zbmr84xrtbp',
-        'ban_1jmbtdgh1c1jjfyhgyr8pq8dzb48xghjsmgx5cuqmrqupymp6zyw514ub9ye',
-        'ban_15qir7oegw5uaus1tb8dibn9cgeg941n44hhieofh55kgp93od73dfo7f67t',
-    ];
-
-    sampleTransactions = [
-        'EA3A67403F255C47AE1698350D1BA2D8CD3C108A8688144B191ED6BBE60EF91D',
-        '88E8265AE188AAC33173CFD46EDE051B92055928CDF91D060F303BEE2D047459',
-        'CB397ED6BC2728B370295EF980BC0AF91FE4F4059C52EE71B15C9F1EF0240254',
-    ];
-
     navigation$;
 
     constructor(
@@ -58,6 +49,7 @@ export class ExploreComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.searchFormControl = new FormControl();
+        console.log(this.svgWave);
         this.searchViaParams(window.location.search);
     }
 
@@ -150,13 +142,5 @@ export class ExploreComponent implements OnInit, OnDestroy {
                 this.loading = false;
                 this.error = true;
             });
-    }
-
-    formatShortedAddress(addr: string): string {
-        return `${addr.substr(0, 10)}...${addr.substr(addr.length - 6, addr.length)}`;
-    }
-
-    formatShortenedTx(tx: string): string {
-        return `${tx.substr(0, 15)}...`;
     }
 }

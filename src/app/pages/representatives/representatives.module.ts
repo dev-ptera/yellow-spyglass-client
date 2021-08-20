@@ -11,11 +11,19 @@ import { RepresentativesComponent } from '@app/pages/representatives/representat
 import { FormsModule } from '@angular/forms';
 import { LargeRepTableComponent } from '@app/pages/representatives/display/large-rep-table/large-rep-table.component';
 import { LargeRepCardsComponent } from '@app/pages/representatives/display/large-rep-cards/large-rep-cards.component';
-import {MonitoredRepTableComponent} from "@app/pages/representatives/display/monitored-rep-table/monitored-rep-table.component";
-import {MonitoredRepListComponent} from "@app/pages/representatives/display/monitored-rep-list/monitored-rep-list.component";
+import { MonitoredRepTableComponent } from '@app/pages/representatives/display/monitored-rep-table/monitored-rep-table.component';
+import { MonitoredRepListComponent } from '@app/pages/representatives/display/monitored-rep-list/monitored-rep-list.component';
+import { MicroRepListComponent } from '@app/pages/representatives/display/micro-rep-list/micro-rep-list.component';
 
 @NgModule({
-    declarations: [RepresentativesComponent, LargeRepTableComponent, LargeRepCardsComponent,MonitoredRepListComponent, MonitoredRepTableComponent],
+    declarations: [
+        RepresentativesComponent,
+        LargeRepTableComponent,
+        LargeRepCardsComponent,
+        MonitoredRepListComponent,
+        MonitoredRepTableComponent,
+        MicroRepListComponent,
+    ],
     imports: [
         AppCommonModule,
         CommonModule,
@@ -28,6 +36,13 @@ import {MonitoredRepListComponent} from "@app/pages/representatives/display/moni
         MatSlideToggleModule,
         FormsModule,
     ],
-    exports: [RepresentativesComponent, LargeRepTableComponent, LargeRepCardsComponent,MonitoredRepListComponent, MonitoredRepTableComponent],
+    exports: [
+        RepresentativesComponent,
+        LargeRepTableComponent,
+        LargeRepCardsComponent,
+        MonitoredRepListComponent,
+        MonitoredRepTableComponent,
+        MicroRepListComponent,
+    ],
 })
 export class RepresentativesModule {}

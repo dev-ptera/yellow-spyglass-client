@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { APP_NAV_ITEMS } from './navigation/nav-items';
-import { ExploreComponent } from './pages/explore/explore.component';
 import { BookmarksComponent } from '@app/pages/bookmarks/bookmarks.component';
 import { RepresentativesComponent } from '@app/pages/representatives/representatives.component';
 import { NodeMonitorComponent } from '@app/pages/node-monitor/node-monitor.component';
@@ -9,10 +8,10 @@ import { WalletsComponent } from '@app/pages/wallets/wallets.component';
 import { KnownAccountsComponent } from '@app/pages/known-accounts/known-accounts.component';
 import { NetworkComponent } from '@app/pages/network/network.component';
 import { VanityComponent } from '@app/pages/vanity/vanity.component';
+import { HomeComponent } from '@app/pages/home/home.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: APP_NAV_ITEMS.search.route, pathMatch: 'full' },
-    { path: APP_NAV_ITEMS.search.route, component: ExploreComponent },
+    { path: '', component: HomeComponent },
     { path: APP_NAV_ITEMS.representatives.route, component: RepresentativesComponent },
     { path: APP_NAV_ITEMS.bookmarks.route, component: BookmarksComponent },
     { path: APP_NAV_ITEMS.node.route, component: NodeMonitorComponent },

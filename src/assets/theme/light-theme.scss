@@ -4,7 +4,7 @@
 @import '~@angular/material/_theming.scss';
 @import 'src/app/pages/wallets/wallets.component.scss';
 @import 'src/app/pages/representatives/representatives.component.scss';
-@import 'src/app/pages/explore/account/account.component.scss';
+@import '../../app/pages/account/account.component.scss';
 @import 'src/app/pages/network/network.component.scss';
 
 $material-theme-primary: mat-palette($pxb-green, 700);

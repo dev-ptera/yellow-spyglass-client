@@ -1,30 +1,34 @@
-import { ChangeDetectorRef, Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
-import { MonitoredRepDto } from '@app/types/dto';
+import { MicroRepresentativeDto, MonitoredRepDto, RepresentativeDto } from '@app/types/dto';
 import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
-import { MatSort } from '@angular/material/sort';
 import { AliasService } from '@app/services/alias/alias.service';
 
 @Component({
-    selector: 'app-monitored-rep-list',
+    selector: 'app-micro-rep-list',
     template: `
         <mat-card style="padding: 0 12px">
             <mat-list [style.paddingTop.px]="0" class="representatives-monitored-list">
                 <pxb-info-list-item
-                    *ngFor="let rep of monitoredReps; trackBy: trackByFn"
+                    *ngFor="let rep of microReps; trackBy: trackByFn; let i = index"
                     [hidePadding]="true"
                     [dense]="false"
                     divider="full"
                 >
-                    <div pxb-title>
-                        <span class="link primary" (click)="openMonitoredRep(rep.ip)">{{ rep.name }}</span>
+                    <div pxb-left-content style="width: 32px" [style.marginLeft.px]="vp.sm ? 0 : 16">#{{ i + 1 }}</div>
+                    <div pxb-title class="primary">{{ aliasService.get(rep.address) }}</div>
+                    <div pxb-subtitle style="font-size: 0.875rem">{{ formatMicroRepInfoList(rep) }}</div>
+                    <div pxb-info>
+                        <span class="link" (click)="routeRepAddress(rep.address)">{{
+                            formatMicroListAddress(rep.address)
+                        }}</span>
                     </div>
-                    <div pxb-subtitle style="font-size: 0.875rem">{{ formatMonitoredRepInfoLine(rep) }}</div>
-                    <div pxb-info style="font-size: 0.875rem" (click)="routeRepAddress(rep.address)">
-                        {{ formatMonitoredListAddress(rep.address) }}
-                    </div>
-                    <div pxb-right-content style="display: flex; flex-direction: column; align-items: flex-end">
+                    <div
+                        pxb-right-content
+                        style="display: flex; flex-direction: column; align-items: flex-end"
+                        [style.marginRight.px]="vp.sm ? 0 : 16"
+                    >
                         <div style="font-size: 0.875rem">{{ formatBanWeight(rep.weight) }} BAN</div>
                         <div style="font-size: 0.75rem">{{ formatWeightPercent(rep.weight) }} weight</div>
                     </div>
@@ -32,14 +36,11 @@ import { AliasService } from '@app/services/alias/alias.service';
             </mat-list>
         </mat-card>
     `,
-    styleUrls: ['./monitored-rep-list.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class MonitoredRepListComponent {
-    @Input() monitoredReps: MonitoredRepDto[] = [];
+export class MicroRepListComponent {
+    @Input() microReps: RepresentativeDto[] = [];
     @Input() onlineWeight: number;
-
-    @ViewChild('sortMonitored') sortMonitored: MatSort;
 
     constructor(
         public vp: ViewportService,
@@ -67,10 +68,6 @@ export class MonitoredRepListComponent {
         }
     }
 
-    openMonitoredRep(ip: string): void {
-        window.open(`http://${ip}`, '_blank');
-    }
-
     formatWeightPercent(weight: number): string {
         return `${((weight / this.onlineWeight) * 100).toFixed(1).replace(/\.?0+$/, '')}`;
     }
@@ -79,16 +76,11 @@ export class MonitoredRepListComponent {
         return `${addr.substr(0, 12)}...${addr.substr(addr.length - 6, addr.length)}`;
     }
 
-    formatVersion(version: string): string {
-        if (version) {
-            return version.replace('BANANO', '');
-        }
-        return '';
+    formatMicroListAddress(addr: string): string {
+        return this.vp.sm ? this.formatMonitoredListAddress(addr) : addr;
     }
 
-    formatMonitoredRepInfoLine(rep: MonitoredRepDto): string {
-        return `${this.formatVersion(rep.version)} · ${this.numberWithCommas(
-            rep.delegatorsCount
-        )} delegators · ${this.numberWithCommas(rep.peers)} peers`;
+    formatMicroRepInfoList(rep: MicroRepresentativeDto): string {
+        return `${this.numberWithCommas(rep.delegatorsCount)} delegators`;
     }
 }

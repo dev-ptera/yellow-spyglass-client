@@ -17,6 +17,12 @@ const walletsNavItem: NavItem = {
     icon: 'account_balance_wallet',
 };
 
+const homeNavItem: NavItem = {
+    title: 'Home',
+    route: '',
+    icon: '',
+};
+
 const knownAccountsNavItem: NavItem = {
     title: 'Known Accounts',
     route: 'known-accounts',
@@ -54,6 +60,7 @@ const vanityNavItem: NavItem = {
 };
 
 export const APP_NAV_ITEMS = {
+    home: homeNavItem,
     knownAccounts: knownAccountsNavItem,
     bookmarks: bookmarksNavItem,
     search: searchNavItem,

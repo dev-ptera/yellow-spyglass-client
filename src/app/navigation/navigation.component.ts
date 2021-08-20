@@ -50,6 +50,10 @@ export class NavigationComponent implements OnInit {
         });
     }
 
+    goHome(): void {
+        void this._router.navigate([APP_NAV_ITEMS.home.route]);
+    }
+
     navigate(url: string): void {
         void this._router.navigateByUrl(url);
     }

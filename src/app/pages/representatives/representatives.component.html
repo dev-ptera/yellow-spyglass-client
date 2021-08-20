@@ -1,5 +1,5 @@
 <ng-template #titleContent>
-    <div class="app-page-title" >
+    <div class="app-page-title">
         <ng-container *ngIf="!loading">Representatives</ng-container>
         <ng-container *ngIf="loading">Loading</ng-container>
     </div>
@@ -51,8 +51,16 @@
         >
         software are shown in the list below.
     </div>
-    <app-monitored-rep-table *ngIf="!vp.sm" [monitoredReps]="monitoredReps" [onlineWeight]="onlineWeight"></app-monitored-rep-table>
-    <app-monitored-rep-list *ngIf="vp.sm" [monitoredReps]="monitoredReps" [onlineWeight]="onlineWeight"></app-monitored-rep-list>
+    <app-monitored-rep-table
+        *ngIf="!vp.sm"
+        [monitoredReps]="monitoredReps"
+        [onlineWeight]="onlineWeight"
+    ></app-monitored-rep-table>
+    <app-monitored-rep-list
+        *ngIf="vp.sm"
+        [monitoredReps]="monitoredReps"
+        [onlineWeight]="onlineWeight"
+    ></app-monitored-rep-list>
     <div class="app-section-title" [style.marginTop.px]="72">
         Large Representatives
         <span class="app-caption">({{ onlineLargeRepsCount }} of {{ allLargeReps.length }} online)</span>
@@ -82,37 +90,7 @@
     <div class="app-section-subtitle">
         Online representatives with less than 100,000 BANANO weight delegated towards them.
     </div>
-    <ng-template [ngTemplateOutlet]="microRepsList"></ng-template>
-</ng-template>
-
-<ng-template #microRepsList>
-    <mat-card style="padding: 0 12px">
-        <mat-list [style.paddingTop.px]="0" class="representatives-monitored-list">
-            <pxb-info-list-item
-                *ngFor="let rep of microReps; trackBy: trackByFn; let i = index"
-                [hidePadding]="true"
-                [dense]="false"
-                divider="full"
-            >
-                <div pxb-left-content style="width: 32px" [style.marginLeft.px]="vp.sm ? 0 : 16">#{{ i + 1 }}</div>
-                <div pxb-title class="primary">{{ aliasService.get(rep.address) }}</div>
-                <div pxb-subtitle style="font-size: 0.875rem">{{ formatMicroRepInfoList(rep) }}</div>
-                <div pxb-info>
-                    <span class="link" (click)="routeRepAddress(rep.address)">{{
-                        formatMicroListAddress(rep.address)
-                    }}</span>
-                </div>
-                <div
-                    pxb-right-content
-                    style="display: flex; flex-direction: column; align-items: flex-end"
-                    [style.marginRight.px]="vp.sm ? 0 : 16"
-                >
-                    <div style="font-size: 0.875rem">{{ formatBanWeight(rep.weight) }} BAN</div>
-                    <div style="font-size: 0.75rem">{{ formatWeightPercent(rep.weight) }} weight</div>
-                </div>
-            </pxb-info-list-item>
-        </mat-list>
-    </mat-card>
+    <app-micro-rep-list [onlineWeight]="onlineWeight" [microReps]="microReps"></app-micro-rep-list>
 </ng-template>
 
 <div class="app-page-root" responsive>

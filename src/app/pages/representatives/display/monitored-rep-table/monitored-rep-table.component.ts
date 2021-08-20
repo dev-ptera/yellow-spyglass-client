@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
-import {MonitoredRepDto, RepresentativeDto} from '@app/types/dto';
+import { MonitoredRepDto, RepresentativeDto } from '@app/types/dto';
 import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -28,9 +28,9 @@ import { AliasService } from '@app/services/alias/alias.service';
                     *matCellDef="let element"
                     style="padding-top: 8px; padding-bottom: 8px"
                 >
-                <span class="link primary" style="font-weight: 600" (click)="openMonitoredRep(element.ip)">
-                    {{ element.name }}
-                </span>
+                    <span class="link primary" style="font-weight: 600" (click)="openMonitoredRep(element.ip)">
+                        {{ element.name }}
+                    </span>
                     <br />
                     <span
                         class="link monitored-reps-table-address"
@@ -38,8 +38,8 @@ import { AliasService } from '@app/services/alias/alias.service';
                         style="padding-right: 24px; margin-top: -4px; word-break: break-word"
                         [style.fontSize.px]="vp.md ? 13 : 14"
                     >
-                    {{ element.address }}
-                </span>
+                        {{ element.address }}
+                    </span>
                 </td>
             </ng-container>
 
@@ -56,7 +56,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                     {{ formatBanWeight(element.weight) }}
                     <br />
                     <span class="representatives-weight-percentage" responsive
-                    >({{ formatWeightPercent(element.weight) }}%)</span
+                        >({{ formatWeightPercent(element.weight) }}%)</span
                     >
                 </td>
             </ng-container>

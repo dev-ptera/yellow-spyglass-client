@@ -2,7 +2,6 @@ import { Component, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app.routing';
 import { HttpClientModule } from '@angular/common/http';
-import { ExploreModule } from './pages/explore/explore.module';
 import { BookmarksModule } from '@app/pages/bookmarks/bookmarks.module';
 import { KnownAccountsModule } from '@app/pages/known-accounts/known-accounts.module';
 import { NodeMonitorModule } from '@app/pages/node-monitor/node-monitor.module';
@@ -11,6 +10,7 @@ import { WalletsModule } from '@app/pages/wallets/wallets.module';
 import { NavigationModule } from './navigation/navigation.module';
 import { NetworkModule } from '@app/pages/network/network.module';
 import { VanityModule } from '@app/pages/vanity/vanity.module';
+import { HomeModule } from '@app/pages/home/home.module';
 
 @Component({
     selector: 'app-root',
@@ -23,8 +23,8 @@ export class AppComponent {}
     imports: [
         AppRoutingModule,
         BookmarksModule,
-        ExploreModule,
         HttpClientModule,
+        HomeModule,
         KnownAccountsModule,
         NavigationModule,
         NetworkModule,

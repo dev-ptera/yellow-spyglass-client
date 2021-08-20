@@ -1,0 +1,38 @@
+<div class="home-root">
+    <div class="home-body">
+        <div class="home-title">Yellow Spyglass</div>
+        <img src="assets/spyglass.svg" class="home-spyglass-svg" />
+
+        <div class="app-section-subtitle" style="text-align: center; margin-bottom: 8px">
+            Explore the open seas of the banano network
+        </div>
+
+        <div class="home-search-bar" responsive>
+            <mat-form-field appearance="outline">
+                <mat-label>Address or Hash</mat-label>
+                <input
+                    matInput
+                    autocomplete="off"
+                    (focus)="touchedIdField = true; idFieldActive = true"
+                    (blur)="idFieldActive = false"
+                    [formControl]="searchFormControl"
+                    (keyup.enter)="search(searchFormControl.value)"
+                />
+            </mat-form-field>
+            <button
+                responsive
+                class="home-search-button"
+                mat-flat-button
+                color="primary"
+                [disabled]="loading || !searchFormControl.value"
+                (click)="search(searchFormControl.value)"
+            >
+                <div [class.home-loading]="loading">
+                    <mat-spinner *ngIf="loading" [diameter]="18" [style.marginRight.px]="16"></mat-spinner>
+                    Search
+                </div>
+            </button>
+        </div>
+    </div>
+    <img src="assets/waves/wave4.svg" />
+</div>
