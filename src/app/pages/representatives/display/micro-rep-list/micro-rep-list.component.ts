@@ -24,7 +24,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                     <div pxb-info>
                         <span class="link" (click)="routeRepAddress(rep.address)">{{
                             formatAddress(rep.address)
-                            }}</span>
+                        }}</span>
                     </div>
                     <div
                         pxb-right-content

@@ -7,7 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { APP_NAV_ITEMS } from '../../navigation/nav-items';
-import {UtilService} from "@app/services/util/util.service";
+import { UtilService } from '@app/services/util/util.service';
 
 @Component({
     selector: 'app-known-accounts',

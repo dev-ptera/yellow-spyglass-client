@@ -77,7 +77,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                     <div style="text-align: left">
                         Uptime
                         <ng-container *ngIf="!vp.md">
-                            <br/>
+                            <br />
                             <div style="font-size: 10px; margin-top: -4px">month · week · day</div>
                         </ng-container>
                     </div>
@@ -91,7 +91,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                         {{ element.uptimePercentMonth }}<span style="font-size: 11px">% </span>
                     </span>
                     <span *ngIf="!vp.md" style="font-size: 11px"
-                    >· {{ element.uptimePercentWeek }}% · {{ element.uptimePercentDay }}%
+                        >· {{ element.uptimePercentWeek }}% · {{ element.uptimePercentDay }}%
                     </span>
                 </td>
             </ng-container>
@@ -159,7 +159,6 @@ export class LargeRepTableComponent implements OnChanges {
         this._ref.detectChanges();
         this.largeRepsDataSource.sort = this.sortAll;
     }
-
 
     formatBanWeight(weight: number): string {
         return this._util.numberWithCommas(Math.round(weight));

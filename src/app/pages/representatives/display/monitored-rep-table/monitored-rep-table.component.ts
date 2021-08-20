@@ -133,7 +133,6 @@ export class MonitoredRepTableComponent implements OnChanges {
         return this._util.numberWithCommas(Math.round(weight));
     }
 
-
     formatAddress(addr: string): string {
         return this.vp.md ? this._util.shortenAddress(addr) : addr;
     }

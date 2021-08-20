@@ -26,7 +26,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                     <span style="margin-right: 12px">{{ rep.online ? '' : 'Offline' }}</span>
                     <mat-icon style="font-size: 1.5rem">{{
                         rep.online ? 'check_circle_outline' : 'error_outline'
-                        }}</mat-icon>
+                    }}</mat-icon>
                 </span>
             </div>
 
