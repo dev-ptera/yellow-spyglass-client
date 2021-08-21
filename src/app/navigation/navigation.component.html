@@ -37,14 +37,17 @@
         <div class="navigation-app-bar-container">
             <mat-toolbar class="navigation-app-bar mat-elevation-z2" color="primary" responsive>
                 <div style="display: flex; width: 100%; align-items: center">
-                    <button mat-icon-button (click)="openDrawer()"
-                            [style.marginRight.px]="vp.sm ? 16 : 24">
+                    <button mat-icon-button (click)="openDrawer()" [style.marginRight.px]="vp.sm ? 16 : 24">
                         <mat-icon>menu</mat-icon>
                     </button>
                     <div responsive class="navigation-toolbar-title" (click)="goHome()">Yellow Spyglass</div>
                     <pxb-spacer></pxb-spacer>
-                    <button data-cy="search-btn" mat-icon-button (click)="openSearch()"
-                            [style.marginRight.px]="vp.sm ? 4 : 16">
+                    <button
+                        data-cy="search-btn"
+                        mat-icon-button
+                        (click)="openSearch()"
+                        [style.marginRight.px]="vp.sm ? 4 : 16"
+                    >
                         <mat-icon>search</mat-icon>
                     </button>
                     <app-user-menu style="margin-right: 8px"></app-user-menu>

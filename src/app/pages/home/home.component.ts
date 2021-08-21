@@ -1,11 +1,11 @@
-import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {UtilService} from '@app/services/util/util.service';
-import {AccountOverviewDto} from '@app/types/dto';
-import {BlockDto} from '@app/types/dto/BlockDto';
-import {ApiService} from '@app/services/api/api.service';
-import {ViewportService} from '@app/services/viewport/viewport.service';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UtilService } from '@app/services/util/util.service';
+import { AccountOverviewDto } from '@app/types/dto';
+import { BlockDto } from '@app/types/dto/BlockDto';
+import { ApiService } from '@app/services/api/api.service';
+import { ViewportService } from '@app/services/viewport/viewport.service';
 
 @Component({
     selector: 'app-home',
