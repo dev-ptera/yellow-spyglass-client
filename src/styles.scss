@@ -130,6 +130,7 @@
     align-items: center;
     width: 100%;
     box-sizing: border-box;
+    min-height: 100vh;
     // TODO: move these paddings to a global style, shared
     padding: 128px 64px 64px 64px;
     &.md {

@@ -1,15 +1,19 @@
-.home-root {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
+.app-page-root.home-root {
+
+    padding: 0;
 
     .home-body {
+        height:100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         flex: 1;
-        margin-top: 15vh;
+        padding-bottom: 250px;
+        &.sm {
+            margin-top: -150px;
+            padding-bottom: 0px;
+        }
     }
 
     .home-title {
@@ -19,6 +23,12 @@
         margin-bottom: 8px;
         font-family: pirateFont;
         font-size: 140px;
+        &.md {
+            font-size: 120px;
+        }
+        &.sm {
+            font-size: 72px;
+        }
     }
     .home-spyglass-svg {
         margin-top: 4px;
@@ -26,7 +36,18 @@
         width: 168px;
         left: 282px;
         margin-top: -124px;
-        margin-bottom: -19px;
+        margin-bottom: -30px;
+        &.md {
+            width: 140px;
+            left: 234px;
+            margin-top: -108px;
+        }
+        &.sm {
+            width: 70px;
+            left: 135px;
+            margin-top: -65px;
+            margin-bottom: 0px;
+        }
     }
 
     .home-search-bar {
@@ -36,6 +57,7 @@
         margin-top: 36px;
         &.sm {
             flex-direction: column;
+            max-width: 280px;
         }
         mat-form-field {
             width: 100%;

@@ -24,12 +24,15 @@
     padding: 0 24px;
     top: 0;
     z-index: 2;
+    &.sm {
+        padding: 0 8px;
+    }
     .navigation-toolbar-title {
         cursor: pointer;
         font-family: pirateFont, 'Open Sans', 'Arial';
         font-size: 36px;
         &.sm {
-            font-size: 32px;
+            font-size: 28px;
         }
     }
 }

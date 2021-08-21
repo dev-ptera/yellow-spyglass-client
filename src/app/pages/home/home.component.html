@@ -1,7 +1,7 @@
-<div class="home-root">
-    <div class="home-body">
-        <div class="home-title">Yellow Spyglass</div>
-        <img src="assets/spyglass.svg" class="home-spyglass-svg" />
+<div class="app-page-root home-root">
+    <div class="home-body" responsive>
+        <div class="home-title" responsive>Yellow Spyglass</div>
+        <img src="assets/spyglass.svg" class="home-spyglass-svg" responsive />
 
         <div class="app-section-subtitle" style="text-align: center; margin-bottom: 8px">
             Explore the open seas of the banano network
@@ -33,7 +33,12 @@
                 </div>
             </button>
         </div>
+        <!--
         <div class="primary home-get-started">Getting started?</div>
+        -->
     </div>
-    <img src="assets/waves/wave1.svg" />
 </div>
+
+
+<app-wave *ngIf="!vp.sm" [waveNumber]="1" [bottom]="-100" maxHeight="800"></app-wave>
+<img *ngIf="vp.sm" style="margin-top: -250px" height="300" src="assets/waves/wave1.svg" />
