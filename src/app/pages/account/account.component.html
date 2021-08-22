@@ -16,11 +16,15 @@
 
 <ng-template #headerContent>
     <div class="account-header" responsive>
-        <div class="account-title">
+        <div class="account-header-details">
             <div [style.width.%]="100">
-                <div class="app-page-title" [style.marginBottom.px]="4">
-                    <span *ngIf="loading">Loading</span>
-                    <ng-container *ngIf="!loading">
+                <ng-container *ngIf="loading">
+                    <div class="app-page-title">Loading</div>
+                    <div class="app-page-subtitle" style="word-break: break-all">{{ address }}</div>
+                </ng-container>
+
+                <ng-container *ngIf="!loading">
+                    <div class="app-page-title">
                         <ng-container *ngIf="!isRepresentative()">
                             <span *ngIf="accountOverview.opened"> Account </span>
                             <span *ngIf="!accountOverview.opened"> Unopened Account </span>
@@ -39,86 +43,85 @@
                                 label="Online"
                             ></pxb-list-item-tag>
                         </span>
-                    </ng-container>
-                </div>
-                <div class="mat-subheading-2 account-address">
-                    <span class="account-address-link"> {{ address }}</span>
-                    <div style="display: flex" [style.marginLeft.px]="vp.sm ? 4 : 0">
-                        <app-copy-button [data]="address"></app-copy-button>
-                        <app-qr-button [address]="address"></app-qr-button>
-                        <app-bookmark-button [id]="address"></app-bookmark-button>
                     </div>
-                </div>
-                <div
-                    *ngIf="accountOverview?.opened"
-                    class="account-representative"
-                    [class.mat-caption]="vp.sm"
-                    [class.mat-subheading-2]="!vp.sm"
-                    responsive
-                >
-                    <ng-container *ngIf="accountOverview.representative !== address">
-                        Represented by
-
-                        <span
-                            (click)="searchService.emitSearch(accountOverview.representative)"
-                            [style.marginLeft.px]="4"
-                            class="account-representative-address"
-                        >
-                            {{ shortenedRep }}
-                        </span>
-                        <pxb-list-item-tag
-                            *ngIf="!onlineRepService.onlineReps.has(accountOverview.representative)"
-                            [style.marginLeft.px]="8"
-                            class="account-rep-offline"
-                            label="Offline"
-                        ></pxb-list-item-tag>
-                        <pxb-list-item-tag
-                            *ngIf="onlineRepService.onlineReps.has(accountOverview.representative)"
-                            class="account-rep-online"
-                            [style.marginLeft.px]="8"
-                            label="Online"
-                        ></pxb-list-item-tag>
-                    </ng-container>
+                    <div class="app-page-subtitle account-address-line">
+                        <span class="account-address"> {{ address }}</span>
+                        <div style="display: flex" [style.marginLeft.px]="vp.sm ? 4 : 0">
+                            <app-copy-button [data]="address"></app-copy-button>
+                            <app-qr-button [address]="address"></app-qr-button>
+                            <app-bookmark-button [id]="address"></app-bookmark-button>
+                        </div>
+                    </div>
                     <div
-                        *ngIf="accountOverview.representative === address"
-                        class="mat-overline"
-                        style="margin-top: -8px"
+                        *ngIf="accountOverview.opened"
+                        class="account-representative"
+                        [class.mat-caption]="vp.sm"
+                        [class.mat-subheading-2]="!vp.sm"
+                        responsive
                     >
-                        Self-Represented
-                    </div>
-                </div>
+                        <ng-container *ngIf="accountOverview.representative !== address">
+                            Represented by
 
-                <div class="account-summary-tags" responsive *ngIf="accountOverview">
-                    <ng-template *ngIf="vp.sm" [ngTemplateOutlet]="accountMonkey"></ng-template>
-
-                    <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 0" responsive>
-                        <ng-container *ngIf="!vp.sm">
-                            <span class="account-ban-amount" [style.marginRight.px]="8"
-                                >{{ confirmedBalance }} BAN</span
+                            <span
+                                (click)="searchService.emitSearch(accountOverview.representative)"
+                                [style.marginLeft.px]="4"
+                                class="account-representative-address"
                             >
-                            ·
-                            <span class="account-btc-amount" style="margin: 0 8px">
-                                {{ formatBtcPrice(accountOverview.balanceRaw) }}</span
-                            >
-                            ·
-                            <span class="account-usd-amount" [style.marginLeft.px]="8">
-                                {{ formatUsdPrice(accountOverview.balanceRaw) | currency }}
+                                {{ shortenedRep }}
                             </span>
+                            <pxb-list-item-tag
+                                *ngIf="!onlineRepService.onlineReps.has(accountOverview.representative)"
+                                [style.marginLeft.px]="8"
+                                class="account-rep-offline"
+                                label="Offline"
+                            ></pxb-list-item-tag>
+                            <pxb-list-item-tag
+                                *ngIf="onlineRepService.onlineReps.has(accountOverview.representative)"
+                                class="account-rep-online"
+                                [style.marginLeft.px]="8"
+                                label="Online"
+                            ></pxb-list-item-tag>
                         </ng-container>
-                        <ng-container *ngIf="vp.sm">
-                            <div class="account-ban-amount">{{ confirmedBalance }} BAN</div>
-                            <div>
-                                <span class="account-btc-amount" [style.marginRight.px]="4">{{
-                                    formatBtcPrice(accountOverview.balanceRaw)
-                                }}</span>
-                                |
-                                <span class="account-usd-amount" [style.marginLeft.px]="4">{{
-                                    formatUsdPrice(accountOverview.balanceRaw) | currency
-                                }}</span>
-                            </div>
-                        </ng-container>
+                        <div
+                            *ngIf="accountOverview.representative === address"
+                            class="mat-overline"
+                            style="margin-top: -8px"
+                        >
+                            Self-Represented
+                        </div>
                     </div>
-                </div>
+                    <div class="account-summary-tags" responsive>
+                        <ng-template *ngIf="vp.sm" [ngTemplateOutlet]="accountMonkey"></ng-template>
+
+                        <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 0" responsive>
+                            <ng-container *ngIf="!vp.sm">
+                                <span class="account-ban-amount" [style.marginRight.px]="8"
+                                    >{{ confirmedBalance }} BAN</span
+                                >
+                                ·
+                                <span class="account-btc-amount" style="margin: 0 8px">
+                                    {{ formatBtcPrice(accountOverview.balanceRaw) }}</span
+                                >
+                                ·
+                                <span class="account-usd-amount" [style.marginLeft.px]="8">
+                                    {{ formatUsdPrice(accountOverview.balanceRaw) | currency }}
+                                </span>
+                            </ng-container>
+                            <ng-container *ngIf="vp.sm">
+                                <div class="account-ban-amount">{{ confirmedBalance }} BAN</div>
+                                <div>
+                                    <span class="account-btc-amount" [style.marginRight.px]="4">{{
+                                        formatBtcPrice(accountOverview.balanceRaw)
+                                    }}</span>
+                                    |
+                                    <span class="account-usd-amount" [style.marginLeft.px]="4">{{
+                                        formatUsdPrice(accountOverview.balanceRaw) | currency
+                                    }}</span>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </ng-container>
             </div>
         </div>
         <div style="display: flex; align-items: center">

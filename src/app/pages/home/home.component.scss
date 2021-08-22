@@ -56,7 +56,7 @@
         margin-top: 36px;
         &.sm {
             flex-direction: column;
-            max-width: 280px;
+            max-width: 300px;
         }
         mat-form-field {
             width: 100%;
@@ -81,12 +81,27 @@
         }
     }
     .home-get-started {
+        text-align: center;
+        max-width: 500px;
+        &.sm {
+            max-width: 300px;
+        }
         margin-top: 48px;
         margin-bottom: -48px;
-        opacity: 0.4;
-        cursor: pointer;
-        &:hover {
-            opacity: 1;
+
+        .home-get-started-prompt {
+            opacity: 0.4;
+            cursor: pointer;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+        .home-sample-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
     }
 }

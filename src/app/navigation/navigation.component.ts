@@ -1,5 +1,4 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { DrawerLayoutVariantType } from '@pxblue/angular-components';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ViewportService } from '../services/viewport/viewport.service';
@@ -102,8 +101,9 @@ export class NavigationComponent implements OnInit {
                 if (drawerContent) {
                     drawerContent.scroll(0, 0);
                 }
-                switch (route.urlAfterRedirects.split('?')[0]) {
-                    case `/${APP_NAV_ITEMS.home.route}`: {
+                console.log(route.urlAfterRedirects.split('/')[1]);
+                switch (route.urlAfterRedirects.split('/')[1]) {
+                    case `${APP_NAV_ITEMS.home.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.home.title;
                         this._stateService.setSelectedItem(APP_NAV_ITEMS.home.title);
                         this._title.setTitle(this._makeTitle('Explore'));
@@ -114,7 +114,27 @@ export class NavigationComponent implements OnInit {
                         });
                         break;
                     }
-                    case `/${APP_NAV_ITEMS.representatives.route}`: {
+                    case `${APP_NAV_ITEMS.account.route}`: {
+                        this.toolbarTitle = APP_NAV_ITEMS.account.title;
+                        this._stateService.setSelectedItem(APP_NAV_ITEMS.account.title);
+                        this._title.setTitle(this._makeTitle('Account'));
+                        this._meta.updateTag({
+                            name: 'description',
+                            content: 'Explore account transaction history and delegators.',
+                        });
+                        break;
+                    }
+                    case `${APP_NAV_ITEMS.hash.route}`: {
+                        this.toolbarTitle = APP_NAV_ITEMS.hash.title;
+                        this._stateService.setSelectedItem(APP_NAV_ITEMS.hash.title);
+                        this._title.setTitle(this._makeTitle('Block'));
+                        this._meta.updateTag({
+                            name: 'description',
+                            content: 'See details for a specific block',
+                        });
+                        break;
+                    }
+                    case `${APP_NAV_ITEMS.representatives.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.representatives.title;
                         this._stateService.setSelectedItem(APP_NAV_ITEMS.representatives.title);
                         this._title.setTitle(this._makeTitle('Representatives'));
@@ -124,7 +144,7 @@ export class NavigationComponent implements OnInit {
                         });
                         break;
                     }
-                    case `/${APP_NAV_ITEMS.network.route}`: {
+                    case `${APP_NAV_ITEMS.network.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.network.title;
                         this._stateService.setSelectedItem(APP_NAV_ITEMS.network.title);
                         this._title.setTitle(this._makeTitle('Network'));
@@ -134,7 +154,7 @@ export class NavigationComponent implements OnInit {
                         });
                         break;
                     }
-                    case `/${APP_NAV_ITEMS.bookmarks.route}`: {
+                    case `${APP_NAV_ITEMS.bookmarks.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.bookmarks.title;
                         this._stateService.setSelectedItem(undefined);
                         this._title.setTitle(this._makeTitle('Bookmarks'));
@@ -144,7 +164,7 @@ export class NavigationComponent implements OnInit {
                         });
                         break;
                     }
-                    case `/${APP_NAV_ITEMS.node.route}`: {
+                    case `${APP_NAV_ITEMS.node.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.node.title;
                         this._stateService.setSelectedItem(APP_NAV_ITEMS.node.title);
                         this._title.setTitle(this._makeTitle('Node'));
@@ -154,7 +174,7 @@ export class NavigationComponent implements OnInit {
                         });
                         break;
                     }
-                    case `/${APP_NAV_ITEMS.wallets.route}`: {
+                    case `${APP_NAV_ITEMS.wallets.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.wallets.title;
                         this._stateService.setSelectedItem(APP_NAV_ITEMS.wallets.title);
                         this._title.setTitle(this._makeTitle('Wallets'));
@@ -164,7 +184,7 @@ export class NavigationComponent implements OnInit {
                         });
                         break;
                     }
-                    case `/${APP_NAV_ITEMS.knownAccounts.route}`: {
+                    case `${APP_NAV_ITEMS.knownAccounts.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.knownAccounts.title;
                         this._stateService.setSelectedItem(APP_NAV_ITEMS.knownAccounts.title);
                         this._title.setTitle(this._makeTitle('Known Accounts'));
@@ -175,7 +195,7 @@ export class NavigationComponent implements OnInit {
                         });
                         break;
                     }
-                    case `/${APP_NAV_ITEMS.vanity.route}`: {
+                    case `${APP_NAV_ITEMS.vanity.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.vanity.title;
                         this._stateService.setSelectedItem(APP_NAV_ITEMS.vanity.title);
                         this._title.setTitle(this._makeTitle('Vanity MonKeys'));

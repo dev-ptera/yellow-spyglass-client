@@ -5,6 +5,9 @@
     }
 }
 .cdk-overlay-pane {
+    .pxb-drawer-header-title-wrapper {
+        width: 100%;
+    }
     .pxb-drawer-header-icon-wrapper {
         display: none !important;
     }

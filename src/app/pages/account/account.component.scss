@@ -10,27 +10,23 @@
         flex-direction: column;
         align-items: flex-start;
     }
-    .account-title {
+    .account-header-details {
         display: flex;
         align-items: center;
     }
-    .account-address {
+    .account-address-line {
         display: flex;
         align-items: center;
-        .account-address-link {
+        margin-bottom: 0;
+        .account-address {
             margin-right: 8px;
-            cursor: pointer;
-            &:hover {
-                text-decoration: underline;
-            }
         }
     }
-    .account-address,
+    .account-address-line,
     .account-representative {
         display: flex;
         align-items: center;
         word-break: break-all;
-        line-height: 16px;
     }
     .account-representative-address {
         cursor: pointer;
@@ -46,11 +42,12 @@
         display: flex;
         &.sm {
             margin-bottom: 8px;
+            margin-top: -24px;
         }
     }
 
     .account-monkey {
-        width: 200px;
+        width: 185px;
         min-width: 150px;
         &.md {
             width: 180px;

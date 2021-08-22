@@ -12,7 +12,7 @@
     <div style="display: flex; justify-content: center; flex-wrap: wrap">
         <mat-card
             *ngFor="let address of vanityAddresses"
-            [style.maxWidth.px]="vp.sm ? 300 : 390"
+            [style.maxWidth.px]="vp.sm ? 300 : 350"
             [style.margin.px]="vp.sm ? 8 : 16"
         >
             <ng-container *ngIf="aliasService.has(address)">
@@ -40,3 +40,5 @@
         </ng-container>
     </div>
 </div>
+
+<app-wave [waveNumber]="20"></app-wave>

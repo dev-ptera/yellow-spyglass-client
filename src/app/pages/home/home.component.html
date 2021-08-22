@@ -33,10 +33,52 @@
                 </div>
             </button>
         </div>
+
         <!--
-        <div class="primary home-get-started">Getting started?</div>
-        -->
-    </div>
+        <div class="home-get-started">
+            <div class="primary home-get-started-prompt" responsive (click)="gettingStarted=true" *ngIf="!gettingStarted">Getting started?</div>
+            <div *ngIf="gettingStarted">
+                <div class="app-caption" style="text-align: left; margin-bottom: 24px;">
+                    Below are some sample accounts and transactions to help you get familiar with how things work around
+                    here.
+                </div>
+                <div style="display: flex; justify-content: space-around">
+                    <div class="home-sample-wrapper">
+                        <div class="app-caption" [style.marginBottom.px]="12">Sample Address</div>
+                        <div>
+                            <button
+                                mat-stroked-button
+                                color="primary"
+                                style="width: 100%"
+                                *ngFor="let addr of sampleAddresses"
+                                [style.marginRight.px]="32"
+                                [style.marginBottom.px]="16"
+                                (click)="search(addr)"
+                            >
+                                {{ shortenAddress(addr) }}
+                            </button>
+                        </div>
+                    </div>
+                    <div class="home-sample-wrapper">
+                        <div class="app-caption" [style.marginBottom.px]="12">Sample Transaction</div>
+                        <div>
+                            <button
+                                mat-stroked-button
+                                color="primary"
+                                style="width: 100%"
+                                *ngFor="let tx of sampleTransactions"
+                                [style.marginRight.px]="32"
+                                [style.marginBottom.px]="16"
+                                (click)="search(tx)"
+                            >
+                                {{ formatShortenedTx(tx) }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    --></div>
 </div>
 
 <app-wave *ngIf="!vp.sm" [waveNumber]="1" [bottom]="-100" maxHeight="800"></app-wave>
