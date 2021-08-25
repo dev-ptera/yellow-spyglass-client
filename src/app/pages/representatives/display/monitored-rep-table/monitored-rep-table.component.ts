@@ -139,7 +139,7 @@ export class MonitoredRepTableComponent implements OnChanges {
 
     formatVersion(version: string): string {
         if (version) {
-            return version.replace('BANANO', '');
+            return version.toUpperCase().replace('BANANO', '');
         }
         return '';
     }

@@ -88,7 +88,7 @@ export class MonitoredRepListComponent {
 
     formatVersion(version: string): string {
         if (version) {
-            return version.replace('BANANO', '');
+            return version.toUpperCase().replace('BANANO', '');
         }
         return '';
     }
