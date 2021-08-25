@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NetworkComponent } from './network.component';
 import { NetworkModule } from '@app/pages/network/network.module';
-import {RouterTestingModule} from "@angular/router/testing";
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('NetworkComponent', () => {
     let component: NetworkComponent;

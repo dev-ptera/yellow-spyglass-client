@@ -191,8 +191,7 @@ $delegatorsBadgeColor: map-get($pxb-blue, 200);
 /* Representative Page */
 .insights-chart .highcharts-legend-item text {
     fill: map-get($theme-foreground, hint-text) !important;
-    font-weight: 400!important;
-
+    font-weight: 400 !important;
 }
 $online-color: $primary-green;
 $offline-color: $warn-red;

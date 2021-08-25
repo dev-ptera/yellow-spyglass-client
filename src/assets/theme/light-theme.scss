@@ -161,9 +161,9 @@ $delegatorsBadgeColor: map-get($pxb-blue, 500);
     changeTag,
     receiveAmount,
     sendAmount,
-        $hashColor,
-        $pendingBadgeColor,
-        $delegatorsBadgeColor
+    $hashColor,
+    $pendingBadgeColor,
+    $delegatorsBadgeColor
 );
 
 $network-table-border: solid 1px map-get($theme-foreground, divider);
