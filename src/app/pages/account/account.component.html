@@ -156,7 +156,7 @@
         <!-- Pending transactions -->
         <mat-tab class="account-pending-tab">
             <ng-template mat-tab-label>
-                <span [matBadge]="getPendingBadge()" matBadgeOverlap="false">
+                <span class="account-pending-badge" [matBadge]="getPendingBadge()" matBadgeOverlap="false">
                     <ng-container *ngIf="!vp.sm">
                         Pending
                         <ng-container *ngIf="!vp.md">Transactions</ng-container>
@@ -173,7 +173,7 @@
         <!-- Delegators -->
         <mat-tab>
             <ng-template mat-tab-label>
-                <span [matBadge]="getDelegatorsBadge()" matBadgeOverlap="false">
+                <span class="account-delegators-badge" [matBadge]="getDelegatorsBadge()" matBadgeOverlap="false">
                     <!-- Delegators -->
                     <ng-container *ngIf="!vp.sm">Delegators</ng-container>
                     <mat-icon *ngIf="vp.sm">how_to_vote</mat-icon>

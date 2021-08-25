@@ -150,6 +150,8 @@ $grid-stroke-color: map-get($pxb-gray, 100);
     color: map-get($brand-emerald, 500);
 }
 $hashColor: map-get($pxb-gray, 400);
+$pendingBadgeColor: map-get($pxb-orange, 500);
+$delegatorsBadgeColor: map-get($pxb-blue, 500);
 @include account-theme(
     repOnlineTag,
     repOfflineTag,
@@ -159,7 +161,9 @@ $hashColor: map-get($pxb-gray, 400);
     changeTag,
     receiveAmount,
     sendAmount,
-    $hashColor
+        $hashColor,
+        $pendingBadgeColor,
+        $delegatorsBadgeColor
 );
 
 $network-table-border: solid 1px map-get($theme-foreground, divider);

@@ -144,13 +144,25 @@
     $changeTag,
     $receiveAmount,
     $sendAmount,
-    $hashColor
+    $hashColor,
+    $pendingBadgeColor,
+    $delegatorsBadgeColor,
 ) {
     .account-rep-online {
         @include repOnlineTag();
     }
     .account-rep-offline {
         @include repOfflineTag();
+    }
+    .account-pending-badge {
+        .mat-badge-content {
+            background-color: $pendingBadgeColor!important;
+        }
+    }
+    .account-delegators-badge {
+        .mat-badge-content {
+            background-color: $delegatorsBadgeColor!important;
+        }
     }
     .tab-transaction-list {
         .height {
