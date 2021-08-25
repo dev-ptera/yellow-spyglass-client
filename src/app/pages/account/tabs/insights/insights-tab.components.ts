@@ -84,6 +84,18 @@ import * as Highcharts from 'highcharts';
                     sender.
                 </div>
             </div>
+            <div class="insights-section">
+                <div>
+                    <span class="app-section-title">Total BAN Sent</span>
+                    <span class="app-section-subtitle"> {{ formatBan(insights.totalAmountSentBan) }} BAN </span>
+                </div>
+            </div>
+            <div class="insights-section">
+                <div>
+                    <span class="app-section-title">Total BAN Received</span>
+                    <span class="app-section-subtitle"> {{ formatBan(insights.totalAmountReceivedBan) }} BAN </span>
+                </div>
+            </div>
         </div>
         <pxb-empty-state
             *ngIf="!error && !insights && !disabled"

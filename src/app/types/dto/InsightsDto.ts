@@ -13,4 +13,6 @@ export type InsightsDto = {
     mostCommonSenderTxCount: number;
     mostCommonRecipientAddress: string;
     mostCommonRecipientTxCount: number;
+    totalAmountReceivedBan: number;
+    totalAmountSentBan: number;
 };
