@@ -55,11 +55,10 @@ $custom-typography: mat-typography-config(
     max-width: 1250px;
 }
 .app-page-title {
-    font-size: 72px;
+    font-size: 48px;
     display: flex;
     width: 100%;
     margin-bottom: 0px;
-    font-family: pirateFont;
 }
 .app-page-subtitle {
     width: 100%;
@@ -80,7 +79,7 @@ $custom-typography: mat-typography-config(
 }
 .sm {
     .app-page-title {
-        font-size: 48px;
+        font-size: 28px;
         margin-bottom: 4px;
     }
     .app-page-subtitle {

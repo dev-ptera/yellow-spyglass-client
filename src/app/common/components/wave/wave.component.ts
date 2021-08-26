@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
-import {ThemeService} from "@app/services/theme/theme.service";
+import { ThemeService } from '@app/services/theme/theme.service';
 
 @Component({
     selector: 'app-wave',
@@ -17,13 +17,15 @@ import {ThemeService} from "@app/services/theme/theme.service";
 })
 export class WaveComponent {
     @Input() darkThemeWaveNumber: number = 5;
-    @Input() lightThemeWaveNumber: number = 0;
+    @Input() lightThemeWaveNumber: number = 23;
     @Input() maxHeight: number;
     @Input() bottom: number = 0;
 
     constructor(public vp: ViewportService, public theme: ThemeService) {}
 
     getSource(): string {
-        return `assets/waves/wave${this.theme.isLightMode() ? this.lightThemeWaveNumber : this.darkThemeWaveNumber}.svg`;
+        return `assets/waves/wave${
+            this.theme.isLightMode() ? this.lightThemeWaveNumber : this.darkThemeWaveNumber
+        }.svg`;
     }
 }

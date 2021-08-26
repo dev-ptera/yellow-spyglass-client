@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 export type Theme = 'light' | 'dark';
 
-
 const LIGHT_THEME = 'light';
 const DARK_THEME = 'dark';
 
@@ -10,7 +9,6 @@ const DARK_THEME = 'dark';
     providedIn: 'root',
 })
 export class ThemeService {
-
     themeLocalStorageId = 'YELLOW_SPYGLASS_THEME';
     currentTheme: Theme;
 
