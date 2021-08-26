@@ -33,7 +33,7 @@ $light-theme: map-merge(
         background: (
             status-bar: map_get($mat-grey, 300),
             app-bar: map-get($pxb-gray, 50),
-            background: #fff9e6,
+            background: #fffef9,
             hover: rgba(black, 0.04),
             card: map-get($pxb-white, 50),
             dialog: map-get($pxb-white, 50),
