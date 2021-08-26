@@ -105,7 +105,7 @@ export class WalletsComponent implements OnInit {
             largeReps.add('ban_1cake36ua5aqcq1c5i3dg7k8xtosw7r9r7qbbf5j15sk75csp9okesz87nfn');
             return largeReps.has(rep);
         }
-        return !this._onlineRepsService.onlineReps.has(rep);
+        return this._onlineRepsService.onlineReps.size > 0 && !this._onlineRepsService.onlineReps.has(rep);
     }
 
     toot(): void {
