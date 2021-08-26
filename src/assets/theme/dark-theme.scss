@@ -203,7 +203,7 @@ $table-address-color: map-get($theme-foreground, text);
     background-color: rgba($tag, $tag-opacity) !important;
     color: $tag !important;
 }
-@include representatives-theme($online-color, $offline-color, $rep-border-color, $table-address-color, receiveTag);
+@include representatives-theme($online-color, $offline-color, $rep-border-color, $table-address-color, principalTag);
 
 /* Network Page */
 $network-table-border: solid 1px map-get($theme-foreground, divider);

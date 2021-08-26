@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
+import {ThemeService} from "@app/services/theme/theme.service";
 
 @Component({
     selector: 'app-wave',
@@ -10,14 +11,19 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
             [style.bottom.px]="bottom"
             [style.maxHeight.px]="maxHeight"
         >
-            <img [src]="'assets/waves/wave' + waveNumber + '.svg'" />
+            <img [src]="getSource()" />
         </div>
     `,
 })
 export class WaveComponent {
-    @Input() waveNumber: number = 5;
+    @Input() darkThemeWaveNumber: number = 5;
+    @Input() lightThemeWaveNumber: number = 0;
     @Input() maxHeight: number;
     @Input() bottom: number = 0;
 
-    constructor(public vp: ViewportService) {}
+    constructor(public vp: ViewportService, public theme: ThemeService) {}
+
+    getSource(): string {
+        return `assets/waves/wave${this.theme.isLightMode() ? this.lightThemeWaveNumber : this.darkThemeWaveNumber}.svg`;
+    }
 }

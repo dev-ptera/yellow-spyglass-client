@@ -151,7 +151,7 @@ import { ApiService } from '@app/services/api/api.service';
             </div>
         </div>
 
-        <app-wave [waveNumber]="14"></app-wave>
+        <app-wave [darkThemeWaveNumber]="14"></app-wave>
     `,
     styleUrls: ['./node-monitor.component.scss'],
     encapsulation: ViewEncapsulation.None,
