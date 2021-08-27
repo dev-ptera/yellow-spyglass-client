@@ -1,5 +1,5 @@
 .network-root {
-    .app-page-content {
+    .app-page-content:not(.loading) {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;

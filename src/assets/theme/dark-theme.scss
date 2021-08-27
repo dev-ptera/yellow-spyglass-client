@@ -6,7 +6,7 @@
 @import 'src/app/pages/network/network.component.scss';
 
 $material-theme-primary: mat-palette($pxb-green, 200);
-$material-theme-accent: mat-palette($pxb-blue);
+$material-theme-accent: mat-palette($pxb-green, 200);
 $material-theme-warn: mat-palette($pxb-red);
 $dark-theme: map-merge(
     mat-dark-theme($material-theme-primary, $material-theme-accent, $material-theme-warn),
