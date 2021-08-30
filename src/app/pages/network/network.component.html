@@ -27,17 +27,13 @@
             [style.marginTop.px]="vp.sm ? 36 : 0"
             style="margin-bottom: 0"
         >
-            The <strong>{{ nakamotoCoefficient }}</strong> largest entities could potentially collude together to
+            The <strong>{{ nakamotoCoefficient }}</strong> largest reps could potentially collude together to
             achieve >50% of the online voting weight and stall the network.
         </div>
         <div class="app-section-subtitle" *ngIf="nakamotoCoefficient === 1" style="margin-bottom: 0">
             It only takes <strong>one</strong> entity to stall the network.
         </div>
-        <div class="app-caption" style="margin-top: 4px; margin-bottom: 16px">
-            Official
-            <ng-container *ngIf="!vp.sm">representatives</ng-container>
-            <ng-container *ngIf="vp.sm">reps</ng-container>
-            are counted as a single entity. See the full representative list
+        <div class="app-caption" style="margin-top: 4px; margin-bottom: 16px">See the full representative list
             <span class="link primary" (click)="goRepsPage()">here</span>.
         </div>
     </mat-card>
@@ -107,42 +103,26 @@
             <tr>
                 <td>
                     <mat-icon class="status-icon primary">check</mat-icon>
-                    Official Online
+                    Online
                 </td>
-                <td>{{ consensus.official.onlineAmount | appComma }}</td>
-                <td>{{ consensus.official.onlinePercent | appPercent }}</td>
-            </tr>
-            <tr>
-                <td>
-                    <mat-icon class="status-icon primary">check</mat-icon>
-                    Unofficial Online
-                </td>
-                <td>{{ consensus.unofficial.onlineAmount | appComma }}</td>
-                <td>{{ consensus.unofficial.onlinePercent | appPercent }}</td>
+                <td>{{ consensus.onlineAmount | appComma }}</td>
+                <td>{{ consensus.onlinePercent | appPercent }}</td>
             </tr>
             <tr>
                 <td>
                     <mat-icon class="status-icon warn">priority_high</mat-icon>
-                    Official Offline
+                    Offline
                 </td>
-                <td>{{ consensus.official.offlineAmount | appComma }}</td>
-                <td>{{ consensus.official.offlinePercent | appPercent }}</td>
-            </tr>
-            <tr>
-                <td>
-                    <mat-icon class="status-icon warn">priority_high</mat-icon>
-                    Unofficial Offline
-                </td>
-                <td>{{ consensus.unofficial.offlineAmount | appComma }}</td>
-                <td>{{ consensus.unofficial.offlinePercent | appPercent }}</td>
+                <td>{{ consensus.offlineAmount | appComma }}</td>
+                <td>{{ consensus.offlinePercent | appPercent }}</td>
             </tr>
             <tr>
                 <td>
                     <mat-icon class="status-icon warn">priority_high</mat-icon>
                     No Rep
                 </td>
-                <td>{{ consensus.noRep.amount | appComma }}</td>
-                <td>{{ consensus.noRep.percent | appPercent }}</td>
+                <td>{{ consensus.noRepAmount | appComma }}</td>
+                <td>{{ consensus.noRepPercent | appPercent }}</td>
             </tr>
         </table>
     </mat-card>

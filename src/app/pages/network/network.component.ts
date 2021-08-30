@@ -122,14 +122,10 @@ export class NetworkComponent implements OnInit {
     private _createConsensusChart(consensus: ConsensusStatsDto): Options {
         const format = (num: number): number => Number(parseFloat(String(num * 100)).toFixed(2));
         const data = [
-            ['Official Online', format(consensus.official.onlinePercent)],
-            ['Unofficial Online', format(consensus.unofficial.onlinePercent)],
-            ['Unofficial Offline', format(consensus.unofficial.offlinePercent)],
-            ['No Rep', format(consensus.noRep.percent)],
+            ['Online', format(consensus.onlinePercent)],
+            ['Offline', format(consensus.offlinePercent)],
+            ['No Rep', format(consensus.noRepPercent)],
         ];
-        if (this.consensus.official.offlineAmount !== 0) {
-            data.push(['Official Offline', format(consensus.official.offlinePercent)]);
-        }
         return {
             plotOptions: {
                 pie: {
@@ -149,7 +145,7 @@ export class NetworkComponent implements OnInit {
                 {
                     name: 'Consensus',
                     type: 'pie',
-                    colors: ['#FBDD11', '#4CBF4B', 'red', 'gray', 'pink'],
+                    colors: ['#FBDD11', '#4CBF4B',  'red'],
                     data,
                     dataLabels: {
                         enabled: true,
