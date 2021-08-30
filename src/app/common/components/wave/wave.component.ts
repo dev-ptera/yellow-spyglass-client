@@ -16,10 +16,10 @@ import { ThemeService } from '@app/services/theme/theme.service';
     `,
 })
 export class WaveComponent {
-    @Input() darkThemeWaveNumber: number = 5;
-    @Input() lightThemeWaveNumber: number = 23;
+    @Input() darkThemeWaveNumber = 5;
+    @Input() lightThemeWaveNumber = 23;
     @Input() maxHeight: number;
-    @Input() bottom: number = 0;
+    @Input() bottom = 0;
 
     constructor(public vp: ViewportService, public theme: ThemeService) {}
 

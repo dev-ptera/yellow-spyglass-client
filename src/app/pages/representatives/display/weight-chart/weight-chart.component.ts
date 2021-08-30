@@ -3,8 +3,8 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
 import { RepresentativeDto } from '@app/types/dto';
 import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
-// eslint-disable-next-line no-duplicate-imports
 import * as Highcharts from 'highcharts';
+// eslint-disable-next-line no-duplicate-imports
 import { Options } from 'highcharts';
 import { AliasService } from '@app/services/alias/alias.service';
 

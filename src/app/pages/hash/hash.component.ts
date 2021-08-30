@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { BlockDto } from '@app/types/dto/BlockDto';
 import { UtilService } from '@app/services/util/util.service';

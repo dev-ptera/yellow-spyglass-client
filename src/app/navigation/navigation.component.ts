@@ -101,7 +101,6 @@ export class NavigationComponent implements OnInit {
                 if (drawerContent) {
                     drawerContent.scroll(0, 0);
                 }
-                console.log(route.urlAfterRedirects.split('/')[1]);
                 switch (route.urlAfterRedirects.split('/')[1]) {
                     case `${APP_NAV_ITEMS.home.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.home.title;

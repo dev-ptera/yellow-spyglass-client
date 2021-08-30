@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
-import { MonitoredRepDto, RepresentativeDto } from '@app/types/dto';
+import { MonitoredRepDto } from '@app/types/dto';
 import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
 import { MatTableDataSource } from '@angular/material/table';

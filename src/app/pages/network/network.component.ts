@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
-// eslint-disable-next-line no-duplicate-imports
 import * as Highcharts from 'highcharts';
+// eslint-disable-next-line no-duplicate-imports
 import { Options } from 'highcharts';
 import HC_bullet from 'highcharts/modules/bullet';
 import { ViewportService } from '@app/services/viewport/viewport.service';
