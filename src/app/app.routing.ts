@@ -23,7 +23,7 @@ const routes: Routes = [
     { path: APP_NAV_ITEMS.vanity.route, component: VanityComponent },
     { path: `${APP_NAV_ITEMS.account.route}/:id`, component: AccountComponent },
     { path: `${APP_NAV_ITEMS.hash.route}/:id`, component: HashComponent },
-    {path: '**', redirectTo: '', pathMatch: 'full'}
+    { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 @NgModule({
     imports: [RouterModule.forRoot(routes)],

@@ -70,13 +70,13 @@ $tag-opacity: 0.06;
 $toolbarBgColor: map-get($pxb-yellow, 800);
 /* Navigation */
 .pxb-drawer .pxb-drawer-nav-item-active-highlight {
-    background-color: rgba($toolbarBgColor, .16)!important;
+    background-color: rgba($toolbarBgColor, 0.16) !important;
 }
 .pxb-drawer-header .mat-toolbar {
-    background-color: $toolbarBgColor!important;
+    background-color: $toolbarBgColor !important;
 }
 .navigation-app-bar {
-    background-color: $toolbarBgColor!important;
+    background-color: $toolbarBgColor !important;
     color: map-get($theme-background, background) !important;
 }
 .navigation-search-bar {

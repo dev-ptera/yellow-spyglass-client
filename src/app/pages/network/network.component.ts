@@ -145,7 +145,7 @@ export class NetworkComponent implements OnInit {
                 {
                     name: 'Consensus',
                     type: 'pie',
-                    colors: ['#FBDD11', '#4CBF4B',  'red'],
+                    colors: ['#FBDD11', '#4CBF4B', 'red'],
                     data,
                     dataLabels: {
                         enabled: true,
