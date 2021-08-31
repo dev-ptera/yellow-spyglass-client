@@ -24,4 +24,5 @@ export type MonitoredRepDto = {
     nodeUptimeStartup?: number;
     location?: string;
     ip?: string;
+    customMonitorPageUrl?: string;
 };

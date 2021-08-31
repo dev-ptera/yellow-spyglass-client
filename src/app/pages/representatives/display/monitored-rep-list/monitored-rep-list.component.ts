@@ -5,6 +5,7 @@ import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
 import { MatSort } from '@angular/material/sort';
 import { AliasService } from '@app/services/alias/alias.service';
+import { RepresentativesService } from '@app/pages/representatives/representatives.service';
 
 @Component({
     selector: 'app-monitored-rep-list',
@@ -18,7 +19,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                     divider="full"
                 >
                     <div pxb-title>
-                        <div class="link primary" (click)="openMonitoredRep(rep.ip)">{{ rep.name }}</div>
+                        <div class="link primary" (click)="repService.openMonitoredRep(rep)">{{ rep.name }}</div>
                     </div>
                     <div pxb-subtitle style="font-size: 0.875rem">{{ formatInfoLine(rep) }}</div>
                     <div pxb-info style="font-size: 0.875rem" (click)="routeRepAddress(rep.address)">
@@ -51,6 +52,7 @@ export class MonitoredRepListComponent {
     constructor(
         public vp: ViewportService,
         public aliasService: AliasService,
+        public repService: RepresentativesService,
         private readonly _util: UtilService,
         private readonly _searchService: SearchService,
         private readonly _ref: ChangeDetectorRef
@@ -70,10 +72,6 @@ export class MonitoredRepListComponent {
         }
     }
 
-    openMonitoredRep(ip: string): void {
-        window.open(`http://${ip}`, '_blank');
-    }
-
     formatWeightPercent(weight: number): string {
         return `${((weight / this.onlineWeight) * 100).toFixed(3).replace(/\.?0+$/, '')}%`;
     }
@@ -86,15 +84,8 @@ export class MonitoredRepListComponent {
         return this._util.numberWithCommas(Math.round(weight));
     }
 
-    formatVersion(version: string): string {
-        if (version) {
-            return version.toUpperCase().replace('BANANO', '');
-        }
-        return '';
-    }
-
     formatInfoLine(rep: MonitoredRepDto): string {
-        return `${this.formatVersion(rep.version)} · ${this.numberWithCommas(
+        return `${this.repService.formatVersion(rep.version)} · ${this.numberWithCommas(
             rep.delegatorsCount
         )} delegators · ${this.numberWithCommas(rep.peers)} peers`;
     }

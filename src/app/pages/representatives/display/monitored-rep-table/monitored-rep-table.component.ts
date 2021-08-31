@@ -6,6 +6,7 @@ import { UtilService } from '@app/services/util/util.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { AliasService } from '@app/services/alias/alias.service';
+import { RepresentativesService } from '@app/pages/representatives/representatives.service';
 
 @Component({
     selector: 'app-monitored-rep-table',
@@ -28,7 +29,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                     *matCellDef="let element"
                     style="padding-top: 8px; padding-bottom: 8px"
                 >
-                    <span class="link primary" style="font-weight: 600" (click)="openMonitoredRep(element.ip)">
+                    <span class="link primary" style="font-weight: 600" (click)="repService.openMonitoredRep(element)">
                         {{ element.name }}
                     </span>
                     <br />
@@ -46,7 +47,7 @@ import { AliasService } from '@app/services/alias/alias.service';
             <ng-container matColumnDef="version">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Version</th>
                 <td class="representatives-weight-cell" mat-cell *matCellDef="let element">
-                    {{ formatVersion(element.version) }}
+                    {{ repService.formatVersion(element.version) }}
                 </td>
             </ng-container>
 
@@ -97,6 +98,7 @@ export class MonitoredRepTableComponent implements OnChanges {
     constructor(
         public vp: ViewportService,
         public aliasService: AliasService,
+        public repService: RepresentativesService,
         private readonly _util: UtilService,
         private readonly _searchService: SearchService,
         private readonly _ref: ChangeDetectorRef
@@ -135,16 +137,5 @@ export class MonitoredRepTableComponent implements OnChanges {
 
     formatAddress(addr: string): string {
         return this.vp.md ? this._util.shortenAddress(addr) : addr;
-    }
-
-    formatVersion(version: string): string {
-        if (version) {
-            return version.toUpperCase().replace('BANANO', '');
-        }
-        return '';
-    }
-
-    openMonitoredRep(ip: string): void {
-        window.open(`http://${ip}`, '_blank');
     }
 }
