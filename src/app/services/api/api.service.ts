@@ -17,9 +17,9 @@ import {
 import { InsightsDto } from '@app/types/dto/InsightsDto';
 import { timeout } from 'rxjs/operators';
 
-const SLOW_MS = 20000;
-const MED_MS = 15000;
-const FAST_MS = 10000;
+const SLOW_MS = 30000;
+const MED_MS = 20000;
+const FAST_MS = 15000;
 
 @Injectable({
     providedIn: 'root',
@@ -80,7 +80,7 @@ export class ApiService {
     getAccountBalances(offset: number, pageSize: number): Promise<AccountBalanceDto[]> {
         return this._http
             .get<AccountBalanceDto[]>(`${this.richListUrl}/accounts-balance?offset=${offset}&size=${pageSize}`)
-            .pipe(timeout(3000))
+            .pipe(timeout(SLOW_MS))
             .toPromise();
     }
 
