@@ -29,7 +29,10 @@ import { AliasService } from '@app/services/alias/alias.service';
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Representative</th>
                 <td mat-cell *matCellDef="let element">
                     <div style="display: flex; flex-direction: column; justify-content: center">
-                        <div style="display: flex; align-items: center">
+                        <div class="invisible-full-address">
+                            {{ element.address }}
+                        </div>
+                        <div style="display: flex; align-items: center; z-index: 2">
                             <pxb-list-item-tag
                                 *ngIf="element.principal"
                                 class="principal-tag"

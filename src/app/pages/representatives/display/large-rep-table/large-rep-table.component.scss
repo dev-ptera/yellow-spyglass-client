@@ -19,6 +19,13 @@
         }
     }
 }
+
+.invisible-full-address {
+    position: absolute;
+    color: transparent;
+    z-index: 1;
+}
+
 .representatives-chart {
     margin: 0;
     margin-top: 24px;
