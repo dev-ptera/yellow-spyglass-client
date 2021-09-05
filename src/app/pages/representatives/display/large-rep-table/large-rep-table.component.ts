@@ -28,7 +28,7 @@ import { AliasService } from '@app/services/alias/alias.service';
             <ng-container matColumnDef="address">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Representative</th>
                 <td mat-cell *matCellDef="let element">
-                    <div style="display: flex; flex-direction: column; justify-content: center">
+                    <div style="display: flex; flex-direction: column; justify-content: center; position: relative">
                         <div class="invisible-full-address">
                             {{ element.address }}
                         </div>

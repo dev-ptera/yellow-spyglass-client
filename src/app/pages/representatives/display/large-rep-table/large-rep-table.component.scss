@@ -22,8 +22,10 @@
 
 .invisible-full-address {
     position: absolute;
+    right: 24px;
     color: transparent;
     z-index: 1;
+    font-size: 4px!important;
 }
 
 .representatives-chart {
