@@ -19,14 +19,21 @@
         }
     }
 }
-
-.invisible-full-address {
-    position: absolute;
-    right: 24px;
-    color: transparent;
-    z-index: 1;
-    font-size: 4px!important;
+.all-reps-table-alias-cell {
+    display: flex; flex-direction: column; justify-content: center; position: relative;
+    .invisible-full-address {
+        position: absolute;
+        color: transparent;
+        z-index: 0;
+        left: -100px;
+        font-size: 3px!important;
+        letter-spacing: 10vw;
+        top: 32px;
+    }
+    .invisible-full-address {
+    }
 }
+
 
 .representatives-chart {
     margin: 0;
