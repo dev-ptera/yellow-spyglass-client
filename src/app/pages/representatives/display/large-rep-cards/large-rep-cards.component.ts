@@ -9,7 +9,7 @@ import { AliasService } from '@app/services/alias/alias.service';
     selector: 'app-large-rep-cards',
     template: `
         <mat-card
-            style="padding: 12px 12px; margin-bottom: 6px"
+            style="padding: 12px 12px; margin-bottom: 8px"
             *ngFor="let rep of shownReps; let i = index; trackBy: trackByFn"
             class="representatives-all-reps-card mat-elevation-z0"
         >

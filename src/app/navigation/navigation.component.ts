@@ -92,6 +92,10 @@ export class NavigationComponent implements OnInit {
         this.toggleSearch = false;
     }
 
+    isHome(): boolean {
+        return this._router.url === '/';
+    }
+
     // Observes route changes and changes app title & sets selected item
     private _listenForRouteChanges(): void {
         this.routeListener = this._router.events.subscribe((route) => {

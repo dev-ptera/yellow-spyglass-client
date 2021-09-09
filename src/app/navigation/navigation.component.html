@@ -35,7 +35,7 @@
     </pxb-drawer>
     <div pxb-content class="navigation-drawer-content">
         <div class="navigation-app-bar-container">
-            <mat-toolbar class="navigation-app-bar mat-elevation-z2" color="primary" responsive>
+            <mat-toolbar class="navigation-app-bar mat-elevation-z2" [class.home]="isHome()" color="primary" responsive>
                 <div style="display: flex; width: 100%; align-items: center">
                     <button mat-icon-button (click)="openDrawer()" [style.marginRight.px]="vp.sm ? 16 : 24">
                         <mat-icon>menu</mat-icon>

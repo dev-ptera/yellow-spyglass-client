@@ -12,8 +12,8 @@ $dark-theme: map-merge(
     mat-dark-theme($material-theme-primary, $material-theme-accent, $material-theme-warn),
     (
         foreground: (
-            text: map-get($pxb-black, 100),
-            secondary-text: map-get($pxb-black, 200),
+            text: map-get($pxb-black, 50),
+            secondary-text: map-get($pxb-black, 100),
             hint-text: map-get($pxb-black, 200),
             base: map-get($pxb-white, 100),
             divider: rgba(map-get($pxb-black, 200), 0.36),
@@ -31,7 +31,7 @@ $dark-theme: map-merge(
         background: (
             status-bar: map-get($pxb-darkBlack, 900),
             app-bar: map-get($pxb-darkBlack, 100),
-            background: map-get($pxb-darkBlack, 200),
+            background: map-get($pxb-darkBlack, 300),
             hover: rgba(white, 0.04),
             card: map-get($pxb-black, 900),
             dialog: map-get($pxb-black, 900),
@@ -72,6 +72,9 @@ body {
 .navigation-app-bar {
     background-color: map-get($pxb-black, 800) !important;
     color: map-get($theme-foreground, text) !important;
+    &.home {
+        background-color: map-get($theme-background, background) !important;
+    }
 }
 .navigation-search-bar {
     background-color: map-get($theme-background, card) !important;
