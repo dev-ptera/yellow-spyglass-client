@@ -74,8 +74,7 @@
                 <td>{{ supply.circulatingPercent | appPercent }}</td>
             </tr>
         </table>
-        <pxb-spacer></pxb-spacer>
-        <div class="app-section-subtitle" style="margin-bottom: 0">
+        <div class="app-section-subtitle" style="margin-bottom: 0; margin-top: 24px">
             <strong>{{ supply.burnedAmount | appComma }}</strong> banano has been burned.
         </div>
     </mat-card>
@@ -149,7 +148,7 @@
         <div class="app-section-title">Quorum</div>
         <div class="app-section-subtitle">How much banano is needed to achieve consensus?</div>
         <!-- Make this a list that has STAT as title, description as subtitle, icon and metric. -->
-        <table class="network-quorum-table" responsive [style.marginTop.px]="16">
+        <table class="network-quorum-table" responsive [style.marginTop.px]="0">
             <tr>
                 <td>Current online stake total</td>
                 <td>{{ quorum.onlineStakeTotal | appComma }} BAN</td>

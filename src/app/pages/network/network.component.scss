@@ -65,8 +65,8 @@
     table.network-quorum-table,
     table.network-peer-version-table,
     table.network-consensus-table {
-        margin-bottom: 32px !important;
         border-collapse: collapse;
+        margin-bottom: 8px;
         border-radius: 4px;
         th,
         tr,
