@@ -96,6 +96,18 @@ import * as Highcharts from 'highcharts';
                     <span class="app-section-subtitle"> {{ formatBan(insights.totalAmountReceivedBan) }} BAN </span>
                 </div>
             </div>
+            <div class="insights-section">
+                <div>
+                    <span class="app-section-title">Last Received Date</span>
+                    <span class="app-section-subtitle"> {{ formatDate(insights.lastReceivedUnixTimestamp) }} </span>
+                </div>
+            </div>
+            <div class="insights-section">
+                <div>
+                    <span class="app-section-title">Last Sent Date</span>
+                    <span class="app-section-subtitle"> {{ formatDate(insights.lastSentUnixTimestamp) }} </span>
+                </div>
+            </div>
         </div>
         <pxb-empty-state
             *ngIf="!error && !insights && !disabled"
@@ -154,6 +166,15 @@ export class InsightsTabComponent implements OnChanges {
 
     formatBan(ban: number): string {
         return this._util.numberWithCommas(ban);
+    }
+
+    formatDate(unixTimestamp: number): string {
+        if (unixTimestamp) {
+            return `${new Date(unixTimestamp * 1000).toLocaleDateString()}, ${new Date(
+                unixTimestamp * 1000
+            ).toLocaleTimeString()}`;
+        }
+        return 'N/A';
     }
 
     getErrorDescription(): string {
