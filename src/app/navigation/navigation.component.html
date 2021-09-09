@@ -33,7 +33,7 @@
             </pxb-drawer-nav-group>
         </pxb-drawer-body>
     </pxb-drawer>
-    <div pxb-content class="navigation-drawer-content">
+    <div pxb-content class="navigation-drawer-content" [class.home]="isHome()" responsive>
         <div class="navigation-app-bar-container">
             <mat-toolbar class="navigation-app-bar mat-elevation-z2" [class.home]="isHome()" color="primary" responsive>
                 <div style="display: flex; width: 100%; align-items: center">

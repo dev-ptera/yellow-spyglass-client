@@ -43,6 +43,9 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    &.sm.home {
+        height: 100vh;
+    }
 }
 
 .navigation-app-bar-container {
