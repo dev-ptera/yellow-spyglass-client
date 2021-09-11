@@ -15,6 +15,14 @@ export type InsightsDto = {
     mostCommonRecipientTxCount: number;
     totalAmountReceivedBan: number;
     totalAmountSentBan: number;
-    lastReceivedUnixTimestamp: number;
-    lastSentUnixTimestamp: number;
+    totalTxSent: number;
+    totalTxReceived: number;
+    firstInTxUnixTimestamp: number;
+    firstInTxHash: string;
+    firstOutTxUnixTimestamp: number;
+    firstOutTxHash: string;
+    lastInTxUnixTimestamp: number;
+    lastInTxHash: string;
+    lastOutTxUnixTimestamp: number;
+    lastOutTxHash: string;
 };

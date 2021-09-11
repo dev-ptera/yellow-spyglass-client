@@ -23,91 +23,183 @@ import * as Highcharts from 'highcharts';
                     [style.height.px]="vp.sm ? 300 : vp.md ? 350 : 450"
                 ></highcharts-chart>
             </div>
-            <div class="insights-section">
-                <div>
-                    <span class="app-section-title">Max BAN Received</span>
-                    <span class="app-section-subtitle"> {{ formatBan(insights.maxAmountReceivedBan) }} BAN </span>
-                </div>
-                <div class="app-caption link" (click)="search(insights.maxAmountReceivedHash)">
-                    {{ insights.maxAmountReceivedHash }}
-                </div>
+
+            <div class="app-section-title" [style.marginBottom.px]="16" [style.marginTop.px]="32">
+                Account Statistics
             </div>
-            <div class="insights-section">
-                <div>
-                    <span class="app-section-title">Max BAN Sent</span>
-                    <span class="app-section-subtitle"> {{ formatBan(insights.maxAmountSentBan) }} BAN </span>
-                </div>
-                <div class="app-caption link" (click)="search(insights.maxAmountSentHash)">
-                    {{ insights.maxAmountSentHash }}
-                </div>
+            <div *ngIf="!vp.sm" style="display: flex;">
+                <mat-card style="width: 100%; margin-right: 8px">
+                    <div class="primary node-monitor-section-title">Received</div>
+                    <mat-divider></mat-divider>
+                    <mat-list [style.paddingTop.px]="0">
+                        <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                            <div pxb-title>Largest Single Transaction</div>
+                            <div pxb-subtitle>{{formatBan(insights.maxAmountReceivedBan) }} BAN</div>
+                        </pxb-info-list-item>
+                    </mat-list>
+                </mat-card>
+                <mat-card style="width: 100%">
+                    <div class="primary node-monitor-section-title">Sent</div>
+                    <mat-divider></mat-divider>
+                    <mat-list [style.paddingTop.px]="0">
+                        <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                            <div pxb-title>Transactions Sent</div>
+                            <div pxb-subtitle>{{ numberWithComas(insights.totalTxSent) }}</div>
+                        </pxb-info-list-item>
+                        <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                            <div pxb-title>Largest Single Transaction</div>
+                            <div pxb-subtitle>{{formatBan(insights.maxAmountSentBan) }} BAN</div>
+                        </pxb-info-list-item>
+                    </mat-list>
+                </mat-card>
             </div>
-            <div class="insights-section">
-                <div>
-                    <span class="app-section-title">Account Max Balance</span>
-                    <span class="app-section-subtitle"> {{ formatBan(insights.maxBalanceBan) }} BAN </span>
-                </div>
-                <div class="app-caption link" (click)="search(insights.maxBalanceHash)">
-                    {{ insights.maxBalanceHash }}
-                </div>
-            </div>
-            <div class="insights-section">
-                <div>
-                    <span class="app-section-title">Most Common Recipient</span>
-                    <span
-                        *ngIf="insights.mostCommonRecipientAddress"
-                        class="app-section-subtitle  link"
+            <ng-container *ngIf="vp.sm">
+
+            <mat-list [style.paddingTop.px]="0">
+                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div pxb-title>Max BAN Received</div>
+                    <div pxb-subtitle>{{ formatBan(insights.maxAmountReceivedBan) }} BAN</div>
+                    <div
+                        pxb-right-content
+                        class=" link mat-overline"
+                        (click)="search(insights.maxAmountReceivedHash)"
+                    >
+                        hash
+                    </div>
+                </pxb-info-list-item>
+                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div pxb-title>Max BAN Sent</div>
+                    <div pxb-subtitle> {{ formatBan(insights.maxAmountSentBan) }} BAN
+                    </div>
+                    <div
+                        pxb-right-content
+                        class=" link mat-overline"
+                        (click)="search(insights.maxAmountSentHash)"
+                    >
+                        hash
+                    </div>
+                </pxb-info-list-item>
+                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div pxb-title>Account Max Balance</div>
+                    <div pxb-subtitle> {{ formatBan(insights.maxBalanceBan) }} BAN</div>
+                    <div
+                        pxb-right-content
+                        class="link mat-overline"
+                        (click)="search(insights.maxBalanceHash)"
+                    >
+                        hash
+                    </div>
+                </pxb-info-list-item>
+
+                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div pxb-title>Total BAN Sent</div>
+                    <div pxb-subtitle>{{ formatBan(insights.totalAmountSentBan) }} BAN</div>
+                </pxb-info-list-item>
+
+                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div pxb-title>Total BAN Received</div>
+                    <div pxb-subtitle>{{ formatBan(insights.totalAmountReceivedBan) }} BAN</div>
+                </pxb-info-list-item>
+
+
+                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div pxb-title># Transactions Received</div>
+                    <div pxb-subtitle>{{ numberWithComas(insights.totalTxReceived) }}</div>
+                </pxb-info-list-item>
+                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div pxb-title># Transactions Sent</div>
+                    <div pxb-subtitle>{{ numberWithComas(insights.totalTxSent) }}</div>
+                </pxb-info-list-item>
+                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div pxb-title>First-Received Date</div>
+                    <div pxb-subtitle>{{ formatDate(insights.firstInTxUnixTimestamp) }}</div>
+                    <div
+                        pxb-right-content
+                        class="link mat-overline"
+                        (click)="search(insights.firstInTxHash)"
+                    >
+                        hash
+                    </div>
+                </pxb-info-list-item>
+                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div pxb-title>Last-Received Date</div>
+                    <div pxb-subtitle>{{ formatDate(insights.lastInTxUnixTimestamp) }}</div>
+                    <div
+                        pxb-right-content
+                        class="link mat-overline"
+                        (click)="search(insights.lastInTxHash)"
+                    >
+                        hash
+                    </div>
+                </pxb-info-list-item>
+                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div pxb-title>First-Sent Date</div>
+                    <div pxb-subtitle>{{ formatDate(insights.firstOutTxUnixTimestamp) }}</div>
+                    <div
+                        pxb-right-content
+                        class="link mat-overline"
+                        (click)="search(insights.firstOutTxHash)"
+                    >
+                        hash
+                    </div>
+                </pxb-info-list-item>
+                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div pxb-title>Last-Sent Date</div>
+                    <div pxb-subtitle>{{ formatDate(insights.lastOutTxUnixTimestamp) }}</div>
+                    <div
+                        pxb-right-content
+                        class="link mat-overline"
+                        (click)="search(insights.lastOutTxHash)"
+                    >
+                        hash
+                    </div>
+                </pxb-info-list-item>
+                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div pxb-title>Most Common Recipient</div>
+                    <div pxb-subtitle>
+                        <div *ngIf="insights.mostCommonRecipientAddress">
+                            Sent BAN
+                            <strong style="margin: 0 4px"> {{ insights.mostCommonRecipientTxCount }} </strong> times to
+                            recipient.
+                        </div>
+                        <div *ngIf="!insights.mostCommonRecipientAddress" >
+                            This account has never sent any BAN.
+                        </div>
+                    </div>
+                    <div pxb-info *ngIf="vp.sm" class="link" (click)="search(insights.mostCommonRecipientAddress)">
+                        {{ shortenAddr(insights.mostCommonRecipientAddress) }}
+                    </div>
+                    <div
+                        pxb-right-content
+                        *ngIf="!vp.sm"
+                        class="link"
                         (click)="search(insights.mostCommonRecipientAddress)"
                     >
-                        {{ insights.mostCommonRecipientAddress }}
-                    </span>
-                    <span *ngIf="!insights.mostCommonRecipientAddress">N/A</span>
-                </div>
-                <div *ngIf="insights.mostCommonRecipientAddress" class="app-caption">
-                    Account sent BAN
-                    <strong style="margin: 0 4px"> {{ insights.mostCommonRecipientTxCount }} </strong> times to the
-                    above recipient.
-                </div>
-                <div *ngIf="!insights.mostCommonRecipientAddress" class="app-caption">
-                    This account has never sent any BAN.
-                </div>
-            </div>
-            <div class="insights-section">
-                <div>
-                    <span class="app-section-title">Most Common Sender</span>
-                    <span class="app-section-subtitle  link" (click)="search(insights.mostCommonSenderAddress)">
-                        {{ insights.mostCommonSenderAddress }}
-                    </span>
-                </div>
-                <div class="app-caption">
-                    Account received BAN
-                    <strong style="margin: 0 4px"> {{ insights.mostCommonSenderTxCount }} </strong> times from above
-                    sender.
-                </div>
-            </div>
-            <div class="insights-section">
-                <div>
-                    <span class="app-section-title">Total BAN Sent</span>
-                    <span class="app-section-subtitle"> {{ formatBan(insights.totalAmountSentBan) }} BAN </span>
-                </div>
-            </div>
-            <div class="insights-section">
-                <div>
-                    <span class="app-section-title">Total BAN Received</span>
-                    <span class="app-section-subtitle"> {{ formatBan(insights.totalAmountReceivedBan) }} BAN </span>
-                </div>
-            </div>
-            <div class="insights-section">
-                <div>
-                    <span class="app-section-title">Last Received Date</span>
-                    <span class="app-section-subtitle"> {{ formatDate(insights.lastReceivedUnixTimestamp) }} </span>
-                </div>
-            </div>
-            <div class="insights-section">
-                <div>
-                    <span class="app-section-title">Last Sent Date</span>
-                    <span class="app-section-subtitle"> {{ formatDate(insights.lastSentUnixTimestamp) }} </span>
-                </div>
-            </div>
+                        {{ shortenAddr(insights.mostCommonRecipientAddress) }}
+                    </div>
+                </pxb-info-list-item>
+
+                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div pxb-title>Most Common Sender</div>
+                    <div pxb-subtitle>
+                        Received BAN
+                        <strong style="margin: 0 4px">{{ insights.mostCommonSenderTxCount }}</strong> times from
+                        sender.
+                    </div>
+                    <div pxb-info *ngIf="vp.sm" class="link" (click)="search(insights.mostCommonSenderAddress)">
+                        {{ shortenAddr(insights.mostCommonSenderAddress) }}
+                    </div>
+                    <div
+                        pxb-right-content
+                        *ngIf="!vp.sm"
+                        class="link"
+                        (click)="search(insights.mostCommonSenderAddress)"
+                    >
+                        {{ shortenAddr(insights.mostCommonSenderAddress) }}
+                    </div>
+                </pxb-info-list-item>
+            </mat-list>
+            </ng-container>
         </div>
         <pxb-empty-state
             *ngIf="!error && !insights && !disabled"
@@ -161,11 +253,20 @@ export class InsightsTabComponent implements OnChanges {
     }
 
     search(value: string): void {
-        this._searchService.emitSearch(value);
+        if (value) {
+            this._searchService.emitSearch(value);
+        }
     }
 
     formatBan(ban: number): string {
         return this._util.numberWithCommas(ban);
+    }
+
+    shortenAddr(addr: string): string {
+        if (!addr) {
+            return 'N/A';
+        }
+        return this._util.shortenAddress(addr);
     }
 
     formatDate(unixTimestamp: number): string {
@@ -175,6 +276,10 @@ export class InsightsTabComponent implements OnChanges {
             ).toLocaleTimeString()}`;
         }
         return 'N/A';
+    }
+
+    numberWithComas(num: number): string {
+        return this._util.numberWithCommas(num);
     }
 
     getErrorDescription(): string {

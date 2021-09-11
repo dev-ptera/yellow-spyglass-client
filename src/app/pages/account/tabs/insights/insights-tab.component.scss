@@ -1,5 +1,11 @@
 .insights-root {
     padding: 32px 16px;
+
+    mat-card {
+        padding-bottom: 0;
+        padding-top: 0;
+        margin-bottom: 16px;
+    }
 }
 .insights-chart {
     display: flex;
@@ -7,24 +13,11 @@
     box-sizing: border-box;
     margin-top: 32px;
 }
-.sm {
-    .insights-section {
-        margin: 24px 12px;
-    }
-}
-.insights-section {
-    margin: 24px;
-    word-break: break-word;
-    div {
-        display: flex;
-        justify-content: left;
-        align-items: center;
-        flex-wrap: wrap;
-    }
-    .app-section-title {
-        margin-right: 16px;
-    }
-    .app-section-subtitle {
-        margin-bottom: 0 !important;
-    }
+
+.node-monitor-section-title {
+    padding-left: 16px;
+    font-size: 16px;
+    height: 48px;
+    line-height: 48px;
+    font-weight: 600;
 }
