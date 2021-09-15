@@ -1,5 +1,8 @@
 .insights-root {
     padding: 32px 16px;
+    &.md {
+        padding-bottom: 0;
+    }
 
     mat-card {
         padding-bottom: 0;
@@ -20,4 +23,33 @@
     height: 48px;
     line-height: 48px;
     font-weight: 600;
+}
+
+.insights-account-stats-container {
+    display: flex;
+    &.md {
+        flex-direction: column;
+        margin-left: -16px;
+        margin-right: -16px;
+    }
+    mat-card {
+        width: 100%;
+        &:first-of-type {
+            margin-right: 16px;
+        }
+        &:last-of-type {
+            margin-left: 16px;
+        }
+    }
+
+    &.md {
+        mat-card {
+            margin: 0;
+            width: unset;
+            margin-bottom: 16px;
+        }
+    }
+    .pxb-info-list-item-content .pxb-info-list-item-title-wrapper {
+        font-weight: 600 !important;
+    }
 }
