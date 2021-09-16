@@ -89,6 +89,8 @@ export class WeightChartComponent implements OnChanges {
 
     private _createRepChart(): Options {
         const reps = this.largeReps;
+        const formatPercentage = (percent: number): any => Number(((percent / this.onlineWeight) * 100).toFixed(1));
+
         const onlineReps = (): Array<{ name: string; y: number; address: string }> => {
             let allOthersWeight = this.onlineWeight;
             const MAX_REPS = 7;
@@ -103,7 +105,7 @@ export class WeightChartComponent implements OnChanges {
                     shownReps.push({
                         name: this.formatChartAddress(rep.address),
                         address: rep.address,
-                        y: rep.weight,
+                        y: formatPercentage(rep.weight),
                     });
                 }
             }
@@ -122,7 +124,7 @@ export class WeightChartComponent implements OnChanges {
             shownReps.push({
                 name: 'Other Reps',
                 address: undefined,
-                y: allOthersWeight,
+                y: formatPercentage(allOthersWeight),
             });
             return shownReps;
         };
@@ -174,7 +176,7 @@ export class WeightChartComponent implements OnChanges {
                             fontFamily: 'Open Sans',
                             textOutline: 'none',
                         },
-                        format: '<strong>{point.percentage:.1f}%</strong>',
+                        format: '<strong>{point.y}%</strong>',
                     },
                 },
             ],
