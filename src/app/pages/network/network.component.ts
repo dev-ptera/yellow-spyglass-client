@@ -91,7 +91,7 @@ export class NetworkComponent implements OnInit {
                 {
                     name: 'supply',
                     type: 'pie',
-                    colors: ['#FBDD11', '#4CBF4B'],
+                    colors: ['#4CBF4B', '#FBDD11'],
                     data: [
                         {
                             name: 'Circulating',
@@ -145,7 +145,7 @@ export class NetworkComponent implements OnInit {
                 {
                     name: 'Consensus',
                     type: 'pie',
-                    colors: ['#FBDD11', '#4CBF4B', 'red'],
+                    colors: ['#4CBF4B', '#FBDD11', 'red'],
                     data,
                     dataLabels: {
                         enabled: true,
