@@ -1,14 +1,14 @@
 .app-user-menu {
     margin-right: -8px;
-    .pxb-drawer-header-icon-wrapper {
+    .pxb-user-menu-header-icon-wrapper {
         display: none !important;
     }
 }
 .cdk-overlay-pane {
-    .pxb-drawer-header-title-wrapper {
-        width: 100%;
+    .pxb-user-menu-header-title-wrapper {
+        width: 100% !important;
     }
-    .pxb-drawer-header-icon-wrapper {
+    .pxb-user-menu-header-icon-wrapper {
         display: none !important;
     }
     .mat-toolbar.mat-toolbar-single-row {
