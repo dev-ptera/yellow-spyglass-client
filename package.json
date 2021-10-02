@@ -15,7 +15,6 @@
     },
     "private": true,
     "dependencies": {
-
         "@angular/animations": "~12.2.4",
         "@angular/cdk": "^12.2.4",
         "@angular/common": "~12.2.4",
@@ -27,23 +26,22 @@
         "@angular/platform-browser": "~12.2.4",
         "@angular/platform-browser-dynamic": "~12.2.4",
         "@angular/router": "^12.2.4",
-        "@pxblue/angular-auth-workflow": "^2.4.0",
+        "@dev-ptera/nano-node-rpc": "^1.1.0",
         "@pxblue/angular-components": "^6.0.0",
         "@pxblue/angular-themes": "^6.3.0",
         "@pxblue/colors": "^3.0.1",
+        "@pxblue/colors-branding": "^3.1.0",
         "@pxblue/icons": "^1.2.0",
         "@pxblue/icons-svg": "^1.2.0",
         "@pxblue/ng-progress-icons": "^1.2.1",
-        "rxjs": "~6.6.0",
-        "tslib": "^2.0.0",
-        "zone.js": "~0.11.4",
-
-        "@dev-ptera/nano-node-rpc": "^1.1.0",
-        "@pxblue/colors-branding": "^3.1.0",
         "banano-unit-converter": "^0.1.0",
         "highcharts": "^9.1.0",
         "highcharts-angular": "^2.10.0",
-        "qrcode": "^1.4.4"
+        "qrcode": "^1.4.4",
+        "rxjs": "~6.6.0",
+        "sass": "^1.42.1",
+        "tslib": "^2.0.0",
+        "zone.js": "~0.11.4"
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "~12.2.4",

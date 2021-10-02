@@ -1382,13 +1382,6 @@
     node-gyp "^7.1.0"
     read-package-json-fast "^2.0.1"
 
-"@pxblue/angular-auth-workflow@^2.4.0":
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@pxblue/angular-auth-workflow/-/angular-auth-workflow-2.4.0.tgz#16efd993571da806be1f2e70fe7c9199dd2b8656"
-  integrity sha512-1H1SOJrzGrXxgcc3u5n6J5a5vrzcqr0uVu66U8EPzJjwraNrS+ERkgWlIFSeXoIZHB4wlmcF5Fde91peaV5VUg==
-  dependencies:
-    tslib "^2.0.0"
-
 "@pxblue/angular-components@^6.0.0":
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/@pxblue/angular-components/-/angular-components-6.0.0.tgz#842e0c5a4f79493aaafc70158836bdc2c60b8ee5"
@@ -7831,6 +7824,13 @@ sass@1.36.0:
   version "1.36.0"
   resolved "https://registry.yarnpkg.com/sass/-/sass-1.36.0.tgz#5912ef9d5d16714171ba11cb17edb274c4bbc07e"
   integrity sha512-fQzEjipfOv5kh930nu3Imzq3ie/sGDc/4KtQMJlt7RRdrkQSfe37Bwi/Rf/gfuYHsIuE1fIlDMvpyMcEwjnPvg==
+  dependencies:
+    chokidar ">=3.0.0 <4.0.0"
+
+sass@^1.42.1:
+  version "1.42.1"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.42.1.tgz#5ab17bebc1cb1881ad2e0c9a932c66ad64e441e2"
+  integrity sha512-/zvGoN8B7dspKc5mC6HlaygyCBRvnyzzgD5khiaCfglWztY99cYoiTUksVx11NlnemrcfH5CEaCpsUKoW0cQqg==
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
 
