@@ -11,7 +11,7 @@ import * as Highcharts from 'highcharts';
     selector: 'account-insights-tab',
     template: `
         <div class="insights-root" *ngIf="insights" responsive>
-            <div class="app-section-title" [style.marginBottom.px]="16" [style.marginLeft.px]="vp.sm ? 12 : 24">
+            <div class="app-section-title" responsive [style.marginBottom.px]="16">
                 Account Balance Over Time
             </div>
             <div class="insights-chart" responsive>
@@ -24,7 +24,7 @@ import * as Highcharts from 'highcharts';
                 ></highcharts-chart>
             </div>
 
-            <div class="app-section-title" [style.marginBottom.px]="16" [style.marginTop.px]="32">
+            <div class="app-section-title"  responsive [style.marginBottom.px]="16" [style.marginTop.px]="32">
                 Account Statistics
             </div>
             <div class="insights-account-stats-container" responsive>

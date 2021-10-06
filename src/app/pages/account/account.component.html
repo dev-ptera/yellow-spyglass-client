@@ -133,6 +133,7 @@
 <ng-template #bodyContent>
     <mat-tab-group
         *ngIf="!loading"
+        [animationDuration]="0"
         class="account-tabs mat-elevation-z2"
         (selectedTabChange)="this.fetchInsights($event)"
     >

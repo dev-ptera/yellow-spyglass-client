@@ -9,6 +9,12 @@
         padding-top: 0;
         margin-bottom: 16px;
     }
+    .app-section-title {
+        padding-left: 32px;
+        &.md {
+            padding-left: 0;
+        }
+    }
 }
 .insights-chart {
     display: flex;
@@ -26,6 +32,12 @@
 }
 
 .insights-account-stats-container {
+
+    mat-card {
+        border-left: none!important;
+        border-right: none!important;
+        border-top: none!important;;
+    }
     display: flex;
     &.md {
         flex-direction: column;
