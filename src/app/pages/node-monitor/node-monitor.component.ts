@@ -142,7 +142,7 @@ import { ApiService } from '@app/services/api/api.service';
         </ng-template>
 
         <div class="app-page-root" responsive>
-            <div class="app-page-content node-monitor-content">
+            <div class="app-page-content node-monitor-content" responsive>
                 <app-error *ngIf="error"></app-error>
                 <ng-container *ngIf="!error">
                     <ng-template [ngTemplateOutlet]="titleContent"></ng-template>

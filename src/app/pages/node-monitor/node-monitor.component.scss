@@ -13,6 +13,16 @@
     }
 }
 
+.node-monitor-content.sm {
+    mat-card {
+        margin-left: -16px;
+        margin-right: -16px;
+        .mat-list-item-content, .node-monitor-section-title {
+            padding-left: 0!important;
+        }
+    }
+}
+
 .node-monitor-section-title {
     padding-left: 16px;
     font-size: 16px;
