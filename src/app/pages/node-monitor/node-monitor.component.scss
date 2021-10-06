@@ -15,10 +15,15 @@
 
 .node-monitor-content.sm {
     mat-card {
+        box-shadow: none!important;
         margin-left: -16px;
         margin-right: -16px;
-        .mat-list-item-content, .node-monitor-section-title {
-            padding-left: 0!important;
+        border: none!important;
+        .mat-list-item-content {
+            padding-left: 0px!important;
+        }
+        .node-monitor-section-title {
+            padding-left: 4px!important;
         }
     }
 }
