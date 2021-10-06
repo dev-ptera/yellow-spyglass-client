@@ -1,14 +1,28 @@
 .known-accounts-table {
     width: 100%;
     margin-top: 56px;
+
     * {
         font-size: 15px;
     }
-    &.sm * {
-        font-size: 14px;
+    &.sm {
+        width: 100vw;
+        margin-left: -16px;
+        margin-right: -16px;
+        * {
+            font-size: 14px;
+        }
     }
 }
 
 th.mat-sort-header-sorted {
     color: black;
+}
+
+.known-accounts-alias-cell {
+    padding: 8px 16px 8px 24px!important;
+}
+
+.known-accounts-table.sm .known-accounts-alias-cell {
+    padding-left: 20px!important;
 }
