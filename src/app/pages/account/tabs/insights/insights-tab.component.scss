@@ -32,11 +32,10 @@
 }
 
 .insights-account-stats-container {
-
     mat-card {
-        border-left: none!important;
-        border-right: none!important;
-        border-top: none!important;;
+        border-left: none !important;
+        border-right: none !important;
+        border-top: none !important;
     }
     display: flex;
     &.md {

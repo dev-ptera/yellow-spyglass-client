@@ -10,15 +10,15 @@ import { AliasService } from '@app/services/alias/alias.service';
     styles: [
         `
             .representatives-micro-list .mat-list-item-content {
-                padding: 0!important;
+                padding: 0 !important;
             }
-        `
+        `,
     ],
     template: `
         <mat-card class="rep-mobile-list-container mat-elevation-z0">
             <mat-list [style.paddingTop.px]="0" class="representatives-micro-list">
                 <pxb-info-list-item
-                    *ngFor="let rep of microReps; trackBy: trackByFn;  let last = last; let i = index"
+                    *ngFor="let rep of microReps; trackBy: trackByFn; let last = last; let i = index"
                     [hidePadding]="true"
                     [dense]="false"
                     [divider]="last ? undefined : 'full'"

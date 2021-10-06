@@ -3,7 +3,7 @@
     $offline-color,
     $rep-card-border-color,
     $monitored-reps-table-address-color,
-    $principalTag,
+    $principalTag
 ) {
     .principal-tag {
         @include principalTag();

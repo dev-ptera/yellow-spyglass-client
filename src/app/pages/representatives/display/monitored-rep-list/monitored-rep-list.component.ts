@@ -13,7 +13,7 @@ import { RepresentativesService } from '@app/pages/representatives/representativ
         <mat-card class="rep-mobile-list-container mat-elevation-z0">
             <mat-list [style.paddingTop.px]="0" class="monitored-rep-list">
                 <pxb-info-list-item
-                    *ngFor="let rep of monitoredReps; trackBy: trackByFn;  let last = last;"
+                    *ngFor="let rep of monitoredReps; trackBy: trackByFn; let last = last"
                     [hidePadding]="true"
                     [dense]="false"
                     [divider]="last ? undefined : 'full'"
