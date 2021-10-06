@@ -3,7 +3,7 @@
     $offline-color,
     $rep-card-border-color,
     $monitored-reps-table-address-color,
-    $principalTag
+    $principalTag,
 ) {
     .principal-tag {
         @include principalTag();
@@ -22,5 +22,8 @@
         .offline {
             color: $offline-color !important;
         }
+    }
+    .rep-mobile-list-container {
+        border: solid 1px $rep-card-border-color;
     }
 }

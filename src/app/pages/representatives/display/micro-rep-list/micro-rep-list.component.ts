@@ -7,14 +7,21 @@ import { AliasService } from '@app/services/alias/alias.service';
 
 @Component({
     selector: 'app-micro-rep-list',
+    styles: [
+        `
+            .representatives-micro-list .mat-list-item-content {
+                padding: 0!important;
+            }
+        `
+    ],
     template: `
-        <mat-card style="padding: 0 12px">
-            <mat-list [style.paddingTop.px]="0" class="representatives-monitored-list">
+        <mat-card class="rep-mobile-list-container mat-elevation-z0">
+            <mat-list [style.paddingTop.px]="0" class="representatives-micro-list">
                 <pxb-info-list-item
-                    *ngFor="let rep of microReps; trackBy: trackByFn; let i = index"
+                    *ngFor="let rep of microReps; trackBy: trackByFn;  let last = last; let i = index"
                     [hidePadding]="true"
                     [dense]="false"
-                    divider="full"
+                    [divider]="last ? undefined : 'full'"
                 >
                     <div pxb-left-content style="width: 32px; font-weight: 600" [style.marginLeft.px]="vp.sm ? 0 : 16">
                         #{{ i + 1 }}
