@@ -26,14 +26,14 @@
         font-size: 14px !important;
     }
     &.sm .wallets-table-alias {
-        font-size: 12px !important;
+        font-size: 13px !important;
     }
 
     .wallets-rich-list-conversion {
         font-size: 14px !important;
     }
     &.sm .wallets-rich-list-conversion {
-        font-size: 11px !important;
+        font-size: 12px !important;
     }
 }
 
@@ -54,6 +54,21 @@
         justify-content: center;
     }
 }
+
+/* Mobile styles */
+app-paginator.sm > div {
+    margin-left: -8px;
+    margin-right: -8px;
+}
+.wallets-rich-list-table,
+.wallets-chart {
+    &.sm {
+        width: 100vw!important;
+        margin-right: -16px;
+        margin-left: -16px;
+    }
+}
+
 .wallets-address-cell {
     word-break: break-all;
     padding-right: 8px;

@@ -39,9 +39,9 @@ export class WalletsComponent implements OnInit {
         public megaphone: MegaphoneService,
         public searchService: SearchService,
         public aliasService: AliasService,
+        private readonly _ref: ChangeDetectorRef,
         private readonly _priceService: PriceService,
         private readonly _onlineRepsService: OnlineRepsService,
-        private readonly _ref: ChangeDetectorRef
     ) {
         this.vp.vpChange.subscribe(() => {
             setTimeout(() => {
