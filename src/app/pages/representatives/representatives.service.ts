@@ -5,7 +5,6 @@ import { MonitoredRepDto } from '@app/types/dto';
     providedIn: 'root',
 })
 export class RepresentativesService {
-
     openMonitoredRep(rep: MonitoredRepDto): void {
         if (rep.customMonitorPageUrl) {
             window.open(rep.customMonitorPageUrl, '_blank');
