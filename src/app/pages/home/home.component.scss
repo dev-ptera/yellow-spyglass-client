@@ -80,28 +80,4 @@
             }
         }
     }
-    .home-get-started {
-        text-align: center;
-        max-width: 500px;
-        &.sm {
-            max-width: 300px;
-        }
-        margin-top: 48px;
-        margin-bottom: -48px;
-
-        .home-get-started-prompt {
-            opacity: 0.4;
-            cursor: pointer;
-
-            &:hover {
-                opacity: 1;
-            }
-        }
-        .home-sample-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-    }
 }
