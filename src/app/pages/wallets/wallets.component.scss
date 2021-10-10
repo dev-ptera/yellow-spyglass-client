@@ -42,6 +42,7 @@
     margin-top: 24px;
     display: flex;
     width: 100%;
+    box-sizing: border-box;
     justify-content: left;
     margin-bottom: 72px;
     padding-top: 16px;
@@ -72,12 +73,6 @@ app-paginator.sm > div {
 .wallets-address-cell {
     word-break: break-all;
     padding-right: 8px;
-    .address {
-        cursor: pointer;
-        &:hover {
-            text-decoration: underline !important;
-        }
-    }
 }
 
 @mixin wallets-theme($foreground, $background, $chart-grid) {

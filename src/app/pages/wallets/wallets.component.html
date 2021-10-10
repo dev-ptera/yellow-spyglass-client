@@ -112,8 +112,8 @@
                 <a
                     [routerLink]="'/search'"
                     [queryParams]="{ address: element.addr }"
-                    class="address"
-                    style="color: inherit; text-decoration: none"
+                    class="address link"
+                    style="color: inherit;"
                     (click)="searchAddress($event, element.addr)"
                 >
                     {{ element.addr }}

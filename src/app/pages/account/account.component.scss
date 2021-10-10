@@ -129,6 +129,10 @@
         padding: 2px;
         top: -16px !important;
     }
+    &.sm {
+        margin-right: -16px;
+        margin-left: -16px;
+    }
 }
 
 .account-empty-state {
