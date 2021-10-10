@@ -129,7 +129,7 @@ body {
 $grid-stroke-color: map-get($pxb-gray, 800);
 @include wallets-theme($theme-foreground, $theme-background, $grid-stroke-color);
 .mat-drawer-backdrop.mat-drawer-shown {
-    background-color: #040404d1 !important;
+    background-color: rgba(4, 4, 4, 0.62) !important;
 }
 .pxb-list-item-tag-content .pxb-list-item-tag-label {
     font-weight: 400 !important;
