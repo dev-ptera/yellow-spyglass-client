@@ -26,11 +26,11 @@ The list of representatives that process transactions on the banano network.
 Information about the node running the Yellow Spyglass.
     
 ## Features
-- Bookmarks........................Quickly save hashes or addresses for future reference
-- Themes.............................Currently supports a light and dark mode
+- Bookmarks.............................Quickly save hashes or addresses for future reference
+- Themes....................................Currently supports a light and dark mode
 - Representative Insights.....See which representatives are online/offline
-- Rich List Insights...............Quickly see if top banano holders are voting for online reps
-- Account Insights................Generate a high-level chart of an account balance over time & account stats
+- Rich List Insights...................Quickly see if top banano holders are voting for online reps
+- Account Insights...................Generate a high-level chart of an account balance over time & account stats
     
 
 
