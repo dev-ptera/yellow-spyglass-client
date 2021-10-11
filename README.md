@@ -1,59 +1,58 @@
-# YellowSpyglassClient
+# [YellowSpyglass](https://www.yellowspyglass.com/) Client
 
-<div style="width: 100%; text-align: center">
-    <img width="400px" alt="Yellow Spyglass" src="./logo.png">
-</div>
+This is a [Banano](https://banano.cc/) network explorer, written in Angular.  It currently supports the following pages & features:
 
-View the Yellow Spyglass [here](https://www.yellowspyglass.com/).
+## Pages
 
-This is a [BANANO](https://banano.cc/) network explorer, written in Angular.  
+#### [Explore](https://www.yellowspyglass.com/) 
+See address history & block hash information
 
-It currently supports the following pages & features:
+#### [Wallets](https://www.yellowspyglass.com/wallets)
+See banano distribution by account balance & the list of top banano holders
 
-### Pages
-- Explore
-  - See address history & block hash information
-- Wallets
-  - See banano distribution by account balance & the list of top banano holders
-- Known Accounts
-  - A list of exchanges, developer funds, and other known addresses
-- Network
-  - TODO
-- Representatives
-  - The list of representatives that process transactions on the banano network.
-- Node
-  - Information about the node running the Yellow Spyglass.
+#### [Known Accounts](https://www.yellowspyglass.com/known-accounts)
+A list of exchanges, developer funds, and other known addresses
+
+#### [Vanity MonKeys](https://www.yellowspyglass.com/vanity)
+A showcase of custom vanity monKeys, for special monkeys. 
+
+#### [Network](https://www.yellowspyglass.com/network)
+Distribution, Quorum, & Nakamoto Coefficient statistics for banano.
+
+#### [Representatives](https://www.yellowspyglass.com/representatives)
+The list of representatives that process transactions on the banano network.
+
+#### [Node](https://www.yellowspyglass.com/monitor)
+Information about the node running the Yellow Spyglass.
     
-### Features
-- Bookmarks
-  - Quickly save hashes or addresses for future reference
-- Themes
-    - Currently supports a light and dark mode
-- Representative Insights
-    - Easily see which representatives are online/offline
-- Rich List Insights
-    - Quickly see if top banano holders are voting for online reps
-- Account Insights
-    - Generate a high-level chart of an account balance over time + account stats
+## Features
+- Bookmarks........................Quickly save hashes or addresses for future reference
+- Themes.............................Currently supports a light and dark mode
+- Representative Insights.....See which representatives are online/offline
+- Rich List Insights...............Quickly see if top banano holders are voting for online reps
+- Account Insights................Generate a high-level chart of an account balance over time & account stats
     
 
 
-## Development server
+## Local Development
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### build
+`yarn build`
 
-## Build
+### serve
+`yarn start`
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+### deploy
+`yarn build && firebase deploy`
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### testing / code quality
+`yarn prettier && yarn test && yarn lint`
 
 ## Hosting
 
-This application is currently hosted by Firebase.
+Firebase hosts this application.
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Issues or Feature Requests
+
+Please feel free to add any feature requests or bug reports to the issues tab found [here](https://github.com/dev-ptera/yellow-spyglass-client/issues).
