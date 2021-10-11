@@ -135,7 +135,7 @@ export class AccountComponent implements OnDestroy {
         this.confirmedTxPageIndex = 0;
         this.insights = undefined;
         this.loadingInsights = false;
-        this.insightsDisabled = this.accountOverview.completedTxCount > 50_000 || !this.accountOverview.opened;
+        this.insightsDisabled = this.accountOverview.completedTxCount > 100_000 || !this.accountOverview.opened;
         this._prepareAccountOverview(this.accountOverview);
         this._prepareConfirmed(this.accountOverview);
         this._preparePending(this.accountOverview);
