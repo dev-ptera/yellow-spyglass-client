@@ -59,7 +59,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                 </div>
                 <div>
                     <div>{{ formatBanWeight(rep.weight) }} BAN</div>
-                    <div>{{ formatWeightPercent(rep.weight) }} weight</div>
+                    <div *ngIf="rep.online">{{ formatWeightPercent(rep.weight) }} weight</div>
                 </div>
             </div>
         </mat-card>
