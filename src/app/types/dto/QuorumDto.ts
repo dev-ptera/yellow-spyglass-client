@@ -4,5 +4,4 @@ export type QuorumDto = {
     onlineWeightMinimum: number;
     onlineStakeTotal: number;
     peersStakeTotal: number;
-    peersStakeRequired: number;
 };
