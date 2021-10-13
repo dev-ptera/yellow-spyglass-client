@@ -28,7 +28,7 @@
             style="margin-bottom: 0"
         >
             The <strong>{{ nakamotoCoefficient }}</strong> largest reps could potentially collude together to achieve
-            >50% of the online voting weight and stall the network.
+            >{{ quorum.onlineWeightQuorumPercent }}% of the online voting weight and stall the network.
         </div>
         <div class="app-section-subtitle" *ngIf="nakamotoCoefficient === 1" style="margin-bottom: 0">
             It only takes <strong>one</strong> entity to stall the network.
