@@ -11,15 +11,23 @@
 <ng-template #bodyContent>
     <div class="app-section-title">Weight Distribution</div>
     <div class="app-section-subtitle">Online voting weight allocation between the largest representatives.</div>
-    <app-weight-chart [onlineWeight]="onlineWeight" [largeReps]="allLargeReps"></app-weight-chart>
+    <mat-slide-toggle color="primary" class="app-section-subtitle" [(ngModel)]="showOfflineWeight">
+        Include offline representatives
+    </mat-slide-toggle>
+    <app-weight-chart
+        [onlineWeight]="onlineWeight"
+        [offlineWeight]="offlineWeight"
+        [largeReps]="allLargeReps"
+        [showOfflineWeight]="showOfflineWeight"
+    ></app-weight-chart>
     <div class="app-section-title" [style.marginTop.px]="56">
         Monitored Representatives <span class="app-caption">({{ monitoredReps.length }})</span>
     </div>
     <div class="app-section-subtitle">
         Online representatives that use the
-        <a class="link primary" href="https://github.com/NanoTools/nanoNodeMonitor" target="_blank"
-            >Nano Node Monitor</a
-        >
+        <a class="link primary" href="https://github.com/NanoTools/nanoNodeMonitor" target="_blank">
+            Nano Node Monitor
+        </a>
         software are shown in the list below.
     </div>
     <app-monitored-rep-table

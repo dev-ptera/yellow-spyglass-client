@@ -51,6 +51,8 @@ import { AliasService } from '@app/services/alias/alias.service';
 export class WeightChartComponent implements OnChanges {
     @Input() largeReps: RepresentativeDto[] = [];
     @Input() onlineWeight: number;
+    @Input() offlineWeight: number;
+    @Input() showOfflineWeight: boolean;
 
     Highcharts: typeof Highcharts = Highcharts;
     pieChartColors = [
@@ -62,9 +64,15 @@ export class WeightChartComponent implements OnChanges {
         '#6b54db',
         '#d92d2d',
         '#1d9eef',
-        '#8d8881',
+        '#bbb7b1',
         '#75c915',
         '#0d7f87',
+        '#830d87',
+        '#e5f5f6',
+        '#a4d5ac',
+        '#956a35',
+        '#37ecad',
+        '#a98dde',
     ];
 
     repsChart: Options;
@@ -88,11 +96,13 @@ export class WeightChartComponent implements OnChanges {
     }
 
     private _createRepChart(): Options {
+        const totalWeight = this.showOfflineWeight ? this.onlineWeight + this.offlineWeight : this.onlineWeight;
+
         const reps = this.largeReps;
-        const formatPercentage = (percent: number): any => Number(((percent / this.onlineWeight) * 100).toFixed(1));
+        const formatPercentage = (percent: number): any => Number(((percent / totalWeight) * 100).toFixed(1));
 
         const onlineReps = (): Array<{ name: string; y: number; address: string }> => {
-            let allOthersWeight = this.onlineWeight;
+            let allOthersWeight = totalWeight;
             const MAX_REPS = 7;
             const shownReps = [];
 
@@ -116,16 +126,31 @@ export class WeightChartComponent implements OnChanges {
                 if (!rep.online) {
                     continue;
                 }
-                if (i++ >= shownReps.length) {
+                if (i++ > shownReps.length) {
                     break;
                 }
                 allOthersWeight -= rep.weight;
             }
+
+            if (this.showOfflineWeight) {
+                allOthersWeight -= this.offlineWeight;
+            }
+
             shownReps.push({
                 name: 'Other Reps',
                 address: undefined,
                 y: formatPercentage(allOthersWeight),
             });
+
+            // Calculate offline weight
+            if (this.showOfflineWeight) {
+                shownReps.push({
+                    name: 'Offline Reps',
+                    address: undefined,
+                    y: formatPercentage(this.offlineWeight),
+                });
+            }
+
             return shownReps;
         };
         this.chartShownReps = onlineReps();

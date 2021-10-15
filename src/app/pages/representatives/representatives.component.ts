@@ -12,10 +12,12 @@ import { MatSort } from '@angular/material/sort';
 })
 export class RepresentativesComponent implements OnInit {
     showOfflineRepsFilter = false;
+    showOfflineWeight = false;
     loading = true;
     error = false;
 
     onlineWeight: number;
+    offlineWeight: number;
     allLargeReps: RepresentativeDto[] = [];
     monitoredReps: MonitoredRepDto[] = [];
     microReps: MicroRepresentativeDto[] = [];
@@ -35,6 +37,7 @@ export class RepresentativesComponent implements OnInit {
                 this.allLargeReps = data.thresholdReps;
                 this.monitoredReps = data.monitoredReps;
                 this.onlineWeight = data.onlineWeight;
+                this.offlineWeight = data.offlineWeight;
                 this.microReps = data.microReps;
                 this.loading = false;
                 data.thresholdReps.map((rep) => (rep.online ? this.onlineLargeRepsCount++ : undefined));
