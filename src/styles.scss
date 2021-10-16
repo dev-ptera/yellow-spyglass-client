@@ -81,10 +81,9 @@
 // Fix Safari scroll issue
 .pxb-drawer-layout {
     height: 100% !important;
-    &.open {
-        .mat-drawer {
-            position: fixed;
-        }
+    .mat-drawer {
+        position: fixed;
+        top: 0;
     }
     .mat-drawer-content {
         /* MAGIC HAPPENS HERE */
