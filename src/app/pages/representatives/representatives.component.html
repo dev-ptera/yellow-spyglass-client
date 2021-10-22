@@ -62,14 +62,16 @@
     ></app-large-rep-table>
     <app-large-rep-cards *ngIf="vp.sm" [onlineWeight]="onlineWeight" [shownReps]="shownLargeReps"></app-large-rep-cards>
 
-    <div class="app-section-title" [style.marginTop.px]="72">
-        Micro Representatives
-        <span class="app-caption">({{ onlineMicroRepsCount }})</span>
-    </div>
-    <div class="app-section-subtitle">
-        Online representatives with less than 100,000 BANANO weight delegated towards them.
-    </div>
-    <app-micro-rep-list [onlineWeight]="onlineWeight" [microReps]="microReps"></app-micro-rep-list>
+    <ng-container *ngIf="microReps?.length > 0">
+        <div class="app-section-title" [style.marginTop.px]="72">
+            Micro Representatives
+            <span class="app-caption">({{ onlineMicroRepsCount }})</span>
+        </div>
+        <div class="app-section-subtitle">
+            Online representatives with less than 100,000 BANANO weight delegated towards them.
+        </div>
+        <app-micro-rep-list [onlineWeight]="onlineWeight" [microReps]="microReps"></app-micro-rep-list>
+    </ng-container>
 </ng-template>
 
 <div class="app-page-root" responsive>

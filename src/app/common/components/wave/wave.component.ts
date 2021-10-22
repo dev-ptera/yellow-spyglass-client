@@ -19,7 +19,7 @@ export class WaveComponent {
     @Input() darkThemeWaveNumber = 5;
     @Input() lightThemeWaveNumber = 23;
     @Input() maxHeight: number;
-    @Input() bottom = 0;
+    @Input() bottom = -12;
 
     constructor(public vp: ViewportService, public theme: ThemeService) {}
 
