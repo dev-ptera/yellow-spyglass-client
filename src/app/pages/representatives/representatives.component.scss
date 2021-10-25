@@ -26,4 +26,11 @@
     .rep-mobile-list-container {
         border: solid 1px $rep-card-border-color;
     }
+    .monitored-reps-table {
+        thead th:nth-child(1),
+        tr td:nth-child(1) {
+            border-right: solid 1px;
+            border-color: $rep-card-border-color;
+        }
+    }
 }

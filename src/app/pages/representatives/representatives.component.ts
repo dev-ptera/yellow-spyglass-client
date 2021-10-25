@@ -11,10 +11,14 @@ import { MatSort } from '@angular/material/sort';
     encapsulation: ViewEncapsulation.None,
 })
 export class RepresentativesComponent implements OnInit {
+    @ViewChild('sortAll') sortAll: MatSort;
+    @ViewChild('sortMonitored') sortMonitored: MatSort;
+
     showOfflineRepsFilter = false;
     showOfflineWeight = false;
     loading = true;
     error = false;
+    monitoredRepColumnToggle = false;
 
     onlineWeight: number;
     offlineWeight: number;
@@ -25,8 +29,18 @@ export class RepresentativesComponent implements OnInit {
     onlineMicroRepsCount = 0;
     shownLargeReps: RepresentativeDto[] = [];
 
-    @ViewChild('sortAll') sortAll: MatSort;
-    @ViewChild('sortMonitored') sortMonitored: MatSort;
+    shownColumns = {
+        showAddress: true,
+        showVersion: true,
+        showDelegatorsCount: true,
+        showWeight: true,
+        showPeerCount: true,
+        showUncheckedBlocks: true,
+        showCementedBlocks: false,
+        showMemory: false,
+        showUptime: false,
+        showLocation: false,
+    };
 
     constructor(public vp: ViewportService, private readonly _api: ApiService) {}
 

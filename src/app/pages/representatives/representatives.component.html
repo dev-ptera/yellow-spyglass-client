@@ -20,20 +20,175 @@
         [largeReps]="allLargeReps"
         [showOfflineWeight]="showOfflineWeight"
     ></app-weight-chart>
-    <div class="app-section-title" [style.marginTop.px]="56">
-        Monitored Representatives <span class="app-caption">({{ monitoredReps.length }})</span>
-    </div>
-    <div class="app-section-subtitle">
-        Online representatives that use the
-        <a class="link primary" href="https://github.com/NanoTools/nanoNodeMonitor" target="_blank">
-            Nano Node Monitor
-        </a>
-        software are shown in the list below.
+
+    <div style="display: flex">
+        <div style="width: 100%; margin-right: 16px">
+            <div class="app-section-title">
+                Monitored Representatives <span class="app-caption">({{ monitoredReps.length }})</span>
+            </div>
+            <div class="app-section-subtitle">
+                Online representatives that use the
+                <a class="link primary" href="https://github.com/NanoTools/nanoNodeMonitor" target="_blank">
+                    Nano Node Monitor
+                </a>
+                software are shown in the list below.
+            </div>
+        </div>
+        <pxb-user-menu
+            *ngIf="!vp.sm"
+            class="app-user-menu"
+            style="align-items: end; margin-bottom: 4px"
+            [(open)]="monitoredRepColumnToggle"
+        >
+            <mat-icon pxb-avatar>more_vert</mat-icon>
+            <mat-nav-list pxb-menu-body [style.paddingTop.px]="0">
+                <pxb-info-list-item
+                    [dense]="true"
+                    [hidePadding]="true"
+                    (click)="shownColumns.showAddress = !shownColumns.showAddress"
+                >
+                    <mat-checkbox
+                        color="primary"
+                        pxb-left-content
+                        [checked]="shownColumns.showAddress"
+                        style="pointer-events: none"
+                    ></mat-checkbox>
+                    <div pxb-title>Address</div>
+                </pxb-info-list-item>
+
+                <pxb-info-list-item
+                    [dense]="true"
+                    [hidePadding]="true"
+                    (click)="shownColumns.showVersion = !shownColumns.showVersion"
+                >
+                    <mat-checkbox
+                        color="primary"
+                        pxb-left-content
+                        [checked]="shownColumns.showVersion"
+                        style="pointer-events: none"
+                    ></mat-checkbox>
+                    <div pxb-title>Version</div>
+                </pxb-info-list-item>
+
+                <pxb-info-list-item
+                    [dense]="true"
+                    [hidePadding]="true"
+                    (click)="shownColumns.showDelegatorsCount = !shownColumns.showDelegatorsCount"
+                >
+                    <mat-checkbox
+                        color="primary"
+                        pxb-left-content
+                        [checked]="shownColumns.showDelegatorsCount"
+                        style="pointer-events: none"
+                    ></mat-checkbox>
+                    <div pxb-title>Delegators</div>
+                </pxb-info-list-item>
+
+                <pxb-info-list-item
+                    [dense]="true"
+                    [hidePadding]="true"
+                    (click)="shownColumns.showWeight = !shownColumns.showWeight"
+                >
+                    <mat-checkbox
+                        color="primary"
+                        pxb-left-content
+                        [checked]="shownColumns.showWeight"
+                        style="pointer-events: none"
+                    ></mat-checkbox>
+                    <div pxb-title>Weight</div>
+                </pxb-info-list-item>
+
+                <pxb-info-list-item
+                    [dense]="true"
+                    [hidePadding]="true"
+                    (click)="shownColumns.showPeerCount = !shownColumns.showPeerCount"
+                >
+                    <mat-checkbox
+                        color="primary"
+                        pxb-left-content
+                        [checked]="shownColumns.showPeerCount"
+                        style="pointer-events: none"
+                    ></mat-checkbox>
+                    <div pxb-title>Peer Count</div>
+                </pxb-info-list-item>
+
+                <pxb-info-list-item
+                    [dense]="true"
+                    [hidePadding]="true"
+                    (click)="shownColumns.showUncheckedBlocks = !shownColumns.showUncheckedBlocks"
+                >
+                    <mat-checkbox
+                        color="primary"
+                        pxb-left-content
+                        [checked]="shownColumns.showUncheckedBlocks"
+                        style="pointer-events: none"
+                    ></mat-checkbox>
+                    <div pxb-title>Unchecked Blocks</div>
+                </pxb-info-list-item>
+
+                <pxb-info-list-item
+                    [dense]="true"
+                    [hidePadding]="true"
+                    (click)="shownColumns.showCementedBlocks = !shownColumns.showCementedBlocks"
+                >
+                    <mat-checkbox
+                        color="primary"
+                        pxb-left-content
+                        [checked]="shownColumns.showCementedBlocks"
+                        style="pointer-events: none"
+                    ></mat-checkbox>
+                    <div pxb-title>Cemented Blocks</div>
+                </pxb-info-list-item>
+
+                <pxb-info-list-item
+                    [dense]="true"
+                    [hidePadding]="true"
+                    (click)="shownColumns.showLocation = !shownColumns.showLocation"
+                >
+                    <mat-checkbox
+                        color="primary"
+                        pxb-left-content
+                        [checked]="shownColumns.showLocation"
+                        style="pointer-events: none"
+                    ></mat-checkbox>
+                    <div pxb-title>Location</div>
+                </pxb-info-list-item>
+
+                <pxb-info-list-item
+                    [dense]="true"
+                    [hidePadding]="true"
+                    (click)="shownColumns.showMemory = !shownColumns.showMemory"
+                >
+                    <mat-checkbox
+                        color="primary"
+                        pxb-left-content
+                        [checked]="shownColumns.showMemory"
+                        style="pointer-events: none"
+                    ></mat-checkbox>
+                    <div pxb-title>Memory Usage</div>
+                </pxb-info-list-item>
+
+                <pxb-info-list-item
+                    [dense]="true"
+                    [hidePadding]="true"
+                    (click)="shownColumns.showUptime = !shownColumns.showUptime"
+                >
+                    <mat-checkbox
+                        color="primary"
+                        pxb-left-content
+                        [checked]="shownColumns.showUptime"
+                        style="pointer-events: none"
+                    ></mat-checkbox>
+                    <div pxb-title>Uptime</div>
+                </pxb-info-list-item>
+            </mat-nav-list>
+        </pxb-user-menu>
     </div>
     <app-monitored-rep-table
         *ngIf="!vp.sm"
         [monitoredReps]="monitoredReps"
         [onlineWeight]="onlineWeight"
+        [shownColumns]="shownColumns"
     ></app-monitored-rep-table>
     <app-monitored-rep-list
         *ngIf="vp.sm"

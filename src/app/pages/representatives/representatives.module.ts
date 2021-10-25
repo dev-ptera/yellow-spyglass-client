@@ -4,7 +4,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSortModule } from '@angular/material/sort';
-import { InfoListItemModule, ListItemTagModule } from '@pxblue/angular-components';
+import { InfoListItemModule, ListItemTagModule, UserMenuModule } from '@pxblue/angular-components';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { AppCommonModule } from '@app/common/app-common.module';
 import { RepresentativesComponent } from '@app/pages/representatives/representatives.component';
@@ -15,6 +15,7 @@ import { MonitoredRepTableComponent } from '@app/pages/representatives/display/m
 import { MonitoredRepListComponent } from '@app/pages/representatives/display/monitored-rep-list/monitored-rep-list.component';
 import { MicroRepListComponent } from '@app/pages/representatives/display/micro-rep-list/micro-rep-list.component';
 import { WeightChartComponent } from '@app/pages/representatives/display/weight-chart/weight-chart.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
     declarations: [
@@ -37,6 +38,8 @@ import { WeightChartComponent } from '@app/pages/representatives/display/weight-
         MatSortModule,
         MatSlideToggleModule,
         FormsModule,
+        UserMenuModule,
+        MatCheckboxModule,
     ],
     exports: [
         RepresentativesComponent,

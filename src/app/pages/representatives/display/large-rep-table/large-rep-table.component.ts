@@ -66,8 +66,8 @@ import { AliasService } from '@app/services/alias/alias.service';
                 <th mat-header-cell *matHeaderCellDef>%</th>
                 <td mat-cell *matCellDef="let element" [class.warn]="isLargeRep(element.weight) && element.online">
                     <ng-container *ngIf="element.online">
-                        {{ formatWeightPercent(element.weight)
-                        }}<span style="font-size: 11px; font-weight: 200; margin-left: 2px">%</span>
+                        {{ formatWeightPercent(element.weight) }}
+                        <span style="font-size: 11px; font-weight: 200; margin-left: 2px">%</span>
                     </ng-container>
                     <ng-container *ngIf="!element.online">--</ng-container>
                 </td>

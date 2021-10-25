@@ -50,9 +50,7 @@
     }
 }
 
-.monitored-reps-table,
-.all-reps-table {
-    width: 100%;
+.monitored-reps-table {
     .pxb-list-item-tag-label {
         font-size: 0.625rem !important;
     }
@@ -63,6 +61,21 @@
     td.mat-cell:last-of-type,
     td.mat-footer-cell:last-of-type {
         padding-right: 0 !important;
+    }
+}
+
+.monitored-reps-table {
+    display: block;
+    max-height: 75vh;
+    height: 100%;
+    width: calc(100% - 1px);
+    max-width: 100%;
+    overflow: auto !important;
+    thead th:nth-child(2) {
+        padding-left: 16px;
+    }
+    tr td:nth-child(2) {
+        padding-left: 16px;
     }
 }
 
