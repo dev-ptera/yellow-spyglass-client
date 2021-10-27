@@ -34,6 +34,8 @@ export class ThemeService {
         document.body.classList.remove('light');
         document.body.classList.remove('dark');
         document.body.classList.add(newTheme);
-        localStorage.setItem(this.themeLocalStorageId, newTheme);
+        setTimeout(() => {
+            localStorage.setItem(this.themeLocalStorageId, newTheme);
+        });
     }
 }

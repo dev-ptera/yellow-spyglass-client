@@ -3,6 +3,23 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
 import { ApiService } from '@app/services/api/api.service';
 import { MicroRepresentativeDto, MonitoredRepDto, RepresentativeDto, RepresentativesResponseDto } from '@app/types/dto';
 import { MatSort } from '@angular/material/sort';
+import {Theme} from "@app/services/theme/theme.service";
+
+export type MonitoredRepTableColumns = {
+    address: boolean;
+    version: boolean;
+    delegatorsCount: boolean;
+    weightBan: boolean;
+    weightPercent: boolean;
+    peerCount: boolean;
+    uncheckedBlocks: boolean;
+    cementedBlocks: boolean;
+    memory: boolean;
+    lastRestart: boolean;
+    location: boolean;
+    isPrincipal: boolean;
+    uptime: boolean;
+}
 
 @Component({
     selector: 'app-representatives',
@@ -28,23 +45,29 @@ export class RepresentativesComponent implements OnInit {
     onlineLargeRepsCount = 0;
     onlineMicroRepsCount = 0;
     shownLargeReps: RepresentativeDto[] = [];
+    monitoredRepsShownColumnsKey = 'YELLOW_SPYGLASS_MONITORED_REP_COLUMNS';
 
-    shownColumns = {
-        showAddress: true,
-        showVersion: true,
-        showDelegatorsCount: true,
-        showWeight: true,
-        showPeerCount: true,
-        showUncheckedBlocks: true,
-        showCementedBlocks: false,
-        showMemory: false,
-        showUptime: false,
-        showLocation: false,
+    /* Defaults */
+    shownColumns: MonitoredRepTableColumns = {
+        address: true,
+        version: true,
+        delegatorsCount: false,
+        weightBan: true,
+        weightPercent: false,
+        peerCount: true,
+        uncheckedBlocks: true,
+        cementedBlocks: false,
+        memory: true,
+        lastRestart: true,
+        location: false,
+        isPrincipal: true,
+        uptime: false
     };
 
     constructor(public vp: ViewportService, private readonly _api: ApiService) {}
 
     ngOnInit(): void {
+        this._parseMonitoredRepsShownColumns();
         this._api
             .representatives()
             .then((data: RepresentativesResponseDto) => {
@@ -65,6 +88,13 @@ export class RepresentativesComponent implements OnInit {
             });
     }
 
+    _parseMonitoredRepsShownColumns(): void {
+        const showColumns = localStorage.getItem(this.monitoredRepsShownColumnsKey);
+        if (showColumns) {
+            this.shownColumns = JSON.parse(showColumns);
+        }
+    }
+
     filterLargeRepsByStatus(): void {
         this.shownLargeReps = [];
         if (this.showOfflineRepsFilter) {
@@ -72,5 +102,10 @@ export class RepresentativesComponent implements OnInit {
         } else {
             this.allLargeReps.map((rep) => (rep.online ? this.shownLargeReps.push(rep) : undefined));
         }
+    }
+
+    toggleColumn(column: keyof MonitoredRepTableColumns): void {
+        this.shownColumns[column] = !this.shownColumns[column];
+        localStorage.setItem(this.monitoredRepsShownColumnsKey, JSON.stringify(this.shownColumns));
     }
 }

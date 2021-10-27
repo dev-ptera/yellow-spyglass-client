@@ -7,7 +7,7 @@ import { ThemeService } from '@app/services/theme/theme.service';
     template: `
         <div
             *ngIf="!vp.sm"
-            style="position: fixed; width: 100%; z-index: -1; min-width: 1200px"
+            style="position: fixed; width: 100%; z-index: -1; min-width: 2000px"
             [style.bottom.px]="bottom"
             [style.maxHeight.px]="maxHeight"
         >

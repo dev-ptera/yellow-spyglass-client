@@ -34,6 +34,8 @@
                 software are shown in the list below.
             </div>
         </div>
+
+        <!-- TODO: Make me a component. -->
         <pxb-user-menu
             *ngIf="!vp.sm"
             class="app-user-menu"
@@ -45,12 +47,12 @@
                 <pxb-info-list-item
                     [dense]="true"
                     [hidePadding]="true"
-                    (click)="shownColumns.showAddress = !shownColumns.showAddress"
+                    (click)="toggleColumn('address')"
                 >
                     <mat-checkbox
                         color="primary"
                         pxb-left-content
-                        [checked]="shownColumns.showAddress"
+                        [checked]="shownColumns.address"
                         style="pointer-events: none"
                     ></mat-checkbox>
                     <div pxb-title>Address</div>
@@ -59,12 +61,12 @@
                 <pxb-info-list-item
                     [dense]="true"
                     [hidePadding]="true"
-                    (click)="shownColumns.showVersion = !shownColumns.showVersion"
+                    (click)="toggleColumn('version')"
                 >
                     <mat-checkbox
                         color="primary"
                         pxb-left-content
-                        [checked]="shownColumns.showVersion"
+                        [checked]="shownColumns.version"
                         style="pointer-events: none"
                     ></mat-checkbox>
                     <div pxb-title>Version</div>
@@ -73,12 +75,12 @@
                 <pxb-info-list-item
                     [dense]="true"
                     [hidePadding]="true"
-                    (click)="shownColumns.showDelegatorsCount = !shownColumns.showDelegatorsCount"
+                    (click)="toggleColumn('delegatorsCount')"
                 >
                     <mat-checkbox
                         color="primary"
                         pxb-left-content
-                        [checked]="shownColumns.showDelegatorsCount"
+                        [checked]="shownColumns.delegatorsCount"
                         style="pointer-events: none"
                     ></mat-checkbox>
                     <div pxb-title>Delegators</div>
@@ -87,26 +89,41 @@
                 <pxb-info-list-item
                     [dense]="true"
                     [hidePadding]="true"
-                    (click)="shownColumns.showWeight = !shownColumns.showWeight"
+                    (click)="toggleColumn('weightBan')"
                 >
                     <mat-checkbox
                         color="primary"
                         pxb-left-content
-                        [checked]="shownColumns.showWeight"
+                        [checked]="shownColumns.weightBan"
                         style="pointer-events: none"
                     ></mat-checkbox>
-                    <div pxb-title>Weight</div>
+                    <div pxb-title>Weight (BAN)</div>
+                </pxb-info-list-item>
+
+
+                <pxb-info-list-item
+                    [dense]="true"
+                    [hidePadding]="true"
+                    (click)="toggleColumn('weightPercent')"
+                >
+                    <mat-checkbox
+                        color="primary"
+                        pxb-left-content
+                        [checked]="shownColumns.weightPercent"
+                        style="pointer-events: none"
+                    ></mat-checkbox>
+                    <div pxb-title>Weight (%)</div>
                 </pxb-info-list-item>
 
                 <pxb-info-list-item
                     [dense]="true"
                     [hidePadding]="true"
-                    (click)="shownColumns.showPeerCount = !shownColumns.showPeerCount"
+                    (click)="toggleColumn('peerCount')"
                 >
                     <mat-checkbox
                         color="primary"
                         pxb-left-content
-                        [checked]="shownColumns.showPeerCount"
+                        [checked]="shownColumns.peerCount"
                         style="pointer-events: none"
                     ></mat-checkbox>
                     <div pxb-title>Peer Count</div>
@@ -115,12 +132,12 @@
                 <pxb-info-list-item
                     [dense]="true"
                     [hidePadding]="true"
-                    (click)="shownColumns.showUncheckedBlocks = !shownColumns.showUncheckedBlocks"
+                    (click)="toggleColumn('uncheckedBlocks')"
                 >
                     <mat-checkbox
                         color="primary"
                         pxb-left-content
-                        [checked]="shownColumns.showUncheckedBlocks"
+                        [checked]="shownColumns.uncheckedBlocks"
                         style="pointer-events: none"
                     ></mat-checkbox>
                     <div pxb-title>Unchecked Blocks</div>
@@ -129,12 +146,12 @@
                 <pxb-info-list-item
                     [dense]="true"
                     [hidePadding]="true"
-                    (click)="shownColumns.showCementedBlocks = !shownColumns.showCementedBlocks"
+                    (click)="toggleColumn('cementedBlocks')"
                 >
                     <mat-checkbox
                         color="primary"
                         pxb-left-content
-                        [checked]="shownColumns.showCementedBlocks"
+                        [checked]="shownColumns.cementedBlocks"
                         style="pointer-events: none"
                     ></mat-checkbox>
                     <div pxb-title>Cemented Blocks</div>
@@ -143,12 +160,12 @@
                 <pxb-info-list-item
                     [dense]="true"
                     [hidePadding]="true"
-                    (click)="shownColumns.showLocation = !shownColumns.showLocation"
+                    (click)="toggleColumn('location')"
                 >
                     <mat-checkbox
                         color="primary"
                         pxb-left-content
-                        [checked]="shownColumns.showLocation"
+                        [checked]="shownColumns.location"
                         style="pointer-events: none"
                     ></mat-checkbox>
                     <div pxb-title>Location</div>
@@ -157,12 +174,12 @@
                 <pxb-info-list-item
                     [dense]="true"
                     [hidePadding]="true"
-                    (click)="shownColumns.showMemory = !shownColumns.showMemory"
+                    (click)="toggleColumn('memory')"
                 >
                     <mat-checkbox
                         color="primary"
                         pxb-left-content
-                        [checked]="shownColumns.showMemory"
+                        [checked]="shownColumns.memory"
                         style="pointer-events: none"
                     ></mat-checkbox>
                     <div pxb-title>Memory Usage</div>
@@ -171,12 +188,39 @@
                 <pxb-info-list-item
                     [dense]="true"
                     [hidePadding]="true"
-                    (click)="shownColumns.showUptime = !shownColumns.showUptime"
+                    (click)="toggleColumn('lastRestart')"
                 >
                     <mat-checkbox
                         color="primary"
                         pxb-left-content
-                        [checked]="shownColumns.showUptime"
+                        [checked]="shownColumns.lastRestart"
+                        style="pointer-events: none"
+                    ></mat-checkbox>
+                    <div pxb-title>Last Restart</div>
+                </pxb-info-list-item>
+                <pxb-info-list-item
+                    [dense]="true"
+                    [hidePadding]="true"
+                    (click)="toggleColumn('isPrincipal')"
+                >
+                    <mat-checkbox
+                        color="primary"
+                        pxb-left-content
+                        [checked]="shownColumns.isPrincipal"
+                        style="pointer-events: none"
+                    ></mat-checkbox>
+                    <div pxb-title>Principal Rep</div>
+                </pxb-info-list-item>
+
+                <pxb-info-list-item
+                    [dense]="true"
+                    [hidePadding]="true"
+                    (click)="toggleColumn('uptime')"
+                >
+                    <mat-checkbox
+                        color="primary"
+                        pxb-left-content
+                        [checked]="shownColumns.uptime"
                         style="pointer-events: none"
                     ></mat-checkbox>
                     <div pxb-title>Uptime</div>
@@ -189,6 +233,7 @@
         [monitoredReps]="monitoredReps"
         [onlineWeight]="onlineWeight"
         [shownColumns]="shownColumns"
+        [largeReps]="allLargeReps"
     ></app-monitored-rep-table>
     <app-monitored-rep-list
         *ngIf="vp.sm"
@@ -230,7 +275,7 @@
 </ng-template>
 
 <div class="app-page-root" responsive>
-    <div class="app-page-content">
+    <div class="app-page-content representatives">
         <app-error *ngIf="error"></app-error>
         <ng-container *ngIf="!error">
             <ng-template [ngTemplateOutlet]="titleContent"></ng-template>

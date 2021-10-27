@@ -81,7 +81,11 @@
 // Fix Safari scroll issue
 .pxb-drawer-layout {
     height: 100% !important;
+    .mat-drawer-backdrop {
+        z-index: 400;
+    }
     .mat-drawer {
+        z-index: 400;
         position: fixed;
         top: 0;
     }

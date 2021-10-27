@@ -1,12 +1,13 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
-import { MonitoredRepDto } from '@app/types/dto';
+import {MonitoredRepDto, RepresentativeDto} from '@app/types/dto';
 import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { AliasService } from '@app/services/alias/alias.service';
 import { RepresentativesService } from '@app/pages/representatives/representatives.service';
+import {MonitoredRepTableColumns} from "@app/pages/representatives/representatives.component";
 
 @Component({
     selector: 'app-monitored-rep-table',
@@ -35,7 +36,7 @@ import { RepresentativesService } from '@app/pages/representatives/representativ
                     class="representatives-name-cell"
                     mat-cell
                     *matCellDef="let element"
-                    style="padding-top: 8px; padding-bottom: 8px"
+                    style="padding-top: 8px; padding-bottom: 8px; padding-right: 8px"
                 >
                     <span class="link primary" style="font-weight: 600" (click)="repService.openMonitoredRep(element)">
                         {{ element.name }}
@@ -56,7 +57,7 @@ import { RepresentativesService } from '@app/pages/representatives/representativ
             <ng-container matColumnDef="address">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 210px">Address</th>
                 <td class="representatives-weight-cell" mat-cell *matCellDef="let element">
-                    {{ formatShortAddress(element.address) }}
+                    <span (click)="routeRepAddress(element.address)" class="link">{{ formatShortAddress(element.address) }}</span>
                 </td>
             </ng-container>
 
@@ -67,15 +68,17 @@ import { RepresentativesService } from '@app/pages/representatives/representativ
                 </td>
             </ng-container>
 
-            <ng-container matColumnDef="weight">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 140px">Weight</th>
-                <td class="representatives-weight-cell" mat-cell *matCellDef="let element">
+            <ng-container matColumnDef="weightBan">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 130px">Weight</th>
+                <td mat-cell *matCellDef="let element">
                         {{ formatBanWeight(element.weight) }}
-                    <!--    <pxb-spacer></pxb-spacer>
-                        <span style="font-size: 12px"
-                        >{{ formatWeightPercent(element.weight) }}<span style="font-size: 10px">%</span></span
-                        >
-                        -->
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="weightPercent">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 90px">%</th>
+                <td mat-cell *matCellDef="let element">
+                    {{ formatWeightPercent(element.weight) }}<span style="font-size: 10px">%</span>
                 </td>
             </ng-container>
 
@@ -113,17 +116,53 @@ import { RepresentativesService } from '@app/pages/representatives/representativ
                 </td>
             </ng-container>
 
-            <ng-container matColumnDef="memory">
+            <ng-container matColumnDef="totalMem">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 150px">Memory</th>
                 <td mat-cell *matCellDef="let element">
                     {{ formatMemoryUsage(element) }}
                 </td>
             </ng-container>
 
-            <ng-container matColumnDef="uptime">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 150px">Uptime</th>
+            <ng-container matColumnDef="nodeUptimeStartup">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 130px">Last Restart</th>
                 <td mat-cell *matCellDef="let element">
                     {{ formatUptime(element.nodeUptimeStartup) }}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="isPrincipal">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 80px">PR</th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-icon  *ngIf="repService.isPR(element.weight, onlineWeight)" style="font-size: 1.5rem" class="primary">verified</mat-icon>
+                </td>
+            </ng-container>
+
+            <!-- TODO: MAKE me a component -->
+            <ng-container matColumnDef="uptime">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header  style="min-width: 150px">
+                    <div style="text-align: left">
+                        Uptime
+                        <ng-container *ngIf="!vp.md">
+                            <br />
+                            <div style="font-size: 10px; margin-top: -4px">month · week · day</div>
+                        </ng-container>
+                    </div>
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    <ng-container *ngIf="largeRepMap.has(element.address)">
+                        <span
+                            [class.warn]="largeRepMap.get(element.address)?.uptimePercentMonth <= 80"
+                            [class.intermediary]="largeRepMap.get(element.address)?.uptimePercentMonth > 80 && largeRepMap.get(element.address)?.uptimePercentMonth <= 95"
+                            [class.primary]="largeRepMap.get(element.address)?.uptimePercentMonth > 95"
+                            >
+                            {{ largeRepMap.get(element.address)?.uptimePercentMonth }}<span style="font-size: 11px">% </span>
+                        </span>
+                            <span *ngIf="!vp.md" style="font-size: 11px"
+                            >· {{ largeRepMap.get(element.address)?.uptimePercentWeek }}% · {{ largeRepMap.get(element.address)?.uptimePercentDay }}%
+                        </span>
+                    </ng-container>
+                    <ng-container *ngIf="!largeRepMap.has(element.address)">--</ng-container>
+
                 </td>
             </ng-container>
 
@@ -135,9 +174,12 @@ import { RepresentativesService } from '@app/pages/representatives/representativ
     encapsulation: ViewEncapsulation.None,
 })
 export class MonitoredRepTableComponent implements OnChanges {
+    @Input() largeReps: RepresentativeDto[] = [];
     @Input() monitoredReps: MonitoredRepDto[] = [];
     @Input() onlineWeight: number;
-    @Input() shownColumns: any;
+    @Input() shownColumns: MonitoredRepTableColumns;
+
+    largeRepMap: Map<string, RepresentativeDto> = new Map();
 
     @ViewChild('sortMonitored') sortMonitored: MatSort;
 
@@ -154,6 +196,7 @@ export class MonitoredRepTableComponent implements OnChanges {
 
     ngOnChanges(): void {
         this._configureTables();
+        this._createNewRepMap();
     }
 
     private _configureTables(): void {
@@ -163,38 +206,70 @@ export class MonitoredRepTableComponent implements OnChanges {
         this.monitoredRepsDataSource = new MatTableDataSource(this.monitoredReps);
         this._ref.detectChanges();
         this.monitoredRepsDataSource.sort = this.sortMonitored;
+        this.monitoredRepsDataSource.sortingDataAccessor = (item, property) => {
+            switch (property) {
+                case 'isPrincipal': {
+                    return item['weight'];
+                }
+                case 'weightBan': {
+                    return item['weight'];
+                }
+                case 'weightPercent': {
+                    return item['weight'];
+                }
+                default: {
+                    return item[property];
+                }
+            };
+        }
+    }
+
+    private _createNewRepMap(): void {
+        this.largeRepMap.clear();
+        for (const rep of this.largeReps) {
+            this.largeRepMap.set(rep.address, rep);
+        }
     }
 
     getDisplayedColumns(): string[] {
         const displayedColumns = ['name'];
-        if (this.shownColumns.showAddress) {
+        if (this.shownColumns.address) {
             displayedColumns.push('address');
         }
-        if (this.shownColumns.showVersion) {
+        if (this.shownColumns.version) {
             displayedColumns.push('version');
         }
-        if (this.shownColumns.showDelegatorsCount) {
+        if (this.shownColumns.delegatorsCount) {
             displayedColumns.push('delegatorsCount');
         }
-        if (this.shownColumns.showWeight) {
-            displayedColumns.push('weight');
+        if (this.shownColumns.weightBan) {
+            displayedColumns.push('weightBan');
         }
-        if (this.shownColumns.showPeerCount) {
+        if (this.shownColumns.weightPercent) {
+            displayedColumns.push('weightPercent');
+        }
+        if (this.shownColumns.peerCount) {
             displayedColumns.push('peers');
         }
-        if (this.shownColumns.showUncheckedBlocks) {
+        if (this.shownColumns.uncheckedBlocks) {
             displayedColumns.push('uncheckedBlocks');
         }
-        if (this.shownColumns.showCementedBlocks) {
+        if (this.shownColumns.cementedBlocks) {
             displayedColumns.push('cementedBlocks');
         }
-        if (this.shownColumns.showMemory) {
-            displayedColumns.push('memory');
+        if (this.shownColumns.memory) {
+            displayedColumns.push('totalMem');
         }
-        if (this.shownColumns.showLocation) {
+        if (this.shownColumns.location) {
             displayedColumns.push('location');
         }
-        if (this.shownColumns.showUptime) {
+        if (this.shownColumns.lastRestart) {
+            displayedColumns.push('nodeUptimeStartup');
+        }
+        if (this.shownColumns.isPrincipal) {
+            displayedColumns.push('isPrincipal');
+        }
+        if (this.shownColumns.uptime) {
             displayedColumns.push('uptime');
         }
         return displayedColumns;
@@ -217,11 +292,6 @@ export class MonitoredRepTableComponent implements OnChanges {
     formatBanWeight(weight: number): string {
         return this._util.numberWithCommas(Math.round(weight));
     }
-
-    formatAddress(addr: string): string {
-        return this.vp.md ? this._util.shortenAddress(addr) : addr;
-    }
-
 
     formatShortAddress(addr: string): string {
         return this._util.shortenAddress(addr);

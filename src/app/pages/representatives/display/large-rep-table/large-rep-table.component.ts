@@ -103,7 +103,7 @@ import { AliasService } from '@app/services/alias/alias.service';
             </ng-container>
 
             <ng-container matColumnDef="online">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Online</th>
                 <td
                     mat-cell
                     class="representatives-online-cell"
