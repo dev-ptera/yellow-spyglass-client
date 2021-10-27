@@ -1,13 +1,13 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
-import {MonitoredRepDto, RepresentativeDto} from '@app/types/dto';
+import { MonitoredRepDto, RepresentativeDto } from '@app/types/dto';
 import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { AliasService } from '@app/services/alias/alias.service';
 import { RepresentativesService } from '@app/pages/representatives/representatives.service';
-import {MonitoredRepTableColumns} from "@app/pages/representatives/representatives.component";
+import { MonitoredRepTableColumns } from '@app/pages/representatives/representatives.component';
 
 @Component({
     selector: 'app-monitored-rep-table',
@@ -23,13 +23,7 @@ import {MonitoredRepTableColumns} from "@app/pages/representatives/representativ
             id="large-reps-table"
         >
             <ng-container matColumnDef="name" sticky>
-                <th
-                    mat-header-cell
-                    *matHeaderCellDef
-                    mat-sort-header
-                    style="width: 100%"
-                    [style.minWidth.px]="200"
-                >
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 100%" [style.minWidth.px]="200">
                     Representative
                 </th>
                 <td
@@ -41,7 +35,7 @@ import {MonitoredRepTableColumns} from "@app/pages/representatives/representativ
                     <span class="link primary" style="font-weight: 600" (click)="repService.openMonitoredRep(element)">
                         {{ element.name }}
                     </span>
-                   <!--
+                    <!--
                     <br />
                     <span
                         class="link monitored-reps-table-address"
@@ -57,7 +51,9 @@ import {MonitoredRepTableColumns} from "@app/pages/representatives/representativ
             <ng-container matColumnDef="address">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 210px">Address</th>
                 <td class="representatives-weight-cell" mat-cell *matCellDef="let element">
-                    <span (click)="routeRepAddress(element.address)" class="link">{{ formatShortAddress(element.address) }}</span>
+                    <span (click)="routeRepAddress(element.address)" class="link">{{
+                        formatShortAddress(element.address)
+                    }}</span>
                 </td>
             </ng-container>
 
@@ -71,7 +67,7 @@ import {MonitoredRepTableColumns} from "@app/pages/representatives/representativ
             <ng-container matColumnDef="weightBan">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 130px">Weight</th>
                 <td mat-cell *matCellDef="let element">
-                        {{ formatBanWeight(element.weight) }}
+                    {{ formatBanWeight(element.weight) }}
                 </td>
             </ng-container>
 
@@ -133,13 +129,18 @@ import {MonitoredRepTableColumns} from "@app/pages/representatives/representativ
             <ng-container matColumnDef="isPrincipal">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 80px">PR</th>
                 <td mat-cell *matCellDef="let element">
-                    <mat-icon  *ngIf="repService.isPR(element.weight, onlineWeight)" style="font-size: 1.5rem" class="primary">verified</mat-icon>
+                    <mat-icon
+                        *ngIf="repService.isPR(element.weight, onlineWeight)"
+                        style="font-size: 1.5rem"
+                        class="primary"
+                        >verified</mat-icon
+                    >
                 </td>
             </ng-container>
 
             <!-- TODO: MAKE me a component -->
             <ng-container matColumnDef="uptime">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header  style="min-width: 150px">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 150px">
                     <div style="text-align: left">
                         Uptime
                         <ng-container *ngIf="!vp.md">
@@ -152,17 +153,21 @@ import {MonitoredRepTableColumns} from "@app/pages/representatives/representativ
                     <ng-container *ngIf="largeRepMap.has(element.address)">
                         <span
                             [class.warn]="largeRepMap.get(element.address)?.uptimePercentMonth <= 80"
-                            [class.intermediary]="largeRepMap.get(element.address)?.uptimePercentMonth > 80 && largeRepMap.get(element.address)?.uptimePercentMonth <= 95"
+                            [class.intermediary]="
+                                largeRepMap.get(element.address)?.uptimePercentMonth > 80 &&
+                                largeRepMap.get(element.address)?.uptimePercentMonth <= 95
+                            "
                             [class.primary]="largeRepMap.get(element.address)?.uptimePercentMonth > 95"
-                            >
-                            {{ largeRepMap.get(element.address)?.uptimePercentMonth }}<span style="font-size: 11px">% </span>
+                        >
+                            {{ largeRepMap.get(element.address)?.uptimePercentMonth
+                            }}<span style="font-size: 11px">% </span>
                         </span>
-                            <span *ngIf="!vp.md" style="font-size: 11px"
-                            >· {{ largeRepMap.get(element.address)?.uptimePercentWeek }}% · {{ largeRepMap.get(element.address)?.uptimePercentDay }}%
+                        <span *ngIf="!vp.md" style="font-size: 11px"
+                            >· {{ largeRepMap.get(element.address)?.uptimePercentWeek }}% ·
+                            {{ largeRepMap.get(element.address)?.uptimePercentDay }}%
                         </span>
                     </ng-container>
                     <ng-container *ngIf="!largeRepMap.has(element.address)">--</ng-container>
-
                 </td>
             </ng-container>
 
@@ -217,11 +222,14 @@ export class MonitoredRepTableComponent implements OnChanges {
                 case 'weightPercent': {
                     return item['weight'];
                 }
+                case 'uptime': {
+                    return this.largeRepMap.get(item['address'])?.uptimePercentMonth;
+                }
                 default: {
                     return item[property];
                 }
-            };
-        }
+            }
+        };
     }
 
     private _createNewRepMap(): void {

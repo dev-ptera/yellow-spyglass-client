@@ -44,11 +44,7 @@
         >
             <mat-icon pxb-avatar>more_vert</mat-icon>
             <mat-nav-list pxb-menu-body [style.paddingTop.px]="0">
-                <pxb-info-list-item
-                    [dense]="true"
-                    [hidePadding]="true"
-                    (click)="toggleColumn('address')"
-                >
+                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('address')">
                     <mat-checkbox
                         color="primary"
                         pxb-left-content
@@ -58,11 +54,7 @@
                     <div pxb-title>Address</div>
                 </pxb-info-list-item>
 
-                <pxb-info-list-item
-                    [dense]="true"
-                    [hidePadding]="true"
-                    (click)="toggleColumn('version')"
-                >
+                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('version')">
                     <mat-checkbox
                         color="primary"
                         pxb-left-content
@@ -72,11 +64,7 @@
                     <div pxb-title>Version</div>
                 </pxb-info-list-item>
 
-                <pxb-info-list-item
-                    [dense]="true"
-                    [hidePadding]="true"
-                    (click)="toggleColumn('delegatorsCount')"
-                >
+                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('delegatorsCount')">
                     <mat-checkbox
                         color="primary"
                         pxb-left-content
@@ -86,11 +74,7 @@
                     <div pxb-title>Delegators</div>
                 </pxb-info-list-item>
 
-                <pxb-info-list-item
-                    [dense]="true"
-                    [hidePadding]="true"
-                    (click)="toggleColumn('weightBan')"
-                >
+                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('weightBan')">
                     <mat-checkbox
                         color="primary"
                         pxb-left-content
@@ -100,12 +84,7 @@
                     <div pxb-title>Weight (BAN)</div>
                 </pxb-info-list-item>
 
-
-                <pxb-info-list-item
-                    [dense]="true"
-                    [hidePadding]="true"
-                    (click)="toggleColumn('weightPercent')"
-                >
+                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('weightPercent')">
                     <mat-checkbox
                         color="primary"
                         pxb-left-content
@@ -115,11 +94,7 @@
                     <div pxb-title>Weight (%)</div>
                 </pxb-info-list-item>
 
-                <pxb-info-list-item
-                    [dense]="true"
-                    [hidePadding]="true"
-                    (click)="toggleColumn('peerCount')"
-                >
+                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('peerCount')">
                     <mat-checkbox
                         color="primary"
                         pxb-left-content
@@ -129,11 +104,7 @@
                     <div pxb-title>Peer Count</div>
                 </pxb-info-list-item>
 
-                <pxb-info-list-item
-                    [dense]="true"
-                    [hidePadding]="true"
-                    (click)="toggleColumn('uncheckedBlocks')"
-                >
+                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('uncheckedBlocks')">
                     <mat-checkbox
                         color="primary"
                         pxb-left-content
@@ -143,11 +114,7 @@
                     <div pxb-title>Unchecked Blocks</div>
                 </pxb-info-list-item>
 
-                <pxb-info-list-item
-                    [dense]="true"
-                    [hidePadding]="true"
-                    (click)="toggleColumn('cementedBlocks')"
-                >
+                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('cementedBlocks')">
                     <mat-checkbox
                         color="primary"
                         pxb-left-content
@@ -157,11 +124,7 @@
                     <div pxb-title>Cemented Blocks</div>
                 </pxb-info-list-item>
 
-                <pxb-info-list-item
-                    [dense]="true"
-                    [hidePadding]="true"
-                    (click)="toggleColumn('location')"
-                >
+                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('location')">
                     <mat-checkbox
                         color="primary"
                         pxb-left-content
@@ -171,11 +134,7 @@
                     <div pxb-title>Location</div>
                 </pxb-info-list-item>
 
-                <pxb-info-list-item
-                    [dense]="true"
-                    [hidePadding]="true"
-                    (click)="toggleColumn('memory')"
-                >
+                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('memory')">
                     <mat-checkbox
                         color="primary"
                         pxb-left-content
@@ -185,11 +144,7 @@
                     <div pxb-title>Memory Usage</div>
                 </pxb-info-list-item>
 
-                <pxb-info-list-item
-                    [dense]="true"
-                    [hidePadding]="true"
-                    (click)="toggleColumn('lastRestart')"
-                >
+                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('lastRestart')">
                     <mat-checkbox
                         color="primary"
                         pxb-left-content
@@ -198,11 +153,7 @@
                     ></mat-checkbox>
                     <div pxb-title>Last Restart</div>
                 </pxb-info-list-item>
-                <pxb-info-list-item
-                    [dense]="true"
-                    [hidePadding]="true"
-                    (click)="toggleColumn('isPrincipal')"
-                >
+                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('isPrincipal')">
                     <mat-checkbox
                         color="primary"
                         pxb-left-content
@@ -212,11 +163,7 @@
                     <div pxb-title>Principal Rep</div>
                 </pxb-info-list-item>
 
-                <pxb-info-list-item
-                    [dense]="true"
-                    [hidePadding]="true"
-                    (click)="toggleColumn('uptime')"
-                >
+                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('uptime')">
                     <mat-checkbox
                         color="primary"
                         pxb-left-content

@@ -3,7 +3,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
 import { ApiService } from '@app/services/api/api.service';
 import { MicroRepresentativeDto, MonitoredRepDto, RepresentativeDto, RepresentativesResponseDto } from '@app/types/dto';
 import { MatSort } from '@angular/material/sort';
-import {Theme} from "@app/services/theme/theme.service";
+import { Theme } from '@app/services/theme/theme.service';
 
 export type MonitoredRepTableColumns = {
     address: boolean;
@@ -19,7 +19,7 @@ export type MonitoredRepTableColumns = {
     location: boolean;
     isPrincipal: boolean;
     uptime: boolean;
-}
+};
 
 @Component({
     selector: 'app-representatives',
@@ -61,7 +61,7 @@ export class RepresentativesComponent implements OnInit {
         lastRestart: true,
         location: false,
         isPrincipal: true,
-        uptime: false
+        uptime: false,
     };
 
     constructor(public vp: ViewportService, private readonly _api: ApiService) {}
