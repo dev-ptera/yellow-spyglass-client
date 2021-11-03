@@ -16,9 +16,11 @@
     }
     .representatives-all-reps-card {
         border: solid 1px $rep-card-border-color;
+
         .online {
             color: $online-color !important;
         }
+
         .offline {
             color: $offline-color !important;
         }
@@ -33,9 +35,4 @@
             border-color: $rep-card-border-color;
         }
     }
-}
-
-// Override for this page
-.app-page-content.representatives {
-    max-width: 1650px !important;
 }
