@@ -7,7 +7,7 @@ import { Subtype } from '@dev-ptera/nano-node-rpc';
 })
 export class UtilService {
     numberWithCommas(x: number | string): string {
-        if (x === undefined) {
+        if (!x && x !== 0) {
             return '';
         }
         const parts = x.toString().split('.');
