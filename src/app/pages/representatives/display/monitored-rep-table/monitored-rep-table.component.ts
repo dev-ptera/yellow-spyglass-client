@@ -74,7 +74,9 @@ import { MonitoredRepTableColumns } from '@app/pages/representatives/representat
             <ng-container matColumnDef="weightPercent">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 90px">%</th>
                 <td mat-cell *matCellDef="let element">
-                    {{ formatWeightPercent(element.weight) }}<span style="font-size: 10px">%</span>
+                    <ng-container *ngIf="element.weight">
+                        {{ formatWeightPercent(element.weight) }}<span style="font-size: 10px">%</span>
+                    </ng-container>
                 </td>
             </ng-container>
 
@@ -310,6 +312,8 @@ export class MonitoredRepTableComponent implements OnChanges {
     }
 
     formatMemoryUsage(rep: MonitoredRepDto): string {
-        return `${(Math.round(rep.usedMem) / 1024).toFixed(1)} / ${Math.ceil(rep.totalMem / 1024).toFixed(0)} GB`;
+        if (rep.usedMem && rep.totalMem) {
+            return `${(Math.round(rep.usedMem) / 1024).toFixed(1)} / ${Math.ceil(rep.totalMem / 1024).toFixed(0)} GB`;
+        }
     }
 }
