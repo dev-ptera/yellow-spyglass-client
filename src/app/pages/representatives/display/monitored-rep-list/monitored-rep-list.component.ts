@@ -27,7 +27,9 @@ import { RepresentativesService } from '@app/pages/representatives/representativ
                     </div>
                     <div pxb-right-content style="display: flex; flex-direction: column; align-items: flex-end">
                         <div style="font-size: 0.875rem" *ngIf="rep.weight">{{ formatBanWeight(rep.weight) }} BAN</div>
-                        <div style="font-size: 0.75rem" *ngIf="rep.weight">{{ formatWeightPercent(rep.weight) }} weight</div>
+                        <div style="font-size: 0.75rem" *ngIf="rep.weight">
+                            {{ formatWeightPercent(rep.weight) }} weight
+                        </div>
                     </div>
                 </pxb-info-list-item>
             </mat-list>
@@ -88,6 +90,8 @@ export class MonitoredRepListComponent {
         const version = this.repService.formatVersion(rep.version);
         const delegators = this.numberWithCommas(rep.delegatorsCount);
         const peers = this.numberWithCommas(rep.peers);
-        return `${version} ${version ? ' · ' : ''}  ${delegators} ${delegators ? ' delegators · ' : ''} ${peers} ${peers ? ' peers' : ''}`;
+        return `${version} ${version ? ' · ' : ''}  ${delegators} ${delegators ? ' delegators · ' : ''} ${peers} ${
+            peers ? ' peers' : ''
+        }`;
     }
 }

@@ -19,16 +19,48 @@ import { AliasService } from '@app/services/alias/alias.service';
                     [options]="repsChart"
                     style="pointer-events: none"
                     [style.width.px]="vp.sm ? 350 : vp.md ? 650 : 800"
-                    [style.height.px]="vp.sm ? 270 : vp.md ? 300 : 350"
+                    [style.height.px]="vp.sm ? 290 : vp.md ? 310 : 350"
                 ></highcharts-chart>
             </div>
-            <div class="representatives-legend">
+            <div class="representatives-legend" responsive>
+                <ng-container *ngIf="!vp.md && !vp.sm">
+                    <div>
+                        <ng-template
+                            [ngTemplateOutlet]="legend"
+                            [ngTemplateOutletContext]="{ repList: chartShownRepsCol1, colorOffset: 0 }"
+                        >
+                        </ng-template>
+                    </div>
+                    <div [style.marginLeft.px]="vp.md ? 0 : 24">
+                        <ng-template
+                            [ngTemplateOutlet]="legend"
+                            [ngTemplateOutletContext]="{
+                                repList: chartShownRepsCol2,
+                                colorOffset: chartShownRepsCol1.length
+                            }"
+                        >
+                        </ng-template>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="vp.md || vp.sm">
+                    <ng-template
+                        [ngTemplateOutlet]="legend"
+                        [ngTemplateOutletContext]="{ repList: chartShownReps, colorOffset: 0 }"
+                    >
+                    </ng-template>
+                </ng-container>
+            </div>
+
+            <ng-template #legend let-repList="repList" let-colorOffset="colorOffset">
                 <div
-                    *ngFor="let rep of chartShownReps; let i = index; let last = last"
+                    *ngFor="let rep of repList; let i = index; let last = last"
                     class="representatives-legend-entry"
                     [style.fontSize.px]="vp.sm ? 12 : 15"
                 >
-                    <div class="representatives-legend-color" [style.backgroundColor]="pieChartColors[i]"></div>
+                    <div
+                        class="representatives-legend-color"
+                        [style.backgroundColor]="pieChartColors[i + colorOffset]"
+                    ></div>
                     <div
                         class="link"
                         [class.representatives-legend-others]="last"
@@ -42,7 +74,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                         </ng-container>
                     </div>
                 </div>
-            </div>
+            </ng-template>
         </div>
     `,
     styleUrls: ['./weight-chart.component.scss'],
@@ -64,19 +96,20 @@ export class WeightChartComponent implements OnChanges {
         '#6b54db',
         '#d92d2d',
         '#1d9eef',
-        '#bbb7b1',
+        '#ad7a4d',
         '#75c915',
         '#0d7f87',
         '#830d87',
-        '#e5f5f6',
+        '#74ffff',
         '#a4d5ac',
-        '#956a35',
-        '#37ecad',
         '#a98dde',
+        '#a7a7a7',
     ];
 
     repsChart: Options;
     chartShownReps: Array<{ name: string; address: string }> = [];
+    chartShownRepsCol1: Array<{ name: string; address: string }> = [];
+    chartShownRepsCol2: Array<{ name: string; address: string }> = [];
 
     constructor(
         public vp: ViewportService,
@@ -103,7 +136,7 @@ export class WeightChartComponent implements OnChanges {
 
         const onlineReps = (): Array<{ name: string; y: number; address: string }> => {
             let allOthersWeight = totalWeight;
-            const MAX_REPS = 7;
+            const MAX_REPS = 13;
             const shownReps = [];
 
             // Get Largest Reps
@@ -154,6 +187,9 @@ export class WeightChartComponent implements OnChanges {
             return shownReps;
         };
         this.chartShownReps = onlineReps();
+        this.chartShownRepsCol1 = this.chartShownReps.slice(0, this.chartShownReps.length / 2);
+        this.chartShownRepsCol2 = this.chartShownReps.slice(this.chartShownReps.length / 2, this.chartShownReps.length);
+
         return {
             chart: {
                 backgroundColor: 'rgba(0,0,0,0)',
@@ -196,7 +232,7 @@ export class WeightChartComponent implements OnChanges {
                         enabled: true,
                         distance: 30,
                         style: {
-                            fontSize: this.vp.sm ? '12px' : '14px',
+                            fontSize: this.vp.sm ? '10px' : '14px',
                             fontWeight: '400',
                             fontFamily: 'Open Sans',
                             textOutline: 'none',
