@@ -2,16 +2,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 72px;display: flex;
+    align-items: center;
+    justify-content: center;
     margin-bottom: 72px;
     &.md {
         justify-content: center;
         flex-direction: column;
-        .representatives-legend {
-            margin-top: 24px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
     }
 }
 
@@ -30,6 +27,7 @@
 }
 
 .representatives-legend {
+    display: flex;
     .representatives-legend-entry {
         padding: 8px 8px;
         display: flex;
@@ -43,5 +41,15 @@
     }
     .representatives-legend-others {
         pointer-events: none;
+    }
+    &.md {
+        margin-top: 24px;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+        div {
+            display: flex;
+            flex-wrap: wrap;
+        }
     }
 }
