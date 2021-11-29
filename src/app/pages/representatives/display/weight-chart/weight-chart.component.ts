@@ -19,7 +19,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                     [options]="repsChart"
                     style="pointer-events: none"
                     [style.width.px]="vp.sm ? 350 : vp.md ? 650 : 800"
-                    [style.height.px]="vp.sm ? 290 : vp.md ? 310 : 350"
+                    [style.height.px]="vp.sm ? 300 : vp.md ? 320 : 360"
                 ></highcharts-chart>
             </div>
             <div class="representatives-legend" responsive>
@@ -232,7 +232,7 @@ export class WeightChartComponent implements OnChanges {
                         enabled: true,
                         distance: 30,
                         style: {
-                            fontSize: this.vp.sm ? '10px' : '14px',
+                            fontSize: this.vp.sm ? '9px' : '13px',
                             fontWeight: '400',
                             fontFamily: 'Open Sans',
                             textOutline: 'none',
