@@ -1,7 +1,13 @@
-export type QuorumDto = {
-    quorumDelta: number;
-    onlineWeightQuorumPercent: number;
+export type SpyglassAPIQuorumDto = {
+    noRepPercent: number;
+    noRepWeight: number;
+    nonBurnedWeight: number;
+    offlinePercent: number;
+    offlineWeight: number;
+    onlinePercent: number;
+    onlineWeight: number;
     onlineWeightMinimum: number;
-    onlineStakeTotal: number;
-    peersStakeTotal: number;
+    onlineWeightQuorumPercent: number;
+    peersStakeWeight: number;
+    quorumDelta: number;
 };

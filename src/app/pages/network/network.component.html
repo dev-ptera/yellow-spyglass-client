@@ -104,24 +104,24 @@
                     <mat-icon class="status-icon primary">check</mat-icon>
                     Online
                 </td>
-                <td>{{ consensus.onlineAmount | appComma }}</td>
-                <td>{{ consensus.onlinePercent | appPercent }}</td>
+                <td>{{ quorum.onlineWeight | appComma }}</td>
+                <td>{{ quorum.onlinePercent | appPercent }}</td>
             </tr>
             <tr>
                 <td>
                     <mat-icon class="status-icon warn">priority_high</mat-icon>
                     Offline
                 </td>
-                <td>{{ consensus.offlineAmount | appComma }}</td>
-                <td>{{ consensus.offlinePercent | appPercent }}</td>
+                <td>{{ quorum.offlineWeight | appComma }}</td>
+                <td>{{ quorum.offlinePercent | appPercent }}</td>
             </tr>
             <tr>
                 <td>
                     <mat-icon class="status-icon warn">priority_high</mat-icon>
                     No Rep
                 </td>
-                <td>{{ consensus.noRepAmount | appComma }}</td>
-                <td>{{ consensus.noRepPercent | appPercent }}</td>
+                <td>{{ quorum.noRepWeight | appComma }}</td>
+                <td>{{ quorum.noRepPercent | appPercent }}</td>
             </tr>
         </table>
     </mat-card>
@@ -151,7 +151,7 @@
         <table class="network-quorum-table" responsive [style.marginTop.px]="0">
             <tr>
                 <td>Current online stake total</td>
-                <td>{{ quorum.onlineStakeTotal | appComma }} BAN</td>
+                <td>{{ quorum.onlineWeight | appComma }} BAN</td>
             </tr>
             <tr>
                 <td>Online weight quorum percent</td>

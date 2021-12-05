@@ -5,7 +5,7 @@ import { Options } from 'highcharts';
 import HC_bullet from 'highcharts/modules/bullet';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { ApiService } from '@app/services/api/api.service';
-import { ConsensusStatsDto, NetworkStatsDto, PeerVersionsDto, QuorumDto, SupplyDto } from '@app/types/dto';
+import { NetworkStatsDto, PeerVersionsDto, SpyglassAPIQuorumDto, SupplyDto } from '@app/types/dto';
 import { Router } from '@angular/router';
 
 HC_bullet(Highcharts);
@@ -25,10 +25,9 @@ export class NetworkComponent implements OnInit {
     supplyChartOptions: Options;
     consensusChartOptions: Options;
 
-    consensus: ConsensusStatsDto;
     supply: SupplyDto;
     peerVersions: PeerVersionsDto[];
-    quorum: QuorumDto;
+    quorum: SpyglassAPIQuorumDto;
     nakamotoCoefficient: number;
     totalNumberOfPeers = 0;
 
@@ -49,12 +48,11 @@ export class NetworkComponent implements OnInit {
         void this._apiService
             .getNetworkStats()
             .then((response: NetworkStatsDto) => {
-                this.consensus = response.consensus;
                 this.supply = response.supply;
-                this.quorum = response.quorum;
                 this.peerVersions = response.peerVersions;
+                this.quorum = response.spyglassQuorum;
                 this.nakamotoCoefficient = response.nakamotoCoefficient;
-                this.consensusChartOptions = this._createConsensusChart(response.consensus);
+                this.consensusChartOptions = this._createVoteWeightChart(response.spyglassQuorum);
                 this.supplyChartOptions = this._createSupplyChart(response.supply);
                 this.peerVersions.map((version) => {
                     this.totalNumberOfPeers += version.count;
@@ -119,12 +117,12 @@ export class NetworkComponent implements OnInit {
         };
     }
 
-    private _createConsensusChart(consensus: ConsensusStatsDto): Options {
+    private _createVoteWeightChart(quorum: SpyglassAPIQuorumDto): Options {
         const format = (num: number): number => Number(parseFloat(String(num * 100)).toFixed(2));
         const data = [
-            ['Online', format(consensus.onlinePercent)],
-            ['Offline', format(consensus.offlinePercent)],
-            ['No Rep', format(consensus.noRepPercent)],
+            ['Online', format(quorum.onlinePercent)],
+            ['Offline', format(quorum.offlinePercent)],
+            ['No Rep', format(quorum.noRepPercent)],
         ];
         return {
             plotOptions: {
