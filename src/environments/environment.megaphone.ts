@@ -6,8 +6,6 @@ export const environment = {
     megaphone: true,
     production: false,
     api: 'http://192.168.1.235:3000/yellowspyglass',
-    /*TODO: THIS IS NOT REQUIRED ANYMORE. API LOCALHOST READS FROM BACKUP RICHLIST FILE. */
-    richListApi: 'https://api.yellowspyglass.com/yellowspyglass',
 };
 
 /*
