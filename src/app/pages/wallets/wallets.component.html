@@ -74,19 +74,19 @@
             <td mat-cell *matCellDef="let element">
                 <div
                     style="display: flex"
-                    *ngIf="!megaphone.hasAddress(element.addr) && showWarningBadge(element.representative)"
+                    *ngIf="!megaphone.hasAddress(element.address) && showWarningBadge(element.representative)"
                 >
                     <button
                         mat-stroked-button
                         color="accent"
-                        (click)="megaphone.addAddress(element.addr, 2)"
+                        (click)="megaphone.addAddress(element.address, 2)"
                         [style.marginRight.px]="16"
                     >
                         Add
                     </button>
                 </div>
-                <ng-container *ngIf="megaphone.hasAddress(element.addr)">
-                    <button mat-stroked-button color="warn" (click)="megaphone.removeAddress(element.addr)">
+                <ng-container *ngIf="megaphone.hasAddress(element.address)">
+                    <button mat-stroked-button color="warn" (click)="megaphone.removeAddress(element.address)">
                         Exclude
                     </button>
                 </ng-container>
@@ -103,19 +103,19 @@
                 *matCellDef="let element"
             >
                 <div
-                    *ngIf="aliasService.has(element.addr)"
+                    *ngIf="aliasService.has(element.address)"
                     class="wallets-table-alias primary"
                     style="margin-bottom: -2px; word-break: break-word"
                 >
-                    {{ aliasService.get(element.addr) }}
+                    {{ aliasService.get(element.address) }}
                 </div>
                 <a
-                    [routerLink]="'/account/' + element.addr"
+                    [routerLink]="'/account/' + element.address"
                     class="address link"
                     style="color: inherit"
-                    (click)="searchAddress($event, element.addr)"
+                    (click)="searchAddress($event, element.address)"
                 >
-                    {{ element.addr }}
+                    {{ element.address }}
                 </a>
             </td>
         </ng-container>
@@ -130,12 +130,12 @@
                         [height]="vp.sm ? 16 : 20"
                         style="margin-right: 4px"
                     />
-                    {{ formatBanAmount(element.ban) }}
+                    {{ formatBanAmount(element.amount) }}
                 </div>
                 <div class="wallets-rich-list-conversion">
                     <div>
-                        {{ formatUsdPrice(element.ban) | currency }} ·
-                        {{ formatBtcPrice(element.ban) }}
+                        {{ formatUsdPrice(element.amount) | currency }} ·
+                        {{ formatBtcPrice(element.amount) }}
                     </div>
                 </div>
             </td>
