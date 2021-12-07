@@ -128,6 +128,9 @@ export class WeightChartComponent implements OnChanges {
         this.repsChart = this._createRepChart();
     }
 
+    /** When showing offline weight, the percentages of accounts with no-representative is omitted from the displayed percentages.
+     * This is why offline weight % doesn't match exactly against Network page's offline weight %.
+     */
     private _createRepChart(): Options {
         const totalWeight = this.showOfflineWeight ? this.onlineWeight + this.offlineWeight : this.onlineWeight;
 
@@ -135,7 +138,7 @@ export class WeightChartComponent implements OnChanges {
         const formatPercentage = (percent: number): any => Number(((percent / totalWeight) * 100).toFixed(1));
 
         const onlineReps = (): Array<{ name: string; y: number; address: string }> => {
-            let allOthersWeight = totalWeight;
+            let largeRepWeight = 0;
             const MAX_REPS = 13;
             const shownReps = [];
 
@@ -145,6 +148,7 @@ export class WeightChartComponent implements OnChanges {
                     continue;
                 }
                 if (shownReps.length < MAX_REPS) {
+                    largeRepWeight += rep.weight;
                     shownReps.push({
                         name: this.formatChartAddress(rep.address),
                         address: rep.address,
@@ -153,17 +157,9 @@ export class WeightChartComponent implements OnChanges {
                 }
             }
 
-            // Calculate all other reps weight
-            let i = 1;
-            for (const rep of reps) {
-                if (!rep.online) {
-                    continue;
-                }
-                if (i++ > shownReps.length) {
-                    break;
-                }
-                allOthersWeight -= rep.weight;
-            }
+            console.log(largeRepWeight);
+            let allOthersWeight = this.onlineWeight - largeRepWeight;
+
 
             if (this.showOfflineWeight) {
                 allOthersWeight -= this.offlineWeight;
