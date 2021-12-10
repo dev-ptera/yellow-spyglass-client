@@ -63,7 +63,7 @@ export class ApiService {
 
     representatives(): Promise<RepresentativesResponseDto> {
         return this._http
-            .get<RepresentativesResponseDto>(`${this.url}/representatives`)
+            .get<RepresentativesResponseDto>(`${this.url}/v2/representatives`)
             .pipe(timeout(MED_MS))
             .toPromise();
     }
