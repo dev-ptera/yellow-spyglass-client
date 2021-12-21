@@ -3,6 +3,7 @@
         padding-left: 18px !important;
         padding-right: 18px !important;
     }
+
     .pxb-info-list-item .mat-list-item {
         padding-top: 16px;
         padding-bottom: 16px;
@@ -91,5 +92,10 @@
         > span {
             margin-left: 16px;
         }
+    }
+
+    .pxb-info-list-item-partial-divider {
+        left: calc(6rem + 32px) !important;
+        width: calc(100% - calc(6rem + 32px)) !important;
     }
 }

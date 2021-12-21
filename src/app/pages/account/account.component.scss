@@ -36,13 +36,11 @@
     }
 
     .account-representative {
-        color: map-get($pxb-gray, 500);
         margin-bottom: 16px;
-        margin-top: 8px;
+        margin-top: 0px;
         display: flex;
         &.sm {
             margin-bottom: 8px;
-            margin-top: -24px;
         }
     }
 
@@ -160,12 +158,12 @@
     }
     .account-pending-badge {
         .mat-badge-content {
-            background-color: $pendingBadgeColor !important;
+           // background-color: $pendingBadgeColor !important;
         }
     }
     .account-delegators-badge {
         .mat-badge-content {
-            background-color: $delegatorsBadgeColor !important;
+           // background-color: $delegatorsBadgeColor !important;
         }
     }
     .tab-transaction-list {

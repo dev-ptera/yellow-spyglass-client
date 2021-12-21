@@ -15,6 +15,7 @@ import { OnlineRepsService } from '@app/services/online-reps/online-reps.service
 import { NavigationEnd, Router } from '@angular/router';
 import { APP_NAV_ITEMS } from '../../navigation/nav-items';
 import { Subscription } from 'rxjs';
+import {AliasService} from "@app/services/alias/alias.service";
 
 @Component({
     selector: 'app-account',
@@ -31,7 +32,7 @@ export class AccountComponent implements OnDestroy {
 
     pendingBalance: string;
     confirmedBalance: string;
-    shortenedRep: string;
+    accountRepresentative: string;
     insights: InsightsDto;
     accountOverview: AccountOverviewDto;
     insightsDisabled: boolean;
@@ -65,6 +66,7 @@ export class AccountComponent implements OnDestroy {
         private readonly _priceService: PriceService,
         private readonly _ref: ChangeDetectorRef,
         private readonly _monkeyCache: MonkeyCacheService,
+        private readonly _aliasService: AliasService,
         public onlineRepService: OnlineRepsService
     ) {
         this.routeListener = this._router.events.subscribe((route) => {
@@ -157,7 +159,9 @@ export class AccountComponent implements OnDestroy {
             this.pendingBalance = '~0';
         }
         const rep = accountOverview.representative;
-        this.shortenedRep = `${rep.substr(0, 11)}...${rep.substr(rep.length - 6, rep.length)}`;
+        this.accountRepresentative = this._aliasService.has(rep) ?
+            this._aliasService.get(rep) :
+            `${rep.substr(0, 11)}...${rep.substr(rep.length - 6, rep.length)}`;
     }
 
     /**
@@ -350,5 +354,24 @@ export class AccountComponent implements OnDestroy {
                     this._ref.detectChanges();
                 });
         }
+    }
+
+    formatAccountAddress(address: string): string {
+        if (address) {
+            const firstBits = address.substring(0, 12);
+            const midBits = address.substring(12, 58);
+            const lastBits = address.substring(58, 64);
+            // ban_3batmanuenphd7osrez9c45b3uqw9d9u813uqw9d9u81ne8xa6m43e1py56y9p48ap
+            // ban_3batmanuenphd7osrez9c45b3uqw9d9u81ne8xa6m43e1py56y9p48ap69zg
+            return `<strong class="">${firstBits}</strong><span class="secondary">${midBits}</span><strong class="">${lastBits}</strong>`;
+        }
+    }
+
+    hasAlias(address: string): boolean {
+        return this._aliasService.has(address);
+    }
+
+    getAlias(address: string): string {
+        return this._aliasService.get(address);
     }
 }

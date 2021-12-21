@@ -33,7 +33,7 @@ $dark-theme: map-merge(
             app-bar: map-get($pxb-darkBlack, 100),
             background: map-get($pxb-darkBlack, 300),
             hover: rgba(white, 0.04),
-            card: map-get($pxb-black, 900),
+            card: rgba(map-get($pxb-black, 900), 1),
             dialog: map-get($pxb-black, 900),
             disabled-button: rgba(white, 0.12),
             raised-button: map-get($pxb-black, 1000),
@@ -102,6 +102,12 @@ body {
 }
 .warn {
     color: $warn-red !important;
+}
+.secondary {
+    color: map-get($theme-foreground, secondary);
+}
+.hint {
+    color: map-get($theme-foreground, hint-text);
 }
 
 .pxb-drawer-body-content,

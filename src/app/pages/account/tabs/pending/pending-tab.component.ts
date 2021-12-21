@@ -65,8 +65,8 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
             responsive
             class="account-empty-state"
             *ngIf="pendingTransactions.length === 0"
-            title="No Pending Transactions"
-            description="This account has already received all pending payments"
+            title="No Receivable Transactions"
+            description="This account has already received all incoming payments"
         >
             <mat-icon pxb-empty-icon>paid</mat-icon>
         </pxb-empty-state>

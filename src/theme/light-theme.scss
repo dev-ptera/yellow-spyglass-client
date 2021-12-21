@@ -16,7 +16,7 @@ $light-theme: map-merge(
         foreground: (
             text: map-get($pxb-black, 500),
             secondary-text: map-get($pxb-gray, 500),
-            hint-text: map-get($pxb-black, 400),
+            hint-text: map-get($pxb-black, 200),
             base: map-get($pxb-darkBlack, 900),
             divider: rgba(66, 78, 84, 0.12),
             dividers: $dark-dividers,
@@ -114,6 +114,12 @@ $toolbarBgColor: $primary-green;
 }
 .warn {
     color: $warn-red !important;
+}
+.secondary {
+    color: map-get($theme-foreground, secondary);
+}
+.hint {
+    color: map-get($theme-foreground, hint-text);
 }
 
 /* Representative Page */

@@ -5,6 +5,7 @@ import { SearchService } from '@app/services/search/search.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { PaginatorComponent } from '@app/common/components/paginator/paginator.component';
 import { UtilService } from '@app/services/util/util.service';
+import {AliasService} from "@app/services/alias/alias.service";
 
 @Component({
     selector: 'account-confirmed-tab',
@@ -15,7 +16,7 @@ import { UtilService } from '@app/services/util/util.service';
         <mat-list class="tab-transaction-list" *ngIf="confirmedTransactions.length >= 0" responsive>
             <pxb-info-list-item
                 *ngFor="let tx of confirmedTransactions; trackBy: trackByFn"
-                [divider]="true"
+                [divider]="vp.sm ? 'full' : 'partial'"
                 [wrapTitle]="true"
                 [wrapSubtitle]="false"
                 [hidePadding]="true"
@@ -36,7 +37,7 @@ import { UtilService } from '@app/services/util/util.service';
                     <div>
                         <span class="to-from">{{ tx.type === 'receive' ? ' from ' : 'to ' }}</span>
                         <span class="address link" (click)="searchService.emitSearch(tx.address)"
-                            >{{ tx.address }}
+                            >{{ aliasService.get(tx.address) || tx.address }}
                         </span>
                     </div>
                 </div>
@@ -76,6 +77,7 @@ export class ConfirmedTabComponent {
     @Input() paginator: TemplateRef<PaginatorComponent>;
 
     constructor(
+        public aliasService: AliasService,
         public monkeyCache: MonkeyCacheService,
         public searchService: SearchService,
         public vp: ViewportService,
