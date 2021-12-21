@@ -15,8 +15,8 @@ import {AliasService} from "@app/services/alias/alias.service";
 
         <mat-list class="tab-transaction-list" *ngIf="confirmedTransactions.length >= 0" responsive>
             <pxb-info-list-item
-                *ngFor="let tx of confirmedTransactions; trackBy: trackByFn"
-                [divider]="vp.sm ? 'full' : 'partial'"
+                *ngFor="let tx of confirmedTransactions; trackBy: trackByFn; let last = last"
+                [divider]="last ? undefined : vp.sm ? 'full' : 'partial'"
                 [wrapTitle]="true"
                 [wrapSubtitle]="false"
                 [hidePadding]="true"
@@ -56,6 +56,7 @@ import {AliasService} from "@app/services/alias/alias.service";
                     </div>
                 </div>
             </pxb-info-list-item>
+            <mat-divider></mat-divider>
             <ng-template [ngTemplateOutlet]="paginator"></ng-template>
         </mat-list>
 
