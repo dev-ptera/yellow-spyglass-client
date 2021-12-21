@@ -10,7 +10,7 @@ import { RepresentativesService } from '@app/pages/representatives/representativ
 @Component({
     selector: 'app-monitored-rep-list',
     template: `
-        <mat-card class="rep-mobile-list-container mat-elevation-z0">
+        <mat-card class="rep-mobile-list-container mat-elevation-z0" >
             <mat-list [style.paddingTop.px]="0" class="monitored-rep-list">
                 <pxb-info-list-item
                     *ngFor="let rep of monitoredReps; trackBy: trackByFn; let last = last"
@@ -18,7 +18,7 @@ import { RepresentativesService } from '@app/pages/representatives/representativ
                     [dense]="false"
                     [divider]="last ? undefined : 'full'"
                 >
-                    <div pxb-title>
+                    <div pxb-title style="font-weight: 600">
                         <div class="link primary" (click)="repService.openMonitoredRep(rep)">{{ rep.name }}</div>
                     </div>
                     <div pxb-subtitle style="font-size: 0.875rem">{{ formatInfoLine(rep) }}</div>
