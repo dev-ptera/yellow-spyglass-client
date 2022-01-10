@@ -44,7 +44,7 @@
                             ></pxb-list-item-tag>
                         </span>
                     </div>
-                    <div class="app-page-subtitle account-address-line">
+                    <div class="app-page-subtitle account-address-line" [style.marginBottom.px]="vp.sm ? 8 : 0">
                         <span class="account-address" [innerHTML]="formatAccountAddress(address)"></span>
                         <div style="display: flex" [style.marginLeft.px]="vp.sm ? 4 : 0">
                             <app-copy-button [data]="address"></app-copy-button>
@@ -53,15 +53,23 @@
                         </div>
                     </div>
 
-                    <div [style.marginTop.px]="vp.sm ? -16 : 0">
-                        <div *ngIf="hasAlias(address)" style="margin-bottom: 8px"  class="app-page-subtitle">
-                            <span class="secondary">Also known as </span><strong class="primary"> {{getAlias(address)}}</strong>
+                    <div style="display: flex; align-items: center; flex-wrap: wrap"
+                         [style.marginBottom.px]="vp.sm ? 16 : 8"
+                         [style.fontSize.px]="vp.sm ? 14 : 16">
+                        <div *ngIf="hasAlias(address)" style="display: flex;">
+                            <span class="secondary" style="margin-right: 4px">
+                                <ng-container *ngIf="vp.sm">
+                                    A.K.A
+                                </ng-container>
+                                <ng-container *ngIf="!vp.sm">
+                                    Also known as
+                                </ng-container>
+                                </span> <strong class="primary">{{getAlias(address)}}</strong>
+                            <span style="margin: 0 8px">|</span>
                         </div>
                         <div
                             *ngIf="accountOverview.opened"
                             class="account-representative secondary"
-                            [class.mat-caption]="vp.sm"
-                            [class.mat-subheading-2]="!vp.sm"
                             responsive
                         >
                             <ng-container *ngIf="accountOverview.representative !== address">
@@ -83,7 +91,7 @@
                             <div
                                 *ngIf="accountOverview.representative === address"
                                 class="mat-overline"
-                                style="margin-top: -8px"
+                                [style.fontSize.px]="vp.sm ? 12 : 14"
                             >
                                 Self-Represented
                             </div>
