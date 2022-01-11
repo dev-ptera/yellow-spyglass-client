@@ -47,7 +47,11 @@ import { AliasService } from '@app/services/alias/alias.service';
             <mat-divider></mat-divider>
             <div style="display: flex; justify-content: space-between; font-size: 0.75rem; padding-top: 12px">
                 <div>
-                    <div>{{ numberWithCommas(rep.delegatorsCount) }} Delegators</div>
+                    <div *ngIf="rep.score">
+                        <strong>{{ rep.score }}</strong>
+                        <span style="font-size: 11px"> /100</span>
+                        Score
+                    </div>
                     <div>
                         {{ rep.uptimePercentMonth }}% /
                         <span style="font-size: 10px">
@@ -58,8 +62,10 @@ import { AliasService } from '@app/services/alias/alias.service';
                     </div>
                 </div>
                 <div>
-                    <div>{{ formatBanWeight(rep.weight) }} BAN</div>
-                    <div *ngIf="rep.online">{{ formatWeightPercent(rep.weight) }} weight</div>
+                    <div>
+                        {{ formatBanWeight(rep.weight) }} BAN <ng-container *ngIf="!rep.online">Weight</ng-container>
+                    </div>
+                    <div *ngIf="rep.online">{{ formatWeightPercent(rep.weight) }} Weight</div>
                 </div>
             </div>
         </mat-card>

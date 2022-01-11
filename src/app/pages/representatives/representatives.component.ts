@@ -3,7 +3,6 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
 import { ApiService } from '@app/services/api/api.service';
 import { MicroRepresentativeDto, MonitoredRepDto, RepresentativeDto, RepresentativesResponseDto } from '@app/types/dto';
 import { MatSort } from '@angular/material/sort';
-import { Theme } from '@app/services/theme/theme.service';
 
 export type MonitoredRepTableColumns = {
     address: boolean;

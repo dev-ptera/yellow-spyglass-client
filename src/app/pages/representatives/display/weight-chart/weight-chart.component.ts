@@ -160,7 +160,6 @@ export class WeightChartComponent implements OnChanges {
             console.log(largeRepWeight);
             let allOthersWeight = this.onlineWeight - largeRepWeight;
 
-
             if (this.showOfflineWeight) {
                 allOthersWeight -= this.offlineWeight;
             }

@@ -10,7 +10,7 @@ import { RepresentativesService } from '@app/pages/representatives/representativ
 @Component({
     selector: 'app-monitored-rep-list',
     template: `
-        <mat-card class="rep-mobile-list-container mat-elevation-z0" >
+        <mat-card class="rep-mobile-list-container mat-elevation-z0">
             <mat-list [style.paddingTop.px]="0" class="monitored-rep-list">
                 <pxb-info-list-item
                     *ngFor="let rep of monitoredReps; trackBy: trackByFn; let last = last"

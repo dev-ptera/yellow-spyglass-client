@@ -5,7 +5,7 @@ import { SearchService } from '@app/services/search/search.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { PaginatorComponent } from '@app/common/components/paginator/paginator.component';
 import { UtilService } from '@app/services/util/util.service';
-import {AliasService} from "@app/services/alias/alias.service";
+import { AliasService } from '@app/services/alias/alias.service';
 
 @Component({
     selector: 'account-confirmed-tab',

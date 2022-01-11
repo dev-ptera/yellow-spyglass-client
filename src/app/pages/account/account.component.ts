@@ -15,7 +15,7 @@ import { OnlineRepsService } from '@app/services/online-reps/online-reps.service
 import { NavigationEnd, Router } from '@angular/router';
 import { APP_NAV_ITEMS } from '../../navigation/nav-items';
 import { Subscription } from 'rxjs';
-import {AliasService} from "@app/services/alias/alias.service";
+import { AliasService } from '@app/services/alias/alias.service';
 
 @Component({
     selector: 'app-account',
@@ -159,9 +159,9 @@ export class AccountComponent implements OnDestroy {
             this.pendingBalance = '~0';
         }
         const rep = accountOverview.representative;
-        this.accountRepresentative = this._aliasService.has(rep) ?
-            this._aliasService.get(rep) :
-            `${rep.substr(0, 11)}...${rep.substr(rep.length - 6, rep.length)}`;
+        this.accountRepresentative = this._aliasService.has(rep)
+            ? this._aliasService.get(rep)
+            : `${rep.substr(0, 11)}...${rep.substr(rep.length - 6, rep.length)}`;
     }
 
     /**

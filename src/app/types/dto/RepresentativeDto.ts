@@ -6,4 +6,5 @@ export type RepresentativeDto = {
     online: boolean;
     principal: boolean;
     delegatorsCount: number;
+    score?: number;
 } & RepresentativeUptimeDto;

@@ -20,7 +20,11 @@
             <div [style.width.%]="100">
                 <ng-container *ngIf="loading">
                     <div class="app-page-title">Loading</div>
-                    <div class="app-page-subtitle" style="word-break: break-all" [innerHTML]="formatAccountAddress(address)"></div>
+                    <div
+                        class="app-page-subtitle"
+                        style="word-break: break-all"
+                        [innerHTML]="formatAccountAddress(address)"
+                    ></div>
                 </ng-container>
 
                 <ng-container *ngIf="!loading">
@@ -53,25 +57,20 @@
                         </div>
                     </div>
 
-                    <div style="display: flex; align-items: center; flex-wrap: wrap"
-                         [style.marginBottom.px]="vp.sm ? 16 : 8"
-                         [style.fontSize.px]="vp.sm ? 14 : 16">
-                        <div *ngIf="hasAlias(address)" style="display: flex;">
+                    <div
+                        style="display: flex; align-items: center; flex-wrap: wrap"
+                        [style.marginBottom.px]="vp.sm ? 16 : 8"
+                        [style.fontSize.px]="vp.sm ? 14 : 16"
+                    >
+                        <div *ngIf="hasAlias(address)" style="display: flex">
                             <span class="secondary" style="margin-right: 4px">
-                                <ng-container *ngIf="vp.sm">
-                                    A.K.A
-                                </ng-container>
-                                <ng-container *ngIf="!vp.sm">
-                                    Also known as
-                                </ng-container>
-                                </span> <strong class="primary">{{getAlias(address)}}</strong>
+                                <ng-container *ngIf="vp.sm"> A.K.A </ng-container>
+                                <ng-container *ngIf="!vp.sm"> Also known as </ng-container>
+                            </span>
+                            <strong class="primary">{{ getAlias(address) }}</strong>
                             <span style="margin: 0 8px">|</span>
                         </div>
-                        <div
-                            *ngIf="accountOverview.opened"
-                            class="account-representative secondary"
-                            responsive
-                        >
+                        <div *ngIf="accountOverview.opened" class="account-representative secondary" responsive>
                             <ng-container *ngIf="accountOverview.representative !== address">
                                 Represented by
 
@@ -80,13 +79,15 @@
                                     [style.marginLeft.px]="4"
                                     [matBadgeSize]="'small'"
                                     matBadgeColor="warn"
-                                    [matBadge]="onlineRepService.onlineReps.has(accountOverview.representative) ? '' : '!'"
+                                    [matBadge]="
+                                        onlineRepService.onlineReps.has(accountOverview.representative) ? '' : '!'
+                                    "
                                     [matBadgeOverlap]="false"
                                     matBadgePosition="after"
                                     class="account-representative-address primary"
                                 >
-                                <strong>{{ accountRepresentative }}</strong>
-                            </span>
+                                    <strong>{{ accountRepresentative }}</strong>
+                                </span>
                             </ng-container>
                             <div
                                 *ngIf="accountOverview.representative === address"
@@ -166,7 +167,12 @@
         <!-- Pending transactions -->
         <mat-tab class="account-pending-tab">
             <ng-template mat-tab-label>
-                <span class="account-pending-badge" [matBadge]="getPendingBadge()" matBadgeOverlap="false" matBadgeColor="primary">
+                <span
+                    class="account-pending-badge"
+                    [matBadge]="getPendingBadge()"
+                    matBadgeOverlap="false"
+                    matBadgeColor="primary"
+                >
                     <ng-container *ngIf="!vp.sm">
                         Pending
                         <ng-container *ngIf="!vp.md">Transactions</ng-container>
@@ -183,7 +189,12 @@
         <!-- Delegators -->
         <mat-tab>
             <ng-template mat-tab-label>
-                <span class="account-delegators-badge" [matBadge]="getDelegatorsBadge()" matBadgeOverlap="false" matBadgeColor="primary">
+                <span
+                    class="account-delegators-badge"
+                    [matBadge]="getDelegatorsBadge()"
+                    matBadgeOverlap="false"
+                    matBadgeColor="primary"
+                >
                     <!-- Delegators -->
                     <ng-container *ngIf="!vp.sm">Delegators</ng-container>
                     <mat-icon *ngIf="vp.sm">how_to_vote</mat-icon>

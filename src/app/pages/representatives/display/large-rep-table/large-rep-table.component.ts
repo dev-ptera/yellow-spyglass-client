@@ -63,7 +63,7 @@ import { AliasService } from '@app/services/alias/alias.service';
             </ng-container>
 
             <ng-container matColumnDef="percentWeight">
-                <th mat-header-cell *matHeaderCellDef>%</th>
+                <th mat-header-cell *matHeaderCellDef>Weight</th>
                 <td mat-cell *matCellDef="let element" [class.warn]="isLargeRep(element.weight) && element.online">
                     <ng-container *ngIf="element.online">
                         {{ formatWeightPercent(element.weight) }}
@@ -116,6 +116,22 @@ import { AliasService } from '@app/services/alias/alias.service';
                 </td>
             </ng-container>
 
+            <ng-container matColumnDef="score">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Score</th>
+                <td mat-cell *matCellDef="let element">
+                    <span
+                        *ngIf="element.score"
+                        [class.warn]="element.score <= 50"
+                        [class.intermediary]="element.score > 50 && element.score <= 75"
+                        [class.primary]="element.score > 75"
+                    >
+                        {{ element.score }}
+                    </span>
+                    <span *ngIf="element.score" style="font-size: 11px">/ 100</span>
+                    <span *ngIf="!element.score">--</span>
+                </td>
+            </ng-container>
+
             <tr mat-header-row *matHeaderRowDef="vp.md ? largeRepsDisplayColumnsMd : largeRepsDisplayColumnsLg"></tr>
             <tr
                 mat-row
@@ -138,12 +154,13 @@ export class LargeRepTableComponent implements OnChanges {
         'position',
         'address',
         'online',
+        'score',
         'weight',
         'percentWeight',
         'delegatorsCount',
         'uptimePercentMonth',
     ];
-    largeRepsDisplayColumnsMd = ['position', 'address', 'online', 'weight', 'percentWeight', 'uptimePercentMonth'];
+    largeRepsDisplayColumnsMd = ['position', 'address', 'online', 'score', 'weight', 'percentWeight'];
 
     constructor(
         public vp: ViewportService,
