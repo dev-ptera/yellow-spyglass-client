@@ -55,7 +55,7 @@ export class KnownAccountsComponent implements OnInit {
         return this.vp.md ? this._util.shortenAddress(addr) : addr;
     }
 
-    routeRepAddress(address: string): void {
-        this._searchService.emitSearch(address);
+    routeRepAddress(address: string, e: MouseEvent): void {
+        this._searchService.emitSearch(address, e.ctrlKey);
     }
 }

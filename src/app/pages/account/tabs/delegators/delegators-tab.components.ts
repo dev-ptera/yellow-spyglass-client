@@ -76,7 +76,7 @@ import { MegaphoneService } from '@app/services/megaphone/megaphone.service';
                     [style.paddingBottom.px]="8"
                     class="account-delegator-address-cell"
                     *matCellDef="let element"
-                    (click)="searchService.emitSearch(element.address)"
+                    (click)="searchService.emitSearch(element.address, $event.ctrlKey)"
                 >
                     {{ element.address }}
                 </td>

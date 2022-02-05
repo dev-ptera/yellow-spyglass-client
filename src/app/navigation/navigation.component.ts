@@ -36,11 +36,19 @@ export class NavigationComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this._searchService.searchEvents().subscribe((searchValue: string) => {
-            if (searchValue.startsWith('ban_')) {
-                void this._router.navigate([`${APP_NAV_ITEMS.account.route}/${searchValue}`]);
+        this._searchService.searchEvents().subscribe((data: { search: string, openInNewWindow: boolean}) => {
+            if (data.openInNewWindow) {
+                if (data.search.startsWith('ban_')) {
+                    window.open(`https://yellowspyglass.com/${APP_NAV_ITEMS.account.route}/${data.search}`, '_blank');
+                } else {
+                    window.open(`https://yellowspyglass.com/${APP_NAV_ITEMS.hash.route}/${data.search}`, '_blank');
+                }
             } else {
-                void this._router.navigate([`${APP_NAV_ITEMS.hash.route}/${searchValue}`]);
+                if (data.search.startsWith('ban_')) {
+                    void this._router.navigate([`${APP_NAV_ITEMS.account.route}/${data.search}`]);
+                } else {
+                    void this._router.navigate([`${APP_NAV_ITEMS.hash.route}/${data.search}`]);
+                }
             }
         });
     }

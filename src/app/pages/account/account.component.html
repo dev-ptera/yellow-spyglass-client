@@ -75,7 +75,7 @@
                                 Represented by
 
                                 <span
-                                    (click)="searchService.emitSearch(accountOverview.representative)"
+                                    (click)="searchService.emitSearch(accountOverview.representative, $event.ctrlKey)"
                                     [style.marginLeft.px]="4"
                                     [matBadgeSize]="'small'"
                                     matBadgeColor="warn"

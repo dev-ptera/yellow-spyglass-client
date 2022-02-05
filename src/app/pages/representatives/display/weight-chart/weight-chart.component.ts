@@ -64,7 +64,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                     <div
                         class="link"
                         [class.representatives-legend-others]="last"
-                        (click)="routeRepAddress(rep.address)"
+                        (click)="routeRepAddress(rep.address, $event)"
                     >
                         <ng-container *ngIf="aliasService.has(rep.address)">
                             {{ aliasService.get(rep.address) }}
@@ -239,9 +239,9 @@ export class WeightChartComponent implements OnChanges {
         };
     }
 
-    routeRepAddress(address: string): void {
+    routeRepAddress(address: string, e: MouseEvent): void {
         if (address) {
-            this._searchService.emitSearch(address);
+            this._searchService.emitSearch(address, e.ctrlKey);
         }
     }
     formatChartAddress(addr: string): string {

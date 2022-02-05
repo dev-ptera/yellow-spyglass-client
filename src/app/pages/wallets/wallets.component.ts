@@ -119,10 +119,8 @@ export class WalletsComponent implements OnInit {
             });
     }
 
-    searchAddress(e: any, addr: string): void {
-        if (!e.ctrlKey) {
-            this.searchService.emitSearch(addr);
-        }
+    routeRepAddress(addr: string, e: MouseEvent): void {
+        this.searchService.emitSearch(addr, e.ctrlKey);
     }
 
     private _createDistributionChart(data: AccountDistributionStatsDto): Options {

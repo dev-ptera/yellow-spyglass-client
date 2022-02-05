@@ -26,7 +26,7 @@
             <td
                 mat-cell
                 *matCellDef="let element"
-                (click)="routeRepAddress(element.address)"
+                (click)="routeRepAddress(element.address, $event)"
                 class="known-accounts-alias-cell"
             >
                 <span class="link primary" style="word-break: break-word; font-weight: 600">{{ element.alias }}</span>

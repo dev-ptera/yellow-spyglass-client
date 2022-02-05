@@ -110,10 +110,9 @@
                     {{ aliasService.get(element.address) }}
                 </div>
                 <a
-                    [routerLink]="'/account/' + element.address"
                     class="address link"
                     style="color: inherit"
-                    (click)="searchAddress($event, element.address)"
+                    (click)="routeRepAddress(element.address, $event)"
                 >
                     {{ element.address }}
                 </a>

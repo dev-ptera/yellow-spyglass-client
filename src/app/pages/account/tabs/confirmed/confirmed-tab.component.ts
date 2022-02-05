@@ -36,13 +36,13 @@ import { AliasService } from '@app/services/alias/alias.service';
                     </div>
                     <div>
                         <span class="to-from">{{ tx.type === 'receive' ? ' from ' : 'to ' }}</span>
-                        <span class="address link" (click)="searchService.emitSearch(tx.address)"
+                        <span class="address link" (click)="searchService.emitSearch(tx.address, $event.ctrlKey)"
                             >{{ aliasService.get(tx.address) || tx.address }}
                         </span>
                     </div>
                 </div>
                 <div pxb-subtitle class="hash">
-                    <span class="link" (click)="searchService.emitSearch(tx.hash)">{{ tx.hash }}</span>
+                    <span class="link" (click)="searchService.emitSearch(tx.hash, $event.ctrlKey)">{{ tx.hash }}</span>
                 </div>
                 <div pxb-right-content class="right-content">
                     <div

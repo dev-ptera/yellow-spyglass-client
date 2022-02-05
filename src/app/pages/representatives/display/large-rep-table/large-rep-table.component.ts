@@ -39,7 +39,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                                 label="Principal"
                                 style="margin-right: 12px"
                             ></pxb-list-item-tag>
-                            <span class="link" style="font-weight: 600" (click)="routeRepAddress(element.address)">
+                            <span class="link" style="font-weight: 600" (click)="routeRepAddress(element.address, $event)">
                                 <div
                                     *ngIf="aliasService.get(element.address)"
                                     style="white-space: nowrap; text-overflow: ellipsis; max-width: 210px; overflow: hidden"
@@ -122,8 +122,8 @@ import { AliasService } from '@app/services/alias/alias.service';
                     <span
                         *ngIf="element.score"
                         [class.warn]="element.score <= 50"
-                        [class.intermediary]="element.score > 50 && element.score <= 75"
-                        [class.primary]="element.score > 75"
+                        [class.intermediary]="element.score > 50 && element.score <= 84"
+                        [class.primary]="element.score > 84"
                     >
                         {{ element.score }}
                     </span>
@@ -195,9 +195,9 @@ export class LargeRepTableComponent implements OnChanges {
         return this._util.shortenAddress(addr);
     }
 
-    routeRepAddress(address: string): void {
+    routeRepAddress(address: string, e: MouseEvent): void {
         if (address) {
-            this._searchService.emitSearch(address);
+            this._searchService.emitSearch(address, e.ctrlKey);
         }
     }
 

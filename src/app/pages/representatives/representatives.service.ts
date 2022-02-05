@@ -6,12 +6,16 @@ import { MonitoredRepDto } from '@app/types/dto';
 })
 export class RepresentativesService {
     openMonitoredRep(rep: MonitoredRepDto): void {
+        window.open(this.getMonitoredRepUrl(rep), '_blank');
+    }
+
+    getMonitoredRepUrl(rep: MonitoredRepDto): string {
         if (rep.customMonitorPageUrl) {
-            window.open(rep.customMonitorPageUrl, '_blank');
+            return rep.customMonitorPageUrl;
         } else if (rep.ip.includes('http') || rep.ip.includes('https')) {
-            window.open(`${rep.ip}`, '_blank');
+            return rep.ip;
         } else {
-            window.open(`http://${rep.ip}`, '_blank');
+            return `http://${rep.ip}`;
         }
     }
 

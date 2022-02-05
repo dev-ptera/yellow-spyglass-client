@@ -5,13 +5,13 @@ import { Observable, Subject } from 'rxjs';
     providedIn: 'root',
 })
 export class SearchService {
-    search$ = new Subject<string>();
+    search$ = new Subject<{ search: string, openInNewWindow: boolean }>();
 
-    searchEvents(): Observable<string> {
+    searchEvents(): Observable<{ search: string, openInNewWindow: boolean }> {
         return this.search$;
     }
 
-    emitSearch(search: string): void {
-        this.search$.next(search);
+    emitSearch(search: string, openInNewWindow: boolean = true): void {
+        this.search$.next({search, openInNewWindow});
     }
 }

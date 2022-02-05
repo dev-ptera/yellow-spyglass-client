@@ -31,7 +31,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
                     </div>
                     <div>
                         <span class="to-from">from</span>
-                        <span class="address link" (click)="searchService.emitSearch(tx.address)">
+                        <span class="address link" (click)="searchService.emitSearch(tx.address, $event.ctrlKey)">
                             {{ ' ' + tx.address }}
                         </span>
                     </div>

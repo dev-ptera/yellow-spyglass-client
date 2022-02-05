@@ -35,25 +35,14 @@ import { MonitoredRepTableColumns } from '@app/pages/representatives/representat
                     <span class="link primary" style="font-weight: 600" (click)="repService.openMonitoredRep(element)">
                         {{ element.name }}
                     </span>
-                    <!--
-                    <br />
-                    <span
-                        class="link monitored-reps-table-address"
-                        (click)="routeRepAddress(element.address)"
-                        style="margin-top: -4px; word-break: break-word"
-                        [style.fontSize.px]="vp.md ? 13 : 14"
-                    >
-                        {{ formatAddress(element.address) }}
-                    </span> -->
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="address">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 220px">Address</th>
                 <td class="representatives-weight-cell" mat-cell *matCellDef="let element">
-                    <span (click)="routeRepAddress(element.address)" class="link">{{
-                        formatShortAddress(element.address)
-                    }}</span>
+                    <span (click)="routeRepAddress(element.address, $event)" class="link">
+                        {{formatShortAddress(element.address)}}</span>
                 </td>
             </ng-container>
 
@@ -289,9 +278,9 @@ export class MonitoredRepTableComponent implements OnChanges {
         return `${this._util.numberWithCommas(count)}`;
     }
 
-    routeRepAddress(address: string): void {
+    routeRepAddress(address: string, e: MouseEvent): void {
         if (address) {
-            this._searchService.emitSearch(address);
+            this._searchService.emitSearch(address, e.ctrlKey);
         }
     }
 
