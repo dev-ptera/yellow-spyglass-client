@@ -42,7 +42,8 @@ import { MonitoredRepTableColumns } from '@app/pages/representatives/representat
                 <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 220px">Address</th>
                 <td class="representatives-weight-cell" mat-cell *matCellDef="let element">
                     <span (click)="routeRepAddress(element.address, $event)" class="link">
-                        {{formatShortAddress(element.address)}}</span>
+                        {{ formatShortAddress(element.address) }}</span
+                    >
                 </td>
             </ng-container>
 

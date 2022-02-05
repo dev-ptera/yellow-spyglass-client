@@ -36,7 +36,7 @@ export class NavigationComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this._searchService.searchEvents().subscribe((data: { search: string, openInNewWindow: boolean}) => {
+        this._searchService.searchEvents().subscribe((data: { search: string; openInNewWindow: boolean }) => {
             if (data.openInNewWindow) {
                 if (data.search.startsWith('ban_')) {
                     window.open(`https://yellowspyglass.com/${APP_NAV_ITEMS.account.route}/${data.search}`, '_blank');

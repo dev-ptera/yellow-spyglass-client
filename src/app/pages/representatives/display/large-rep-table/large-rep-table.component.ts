@@ -39,7 +39,11 @@ import { AliasService } from '@app/services/alias/alias.service';
                                 label="Principal"
                                 style="margin-right: 12px"
                             ></pxb-list-item-tag>
-                            <span class="link" style="font-weight: 600" (click)="routeRepAddress(element.address, $event)">
+                            <span
+                                class="link"
+                                style="font-weight: 600"
+                                (click)="routeRepAddress(element.address, $event)"
+                            >
                                 <div
                                     *ngIf="aliasService.get(element.address)"
                                     style="white-space: nowrap; text-overflow: ellipsis; max-width: 210px; overflow: hidden"

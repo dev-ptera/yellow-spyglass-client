@@ -16,7 +16,7 @@ import { MonitoredRepListComponent } from '@app/pages/representatives/display/mo
 import { MicroRepListComponent } from '@app/pages/representatives/display/micro-rep-list/micro-rep-list.component';
 import { WeightChartComponent } from '@app/pages/representatives/display/weight-chart/weight-chart.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import {RouterModule} from "@angular/router";
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     declarations: [
