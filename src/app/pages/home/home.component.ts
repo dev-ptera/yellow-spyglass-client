@@ -17,12 +17,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     touchedIdField: boolean;
     loading: boolean;
     error: boolean;
-    gettingStarted = false;
     navigation$;
-
-    sampleAddresses = ['ban_39qbrcfii4imaekkon7gqs1emssg7pfhiirfg7u85nh9rnf51zbmr84xrtbp'];
-
-    sampleTransactions = ['EA3A67403F255C47AE1698350D1BA2D8CD3C108A8688144B191ED6BBE60EF91D'];
 
     constructor(
         public vp: ViewportService,
@@ -41,15 +36,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
     }
 
-    search(searchValue: string): void {
-        this._searchService.emitSearch(searchValue);
-    }
-
-    shortenAddress(addr: string): string {
-        return this._util.shortenAddress(addr);
-    }
-
-    formatShortenedTx(tx: string): string {
-        return `${tx.substr(0, 15)}...`;
+    search(searchValue: string, e: MouseEvent): void {
+        this._searchService.emitSearch(searchValue, e.ctrlKey);
     }
 }

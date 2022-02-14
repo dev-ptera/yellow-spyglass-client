@@ -16,7 +16,7 @@
                     (focus)="touchedIdField = true; idFieldActive = true"
                     (blur)="idFieldActive = false"
                     [formControl]="searchFormControl"
-                    (keyup.enter)="search(searchFormControl.value)"
+                    (keyup.enter)="search(searchFormControl.value, $event)"
                 />
             </mat-form-field>
             <button
@@ -25,7 +25,7 @@
                 mat-flat-button
                 color="accent"
                 [disabled]="loading || !searchFormControl.value"
-                (click)="search(searchFormControl.value)"
+                (click)="search(searchFormControl.value, $event)"
             >
                 <div [class.home-loading]="loading">
                     <mat-spinner *ngIf="loading" [diameter]="18" [style.marginRight.px]="16"></mat-spinner>

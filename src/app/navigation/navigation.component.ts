@@ -69,7 +69,7 @@ export class NavigationComponent implements OnInit {
 
     appbarSearch(event: any): void {
         if (event.key === 'Enter') {
-            this._searchService.emitSearch(this.appbarSearchText);
+            this._searchService.emitSearch(this.appbarSearchText, false);
             this.closeSearch();
         }
     }
