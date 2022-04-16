@@ -59,6 +59,7 @@
     right: 0;
     width: 0%;
     transition: width 250ms ease-in-out;
+    overflow: hidden;
     z-index: 300;
     &.active {
         width: 100%;

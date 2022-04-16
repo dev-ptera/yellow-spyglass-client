@@ -39,7 +39,7 @@ import { MonitoredRepTableColumns } from '@app/pages/representatives/representat
             </ng-container>
 
             <ng-container matColumnDef="address">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 220px">Address</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 190px">Address</th>
                 <td class="representatives-weight-cell" mat-cell *matCellDef="let element">
                     <span (click)="routeRepAddress(element.address, $event)" class="link">
                         {{ formatShortAddress(element.address) }}</span
@@ -48,21 +48,21 @@ import { MonitoredRepTableColumns } from '@app/pages/representatives/representat
             </ng-container>
 
             <ng-container matColumnDef="version">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 100px">Version</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 70px">Version</th>
                 <td class="representatives-weight-cell" mat-cell *matCellDef="let element">
                     {{ repService.formatVersion(element.version) }}
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="weightBan">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 130px">Weight</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 100px">Weight</th>
                 <td mat-cell *matCellDef="let element">
                     {{ formatBanWeight(element.weight) }}
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="weightPercent">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 90px">%</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 70px">%</th>
                 <td mat-cell *matCellDef="let element">
                     <ng-container *ngIf="element.weight">
                         {{ formatWeightPercent(element.weight) }}<span style="font-size: 10px">%</span>
@@ -71,17 +71,17 @@ import { MonitoredRepTableColumns } from '@app/pages/representatives/representat
             </ng-container>
 
             <ng-container matColumnDef="delegatorsCount">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 110px">Delegators</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 60px">Delegators</th>
                 <td mat-cell *matCellDef="let element">{{ numberWithCommas(element.delegatorsCount) }}</td>
             </ng-container>
 
             <ng-container matColumnDef="peers">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 80px">Peers</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 60px">Peers</th>
                 <td mat-cell *matCellDef="let element">{{ numberWithCommas(element.peers) }}</td>
             </ng-container>
 
             <ng-container matColumnDef="uncheckedBlocks">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 120px;">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 90px;">
                     Unchecked<br />
                     Blocks
                 </th>
@@ -91,35 +91,35 @@ import { MonitoredRepTableColumns } from '@app/pages/representatives/representat
             </ng-container>
 
             <ng-container matColumnDef="cementedBlocks">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 130px">Cemented<br />Blocks</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 100px">Cemented<br />Blocks</th>
                 <td mat-cell *matCellDef="let element">
                     {{ numberWithCommas(element.cementedBlocks) }}
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="location">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 180px">Location</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 150px">Location</th>
                 <td mat-cell *matCellDef="let element">
                     {{ element.location }}
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="totalMem">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 130px">Memory</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 90px">Memory</th>
                 <td mat-cell *matCellDef="let element">
                     {{ formatMemoryUsage(element) }}
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="nodeUptimeStartup">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 120px">Last Restart</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 100px">Last Restart</th>
                 <td mat-cell *matCellDef="let element">
                     {{ formatUptime(element.nodeUptimeStartup) }}
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="isPrincipal">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 80px">PR</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 50px">PR</th>
                 <td mat-cell *matCellDef="let element">
                     <mat-icon
                         *ngIf="repService.isPR(element.weight, onlineWeight)"
@@ -132,7 +132,7 @@ import { MonitoredRepTableColumns } from '@app/pages/representatives/representat
 
             <!-- TODO: MAKE me a component -->
             <ng-container matColumnDef="uptime">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 150px">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 140px">
                     <div style="text-align: left">
                         Uptime
                         <ng-container *ngIf="!vp.md">

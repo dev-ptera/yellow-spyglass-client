@@ -7,7 +7,6 @@
 @use 'node_modules/@brightlayer-ui/angular-themes/typography';
 @use 'node_modules/@brightlayer-ui/angular-themes/common';
 @use './theme/typography' as ysg-typography;
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css'; // Tooltip needs this theme to work?
 
 @include margins.reasonable-margins();
 @include mat.core(ysg-typography.$custom-typography);
@@ -138,14 +137,15 @@
     align-items: center;
     width: 100%;
     box-sizing: border-box;
-    min-height: 100vh;
+    min-height: calc(100vh - 64px);
     // TODO: move these paddings to a global style, shared
-    padding: 128px 64px 64px 64px;
+    padding: 64px 64px 64px 64px;
     &.md {
-        padding: 114px 32px 48px 32px;
+        padding: 64px 32px 48px 32px;
     }
     &.sm {
-        padding: 92px 16px 48px 16px;
+        padding: 32px 16px 48px 16px;
+        min-height: calc(100vh - 56px);
     }
 }
 

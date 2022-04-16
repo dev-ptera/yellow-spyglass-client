@@ -45,7 +45,6 @@
                     </div>
                     <blui-spacer></blui-spacer>
                     <button
-                        data-cy="search-btn"
                         mat-icon-button
                         (click)="openSearch()"
                         [style.marginRight.px]="vp.sm ? 4 : 16"
@@ -70,7 +69,7 @@
                         (keyup)="appbarSearch($event)"
                         #searchBar
                     />
-                    <button mat-icon-button (click)="closeSearch()" data-cy="search-close-btn">
+                    <button mat-icon-button (click)="closeSearch()">
                         <mat-icon>close</mat-icon>
                     </button>
                 </mat-toolbar-row>
@@ -84,8 +83,7 @@
                 <mat-icon blui-empty-icon>update</mat-icon>
             </blui-empty-state>
         </div>
-
-            -->
+        -->
 
         <router-outlet></router-outlet>
     </div>
