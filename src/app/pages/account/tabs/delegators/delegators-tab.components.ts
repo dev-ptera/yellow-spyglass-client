@@ -20,7 +20,7 @@ import { MegaphoneService } from '@app/services/megaphone/megaphone.service';
             <span class="account-delegator-weight-sum" responsive>{{ formattedWeight }}</span>
             <span class="account-delegator-weight-sum-description" responsive>BAN Delegated Weight</span>
             <ng-container *ngIf="isMegaphone">
-                <pxb-spacer></pxb-spacer>
+                <blui-spacer></blui-spacer>
                 <button
                     mat-flat-button
                     color="primary"
@@ -102,15 +102,15 @@ import { MegaphoneService } from '@app/services/megaphone/megaphone.service';
             </button>
         </div>
 
-        <pxb-empty-state
+        <blui-empty-state
             responsive
             *ngIf="delegators.length === 0"
             class="account-empty-state"
             title="No Delegators"
             description="This account has no delegated weight.  If this account is not running a node, this is a good thing."
         >
-            <mat-icon pxb-empty-icon>how_to_vote</mat-icon>
-        </pxb-empty-state>
+            <mat-icon blui-empty-icon>how_to_vote</mat-icon>
+        </blui-empty-state>
     `,
     styleUrls: ['delegators-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,

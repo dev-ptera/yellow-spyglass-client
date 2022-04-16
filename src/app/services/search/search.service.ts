@@ -11,7 +11,7 @@ export class SearchService {
         return this.search$;
     }
 
-    emitSearch(search: string, openInNewWindow: boolean = true): void {
+    emitSearch(search: string, openInNewWindow = true): void {
         this.search$.next({ search, openInNewWindow });
     }
 }

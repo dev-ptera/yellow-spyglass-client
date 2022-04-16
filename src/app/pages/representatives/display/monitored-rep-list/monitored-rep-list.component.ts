@@ -12,26 +12,26 @@ import { RepresentativesService } from '@app/pages/representatives/representativ
     template: `
         <mat-card class="rep-mobile-list-container mat-elevation-z0">
             <mat-list [style.paddingTop.px]="0" class="monitored-rep-list">
-                <pxb-info-list-item
+                <blui-info-list-item
                     *ngFor="let rep of monitoredReps; trackBy: trackByFn; let last = last"
                     [hidePadding]="true"
                     [dense]="false"
                     [divider]="last ? undefined : 'full'"
                 >
-                    <div pxb-title style="font-weight: 600">
+                    <div blui-title style="font-weight: 600">
                         <div class="link primary" (click)="repService.openMonitoredRep(rep)">{{ rep.name }}</div>
                     </div>
-                    <div pxb-subtitle style="font-size: 0.875rem">{{ formatInfoLine(rep) }}</div>
-                    <div pxb-info style="font-size: 0.875rem" (click)="routeRepAddress(rep.address)">
+                    <div blui-subtitle style="font-size: 0.875rem">{{ formatInfoLine(rep) }}</div>
+                    <div blui-info style="font-size: 0.875rem" (click)="routeRepAddress(rep.address)">
                         {{ formatAddress(rep.address) }}
                     </div>
-                    <div pxb-right-content style="display: flex; flex-direction: column; align-items: flex-end">
+                    <div blui-right-content style="display: flex; flex-direction: column; align-items: flex-end">
                         <div style="font-size: 0.875rem" *ngIf="rep.weight">{{ formatBanWeight(rep.weight) }} BAN</div>
                         <div style="font-size: 0.75rem" *ngIf="rep.weight">
                             {{ formatWeightPercent(rep.weight) }} weight
                         </div>
                     </div>
-                </pxb-info-list-item>
+                </blui-info-list-item>
             </mat-list>
         </mat-card>
     `,

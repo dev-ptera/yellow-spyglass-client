@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { MatIconModule } from '@angular/material/icon';
-import { EmptyStateModule, SpacerModule } from '@pxblue/angular-components';
+import { EmptyStateModule, SpacerModule } from '@brightlayer-ui/angular-components';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { ResponsiveDirective } from '@app/common/directives/responsive.directive';

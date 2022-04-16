@@ -1,15 +1,16 @@
-@import '~@angular/material/_theming.scss';
+@use 'node_modules/@brightlayer-ui/colors/palette' as blui;
+@use 'node_modules/@angular/material' as mat;
+@use 'node_modules/@brightlayer-ui/angular-themes/blui-component-theme';
+@use 'node_modules/@brightlayer-ui/angular-themes/darkTheme';
+@use 'node_modules/@brightlayer-ui/angular-themes/margins';
+@use 'node_modules/@brightlayer-ui/angular-themes/fonts';
+@use 'node_modules/@brightlayer-ui/angular-themes/typography';
+@use 'node_modules/@brightlayer-ui/angular-themes/common';
+@use './theme/typography' as ysg-typography;
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css'; // Tooltip needs this theme to work?
-@import '~@pxblue/colors-branding/palette.scss';
-@import '~@pxblue/angular-themes/pxb-component-theme';
-@import '~@pxblue/angular-themes/margins';
-@import '~@pxblue/angular-themes/fonts';
-@import '~@pxblue/angular-themes/common';
-@import './theme/typography';
-@import './theme/common';
 
-@include reasonable-margins();
-@include mat-core($custom-typography);
+@include margins.reasonable-margins();
+@include mat.core(ysg-typography.$custom-typography);
 
 @font-face {
     font-family: pirateFont;
@@ -18,19 +19,19 @@
 
 .light {
     @import './theme/light-theme';
-    @include common($light-theme);
-    @include angular-material-theme($light-theme);
-    @include pxb-components-theme($light-theme);
-    @include bodyfont();
+    @include common.common();
+    @include mat.all-component-themes($light-theme);
+    @include blui-component-theme.blui-components-theme($light-theme);
+    @include fonts.bodyfont();
     @import './theme/typography';
 }
 
 .dark {
     @import './theme/dark-theme';
-    @include common($dark-theme);
-    @include angular-material-theme($dark-theme);
-    @include pxb-components-theme($dark-theme);
-    @include bodyfont();
+    @include common.common();
+    @include mat.all-component-themes($dark-theme);
+    @include blui-component-theme.blui-components-theme($dark-theme);
+    @include fonts.bodyfont();
     @import './theme/typography';
 }
 

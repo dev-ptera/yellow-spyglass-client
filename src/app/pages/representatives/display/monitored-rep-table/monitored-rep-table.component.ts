@@ -297,8 +297,8 @@ export class MonitoredRepTableComponent implements OnChanges {
         return this._util.shortenAddress(addr);
     }
 
-    formatUptime(seconds: number = 0): string {
-        return this._util.numberWithCommas((seconds / (60 * 60 * 24)).toFixed(1)) + ' days';
+    formatUptime(seconds = 0): string {
+        return `${this._util.numberWithCommas((seconds / (60 * 60 * 24)).toFixed(1))  } days`;
     }
 
     formatMemoryUsage(rep: MonitoredRepDto): string {

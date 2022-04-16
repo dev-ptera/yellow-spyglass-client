@@ -6,28 +6,28 @@ import { ThemeService } from '@app/services/theme/theme.service';
 @Component({
     selector: 'app-user-menu',
     template: `
-        <pxb-user-menu class="app-user-menu" menuTitle="User Settings" [(open)]="userMenuOpen">
-            <mat-icon pxb-avatar>settings</mat-icon>
-            <mat-nav-list pxb-menu-body [style.paddingTop.px]="0">
-                <pxb-info-list-item [dense]="true" (click)="openBookmarks()">
-                    <mat-icon pxb-icon>bookmarks</mat-icon>
-                    <div pxb-title>Bookmarks</div>
-                </pxb-info-list-item>
+        <blui-user-menu class="app-user-menu" menuTitle="User Settings" [(open)]="userMenuOpen">
+            <mat-icon blui-avatar>settings</mat-icon>
+            <mat-nav-list blui-menu-body [style.paddingTop.px]="0">
+                <blui-info-list-item [dense]="true" (click)="openBookmarks()">
+                    <mat-icon blui-icon>bookmarks</mat-icon>
+                    <div blui-title>Bookmarks</div>
+                </blui-info-list-item>
                 <div>
                     <mat-divider></mat-divider>
                     <div style="padding: 8px 16px 8px 16px; font-weight: 600">Themes</div>
                     <mat-divider></mat-divider>
-                    <pxb-info-list-item [dense]="true" (click)="toggleLightTheme()">
-                        <mat-icon pxb-icon>light_mode</mat-icon>
-                        <div pxb-title>Light Theme</div>
-                    </pxb-info-list-item>
-                    <pxb-info-list-item [dense]="true" (click)="toggleDarkTheme()">
-                        <mat-icon pxb-icon>dark_mode</mat-icon>
-                        <div pxb-title>Dark Theme</div>
-                    </pxb-info-list-item>
+                    <blui-info-list-item [dense]="true" (click)="toggleLightTheme()">
+                        <mat-icon blui-icon>light_mode</mat-icon>
+                        <div blui-title>Light Theme</div>
+                    </blui-info-list-item>
+                    <blui-info-list-item [dense]="true" (click)="toggleDarkTheme()">
+                        <mat-icon blui-icon>dark_mode</mat-icon>
+                        <div blui-title>Dark Theme</div>
+                    </blui-info-list-item>
                 </div>
             </mat-nav-list>
-        </pxb-user-menu>
+        </blui-user-menu>
     `,
     styleUrls: ['./user-menu.component.scss'],
     encapsulation: ViewEncapsulation.None,

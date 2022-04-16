@@ -1,47 +1,50 @@
-@import '~@pxblue/colors/palette';
-@import '~@angular/material/_theming.scss';
+@use 'node_modules/@brightlayer-ui/colors/palette' as blui;
+@use 'node_modules/@angular/material' as mat;
+
 @import 'src/app/pages/wallets/wallets.component.scss';
 @import 'src/app/pages/representatives/representatives.component.scss';
 @import 'src/app/pages/account/account.component.scss';
 @import 'src/app/pages/network/network.component.scss';
 
-$material-theme-primary: mat-palette($pxb-green, 200);
-$material-theme-accent: mat-palette($pxb-green, 200);
-$material-theme-warn: mat-palette($pxb-red);
+$material-theme-primary: mat.define-palette(blui.$blui-green, 200);
+$material-theme-accent: mat.define-palette(blui.$blui-green, 200);
+$material-theme-warn: mat.define-palette(blui.$blui-red, 500);
+
 $dark-theme: map-merge(
-    mat-dark-theme($material-theme-primary, $material-theme-accent, $material-theme-warn),
+    mat.define-dark-theme($material-theme-primary, $material-theme-accent, $material-theme-warn),
     (
         foreground: (
-            text: map-get($pxb-black, 50),
-            secondary-text: map-get($pxb-black, 100),
-            hint-text: map-get($pxb-black, 200),
-            base: map-get($pxb-white, 100),
-            divider: rgba(map-get($pxb-black, 200), 0.36),
-            dividers: rgba(map-get($pxb-black, 200), 0.36),
-            disabled: rgba(map-get($pxb-black, 300), 0.36),
+            text: map-get(blui.$blui-black, 50),
+            secondary-text: map-get(blui.$blui-black, 100),
+            hint-text: map-get(blui.$blui-black, 200),
+            base: map-get(blui.$blui-white, 100),
+            divider: rgba(map-get(blui.$blui-black, 200), 0.36),
+            dividers: rgba(map-get(blui.$blui-black, 200), 0.36),
+            disabled: rgba(map-get(blui.$blui-black, 300), 0.36),
             disabled-button: rgba(white, 0.3),
-            disabled-text: rgba(map-get($pxb-black, 300), 0.36),
-            elevation: map-get($pxb-darkBlack, 900),
-            icon: map-get($pxb-black, 100),
-            icons: map-get($pxb-black, 100),
-            slider-min: map-get($pxb-black, 100),
+            disabled-text: rgba(map-get(blui.$blui-black, 300), 0.36),
+            elevation: map-get(blui.$blui-darkBlack, 900),
+            icon: map-get(blui.$blui-black, 100),
+            icons: map-get(blui.$blui-black, 100),
+            slider-min: map-get(blui.$blui-black, 100),
             slider-off: rgba(white, 0.3),
             slider-off-active: rgba(white, 0.3),
         ),
         background: (
-            status-bar: map-get($pxb-darkBlack, 900),
-            app-bar: map-get($pxb-darkBlack, 100),
-            background: map-get($pxb-darkBlack, 300),
+            status-bar: map-get(blui.$blui-darkBlack, 900),
+            app-bar: map-get(blui.$blui-darkBlack, 100),
+            background: map-get(blui.$blui-darkBlack, 300),
             hover: rgba(white, 0.04),
-            card: rgba(map-get($pxb-black, 900), 1),
-            dialog: map-get($pxb-black, 900),
+            card: rgba(map-get(blui.$blui-black, 900), 1),
+            dialog: map-get(blui.$blui-black, 900),
             disabled-button: rgba(white, 0.12),
-            raised-button: map-get($pxb-black, 1000),
-            focused-button: $light-focused,
-            selected-button: map_get($mat-grey, 900),
-            selected-disabled-button: map_get($mat-grey, 800),
+            raised-button: map-get(blui.$blui-black, 500),
+            focused-button: mat.get-color-from-palette(mat.$dark-theme-background-palette, focused-button),
+            selected-button: mat.get-color-from-palette(mat.$dark-theme-background-palette, selected-button),
+            selected-disabled-button:
+                mat.get-color-from-palette(mat.$dark-theme-background-palette, selected-disabled-button),
             disabled-button-toggle: black,
-            unselected-chip: map_get($mat-grey, 700),
+            unselected-chip: mat.get-color-from-palette(mat.$dark-theme-background-palette, unselected-chip),
             disabled-list-option: black,
         ),
     )
@@ -50,8 +53,8 @@ $dark-theme: map-merge(
 $theme-foreground: map-get($dark-theme, foreground);
 $theme-background: map-get($dark-theme, background);
 
-$primary-green: map-get($pxb-green, 200);
-$warn-red: map-get($pxb-red, 200);
+$primary-green: map-get(blui.$blui-green, 200);
+$warn-red: map-get(blui.$blui-red, 200);
 $tag-opacity: 0.06;
 
 html,
@@ -59,18 +62,22 @@ body {
     background-color: map-get($theme-background, background) !important;
 }
 
-.pxb-user-menu-avatar {
+.mat-tab-group {
+    background-color: map-get(blui.$blui-black, 900);
+}
+
+.blui-user-menu-avatar {
     color: map-get($theme-foreground, text) !important;
     background: unset !important;
 }
 
 /* Navigation */
-.pxb-drawer .pxb-drawer-nav-item-active-highlight {
+.blui-drawer .blui-drawer-nav-item-active-highlight {
     background-color: rgba(30, 99, 15, 0.14) !important;
 }
 .mat-toolbar.mat-primary,
 .navigation-app-bar {
-    background-color: map-get($pxb-black, 800) !important;
+    background-color: map-get(blui.$blui-black, 800) !important;
     color: map-get($theme-foreground, text) !important;
     &.home {
         background-color: map-get($theme-background, background) !important;
@@ -92,13 +99,13 @@ body {
 
 /* General */
 .bookmarked-button {
-    color: map-get($pxb-red, 300);
+    color: map-get(blui.$blui-red, 300);
 }
 .primary {
     color: $primary-green !important;
 }
 .intermediary {
-    color: map-get($pxb-yellow, 500);
+    color: map-get(blui.$blui-yellow, 500);
 }
 .warn {
     color: $warn-red !important;
@@ -110,7 +117,7 @@ body {
     color: map-get($theme-foreground, hint-text);
 }
 
-.pxb-drawer-body-content,
+.blui-drawer-body-content,
 .mat-table,
 .mat-tab-group,
 .mat-card {
@@ -118,7 +125,7 @@ body {
     border: solid 1px map-get($theme-foreground, divider);
     border-radius: 4px;
 }
-.pxb-drawer-body-content {
+.blui-drawer-body-content {
     box-shadow: none !important;
     border-right: solid 1px map-get($theme-foreground, divider);
     border-radius: 0px;
@@ -132,12 +139,12 @@ body {
 }
 
 /* Wallets Page */
-$grid-stroke-color: map-get($pxb-gray, 800);
+$grid-stroke-color: map-get(blui.$blui-gray, 800);
 @include wallets-theme($theme-foreground, $theme-background, $grid-stroke-color);
 .mat-drawer-backdrop.mat-drawer-shown {
     background-color: rgba(4, 4, 4, 0.62) !important;
 }
-.pxb-list-item-tag-content .pxb-list-item-tag-label {
+.blui-list-item-tag-content .blui-list-item-tag-label {
     font-weight: 400 !important;
 }
 
@@ -169,9 +176,9 @@ $grid-stroke-color: map-get($pxb-gray, 800);
     font-weight: 400;
 }
 @mixin changeTag {
-    border: solid 1px map-get($pxb-blue, 200);
-    background-color: rgba(map-get($pxb-blue, 200), $tag-opacity) !important;
-    color: map-get($pxb-blue, 200) !important;
+    border: solid 1px map-get(blui.$blui-blue, 200);
+    background-color: rgba(map-get(blui.$blui-blue, 200), $tag-opacity) !important;
+    color: map-get(blui.$blui-blue, 200) !important;
     font-weight: 400;
 }
 @mixin sendAmount {
@@ -180,9 +187,9 @@ $grid-stroke-color: map-get($pxb-gray, 800);
 @mixin receiveAmount {
     color: $primary-green;
 }
-$hashColor: map-get($pxb-gray, 400);
-$pendingBadgeColor: map-get($pxb-orange, 200);
-$delegatorsBadgeColor: map-get($pxb-blue, 200);
+$hashColor: map-get(blui.$blui-gray, 400);
+$pendingBadgeColor: map-get(blui.$blui-orange, 200);
+$delegatorsBadgeColor: map-get(blui.$blui-blue, 200);
 @include account-theme(
     repOnlineTag,
     repOfflineTag,
@@ -207,7 +214,7 @@ $offline-color: $warn-red;
 $rep-border-color: map-get($theme-foreground, divider);
 $table-address-color: map-get($theme-foreground, text);
 @mixin principalTag {
-    $tag: map-get($pxb-yellow, 500);
+    $tag: map-get(blui.$blui-yellow, 500);
     border: solid 1px $tag;
     background-color: rgba($tag, $tag-opacity) !important;
     color: $tag !important;

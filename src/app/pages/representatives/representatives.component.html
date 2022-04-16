@@ -36,144 +36,144 @@
         </div>
 
         <!-- TODO: Make me a component. -->
-        <pxb-user-menu
+        <blui-user-menu
             *ngIf="!vp.sm"
             class="app-user-menu"
             style="align-items: end; margin-bottom: 4px"
             [(open)]="monitoredRepColumnToggle"
         >
-            <mat-icon pxb-avatar>more_vert</mat-icon>
-            <mat-nav-list pxb-menu-body [style.paddingTop.px]="0">
-                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('address')">
+            <mat-icon blui-avatar>more_vert</mat-icon>
+            <mat-nav-list blui-menu-body [style.paddingTop.px]="0">
+                <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('address')">
                     <mat-checkbox
                         color="primary"
-                        pxb-left-content
+                        blui-left-content
                         [checked]="shownColumns.address"
                         style="pointer-events: none"
                     ></mat-checkbox>
-                    <div pxb-title>Address</div>
-                </pxb-info-list-item>
+                    <div blui-title>Address</div>
+                </blui-info-list-item>
 
-                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('version')">
+                <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('version')">
                     <mat-checkbox
                         color="primary"
-                        pxb-left-content
+                        blui-left-content
                         [checked]="shownColumns.version"
                         style="pointer-events: none"
                     ></mat-checkbox>
-                    <div pxb-title>Version</div>
-                </pxb-info-list-item>
+                    <div blui-title>Version</div>
+                </blui-info-list-item>
 
-                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('delegatorsCount')">
+                <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('delegatorsCount')">
                     <mat-checkbox
                         color="primary"
-                        pxb-left-content
+                        blui-left-content
                         [checked]="shownColumns.delegatorsCount"
                         style="pointer-events: none"
                     ></mat-checkbox>
-                    <div pxb-title>Delegators</div>
-                </pxb-info-list-item>
+                    <div blui-title>Delegators</div>
+                </blui-info-list-item>
 
-                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('weightBan')">
+                <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('weightBan')">
                     <mat-checkbox
                         color="primary"
-                        pxb-left-content
+                        blui-left-content
                         [checked]="shownColumns.weightBan"
                         style="pointer-events: none"
                     ></mat-checkbox>
-                    <div pxb-title>Weight (BAN)</div>
-                </pxb-info-list-item>
+                    <div blui-title>Weight (BAN)</div>
+                </blui-info-list-item>
 
-                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('weightPercent')">
+                <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('weightPercent')">
                     <mat-checkbox
                         color="primary"
-                        pxb-left-content
+                        blui-left-content
                         [checked]="shownColumns.weightPercent"
                         style="pointer-events: none"
                     ></mat-checkbox>
-                    <div pxb-title>Weight (%)</div>
-                </pxb-info-list-item>
+                    <div blui-title>Weight (%)</div>
+                </blui-info-list-item>
 
-                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('peerCount')">
+                <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('peerCount')">
                     <mat-checkbox
                         color="primary"
-                        pxb-left-content
+                        blui-left-content
                         [checked]="shownColumns.peerCount"
                         style="pointer-events: none"
                     ></mat-checkbox>
-                    <div pxb-title>Peer Count</div>
-                </pxb-info-list-item>
+                    <div blui-title>Peer Count</div>
+                </blui-info-list-item>
 
-                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('uncheckedBlocks')">
+                <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('uncheckedBlocks')">
                     <mat-checkbox
                         color="primary"
-                        pxb-left-content
+                        blui-left-content
                         [checked]="shownColumns.uncheckedBlocks"
                         style="pointer-events: none"
                     ></mat-checkbox>
-                    <div pxb-title>Unchecked Blocks</div>
-                </pxb-info-list-item>
+                    <div blui-title>Unchecked Blocks</div>
+                </blui-info-list-item>
 
-                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('cementedBlocks')">
+                <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('cementedBlocks')">
                     <mat-checkbox
                         color="primary"
-                        pxb-left-content
+                        blui-left-content
                         [checked]="shownColumns.cementedBlocks"
                         style="pointer-events: none"
                     ></mat-checkbox>
-                    <div pxb-title>Cemented Blocks</div>
-                </pxb-info-list-item>
+                    <div blui-title>Cemented Blocks</div>
+                </blui-info-list-item>
 
-                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('location')">
+                <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('location')">
                     <mat-checkbox
                         color="primary"
-                        pxb-left-content
+                        blui-left-content
                         [checked]="shownColumns.location"
                         style="pointer-events: none"
                     ></mat-checkbox>
-                    <div pxb-title>Location</div>
-                </pxb-info-list-item>
+                    <div blui-title>Location</div>
+                </blui-info-list-item>
 
-                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('memory')">
+                <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('memory')">
                     <mat-checkbox
                         color="primary"
-                        pxb-left-content
+                        blui-left-content
                         [checked]="shownColumns.memory"
                         style="pointer-events: none"
                     ></mat-checkbox>
-                    <div pxb-title>Memory Usage</div>
-                </pxb-info-list-item>
+                    <div blui-title>Memory Usage</div>
+                </blui-info-list-item>
 
-                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('lastRestart')">
+                <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('lastRestart')">
                     <mat-checkbox
                         color="primary"
-                        pxb-left-content
+                        blui-left-content
                         [checked]="shownColumns.lastRestart"
                         style="pointer-events: none"
                     ></mat-checkbox>
-                    <div pxb-title>Last Restart</div>
-                </pxb-info-list-item>
-                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('isPrincipal')">
+                    <div blui-title>Last Restart</div>
+                </blui-info-list-item>
+                <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('isPrincipal')">
                     <mat-checkbox
                         color="primary"
-                        pxb-left-content
+                        blui-left-content
                         [checked]="shownColumns.isPrincipal"
                         style="pointer-events: none"
                     ></mat-checkbox>
-                    <div pxb-title>Principal Rep</div>
-                </pxb-info-list-item>
+                    <div blui-title>Principal Rep</div>
+                </blui-info-list-item>
 
-                <pxb-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('uptime')">
+                <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumn('uptime')">
                     <mat-checkbox
                         color="primary"
-                        pxb-left-content
+                        blui-left-content
                         [checked]="shownColumns.uptime"
                         style="pointer-events: none"
                     ></mat-checkbox>
-                    <div pxb-title>Uptime</div>
-                </pxb-info-list-item>
+                    <div blui-title>Uptime</div>
+                </blui-info-list-item>
             </mat-nav-list>
-        </pxb-user-menu>
+        </blui-user-menu>
     </div>
     <app-monitored-rep-table
         *ngIf="!vp.sm"

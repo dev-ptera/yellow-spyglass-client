@@ -4,7 +4,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { EmptyStateModule } from '@pxblue/angular-components';
+import { EmptyStateModule } from '@brightlayer-ui/angular-components';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AppCommonModule } from '@app/common/app-common.module';

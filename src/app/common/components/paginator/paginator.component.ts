@@ -21,7 +21,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
                     <mat-icon>chevron_left</mat-icon>
                 </button>
             </ng-container>
-            <pxb-spacer></pxb-spacer>
+            <blui-spacer></blui-spacer>
             <div [style.fontSize.px]="vp.sm ? 13 : 16">
                 Showing
                 <strong>{{ getCurrPageMin() }}</strong>
@@ -30,7 +30,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
                 of
                 <strong>{{ util.numberWithCommas(maxElements) }}</strong>
             </div>
-            <pxb-spacer></pxb-spacer>
+            <blui-spacer></blui-spacer>
             <ng-container *ngIf="maxElements > pageSize">
                 <button
                     mat-icon-button

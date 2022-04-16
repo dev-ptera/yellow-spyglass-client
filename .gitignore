@@ -3,3 +3,4 @@ node_modules
 .firebase
 .idea
 yarn-error.log
+.angular

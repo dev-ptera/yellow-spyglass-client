@@ -15,8 +15,8 @@ import { AliasService } from '@app/services/alias/alias.service';
         >
             <div style="align-items: center; display: flex; margin-bottom: 8px">
                 <span [style.fontSize.px]="16" style="margin-right: 16px; font-weight: 600"> #{{ i + 1 }}</span>
-                <pxb-list-item-tag *ngIf="rep.principal" label="Principal" class="principal-tag"></pxb-list-item-tag>
-                <pxb-spacer></pxb-spacer>
+                <blui-list-item-tag *ngIf="rep.principal" label="Principal" class="principal-tag"></blui-list-item-tag>
+                <blui-spacer></blui-spacer>
                 <span
                     class="mat-overline"
                     style="font-size: 11px; display: flex; align-items: center"

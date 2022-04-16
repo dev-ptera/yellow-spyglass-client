@@ -1,20 +1,19 @@
-@import '~@angular/material/_theming.scss';
+@use '@angular/material' as mat;
 
-$custom-typography: mat-typography-config(
+$custom-typography: mat.define-typography-config(
     $font-family: '"Open Sans", Arial, Helvetica, sans-serif;',
-    $display-4: mat-typography-level(6rem, 1.167, 300),
-    $display-3: mat-typography-level(3.75rem, 1.2, 300),
-    $display-2: mat-typography-level(3rem, 1.167, 400),
-    $display-1: mat-typography-level(2.125rem, 1.235, 400),
-    $headline: mat-typography-level(1.5rem, 1.334, 400),
-    $title: mat-typography-level(1.25rem, 1.6, 600),
-    $subheading-2: mat-typography-level(1rem, 1.75, 400),
-    $subheading-1: mat-typography-level(0.875rem, 1.57, 600),
-    $body-2: mat-typography-level(0.875rem, 1.43, 500),
-    $body-1: mat-typography-level(1rem, 1.5, 400),
-    $caption: mat-typography-level(0.75rem, 1.66, 400),
-    $button: mat-typography-level(0.875rem, 1, 600),
-    $input: mat-typography-level(inherit, 1.125, 400),
+    $display-4: mat.define-typography-level(6rem, 1.167, 300),
+    $display-2: mat.define-typography-level(3rem, 1.167, 400),
+    $display-1: mat.define-typography-level(2.125rem, 1.235, 400),
+    $headline: mat.define-typography-level(1.5rem, 1.334, 400),
+    $title: mat.define-typography-level(1.25rem, 1.6, 600),
+    $subheading-2: mat.define-typography-level(1rem, 1.75, 400),
+    $subheading-1: mat.define-typography-level(0.875rem, 1.57, 600),
+    $body-2: mat.define-typography-level(0.875rem, 1.43, 500),
+    $body-1: mat.define-typography-level(1rem, 1.5, 400),
+    $caption: mat.define-typography-level(0.75rem, 1.66, 400),
+    $button: mat.define-typography-level(0.875rem, 1, 600),
+    $input: mat.define-typography-level(inherit, 1.125, 400),
 );
 
 .mat-display-4,

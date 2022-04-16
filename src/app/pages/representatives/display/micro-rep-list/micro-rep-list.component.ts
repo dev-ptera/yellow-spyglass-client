@@ -17,31 +17,31 @@ import { AliasService } from '@app/services/alias/alias.service';
     template: `
         <mat-card class="rep-mobile-list-container mat-elevation-z0">
             <mat-list [style.paddingTop.px]="0" class="representatives-micro-list">
-                <pxb-info-list-item
+                <blui-info-list-item
                     *ngFor="let rep of microReps; trackBy: trackByFn; let last = last; let i = index"
                     [hidePadding]="true"
                     [dense]="false"
                     [divider]="last ? undefined : 'full'"
                 >
-                    <div pxb-left-content style="width: 32px; font-weight: 600" [style.marginLeft.px]="vp.sm ? 0 : 16">
+                    <div blui-left-content style="width: 32px; font-weight: 600" [style.marginLeft.px]="vp.sm ? 0 : 16">
                         #{{ i + 1 }}
                     </div>
-                    <div pxb-title class="primary">{{ aliasService.get(rep.address) }}</div>
-                    <div pxb-subtitle style="font-size: 0.875rem">{{ formatMicroRepInfoList(rep) }}</div>
-                    <div pxb-info>
+                    <div blui-title class="primary">{{ aliasService.get(rep.address) }}</div>
+                    <div blui-subtitle style="font-size: 0.875rem">{{ formatMicroRepInfoList(rep) }}</div>
+                    <div blui-info>
                         <span class="link" (click)="routeRepAddress(rep.address)">{{
                             formatAddress(rep.address)
                         }}</span>
                     </div>
                     <div
-                        pxb-right-content
+                        blui-right-content
                         style="display: flex; flex-direction: column; align-items: flex-end"
                         [style.marginRight.px]="vp.sm ? 0 : 16"
                     >
                         <div style="font-size: 0.875rem">{{ formatBanWeight(rep.weight) }} BAN</div>
                         <div style="font-size: 0.75rem">{{ formatWeightPercent(rep.weight) }} weight</div>
                     </div>
-                </pxb-info-list-item>
+                </blui-info-list-item>
             </mat-list>
         </mat-card>
     `,

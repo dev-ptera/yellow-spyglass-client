@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EmptyStateModule, SpacerModule } from '@pxblue/angular-components';
+import { EmptyStateModule, SpacerModule } from '@brightlayer-ui/angular-components';
 import { MatIconModule } from '@angular/material/icon';
 import { AppCommonModule } from '@app/common/app-common.module';
 import { NetworkComponent } from '@app/pages/network/network.component';

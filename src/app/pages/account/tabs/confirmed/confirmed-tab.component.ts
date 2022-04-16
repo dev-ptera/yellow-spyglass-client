@@ -14,7 +14,7 @@ import { AliasService } from '@app/services/alias/alias.service';
         <mat-divider></mat-divider>
 
         <mat-list class="tab-transaction-list" *ngIf="confirmedTransactions.length >= 0" responsive>
-            <pxb-info-list-item
+            <blui-info-list-item
                 *ngFor="let tx of confirmedTransactions; trackBy: trackByFn; let last = last"
                 [divider]="last ? undefined : vp.sm ? 'full' : 'partial'"
                 [wrapTitle]="true"
@@ -22,16 +22,16 @@ import { AliasService } from '@app/services/alias/alias.service';
                 [hidePadding]="true"
                 style="position: relative"
             >
-                <div pxb-icon>
+                <div blui-icon>
                     <div
                         *ngIf="monkeyCache.getMonkey(tx.address)"
                         [innerHTML]="monkeyCache.getMonkey(tx.address) | safe"
                     ></div>
                 </div>
-                <div pxb-title>
+                <div blui-title>
                     <div class="tag-row">
-                        <pxb-list-item-tag [label]="tx.formatHeight" [class]="'height ' + tx.type"></pxb-list-item-tag>
-                        <pxb-list-item-tag [label]="tx.type" [class]="'type ' + tx.type"></pxb-list-item-tag>
+                        <blui-list-item-tag [label]="tx.formatHeight" [class]="'height ' + tx.type"></blui-list-item-tag>
+                        <blui-list-item-tag [label]="tx.type" [class]="'type ' + tx.type"></blui-list-item-tag>
                         <span *ngIf="tx.type !== 'change'" [class]="'amount ' + tx.type">{{ tx.balance }}</span>
                     </div>
                     <div>
@@ -41,10 +41,10 @@ import { AliasService } from '@app/services/alias/alias.service';
                         </span>
                     </div>
                 </div>
-                <div pxb-subtitle class="hash">
+                <div blui-subtitle class="hash">
                     <span class="link" (click)="searchService.emitSearch(tx.hash, $event.ctrlKey)">{{ tx.hash }}</span>
                 </div>
-                <div pxb-right-content class="right-content">
+                <div blui-right-content class="right-content">
                     <div
                         class="small-monkey"
                         *ngIf="monkeyCache.getMonkey(tx.address) && vp.sm"
@@ -55,20 +55,20 @@ import { AliasService } from '@app/services/alias/alias.service';
                         <span>{{ tx.time }}</span>
                     </div>
                 </div>
-            </pxb-info-list-item>
+            </blui-info-list-item>
             <mat-divider></mat-divider>
             <ng-template [ngTemplateOutlet]="paginator"></ng-template>
         </mat-list>
 
-        <pxb-empty-state
+        <blui-empty-state
             responsive
             *ngIf="confirmedTransactions.length === 0"
             class="account-empty-state"
             title="No Confirmed Transactions"
             description="This account has not received or sent anything yet."
         >
-            <mat-icon pxb-empty-icon>paid</mat-icon>
-        </pxb-empty-state>
+            <mat-icon blui-empty-icon>paid</mat-icon>
+        </blui-empty-state>
     `,
     styleUrls: ['confirmed-tab.component.scss'],
     encapsulation: ViewEncapsulation.None,

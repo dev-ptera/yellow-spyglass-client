@@ -5,7 +5,7 @@
 export const environment = {
     megaphone: false,
     production: false,
-    api: 'http://192.168.1.235:3000/yellowspyglass',
+    api: 'http://192.168.1.200:3000/yellowspyglass',
 };
 
 /*

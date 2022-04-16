@@ -4,11 +4,11 @@
         padding-right: 18px !important;
     }
 
-    .pxb-info-list-item .mat-list-item {
+    .blui-info-list-item .mat-list-item {
         padding-top: 16px;
         padding-bottom: 16px;
 
-        .pxb-info-list-item-icon-wrapper {
+        .blui-info-list-item-icon-wrapper {
             display: none;
         }
 
@@ -36,7 +36,7 @@
 }
 
 .tab-transaction-list.md {
-    .pxb-info-list-item .mat-list-item {
+    .blui-info-list-item .mat-list-item {
         .timestamps {
             flex-direction: column;
             text-align: right;
@@ -46,7 +46,7 @@
 
 .tab-transaction-list {
     padding-top: 0px;
-    .pxb-info-list-item {
+    .blui-info-list-item {
         .tag-row {
             display: flex;
             align-items: center;
@@ -65,15 +65,15 @@
             margin-right: 8px;
         }
     }
-    .pxb-info-list-item .pxb-info-list-item-subtitle-wrapper {
+    .blui-info-list-item .blui-info-list-item-subtitle-wrapper {
         font-size: 0.75rem;
     }
-    .pxb-info-list-item-icon-wrapper > * {
+    .blui-info-list-item-icon-wrapper > * {
         height: 6rem !important;
         width: 6rem !important;
         font-size: 6rem !important;
     }
-    .pxb-info-list-item-icon-wrapper {
+    .blui-info-list-item-icon-wrapper {
         max-width: unset !important;
         width: unset !important;
         min-width: unset !important;
@@ -94,7 +94,7 @@
         }
     }
 
-    .pxb-info-list-item-partial-divider {
+    .blui-info-list-item-partial-divider {
         left: calc(6rem + 32px) !important;
         width: calc(100% - calc(6rem + 32px)) !important;
     }

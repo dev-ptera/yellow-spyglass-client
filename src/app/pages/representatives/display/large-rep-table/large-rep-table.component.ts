@@ -33,12 +33,12 @@ import { AliasService } from '@app/services/alias/alias.service';
                             {{ element.address }}
                         </div>
                         <div style="display: flex; align-items: center; z-index: 1">
-                            <pxb-list-item-tag
+                            <blui-list-item-tag
                                 *ngIf="element.principal"
                                 class="principal-tag"
                                 label="Principal"
                                 style="margin-right: 12px"
-                            ></pxb-list-item-tag>
+                            ></blui-list-item-tag>
                             <span
                                 class="link"
                                 style="font-weight: 600"

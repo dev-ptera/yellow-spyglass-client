@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { EmptyStateModule, InfoListItemModule, ListItemTagModule } from '@pxblue/angular-components';
+import { EmptyStateModule, InfoListItemModule, ListItemTagModule } from '@brightlayer-ui/angular-components';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';

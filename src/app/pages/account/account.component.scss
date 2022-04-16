@@ -1,4 +1,4 @@
-@import '../../../../node_modules/@pxblue/colors/palette';
+@use '../../../../node_modules/@brightlayer-ui/colors/palette' as blui;
 
 .account-header {
     display: flex;
@@ -87,7 +87,7 @@
     height: 120px !important;
     width: 120px !important;
     box-sizing: border-box;
-    border: solid 1px map-get($pxb-green, 500);
+    border: solid 1px map-get(blui.$blui-green, 500);
 }
 
 .account-tabs .mat-tab-label {
@@ -101,7 +101,7 @@
     &.sm {
         display: flex;
     }
-    pxb-list-item-tag {
+    blui-list-item-tag {
         margin-right: 16px;
     }
     .account-balance {
@@ -109,9 +109,9 @@
         font-size: 18px;
     }
     .account-pending {
-        background-color: map-get($pxb-white, 50);
-        color: map-get($pxb-orange, 500);
-        border: solid 1px map-get($pxb-orange, 500);
+        background-color: map-get(blui.$blui-white, 50);
+        color: map-get(blui.$blui-orange, 500);
+        border: solid 1px map-get(blui.$blui-orange, 500);
     }
 }
 
@@ -169,7 +169,7 @@
         .to-from {
             color: $hashColor;
         }
-        pxb-list-item-tag.type {
+        blui-list-item-tag.type {
             &.send {
                 @include sendTag();
             }

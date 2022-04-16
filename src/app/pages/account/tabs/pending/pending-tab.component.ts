@@ -10,7 +10,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
         <mat-divider></mat-divider>
 
         <mat-list class="tab-transaction-list" *ngIf="pendingTransactions.length >= 0" responsive>
-            <pxb-info-list-item
+            <blui-info-list-item
                 *ngFor="let tx of pendingTransactions; trackBy: trackByFn"
                 [divider]="true"
                 [wrapTitle]="true"
@@ -18,15 +18,15 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
                 [hidePadding]="true"
                 style="position: relative"
             >
-                <div class="large-monkey-wrapper" pxb-icon>
+                <div class="large-monkey-wrapper" blui-icon>
                     <div
                         *ngIf="monkeyCache.getMonkey(tx.address)"
                         [innerHTML]="monkeyCache.getMonkey(tx.address) | safe"
                     ></div>
                 </div>
-                <div pxb-title>
+                <div blui-title>
                     <div class="tag-row">
-                        <pxb-list-item-tag label="receive" class="type receive"></pxb-list-item-tag>
+                        <blui-list-item-tag label="receive" class="type receive"></blui-list-item-tag>
                         <span class="amount receive">{{ tx.balance }}</span>
                     </div>
                     <div>
@@ -36,10 +36,10 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
                         </span>
                     </div>
                 </div>
-                <div pxb-subtitle class="hash">
+                <div blui-subtitle class="hash">
                     <span class="link" (click)="searchService.emitSearch(tx.hash)">{{ tx.hash }}</span>
                 </div>
-                <div pxb-right-content class="right-content">
+                <div blui-right-content class="right-content">
                     <div
                         class="small-monkey"
                         *ngIf="monkeyCache.getMonkey(tx.address) && vp.sm"
@@ -50,7 +50,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
                         <span>{{ tx.time }}</span>
                     </div>
                 </div>
-            </pxb-info-list-item>
+            </blui-info-list-item>
         </mat-list>
 
         <!--
@@ -61,15 +61,15 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
         </div>
         -->
 
-        <pxb-empty-state
+        <blui-empty-state
             responsive
             class="account-empty-state"
             *ngIf="pendingTransactions.length === 0"
             title="No Receivable Transactions"
             description="This account has already received all incoming payments"
         >
-            <mat-icon pxb-empty-icon>paid</mat-icon>
-        </pxb-empty-state>
+            <mat-icon blui-empty-icon>paid</mat-icon>
+        </blui-empty-state>
     `,
     encapsulation: ViewEncapsulation.None,
     styleUrls: ['../confirmed/confirmed-tab.component.scss'],

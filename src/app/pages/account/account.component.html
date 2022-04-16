@@ -36,16 +36,16 @@
                         <span *ngIf="isRepresentative()">
                             <ng-container *ngIf="!accountOverview.principal"> Representative </ng-container>
                             <ng-container *ngIf="accountOverview.principal"> Principal Rep </ng-container>
-                            <pxb-list-item-tag
+                            <blui-list-item-tag
                                 *ngIf="!onlineRepService.onlineReps.has(address)"
                                 class="account-rep-offline"
                                 label="Offline"
-                            ></pxb-list-item-tag>
-                            <pxb-list-item-tag
+                            ></blui-list-item-tag>
+                            <blui-list-item-tag
                                 class="account-rep-online"
                                 *ngIf="onlineRepService.onlineReps.has(address)"
                                 label="Online"
-                            ></pxb-list-item-tag>
+                            ></blui-list-item-tag>
                         </span>
                     </div>
                     <div class="app-page-subtitle account-address-line" [style.marginBottom.px]="vp.sm ? 8 : 0">
@@ -102,7 +102,7 @@
                     <div class="account-summary-tags" responsive>
                         <ng-template *ngIf="vp.sm" [ngTemplateOutlet]="accountMonkey"></ng-template>
 
-                        <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 0" responsive>
+                        <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 16" responsive>
                             <ng-container *ngIf="!vp.sm">
                                 <span class="account-ban-amount" [style.marginRight.px]="8"
                                     >{{ confirmedBalance }} BAN</span

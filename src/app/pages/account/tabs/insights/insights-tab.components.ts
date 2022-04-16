@@ -37,63 +37,63 @@ import * as Highcharts from 'highcharts';
                 </mat-card>
             </div>
         </div>
-        <pxb-empty-state
+        <blui-empty-state
             *ngIf="!error && !insights && !disabled"
             responsive
             class="account-empty-state"
             title="Loading"
             description="One second, counting them 'nanners.  Larger accounts will take longer."
         >
-            <mat-icon pxb-empty-icon>pending</mat-icon>
-        </pxb-empty-state>
-        <pxb-empty-state
+            <mat-icon blui-empty-icon>pending</mat-icon>
+        </blui-empty-state>
+        <blui-empty-state
             *ngIf="disabled"
             responsive
             class="account-empty-state"
             title="No Insights"
             [description]="getErrorDescription()"
         >
-            <mat-icon pxb-empty-icon>disc_full</mat-icon>
-        </pxb-empty-state>
+            <mat-icon blui-empty-icon>disc_full</mat-icon>
+        </blui-empty-state>
         <app-error *ngIf="error"></app-error>
 
         <ng-template #sent>
             <div class="primary node-monitor-section-title">Sent</div>
             <mat-divider></mat-divider>
             <mat-list [style.paddingTop.px]="0">
-                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
-                    <div pxb-title>Total BAN Sent</div>
-                    <div pxb-subtitle>{{ formatBan(insights.totalAmountSentBan) }} BAN</div>
-                </pxb-info-list-item>
-                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
-                    <div pxb-title>Largest Tx Sent</div>
-                    <div pxb-subtitle>{{ formatBan(insights.maxAmountSentBan) }} BAN</div>
-                    <div pxb-right-content class=" link mat-overline" (click)="search(insights.maxAmountSentHash)">
+                <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div blui-title>Total BAN Sent</div>
+                    <div blui-subtitle>{{ formatBan(insights.totalAmountSentBan) }} BAN</div>
+                </blui-info-list-item>
+                <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div blui-title>Largest Tx Sent</div>
+                    <div blui-subtitle>{{ formatBan(insights.maxAmountSentBan) }} BAN</div>
+                    <div blui-right-content class=" link mat-overline" (click)="search(insights.maxAmountSentHash)">
                         hash
                     </div>
-                </pxb-info-list-item>
+                </blui-info-list-item>
 
-                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
-                    <div pxb-title># Tx Sent</div>
-                    <div pxb-subtitle>{{ numberWithComas(insights.totalTxSent) }}</div>
-                </pxb-info-list-item>
+                <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div blui-title># Tx Sent</div>
+                    <div blui-subtitle>{{ numberWithComas(insights.totalTxSent) }}</div>
+                </blui-info-list-item>
 
-                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
-                    <div pxb-title>First-Sent Date</div>
-                    <div pxb-subtitle>{{ formatDate(insights.firstOutTxUnixTimestamp) }}</div>
-                    <div pxb-right-content class="link mat-overline" (click)="search(insights.firstOutTxHash)">
+                <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div blui-title>First-Sent Date</div>
+                    <div blui-subtitle>{{ formatDate(insights.firstOutTxUnixTimestamp) }}</div>
+                    <div blui-right-content class="link mat-overline" (click)="search(insights.firstOutTxHash)">
                         hash
                     </div>
-                </pxb-info-list-item>
+                </blui-info-list-item>
 
-                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
-                    <div pxb-title>Last-Sent Date</div>
-                    <div pxb-subtitle>{{ formatDate(insights.lastOutTxUnixTimestamp) }}</div>
-                    <div pxb-right-content class="link mat-overline" (click)="search(insights.lastOutTxHash)">hash</div>
-                </pxb-info-list-item>
-                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
-                    <div pxb-title>Most Common Recipient</div>
-                    <div pxb-subtitle>
+                <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div blui-title>Last-Sent Date</div>
+                    <div blui-subtitle>{{ formatDate(insights.lastOutTxUnixTimestamp) }}</div>
+                    <div blui-right-content class="link mat-overline" (click)="search(insights.lastOutTxHash)">hash</div>
+                </blui-info-list-item>
+                <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div blui-title>Most Common Recipient</div>
+                    <div blui-subtitle>
                         <div *ngIf="insights.mostCommonRecipientAddress">
                             Sent BAN
                             <strong style="margin: 0 4px"> {{ insights.mostCommonRecipientTxCount }} </strong> times to
@@ -101,18 +101,18 @@ import * as Highcharts from 'highcharts';
                         </div>
                         <div *ngIf="!insights.mostCommonRecipientAddress">This account has never sent any BAN.</div>
                     </div>
-                    <div pxb-info *ngIf="vp.sm" class="link" (click)="search(insights.mostCommonRecipientAddress)">
+                    <div blui-info *ngIf="vp.sm" class="link" (click)="search(insights.mostCommonRecipientAddress)">
                         {{ shortenAddr(insights.mostCommonRecipientAddress) }}
                     </div>
                     <div
-                        pxb-right-content
+                        blui-right-content
                         *ngIf="!vp.sm"
                         class="link"
                         (click)="search(insights.mostCommonRecipientAddress)"
                     >
                         {{ shortenAddr(insights.mostCommonRecipientAddress) }}
                     </div>
-                </pxb-info-list-item>
+                </blui-info-list-item>
             </mat-list>
         </ng-template>
 
@@ -120,59 +120,59 @@ import * as Highcharts from 'highcharts';
             <div class="primary node-monitor-section-title">Received</div>
             <mat-divider></mat-divider>
             <mat-list [style.paddingTop.px]="0">
-                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
-                    <div pxb-title>Total BAN Received</div>
-                    <div pxb-subtitle>{{ formatBan(insights.totalAmountReceivedBan) }} BAN</div>
-                </pxb-info-list-item>
-                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
-                    <div pxb-title>Largest Tx Received</div>
-                    <div pxb-subtitle>{{ formatBan(insights.maxAmountReceivedBan) }} BAN</div>
-                    <div pxb-right-content class=" link mat-overline" (click)="search(insights.maxAmountReceivedHash)">
+                <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div blui-title>Total BAN Received</div>
+                    <div blui-subtitle>{{ formatBan(insights.totalAmountReceivedBan) }} BAN</div>
+                </blui-info-list-item>
+                <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div blui-title>Largest Tx Received</div>
+                    <div blui-subtitle>{{ formatBan(insights.maxAmountReceivedBan) }} BAN</div>
+                    <div blui-right-content class=" link mat-overline" (click)="search(insights.maxAmountReceivedHash)">
                         hash
                     </div>
-                </pxb-info-list-item>
+                </blui-info-list-item>
 
-                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
-                    <div pxb-title># Tx Received</div>
-                    <div pxb-subtitle>{{ numberWithComas(insights.totalTxReceived) }}</div>
-                </pxb-info-list-item>
+                <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div blui-title># Tx Received</div>
+                    <div blui-subtitle>{{ numberWithComas(insights.totalTxReceived) }}</div>
+                </blui-info-list-item>
 
-                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
-                    <div pxb-title>First-Received Date</div>
-                    <div pxb-subtitle>{{ formatDate(insights.firstInTxUnixTimestamp) }}</div>
-                    <div pxb-right-content class="link mat-overline" (click)="search(insights.firstInTxHash)">hash</div>
-                </pxb-info-list-item>
-                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
-                    <div pxb-title>Last-Received Date</div>
-                    <div pxb-subtitle>{{ formatDate(insights.lastInTxUnixTimestamp) }}</div>
-                    <div pxb-right-content class="link mat-overline" (click)="search(insights.lastInTxHash)">hash</div>
-                </pxb-info-list-item>
+                <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div blui-title>First-Received Date</div>
+                    <div blui-subtitle>{{ formatDate(insights.firstInTxUnixTimestamp) }}</div>
+                    <div blui-right-content class="link mat-overline" (click)="search(insights.firstInTxHash)">hash</div>
+                </blui-info-list-item>
+                <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div blui-title>Last-Received Date</div>
+                    <div blui-subtitle>{{ formatDate(insights.lastInTxUnixTimestamp) }}</div>
+                    <div blui-right-content class="link mat-overline" (click)="search(insights.lastInTxHash)">hash</div>
+                </blui-info-list-item>
 
-                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
-                    <div pxb-title>Most Common Sender</div>
-                    <div pxb-subtitle>
+                <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div blui-title>Most Common Sender</div>
+                    <div blui-subtitle>
                         Received BAN
                         <strong style="margin: 0 4px">{{ insights.mostCommonSenderTxCount }}</strong> times from sender.
                     </div>
-                    <div pxb-info *ngIf="vp.sm" class="link" (click)="search(insights.mostCommonSenderAddress)">
+                    <div blui-info *ngIf="vp.sm" class="link" (click)="search(insights.mostCommonSenderAddress)">
                         {{ shortenAddr(insights.mostCommonSenderAddress) }}
                     </div>
                     <div
-                        pxb-right-content
+                        blui-right-content
                         *ngIf="!vp.sm"
                         class="link"
                         (click)="search(insights.mostCommonSenderAddress)"
                     >
                         {{ shortenAddr(insights.mostCommonSenderAddress) }}
                     </div>
-                </pxb-info-list-item>
-                <pxb-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
-                    <div pxb-title>Account Max Balance</div>
-                    <div pxb-subtitle>{{ formatBan(insights.maxBalanceBan) }} BAN</div>
-                    <div pxb-right-content class="link mat-overline" (click)="search(insights.maxBalanceHash)">
+                </blui-info-list-item>
+                <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+                    <div blui-title>Account Max Balance</div>
+                    <div blui-subtitle>{{ formatBan(insights.maxBalanceBan) }} BAN</div>
+                    <div blui-right-content class="link mat-overline" (click)="search(insights.maxBalanceHash)">
                         hash
                     </div>
-                </pxb-info-list-item>
+                </blui-info-list-item>
             </mat-list>
         </ng-template>
     `,

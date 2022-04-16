@@ -3,9 +3,9 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 @Component({
     selector: 'app-error',
     template: `
-        <pxb-empty-state responsive style="padding: 72px 48px" [title]="title" [description]="description">
-            <mat-icon pxb-empty-icon>error</mat-icon>
-        </pxb-empty-state>
+        <blui-empty-state responsive style="padding: 72px 48px" [title]="title" [description]="description">
+            <mat-icon blui-empty-icon>error</mat-icon>
+        </blui-empty-state>
     `,
     encapsulation: ViewEncapsulation.None,
 })
