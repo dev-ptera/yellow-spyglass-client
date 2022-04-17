@@ -106,11 +106,6 @@
     overflow: hidden !important;
 }
 
-.app-page-root,
-.explore-body {
-    min-height: 100vh;
-}
-
 .mat-form-field {
     line-height: 1.5 !important;
 }
@@ -136,8 +131,8 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
+    height: 100%;
     box-sizing: border-box;
-    min-height: calc(100vh - 64px);
     // TODO: move these paddings to a global style, shared
     padding: 64px 64px 64px 64px;
     &.md {
@@ -145,7 +140,6 @@
     }
     &.sm {
         padding: 32px 16px 48px 16px;
-        min-height: calc(100vh - 56px);
     }
 }
 

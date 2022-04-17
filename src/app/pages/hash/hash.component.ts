@@ -26,7 +26,7 @@ import { ApiService } from '@app/services/api/api.service';
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Block Account</span>
-                    <span class="app-section-subtitle link" (click)="search(block.blockAccount)">
+                    <span class="app-section-subtitle link" (click)="search(block.blockAccount, $event)">
                         {{ block.blockAccount }}
                     </span>
                 </div>
@@ -52,13 +52,13 @@ import { ApiService } from '@app/services/api/api.service';
             <div class="hash-section" *ngIf="block.subtype !== 'change'">
                 <div *ngIf="block.subtype === 'send'">
                     <span class="app-section-title">Recipient</span>
-                    <span class="app-section-subtitle link" (click)="search(block.contents.linkAsAccount)">
+                    <span class="app-section-subtitle link" (click)="search(block.contents.linkAsAccount, $event)">
                         {{ block.contents.linkAsAccount }}
                     </span>
                 </div>
                 <div *ngIf="block.subtype === 'receive'">
                     <span class="app-section-title">Sender</span>
-                    <span class="app-section-subtitle link" (click)="search(block.sourceAccount)">
+                    <span class="app-section-subtitle link" (click)="search(block.sourceAccount, $event)">
                         {{ block.sourceAccount }}
                     </span>
                 </div>
@@ -105,7 +105,7 @@ import { ApiService } from '@app/services/api/api.service';
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Representative</span>
-                    <span class="app-section-subtitle link" (click)="search(block.contents.representative)">{{
+                    <span class="app-section-subtitle link" (click)="search(block.contents.representative, $event)">{{
                         block.contents.representative
                     }}</span>
                 </div>
@@ -117,7 +117,7 @@ import { ApiService } from '@app/services/api/api.service';
                     <span
                         class="app-section-subtitle"
                         [class.link]="block.height !== 1"
-                        (click)="search(block.contents.previous)"
+                        (click)="search(block.contents.previous, $event)"
                     >
                         {{ block.height === 1 ? 'This block opened the account' : block.contents.previous }}</span
                     >
@@ -127,7 +127,7 @@ import { ApiService } from '@app/services/api/api.service';
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Link</span>
-                    <span class="app-section-subtitle link" (click)="search(block.contents.link)">{{
+                    <span class="app-section-subtitle link" (click)="search(block.contents.link, $event)">{{
                         block.contents.link
                     }}</span>
                 </div>
@@ -223,9 +223,9 @@ export class HashComponent implements OnDestroy {
         return `${new Date(time * 1000).toLocaleDateString()} ${new Date(time * 1000).toLocaleTimeString()}`;
     }
 
-    search(value: string): void {
+    search(value: string, e: MouseEvent): void {
         if (value !== '0000000000000000000000000000000000000000000000000000000000000000') {
-            this._searchService.emitSearch(value);
+            this._searchService.emitSearch(value, e.ctrlKey);
         }
     }
 }

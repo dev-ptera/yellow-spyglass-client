@@ -30,7 +30,7 @@ import { ApiService } from '@app/services/api/api.service';
                         </div>
                         <div blui-title>Address</div>
                         <div blui-subtitle>
-                            <span class="link" (click)="search(stats.address)">{{ stats.address }}</span>
+                            <span class="link" (click)="search(stats.address, $event)">{{ stats.address }}</span>
                         </div>
                     </blui-info-list-item>
                     <blui-info-list-item>
@@ -186,8 +186,8 @@ export class NodeMonitorComponent implements OnInit {
         return Math.round(mem / 1000);
     }
 
-    search(value: string): void {
-        this._searchService.emitSearch(value);
+    search(value: string, e: MouseEvent): void {
+        this._searchService.emitSearch(value, e.ctrlKey);
     }
 
     formatUptime(seconds: number): string {
