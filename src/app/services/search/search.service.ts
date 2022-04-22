@@ -12,7 +12,10 @@ export class SearchService {
     }
 
     emitSearch(search: string, openInNewWindow = true): void {
-        search = search.trim();
-        this.search$.next({ search, openInNewWindow });
+        if (!search) {
+            return;
+        }
+        const trimmed = search.trim();
+        this.search$.next({ search: trimmed, openInNewWindow });
     }
 }
