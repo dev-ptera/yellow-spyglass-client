@@ -12,6 +12,7 @@ export class SearchService {
     }
 
     emitSearch(search: string, openInNewWindow = true): void {
+        search = search.trim();
         this.search$.next({ search, openInNewWindow });
     }
 }
