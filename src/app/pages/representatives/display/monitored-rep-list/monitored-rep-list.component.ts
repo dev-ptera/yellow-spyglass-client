@@ -22,7 +22,7 @@ import { RepresentativesService } from '@app/pages/representatives/representativ
                         <div class="link primary" (click)="repService.openMonitoredRep(rep)">{{ rep.name }}</div>
                     </div>
                     <div blui-subtitle style="font-size: 0.875rem">{{ formatInfoLine(rep) }}</div>
-                    <div blui-info style="font-size: 0.875rem" (click)="routeRepAddress(rep.address)">
+                    <div blui-info style="font-size: 0.875rem" (click)="routeRepAddress(rep.address, $event)">
                         {{ formatAddress(rep.address) }}
                     </div>
                     <div blui-right-content style="display: flex; flex-direction: column; align-items: flex-end">
@@ -68,9 +68,9 @@ export class MonitoredRepListComponent {
         return `${this._util.numberWithCommas(count)}`;
     }
 
-    routeRepAddress(address: string): void {
+    routeRepAddress(address: string, e: MouseEvent): void {
         if (address) {
-            this._searchService.emitSearch(address);
+            this._searchService.emitSearch(address, e.ctrlKey);
         }
     }
 

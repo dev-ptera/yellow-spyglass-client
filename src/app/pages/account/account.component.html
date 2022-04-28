@@ -63,16 +63,18 @@
                         [style.fontSize.px]="vp.sm ? 14 : 16"
                     >
                         <div *ngIf="hasAlias(address)" style="display: flex">
-                            <span class="secondary" style="margin-right: 4px">
+                            <span class="secondary" style="margin-right: 4px; font-weight: 200">
                                 <ng-container *ngIf="vp.sm"> A.K.A </ng-container>
                                 <ng-container *ngIf="!vp.sm"> Also known as </ng-container>
                             </span>
-                            <strong class="primary">{{ getAlias(address) }}</strong>
+                            {{ getAlias(address) }}
                             <span style="margin: 0 8px">|</span>
                         </div>
                         <div *ngIf="accountOverview.opened" class="account-representative secondary" responsive>
                             <ng-container *ngIf="accountOverview.representative !== address">
+                                <span style="font-weight: 200">
                                 Represented by
+                                </span>
 
                                 <span
                                     (click)="searchService.emitSearch(accountOverview.representative, $event.ctrlKey)"
@@ -86,7 +88,7 @@
                                     matBadgePosition="after"
                                     class="account-representative-address primary"
                                 >
-                                    <strong>{{ accountRepresentative }}</strong>
+                                    {{ accountRepresentative }}
                                 </span>
                             </ng-container>
                             <div
@@ -150,12 +152,16 @@
         <!-- Confirmed transactions -->
         <mat-tab>
             <ng-template mat-tab-label>
-                <span matBadgeOverlap="false" [matBadge]="getConfirmedBadge()" matBadgeColor="primary">
+                <span >
                     <ng-container *ngIf="!vp.sm">
                         Confirmed
                         <ng-container *ngIf="!vp.md">Transactions</ng-container>
                     </ng-container>
                     <mat-icon *ngIf="vp.sm">check</mat-icon>
+                    <br />
+                    <span style="font-size: 14px" class="secondary">
+                         {{  getConfirmedBadge()  }}
+                    </span>
                 </span>
             </ng-template>
             <account-confirmed-tab
@@ -169,15 +175,16 @@
             <ng-template mat-tab-label>
                 <span
                     class="account-pending-badge"
-                    [matBadge]="getPendingBadge()"
-                    matBadgeOverlap="false"
-                    matBadgeColor="primary"
                 >
                     <ng-container *ngIf="!vp.sm">
                         Pending
                         <ng-container *ngIf="!vp.md">Transactions</ng-container>
                     </ng-container>
                     <mat-icon *ngIf="vp.sm">pending</mat-icon>
+                    <br />
+                    <span style="font-size: 14px" class="secondary">
+                         {{  getPendingBadge()  }}
+                    </span>
                 </span>
             </ng-template>
             <account-pending-tab
@@ -191,13 +198,14 @@
             <ng-template mat-tab-label>
                 <span
                     class="account-delegators-badge"
-                    [matBadge]="getDelegatorsBadge()"
-                    matBadgeOverlap="false"
-                    matBadgeColor="primary"
                 >
                     <!-- Delegators -->
                     <ng-container *ngIf="!vp.sm">Delegators</ng-container>
                     <mat-icon *ngIf="vp.sm">how_to_vote</mat-icon>
+                    <br />
+                    <span style="font-size: 14px" class="secondary">
+                         {{  getDelegatorsBadge()  }}
+                    </span>
                 </span>
             </ng-template>
             <account-delegators-tab [delegators]="delegators" [weightSum]="weightSum"></account-delegators-tab>
