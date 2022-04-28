@@ -151,3 +151,12 @@
     border-left: unset !important;
     border-right: unset !important;
 }
+
+// Stupid safari scroll behavior hack.
+.sm.blui-drawer-layout {
+    height: 100%!important;
+    &.open {
+        height: 100vh!important;
+        overflow: hidden;
+    }
+}
