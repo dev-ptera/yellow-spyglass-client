@@ -29,7 +29,7 @@ import { DeleteBookmarkDialog } from '@app/pages/bookmarks/delete-bookmark-dialo
                                 >
                                     <mat-icon>edit</mat-icon>
                                 </button>
-                                <span class="bookmarks-data" (click)="searchService.emitSearch(element.id)">
+                                <span class="bookmarks-data" (click)="searchService.emitSearch(element.id, $event.ctrlKey)">
                                     {{ element.alias }}
                                 </span>
                             </div>
@@ -76,13 +76,13 @@ import { DeleteBookmarkDialog } from '@app/pages/bookmarks/delete-bookmark-dialo
                 </table>
             </div>
             <div style="display: flex; height: 100%; align-items: center">
-                <pxb-empty-state
+                <blui-empty-state
                     *ngIf="bookmarks.length === 0"
                     title="No Bookmarks Found"
                     description="To add a bookmark, search an address or transaction hash and save it."
                 >
-                    <mat-icon pxb-empty-icon>bookmarks</mat-icon>
-                </pxb-empty-state>
+                    <mat-icon blui-empty-icon>bookmarks</mat-icon>
+                </blui-empty-state>
             </div>
         </div>
     `,

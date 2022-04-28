@@ -34,13 +34,13 @@ import { AliasService } from '@app/services/alias/alias.service';
                 *ngIf="aliasService.has(rep.address)"
                 class="primary"
                 style="font-size: 0.875rem; font-weight: 600"
-                (click)="routeRepAddress(rep.address)"
+                (click)="routeRepAddress(rep.address, $event)"
             >
                 {{ aliasService.get(rep.address) }}
             </div>
             <div
                 style="font-size: 0.875rem; word-break: break-all; margin-bottom: 8px"
-                (click)="routeRepAddress(rep.address)"
+                (click)="routeRepAddress(rep.address, $event)"
             >
                 {{ formatAddress(rep.address) }}
             </div>
@@ -104,9 +104,9 @@ export class LargeRepCardsComponent {
         return this._util.shortenAddress(addr);
     }
 
-    routeRepAddress(address: string): void {
+    routeRepAddress(address: string, e: MouseEvent): void {
         if (address) {
-            this._searchService.emitSearch(address);
+            this._searchService.emitSearch(address, e.ctrlKey);
         }
     }
 }
