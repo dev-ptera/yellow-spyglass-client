@@ -33,7 +33,7 @@ export class KnownAccountsComponent implements OnInit {
 
     ngOnInit(): void {
         this._api
-            .getKnownAccounts()
+            .fetchKnownAccounts()
             .then((data: KnownAccountDto[]) => {
                 this.loading = false;
                 this.accountsDataSource = new MatTableDataSource(data);

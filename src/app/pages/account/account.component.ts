@@ -120,7 +120,7 @@ export class AccountComponent implements OnDestroy {
             });
 
         // Monkey
-        Promise.all([this._apiService.monkey(address), spin])
+        Promise.all([this._apiService.fetchMonKey(address), spin])
             .then(([data]) => {
                 this.monkeySvg = data;
             })
@@ -222,7 +222,7 @@ export class AccountComponent implements OnDestroy {
             }
             monkeyPromise.push(
                 this._apiService
-                    .monkey(addr)
+                    .fetchMonKey(addr)
                     .then((monkey: string) => {
                         this._monkeyCache.addCache(addr, monkey);
                         return Promise.resolve();

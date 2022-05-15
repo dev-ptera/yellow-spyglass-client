@@ -10,7 +10,6 @@ import { PriceService } from '@app/services/price/price.service';
 import { AccountBalanceDto, AccountDistributionStatsDto } from '@app/types/dto';
 import { OnlineRepsService } from '@app/services/online-reps/online-reps.service';
 import { MegaphoneService } from '@app/services/megaphone/megaphone.service';
-import { environment } from '../../../environments/environment';
 import { AliasService } from '@app/services/alias/alias.service';
 
 @Component({
@@ -19,26 +18,27 @@ import { AliasService } from '@app/services/alias/alias.service';
     styleUrls: ['./wallets.component.scss'],
 })
 export class WalletsComponent implements OnInit {
-    Highcharts: typeof Highcharts = Highcharts;
-    loading = true;
-    error = false;
-    distributionChart: Options;
-    accountBalances: AccountBalanceDto[] = [];
-    isMegaphone = environment.megaphone;
-    columns = this.isMegaphone ? ['position', 'megaphone', 'addr', 'ban'] : ['position', 'addr', 'ban'];
+
     currentPage = 0;
+    readonly pageSize = 25;
+
+    isLoading = true;
+    hasError = false;
     totalAccounts: number;
     loadingNewAccountBalancePage = false;
-    megaSuccess: boolean;
-    readonly pageSize = 25;
+
+    distributionChart: Options;
+    columns = ['position', 'addr', 'ban'];
+    accountBalances: AccountBalanceDto[] = [];
+    Highcharts: typeof Highcharts = Highcharts;
 
     constructor(
         public util: UtilService,
-        private readonly _api: ApiService,
         public vp: ViewportService,
         public megaphone: MegaphoneService,
         public searchService: SearchService,
         public aliasService: AliasService,
+        private readonly _api: ApiService,
         private readonly _ref: ChangeDetectorRef,
         private readonly _priceService: PriceService,
         private readonly _onlineRepsService: OnlineRepsService
@@ -51,25 +51,25 @@ export class WalletsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        Promise.all([this._api.fetchBananoDistribution(), this._api.getAccountBalances(0, this.pageSize)])
+        Promise.all([this._api.fetchDistributionStats(), this._api.fetchRichListSegment(0, this.pageSize)])
             .then((data) => {
                 this.distributionChart = this._createDistributionChart(data[0]);
                 this.accountBalances = data[1];
                 this.totalAccounts = data[0].totalAccounts;
-                this.loading = false;
+                this.isLoading = false;
             })
             .catch((err) => {
-                this.error = true;
+                this.hasError = true;
                 console.error(err);
             });
     }
 
-    loadAccountBalances(currPage: number): void {
+    loadRichListPage(currPage: number): void {
         this.currentPage = currPage;
         this.loadingNewAccountBalancePage = true;
         const offset = currPage * this.pageSize;
         this._api
-            .getAccountBalances(offset, this.pageSize)
+            .fetchRichListSegment(offset, this.pageSize)
             .then((data) => {
                 this.accountBalances = data;
                 this.loadingNewAccountBalancePage = false;
@@ -97,30 +97,11 @@ export class WalletsComponent implements OnInit {
     }
 
     showWarningBadge(rep: string): boolean {
-        if (this.isMegaphone) {
-            const largeReps = new Set<string>();
-            largeReps.add('ban_1bananobh5rat99qfgt1ptpieie5swmoth87thi74qgbfrij7dcgjiij94xr');
-            largeReps.add('ban_1ka1ium4pfue3uxtntqsrib8mumxgazsjf58gidh1xeo5te3whsq8z476goo');
-            return largeReps.has(rep);
-        }
         return this._onlineRepsService.onlineReps.size > 0 && !this._onlineRepsService.onlineReps.has(rep);
     }
 
-    toot(): void {
-        this.megaphone
-            .toot()
-            .then(() => {
-                this.megaSuccess = true;
-                this.megaphone.reset();
-                this._ref.detectChanges();
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }
-
-    routeRepAddress(addr: string, e: MouseEvent): void {
-        this.searchService.emitSearch(addr, e.ctrlKey);
+    routeRepAddress(address: string, e: MouseEvent): void {
+        this.searchService.emitSearch(address, e.ctrlKey);
     }
 
     private _createDistributionChart(data: AccountDistributionStatsDto): Options {

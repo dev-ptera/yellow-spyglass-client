@@ -55,7 +55,7 @@ export class VanityComponent implements OnInit {
             }
             monkeyPromise.push(
                 this._apiService
-                    .monkey(address)
+                    .fetchMonKey(address)
                     .then((monkey: string) => {
                         this.monkeyCache.addCache(address, monkey);
                         return Promise.resolve();

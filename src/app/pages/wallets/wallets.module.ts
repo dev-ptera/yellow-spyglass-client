@@ -12,14 +12,14 @@ import { MatCardModule } from '@angular/material/card';
 @NgModule({
     declarations: [WalletsComponent],
     imports: [
-        CommonModule,
         AppCommonModule,
+        CommonModule,
         HighchartsChartModule,
         MatBadgeModule,
-        MatTableModule,
         MatButtonModule,
-        RouterModule,
         MatCardModule,
+        MatTableModule,
+        RouterModule,
     ],
     exports: [WalletsComponent],
 })

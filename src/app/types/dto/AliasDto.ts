@@ -1,4 +1,4 @@
 export type AliasDto = {
-    addr: string;
+    address: string;
     alias: string;
 };

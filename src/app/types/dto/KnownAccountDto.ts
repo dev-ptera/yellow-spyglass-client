@@ -1,8 +1,16 @@
 export type KnownAccountDto = {
     address: string;
     alias: string;
-    illicit?: number;
     owner?: string;
-    type?: string;
-    // tags?: 'representative' | 'exchange' | 'developer' | 'faucet' | 'explorer' ;
+    type?: KnownAccountType;
 };
+
+export type KnownAccountType =
+    | ''
+    | 'representative'
+    | 'exchange'
+    | 'distribution'
+    | 'faucet'
+    | 'explorer'
+    | 'citizen'
+    | 'burn';

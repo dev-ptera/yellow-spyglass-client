@@ -54,7 +54,8 @@ export class ApiService {
         return this._http.get<MonitoredRepDto>(`${this.url}/node`).pipe(timeout(FAST_MS)).toPromise();
     }
 
-    monkey(address: string): Promise<string> {
+    /** Fetches monKey avatar for a given account. */
+    fetchMonKey(address: string): Promise<string> {
         const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
         return this._http
             .get(`https://monkey.banano.cc/api/v1/monkey/${address}`, { headers, responseType: 'text' })
@@ -69,17 +70,21 @@ export class ApiService {
             .toPromise();
     }
 
-    /* Rich List is too expensive operation to run non-locally; default to production. */
-    fetchBananoDistribution(): Promise<AccountDistributionStatsDto> {
+    /** Fetches distribute buckets; how many accounts own (1-10 ban, 10-100, etc). */
+    fetchDistributionStats(): Promise<AccountDistributionStatsDto> {
         return this._http
             .get<AccountDistributionStatsDto>(`${this.spyglassApi}/v1/distribution/buckets`)
             .pipe(timeout(MED_MS))
             .toPromise();
     }
 
-    getAccountBalances(offset: number, pageSize: number): Promise<AccountBalanceDto[]> {
+    /** Fetches list of accounts with their respective balance & representative. */
+    fetchRichListSegment(offset: number, size: number): Promise<AccountBalanceDto[]> {
         return this._http
-            .get<AccountBalanceDto[]>(`${this.url}/accounts-balance?offset=${offset}&size=${pageSize}`)
+            .post<AccountBalanceDto[]>(
+                `${this.spyglassApi}/v1/distribution/rich-list`,
+                { offset, size, includeRepresentative: true }
+            )
             .pipe(timeout(SLOW_MS))
             .toPromise();
     }
@@ -92,16 +97,25 @@ export class ApiService {
         return this._http.get<InsightsDto>(`${this.url}/insights/${address}`).pipe(timeout(SLOW_MS)).toPromise();
     }
 
-    getOnlineReps(): Promise<string[]> {
-        return this._http.get<string[]>(`${this.url}/online-reps`).pipe(timeout(FAST_MS)).toPromise();
+    /** Fetches list of representatives that are considered online. */
+    fetchOnlineRepresentatives(): Promise<string[]> {
+        return this._http.get<string[]>(`${this.spyglassApi}/v1/representatives/online`).pipe(timeout(FAST_MS)).toPromise();
     }
 
-    getAliases(): Promise<AliasDto[]> {
-        return this._http.get<AliasDto[]>(`${this.url}/aliases`).pipe(timeout(FAST_MS)).toPromise();
+    /** Fetches list of aliases. */
+    fetchAliases(): Promise<AliasDto[]> {
+        return this._http.post<AliasDto[]>(
+            `${this.spyglassApi}/v1/known/accounts`,
+            { includeOwner: false, includeType: false }
+        ).pipe(timeout(FAST_MS)).toPromise();
     }
 
-    getKnownAccounts(): Promise<KnownAccountDto[]> {
-        return this._http.get<KnownAccountDto[]>(`${this.url}/known-accounts`).pipe(timeout(FAST_MS)).toPromise();
+    /** Fetches list of addresses with known aliases, owner, & type. */
+    fetchKnownAccounts(): Promise<KnownAccountDto[]> {
+        return this._http.post<KnownAccountDto[]>(
+            `${this.url}/known-accounts`,
+            { includeOwner: true, includeType: true }
+        ).pipe(timeout(FAST_MS)).toPromise();
     }
 
     megaphone(hasOfflineRep: string[], hasLargeRep: string[]): Promise<void> {
