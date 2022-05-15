@@ -17,7 +17,7 @@ export class PriceService {
 
     refreshPriceData(): void {
         this._api
-            .getPriceInfo()
+            .fetchPriceInfo()
             .then((data: PriceDataDto) => {
                 this.priceData = data;
             })

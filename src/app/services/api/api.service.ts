@@ -89,8 +89,9 @@ export class ApiService {
             .toPromise();
     }
 
-    getPriceInfo(): Promise<PriceDataDto> {
-        return this._http.get<PriceDataDto>(`${this.url}/price`).pipe(timeout(FAST_MS)).toPromise();
+    /** Fetches banano price data. */
+    fetchPriceInfo(): Promise<PriceDataDto> {
+        return this._http.get<PriceDataDto>(`${this.spyglassApi}/v1/price`).pipe(timeout(FAST_MS)).toPromise();
     }
 
     getInsights(address: string): Promise<InsightsDto> {
