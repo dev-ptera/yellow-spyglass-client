@@ -26,6 +26,7 @@ const FAST_MS = 15000;
 })
 export class ApiService {
     url = environment.api;
+    spyglassApi = environment.spyglassApi;
 
     constructor(private readonly _http: HttpClient) {}
 
@@ -69,9 +70,9 @@ export class ApiService {
     }
 
     /* Rich List is too expensive operation to run non-locally; default to production. */
-    bananoDistribution(): Promise<AccountDistributionStatsDto> {
+    fetchBananoDistribution(): Promise<AccountDistributionStatsDto> {
         return this._http
-            .get<AccountDistributionStatsDto>(`${this.url}/accounts-distribution`)
+            .get<AccountDistributionStatsDto>(`${this.spyglassApi}/v1/distribution/buckets`)
             .pipe(timeout(MED_MS))
             .toPromise();
     }

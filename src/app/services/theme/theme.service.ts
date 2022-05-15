@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
-export type Theme = 'light' | 'dark';
+export type Theme = 'jungle-green' | 'dark';
 
-const LIGHT_THEME = 'light';
+const LIGHT_THEME = 'jungle-green';
 const DARK_THEME = 'dark';
 
 @Injectable({
@@ -31,7 +31,7 @@ export class ThemeService {
 
     setTheme(newTheme: Theme): void {
         this.currentTheme = newTheme;
-        document.body.classList.remove('light');
+        document.body.classList.remove('jungle-green');
         document.body.classList.remove('dark');
         document.body.classList.add(newTheme);
         setTimeout(() => {

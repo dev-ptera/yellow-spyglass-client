@@ -30,11 +30,24 @@
                         ],
                         "styles": [
                             "src/styles.scss",
+                            "./node_modules/@brightlayer-ui/angular-themes/theme.scss",
                             "./node_modules/@brightlayer-ui/angular-themes/open-sans.scss"
                         ],
                         "scripts": []
                     },
                     "configurations": {
+                        "development": {
+                            "buildOptimizer": false,
+                            "optimization": {
+                                "scripts": false,
+                                "styles": false,
+                                "fonts": false
+                            },
+                            "vendorChunk": true,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "namedChunks": true
+                        },
                         "megaphone": {
                             "fileReplacements": [
                                 {
@@ -78,6 +91,9 @@
                         "browserTarget": "yellow-spyglass-client:build"
                     },
                     "configurations": {
+                        "development": {
+                            "browserTarget": "yellow-spyglass-client:build:development"
+                        },
                         "production": {
                             "browserTarget": "yellow-spyglass-client:build:production"
                         },

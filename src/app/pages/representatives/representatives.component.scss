@@ -5,9 +5,6 @@
     $monitored-reps-table-address-color,
     $principalTag
 ) {
-    .principal-tag {
-        @include principalTag();
-    }
     .monitored-reps-table-address {
         color: $monitored-reps-table-address-color !important;
     }

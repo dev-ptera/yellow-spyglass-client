@@ -16,83 +16,91 @@ $custom-typography: mat.define-typography-config(
     $input: mat.define-typography-level(inherit, 1.125, 400),
 );
 
-.mat-display-4,
-.mat-display-3,
-.mat-display-2 {
-    letter-spacing: 0;
-}
 
-.mat-display-4,
-.mat-display-3,
-.mat-display-2,
-.mat-display-1,
-.mat-headline,
-.mat-title,
-.mat-subheading-1,
-.mat-subheading-2,
-.mat-body-1,
-.mat-body-2,
-.mat-caption,
-.mat-button {
-    margin-bottom: 0;
-}
+@mixin typography() {
 
-.mat-body-2 {
-    font-weight: 600;
-}
+    .mat-display-4,
+    .mat-display-3,
+    .mat-display-2 {
+        letter-spacing: 0;
+    }
 
-.mat-overline {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.125rem;
-    line-height: 2.66;
-    text-transform: uppercase;
-}
+    .mat-display-4,
+    .mat-display-3,
+    .mat-display-2,
+    .mat-display-1,
+    .mat-headline,
+    .mat-title,
+    .mat-subheading-1,
+    .mat-subheading-2,
+    .mat-body-1,
+    .mat-body-2,
+    .mat-caption,
+    .mat-button {
+        margin-bottom: 0;
+    }
 
-.app-page-content {
-    width: 100%;
-    max-width: 1250px;
-}
-.app-page-title {
-    font-size: 48px;
-    display: flex;
-    width: 100%;
-    margin-bottom: 0px;
-}
-.app-page-subtitle {
-    width: 100%;
-    font-size: 16px;
-    margin-bottom: 48px;
-    text-align: left;
-}
-.app-section-title {
-    font-size: 20px;
-}
-.app-section-subtitle {
-    margin-bottom: 32px;
-    font-size: 16px;
-}
-.app-caption {
-    font-size: 14px;
-}
-.sm {
+    .mat-body-2 {
+        font-weight: 600;
+    }
+
+    .mat-overline {
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.125rem;
+        line-height: 2.66;
+        text-transform: uppercase;
+    }
+
+    .app-page-content {
+        width: 100%;
+        max-width: 1250px;
+    }
     .app-page-title {
-        font-size: 28px;
-        margin-bottom: 4px;
+        font-size: 48px;
+        display: flex;
+        width: 100%;
+        margin-bottom: 0px;
     }
     .app-page-subtitle {
-        font-size: 14px;
-        margin-bottom: 32px;
+        width: 100%;
+        font-size: 16px;
+        margin-bottom: 48px;
         text-align: left;
     }
     .app-section-title {
         font-size: 20px;
     }
     .app-section-subtitle {
-        margin-bottom: 24px;
-        font-size: 14px;
+        margin-bottom: 32px;
+        font-size: 16px;
     }
     .app-caption {
-        font-size: 12px;
+        font-size: 14px;
+    }
+    .sm {
+        .app-page-title {
+            font-size: 28px;
+            margin-bottom: 4px;
+        }
+
+        .app-page-subtitle {
+            font-size: 14px;
+            margin-bottom: 32px;
+            text-align: left;
+        }
+
+        .app-section-title {
+            font-size: 20px;
+        }
+
+        .app-section-subtitle {
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+
+        .app-caption {
+            font-size: 12px;
+        }
     }
 }

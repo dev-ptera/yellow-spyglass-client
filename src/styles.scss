@@ -1,38 +1,19 @@
 @use 'node_modules/@brightlayer-ui/colors/palette' as blui;
-@use 'node_modules/@angular/material' as mat;
-@use 'node_modules/@brightlayer-ui/angular-themes/blui-component-theme';
-@use 'node_modules/@brightlayer-ui/angular-themes/darkTheme';
-@use 'node_modules/@brightlayer-ui/angular-themes/margins';
-@use 'node_modules/@brightlayer-ui/angular-themes/fonts';
-@use 'node_modules/@brightlayer-ui/angular-themes/typography';
-@use 'node_modules/@brightlayer-ui/angular-themes/common';
-@use './theme/typography' as ysg-typography;
+@use './theme/jungle-green';
 
-@include margins.reasonable-margins();
-@include mat.core(ysg-typography.$custom-typography);
+html * {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
 
 @font-face {
     font-family: pirateFont;
     src: url('~assets/font/Freebooter-6yn1.ttf');
 }
 
-.light {
-    @import './theme/light-theme';
-    @include common.common();
-    @include mat.all-component-themes($light-theme);
-    @include blui-component-theme.blui-components-theme($light-theme);
-    @include fonts.bodyfont();
-    @import './theme/typography';
-}
-
-.dark {
-    @import './theme/dark-theme';
-    @include common.common();
-    @include mat.all-component-themes($dark-theme);
-    @include blui-component-theme.blui-components-theme($dark-theme);
-    @include fonts.bodyfont();
-    @import './theme/typography';
-}
 
 .mat-tab-label-active {
     opacity: 1 !important;

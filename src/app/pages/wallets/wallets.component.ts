@@ -51,7 +51,7 @@ export class WalletsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        Promise.all([this._api.bananoDistribution(), this._api.getAccountBalances(0, this.pageSize)])
+        Promise.all([this._api.fetchBananoDistribution(), this._api.getAccountBalances(0, this.pageSize)])
             .then((data) => {
                 this.distributionChart = this._createDistributionChart(data[0]);
                 this.accountBalances = data[1];
