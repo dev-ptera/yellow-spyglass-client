@@ -1,9 +1,6 @@
 <blui-drawer-layout variant="temporary" (backdropClick)="closeDrawer()" width="280" responsive [class.open]="isOpen()">
     <blui-drawer blui-drawer [open]="isOpen()" [sideBorder]="true" [openOnHover]="false">
         <blui-drawer-header>
-            <div blui-title-content class="navigation-drawer-header-content">
-                <img height="180" src="assets/pirate-monkey.png" style="margin-top: -14px" />
-            </div>
         </blui-drawer-header>
         <blui-drawer-body>
             <blui-drawer-nav-group title="Accounts" [divider]="true">
@@ -34,43 +31,8 @@
         </blui-drawer-body>
     </blui-drawer>
     <div blui-content class="navigation-drawer-content" [class.home]="isHome()" responsive>
-        <div class="navigation-app-bar-container">
-            <mat-toolbar class="navigation-app-bar mat-elevation-z2" [class.home]="isHome()" color="primary" responsive>
-                <div style="display: flex; width: 100%; align-items: center">
-                    <button mat-icon-button (click)="openDrawer()" [style.marginRight.px]="vp.sm ? 16 : 24">
-                        <mat-icon>menu</mat-icon>
-                    </button>
-                    <div responsive class="navigation-toolbar-title" (click)="goHome()">
-                        {{ vp.sm ? toolbarTitle : 'Yellow Spyglass' }}
-                    </div>
-                    <blui-spacer></blui-spacer>
-                    <button mat-icon-button (click)="openSearch()" [style.marginRight.px]="vp.sm ? 4 : 16">
-                        <mat-icon>search</mat-icon>
-                    </button>
-                    <app-user-menu style="margin-right: 8px"></app-user-menu>
-                </div>
-            </mat-toolbar>
-            <mat-toolbar class="navigation-search-bar" [class.active]="toggleSearch" responsive>
-                <mat-toolbar-row style="padding: 0 16px" style="display: flex; width: 100%">
-                    <button mat-icon-button disabled style="margin-left: -8px">
-                        <mat-icon>search</mat-icon>
-                    </button>
-                    <input
-                        class="search-control"
-                        type="text"
-                        tabindex="0"
-                        autocapitalize="none"
-                        placeholder="Search Address or Transaction Hash"
-                        [(ngModel)]="appbarSearchText"
-                        (keyup)="appbarSearch($event)"
-                        #searchBar
-                    />
-                    <button mat-icon-button (click)="closeSearch()">
-                        <mat-icon>close</mat-icon>
-                    </button>
-                </mat-toolbar-row>
-            </mat-toolbar>
-        </div>
+        <app-bar [toolbarTitle]="toolbarTitle" (openDrawer)="openDrawer()"></app-bar>
+
 
         <!--
         MAINTENANCE COMMENT

@@ -10,8 +10,8 @@ import { ApiService } from '@app/services/api/api.service';
     template: `
         <ng-template #titleContent>
             <div class="app-page-title">
-                <span *ngIf="loading">Loading</span>
-                <span *ngIf="!loading">Node Statistics</span>
+                <span *ngIf="isLoading">Loading</span>
+                <span *ngIf="!isLoading">Node Statistics</span>
             </div>
             <div class="app-page-subtitle">
                 This explorer is powered & maintained by the
@@ -32,7 +32,7 @@ import { ApiService } from '@app/services/api/api.service';
                         <div blui-subtitle>
                             <span class="link" (click)="search(stats.addressAsRepresentative, $event)">{{
                                 stats.addressAsRepresentative
-                            }}</span>
+                                }}</span>
                         </div>
                     </blui-info-list-item>
                     <blui-info-list-item divider="full">
@@ -152,23 +152,25 @@ import { ApiService } from '@app/services/api/api.service';
 
         <div class="app-page-root" responsive>
             <div class="app-page-content node-monitor-content" responsive>
-                <app-error *ngIf="error"></app-error>
-                <ng-container *ngIf="!error">
+                <app-error *ngIf="hasError"></app-error>
+                <ng-container *ngIf="!hasError">
                     <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
-                    <ng-template *ngIf="!loading" [ngTemplateOutlet]="bodyContent"></ng-template>
+                    <ng-template *ngIf="!isLoading" [ngTemplateOutlet]="bodyContent"></ng-template>
                 </ng-container>
             </div>
         </div>
 
+        <!--
         <app-wave [darkThemeWaveNumber]="14"></app-wave>
+        -->
     `,
     styleUrls: ['./node-monitor.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
 export class NodeMonitorComponent implements OnInit {
     stats: HostNodeStatsDto;
-    loading = true;
-    error = false;
+    isLoading = true;
+    hasError = false;
 
     constructor(
         private readonly _api: ApiService,
@@ -182,12 +184,12 @@ export class NodeMonitorComponent implements OnInit {
             .fetchHostNodeStats()
             .then((stats: HostNodeStatsDto) => {
                 this.stats = stats;
-                this.loading = false;
+                this.isLoading = false;
             })
             .catch((err) => {
                 console.error(err);
-                this.loading = false;
-                this.error = true;
+                this.isLoading = false;
+                this.hasError = true;
             });
     }
 

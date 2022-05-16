@@ -44,7 +44,7 @@ $greenPalette: (
     ),
 );
 
-$material-theme-primary: mat.define-palette($greenPalette, 500);
+$material-theme-primary: mat.define-palette($greenPalette, 700);
 $material-theme-accent: mat.define-palette(blui.$blui-green, 900);
 $material-theme-warn: mat.define-palette(blui.$blui-red, 500);
 $jungle-green-theme: map-merge(
@@ -97,15 +97,20 @@ $jungle-green-theme: map-merge(
     $theme-foreground: map-get($jungle-green-theme, foreground);
     $theme-background: map-get($jungle-green-theme, background);
 
-    $primary-green: map-get(blui.$blui-green, 800);
+    $primary: map-get($material-theme-primary, 700);
     $warn-red: map-get(blui.$blui-red, 500);
     $tag-opacity: 0.06;
+
+
 
     .mat-tab-group {
         background-color: map-get(blui.$blui-white, 50);
     }
+    .mat-toolbar.mat-primary {
+        background-color: $primary;
+    }
 
-    $toolbarBgColor: $primary-green;
+    $toolbarBgColor: $primary;
     /* Navigation */
     /*
     .blui-drawer .blui-drawer-nav-item-active-highlight {
@@ -146,7 +151,7 @@ $jungle-green-theme: map-merge(
         }
     }
 
-    $online-color: $primary-green;
+    $online-color: $primary;
     $offline-color: $warn-red;
     $rep-border-color: map-get($theme-foreground, divider);
     $table-address-color: map-get($theme-foreground, text);
