@@ -13,7 +13,6 @@ import { LargeRepTableComponent } from '@app/pages/representatives/display/large
 import { LargeRepCardsComponent } from '@app/pages/representatives/display/large-rep-cards/large-rep-cards.component';
 import { MonitoredRepTableComponent } from '@app/pages/representatives/display/monitored-rep-table/monitored-rep-table.component';
 import { MonitoredRepListComponent } from '@app/pages/representatives/display/monitored-rep-list/monitored-rep-list.component';
-import { MicroRepListComponent } from '@app/pages/representatives/display/micro-rep-list/micro-rep-list.component';
 import { WeightChartComponent } from '@app/pages/representatives/display/weight-chart/weight-chart.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RouterModule } from '@angular/router';
@@ -25,7 +24,6 @@ import { RouterModule } from '@angular/router';
         LargeRepCardsComponent,
         MonitoredRepListComponent,
         MonitoredRepTableComponent,
-        MicroRepListComponent,
         WeightChartComponent,
     ],
     imports: [
@@ -49,7 +47,6 @@ import { RouterModule } from '@angular/router';
         LargeRepCardsComponent,
         MonitoredRepListComponent,
         MonitoredRepTableComponent,
-        MicroRepListComponent,
         WeightChartComponent,
     ],
 })

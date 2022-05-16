@@ -59,53 +59,6 @@ import { AliasService } from '@app/services/alias/alias.service';
                 </td>
             </ng-container>
 
-            <ng-container matColumnDef="weight">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Weight</th>
-                <td mat-cell *matCellDef="let element">
-                    {{ formatBanWeight(element.weight) }}
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="percentWeight">
-                <th mat-header-cell *matHeaderCellDef>Weight</th>
-                <td mat-cell *matCellDef="let element" [class.warn]="isLargeRep(element.weight) && element.online">
-                    <ng-container *ngIf="element.online">
-                        {{ formatWeightPercent(element.weight) }}
-                        <span style="font-size: 11px; font-weight: 200; margin-left: 2px">%</span>
-                    </ng-container>
-                    <ng-container *ngIf="!element.online">--</ng-container>
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="delegatorsCount">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Delegators</th>
-                <td mat-cell *matCellDef="let element">{{ numberWithCommas(element.delegatorsCount) }}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="uptimePercentMonth">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                    <div style="text-align: left">
-                        Uptime
-                        <ng-container *ngIf="!vp.md">
-                            <br />
-                            <div style="font-size: 10px; margin-top: -4px">month · week · day</div>
-                        </ng-container>
-                    </div>
-                </th>
-                <td mat-cell *matCellDef="let element">
-                    <span
-                        [class.warn]="element.uptimePercentMonth <= 80"
-                        [class.intermediary]="element.uptimePercentMonth > 80 && element.uptimePercentMonth <= 95"
-                        [class.primary]="element.uptimePercentMonth > 95"
-                    >
-                        {{ element.uptimePercentMonth }}<span style="font-size: 11px">% </span>
-                    </span>
-                    <span *ngIf="!vp.md" style="font-size: 11px"
-                        >· {{ element.uptimePercentWeek }}% · {{ element.uptimePercentDay }}%
-                    </span>
-                </td>
-            </ng-container>
-
             <ng-container matColumnDef="online">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Online</th>
                 <td
@@ -136,6 +89,57 @@ import { AliasService } from '@app/services/alias/alias.service';
                 </td>
             </ng-container>
 
+            <ng-container matColumnDef="weight">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Weight</th>
+                <td mat-cell *matCellDef="let element">
+                    {{ formatBanWeight(element.weight) }}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="percentWeight">
+                <th mat-header-cell *matHeaderCellDef>Weight</th>
+                <td mat-cell *matCellDef="let element" [class.warn]="isLargeRep(element.weight) && element.online">
+                    <ng-container *ngIf="element.online">
+                        {{ formatWeightPercent(element.weight) }}
+                        <span style="font-size: 11px; font-weight: 200; margin-left: 2px">%</span>
+                    </ng-container>
+                    <ng-container *ngIf="!element.online">--</ng-container>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="delegatorsCount">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Delegators</th>
+                <td mat-cell *matCellDef="let element">{{ numberWithCommas(element.delegatorsCount) }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="uptimeStats.uptimePercentages.month">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <div style="text-align: left">
+                        Uptime
+                        <ng-container *ngIf="!vp.md">
+                            <br />
+                            <div style="font-size: 10px; margin-top: -4px">month · week · day</div>
+                        </ng-container>
+                    </div>
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    <span
+                        [class.warn]="element.uptimeStats.uptimePercentages.month <= 80"
+                        [class.intermediary]="
+                            element.uptimeStats.uptimePercentages.month > 80 &&
+                            element.uptimeStats.uptimePercentages.month <= 95
+                        "
+                        [class.primary]="element.uptimeStats.uptimePercentages.month > 95"
+                    >
+                        {{ element.uptimeStats.uptimePercentages.month }}<span style="font-size: 11px">% </span>
+                    </span>
+                    <span *ngIf="!vp.md" style="font-size: 11px"
+                        >· {{ element.uptimeStats.uptimePercentages.week }}% ·
+                        {{ element.uptimeStats.uptimePercentages.day }}%
+                    </span>
+                </td>
+            </ng-container>
+
             <tr mat-header-row *matHeaderRowDef="vp.md ? largeRepsDisplayColumnsMd : largeRepsDisplayColumnsLg"></tr>
             <tr
                 mat-row
@@ -162,7 +166,7 @@ export class LargeRepTableComponent implements OnChanges {
         'weight',
         'percentWeight',
         'delegatorsCount',
-        'uptimePercentMonth',
+        'uptimeStats.uptimePercentages.month',
     ];
     largeRepsDisplayColumnsMd = ['position', 'address', 'online', 'score', 'weight', 'percentWeight'];
 

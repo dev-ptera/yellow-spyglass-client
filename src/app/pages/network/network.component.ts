@@ -27,8 +27,8 @@ export class NetworkComponent implements OnInit {
 
     supply: SupplyDto;
     peerVersions: PeerVersionsDto[];
-    quorum: QuorumDto;
     nakamotoCoefficient: number;
+    quorum: QuorumDto;
     totalNumberOfPeers = 0;
 
     constructor(

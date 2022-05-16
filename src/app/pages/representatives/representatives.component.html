@@ -1,7 +1,7 @@
 <ng-template #titleContent>
     <div class="app-page-title">
-        <ng-container *ngIf="!loading">Representatives</ng-container>
-        <ng-container *ngIf="loading">Loading</ng-container>
+        <ng-container *ngIf="!isLoading">Representatives</ng-container>
+        <ng-container *ngIf="isLoading">Loading</ng-container>
     </div>
     <div class="app-page-subtitle">
         Representatives process transactions on the BANANO network. See all representatives below.
@@ -197,7 +197,7 @@
     <mat-slide-toggle
         color="primary"
         class="app-section-subtitle"
-        [(ngModel)]="showOfflineRepsFilter"
+        [(ngModel)]="showOfflineReps"
         (change)="filterLargeRepsByStatus()"
     >
         Show offline representatives
@@ -208,27 +208,18 @@
         [shownReps]="shownLargeReps"
     ></app-large-rep-table>
     <app-large-rep-cards *ngIf="vp.sm" [onlineWeight]="onlineWeight" [shownReps]="shownLargeReps"></app-large-rep-cards>
-
-    <ng-container *ngIf="microReps?.length > 0">
-        <div class="app-section-title" [style.marginTop.px]="72">
-            Micro Representatives
-            <span class="app-caption">({{ onlineMicroRepsCount }})</span>
-        </div>
-        <div class="app-section-subtitle">
-            Online representatives with less than 100,000 BANANO weight delegated towards them.
-        </div>
-        <app-micro-rep-list [onlineWeight]="onlineWeight" [microReps]="microReps"></app-micro-rep-list>
-    </ng-container>
 </ng-template>
 
 <div class="app-page-root" responsive>
     <div class="app-page-content">
-        <app-error *ngIf="error"></app-error>
-        <ng-container *ngIf="!error">
+        <app-error *ngIf="hasError"></app-error>
+        <ng-container *ngIf="!hasError">
             <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
-            <ng-template *ngIf="!loading" [ngTemplateOutlet]="bodyContent"></ng-template>
+            <ng-template *ngIf="!isLoading" [ngTemplateOutlet]="bodyContent"></ng-template>
         </ng-container>
     </div>
 </div>
 
+<!--
 <app-wave [darkThemeWaveNumber]="5" [lightThemeWaveNumber]="23"></app-wave>
+-->

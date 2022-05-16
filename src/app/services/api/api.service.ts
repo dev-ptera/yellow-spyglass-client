@@ -14,7 +14,8 @@ import {
     PeerVersionsDto,
     PriceDataDto,
     QuorumDto,
-    RepresentativesResponseDto,
+    RepresentativeDto,
+    RepScoreDto,
     SupplyDto,
 } from '@app/types/dto';
 import { InsightsDto } from '@app/types/dto/InsightsDto';
@@ -33,7 +34,8 @@ export class ApiService {
 
     constructor(private readonly _http: HttpClient) {}
 
-    accountOverview(address: string): Promise<AccountOverviewDto> {
+    /** Gets account summary information. */
+    fetchAccountOverview(address: string): Promise<AccountOverviewDto> {
         return this._http
             .get<AccountOverviewDto>(`${this.url}/account-overview/${address}`)
             .pipe(timeout(SLOW_MS))
@@ -75,9 +77,23 @@ export class ApiService {
             .toPromise<string>();
     }
 
-    representatives(): Promise<RepresentativesResponseDto> {
+    /** Fetches representatives stats. */
+    fetchRepresentatives(): Promise<RepresentativeDto[]> {
         return this._http
-            .get<RepresentativesResponseDto>(`${this.url}/v2/representatives`)
+            .post<RepresentativeDto[]>(`${this.spyglassApi}/v1/representatives`, {
+                minimumWeight: 100_000,
+                includeUptimeStats: true,
+                includeDelegatorCount: true,
+                includeNodeMonitorStats: true,
+            })
+            .pipe(timeout(MED_MS))
+            .toPromise();
+    }
+
+    /** Fetches representatives stats. */
+    fetchRepresentativeScores(): Promise<RepScoreDto[]> {
+        return this._http
+            .get<RepScoreDto[]>(`${this.spyglassApi}/v1/representatives/scores`)
             .pipe(timeout(MED_MS))
             .toPromise();
     }

@@ -106,7 +106,7 @@ export class AccountComponent implements OnDestroy {
         const spin = new Promise((resolve) => setTimeout(resolve, 500));
 
         // Confirmed Transactions
-        Promise.all([this._apiService.accountOverview(address), spin])
+        Promise.all([this._apiService.fetchAccountOverview(address), spin])
             .then(([accountOverview]) => {
                 this.loading = false;
                 this.accountOverview = accountOverview;

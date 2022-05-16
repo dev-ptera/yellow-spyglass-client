@@ -144,19 +144,19 @@ import { MonitoredRepTableColumns } from '@app/pages/representatives/representat
                 <td mat-cell *matCellDef="let element">
                     <ng-container *ngIf="largeRepMap.has(element.address)">
                         <span
-                            [class.warn]="largeRepMap.get(element.address)?.uptimePercentMonth <= 80"
+                            [class.warn]="largeRepMap.get(element.address)?.uptimeStats.uptimePercentages.month <= 80"
                             [class.intermediary]="
-                                largeRepMap.get(element.address)?.uptimePercentMonth > 80 &&
-                                largeRepMap.get(element.address)?.uptimePercentMonth <= 95
+                                largeRepMap.get(element.address)?.uptimeStats.uptimePercentages.month > 80 &&
+                                largeRepMap.get(element.address)?.uptimeStats.uptimePercentages.month <= 95
                             "
-                            [class.primary]="largeRepMap.get(element.address)?.uptimePercentMonth > 95"
+                            [class.primary]="largeRepMap.get(element.address)?.uptimeStats.uptimePercentages.month > 95"
                         >
-                            {{ largeRepMap.get(element.address)?.uptimePercentMonth
+                            {{ largeRepMap.get(element.address)?.uptimeStats.uptimePercentages.month
                             }}<span style="font-size: 11px">% </span>
                         </span>
                         <span *ngIf="!vp.md" style="font-size: 11px"
-                            >· {{ largeRepMap.get(element.address)?.uptimePercentWeek }}% ·
-                            {{ largeRepMap.get(element.address)?.uptimePercentDay }}%
+                            >· {{ largeRepMap.get(element.address)?.uptimeStats.uptimePercentages.week }}% ·
+                            {{ largeRepMap.get(element.address)?.uptimeStats.uptimePercentages.day }}%
                         </span>
                     </ng-container>
                     <ng-container *ngIf="!largeRepMap.has(element.address)">--</ng-container>
@@ -215,7 +215,7 @@ export class MonitoredRepTableComponent implements OnChanges {
                     return item['weight'];
                 }
                 case 'uptime': {
-                    return this.largeRepMap.get(item['address'])?.uptimePercentMonth;
+                    return this.largeRepMap.get(item['address'])?.uptimeStats.uptimePercentages.semiAnnual;
                 }
                 default: {
                     return item[property];

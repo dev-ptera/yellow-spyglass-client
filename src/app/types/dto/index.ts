@@ -17,6 +17,7 @@ export * from './PriceDataDto';
 export * from './PendingTransactionDto';
 export * from './QuorumDto';
 export * from './RepresentativeDto';
+export * from './RepScoreDto';
 export * from './RepresentativesResponseDto';
 export * from './RepresentativeUptimeDto';
 export * from './SupplyDto';
