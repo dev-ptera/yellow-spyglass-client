@@ -14,9 +14,8 @@ export class RepresentativesService {
             return rep.customMonitorPageUrl;
         } else if (rep.ip.includes('http') || rep.ip.includes('https')) {
             return rep.ip;
-        } 
-            return `http://${rep.ip}`;
-        
+        }
+        return `http://${rep.ip}`;
     }
 
     formatVersion(version: string): string {

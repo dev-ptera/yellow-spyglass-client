@@ -8,11 +8,14 @@ import {
     AliasDto,
     BlockDto,
     ConfirmedTransactionDto,
+    HostNodeStatsDto,
     KnownAccountDto,
-    MonitoredRepDto,
-    NetworkStatsDto,
+    NakamotoCoefficientDto,
+    PeerVersionsDto,
     PriceDataDto,
+    QuorumDto,
     RepresentativesResponseDto,
+    SupplyDto,
 } from '@app/types/dto';
 import { InsightsDto } from '@app/types/dto/InsightsDto';
 import { timeout } from 'rxjs/operators';
@@ -50,8 +53,17 @@ export class ApiService {
         return this._http.get<BlockDto>(`${this.url}/block/${hash}`).pipe(timeout(FAST_MS)).toPromise();
     }
 
-    node(): Promise<MonitoredRepDto> {
-        return this._http.get<MonitoredRepDto>(`${this.url}/node`).pipe(timeout(FAST_MS)).toPromise();
+    /** Fetches list of known vanities addresses. */
+    fetchKnownVanities(): Promise<string[]> {
+        return this._http.get<string[]>(`${this.spyglassApi}/v1/known/vanities`).pipe(timeout(FAST_MS)).toPromise();
+    }
+
+    /** Fetches server stats & info. */
+    fetchHostNodeStats(): Promise<HostNodeStatsDto> {
+        return this._http
+            .get<HostNodeStatsDto>(`${this.spyglassApi}/v1/network/node-stats`)
+            .pipe(timeout(FAST_MS))
+            .toPromise();
     }
 
     /** Fetches monKey avatar for a given account. */
@@ -78,13 +90,43 @@ export class ApiService {
             .toPromise();
     }
 
+    /** Fetches quorum details. */
+    fetchQuorumStats(): Promise<QuorumDto> {
+        return this._http.get<QuorumDto>(`${this.spyglassApi}/v1/network/quorum`).pipe(timeout(MED_MS)).toPromise();
+    }
+
+    /** Fetches Supply details. */
+    fetchSupplyStats(): Promise<SupplyDto> {
+        return this._http
+            .get<SupplyDto>(`${this.spyglassApi}/v1/distribution/supply`)
+            .pipe(timeout(MED_MS))
+            .toPromise();
+    }
+
+    /** Fetches Peer details. */
+    fetchPeerVersions(): Promise<PeerVersionsDto[]> {
+        return this._http
+            .get<PeerVersionsDto[]>(`${this.spyglassApi}/v1/network/peers`)
+            .pipe(timeout(MED_MS))
+            .toPromise();
+    }
+
+    /** Fetches how many bad actors required to compromise network. */
+    fetchNakamotoCoefficient(): Promise<NakamotoCoefficientDto> {
+        return this._http
+            .get<NakamotoCoefficientDto>(`${this.spyglassApi}/v1/network/nakamoto-coefficient`)
+            .pipe(timeout(MED_MS))
+            .toPromise();
+    }
+
     /** Fetches list of accounts with their respective balance & representative. */
     fetchRichListSegment(offset: number, size: number): Promise<AccountBalanceDto[]> {
         return this._http
-            .post<AccountBalanceDto[]>(
-                `${this.spyglassApi}/v1/distribution/rich-list`,
-                { offset, size, includeRepresentative: true }
-            )
+            .post<AccountBalanceDto[]>(`${this.spyglassApi}/v1/distribution/rich-list`, {
+                offset,
+                size,
+                includeRepresentative: true,
+            })
             .pipe(timeout(SLOW_MS))
             .toPromise();
     }
@@ -100,35 +142,25 @@ export class ApiService {
 
     /** Fetches list of representatives that are considered online. */
     fetchOnlineRepresentatives(): Promise<string[]> {
-        return this._http.get<string[]>(`${this.spyglassApi}/v1/representatives/online`).pipe(timeout(FAST_MS)).toPromise();
+        return this._http
+            .get<string[]>(`${this.spyglassApi}/v1/representatives/online`)
+            .pipe(timeout(FAST_MS))
+            .toPromise();
     }
 
     /** Fetches list of aliases. */
     fetchAliases(): Promise<AliasDto[]> {
-        return this._http.post<AliasDto[]>(
-            `${this.spyglassApi}/v1/known/accounts`,
-            { includeOwner: false, includeType: false }
-        ).pipe(timeout(FAST_MS)).toPromise();
+        return this._http
+            .post<AliasDto[]>(`${this.spyglassApi}/v1/known/accounts`, { includeOwner: false, includeType: false })
+            .pipe(timeout(FAST_MS))
+            .toPromise();
     }
 
     /** Fetches list of addresses with known aliases, owner, & type. */
     fetchKnownAccounts(): Promise<KnownAccountDto[]> {
-        return this._http.post<KnownAccountDto[]>(
-            `${this.url}/known-accounts`,
-            { includeOwner: true, includeType: true }
-        ).pipe(timeout(FAST_MS)).toPromise();
-    }
-
-    megaphone(hasOfflineRep: string[], hasLargeRep: string[]): Promise<void> {
         return this._http
-            .post<void>(`${this.url}/megaphone`, {
-                hasOfflineRep,
-                hasLargeRep,
-            })
+            .post<KnownAccountDto[]>(`${this.spyglassApi}/v1/known/accounts`, { includeOwner: true, includeType: true })
+            .pipe(timeout(FAST_MS))
             .toPromise();
-    }
-
-    getNetworkStats(): Promise<NetworkStatsDto> {
-        return this._http.get<NetworkStatsDto>(`${this.url}/network-stats`).pipe(timeout(FAST_MS)).toPromise();
     }
 }

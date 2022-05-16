@@ -29,7 +29,10 @@ import { DeleteBookmarkDialog } from '@app/pages/bookmarks/delete-bookmark-dialo
                                 >
                                     <mat-icon>edit</mat-icon>
                                 </button>
-                                <span class="bookmarks-data" (click)="searchService.emitSearch(element.id, $event.ctrlKey)">
+                                <span
+                                    class="bookmarks-data"
+                                    (click)="searchService.emitSearch(element.id, $event.ctrlKey)"
+                                >
                                     {{ element.alias }}
                                 </span>
                             </div>

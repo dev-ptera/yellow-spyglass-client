@@ -1,4 +1,4 @@
-export type SpyglassAPIQuorumDto = {
+export type QuorumDto = {
     noRepPercent: number;
     noRepWeight: number;
     nonBurnedWeight: number;

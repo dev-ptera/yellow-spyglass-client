@@ -16,9 +16,7 @@ $custom-typography: mat.define-typography-config(
     $input: mat.define-typography-level(inherit, 1.125, 400),
 );
 
-
 @mixin typography() {
-
     .mat-display-4,
     .mat-display-3,
     .mat-display-2 {

@@ -12,7 +12,6 @@ export * from './KnownAccountDto';
 export * from './MicroRepresentativeDto';
 export * from './NakamotoCoefficientDto';
 export * from './MonitoredRepDto';
-export * from './NetworkStatsDto';
 export * from './PeerVersionsDto';
 export * from './PriceDataDto';
 export * from './PendingTransactionDto';

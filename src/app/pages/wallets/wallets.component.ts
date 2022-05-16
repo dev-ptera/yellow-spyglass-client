@@ -9,7 +9,6 @@ import { UtilService } from '@app/services/util/util.service';
 import { PriceService } from '@app/services/price/price.service';
 import { AccountBalanceDto, AccountDistributionStatsDto } from '@app/types/dto';
 import { OnlineRepsService } from '@app/services/online-reps/online-reps.service';
-import { MegaphoneService } from '@app/services/megaphone/megaphone.service';
 import { AliasService } from '@app/services/alias/alias.service';
 
 @Component({
@@ -18,7 +17,6 @@ import { AliasService } from '@app/services/alias/alias.service';
     styleUrls: ['./wallets.component.scss'],
 })
 export class WalletsComponent implements OnInit {
-
     currentPage = 0;
     readonly pageSize = 25;
 
@@ -35,7 +33,6 @@ export class WalletsComponent implements OnInit {
     constructor(
         public util: UtilService,
         public vp: ViewportService,
-        public megaphone: MegaphoneService,
         public searchService: SearchService,
         public aliasService: AliasService,
         private readonly _api: ApiService,

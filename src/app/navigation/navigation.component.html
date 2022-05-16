@@ -44,11 +44,7 @@
                         {{ vp.sm ? toolbarTitle : 'Yellow Spyglass' }}
                     </div>
                     <blui-spacer></blui-spacer>
-                    <button
-                        mat-icon-button
-                        (click)="openSearch()"
-                        [style.marginRight.px]="vp.sm ? 4 : 16"
-                    >
+                    <button mat-icon-button (click)="openSearch()" [style.marginRight.px]="vp.sm ? 4 : 16">
                         <mat-icon>search</mat-icon>
                     </button>
                     <app-user-menu style="margin-right: 8px"></app-user-menu>

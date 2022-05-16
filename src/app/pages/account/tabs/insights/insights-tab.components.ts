@@ -89,7 +89,9 @@ import * as Highcharts from 'highcharts';
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Last-Sent Date</div>
                     <div blui-subtitle>{{ formatDate(insights.lastOutTxUnixTimestamp) }}</div>
-                    <div blui-right-content class="link mat-overline" (click)="search(insights.lastOutTxHash)">hash</div>
+                    <div blui-right-content class="link mat-overline" (click)="search(insights.lastOutTxHash)">
+                        hash
+                    </div>
                 </blui-info-list-item>
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Most Common Recipient</div>
@@ -140,7 +142,9 @@ import * as Highcharts from 'highcharts';
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>First-Received Date</div>
                     <div blui-subtitle>{{ formatDate(insights.firstInTxUnixTimestamp) }}</div>
-                    <div blui-right-content class="link mat-overline" (click)="search(insights.firstInTxHash)">hash</div>
+                    <div blui-right-content class="link mat-overline" (click)="search(insights.firstInTxHash)">
+                        hash
+                    </div>
                 </blui-info-list-item>
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Last-Received Date</div>

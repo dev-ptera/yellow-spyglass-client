@@ -72,9 +72,7 @@
                         </div>
                         <div *ngIf="accountOverview.opened" class="account-representative secondary" responsive>
                             <ng-container *ngIf="accountOverview.representative !== address">
-                                <span style="font-weight: 200">
-                                Represented by
-                                </span>
+                                <span style="font-weight: 200"> Represented by </span>
 
                                 <span
                                     (click)="searchService.emitSearch(accountOverview.representative, $event.ctrlKey)"
@@ -152,7 +150,7 @@
         <!-- Confirmed transactions -->
         <mat-tab>
             <ng-template mat-tab-label>
-                <span >
+                <span>
                     <ng-container *ngIf="!vp.sm">
                         Confirmed
                         <ng-container *ngIf="!vp.md">Transactions</ng-container>
@@ -160,7 +158,7 @@
                     <mat-icon *ngIf="vp.sm">check</mat-icon>
                     <br />
                     <span style="font-size: 14px" class="secondary">
-                         {{  getConfirmedBadge()  }}
+                        {{ getConfirmedBadge() }}
                     </span>
                 </span>
             </ng-template>
@@ -173,9 +171,7 @@
         <!-- Pending transactions -->
         <mat-tab class="account-pending-tab">
             <ng-template mat-tab-label>
-                <span
-                    class="account-pending-badge"
-                >
+                <span class="account-pending-badge">
                     <ng-container *ngIf="!vp.sm">
                         Pending
                         <ng-container *ngIf="!vp.md">Transactions</ng-container>
@@ -183,7 +179,7 @@
                     <mat-icon *ngIf="vp.sm">pending</mat-icon>
                     <br />
                     <span style="font-size: 14px" class="secondary">
-                         {{  getPendingBadge()  }}
+                        {{ getPendingBadge() }}
                     </span>
                 </span>
             </ng-template>
@@ -196,15 +192,13 @@
         <!-- Delegators -->
         <mat-tab>
             <ng-template mat-tab-label>
-                <span
-                    class="account-delegators-badge"
-                >
+                <span class="account-delegators-badge">
                     <!-- Delegators -->
                     <ng-container *ngIf="!vp.sm">Delegators</ng-container>
                     <mat-icon *ngIf="vp.sm">how_to_vote</mat-icon>
                     <br />
                     <span style="font-size: 14px" class="secondary">
-                         {{  getDelegatorsBadge()  }}
+                        {{ getDelegatorsBadge() }}
                     </span>
                 </span>
             </ng-template>

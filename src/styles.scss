@@ -14,7 +14,6 @@ body {
     src: url('~assets/font/Freebooter-6yn1.ttf');
 }
 
-
 .mat-tab-label-active {
     opacity: 1 !important;
 }
@@ -135,9 +134,9 @@ body {
 
 // Stupid safari scroll behavior hack.
 .sm.blui-drawer-layout {
-    height: 100%!important;
+    height: 100% !important;
     &.open {
-        height: 100vh!important;
+        height: 100vh !important;
         overflow: hidden;
     }
 }

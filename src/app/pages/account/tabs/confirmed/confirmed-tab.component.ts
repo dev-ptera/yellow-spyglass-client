@@ -30,7 +30,10 @@ import { AliasService } from '@app/services/alias/alias.service';
                 </div>
                 <div blui-title>
                     <div class="tag-row">
-                        <blui-list-item-tag [label]="tx.formatHeight" [class]="'height ' + tx.type"></blui-list-item-tag>
+                        <blui-list-item-tag
+                            [label]="tx.formatHeight"
+                            [class]="'height ' + tx.type"
+                        ></blui-list-item-tag>
                         <blui-list-item-tag [label]="tx.type" [class]="'type ' + tx.type"></blui-list-item-tag>
                         <span *ngIf="tx.type !== 'change'" [class]="'amount ' + tx.type">{{ tx.balance }}</span>
                     </div>

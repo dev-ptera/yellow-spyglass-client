@@ -30,15 +30,24 @@ import { ApiService } from '@app/services/api/api.service';
                         </div>
                         <div blui-title>Address</div>
                         <div blui-subtitle>
-                            <span class="link" (click)="search(stats.address, $event)">{{ stats.address }}</span>
+                            <span class="link" (click)="search(stats.addressAsRepresentative, $event)">{{
+                                stats.addressAsRepresentative
+                            }}</span>
                         </div>
                     </blui-info-list-item>
-                    <blui-info-list-item>
+                    <blui-info-list-item divider="full">
                         <div blui-icon>
                             <mat-icon>browser_updated</mat-icon>
                         </div>
-                        <div blui-title>Version</div>
-                        <div blui-subtitle>{{ stats.version }}</div>
+                        <div blui-title>Protocol Version</div>
+                        <div blui-subtitle>{{ stats.nodeVendor }}</div>
+                    </blui-info-list-item>
+                    <blui-info-list-item>
+                        <div blui-icon>
+                            <mat-icon>disc_full</mat-icon>
+                        </div>
+                        <div blui-title>Database Version</div>
+                        <div blui-subtitle>{{ stats.storeVendor }}</div>
                     </blui-info-list-item>
                 </mat-list>
             </mat-card>
@@ -85,9 +94,9 @@ import { ApiService } from '@app/services/api/api.service';
                         </div>
                         <div blui-title>Memory Usage</div>
                         <div blui-subtitle>
-                            {{ formatMem(stats.usedMem) }} / {{ formatMem(stats.totalMem) }}GB
+                            {{ formatMemory(stats.usedMemoryGB) }} / {{ formatMemory(stats.totalMemoryGB) }}GB
                             <span class="mat-subheading-1" [style.marginLeft.px]="8">
-                                ({{ formatMemoryPercentage(stats.usedMem / stats.totalMem) }}%)
+                                ({{ formatMemoryPercentage(stats.usedMemoryGB / stats.totalMemoryGB) }}%)
                             </span>
                         </div>
                     </blui-info-list-item>
@@ -97,7 +106,7 @@ import { ApiService } from '@app/services/api/api.service';
                         </div>
                         <div blui-title>Ledger Size</div>
                         <div blui-subtitle>
-                            {{ formatLedgerSize(stats.ledgerSizeMb) }} GB
+                            {{ formatLedgerSize(stats.ledgerSizeMB) }} GB
                             <span style="margin-left: 8px">({{ formatLedgerPercent() }} of disk space)</span>
                         </div>
                     </blui-info-list-item>
@@ -106,7 +115,7 @@ import { ApiService } from '@app/services/api/api.service';
                             <mat-icon>storage</mat-icon>
                         </div>
                         <div blui-title>Available Disk Space</div>
-                        <div blui-subtitle>{{ formatAvailableSpace(stats.availableDiskSpaceGb) }} GB</div>
+                        <div blui-subtitle>{{ formatAvailableSpace(stats.availableDiskSpaceGB) }} GB</div>
                     </blui-info-list-item>
                 </mat-list>
             </mat-card>
@@ -119,14 +128,14 @@ import { ApiService } from '@app/services/api/api.service';
                             <mat-icon>account_circle</mat-icon>
                         </div>
                         <div blui-title>Peers</div>
-                        <div blui-subtitle>{{ stats.peers }}</div>
+                        <div blui-subtitle>{{ stats.peerCount }}</div>
                     </blui-info-list-item>
                     <blui-info-list-item divider="full">
                         <div blui-icon>
                             <mat-icon>timer</mat-icon>
                         </div>
                         <div blui-title>Uptime</div>
-                        <div blui-subtitle>{{ formatUptime(stats.nodeUptimeStartup) }}</div>
+                        <div blui-subtitle>{{ formatUptime(stats.nodeUptimeSeconds) }}</div>
                     </blui-info-list-item>
                     <blui-info-list-item>
                         <div blui-icon>
@@ -170,7 +179,7 @@ export class NodeMonitorComponent implements OnInit {
 
     ngOnInit(): void {
         this._api
-            .node()
+            .fetchHostNodeStats()
             .then((stats: HostNodeStatsDto) => {
                 this.stats = stats;
                 this.loading = false;
@@ -182,34 +191,47 @@ export class NodeMonitorComponent implements OnInit {
             });
     }
 
-    formatMem(mem: number): number {
-        return Math.round(mem / 1000);
-    }
-
     search(value: string, e: MouseEvent): void {
         this._searchService.emitSearch(value, e.ctrlKey);
     }
 
-    formatUptime(seconds: number): string {
-        return `~ ${Math.round(seconds / 60 / 60 / 24)} days`;
+    formatMemory(mem: number): string {
+        if (mem) {
+            return mem.toFixed(1);
+        }
     }
 
     formatLedgerSize(mb: number): string {
-        return this.util.numberWithCommas((mb / 1024).toFixed(2));
+        if (mb) {
+            return this.util.numberWithCommas((mb / 1024).toFixed(2));
+        }
     }
 
     formatLedgerPercent(): string {
-        const ledger = this.stats.ledgerSizeMb;
-        const disk = this.stats.availableDiskSpaceGb * 1024;
+        const ledger = this.stats.ledgerSizeMB;
+        const disk = this.stats.availableDiskSpaceGB * 1024;
+        if (!ledger || !disk) {
+            return;
+        }
         return `${((ledger / (ledger + disk)) * 100).toFixed(2)}%`;
     }
 
-    formatMemoryPercentage(num: number): number {
-        return Math.round(Number(num.toFixed(2)) * 100);
+    formatUptime(seconds: number): string {
+        if (seconds) {
+            return `~ ${Math.round(seconds / 60 / 60 / 24)} days`;
+        }
     }
 
     formatAvailableSpace(gb: number): string {
-        return this.util.numberWithCommas(gb.toFixed(2));
+        if (gb) {
+            return this.util.numberWithCommas(gb.toFixed(2));
+        }
+    }
+
+    formatMemoryPercentage(num: number): number {
+        if (num) {
+            return Math.round(Number(num.toFixed(2)) * 100);
+        }
     }
 
     openMonitoredRep(ip: string): void {
