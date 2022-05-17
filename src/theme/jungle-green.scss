@@ -45,7 +45,7 @@ $greenPalette: (
 );
 
 $material-theme-primary: mat.define-palette($greenPalette, 700);
-$material-theme-accent: mat.define-palette(blui.$blui-green, 900);
+$material-theme-accent: mat.define-palette(blui.$blui-yellow, 500);
 $material-theme-warn: mat.define-palette(blui.$blui-red, 500);
 $jungle-green-theme: map-merge(
     mat.define-light-theme($material-theme-primary, $material-theme-accent, $material-theme-warn),
@@ -102,6 +102,10 @@ $jungle-green-theme: map-merge(
     $tag-opacity: 0.06;
 
 
+
+    .desktop-search-input {
+        border: solid 1px map-get($theme-foreground, divider);
+    }
 
     .mat-tab-group {
         background-color: map-get(blui.$blui-white, 50);

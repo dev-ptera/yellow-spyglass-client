@@ -13,6 +13,17 @@
     }
 }
 
+.node-section-wrapper:not(.sm)  {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    mat-card {
+        width: 100%;
+        max-width: 49%;
+    }
+}
+
 .node-monitor-content.sm {
     mat-card {
         box-shadow: none !important;

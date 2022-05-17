@@ -1,3 +1,29 @@
+.expanded .monitored-reps-table {
+    max-height: calc(100vh - 64px);
+    position: fixed;
+    top: 64px;
+    left: 0;
+    z-index: 998;
+}
+
+.monitored-table-edit-button {
+    &.button-1 {
+        margin-right: 16px;
+    }
+    &.expanded {
+        position: fixed;
+        z-index: 999;
+        &.button-1 {
+            bottom: 24px;
+            right: 32px;
+        }
+        &.button-2 {
+            bottom: 24px;
+            right: 108px;
+        }
+    }
+}
+
 @mixin representatives-theme(
     $online-color,
     $offline-color,

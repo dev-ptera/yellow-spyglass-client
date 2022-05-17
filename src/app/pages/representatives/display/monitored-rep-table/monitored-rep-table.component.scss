@@ -3,7 +3,11 @@
     flex: 1;
 }
 
+
+
 .monitored-reps-table {
+
+    height: 400px;
     .blui-list-item-tag-label {
         font-size: 0.625rem !important;
     }
@@ -20,6 +24,10 @@
     }
     tr td {
         padding-right: 8px;
+    }
+
+    .mat-column-name {
+        border-right: 1px solid currentColor;
     }
 }
 
@@ -44,7 +52,7 @@
 
 .monitored-reps-table {
     display: block;
-    // max-height: 65vh;
+    max-height: 60vh;
     height: 100%;
     width: calc(100% - 1px);
     max-width: 100%;

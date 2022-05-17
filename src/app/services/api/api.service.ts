@@ -42,6 +42,10 @@ export class ApiService {
             .toPromise();
     }
 
+    getInsights(address: string): Promise<InsightsDto> {
+        return this._http.get<InsightsDto>(`${this.url}/insights/${address}`).pipe(timeout(SLOW_MS)).toPromise();
+    }
+
     confirmedTransactions(address: string, offset: number, pageSize: number): Promise<ConfirmedTransactionDto[]> {
         return this._http
             .get<ConfirmedTransactionDto[]>(
@@ -51,8 +55,9 @@ export class ApiService {
             .toPromise();
     }
 
-    block(hash: string): Promise<BlockDto> {
-        return this._http.get<BlockDto>(`${this.url}/block/${hash}`).pipe(timeout(FAST_MS)).toPromise();
+    /** Given a hash, fetches block. */
+    fetchBlock(hash: string): Promise<BlockDto> {
+        return this._http.get<BlockDto>(`${this.spyglassApi}/v1/block/${hash}`).pipe(timeout(FAST_MS)).toPromise();
     }
 
     /** Fetches list of known vanities addresses. */
@@ -150,10 +155,6 @@ export class ApiService {
     /** Fetches banano price data. */
     fetchPriceInfo(): Promise<PriceDataDto> {
         return this._http.get<PriceDataDto>(`${this.spyglassApi}/v1/price`).pipe(timeout(FAST_MS)).toPromise();
-    }
-
-    getInsights(address: string): Promise<InsightsDto> {
-        return this._http.get<InsightsDto>(`${this.url}/insights/${address}`).pipe(timeout(SLOW_MS)).toPromise();
     }
 
     /** Fetches list of representatives that are considered online. */

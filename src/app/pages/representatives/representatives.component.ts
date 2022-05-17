@@ -32,6 +32,7 @@ export class RepresentativesComponent implements OnInit {
 
     isLoading = true;
     hasError = false;
+    expandedMonitoredTable = false;
     showOfflineWeight = false;
     showOfflineReps = false;
     monitoredRepColumnToggle = false;
@@ -119,6 +120,11 @@ export class RepresentativesComponent implements OnInit {
     }
 
     toggleColumn(column: keyof MonitoredRepTableColumns): void {
+        this.shownColumns[column] = !this.shownColumns[column];
+        localStorage.setItem(this.monitoredRepsShownColumnsKey, JSON.stringify(this.shownColumns));
+    }
+    toggleColumnT(e: Event, column: keyof MonitoredRepTableColumns): void {
+        e.stopPropagation();
         this.shownColumns[column] = !this.shownColumns[column];
         localStorage.setItem(this.monitoredRepsShownColumnsKey, JSON.stringify(this.shownColumns));
     }

@@ -15,32 +15,31 @@ import {APP_NAV_ITEMS} from "../nav-items";
                     <button *ngIf="vp.sm" mat-icon-button (click)="openDrawer.emit()" [style.marginRight.px]="16">
                         <mat-icon>menu</mat-icon>
                     </button>
+                    <blui-spacer *ngIf="!vp.sm"></blui-spacer>
                     <div responsive class="navigation-toolbar-title" (click)="router.navigate(['/home'])">
                         {{ vp.sm ? toolbarTitle : 'Yellow Spyglass' }}
                     </div>
-                    <blui-spacer></blui-spacer>
-                    <div *ngIf="!vp.sm">
-                        <button mat-button [matMenuTriggerFor]="accounts">Accounts</button>
+                    <div *ngIf="!vp.sm" [style.marginLeft.px]="vp.md ? 24 : 48">
+                        <button mat-button class="nav-menu-trigger" [matMenuTriggerFor]="accounts">Explore</button>
                         <mat-menu #accounts="matMenu">
                             <button mat-menu-item (click)="router.navigate([pages.wallets.route])">Wallets</button>
                             <button mat-menu-item (click)="router.navigate([pages.knownAccounts.route])">Known
                                 Accounts
                             </button>
-                        </mat-menu>
-
-
-                        <button mat-button [matMenuTriggerFor]="networkHealth">Network Health</button>
-                        <mat-menu #networkHealth="matMenu">
                             <button mat-menu-item (click)="router.navigate([pages.representatives.route])">
                                 Representatives
                             </button>
+                        </mat-menu>
+
+
+                        <button mat-button class="nav-menu-trigger" [matMenuTriggerFor]="networkHealth">Status</button>
+                        <mat-menu #networkHealth="matMenu">
                             <button mat-menu-item (click)="router.navigate([pages.network.route])">Network</button>
-                            <button mat-menu-item (click)="router.navigate([pages.node.route])">Node</button>
+                            <button mat-menu-item (click)="router.navigate([pages.node.route])">Host Node</button>
                         </mat-menu>
                     </div>
 
 
-                    <blui-spacer></blui-spacer>
                     <blui-spacer></blui-spacer>
                     <blui-spacer></blui-spacer>
 
@@ -53,10 +52,11 @@ import {APP_NAV_ITEMS} from "../nav-items";
                            [(ngModel)]="appbarSearchText"
                            (keyup)="appbarSearch($event)"
                     />
-                    <button *ngIf="vp.sm" mat-icon-button (click)="openSearch()" [style.marginRight.px]="4">
+                    <button *ngIf="vp.sm" mat-icon-button (click)="openSearch()" [style.marginRight.px]="16">
                         <mat-icon>search</mat-icon>
                     </button>
-                    <app-user-menu style="margin-right: 8px"></app-user-menu>
+                    <app-user-menu style="margin-right: 16px"></app-user-menu>
+                    <blui-spacer *ngIf="!vp.sm"></blui-spacer>
                 </div>
             </mat-toolbar>
 

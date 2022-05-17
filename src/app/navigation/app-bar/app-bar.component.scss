@@ -8,9 +8,11 @@
 
     .desktop-search-input {
         margin-right: 32px;
+        margin-left: 32px;
         width: 320px;
         height: 36px;
         border-radius: 4px;
+        padding: 0 16px;
     }
 
     .navigation-app-bar {
@@ -22,6 +24,9 @@
         &.sm {
             padding: 0 8px;
         }
+        .nav-menu-trigger {
+            color: map-get(blui.$blui-white, 50);
+        }
         .navigation-toolbar-title {
             color: map-get(blui.$blui-white, 50);
             font-weight: 400;
@@ -29,7 +34,7 @@
             font-family: pirateFont, 'Open Sans', 'Arial';
             font-size: 36px;
             &.sm {
-                font-family: 'Open Sans';
+                font-family: inherit;
                 font-size: 20px;
             }
         }

@@ -3,6 +3,7 @@
 
 html * {
     box-sizing: border-box;
+    font-family: Helvetica;
 }
 
 body {
@@ -114,9 +115,9 @@ body {
     height: 100%;
     box-sizing: border-box;
     // TODO: move these paddings to a global style, shared
-    padding: 96px 64px 64px 64px;
+    padding: 104px 64px 64px 64px;
     &.md {
-        padding: 96px 32px 48px 32px;
+        padding: 104px 32px 48px 32px;
     }
     &.sm {
         padding: 88px 16px 48px 16px;

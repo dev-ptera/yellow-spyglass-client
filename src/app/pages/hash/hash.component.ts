@@ -200,7 +200,7 @@ export class HashComponent implements OnDestroy {
         const spin = new Promise((resolve) => setTimeout(resolve, 500));
 
         // Confirmed Transactions
-        Promise.all([this._apiService.block(hash), spin])
+        Promise.all([this._apiService.fetchBlock(hash), spin])
             .then(([blockResponse]) => {
                 this.loading = false;
                 this.block = blockResponse;

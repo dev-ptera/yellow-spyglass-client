@@ -20,6 +20,8 @@ import { ApiService } from '@app/services/api/api.service';
         </ng-template>
 
         <ng-template #bodyContent>
+            <div class="node-section-wrapper" responsive>
+
             <mat-card>
                 <div class="primary node-monitor-section-title">Node</div>
                 <mat-divider></mat-divider>
@@ -148,6 +150,8 @@ import { ApiService } from '@app/services/api/api.service';
                     </blui-info-list-item>
                 </mat-list>
             </mat-card>
+
+            </div>
         </ng-template>
 
         <div class="app-page-root" responsive>
