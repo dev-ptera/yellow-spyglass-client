@@ -21,136 +21,134 @@ import { ApiService } from '@app/services/api/api.service';
 
         <ng-template #bodyContent>
             <div class="node-section-wrapper" responsive>
-
-            <mat-card>
-                <div class="primary node-monitor-section-title">Node</div>
-                <mat-divider></mat-divider>
-                <mat-list [style.paddingTop.px]="0">
-                    <blui-info-list-item [wrapSubtitle]="true" divider="full">
-                        <div blui-icon>
-                            <mat-icon>how_to_vote</mat-icon>
-                        </div>
-                        <div blui-title>Address</div>
-                        <div blui-subtitle>
-                            <span class="link" (click)="search(stats.addressAsRepresentative, $event)">{{
-                                stats.addressAsRepresentative
+                <mat-card>
+                    <div class="primary node-monitor-section-title">Node</div>
+                    <mat-divider></mat-divider>
+                    <mat-list [style.paddingTop.px]="0">
+                        <blui-info-list-item [wrapSubtitle]="true" divider="full">
+                            <div blui-icon>
+                                <mat-icon>how_to_vote</mat-icon>
+                            </div>
+                            <div blui-title>Address</div>
+                            <div blui-subtitle>
+                                <span class="link" (click)="search(stats.addressAsRepresentative, $event)">{{
+                                    stats.addressAsRepresentative
                                 }}</span>
-                        </div>
-                    </blui-info-list-item>
-                    <blui-info-list-item divider="full">
-                        <div blui-icon>
-                            <mat-icon>browser_updated</mat-icon>
-                        </div>
-                        <div blui-title>Protocol Version</div>
-                        <div blui-subtitle>{{ stats.nodeVendor }}</div>
-                    </blui-info-list-item>
-                    <blui-info-list-item>
-                        <div blui-icon>
-                            <mat-icon>disc_full</mat-icon>
-                        </div>
-                        <div blui-title>Database Version</div>
-                        <div blui-subtitle>{{ stats.storeVendor }}</div>
-                    </blui-info-list-item>
-                </mat-list>
-            </mat-card>
-            <mat-card>
-                <div class="primary node-monitor-section-title">Block Count</div>
-                <mat-divider></mat-divider>
-                <mat-list [style.paddingTop.px]="0">
-                    <blui-info-list-item divider="full">
-                        <div blui-icon>
-                            <mat-icon>check_circle</mat-icon>
-                        </div>
-                        <div blui-title>Current Block</div>
-                        <div blui-subtitle>
-                            {{ util.numberWithCommas(stats.currentBlock) }}
-                        </div>
-                    </blui-info-list-item>
-                    <blui-info-list-item divider="full">
-                        <div blui-icon>
-                            <mat-icon>check_circle</mat-icon>
-                        </div>
-                        <div blui-title>Cemented Blocks</div>
-                        <div blui-subtitle>
-                            {{ util.numberWithCommas(stats.cementedBlocks) }}
-                        </div>
-                    </blui-info-list-item>
-                    <blui-info-list-item>
-                        <div blui-icon>
-                            <mat-icon>running_with_errors</mat-icon>
-                        </div>
-                        <div blui-title>Unchecked Blocks</div>
-                        <div blui-subtitle>
-                            {{ util.numberWithCommas(stats.uncheckedBlocks) }}
-                        </div>
-                    </blui-info-list-item>
-                </mat-list>
-            </mat-card>
-            <mat-card>
-                <div class="primary node-monitor-section-title">System Resources</div>
-                <mat-divider></mat-divider>
-                <mat-list [style.paddingTop.px]="0">
-                    <blui-info-list-item divider="full">
-                        <div blui-icon>
-                            <mat-icon>memory</mat-icon>
-                        </div>
-                        <div blui-title>Memory Usage</div>
-                        <div blui-subtitle>
-                            {{ formatMemory(stats.usedMemoryGB) }} / {{ formatMemory(stats.totalMemoryGB) }}GB
-                            <span class="mat-subheading-1" [style.marginLeft.px]="8">
-                                ({{ formatMemoryPercentage(stats.usedMemoryGB / stats.totalMemoryGB) }}%)
-                            </span>
-                        </div>
-                    </blui-info-list-item>
-                    <blui-info-list-item divider="full">
-                        <div blui-icon>
-                            <mat-icon>download</mat-icon>
-                        </div>
-                        <div blui-title>Ledger Size</div>
-                        <div blui-subtitle>
-                            {{ formatLedgerSize(stats.ledgerSizeMB) }} GB
-                            <span style="margin-left: 8px">({{ formatLedgerPercent() }} of disk space)</span>
-                        </div>
-                    </blui-info-list-item>
-                    <blui-info-list-item>
-                        <div blui-icon>
-                            <mat-icon>storage</mat-icon>
-                        </div>
-                        <div blui-title>Available Disk Space</div>
-                        <div blui-subtitle>{{ formatAvailableSpace(stats.availableDiskSpaceGB) }} GB</div>
-                    </blui-info-list-item>
-                </mat-list>
-            </mat-card>
-            <mat-card>
-                <div class="primary node-monitor-section-title">Connectivity</div>
-                <mat-divider></mat-divider>
-                <mat-list [style.paddingTop.px]="0">
-                    <blui-info-list-item divider="full">
-                        <div blui-icon>
-                            <mat-icon>account_circle</mat-icon>
-                        </div>
-                        <div blui-title>Peers</div>
-                        <div blui-subtitle>{{ stats.peerCount }}</div>
-                    </blui-info-list-item>
-                    <blui-info-list-item divider="full">
-                        <div blui-icon>
-                            <mat-icon>timer</mat-icon>
-                        </div>
-                        <div blui-title>Uptime</div>
-                        <div blui-subtitle>{{ formatUptime(stats.nodeUptimeSeconds) }}</div>
-                    </blui-info-list-item>
-                    <blui-info-list-item>
-                        <div blui-icon>
-                            <mat-icon>place</mat-icon>
-                        </div>
-                        <div blui-title>Location</div>
-                        <div blui-subtitle>
-                            {{ stats.location }}
-                        </div>
-                    </blui-info-list-item>
-                </mat-list>
-            </mat-card>
-
+                            </div>
+                        </blui-info-list-item>
+                        <blui-info-list-item divider="full">
+                            <div blui-icon>
+                                <mat-icon>browser_updated</mat-icon>
+                            </div>
+                            <div blui-title>Protocol Version</div>
+                            <div blui-subtitle>{{ stats.nodeVendor }}</div>
+                        </blui-info-list-item>
+                        <blui-info-list-item>
+                            <div blui-icon>
+                                <mat-icon>disc_full</mat-icon>
+                            </div>
+                            <div blui-title>Database Version</div>
+                            <div blui-subtitle>{{ stats.storeVendor }}</div>
+                        </blui-info-list-item>
+                    </mat-list>
+                </mat-card>
+                <mat-card>
+                    <div class="primary node-monitor-section-title">Block Count</div>
+                    <mat-divider></mat-divider>
+                    <mat-list [style.paddingTop.px]="0">
+                        <blui-info-list-item divider="full">
+                            <div blui-icon>
+                                <mat-icon>check_circle</mat-icon>
+                            </div>
+                            <div blui-title>Current Block</div>
+                            <div blui-subtitle>
+                                {{ util.numberWithCommas(stats.currentBlock) }}
+                            </div>
+                        </blui-info-list-item>
+                        <blui-info-list-item divider="full">
+                            <div blui-icon>
+                                <mat-icon>check_circle</mat-icon>
+                            </div>
+                            <div blui-title>Cemented Blocks</div>
+                            <div blui-subtitle>
+                                {{ util.numberWithCommas(stats.cementedBlocks) }}
+                            </div>
+                        </blui-info-list-item>
+                        <blui-info-list-item>
+                            <div blui-icon>
+                                <mat-icon>running_with_errors</mat-icon>
+                            </div>
+                            <div blui-title>Unchecked Blocks</div>
+                            <div blui-subtitle>
+                                {{ util.numberWithCommas(stats.uncheckedBlocks) }}
+                            </div>
+                        </blui-info-list-item>
+                    </mat-list>
+                </mat-card>
+                <mat-card>
+                    <div class="primary node-monitor-section-title">System Resources</div>
+                    <mat-divider></mat-divider>
+                    <mat-list [style.paddingTop.px]="0">
+                        <blui-info-list-item divider="full">
+                            <div blui-icon>
+                                <mat-icon>memory</mat-icon>
+                            </div>
+                            <div blui-title>Memory Usage</div>
+                            <div blui-subtitle>
+                                {{ formatMemory(stats.usedMemoryGB) }} / {{ formatMemory(stats.totalMemoryGB) }}GB
+                                <span class="mat-subheading-1" [style.marginLeft.px]="8">
+                                    ({{ formatMemoryPercentage(stats.usedMemoryGB / stats.totalMemoryGB) }}%)
+                                </span>
+                            </div>
+                        </blui-info-list-item>
+                        <blui-info-list-item divider="full">
+                            <div blui-icon>
+                                <mat-icon>download</mat-icon>
+                            </div>
+                            <div blui-title>Ledger Size</div>
+                            <div blui-subtitle>
+                                {{ formatLedgerSize(stats.ledgerSizeMB) }} GB
+                                <span style="margin-left: 8px">({{ formatLedgerPercent() }} of disk space)</span>
+                            </div>
+                        </blui-info-list-item>
+                        <blui-info-list-item>
+                            <div blui-icon>
+                                <mat-icon>storage</mat-icon>
+                            </div>
+                            <div blui-title>Available Disk Space</div>
+                            <div blui-subtitle>{{ formatAvailableSpace(stats.availableDiskSpaceGB) }} GB</div>
+                        </blui-info-list-item>
+                    </mat-list>
+                </mat-card>
+                <mat-card>
+                    <div class="primary node-monitor-section-title">Connectivity</div>
+                    <mat-divider></mat-divider>
+                    <mat-list [style.paddingTop.px]="0">
+                        <blui-info-list-item divider="full">
+                            <div blui-icon>
+                                <mat-icon>account_circle</mat-icon>
+                            </div>
+                            <div blui-title>Peers</div>
+                            <div blui-subtitle>{{ stats.peerCount }}</div>
+                        </blui-info-list-item>
+                        <blui-info-list-item divider="full">
+                            <div blui-icon>
+                                <mat-icon>timer</mat-icon>
+                            </div>
+                            <div blui-title>Uptime</div>
+                            <div blui-subtitle>{{ formatUptime(stats.nodeUptimeSeconds) }}</div>
+                        </blui-info-list-item>
+                        <blui-info-list-item>
+                            <div blui-icon>
+                                <mat-icon>place</mat-icon>
+                            </div>
+                            <div blui-title>Location</div>
+                            <div blui-subtitle>
+                                {{ stats.location }}
+                            </div>
+                        </blui-info-list-item>
+                    </mat-list>
+                </mat-card>
             </div>
         </ng-template>
 

@@ -13,7 +13,6 @@ import { Meta, Title } from '@angular/platform-browser';
     styleUrls: ['./navigation.component.scss'],
 })
 export class NavigationComponent implements OnInit {
-
     appbarSearchText = '';
     toolbarTitle: string;
     routeListener: Subscription;

@@ -1,10 +1,10 @@
-import {Component, ElementRef, EventEmitter, Input, Output, ViewChild, ViewEncapsulation} from "@angular/core";
-import {ViewportService} from "@app/services/viewport/viewport.service";
-import {Meta, Title} from "@angular/platform-browser";
-import {Router} from "@angular/router";
-import {SearchService} from "@app/services/search/search.service";
-import {DrawerStateService} from "@app/services/drawer-state/drawer-state.service";
-import {APP_NAV_ITEMS} from "../nav-items";
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ViewportService } from '@app/services/viewport/viewport.service';
+import { Meta, Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { SearchService } from '@app/services/search/search.service';
+import { DrawerStateService } from '@app/services/drawer-state/drawer-state.service';
+import { APP_NAV_ITEMS } from '../nav-items';
 
 @Component({
     selector: 'app-bar',
@@ -23,14 +23,13 @@ import {APP_NAV_ITEMS} from "../nav-items";
                         <button mat-button class="nav-menu-trigger" [matMenuTriggerFor]="accounts">Explore</button>
                         <mat-menu #accounts="matMenu">
                             <button mat-menu-item (click)="router.navigate([pages.wallets.route])">Wallets</button>
-                            <button mat-menu-item (click)="router.navigate([pages.knownAccounts.route])">Known
-                                Accounts
+                            <button mat-menu-item (click)="router.navigate([pages.knownAccounts.route])">
+                                Known Accounts
                             </button>
                             <button mat-menu-item (click)="router.navigate([pages.representatives.route])">
                                 Representatives
                             </button>
                         </mat-menu>
-
 
                         <button mat-button class="nav-menu-trigger" [matMenuTriggerFor]="networkHealth">Status</button>
                         <mat-menu #networkHealth="matMenu">
@@ -39,18 +38,18 @@ import {APP_NAV_ITEMS} from "../nav-items";
                         </mat-menu>
                     </div>
 
-
                     <blui-spacer></blui-spacer>
                     <blui-spacer></blui-spacer>
 
-                    <input *ngIf="!vp.sm"
-                           class="desktop-search-input"
-                           type="text"
-                           tabindex="0"
-                           autocapitalize="none"
-                           placeholder="Search Address or Transaction Hash"
-                           [(ngModel)]="appbarSearchText"
-                           (keyup)="appbarSearch($event)"
+                    <input
+                        *ngIf="!vp.sm"
+                        class="desktop-search-input"
+                        type="text"
+                        tabindex="0"
+                        autocapitalize="none"
+                        placeholder="Search Address or Transaction Hash"
+                        [(ngModel)]="appbarSearchText"
+                        (keyup)="appbarSearch($event)"
                     />
                     <button *ngIf="vp.sm" mat-icon-button (click)="openSearch()" [style.marginRight.px]="16">
                         <mat-icon>search</mat-icon>
@@ -86,7 +85,6 @@ import {APP_NAV_ITEMS} from "../nav-items";
     encapsulation: ViewEncapsulation.None,
 })
 export class AppBarComponent {
-
     @ViewChild('mobileSearchBar') searchBar: ElementRef;
 
     @Input() toolbarTitle: string;
@@ -104,8 +102,7 @@ export class AppBarComponent {
         private readonly _searchService: SearchService,
         private readonly _viewportService: ViewportService,
         private readonly _stateService: DrawerStateService
-    ) {
-    }
+    ) {}
 
     openSearch(): void {
         this.toggleSearch = true;

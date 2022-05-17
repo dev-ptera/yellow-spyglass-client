@@ -16,8 +16,8 @@ import { MonitoredRepListComponent } from '@app/pages/representatives/display/mo
 import { WeightChartComponent } from '@app/pages/representatives/display/weight-chart/weight-chart.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RouterModule } from '@angular/router';
-import {MatButtonModule} from "@angular/material/button";
-import {MatMenuModule} from "@angular/material/menu";
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
     declarations: [

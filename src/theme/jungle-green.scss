@@ -101,8 +101,6 @@ $jungle-green-theme: map-merge(
     $warn-red: map-get(blui.$blui-red, 500);
     $tag-opacity: 0.06;
 
-
-
     .desktop-search-input {
         border: solid 1px map-get($theme-foreground, divider);
     }

@@ -1,7 +1,6 @@
 <blui-drawer-layout variant="temporary" (backdropClick)="closeDrawer()" width="280" responsive [class.open]="isOpen()">
     <blui-drawer blui-drawer [open]="isOpen()" [sideBorder]="true" [openOnHover]="false">
-        <blui-drawer-header>
-        </blui-drawer-header>
+        <blui-drawer-header> </blui-drawer-header>
         <blui-drawer-body>
             <blui-drawer-nav-group title="Explore" [divider]="true">
                 <blui-drawer-nav-item
@@ -32,7 +31,6 @@
     </blui-drawer>
     <div blui-content class="navigation-drawer-content" [class.home]="isHome()" responsive>
         <app-bar [toolbarTitle]="toolbarTitle" (openDrawer)="openDrawer()"></app-bar>
-
 
         <!--
         MAINTENANCE COMMENT

@@ -36,20 +36,23 @@
         </div>
 
         <div *ngIf="!vp.sm" style="display: flex; align-items: end; padding-bottom: 24px">
-            <button mat-mini-fab
-                    color="primary"
-                    class="monitored-table-edit-button button-1"
-                    [class.expanded]="expandedMonitoredTable"
-                    (click)="expandedMonitoredTable = !expandedMonitoredTable">
-                <mat-icon>{{expandedMonitoredTable ? 'close_fullscreen' : 'open_in_full'}}</mat-icon>
+            <button
+                mat-mini-fab
+                color="primary"
+                class="monitored-table-edit-button button-1"
+                [class.expanded]="expandedMonitoredTable"
+                (click)="expandedMonitoredTable = !expandedMonitoredTable"
+            >
+                <mat-icon>{{ expandedMonitoredTable ? 'close_fullscreen' : 'open_in_full' }}</mat-icon>
             </button>
 
-
-            <button mat-mini-fab
-                    color="primary"
-                    class="monitored-table-edit-button button-2"
-                    [class.expanded]="expandedMonitoredTable"
-                    [matMenuTriggerFor]="columns">
+            <button
+                mat-mini-fab
+                color="primary"
+                class="monitored-table-edit-button button-2"
+                [class.expanded]="expandedMonitoredTable"
+                [matMenuTriggerFor]="columns"
+            >
                 <mat-icon blui-avatar>more_vert</mat-icon>
             </button>
             <mat-menu #columns="matMenu" [hasBackdrop]="true" (click)="$event.stopPropagation()">
@@ -74,7 +77,11 @@
                         <div blui-title>Version</div>
                     </blui-info-list-item>
 
-                    <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumnT($event, 'delegatorsCount')">
+                    <blui-info-list-item
+                        [dense]="true"
+                        [hidePadding]="true"
+                        (click)="toggleColumnT($event, 'delegatorsCount')"
+                    >
                         <mat-checkbox
                             color="primary"
                             blui-left-content
@@ -84,7 +91,11 @@
                         <div blui-title>Delegators</div>
                     </blui-info-list-item>
 
-                    <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumnT($event, 'weightBan')">
+                    <blui-info-list-item
+                        [dense]="true"
+                        [hidePadding]="true"
+                        (click)="toggleColumnT($event, 'weightBan')"
+                    >
                         <mat-checkbox
                             color="primary"
                             blui-left-content
@@ -94,7 +105,11 @@
                         <div blui-title>Weight (BAN)</div>
                     </blui-info-list-item>
 
-                    <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumnT($event, 'weightPercent')">
+                    <blui-info-list-item
+                        [dense]="true"
+                        [hidePadding]="true"
+                        (click)="toggleColumnT($event, 'weightPercent')"
+                    >
                         <mat-checkbox
                             color="primary"
                             blui-left-content
@@ -104,7 +119,11 @@
                         <div blui-title>Weight (%)</div>
                     </blui-info-list-item>
 
-                    <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumnT($event, 'peerCount')">
+                    <blui-info-list-item
+                        [dense]="true"
+                        [hidePadding]="true"
+                        (click)="toggleColumnT($event, 'peerCount')"
+                    >
                         <mat-checkbox
                             color="primary"
                             blui-left-content
@@ -114,7 +133,11 @@
                         <div blui-title>Peer Count</div>
                     </blui-info-list-item>
 
-                    <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumnT($event, 'uncheckedBlocks')">
+                    <blui-info-list-item
+                        [dense]="true"
+                        [hidePadding]="true"
+                        (click)="toggleColumnT($event, 'uncheckedBlocks')"
+                    >
                         <mat-checkbox
                             color="primary"
                             blui-left-content
@@ -124,7 +147,11 @@
                         <div blui-title>Unchecked Blocks</div>
                     </blui-info-list-item>
 
-                    <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumnT($event, 'cementedBlocks')">
+                    <blui-info-list-item
+                        [dense]="true"
+                        [hidePadding]="true"
+                        (click)="toggleColumnT($event, 'cementedBlocks')"
+                    >
                         <mat-checkbox
                             color="primary"
                             blui-left-content
@@ -134,7 +161,11 @@
                         <div blui-title>Cemented Blocks</div>
                     </blui-info-list-item>
 
-                    <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumnT($event, 'location')">
+                    <blui-info-list-item
+                        [dense]="true"
+                        [hidePadding]="true"
+                        (click)="toggleColumnT($event, 'location')"
+                    >
                         <mat-checkbox
                             color="primary"
                             blui-left-content
@@ -154,7 +185,11 @@
                         <div blui-title>Memory Usage</div>
                     </blui-info-list-item>
 
-                    <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumnT($event, 'lastRestart')">
+                    <blui-info-list-item
+                        [dense]="true"
+                        [hidePadding]="true"
+                        (click)="toggleColumnT($event, 'lastRestart')"
+                    >
                         <mat-checkbox
                             color="primary"
                             blui-left-content
@@ -163,7 +198,11 @@
                         ></mat-checkbox>
                         <div blui-title>Last Restart</div>
                     </blui-info-list-item>
-                    <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumnT($event, 'isPrincipal')">
+                    <blui-info-list-item
+                        [dense]="true"
+                        [hidePadding]="true"
+                        (click)="toggleColumnT($event, 'isPrincipal')"
+                    >
                         <mat-checkbox
                             color="primary"
                             blui-left-content
@@ -185,8 +224,6 @@
                 </mat-nav-list>
             </mat-menu>
         </div>
-
-
     </div>
     <app-monitored-rep-table
         *ngIf="!vp.sm"
