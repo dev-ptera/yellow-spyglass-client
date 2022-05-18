@@ -38,7 +38,7 @@ export class ApiService {
     /** Gets account summary information. */
     fetchAccountOverview(address: string): Promise<AccountOverviewDto> {
         return this._http
-            .get<AccountOverviewDto>(`${this.url}/account-overview/${address}`)
+            .get<AccountOverviewDto>(`${this.spyglassApi}/v1/account/overview/${address}`)
             .pipe(timeout(SLOW_MS))
             .toPromise();
     }

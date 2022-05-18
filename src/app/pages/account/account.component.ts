@@ -103,15 +103,13 @@ export class AccountComponent implements OnDestroy {
         this.error = false;
         this._ref.detectChanges();
 
-        const spin = new Promise((resolve) => setTimeout(resolve, 500));
 
-        // Confirmed Transactions
-        Promise.all([this._apiService.fetchAccountOverview(address), spin])
-            .then(([accountOverview]) => {
-                this.loading = false;
+        this._apiService.fetchAccountOverview(address)
+            .then((accountOverview) => {
                 this.accountOverview = accountOverview;
-                this._prepareNewAccount();
-                void this._router.navigate([`${APP_NAV_ITEMS.account.route}/${address}`]);
+                this.loading = false;
+               // this._prepareNewAccount();
+               //  void this._router.navigate([`${APP_NAV_ITEMS.account.route}/${address}`]);
             })
             .catch((err) => {
                 console.error(err);
@@ -119,9 +117,9 @@ export class AccountComponent implements OnDestroy {
                 this.error = true;
             });
 
-        // Monkey
-        Promise.all([this._apiService.fetchMonKey(address), spin])
-            .then(([data]) => {
+        // MonKey
+        this._apiService.fetchMonKey(address)
+            .then((data) => {
                 this.monkeySvg = data;
             })
             .catch((err) => {
@@ -137,7 +135,7 @@ export class AccountComponent implements OnDestroy {
         this.confirmedTxPageIndex = 0;
         this.insights = undefined;
         this.loadingInsights = false;
-        this.insightsDisabled = this.accountOverview.completedTxCount > 100_000 || !this.accountOverview.opened;
+        this.insightsDisabled = this.accountOverview.blockCount > 100_000 || !this.accountOverview.opened;
         this._prepareAccountOverview(this.accountOverview);
         this._prepareConfirmed(this.accountOverview);
         this._preparePending(this.accountOverview);
@@ -149,12 +147,12 @@ export class AccountComponent implements OnDestroy {
      */
     private _prepareAccountOverview(accountOverview: AccountOverviewDto): void {
         const approxBalance = accountOverview.balanceRaw !== '0';
-        const approxPending = accountOverview.pendingRaw !== '0';
+        const approxPending = accountOverview.receivableRaw !== '0';
         this.confirmedBalance = this._util.convertRawToBan(accountOverview.balanceRaw, { precision: 2, comma: true });
         if (approxBalance && this.confirmedBalance === '0') {
             this.confirmedBalance = '~0';
         }
-        this.pendingBalance = this._util.convertRawToBan(accountOverview.pendingRaw, { precision: 2, comma: true });
+        this.pendingBalance = this._util.convertRawToBan(accountOverview.receivableRaw, { precision: 2, comma: true });
         if (approxPending && this.pendingBalance === '0') {
             this.pendingBalance = '~0';
         }
@@ -169,8 +167,8 @@ export class AccountComponent implements OnDestroy {
      */
     private _prepareDelegators(accountOverview: AccountOverviewDto): void {
         this.delegators = [];
-        this.weightSum = accountOverview.delegatorsWeightSum;
-        for (const delegator of accountOverview.delegators) {
+        this.weightSum = accountOverview.weight;
+       /* for (const delegator of accountOverview.de) {
             this.delegators.push({
                 address: delegator.address,
                 weight:
@@ -180,7 +178,7 @@ export class AccountComponent implements OnDestroy {
                               delegator.weightBan.toFixed(delegator.weightBan > 100000 ? 0 : 2)
                           ),
             });
-        }
+        } */
     }
 
     private _prepareConfirmed(accountOverview: AccountOverviewDto): void {
@@ -190,9 +188,11 @@ export class AccountComponent implements OnDestroy {
         };
 
         const converted = [];
-        for (const confirmedTx of accountOverview.confirmedTransactions) {
+   /*     for (const confirmedTx of accountOverview.confirmedTransactions) {
             converted.push(this._convertConfirmedTxDtoToModal(confirmedTx));
         }
+
+    */
         this.confirmedTransactions.all.set(0, converted);
         this.confirmedTransactions.display = converted;
         this._fetchMonkeys(this.confirmedTransactions.display);
@@ -203,9 +203,12 @@ export class AccountComponent implements OnDestroy {
             display: [],
         };
         const converted = [];
+        /*
         for (const pendingTx of accountOverview.pendingTransactions) {
             converted.push(this._convertPendingTxDtoToModal(pendingTx));
         }
+
+         */
         this.pendingTransactions.display = converted;
         this._fetchMonkeys(this.pendingTransactions.display);
     }
@@ -308,15 +311,15 @@ export class AccountComponent implements OnDestroy {
     }
 
     isRepresentative(): boolean {
-        return this.accountOverview && this.accountOverview.opened && this.accountOverview.delegators.length > 0;
+        return this.accountOverview && this.accountOverview.opened && this.accountOverview.weight > 0;
     }
 
     getConfirmedBadge(): string {
-        return this._util.numberWithCommas(this.accountOverview.completedTxCount);
+        return this._util.numberWithCommas(this.accountOverview.blockCount);
     }
 
     getPendingBadge(): string {
-        return this._util.numberWithCommas(this.accountOverview.pendingTxCount);
+        return this._util.numberWithCommas(this.accountOverview.receivable);
     }
 
     getDelegatorsBadge(): string {

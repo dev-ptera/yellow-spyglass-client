@@ -52,7 +52,7 @@ import { LoadingService } from '@app/services/loading/loading.service';
                         [(ngModel)]="appbarSearchText"
                         (keyup)="appbarSearch($event)"
                     />
-                    <button *ngIf="vp.sm" mat-icon-button (click)="openSearch()" [style.marginRight.px]="16">
+                    <button *ngIf="vp.sm" mat-icon-button (click)="openSearch()" [style.marginRight.px]="0">
                         <mat-icon>search</mat-icon>
                     </button>
                     <app-user-menu style="margin-right: 16px"></app-user-menu>
