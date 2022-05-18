@@ -116,7 +116,10 @@ export class NavigationComponent implements OnInit {
                     drawerContent.scroll(0, 0);
                 }
 
-                switch (route.urlAfterRedirects.replace('explorer/', '').split('/')[1]) {
+                switch (route.urlAfterRedirects
+                        .replace('explorer/', '')  // Prune creeper legacy routes
+                    .replace('/history', '')
+                    .split('/')[1]) {
                     case `${APP_NAV_ITEMS.home.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.home.title;
                         this._stateService.setSelectedItem(APP_NAV_ITEMS.home.title);
@@ -128,16 +131,8 @@ export class NavigationComponent implements OnInit {
                         });
                         break;
                     }
-                    case `explorer/${APP_NAV_ITEMS.account.route}`: {
-                        this._updateAccountPageMetadata();
-                        break;
-                    }
                     case `${APP_NAV_ITEMS.account.route}`: {
                         this._updateAccountPageMetadata();
-                        break;
-                    }
-                    case `explorer/${APP_NAV_ITEMS.hash.route}`: {
-                        this._updateHashPageMetadata();
                         break;
                     }
                     case `${APP_NAV_ITEMS.hash.route}`: {
