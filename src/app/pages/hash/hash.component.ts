@@ -178,7 +178,8 @@ export class HashComponent implements OnDestroy {
     ) {
         this.routeListener = this._router.events.subscribe((route) => {
             if (route instanceof NavigationEnd) {
-                this._searchHash(this._router.url.split('/')[2]);
+                const splitUrl = this._router.url.split('/');
+                this._searchHash(splitUrl[splitUrl.length-1]);
             }
         });
     }

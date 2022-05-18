@@ -88,7 +88,8 @@ export class NavigationComponent implements OnInit {
                 if (drawerContent) {
                     drawerContent.scroll(0, 0);
                 }
-                switch (route.urlAfterRedirects.split('/')[1]) {
+
+                switch (route.urlAfterRedirects.replace('explorer/', '').split('/')[1]) {
                     case `${APP_NAV_ITEMS.home.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.home.title;
                         this._stateService.setSelectedItem(APP_NAV_ITEMS.home.title);
@@ -100,24 +101,20 @@ export class NavigationComponent implements OnInit {
                         });
                         break;
                     }
+                    case `explorer/${APP_NAV_ITEMS.account.route}`: {
+                        this._updateAccountPageMetadata();
+                        break;
+                    }
                     case `${APP_NAV_ITEMS.account.route}`: {
-                        this.toolbarTitle = APP_NAV_ITEMS.account.title;
-                        this._stateService.setSelectedItem(APP_NAV_ITEMS.account.title);
-                        this._title.setTitle(this._makeTitle('Account'));
-                        this._meta.updateTag({
-                            name: 'description',
-                            content: 'Explore account transaction history and delegators.',
-                        });
+                        this._updateAccountPageMetadata();
+                        break;
+                    }
+                    case `explorer/${APP_NAV_ITEMS.hash.route}`: {
+                        this._updateHashPageMetadata();
                         break;
                     }
                     case `${APP_NAV_ITEMS.hash.route}`: {
-                        this.toolbarTitle = APP_NAV_ITEMS.hash.title;
-                        this._stateService.setSelectedItem(APP_NAV_ITEMS.hash.title);
-                        this._title.setTitle(this._makeTitle('Block'));
-                        this._meta.updateTag({
-                            name: 'description',
-                            content: 'See details for a specific block',
-                        });
+                        this._updateHashPageMetadata();
                         break;
                     }
                     case `${APP_NAV_ITEMS.representatives.route}`: {
@@ -150,14 +147,12 @@ export class NavigationComponent implements OnInit {
                         });
                         break;
                     }
+                    case `status`: {
+                        this._updateNodePageMetadata();
+                        break;
+                    }
                     case `${APP_NAV_ITEMS.node.route}`: {
-                        this.toolbarTitle = APP_NAV_ITEMS.node.title;
-                        this._stateService.setSelectedItem(APP_NAV_ITEMS.node.title);
-                        this._title.setTitle(this._makeTitle('Node'));
-                        this._meta.updateTag({
-                            name: 'description',
-                            content: 'Node status for the Yellow Spyglass explorer; batman representative',
-                        });
+                        this._updateNodePageMetadata();
                         break;
                     }
                     case `${APP_NAV_ITEMS.wallets.route}`: {
@@ -196,6 +191,34 @@ export class NavigationComponent implements OnInit {
                     }
                 }
             }
+        });
+    }
+
+    private _updateAccountPageMetadata(): void {
+        this.toolbarTitle = APP_NAV_ITEMS.account.title;
+        this._title.setTitle(this._makeTitle('Account'));
+        this._meta.updateTag({
+            name: 'description',
+            content: 'Explore account transaction history and delegators.',
+        });
+    }
+
+    private _updateHashPageMetadata(): void {
+        this.toolbarTitle = APP_NAV_ITEMS.hash.title;
+        this._title.setTitle(this._makeTitle('Block'));
+        this._meta.updateTag({
+            name: 'description',
+            content: 'See details for a specific block',
+        });
+    }
+
+    private _updateNodePageMetadata(): void {
+        this.toolbarTitle = APP_NAV_ITEMS.node.title;
+        this._stateService.setSelectedItem(APP_NAV_ITEMS.node.title);
+        this._title.setTitle(this._makeTitle('Node'));
+        this._meta.updateTag({
+            name: 'description',
+            content: 'Node status for the Yellow Spyglass explorer; batman representative',
         });
     }
 
