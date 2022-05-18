@@ -22,6 +22,7 @@ const routes: Routes = [
     { path: APP_NAV_ITEMS.knownAccounts.route, component: KnownAccountsComponent },
     { path: APP_NAV_ITEMS.network.route, component: NetworkComponent },
     { path: APP_NAV_ITEMS.vanity.route, component: VanityComponent },
+    { path: `explorer/${APP_NAV_ITEMS.account.route}/:id/history`, component: AccountComponent }, // Match Creeper path
     { path: `explorer/${APP_NAV_ITEMS.account.route}/:id`, component: AccountComponent }, // Match Creeper path
     { path: `${APP_NAV_ITEMS.account.route}/:id`, component: AccountComponent },
     { path: `${APP_NAV_ITEMS.hash.route}/:id`, component: HashComponent },
