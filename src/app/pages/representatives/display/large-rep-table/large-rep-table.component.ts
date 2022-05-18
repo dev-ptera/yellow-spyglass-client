@@ -76,16 +76,7 @@ import { AliasService } from '@app/services/alias/alias.service';
             <ng-container matColumnDef="score">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Score</th>
                 <td mat-cell *matCellDef="let element">
-                    <span
-                        *ngIf="element.score"
-                        [class.warn]="element.score <= 50"
-                        [class.intermediary]="element.score > 50 && element.score <= 84"
-                        [class.primary]="element.score > 84"
-                    >
-                        {{ element.score }}
-                    </span>
-                    <span *ngIf="element.score" style="font-size: 11px">/ 100</span>
-                    <span *ngIf="!element.score">--</span>
+                    <rep-score [score]="element.score"></rep-score>
                 </td>
             </ng-container>
 
@@ -123,20 +114,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                     </div>
                 </th>
                 <td mat-cell *matCellDef="let element">
-                    <span
-                        [class.warn]="element.uptimeStats.uptimePercentages.month <= 80"
-                        [class.intermediary]="
-                            element.uptimeStats.uptimePercentages.month > 80 &&
-                            element.uptimeStats.uptimePercentages.month <= 95
-                        "
-                        [class.primary]="element.uptimeStats.uptimePercentages.month > 95"
-                    >
-                        {{ element.uptimeStats.uptimePercentages.month }}<span style="font-size: 11px">% </span>
-                    </span>
-                    <span *ngIf="!vp.md" style="font-size: 11px"
-                        >· {{ element.uptimeStats.uptimePercentages.week }}% ·
-                        {{ element.uptimeStats.uptimePercentages.day }}%
-                    </span>
+                    <rep-uptime [uptimePercentages]="element.uptimePercentages"></rep-uptime>
                 </td>
             </ng-container>
 

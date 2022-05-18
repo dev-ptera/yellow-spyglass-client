@@ -5,46 +5,9 @@
 
 .monitored-reps-table {
     height: 400px;
-    .blui-list-item-tag-label {
-        font-size: 0.625rem !important;
-    }
     * {
         font-size: 14px;
     }
-    .link {
-        font-size: 14px !important;
-    }
-    th.mat-header-cell:last-of-type,
-    td.mat-cell:last-of-type,
-    td.mat-footer-cell:last-of-type {
-        padding-right: 0 !important;
-    }
-    tr td {
-        padding-right: 8px;
-    }
-
-    .mat-column-name {
-        border-right: 1px solid currentColor;
-    }
-}
-
-.dark th.mat-header-cell,
-.dark td.mat-cell,
-.dark td.mat-footer-cell,
-.dark th.mat-header-cell:first-of-type,
-.dark td.mat-cell:first-of-type,
-.dark td.mat-footer-cell:first-of-type,
-.dark th.mat-header-cell:last-of-type,
-.dark td.mat-cell:last-of-type,
-.dark td.mat-footer-cell:last-of-type,
-.dark [dir='rtl'] th.mat-header-cell:first-of-type:not(:only-of-type),
-.dark [dir='rtl'] td.mat-cell:first-of-type:not(:only-of-type),
-.dark [dir='rtl'] td.mat-footer-cell:first-of-type:not(:only-of-type),
-.dark [dir='rtl'] th.mat-header-cell:last-of-type:not(:only-of-type),
-.dark [dir='rtl'] td.mat-cell:last-of-type:not(:only-of-type),
-.dark [dir='rtl'] td.mat-footer-cell:last-of-type:not(:only-of-type) {
-    padding-left: 12px;
-    padding-right: 12px;
 }
 
 .monitored-reps-table {
@@ -61,8 +24,4 @@
     tr td:nth-child(2) {
         padding-left: 16px;
     }
-}
-
-th.mat-sort-header-sorted {
-    color: black;
 }

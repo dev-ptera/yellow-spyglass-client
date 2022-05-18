@@ -19,6 +19,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     mat-card {
+        box-sizing: border-box;
         width: 100%;
         max-width: 49%;
     }

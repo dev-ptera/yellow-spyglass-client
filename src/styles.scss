@@ -1,18 +1,26 @@
 @use 'node_modules/@brightlayer-ui/colors/palette' as blui;
+@use 'node_modules/@brightlayer-ui/angular-themes/margins' as blui-margins;
 @use './theme/jungle-green';
 
-html * {
-    box-sizing: border-box;
-    font-family: Helvetica;
-}
+@include blui-margins.reasonable-margins();
 
-body {
-    margin: 0;
+html * {
+    font-family: Helvetica;
 }
 
 @font-face {
     font-family: pirateFont;
     src: url('~assets/font/Freebooter-6yn1.ttf');
+}
+
+.link {
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+.sm .link:hover {
+    text-decoration: none !important;
 }
 
 .mat-tab-label-active {
@@ -29,17 +37,6 @@ body {
 
 .mat-subheading-2 {
     line-height: 1.25rem !important;
-}
-
-.link {
-    cursor: pointer;
-    text-decoration: none;
-    &:hover {
-        text-decoration: underline;
-    }
-}
-.sm .link:hover {
-    text-decoration: none !important;
 }
 
 .mat-simple-snackbar {
@@ -113,6 +110,7 @@ body {
     align-items: center;
     width: 100%;
     height: 100%;
+    min-height: 100vh;
     box-sizing: border-box;
     // TODO: move these paddings to a global style, shared
     padding: 104px 64px 64px 64px;

@@ -1,5 +1,5 @@
 .network-root {
-    .app-page-content:not(.loading) {
+    .app-page-content:not(.error) {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
@@ -110,14 +110,14 @@
     }
 }
 
-@mixin network-theme($table-border-color) {
+@mixin network-theme($foreground) {
     table.network-supply-table,
     table.network-quorum-table,
     table.network-peer-version-table,
     table.network-consensus-table {
         tr {
             height: 36px;
-            border-bottom: $table-border-color;
+            border-bottom: solid 1px map-get($foreground, divider);
         }
     }
 }

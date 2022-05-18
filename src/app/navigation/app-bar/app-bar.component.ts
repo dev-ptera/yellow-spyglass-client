@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { SearchService } from '@app/services/search/search.service';
 import { DrawerStateService } from '@app/services/drawer-state/drawer-state.service';
 import { APP_NAV_ITEMS } from '../nav-items';
+import { LoadingService } from '@app/services/loading/loading.service';
 
 @Component({
     selector: 'app-bar',
@@ -22,19 +23,19 @@ import { APP_NAV_ITEMS } from '../nav-items';
                     <div *ngIf="!vp.sm" [style.marginLeft.px]="vp.md ? 24 : 48">
                         <button mat-button class="nav-menu-trigger" [matMenuTriggerFor]="accounts">Explore</button>
                         <mat-menu #accounts="matMenu">
-                            <button mat-menu-item (click)="router.navigate([pages.wallets.route])">Wallets</button>
                             <button mat-menu-item (click)="router.navigate([pages.knownAccounts.route])">
                                 Known Accounts
                             </button>
                             <button mat-menu-item (click)="router.navigate([pages.representatives.route])">
                                 Representatives
                             </button>
+                            <button mat-menu-item (click)="router.navigate([pages.wallets.route])">Wallets</button>
                         </mat-menu>
 
                         <button mat-button class="nav-menu-trigger" [matMenuTriggerFor]="networkHealth">Status</button>
                         <mat-menu #networkHealth="matMenu">
+                            <button mat-menu-item (click)="router.navigate([pages.node.route])">Explorer</button>
                             <button mat-menu-item (click)="router.navigate([pages.network.route])">Network</button>
-                            <button mat-menu-item (click)="router.navigate([pages.node.route])">Host Node</button>
                         </mat-menu>
                     </div>
 
@@ -79,6 +80,9 @@ import { APP_NAV_ITEMS } from '../nav-items';
                     </button>
                 </mat-toolbar-row>
             </mat-toolbar>
+
+            <mat-progress-bar style="margin-top: 2px" *ngIf="isLoading" color="primary" mode="indeterminate">
+            </mat-progress-bar>
         </div>
     `,
     styleUrls: ['./app-bar.component.scss'],
@@ -92,6 +96,7 @@ export class AppBarComponent {
 
     appbarSearchText: string;
     toggleSearch = false;
+    isLoading = false;
     pages = APP_NAV_ITEMS;
 
     constructor(
@@ -101,8 +106,15 @@ export class AppBarComponent {
         private readonly _meta: Meta,
         private readonly _searchService: SearchService,
         private readonly _viewportService: ViewportService,
-        private readonly _stateService: DrawerStateService
+        private readonly _stateService: DrawerStateService,
+        private readonly _loadingService: LoadingService
     ) {}
+
+    ngOnInit(): void {
+        this._loadingService.searchEvents().subscribe((isLoading) => {
+            this.isLoading = isLoading;
+        });
+    }
 
     openSearch(): void {
         this.toggleSearch = true;

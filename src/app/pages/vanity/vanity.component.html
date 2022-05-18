@@ -32,7 +32,7 @@
 </ng-template>
 
 <div class="vanity-root app-page-root" responsive>
-    <div class="app-page-content">
+    <div class="app-page-content"style="max-width: 1250px">
         <app-error *ngIf="hasError"></app-error>
         <ng-container *ngIf="!hasError">
             <ng-template [ngTemplateOutlet]="titleContent"></ng-template>

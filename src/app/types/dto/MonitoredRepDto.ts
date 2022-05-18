@@ -21,4 +21,16 @@ export type MonitoredRepDto = {
     usedMem?: number;
     version?: string;
     weight?: number;
+
+    /** Populated these stats from scores. */
+    daysAge: number;
+    principal: boolean;
+    score: number;
+    uptimePercentages?: {
+        day: number;
+        week: number;
+        month: number;
+        semiAnnual: number;
+        year: number;
+    };
 };

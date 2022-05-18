@@ -10,10 +10,12 @@
 
 <ng-template #bodyContent>
     <div class="app-section-title">Weight Distribution</div>
-    <div class="app-section-subtitle">Online voting weight allocation between the largest representatives.</div>
-    <mat-slide-toggle color="primary" class="app-section-subtitle" [(ngModel)]="showOfflineWeight">
-        Include offline representatives
-    </mat-slide-toggle>
+    <div style="display: flex; justify-content: space-between" [style.flex-direction]="vp.sm ? 'column' : 'row'">
+        <div class="app-section-subtitle">Online voting weight allocation between the largest representatives.</div>
+        <mat-slide-toggle color="primary" class="app-section-subtitle" [(ngModel)]="showOfflineWeight">
+            Include offline representatives
+        </mat-slide-toggle>
+    </div>
     <app-weight-chart
         [onlineWeight]="onlineWeight"
         [offlineWeight]="offlineWeight"
@@ -28,9 +30,9 @@
             </div>
             <div class="app-section-subtitle">
                 Online representatives that use the
-                <a class="link primary" href="https://github.com/NanoTools/nanoNodeMonitor" target="_blank">
-                    Nano Node Monitor
-                </a>
+                <a class="link primary" href="https://github.com/NanoTools/nanoNodeMonitor" target="_blank"
+                    >Nano Node Monitor</a
+                >
                 software are shown in the list below.
             </div>
         </div>
@@ -55,172 +57,141 @@
             >
                 <mat-icon blui-avatar>more_vert</mat-icon>
             </button>
-            <mat-menu #columns="matMenu" [hasBackdrop]="true" (click)="$event.stopPropagation()">
+            <mat-menu
+                #columns="matMenu"
+                [hasBackdrop]="true"
+                (click)="$event.stopPropagation()"
+                class="monitored-rep-column-toggle-menu"
+            >
                 <mat-nav-list blui-menu-body [style.paddingTop.px]="0">
-                    <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumnT($event, 'address')">
+                    <mat-list-item (click)="toggleColumn($event, 'address')">
                         <mat-checkbox
                             color="primary"
                             blui-left-content
                             [checked]="shownColumns.address"
                             style="pointer-events: none"
                         ></mat-checkbox>
-                        <div blui-title>Address</div>
-                    </blui-info-list-item>
+                        <div>Address</div>
+                    </mat-list-item>
 
-                    <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumnT($event, 'version')">
+                    <mat-list-item (click)="toggleColumn($event, 'version')">
                         <mat-checkbox
                             color="primary"
                             blui-left-content
                             [checked]="shownColumns.version"
                             style="pointer-events: none"
                         ></mat-checkbox>
-                        <div blui-title>Version</div>
-                    </blui-info-list-item>
+                        <div>Version</div>
+                    </mat-list-item>
 
-                    <blui-info-list-item
-                        [dense]="true"
-                        [hidePadding]="true"
-                        (click)="toggleColumnT($event, 'delegatorsCount')"
-                    >
+                    <mat-list-item (click)="toggleColumn($event, 'delegatorsCount')">
                         <mat-checkbox
                             color="primary"
                             blui-left-content
                             [checked]="shownColumns.delegatorsCount"
                             style="pointer-events: none"
                         ></mat-checkbox>
-                        <div blui-title>Delegators</div>
-                    </blui-info-list-item>
+                        <div>Delegators</div>
+                    </mat-list-item>
 
-                    <blui-info-list-item
-                        [dense]="true"
-                        [hidePadding]="true"
-                        (click)="toggleColumnT($event, 'weightBan')"
-                    >
+                    <mat-list-item (click)="toggleColumn($event, 'weightBan')">
                         <mat-checkbox
                             color="primary"
                             blui-left-content
                             [checked]="shownColumns.weightBan"
                             style="pointer-events: none"
                         ></mat-checkbox>
-                        <div blui-title>Weight (BAN)</div>
-                    </blui-info-list-item>
+                        <div>Weight (BAN)</div>
+                    </mat-list-item>
 
-                    <blui-info-list-item
-                        [dense]="true"
-                        [hidePadding]="true"
-                        (click)="toggleColumnT($event, 'weightPercent')"
-                    >
+                    <mat-list-item (click)="toggleColumn($event, 'weightPercent')">
                         <mat-checkbox
                             color="primary"
                             blui-left-content
                             [checked]="shownColumns.weightPercent"
                             style="pointer-events: none"
                         ></mat-checkbox>
-                        <div blui-title>Weight (%)</div>
-                    </blui-info-list-item>
+                        <div>Weight (%)</div>
+                    </mat-list-item>
 
-                    <blui-info-list-item
-                        [dense]="true"
-                        [hidePadding]="true"
-                        (click)="toggleColumnT($event, 'peerCount')"
-                    >
+                    <mat-list-item (click)="toggleColumn($event, 'peerCount')">
                         <mat-checkbox
                             color="primary"
                             blui-left-content
                             [checked]="shownColumns.peerCount"
                             style="pointer-events: none"
                         ></mat-checkbox>
-                        <div blui-title>Peer Count</div>
-                    </blui-info-list-item>
+                        <div>Peer Count</div>
+                    </mat-list-item>
 
-                    <blui-info-list-item
-                        [dense]="true"
-                        [hidePadding]="true"
-                        (click)="toggleColumnT($event, 'uncheckedBlocks')"
-                    >
+                    <mat-list-item (click)="toggleColumn($event, 'uncheckedBlocks')">
                         <mat-checkbox
                             color="primary"
                             blui-left-content
                             [checked]="shownColumns.uncheckedBlocks"
                             style="pointer-events: none"
                         ></mat-checkbox>
-                        <div blui-title>Unchecked Blocks</div>
-                    </blui-info-list-item>
+                        <div>Unchecked Blocks</div>
+                    </mat-list-item>
 
-                    <blui-info-list-item
-                        [dense]="true"
-                        [hidePadding]="true"
-                        (click)="toggleColumnT($event, 'cementedBlocks')"
-                    >
+                    <mat-list-item (click)="toggleColumn($event, 'cementedBlocks')">
                         <mat-checkbox
                             color="primary"
                             blui-left-content
                             [checked]="shownColumns.cementedBlocks"
                             style="pointer-events: none"
                         ></mat-checkbox>
-                        <div blui-title>Cemented Blocks</div>
-                    </blui-info-list-item>
+                        <div>Cemented Blocks</div>
+                    </mat-list-item>
 
-                    <blui-info-list-item
-                        [dense]="true"
-                        [hidePadding]="true"
-                        (click)="toggleColumnT($event, 'location')"
-                    >
+                    <mat-list-item (click)="toggleColumn($event, 'location')">
                         <mat-checkbox
                             color="primary"
                             blui-left-content
                             [checked]="shownColumns.location"
                             style="pointer-events: none"
                         ></mat-checkbox>
-                        <div blui-title>Location</div>
-                    </blui-info-list-item>
+                        <div>Location</div>
+                    </mat-list-item>
 
-                    <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumnT($event, 'memory')">
+                    <mat-list-item (click)="toggleColumn($event, 'memory')">
                         <mat-checkbox
                             color="primary"
                             blui-left-content
                             [checked]="shownColumns.memory"
                             style="pointer-events: none"
                         ></mat-checkbox>
-                        <div blui-title>Memory Usage</div>
-                    </blui-info-list-item>
+                        <div>Memory Usage</div>
+                    </mat-list-item>
 
-                    <blui-info-list-item
-                        [dense]="true"
-                        [hidePadding]="true"
-                        (click)="toggleColumnT($event, 'lastRestart')"
-                    >
+                    <mat-list-item (click)="toggleColumn($event, 'lastRestart')">
                         <mat-checkbox
                             color="primary"
                             blui-left-content
                             [checked]="shownColumns.lastRestart"
                             style="pointer-events: none"
                         ></mat-checkbox>
-                        <div blui-title>Last Restart</div>
-                    </blui-info-list-item>
-                    <blui-info-list-item
-                        [dense]="true"
-                        [hidePadding]="true"
-                        (click)="toggleColumnT($event, 'isPrincipal')"
-                    >
+                        <div>Last Restart</div>
+                    </mat-list-item>
+                    <mat-list-item (click)="toggleColumn($event, 'isPrincipal')">
                         <mat-checkbox
                             color="primary"
                             blui-left-content
                             [checked]="shownColumns.isPrincipal"
                             style="pointer-events: none"
                         ></mat-checkbox>
-                        <div blui-title>Principal Rep</div>
-                    </blui-info-list-item>
+                        <div>Principal Rep</div>
+                    </mat-list-item>
 
-                    <blui-info-list-item [dense]="true" [hidePadding]="true" (click)="toggleColumnT($event, 'uptime')">
+                    <mat-list-item (click)="toggleColumn($event, 'uptime')">
                         <mat-checkbox
                             color="primary"
                             blui-left-content
                             [checked]="shownColumns.uptime"
                             style="pointer-events: none"
                         ></mat-checkbox>
-                        <div blui-title>Uptime</div>
-                    </blui-info-list-item>
+                        <div>Uptime</div>
+                    </mat-list-item>
                 </mat-nav-list>
             </mat-menu>
         </div>
@@ -262,7 +233,7 @@
 </ng-template>
 
 <div class="app-page-root" responsive>
-    <div class="app-page-content">
+    <div class="app-page-content" style="max-width: 1200px">
         <app-error *ngIf="hasError"></app-error>
         <ng-container *ngIf="!hasError">
             <ng-template [ngTemplateOutlet]="titleContent"></ng-template>

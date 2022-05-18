@@ -11,6 +11,7 @@ import { AppUserMenuComponent } from './user-menu/user-menu.component';
 import { FormsModule } from '@angular/forms';
 import { AppBarComponent } from './app-bar/app-bar.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
     declarations: [NavigationComponent, AppUserMenuComponent, AppBarComponent],
@@ -27,6 +28,7 @@ import { MatMenuModule } from '@angular/material/menu';
         UserMenuModule,
         FormsModule,
         EmptyStateModule,
+        MatProgressBarModule,
     ],
     exports: [NavigationComponent, AppUserMenuComponent, AppBarComponent],
 })

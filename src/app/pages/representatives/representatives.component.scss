@@ -14,48 +14,39 @@
         position: fixed;
         z-index: 999;
         &.button-1 {
-            bottom: 24px;
-            right: 32px;
+            margin-right: 0;
+            bottom: 32px;
+            right: 100px;
         }
         &.button-2 {
-            bottom: 24px;
-            right: 108px;
+            bottom: 32px;
+            right: 44px;
         }
     }
 }
 
-@mixin representatives-theme(
-    $online-color,
-    $offline-color,
-    $rep-card-border-color,
-    $monitored-reps-table-address-color,
-    $principalTag
-) {
-    .monitored-reps-table-address {
-        color: $monitored-reps-table-address-color !important;
+.monitored-rep-column-toggle-menu {
+    .mat-list-item-content {
+        line-height: 0;
     }
-    .monitored-reps-table .unchecked-blocks {
-        color: $offline-color;
-    }
-    .representatives-all-reps-card {
-        border: solid 1px $rep-card-border-color;
-
-        .online {
-            color: $online-color !important;
-        }
-
-        .offline {
-            color: $offline-color !important;
+    .mat-list-item {
+        div {
+            margin-left: 16px;
+            line-height: 24px;
         }
     }
-    .rep-mobile-list-container {
-        border: solid 1px $rep-card-border-color;
-    }
+}
+
+@mixin representatives-theme($sticky-header-border-color, $largeMonitorTableHoverRow) {
     .monitored-reps-table {
-        thead th:nth-child(1),
-        tr td:nth-child(1) {
-            border-right: solid 1px;
-            border-color: $rep-card-border-color;
+        .cdk-header-row th {
+            border-bottom: solid 1px $sticky-header-border-color;
         }
+    }
+    .monitored-reps-table .mat-column-name {
+        border-right: solid 1px $sticky-header-border-color;
+    }
+    .expanded .monitored-reps-table tr:hover {
+        background-color: $largeMonitorTableHoverRow!important;
     }
 }

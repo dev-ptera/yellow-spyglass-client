@@ -16,19 +16,24 @@ import { RepresentativesService } from '@app/pages/representatives/representativ
                     *ngFor="let rep of monitoredReps; trackBy: trackByFn; let last = last"
                     [hidePadding]="true"
                     [dense]="false"
+                    [wrapSubtitle]="true"
                     [divider]="last ? undefined : 'full'"
                 >
                     <div blui-title style="font-weight: 600">
-                        <div class="link primary" (click)="repService.openMonitoredRep(rep)">{{ rep.name }}</div>
+                        <div class="link" (click)="repService.openMonitoredRep(rep)">{{ rep.name }}</div>
                     </div>
-                    <div blui-subtitle style="font-size: 0.875rem">{{ formatInfoLine(rep) }}</div>
-                    <div blui-info style="font-size: 0.875rem" (click)="routeRepAddress(rep.address, $event)">
-                        {{ formatAddress(rep.address) }}
+                    <div blui-info style="font-size: 0.875rem" class="text-secondary">{{ formatInfoLine(rep) }}</div>
+                    <div blui-subtitle style="font-size: 0.875rem; padding-right: 16px"
+                         (click)="routeRepAddress(rep.address, $event)">
+                        {{ rep.address }}
                     </div>
                     <div blui-right-content style="display: flex; flex-direction: column; align-items: flex-end">
-                        <div style="font-size: 0.875rem" *ngIf="rep.weight">{{ formatBanWeight(rep.weight) }} BAN</div>
-                        <div style="font-size: 0.75rem" *ngIf="rep.weight">
+                        <div style="font-size: 0.875rem">
                             {{ formatWeightPercent(rep.weight) }} weight
+                        </div>
+                        <div style="font-size: 0.75rem; display: flex; align-items: center">
+                            <img src="assets/banano-mark.svg" [width]="16" [height]="16" style="margin-right: 6px" />
+                            <span class="text-secondary">{{ formatBanWeight(rep.weight) }}</span>
                         </div>
                     </div>
                 </blui-info-list-item>
@@ -39,7 +44,7 @@ import { RepresentativesService } from '@app/pages/representatives/representativ
         `
             .monitored-rep-list .mat-list-item-content {
                 padding: 12px 0 12px 0 !important;
-                height: unset !important;
+                height: 7rem !important;
             }
         `,
     ],

@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import * as Highcharts from 'highcharts';
 // eslint-disable-next-line no-duplicate-imports
+import * as Highcharts from 'highcharts';
 import { Options } from 'highcharts';
 import HC_bullet from 'highcharts/modules/bullet';
 import { ViewportService } from '@app/services/viewport/viewport.service';
@@ -61,11 +61,12 @@ export class NetworkComponent implements OnInit {
                 this.peerVersions.map((version) => {
                     this.totalNumberOfPeers += version.count;
                 });
-                this.isLoading = false;
             })
             .catch((err) => {
                 console.error(err);
                 this.hasError = true;
+            })
+            .finally(() => {
                 this.isLoading = false;
             });
     }

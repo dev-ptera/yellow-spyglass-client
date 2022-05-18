@@ -170,7 +170,7 @@
 </ng-template>
 
 <div class="network-root app-page-root" responsive>
-    <div class="app-page-content" [class.loading]="isLoading">
+    <div class="app-page-content" [class.error]="hasError">
         <app-error *ngIf="hasError"></app-error>
         <ng-container *ngIf="!hasError">
             <ng-template [ngTemplateOutlet]="titleContent"></ng-template>

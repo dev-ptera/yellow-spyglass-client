@@ -10,6 +10,7 @@ import {
     ConfirmedTransactionDto,
     HostNodeStatsDto,
     KnownAccountDto,
+    MonitoredRepDto,
     NakamotoCoefficientDto,
     PeerVersionsDto,
     PriceDataDto,
@@ -83,14 +84,20 @@ export class ApiService {
     }
 
     /** Fetches representatives stats. */
-    fetchRepresentatives(): Promise<RepresentativeDto[]> {
+    fetchLargeRepresentatives(): Promise<RepresentativeDto[]> {
         return this._http
             .post<RepresentativeDto[]>(`${this.spyglassApi}/v1/representatives`, {
                 minimumWeight: 100_000,
-                includeUptimeStats: true,
                 includeDelegatorCount: true,
-                includeNodeMonitorStats: true,
             })
+            .pipe(timeout(MED_MS))
+            .toPromise();
+    }
+
+    /** Fetches monitored representatives stats. */
+    fetchMonitoredRepresentatives(): Promise<MonitoredRepDto[]> {
+        return this._http
+            .get<MonitoredRepDto[]>(`${this.spyglassApi}/v1/representatives/monitored`)
             .pipe(timeout(MED_MS))
             .toPromise();
     }

@@ -18,6 +18,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
+import { UptimeMetricComponent } from '@app/pages/representatives/display/metrics/uptime-metric/uptime-metric.component';
+import { ScoreMetricComponent } from '@app/pages/representatives/display/metrics/score-metric/score-metric.component';
 
 @NgModule({
     declarations: [
@@ -27,6 +29,8 @@ import { MatMenuModule } from '@angular/material/menu';
         MonitoredRepListComponent,
         MonitoredRepTableComponent,
         WeightChartComponent,
+        ScoreMetricComponent,
+        UptimeMetricComponent,
     ],
     imports: [
         AppCommonModule,
@@ -52,6 +56,8 @@ import { MatMenuModule } from '@angular/material/menu';
         MonitoredRepListComponent,
         MonitoredRepTableComponent,
         WeightChartComponent,
+        ScoreMetricComponent,
+        UptimeMetricComponent,
     ],
 })
 export class RepresentativesModule {}

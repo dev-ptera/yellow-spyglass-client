@@ -2,14 +2,14 @@
 @use 'node_modules/@brightlayer-ui/colors-branding/palette' as branding;
 @use 'node_modules/@angular/material' as mat;
 
-@use 'node_modules/@brightlayer-ui/angular-themes/blui-component-theme';
-@use 'node_modules/@brightlayer-ui/angular-themes/blueTheme';
-@use 'node_modules/@brightlayer-ui/angular-themes/margins';
-@use 'node_modules/@brightlayer-ui/angular-themes/fonts';
-@use 'node_modules/@brightlayer-ui/angular-themes/common';
+@use 'node_modules/@brightlayer-ui/angular-themes/blui-component-theme' as blui-components-theme;
+@use 'node_modules/@brightlayer-ui/angular-themes/blueTheme' as blui-light;
+@use 'node_modules/@brightlayer-ui/angular-themes/fonts' as blui-fonts;
+@use 'node_modules/@brightlayer-ui/angular-themes/common' as blui-common;
 
 @use './typography' as appTypography;
 @use 'src/app/pages/representatives/representatives.component' as representatives;
+@use 'src/app/pages/network/network.component' as network;
 
 $greenPalette: (
     50: #eaf7e9,
@@ -53,7 +53,7 @@ $jungle-green-theme: map-merge(
         foreground: (
             text: map-get(blui.$blui-black, 500),
             secondary-text: map-get(blui.$blui-gray, 500),
-            hint-text: map-get(blui.$blui-black, 400),
+            hint-text: map-get(blui.$blui-black, 200),
             base: map-get(blui.$blui-darkBlack, 900),
             divider: rgba(66, 78, 84, 0.12),
             dividers: mat.get-color-from-palette(mat.$light-theme-foreground-palette, dividers),
@@ -88,18 +88,66 @@ $jungle-green-theme: map-merge(
 
 .jungle-green {
     @include mat.all-component-themes($jungle-green-theme);
-    @include blui-component-theme.blui-components-theme($jungle-green-theme);
-    @include blueTheme.bluetheme($jungle-green-theme);
-    @include fonts.bodyfont();
+    @include blui-components-theme.blui-components-theme($jungle-green-theme);
+    @include blui-light.bluetheme($jungle-green-theme);
+    @include blui-fonts.bodyfont();
+    @include blui-common.common();
     @include appTypography.typography();
-    @include common.common();
 
     $theme-foreground: map-get($jungle-green-theme, foreground);
     $theme-background: map-get($jungle-green-theme, background);
 
     $primary: map-get($material-theme-primary, 700);
-    $warn-red: map-get(blui.$blui-red, 500);
+    $warn: map-get($material-theme-warn, 500);
+
     $tag-opacity: 0.06;
+
+    /** Common **/
+    .sm {
+        .mat-row:nth-child(even), .mat-row:nth-child(odd) {
+            background-color: map-get(blui.$blui-white, 50);
+        }
+    }
+    .mat-row:nth-child(even) {
+        background-color: map-get(blui.$blui-white, 50);
+    }
+
+    .mat-row:nth-child(odd) {
+        background-color: map-get(blui.$blui-white, 100);
+    }
+
+    .text-secondary {
+        color: map-get($theme-foreground, secondary-text);
+    }
+    .primary {
+        color: $primary;
+    }
+    .intermediary {
+        color: map-get(blui.$blui-orange, 500);
+    }
+    .warn {
+        color: $warn;
+    }
+
+    .link {
+        //  text-decoration-color: rgb($primary, 0.8);
+    }
+
+    .app-user-menu .blui-user-menu-avatar {
+        color: map-get(blui.$blui-white, 50);
+    }
+
+    @include network.network-theme($theme-foreground);
+
+    $sticky-border-color: map-get(blui.$blui-black, 100);
+    /**
+    .principal-tag {
+        $tag: map-get(blui.$blui-yellow, 900);
+        border: solid 1px $tag;
+        background-color: rgba($tag, $tag-opacity) !important;
+        color: $tag !important;
+    } **/
+    @include representatives.representatives-theme($sticky-border-color, #f1fff1);
 
     .desktop-search-input {
         border: solid 1px map-get($theme-foreground, divider);
