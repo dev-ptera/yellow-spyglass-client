@@ -17,12 +17,15 @@ const routes: Routes = [
     { path: APP_NAV_ITEMS.representatives.route, component: RepresentativesComponent },
     { path: APP_NAV_ITEMS.bookmarks.route, component: BookmarksComponent },
     { path: APP_NAV_ITEMS.node.route, component: NodeMonitorComponent },
+    { path: 'status', component: NodeMonitorComponent },  // Match Creeper path
     { path: APP_NAV_ITEMS.wallets.route, component: WalletsComponent },
     { path: APP_NAV_ITEMS.knownAccounts.route, component: KnownAccountsComponent },
     { path: APP_NAV_ITEMS.network.route, component: NetworkComponent },
     { path: APP_NAV_ITEMS.vanity.route, component: VanityComponent },
+    { path: `explorer/${APP_NAV_ITEMS.account.route}/:id`, component: AccountComponent }, // Match Creeper path
     { path: `${APP_NAV_ITEMS.account.route}/:id`, component: AccountComponent },
     { path: `${APP_NAV_ITEMS.hash.route}/:id`, component: HashComponent },
+    { path: `explorer/${APP_NAV_ITEMS.hash.route}/:id`, component: HashComponent }, // Match Creeper path
     { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 @NgModule({
