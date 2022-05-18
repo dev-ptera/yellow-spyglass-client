@@ -104,7 +104,8 @@ $jungle-green-theme: map-merge(
 
     /** Common **/
     .sm {
-        .mat-row:nth-child(even), .mat-row:nth-child(odd) {
+        .mat-row:nth-child(even),
+        .mat-row:nth-child(odd) {
             background-color: map-get(blui.$blui-white, 50);
         }
     }

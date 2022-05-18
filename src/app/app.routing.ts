@@ -17,7 +17,7 @@ const routes: Routes = [
     { path: APP_NAV_ITEMS.representatives.route, component: RepresentativesComponent },
     { path: APP_NAV_ITEMS.bookmarks.route, component: BookmarksComponent },
     { path: APP_NAV_ITEMS.node.route, component: NodeMonitorComponent },
-    { path: 'status', component: NodeMonitorComponent },  // Match Creeper path
+    { path: 'status', component: NodeMonitorComponent }, // Match Creeper path
     { path: APP_NAV_ITEMS.wallets.route, component: WalletsComponent },
     { path: APP_NAV_ITEMS.knownAccounts.route, component: KnownAccountsComponent },
     { path: APP_NAV_ITEMS.network.route, component: NetworkComponent },

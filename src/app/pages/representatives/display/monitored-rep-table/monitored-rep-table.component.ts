@@ -122,10 +122,7 @@ import { MonitoredRep, Representative } from '@app/types/modal';
             <ng-container matColumnDef="isPrincipal">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 50px">PR</th>
                 <td mat-cell *matCellDef="let element">
-                    <mat-icon
-                        *ngIf="element.principal"
-                        style="font-size: 1.5rem"
-                        class="text-secondary"
+                    <mat-icon *ngIf="element.principal" style="font-size: 1.5rem" class="text-secondary"
                         >verified
                     </mat-icon>
                 </td>

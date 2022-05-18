@@ -23,14 +23,15 @@ import { RepresentativesService } from '@app/pages/representatives/representativ
                         <div class="link" (click)="repService.openMonitoredRep(rep)">{{ rep.name }}</div>
                     </div>
                     <div blui-info style="font-size: 0.875rem" class="text-secondary">{{ formatInfoLine(rep) }}</div>
-                    <div blui-subtitle style="font-size: 0.875rem; padding-right: 16px"
-                         (click)="routeRepAddress(rep.address, $event)">
+                    <div
+                        blui-subtitle
+                        style="font-size: 0.875rem; padding-right: 16px"
+                        (click)="routeRepAddress(rep.address, $event)"
+                    >
                         {{ rep.address }}
                     </div>
                     <div blui-right-content style="display: flex; flex-direction: column; align-items: flex-end">
-                        <div style="font-size: 0.875rem">
-                            {{ formatWeightPercent(rep.weight) }} weight
-                        </div>
+                        <div style="font-size: 0.875rem">{{ formatWeightPercent(rep.weight) }} weight</div>
                         <div style="font-size: 0.75rem; display: flex; align-items: center">
                             <img src="assets/banano-mark.svg" [width]="16" [height]="16" style="margin-right: 6px" />
                             <span class="text-secondary">{{ formatBanWeight(rep.weight) }}</span>

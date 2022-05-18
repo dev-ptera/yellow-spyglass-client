@@ -89,10 +89,12 @@ export class NavigationComponent implements OnInit {
                     drawerContent.scroll(0, 0);
                 }
 
-                switch (route.urlAfterRedirects
-                        .replace('explorer/', '')  // Prune creeper legacy routes
-                    .replace('/history', '')
-                    .split('/')[1]) {
+                switch (
+                    route.urlAfterRedirects
+                        .replace('explorer/', '') // Prune creeper legacy routes
+                        .replace('/history', '')
+                        .split('/')[1]
+                ) {
                     case `${APP_NAV_ITEMS.home.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.home.title;
                         this._stateService.setSelectedItem(APP_NAV_ITEMS.home.title);

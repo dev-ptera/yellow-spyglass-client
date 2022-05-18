@@ -100,7 +100,7 @@ export class RepresentativesComponent implements OnInit {
         }
     }
 
-     filterLargeRepsByStatus(): void {
+    filterLargeRepsByStatus(): void {
         this.shownLargeReps = [];
         if (this.showOfflineReps) {
             this.shownLargeReps = this.allLargeReps;
@@ -131,7 +131,7 @@ export class RepresentativesComponent implements OnInit {
             if (rep.online) {
                 online++;
             }
-        })
+        });
         return online;
     }
 

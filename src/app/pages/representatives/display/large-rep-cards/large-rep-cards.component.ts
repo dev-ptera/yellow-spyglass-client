@@ -3,7 +3,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
 import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
 import { AliasService } from '@app/services/alias/alias.service';
-import {Representative} from "@app/types/modal";
+import { Representative } from '@app/types/modal';
 
 @Component({
     selector: 'app-large-rep-cards',
@@ -44,8 +44,7 @@ import {Representative} from "@app/types/modal";
                 {{ rep.address }}
             </div>
             <mat-divider></mat-divider>
-            <div
-                style="display: flex; justify-content: space-between; font-size: 0.75rem; padding-top: 12px">
+            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; padding-top: 12px">
                 <div>
                     <div *ngIf="rep.score">
                         Score:&nbsp;

@@ -72,7 +72,7 @@ export class AccountComponent implements OnDestroy {
         this.routeListener = this._router.events.subscribe((route) => {
             if (route instanceof NavigationEnd) {
                 const splitUrl = this._router.url.replace('/history', '').split('/');
-                this._searchAccount(splitUrl[splitUrl.length-1]);
+                this._searchAccount(splitUrl[splitUrl.length - 1]);
             }
         });
     }
@@ -104,13 +104,13 @@ export class AccountComponent implements OnDestroy {
         this.error = false;
         this._ref.detectChanges();
 
-
-        this._apiService.fetchAccountOverview(address)
+        this._apiService
+            .fetchAccountOverview(address)
             .then((accountOverview) => {
                 this.accountOverview = accountOverview;
                 this.loading = false;
-               // this._prepareNewAccount();
-               //  void this._router.navigate([`${APP_NAV_ITEMS.account.route}/${address}`]);
+                // this._prepareNewAccount();
+                //  void this._router.navigate([`${APP_NAV_ITEMS.account.route}/${address}`]);
             })
             .catch((err) => {
                 console.error(err);
@@ -119,7 +119,8 @@ export class AccountComponent implements OnDestroy {
             });
 
         // MonKey
-        this._apiService.fetchMonKey(address)
+        this._apiService
+            .fetchMonKey(address)
             .then((data) => {
                 this.monkeySvg = data;
             })
@@ -169,7 +170,7 @@ export class AccountComponent implements OnDestroy {
     private _prepareDelegators(accountOverview: AccountOverviewDto): void {
         this.delegators = [];
         this.weightSum = accountOverview.weight;
-       /* for (const delegator of accountOverview.de) {
+        /* for (const delegator of accountOverview.de) {
             this.delegators.push({
                 address: delegator.address,
                 weight:
@@ -189,7 +190,7 @@ export class AccountComponent implements OnDestroy {
         };
 
         const converted = [];
-   /*     for (const confirmedTx of accountOverview.confirmedTransactions) {
+        /*     for (const confirmedTx of accountOverview.confirmedTransactions) {
             converted.push(this._convertConfirmedTxDtoToModal(confirmedTx));
         }
 
