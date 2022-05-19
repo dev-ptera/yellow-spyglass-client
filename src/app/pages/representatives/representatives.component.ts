@@ -63,16 +63,16 @@ export class RepresentativesComponent implements OnInit {
         uptime: false,
     };
 
-    constructor(public vp: ViewportService, private readonly _api: ApiService) {}
+    constructor(public vp: ViewportService, private readonly api: ApiService) {}
 
     ngOnInit(): void {
         this._parseMonitoredRepsShownColumns();
 
         Promise.all([
-            this._api.fetchLargeRepresentatives(),
-            this._api.fetchMonitoredRepresentatives(),
-            this._api.fetchQuorumStats(),
-            this._api.fetchRepresentativeScores(),
+            this.api.fetchLargeRepresentatives(),
+            this.api.fetchMonitoredRepresentatives(),
+            this.api.fetchQuorumStats(),
+            this.api.fetchRepresentativeScores(),
         ])
             .then((data) => {
                 this.isLoading = false;

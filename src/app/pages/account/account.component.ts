@@ -1,32 +1,30 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { AccountOverviewDto, ConfirmedTransactionDto, PendingTransactionDto } from '@app/types/dto';
-import { Delegator } from '@app/types/modal/Delegator';
-import { ConfirmedTransaction } from '@app/types/modal/ConfirmedTransaction';
-import { ViewportService } from '@app/services/viewport/viewport.service';
-import { UtilService } from '@app/services/util/util.service';
-import { ApiService } from '@app/services/api/api.service';
-import { MonkeyCacheService } from '@app/services/monkey-cache/monkey-cache.service';
-import { PendingTransaction } from '@app/types/modal';
-import { SearchService } from '@app/services/search/search.service';
-import { PriceService } from '@app/services/price/price.service';
-import { InsightsDto } from '@app/types/dto/InsightsDto';
-import { MatTabChangeEvent } from '@angular/material/tabs';
-import { OnlineRepsService } from '@app/services/online-reps/online-reps.service';
-import { NavigationEnd, Router } from '@angular/router';
-import { APP_NAV_ITEMS } from '../../navigation/nav-items';
-import { Subscription } from 'rxjs';
-import { AliasService } from '@app/services/alias/alias.service';
+import {ChangeDetectorRef, Component, OnDestroy, ViewEncapsulation} from '@angular/core';
+import {AccountOverviewDto, ConfirmedTransactionDto, ReceivableTransactionDto} from '@app/types/dto';
+import {Delegator} from '@app/types/modal/Delegator';
+import {ConfirmedTransaction} from '@app/types/modal/ConfirmedTransaction';
+import {ViewportService} from '@app/services/viewport/viewport.service';
+import {UtilService} from '@app/services/util/util.service';
+import {ApiService} from '@app/services/api/api.service';
+import {MonkeyCacheService} from '@app/services/monkey-cache/monkey-cache.service';
+import {PendingTransaction} from '@app/types/modal';
+import {SearchService} from '@app/services/search/search.service';
+import {PriceService} from '@app/services/price/price.service';
+import {InsightsDto} from '@app/types/dto/InsightsDto';
+import {MatTabChangeEvent} from '@angular/material/tabs';
+import {OnlineRepsService} from '@app/services/online-reps/online-reps.service';
+import {NavigationEnd, Router} from '@angular/router';
+import {Subscription} from 'rxjs';
+import {AliasService} from '@app/services/alias/alias.service';
 
 @Component({
     selector: 'app-account',
     templateUrl: 'account.component.html',
     styleUrls: ['account.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
 export class AccountComponent implements OnDestroy {
-    loading: boolean;
-    error: boolean;
+    isLoading: boolean;
+    hasError: boolean;
     address: string;
     monkeySvg: string;
 
@@ -40,34 +38,32 @@ export class AccountComponent implements OnDestroy {
     hasInsightsError: boolean;
 
     delegators: Delegator[] = [];
+    pendingTransactions: ReceivableTransactionDto[] = [];
     weightSum = 0;
     readonly txPerPage = 50;
 
     confirmedTransactions: {
-        all: Map<number, ConfirmedTransaction[]>;
-        display: ConfirmedTransaction[];
-    };
-
-    pendingTransactions: {
-        display: PendingTransaction[];
-        // TODO: Support loading more than 50 pending Tx.
+        all: Map<number, ConfirmedTransactionDto[]>;
+        display: ConfirmedTransactionDto[];
     };
 
     paginatorSize = 50;
     confirmedTxPageIndex = 0;
     routeListener: Subscription;
 
+    showTabNumber = 1;
+
     constructor(
         public vp: ViewportService,
         public searchService: SearchService,
+        public onlineRepService: OnlineRepsService,
         private readonly _router: Router,
         private readonly _util: UtilService,
-        private readonly _apiService: ApiService,
+        private readonly apiService: ApiService,
         private readonly _priceService: PriceService,
         private readonly _ref: ChangeDetectorRef,
         private readonly _monkeyCache: MonkeyCacheService,
         private readonly _aliasService: AliasService,
-        public onlineRepService: OnlineRepsService
     ) {
         this.routeListener = this._router.events.subscribe((route) => {
             if (route instanceof NavigationEnd) {
@@ -83,43 +79,30 @@ export class AccountComponent implements OnDestroy {
         }
     }
 
-    search(searchValue: string): void {
-        this.loading = true;
-        this.error = false;
-        this.monkeySvg = undefined;
-        this.accountOverview = undefined;
-        window.scrollTo(0, 0);
-        if (searchValue.toLowerCase().startsWith('ban_')) {
-            this._searchAccount(searchValue.toLowerCase());
-        } else {
-            void this._router.navigate([`${APP_NAV_ITEMS.hash.route}/${searchValue}`]);
-        }
-    }
-
     /** Given a ban address, searches for account. */
     private _searchAccount(address): void {
         this.address = address;
         this.monkeySvg = '';
-        this.loading = true;
-        this.error = false;
+        this.isLoading = true;
+        this.hasError = false;
         this._ref.detectChanges();
 
-        this._apiService
-            .fetchAccountOverview(address)
-            .then((accountOverview) => {
-                this.accountOverview = accountOverview;
-                this.loading = false;
-                // this._prepareNewAccount();
-                //  void this._router.navigate([`${APP_NAV_ITEMS.account.route}/${address}`]);
-            })
+        Promise.all([
+            this.apiService.fetchAccountOverview(address),
+            this.apiService.fetchConfirmedTransactions(address, 0, this.paginatorSize),
+            this.apiService.fetchReceivableTransactions(address)
+        ]).then((data) => {
+            this._prepareNewAccount(data);
+        })
             .catch((err) => {
                 console.error(err);
-                this.loading = false;
-                this.error = true;
-            });
+                this.hasError = true;
+            }).finally(() => {
+                this.isLoading = false;
+        })
 
         // MonKey
-        this._apiService
+        this.apiService
             .fetchMonKey(address)
             .then((data) => {
                 this.monkeySvg = data;
@@ -131,16 +114,16 @@ export class AccountComponent implements OnDestroy {
 
     /**
      * Called whenever a new address has been loaded.
-     * Converts DTO into displayable format.
      */
-    private _prepareNewAccount(): void {
+    private _prepareNewAccount(data: [AccountOverviewDto, ConfirmedTransactionDto[], ReceivableTransactionDto[]]): void {
+        this.accountOverview = data[0];
+        this.pendingTransactions = data[2];
         this.confirmedTxPageIndex = 0;
         this.insights = undefined;
         this.loadingInsights = false;
         this.insightsDisabled = this.accountOverview.blockCount > 100_000 || !this.accountOverview.opened;
         this._prepareAccountOverview(this.accountOverview);
-        this._prepareConfirmed(this.accountOverview);
-        this._preparePending(this.accountOverview);
+        this._prepareConfirmed(data[1]);
         this._prepareDelegators(this.accountOverview);
     }
 
@@ -183,64 +166,13 @@ export class AccountComponent implements OnDestroy {
         } */
     }
 
-    private _prepareConfirmed(accountOverview: AccountOverviewDto): void {
+    private _prepareConfirmed(confirmedTransactions: ConfirmedTransactionDto[]): void {
         this.confirmedTransactions = {
-            all: new Map<number, ConfirmedTransaction[]>(),
+            all: new Map<number, ConfirmedTransactionDto[]>(),
             display: [],
         };
-
-        const converted = [];
-        /*     for (const confirmedTx of accountOverview.confirmedTransactions) {
-            converted.push(this._convertConfirmedTxDtoToModal(confirmedTx));
-        }
-
-    */
-        this.confirmedTransactions.all.set(0, converted);
-        this.confirmedTransactions.display = converted;
-        this._fetchMonkeys(this.confirmedTransactions.display);
-    }
-
-    private _preparePending(accountOverview: AccountOverviewDto): void {
-        this.pendingTransactions = {
-            display: [],
-        };
-        const converted = [];
-        /*
-        for (const pendingTx of accountOverview.pendingTransactions) {
-            converted.push(this._convertPendingTxDtoToModal(pendingTx));
-        }
-
-         */
-        this.pendingTransactions.display = converted;
-        this._fetchMonkeys(this.pendingTransactions.display);
-    }
-
-    private _fetchMonkeys(transactions: ConfirmedTransaction[] | PendingTransaction[]): void {
-        const addrSet = new Set<string>();
-        for (const tx of transactions) {
-            addrSet.add(tx.address);
-        }
-        const monkeyPromise: Array<Promise<void>> = [];
-        for (const addr of addrSet.values()) {
-            if (this._monkeyCache.getMonkey(addr)) {
-                continue;
-            }
-            monkeyPromise.push(
-                this._apiService
-                    .fetchMonKey(addr)
-                    .then((monkey: string) => {
-                        this._monkeyCache.addCache(addr, monkey);
-                        return Promise.resolve();
-                    })
-                    .catch((err) => {
-                        console.error(err);
-                        return Promise.reject(err);
-                    })
-            );
-        }
-        void Promise.all(monkeyPromise).then(() => {
-            this._ref.detectChanges();
-        });
+        this.confirmedTransactions.all.set(0, confirmedTransactions);
+        this.confirmedTransactions.display = confirmedTransactions;
     }
 
     /**
@@ -248,7 +180,7 @@ export class AccountComponent implements OnDestroy {
      */
     private _convertConfirmedTxDtoToModal(tx: ConfirmedTransactionDto): ConfirmedTransaction {
         return {
-            balance: `${this._util.convertRawToBan(tx.balanceRaw, { precision: 5, comma: true, state: tx.type })} BAN`,
+            balance: `${tx.amount} BAN`,
             hash: tx.hash,
             type: tx.type,
             height: tx.height,
@@ -260,15 +192,11 @@ export class AccountComponent implements OnDestroy {
     }
 
     /**
-     * Converts a PendingTransactionDto into a displayable format.
+     * Converts a ReceivableTransactionDto into a displayable format.
      */
-    private _convertPendingTxDtoToModal(tx: PendingTransactionDto): PendingTransaction {
+    private _convertPendingTxDtoToModal(tx: ReceivableTransactionDto): PendingTransaction {
         return {
-            balance: `${this._util.convertRawToBan(tx.balanceRaw, {
-                precision: 5,
-                comma: true,
-                state: 'receive',
-            })} BAN`,
+            balance: `${tx.amount} BAN`,
             hash: tx.hash,
             address: tx.address,
             date: this._formatDateString(tx.timestamp),
@@ -295,8 +223,8 @@ export class AccountComponent implements OnDestroy {
             this.confirmedTransactions.display = preloadedPage;
             return;
         }
-        this._apiService
-            .confirmedTransactions(this.address, currPage * this.txPerPage, this.txPerPage)
+        this.apiService
+            .fetchConfirmedTransactions(this.address, currPage * this.txPerPage, this.txPerPage)
             .then((data: ConfirmedTransactionDto[]) => {
                 const converted = [];
                 for (const tx of data) {
@@ -304,7 +232,6 @@ export class AccountComponent implements OnDestroy {
                 }
                 this.confirmedTransactions.all.set(currPage, converted);
                 this.confirmedTransactions.display = converted;
-                this._fetchMonkeys(this.confirmedTransactions.display);
                 this._ref.detectChanges();
             })
             .catch((err) => {
@@ -345,7 +272,7 @@ export class AccountComponent implements OnDestroy {
     fetchInsights(event: MatTabChangeEvent): void {
         if (!this.insights && !this.loadingInsights && !this.insightsDisabled && event.index === 3) {
             this.loadingInsights = true;
-            this._apiService
+            this.apiService
                 .getInsights(this.address)
                 .then((data) => {
                     this.insights = data;
@@ -366,8 +293,6 @@ export class AccountComponent implements OnDestroy {
             const firstBits = address.substring(0, 12);
             const midBits = address.substring(12, 58);
             const lastBits = address.substring(58, 64);
-            // ban_3batmanuenphd7osrez9c45b3uqw9d9u813uqw9d9u81ne8xa6m43e1py56y9p48ap
-            // ban_3batmanuenphd7osrez9c45b3uqw9d9u81ne8xa6m43e1py56y9p48ap69zg
             return `<strong class="">${firstBits}</strong><span class="secondary">${midBits}</span><strong class="">${lastBits}</strong>`;
         }
     }

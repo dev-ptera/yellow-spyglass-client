@@ -139,3 +139,8 @@ html * {
         overflow: hidden;
     }
 }
+
+// Empty state description font weight change
+.blui-empty-state-content .blui-empty-state-description {
+    font-weight: 400!important;
+}

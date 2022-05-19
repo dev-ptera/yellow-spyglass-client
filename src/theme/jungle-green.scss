@@ -11,6 +11,24 @@
 @use 'src/app/pages/representatives/representatives.component' as representatives;
 @use 'src/app/pages/network/network.component' as network;
 
+
+
+
+@mixin accountPage($foreground, $background, $primary) {
+    .tab-buttons button {
+        background-color: map-get(blui.$blui-white, 50);
+    }
+    .tab-buttons .active {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        border-bottom: solid 2px $primary;
+        color: $primary;
+    }
+    .tx-content-container {
+        background-color: map-get(blui.$blui-white, 50);
+    }
+}
+
 $greenPalette: (
     50: #eaf7e9,
     100: #c9ecc9,
@@ -98,6 +116,8 @@ $jungle-green-theme: map-merge(
     $theme-background: map-get($jungle-green-theme, background);
 
     $primary: map-get($material-theme-primary, 700);
+
+
     $warn: map-get($material-theme-warn, 500);
 
     $tag-opacity: 0.06;
@@ -119,6 +139,9 @@ $jungle-green-theme: map-merge(
 
     .text-secondary {
         color: map-get($theme-foreground, secondary-text);
+    }
+    .text-hint {
+        color: map-get($theme-foreground, hint-text);
     }
     .primary {
         color: $primary;
@@ -149,6 +172,8 @@ $jungle-green-theme: map-merge(
         color: $tag !important;
     } **/
     @include representatives.representatives-theme($sticky-border-color, #f1fff1);
+
+    @include accountPage($theme-foreground, $theme-background, $primary);
 
     .desktop-search-input {
         border: solid 1px map-get($theme-foreground, divider);

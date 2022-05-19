@@ -14,7 +14,7 @@ import {
     NakamotoCoefficientDto,
     PeerVersionsDto,
     PriceDataDto,
-    QuorumDto,
+    QuorumDto, ReceivableTransactionDto,
     RepresentativeDto,
     RepScoreDto,
     SupplyDto,
@@ -33,9 +33,13 @@ export class ApiService {
     url = environment.api;
     spyglassApi = environment.spyglassApi;
 
+    createMonKeyUrl(address: string): string {
+        return `https://monkey.banano.cc/api/v1/monkey/${address}`;
+    }
+
     constructor(private readonly _http: HttpClient) {}
 
-    /** Gets account summary information. */
+    /** Fetches account summary information. */
     fetchAccountOverview(address: string): Promise<AccountOverviewDto> {
         return this._http
             .get<AccountOverviewDto>(`${this.spyglassApi}/v1/account/overview/${address}`)
@@ -43,17 +47,30 @@ export class ApiService {
             .toPromise();
     }
 
-    getInsights(address: string): Promise<InsightsDto> {
-        return this._http.get<InsightsDto>(`${this.url}/insights/${address}`).pipe(timeout(SLOW_MS)).toPromise();
-    }
-
-    confirmedTransactions(address: string, offset: number, pageSize: number): Promise<ConfirmedTransactionDto[]> {
+    /** Fetches 50 confirmed transactions for a given address. */
+    fetchConfirmedTransactions(address: string, offset: number, pageSize: number): Promise<ConfirmedTransactionDto[]> {
         return this._http
-            .get<ConfirmedTransactionDto[]>(
-                `${this.url}/confirmed-transactions?address=${address}&offset=${offset}&size=${pageSize}`
+            .post<ConfirmedTransactionDto[]>(
+                `${this.spyglassApi}/v1/account/confirmed-transactions`,
+                { address, offset, size: pageSize }
             )
             .pipe(timeout(MED_MS))
             .toPromise();
+    }
+
+    /** Fetches 50 receivable transactions for a given address. */
+    fetchReceivableTransactions(address: string): Promise<ReceivableTransactionDto[]> {
+        return this._http
+            .post<ReceivableTransactionDto[]>(
+                `${this.spyglassApi}/v1/account/receivable-transactions`,
+                { address }
+            )
+            .pipe(timeout(MED_MS))
+            .toPromise();
+    }
+
+    getInsights(address: string): Promise<InsightsDto> {
+        return this._http.get<InsightsDto>(`${this.url}/insights/${address}`).pipe(timeout(SLOW_MS)).toPromise();
     }
 
     /** Given a hash, fetches block. */

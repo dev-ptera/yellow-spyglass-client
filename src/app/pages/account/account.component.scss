@@ -4,7 +4,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 64px;
+    margin-bottom: 40px;
     &.sm {
         margin-bottom: 8px;
         flex-direction: column;
@@ -131,6 +131,15 @@
 
 .account-empty-state {
     padding: 72px 48px;
+}
+
+
+.tab-buttons {
+    height: 48px;
+    button {
+        height: 100%;
+        padding: 0 24px;
+    }
 }
 
 @mixin account-theme(
