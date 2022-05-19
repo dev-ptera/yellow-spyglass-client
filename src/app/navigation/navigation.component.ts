@@ -135,6 +135,10 @@ export class NavigationComponent implements OnInit {
                         this._updateAccountPageMetadata();
                         break;
                     }
+                    case `auto`: {
+                        this._updateHashPageMetadata();
+                        break;
+                    }
                     case `${APP_NAV_ITEMS.hash.route}`: {
                         this._updateHashPageMetadata();
                         break;
