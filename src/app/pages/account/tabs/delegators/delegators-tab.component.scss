@@ -7,18 +7,18 @@
 }
 
 .account-delegator-weight {
-    height: 56px;
+    height: 64px;
     display: flex;
     width: 100%;
     align-items: center;
 
     .account-delegator-weight-sum {
-        margin-left: 24px;
-        font-size: 24px;
+        margin-left: 28px;
+        font-size: 18px;
         font-weight: 600;
         margin-right: 8px;
         &.sm {
-            font-size: 18px;
+            font-size: 16px;
         }
     }
 

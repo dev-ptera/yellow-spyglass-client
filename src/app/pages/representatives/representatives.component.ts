@@ -8,7 +8,7 @@ import { MonitoredRep, Representative } from '@app/types/modal';
 export type MonitoredRepTableColumns = {
     address: boolean;
     version: boolean;
-    delegatorsCount: boolean;
+    fundedDelegatorsCount: boolean;
     weightBan: boolean;
     weightPercent: boolean;
     peerCount: boolean;
@@ -50,7 +50,7 @@ export class RepresentativesComponent implements OnInit {
     shownColumns: MonitoredRepTableColumns = {
         address: true,
         version: true,
-        delegatorsCount: false,
+        fundedDelegatorsCount: false,
         weightBan: true,
         weightPercent: false,
         peerCount: true,

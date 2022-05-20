@@ -4,4 +4,5 @@ export type RepresentativeDto = {
     alias?: string;
     weight: number;
     delegatorsCount?: number;
+    fundedDelegatorsCount?: number;
 };

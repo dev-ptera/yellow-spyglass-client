@@ -1,12 +1,12 @@
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
-    Component,
+    Component, EventEmitter,
     Input,
-    OnChanges,
+    OnChanges, Output,
     ViewEncapsulation,
 } from '@angular/core';
-import { Delegator } from '@app/types/modal/Delegator';
+import { DelegatorDto } from '@app/types/dto/DelegatorDto';
 import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
@@ -18,6 +18,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
             <span class="account-delegator-weight-sum" responsive>{{ formattedWeight }}</span>
             <span class="account-delegator-weight-sum-description" responsive>BAN Delegated Weight</span>
         </div>
+        <mat-divider></mat-divider>
         <table mat-table *ngIf="delegators.length > 0" [style.width.%]="100" [dataSource]="getShownDelegators()">
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
@@ -38,7 +39,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
                 </td>
             </ng-container>
             <ng-container matColumnDef="weight">
-                <th mat-header-cell [style.paddingLeft.px]="16" *matHeaderCellDef>Weight (BAN)</th>
+                <th mat-header-cell [style.paddingLeft.px]="16" *matHeaderCellDef>Weight</th>
                 <td mat-cell [style.paddingLeft.px]="16" *matCellDef="let element">{{ element.weight }}</td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="columns"></tr>
@@ -46,35 +47,38 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
         </table>
         <div
             *ngIf="delegators.length > 0"
-            [style.paddingLeft.px]="16"
+            class="text-secondary"
             [style.fontSize.px]="vp.sm ? 10 : 14"
-            style="margin: 16px 0;"
+            style="padding: 16px;"
         >
-            *Accounts with a 0 BANANO balance have been removed from the total delegators count.
+            Accounts with a 0 BANANO balance have been removed from the total delegators count.
         </div>
-        <div style="text-align: center; margin: 16px 0" *ngIf="delegators.length > shownDelegators">
-            <button color="primary" style="padding: 8px 16px" mat-stroked-button (click)="increaseShownDelegators()">
+        <div style="text-align: center; padding: 16px" *ngIf="delegators.length < delegatorsCount">
+            <button color="primary" mat-stroked-button (click)="loadMoreDelegators.emit()">
                 Load more
             </button>
         </div>
 
-        <blui-empty-state
-            responsive
-            *ngIf="delegators.length === 0"
-            class="account-empty-state"
-            title="No Delegators"
-            description="This account has no delegated weight.  If this account is not running a node, this is a good thing."
-        >
-            <mat-icon blui-empty-icon>how_to_vote</mat-icon>
-        </blui-empty-state>
+        <div *ngIf="delegators.length === 0" style="padding: 64px 0">
+            <blui-empty-state
+                responsive
+                class="account-empty-state"
+                title="No Delegators"
+                description="This account has no delegated weight.  If this account is not running a node, this is a good thing."
+            >
+                <mat-icon blui-empty-icon>how_to_vote</mat-icon>
+            </blui-empty-state>
+        </div>
     `,
     styleUrls: ['delegators-tab.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
 export class DelegatorsTabComponent implements OnChanges {
-    @Input() delegators: Delegator[];
+    @Input() delegatorsCount: number;
+    @Input() delegators: DelegatorDto[];
     @Input() weightSum: number;
+    @Output() loadMoreDelegators = new EventEmitter<void>();
 
     shownDelegators = 50;
     columns = ['position', 'address', 'weight'];
@@ -83,23 +87,22 @@ export class DelegatorsTabComponent implements OnChanges {
 
     constructor(
         public vp: ViewportService,
+        public util: UtilService,
         public searchService: SearchService,
-        private readonly _util: UtilService,
         private readonly _ref: ChangeDetectorRef
     ) {}
 
     ngOnChanges(): void {
-        this.formattedWeight = this._util.numberWithCommas(this.weightSum.toFixed(2));
+        this.formattedWeight = this.util.numberWithCommas(this.weightSum.toFixed(2));
+        this.delegators.map((delegator) => {
+            delegator.weight = this.util.numberWithCommas(delegator.weight) as any;
+        })
     }
 
-    getShownDelegators(): Delegator[] {
+    getShownDelegators(): DelegatorDto[] {
         if (this.delegators) {
             return this.delegators.slice(0, this.shownDelegators);
         }
         return [];
-    }
-
-    increaseShownDelegators(): void {
-        this.shownDelegators += 100;
     }
 }

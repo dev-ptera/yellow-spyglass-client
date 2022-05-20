@@ -10,6 +10,6 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
     encapsulation: ViewEncapsulation.None,
 })
 export class ErrorComponent {
-    @Input() title = 'Error';
+    @Input() title = 'Something went wrong...';
     @Input() description = 'An error has occurred. If this persists, please contact dev.ptera@gmail.com.';
 }

@@ -11,18 +11,17 @@
 @use 'src/app/pages/representatives/representatives.component' as representatives;
 @use 'src/app/pages/network/network.component' as network;
 
-
-
-
 @mixin accountPage($foreground, $background, $primary) {
     .tab-buttons button {
+        color: map-get($foreground, secondary-text) !important;
         background-color: map-get(blui.$blui-white, 50);
+        border-color: map-get($foreground, divider);
     }
     .tab-buttons .active {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         border-bottom: solid 2px $primary;
-        color: $primary;
+        color: $primary !important;
     }
     .tx-content-container {
         background-color: map-get(blui.$blui-white, 50);
@@ -86,6 +85,7 @@ $jungle-green-theme: map-merge(
             slider-off-active: rgba(black, 0.38),
         ),
         background: (
+            tooltip: map-get(blui.$blui-gray, 500),
             status-bar: mat.get-color-from-palette(mat.$light-theme-background-palette, status-bar),
             app-bar: map-get(blui.$blui-gray, 50),
             background: map-get(blui.$blui-white, 200),
@@ -116,7 +116,6 @@ $jungle-green-theme: map-merge(
     $theme-background: map-get($jungle-green-theme, background);
 
     $primary: map-get($material-theme-primary, 700);
-
 
     $warn: map-get($material-theme-warn, 500);
 

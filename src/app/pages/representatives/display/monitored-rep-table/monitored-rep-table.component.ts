@@ -71,9 +71,9 @@ import { MonitoredRep, Representative } from '@app/types/modal';
                 </td>
             </ng-container>
 
-            <ng-container matColumnDef="delegatorsCount">
+            <ng-container matColumnDef="fundedDelegatorsCount">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 60px">Delegators</th>
-                <td mat-cell *matCellDef="let element">{{ numberWithCommas(element.delegatorsCount) }}</td>
+                <td mat-cell *matCellDef="let element">{{ numberWithCommas(element.fundedDelegatorsCount) }}</td>
             </ng-container>
 
             <ng-container matColumnDef="peers">
@@ -220,8 +220,8 @@ export class MonitoredRepTableComponent implements OnChanges {
         if (this.shownColumns.version) {
             displayedColumns.push('version');
         }
-        if (this.shownColumns.delegatorsCount) {
-            displayedColumns.push('delegatorsCount');
+        if (this.shownColumns.fundedDelegatorsCount) {
+            displayedColumns.push('fundedDelegatorsCount');
         }
         if (this.shownColumns.weightBan) {
             displayedColumns.push('weightBan');

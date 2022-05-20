@@ -98,9 +98,9 @@ import { AliasService } from '@app/services/alias/alias.service';
                 </td>
             </ng-container>
 
-            <ng-container matColumnDef="delegatorsCount">
+            <ng-container matColumnDef="fundedDelegatorsCount">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Delegators</th>
-                <td mat-cell *matCellDef="let element">{{ numberWithCommas(element.delegatorsCount) }}</td>
+                <td mat-cell *matCellDef="let element">{{ numberWithCommas(element.fundedDelegatorsCount) }}</td>
             </ng-container>
 
             <ng-container matColumnDef="uptimeStats.uptimePercentages.month">
@@ -143,7 +143,7 @@ export class LargeRepTableComponent implements OnChanges {
         'score',
         'weight',
         'percentWeight',
-        'delegatorsCount',
+        'fundedDelegatorsCount',
         'uptimeStats.uptimePercentages.month',
     ];
     largeRepsDisplayColumnsMd = ['position', 'address', 'online', 'score', 'weight', 'percentWeight'];

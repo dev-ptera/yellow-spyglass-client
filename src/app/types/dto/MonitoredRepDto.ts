@@ -1,7 +1,8 @@
 export type MonitoredRepDto = {
     address: string;
     online: boolean;
-    delegatorsCount: number;
+    delegatorsCount?: number;
+    fundedDelegatorsCount?: number;
 
     /* Optional (populated from node-monitor) */
     cementedBlocks?: number;

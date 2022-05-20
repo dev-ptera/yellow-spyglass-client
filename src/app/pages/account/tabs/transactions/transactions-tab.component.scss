@@ -1,3 +1,4 @@
+
 .tab-transaction-list.sm {
     .mat-list-item-content {
         padding-left: 18px !important;
@@ -10,7 +11,6 @@
 
         .blui-info-list-item-icon-wrapper {
             display: none;
-
         }
 
         .timestamps {
@@ -81,7 +81,7 @@
     }
 
     .to-from {
-        font-weight: 200;
+        font-weight: 400;
     }
     .amount {
         margin-left: 8px;
@@ -93,10 +93,5 @@
         > span {
             margin-left: 16px;
         }
-    }
-
-    .blui-info-list-item-partial-divider {
-        left: calc(6rem + 32px) !important;
-        width: calc(100% - calc(6rem + 32px)) !important;
     }
 }

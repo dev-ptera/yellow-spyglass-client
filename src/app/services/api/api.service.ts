@@ -7,14 +7,15 @@ import {
     AccountOverviewDto,
     AliasDto,
     BlockDto,
-    ConfirmedTransactionDto,
+    ConfirmedTransactionDto, DelegatorDto, DelegatorsOverviewDto,
     HostNodeStatsDto,
     KnownAccountDto,
     MonitoredRepDto,
     NakamotoCoefficientDto,
     PeerVersionsDto,
     PriceDataDto,
-    QuorumDto, ReceivableTransactionDto,
+    QuorumDto,
+    ReceivableTransactionDto,
     RepresentativeDto,
     RepScoreDto,
     SupplyDto,
@@ -47,13 +48,23 @@ export class ApiService {
             .toPromise();
     }
 
+    /** Fetches account delegators. */
+    fetchAccountDelegators(address: string, offset: number ): Promise<DelegatorsOverviewDto> {
+        return this._http
+            .post<DelegatorsOverviewDto>(`${this.spyglassApi}/v1/account/delegators`,
+                { address, size: 50, offset })
+            .pipe(timeout(SLOW_MS))
+            .toPromise();
+    }
+
     /** Fetches 50 confirmed transactions for a given address. */
     fetchConfirmedTransactions(address: string, offset: number, pageSize: number): Promise<ConfirmedTransactionDto[]> {
         return this._http
-            .post<ConfirmedTransactionDto[]>(
-                `${this.spyglassApi}/v1/account/confirmed-transactions`,
-                { address, offset, size: pageSize }
-            )
+            .post<ConfirmedTransactionDto[]>(`${this.spyglassApi}/v1/account/confirmed-transactions`, {
+                address,
+                offset,
+                size: pageSize,
+            })
             .pipe(timeout(MED_MS))
             .toPromise();
     }
@@ -61,10 +72,7 @@ export class ApiService {
     /** Fetches 50 receivable transactions for a given address. */
     fetchReceivableTransactions(address: string): Promise<ReceivableTransactionDto[]> {
         return this._http
-            .post<ReceivableTransactionDto[]>(
-                `${this.spyglassApi}/v1/account/receivable-transactions`,
-                { address }
-            )
+            .post<ReceivableTransactionDto[]>(`${this.spyglassApi}/v1/account/receivable-transactions`, { address })
             .pipe(timeout(MED_MS))
             .toPromise();
     }

@@ -34,8 +34,8 @@ import { LoadingService } from '@app/services/loading/loading.service';
 
                         <button mat-button class="nav-menu-trigger" [matMenuTriggerFor]="networkHealth">Status</button>
                         <mat-menu #networkHealth="matMenu">
-                            <button mat-menu-item (click)="router.navigate([pages.node.route])">Explorer</button>
                             <button mat-menu-item (click)="router.navigate([pages.network.route])">Network</button>
+                            <button mat-menu-item (click)="router.navigate([pages.node.route])">Node</button>
                         </mat-menu>
                     </div>
 

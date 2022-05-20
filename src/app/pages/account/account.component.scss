@@ -1,5 +1,3 @@
-@use '@brightlayer-ui/colors/palette' as blui;
-
 .account-header {
     display: flex;
     justify-content: space-between;
@@ -9,34 +7,6 @@
         margin-bottom: 8px;
         flex-direction: column;
         align-items: flex-start;
-    }
-    .account-header-details {
-        display: flex;
-        align-items: center;
-    }
-    .account-address-line {
-        display: flex;
-        align-items: center;
-        margin-bottom: 0;
-        .account-address {
-            margin-right: 8px;
-        }
-    }
-    .account-address-line,
-    .account-representative {
-        display: flex;
-        align-items: center;
-        word-break: break-all;
-    }
-    .account-representative-address {
-        cursor: pointer;
-        &:hover {
-            text-decoration: underline;
-        }
-    }
-
-    .account-representative {
-        display: flex;
     }
 
     .account-monkey {
@@ -58,10 +28,10 @@
             font-weight: 600;
         }
         .account-btc-amount {
-            font-size: 18px;
+            font-size: 16px;
         }
         .account-usd-amount {
-            font-size: 18px;
+            font-size: 16px;
         }
     }
     .account-balance.sm {
@@ -87,10 +57,9 @@
     height: 120px !important;
     width: 120px !important;
     box-sizing: border-box;
-    border: solid 1px map-get(blui.$blui-green, 500);
 }
 
-.account-tabs .mat-tab-label {
+.account-summary-tags .mat-tab-label {
     height: 5rem;
     justify-content: center;
     width: 100%;
@@ -101,100 +70,23 @@
     &.sm {
         display: flex;
     }
-    blui-list-item-tag {
-        margin-right: 16px;
-    }
     .account-balance {
         margin-bottom: 8px;
         font-size: 18px;
     }
-    .account-pending {
-        background-color: map-get(blui.$blui-white, 50);
-        color: map-get(blui.$blui-orange, 500);
-        border: solid 1px map-get(blui.$blui-orange, 500);
-    }
 }
-
-.account-tabs {
-    max-width: unset !important;
-    .mat-badge-content {
-        min-width: 22px;
-        width: unset !important;
-        padding: 2px;
-        top: -16px !important;
-    }
-    &.sm {
-        margin-right: -16px;
-        margin-left: -16px;
-    }
-}
-
-.account-empty-state {
-    padding: 72px 48px;
-}
-
 
 .tab-buttons {
     height: 48px;
     button {
+        box-sizing: border-box;
+        border-radius: 0;
+        border: solid 1px;
+        border-bottom: 0;
         height: 100%;
         padding: 0 24px;
-    }
-}
-
-@mixin account-theme(
-    $repOnlineTag,
-    $repOfflineTag,
-    $heightTag,
-    $receiveTag,
-    $sendTag,
-    $changeTag,
-    $receiveAmount,
-    $sendAmount,
-    $hashColor,
-    $pendingBadgeColor,
-    $delegatorsBadgeColor
-) {
-    .account-rep-online {
-        @include repOnlineTag();
-    }
-    .account-rep-offline {
-        @include repOfflineTag();
-    }
-    .account-pending-badge {
-        .mat-badge-content {
-            // background-color: $pendingBadgeColor !important;
-        }
-    }
-    .account-delegators-badge {
-        .mat-badge-content {
-            // background-color: $delegatorsBadgeColor !important;
-        }
-    }
-    .tab-transaction-list {
-        .height {
-            @include heightTag();
-        }
-        .hash,
-        .to-from {
-            color: $hashColor;
-        }
-        blui-list-item-tag.type {
-            &.send {
-                @include sendTag();
-            }
-            &.receive {
-                @include receiveTag();
-            }
-            &.change {
-                @include changeTag();
-            }
-        }
-        .amount.send {
-            @include sendAmount();
-        }
-        .amount.receive {
-            @include receiveAmount();
+        &.active {
+            box-sizing: unset;
         }
     }
 }

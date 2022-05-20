@@ -113,9 +113,9 @@ html * {
     min-height: 100vh;
     box-sizing: border-box;
     // TODO: move these paddings to a global style, shared
-    padding: 104px 64px 64px 64px;
+    padding: 104px 48px 64px 48px;
     &.md {
-        padding: 104px 32px 48px 32px;
+        padding: 104px 16px 48px 16px;
     }
     &.sm {
         padding: 88px 16px 48px 16px;
@@ -142,5 +142,5 @@ html * {
 
 // Empty state description font weight change
 .blui-empty-state-content .blui-empty-state-description {
-    font-weight: 400!important;
+    font-weight: 400 !important;
 }
