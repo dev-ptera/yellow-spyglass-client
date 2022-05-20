@@ -11,7 +11,7 @@
 @use 'src/app/pages/representatives/representatives.component' as representatives;
 @use 'src/app/pages/network/network.component' as network;
 
-@mixin accountPage($foreground, $background, $primary) {
+@mixin accountPage($foreground, $background, $primary, $warn) {
     .tab-buttons button {
         color: map-get($foreground, secondary-text) !important;
         background-color: map-get(blui.$blui-white, 50);
@@ -25,6 +25,30 @@
     }
     .tx-content-container {
         background-color: map-get(blui.$blui-white, 50);
+    }
+    .account-rep-offline {
+        background-color: $warn;
+    }
+    .tab-transaction-list {
+        .type {
+            &.receive {
+                background-color: rgba($primary, .05);
+                border: solid 1px $primary;
+                color: $primary;
+               // color: map-get($foreground, secondary-text);
+            }
+            &.send {
+                background-color: rgba($warn, .05);
+                border: solid 1px $warn;
+                color: $warn;
+            }
+            &.change {
+                $change: map-get(blui.$blui-blue, 500);
+                background-color: rgba($change, .05);
+                border: solid 1px $change;
+                color: $change;
+            }
+        }
     }
 }
 
@@ -172,7 +196,7 @@ $jungle-green-theme: map-merge(
     } **/
     @include representatives.representatives-theme($sticky-border-color, #f1fff1);
 
-    @include accountPage($theme-foreground, $theme-background, $primary);
+    @include accountPage($theme-foreground, $theme-background, $primary, $warn);
 
     .desktop-search-input {
         border: solid 1px map-get($theme-foreground, divider);

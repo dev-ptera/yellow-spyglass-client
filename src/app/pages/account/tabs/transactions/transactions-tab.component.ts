@@ -33,32 +33,42 @@ type Transaction  = {
             >
                 <div blui-icon>
                     <img [src]="apiService.createMonKeyUrl(tx.address || tx.newRepresentative)"
-                         loading="lazy" style="margin-right: 12px"/>
+                         loading="lazy" style="margin-right: 8px"/>
+                </div>
+                <div blui-left-content
+                     [style.width.px]="vp.sm ? 64 : 72"
+                     style="justify-content: left">
+                    <blui-list-item-tag
+                        [label]="tx.type || 'receive'"
+                        class="type"
+                        [class]="createTagClass(tx)"></blui-list-item-tag>
                 </div>
                 <div blui-title>
                     <div class="tag-row">
-                        <span class="mat-body-2" style="margin-right: 8px" *ngIf="tx.height"># {{ util.numberWithCommas(tx.height) }}</span>
 
                         <!-- Default type to receive. -->
+                        <!--
                         <blui-list-item-tag
                             [label]="tx.type || 'receive'"
                             [class]="'type ' + tx.type || 'receive'"></blui-list-item-tag>
+                            -->
 
-                        <span *ngIf="tx.type !== 'change'" [class]="'amount ' + tx.type">
+                        <span *ngIf="tx.type !== 'change'" class="amount">
+                            {{ tx.type === 'receive' || isPending ? '+' : '-' }}
                             {{ util.numberWithCommas(tx.amount) }}
                         </span>
                     </div>
                     <div>
 
                         <ng-container *ngIf="!tx.type || tx.type === 'receive'">
-                            <span class="to-from text-secondary">to</span>
+                            <span class="to-from text-secondary">from</span>
                             <span class="address link" (click)="searchService.emitSearch(tx.address, $event.ctrlKey)">
                                 {{ aliasService.get(tx.address) || tx.address }}
                             </span>
                         </ng-container>
 
                         <ng-container *ngIf="tx.type === 'send'">
-                            <span class="to-from text-secondary">from</span>
+                            <span class="to-from text-secondary">to</span>
                             <span class="address link" (click)="searchService.emitSearch(tx.address, $event.ctrlKey)">
                                 {{ aliasService.get(tx.address) || tx.address }}
                             </span>
@@ -75,18 +85,22 @@ type Transaction  = {
 
                     </div>
                 </div>
-                <div blui-subtitle class="hash">
-                    <span class="link text-hint" (click)="searchService.emitSearch(tx.hash, $event.ctrlKey)">{{
+                <div blui-subtitle class="hash text-hint">
+
+                    <span class="mat-body-2" style="margin-right: 8px" *ngIf="tx.height">[{{ util.numberWithCommas(tx.height) }}]</span>
+                    <span class="link" (click)="searchService.emitSearch(tx.hash, $event.ctrlKey)">{{
                         tx.hash
                         }}</span>
                 </div>
                 <div blui-right-content class="right-content">
                     <div *ngIf="vp.sm" class="small-monkey">
-                        <img [src]="apiService.createMonKeyUrl(tx.address)" loading="lazy"/>
+                        <img [src]="apiService.createMonKeyUrl(tx.address || tx.newRepresentative)" loading="lazy"/>
                     </div>
-                    <div class="timestamps" [style.marginRight.px]="vp.sm ? 0 : 12">
+                    <div class="timestamps">
                         <span class="mat-body-2">{{ dateMap.get(tx.hash).date }}</span>
-                        <span class="mat-body-2 text-secondary">{{ dateMap.get(tx.hash).diffDays }} days ago</span>
+                        <span class="mat-body-2 text-secondary" [style.fontSize.px]="vp.sm ? 10 : 12">
+                            {{ dateMap.get(tx.hash).diffDays }} days ago
+                        </span>
 
                     </div>
                 </div>
@@ -148,6 +162,13 @@ export class TransactionsTabComponent {
             return 'This account has already received all incoming payments';
         }
         return 'This account has not received or sent anything yet.';
+    }
+
+    createTagClass(tx: Transaction): string {
+        if (this.isPending) {
+            return 'receive';
+        }
+        return tx.type;
     }
 
     private _formatDateString(timestamp: number): string {

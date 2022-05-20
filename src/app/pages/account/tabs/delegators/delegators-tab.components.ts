@@ -19,7 +19,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
             <span class="account-delegator-weight-sum-description" responsive>BAN Delegated Weight</span>
         </div>
         <mat-divider></mat-divider>
-        <table mat-table *ngIf="delegators.length > 0" [style.width.%]="100" [dataSource]="getShownDelegators()">
+        <table mat-table *ngIf="delegators.length > 0" [style.width.%]="100" [dataSource]="delegatorsDatasource">
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
                 <td mat-cell [style.paddingRight.px]="16" *matCellDef="let element; let i = index">#{{ i + 1 }}</td>
@@ -71,17 +71,17 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
         </div>
     `,
     styleUrls: ['delegators-tab.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
 export class DelegatorsTabComponent implements OnChanges {
     @Input() delegatorsCount: number;
+    @Input() loadedDelegatorsCount: number;
     @Input() delegators: DelegatorDto[];
     @Input() weightSum: number;
     @Output() loadMoreDelegators = new EventEmitter<void>();
 
-    shownDelegators = 50;
     columns = ['position', 'address', 'weight'];
+    delegatorsDatasource;
 
     formattedWeight: string;
 
@@ -93,16 +93,11 @@ export class DelegatorsTabComponent implements OnChanges {
     ) {}
 
     ngOnChanges(): void {
+        this.delegatorsDatasource = [];
         this.formattedWeight = this.util.numberWithCommas(this.weightSum.toFixed(2));
         this.delegators.map((delegator) => {
             delegator.weight = this.util.numberWithCommas(delegator.weight) as any;
+            this.delegatorsDatasource.push(delegator);
         })
-    }
-
-    getShownDelegators(): DelegatorDto[] {
-        if (this.delegators) {
-            return this.delegators.slice(0, this.shownDelegators);
-        }
-        return [];
     }
 }

@@ -22,7 +22,6 @@ export class AccountComponent implements OnDestroy {
     isLoading: boolean;
     hasError: boolean;
     address: string;
-    monkeySvg: string;
 
     pendingBalance: string;
     confirmedBalance: string;
@@ -37,7 +36,7 @@ export class AccountComponent implements OnDestroy {
     weightSum: number;
     fundedDelegatorsCount: number;
 
-    pendingTransactions: ReceivableTransactionDto[] = [];
+    receivableTransactions: ReceivableTransactionDto[] = [];
     readonly txPerPage = 50;
 
     confirmedTransactions: {
@@ -80,7 +79,6 @@ export class AccountComponent implements OnDestroy {
     /** Given a ban address, searches for account. */
     private _searchAccount(address): void {
         this.address = address;
-        this.monkeySvg = '';
         this.isLoading = true;
         this.hasError = false;
         this._ref.detectChanges();
@@ -101,19 +99,41 @@ export class AccountComponent implements OnDestroy {
                 this.isLoading = false;
             });
 
-        // MonKey
-        this.apiService
-            .fetchMonKey(address)
-            .then((data) => {
-                this.monkeySvg = data;
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-
         // Delegators
         this.fetchDelegators();
     }
+
+
+    /** Called when a user clicks the insights tab for the first time. */
+    fetchInsights(): void {
+        if (!this.insights && !this.insightsDisabled && !this.loadingInsights) {
+            this.loadingInsights = true;
+            this.apiService
+                .getInsights(this.address)
+                .then((data) => {
+                    this.insights = data;
+                    this.loadingInsights = false;
+                    this._ref.detectChanges();
+                })
+                .catch((err) => {
+                    console.error(err);
+                    this.loadingInsights = false;
+                    this.hasInsightsError = true;
+                    this._ref.detectChanges();
+                });
+        }
+    }
+
+    fetchDelegators(): void {
+        this.apiService.fetchAccountDelegators(this.address, this.delegators.length).then((data) => {
+            this.delegators.push(...data.delegators);
+            this.fundedDelegatorsCount = data.fundedCount;
+            this._ref.detectChanges();
+        }).catch((err) => {
+            console.error(err);
+        })
+    }
+
 
     /**
      * Called whenever a new address has been loaded.
@@ -123,7 +143,7 @@ export class AccountComponent implements OnDestroy {
     ): void {
         this.accountOverview = data[0];
         this.weightSum = this.accountOverview.weight;
-        this.pendingTransactions = data[2];
+        this.receivableTransactions = data[2];
         this.confirmedTxPageIndex = 0;
         this.insights = undefined;
         this.loadingInsights = false;
@@ -202,26 +222,6 @@ export class AccountComponent implements OnDestroy {
         return `₿${this._util.numberWithCommas(this._priceService.priceInBitcoin(Number(ban)).toFixed(4))}`;
     }
 
-    /** Called when a user clicks the insights tab for the first time. */
-    fetchInsights(): void {
-        if (!this.insights && !this.insightsDisabled && !this.loadingInsights) {
-            this.loadingInsights = true;
-            this.apiService
-                .getInsights(this.address)
-                .then((data) => {
-                    this.insights = data;
-                    this.loadingInsights = false;
-                    this._ref.detectChanges();
-                })
-                .catch((err) => {
-                    console.error(err);
-                    this.loadingInsights = false;
-                    this.hasInsightsError = true;
-                    this._ref.detectChanges();
-                });
-        }
-    }
-
     formatAccountAddress(address: string): string {
         if (address) {
             const firstBits = address.substring(0, 12);
@@ -241,14 +241,5 @@ export class AccountComponent implements OnDestroy {
 
     withCommas(x: number): string {
         return this._util.numberWithCommas(x);
-    }
-
-    fetchDelegators(): void {
-        this.apiService.fetchAccountDelegators(this.address, this.delegators.length).then((data) => {
-            this.delegators.push(...data.delegators);
-            this.fundedDelegatorsCount = data.fundedCount;
-        }).catch((err) => {
-            console.error(err);
-        })
     }
 }
