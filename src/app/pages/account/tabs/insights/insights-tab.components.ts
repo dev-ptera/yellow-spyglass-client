@@ -1,30 +1,43 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Input,
+    OnChanges,
+    ViewEncapsulation
+} from '@angular/core';
 import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
 import { InsightsDto } from '@app/types/dto/InsightsDto';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { Options } from 'highcharts';
 // eslint-disable-next-line no-duplicate-imports
+
+// @ts-ignore
 import * as Highcharts from 'highcharts';
 
 @Component({
     selector: 'account-insights-tab',
     template: `
         <div class="insights-root" *ngIf="insights" responsive>
-            <div class="app-section-title" responsive [style.marginBottom.px]="16">Account Balance Over Time</div>
-            <div class="insights-chart" responsive>
-                <highcharts-chart
-                    [update]="true"
-                    [Highcharts]="Highcharts"
-                    [options]="accountHistoryChart"
-                    style="pointer-events: none; width: 100%; height: 100%;"
-                    [style.height.px]="vp.sm ? 300 : vp.md ? 350 : 450"
-                ></highcharts-chart>
+
+            <div class="app-section-title" [style.marginTop.px]="32">
+                Account Balance Over Time
+            </div>
+            <div class="app-section-subtitle" style="margin-bottom: -16px">
+                {{ getGraphSubtitle() }}
             </div>
 
-            <div class="app-section-title" responsive [style.marginBottom.px]="16" [style.marginTop.px]="32">
+            <figure [style.paddingTop.px]="vp.sm ? 32 : 48" style="margin-bottom: 32px">
+                <div id="container"></div>
+            </figure>
+
+            <mat-divider style="margin: 48px 0"></mat-divider>
+
+            <div class="app-section-title" style="margin: 32px 0">
                 Account Statistics
             </div>
+
             <div class="insights-account-stats-container" responsive>
                 <ng-template *ngIf="vp.isMediumOrSmaller()" [ngTemplateOutlet]="received"></ng-template>
                 <mat-card *ngIf="!vp.isMediumOrSmaller()" class="mat-elevation-z0">
@@ -37,25 +50,34 @@ import * as Highcharts from 'highcharts';
                 </mat-card>
             </div>
         </div>
-        <blui-empty-state
-            *ngIf="!error && !insights && !disabled"
-            responsive
-            class="account-empty-state"
-            title="Loading"
-            description="One second, counting them 'nanners.  Larger accounts will take longer."
-        >
-            <mat-icon blui-empty-icon>pending</mat-icon>
-        </blui-empty-state>
-        <blui-empty-state
-            *ngIf="disabled"
-            responsive
-            class="account-empty-state"
-            title="No Insights"
-            [description]="getErrorDescription()"
-        >
-            <mat-icon blui-empty-icon>disc_full</mat-icon>
-        </blui-empty-state>
-        <app-error *ngIf="error"></app-error>
+
+
+
+
+        <div class="tab-empty-state" *ngIf="blockCount >= maxInsightsLimit">
+            <blui-empty-state
+                responsive
+                class="account-empty-state"
+                title="No Insights"
+                [description]="getErrorDescription()"
+            >
+                <mat-icon blui-empty-icon>disc_full</mat-icon>
+            </blui-empty-state>
+        </div>
+
+        <div class="tab-empty-state" *ngIf="blockCount < maxInsightsLimit && !insights && !hasError">
+            <blui-empty-state
+                responsive
+                class="account-empty-state"
+                title="Loading"
+                description="One second, counting them 'nanners.  Larger accounts will take longer."
+            >
+                <mat-icon blui-empty-icon>pending</mat-icon>
+            </blui-empty-state>
+        </div>
+
+        <app-error *ngIf="hasError"></app-error>
+
 
         <ng-template #sent>
             <div class="primary node-monitor-section-title">Sent</div>
@@ -63,12 +85,12 @@ import * as Highcharts from 'highcharts';
             <mat-list [style.paddingTop.px]="0">
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Total BAN Sent</div>
-                    <div blui-subtitle>{{ formatBan(insights.totalAmountSentBan) }} BAN</div>
+                    <div blui-subtitle>{{ formatBan(insights.totalAmountSent) }} BAN</div>
                 </blui-info-list-item>
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Largest Tx Sent</div>
-                    <div blui-subtitle>{{ formatBan(insights.maxAmountSentBan) }} BAN</div>
-                    <div blui-right-content class=" link mat-overline" (click)="search(insights.maxAmountSentHash)">
+                    <div blui-subtitle>{{ formatBan(insights.maxAmountSent) }} BAN</div>
+                    <div blui-right-content class="link mat-overline text-secondary" (click)="search(insights.maxAmountSentHash)">
                         hash
                     </div>
                 </blui-info-list-item>
@@ -81,7 +103,7 @@ import * as Highcharts from 'highcharts';
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>First-Sent Date</div>
                     <div blui-subtitle>{{ formatDate(insights.firstOutTxUnixTimestamp) }}</div>
-                    <div blui-right-content class="link mat-overline" (click)="search(insights.firstOutTxHash)">
+                    <div blui-right-content class="link mat-overline text-secondary" (click)="search(insights.firstOutTxHash)">
                         hash
                     </div>
                 </blui-info-list-item>
@@ -89,7 +111,7 @@ import * as Highcharts from 'highcharts';
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Last-Sent Date</div>
                     <div blui-subtitle>{{ formatDate(insights.lastOutTxUnixTimestamp) }}</div>
-                    <div blui-right-content class="link mat-overline" (click)="search(insights.lastOutTxHash)">
+                    <div blui-right-content class="link mat-overline text-secondary" (click)="search(insights.lastOutTxHash)">
                         hash
                     </div>
                 </blui-info-list-item>
@@ -103,13 +125,13 @@ import * as Highcharts from 'highcharts';
                         </div>
                         <div *ngIf="!insights.mostCommonRecipientAddress">This account has never sent any BAN.</div>
                     </div>
-                    <div blui-info *ngIf="vp.sm" class="link" (click)="search(insights.mostCommonRecipientAddress)">
+                    <div blui-info *ngIf="vp.sm" class="link " (click)="search(insights.mostCommonRecipientAddress)">
                         {{ shortenAddr(insights.mostCommonRecipientAddress) }}
                     </div>
                     <div
                         blui-right-content
                         *ngIf="!vp.sm"
-                        class="link"
+                        class="link text-secondary"
                         (click)="search(insights.mostCommonRecipientAddress)"
                     >
                         {{ shortenAddr(insights.mostCommonRecipientAddress) }}
@@ -124,12 +146,12 @@ import * as Highcharts from 'highcharts';
             <mat-list [style.paddingTop.px]="0">
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Total BAN Received</div>
-                    <div blui-subtitle>{{ formatBan(insights.totalAmountReceivedBan) }} BAN</div>
+                    <div blui-subtitle>{{ formatBan(insights.totalAmountReceived) }} BAN</div>
                 </blui-info-list-item>
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Largest Tx Received</div>
-                    <div blui-subtitle>{{ formatBan(insights.maxAmountReceivedBan) }} BAN</div>
-                    <div blui-right-content class=" link mat-overline" (click)="search(insights.maxAmountReceivedHash)">
+                    <div blui-subtitle>{{ formatBan(insights.maxAmountReceived) }} BAN</div>
+                    <div blui-right-content class=" link mat-overline text-secondary" (click)="search(insights.maxAmountReceivedHash)">
                         hash
                     </div>
                 </blui-info-list-item>
@@ -142,14 +164,14 @@ import * as Highcharts from 'highcharts';
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>First-Received Date</div>
                     <div blui-subtitle>{{ formatDate(insights.firstInTxUnixTimestamp) }}</div>
-                    <div blui-right-content class="link mat-overline" (click)="search(insights.firstInTxHash)">
+                    <div blui-right-content class="link mat-overline text-secondary" (click)="search(insights.firstInTxHash)">
                         hash
                     </div>
                 </blui-info-list-item>
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Last-Received Date</div>
                     <div blui-subtitle>{{ formatDate(insights.lastInTxUnixTimestamp) }}</div>
-                    <div blui-right-content class="link mat-overline" (click)="search(insights.lastInTxHash)">hash</div>
+                    <div blui-right-content class="link mat-overline text-secondary" (click)="search(insights.lastInTxHash)">hash</div>
                 </blui-info-list-item>
 
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
@@ -164,7 +186,7 @@ import * as Highcharts from 'highcharts';
                     <div
                         blui-right-content
                         *ngIf="!vp.sm"
-                        class="link"
+                        class="link text-secondary"
                         (click)="search(insights.mostCommonSenderAddress)"
                     >
                         {{ shortenAddr(insights.mostCommonSenderAddress) }}
@@ -172,8 +194,8 @@ import * as Highcharts from 'highcharts';
                 </blui-info-list-item>
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Account Max Balance</div>
-                    <div blui-subtitle>{{ formatBan(insights.maxBalanceBan) }} BAN</div>
-                    <div blui-right-content class="link mat-overline" (click)="search(insights.maxBalanceHash)">
+                    <div blui-subtitle>{{ formatBan(insights.maxBalance) }} BAN</div>
+                    <div blui-right-content class="link mat-overline text-secondary" (click)="search(insights.maxBalanceHash)">
                         hash
                     </div>
                 </blui-info-list-item>
@@ -185,16 +207,19 @@ import * as Highcharts from 'highcharts';
 })
 export class InsightsTabComponent implements OnChanges {
     @Input() insights: InsightsDto;
-    @Input() error: boolean;
-    @Input() disabled: boolean;
-    @Input() unopened: boolean;
+    @Input() hasError: boolean;
+    @Input() blockCount: number;
+    @Input() isAccountOpened: boolean;
 
     Highcharts: typeof Highcharts = Highcharts;
     accountHistoryChart: Options;
 
+    maxInsightsLimit = 100_000;
+
     constructor(
-        private readonly _searchService: SearchService,
         public vp: ViewportService,
+        private readonly _ref: ChangeDetectorRef,
+        private readonly _searchService: SearchService,
         private readonly _util: UtilService
     ) {
         this.vp.vpChange.subscribe(() => {
@@ -206,8 +231,104 @@ export class InsightsTabComponent implements OnChanges {
 
     ngOnChanges(): void {
         if (this.insights) {
-            this.accountHistoryChart = this._createAccountHistoryChart(this.insights.data);
+            const chartData = [];
+            for (const key of Object.keys(this.insights.heightBalances)) {
+                chartData.push([key, this.insights.heightBalances[key]]);
+            }
+            this._graphChart(chartData);
         }
+    }
+
+    private _graphChart(chartData: Array<[]>): void {
+        this._ref.detectChanges();
+        Highcharts.setOptions({
+            chart: {
+                style: {
+                    fontFamily: 'Helvetica'
+                }
+            }
+        });
+
+        // @ts-ignore
+        Highcharts.chart('container', {
+            credits: {
+                enabled: false
+            },
+            chart: {
+                zoomType: 'x'
+            },
+            title: {
+                text: undefined
+            },
+         /*   title: {
+                text: 'Account Balance Over Time'
+            },
+            subtitle: {
+                text: document.ontouchstart === undefined ?
+                    'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+            }, */
+            xAxis: {
+                type: 'number'
+            },
+            yAxis: {
+                //type: 'logarithmic',
+                labels: {
+                    enabled: true,
+                    /*
+                    formatter: (x) => {
+                        console.log(x);
+                    }, */
+                },
+                 type: 'number',
+                title: {
+                    text: undefined
+                }
+            },
+            legend: {
+                enabled: true
+            },
+            plotOptions: {
+                area: {
+                    events: {
+                        click: () => {
+                            console.log('click');
+                        }
+                    },
+                    fillColor: {
+                        linearGradient: {
+                            x1: 0,
+                            y1: 0,
+                            x2: 0,
+                            y2: 1
+                        },
+                        stops: [
+                            [0, '#4cbf4b'],
+                            [1, Highcharts.color('#4cbf4b').setOpacity(0).get('rgba')]
+                        ]
+                    },
+                    marker: {
+                        radius: 2,
+                    },
+                    lineColor: 'gray',
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
+                }
+            },
+
+            series: [{
+                turboThreshold: this.maxInsightsLimit,
+              //\  type: 'spline',
+                color: '#249b23',
+                type: 'area',
+                name: 'BAN Balance',
+                data: chartData
+            }]
+        });
     }
 
     search(value: string): void {
@@ -236,12 +357,17 @@ export class InsightsTabComponent implements OnChanges {
         return 'N/A';
     }
 
+    getGraphSubtitle(): string {
+       return document.ontouchstart === undefined ?
+            'Click and drag in the plot area to zoom in.' : 'Pinch the chart to zoom in.'
+    }
+
     numberWithComas(num: number): string {
         return this._util.numberWithCommas(num);
     }
 
     getErrorDescription(): string {
-        if (this.unopened) {
+        if (!this.isAccountOpened) {
             return 'This account needs to receive a block before it can be analyzed.';
         }
         return 'This account has too many transactions to analyze.  Please select an account with less activity.';

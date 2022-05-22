@@ -1,20 +1,15 @@
-
-
-
-
-@mixin adjustSize ($buttonSize, $iconSize) {
+@mixin adjustSize($buttonSize, $iconSize) {
     width: $buttonSize !important;
     height: $buttonSize !important;
     line-height: $buttonSize !important;
 
     .mat-icon {
-        line-height: $buttonSize!important;
+        line-height: $buttonSize !important;
         height: $iconSize !important;
         width: $iconSize !important;
         font-size: $iconSize !important;
         vertical-align: inherit !important;
     }
-
 }
 
 .address-action-button {

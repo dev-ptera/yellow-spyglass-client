@@ -7,7 +7,9 @@ import {
     AccountOverviewDto,
     AliasDto,
     BlockDto,
-    ConfirmedTransactionDto, DelegatorDto, DelegatorsOverviewDto,
+    ConfirmedTransactionDto,
+    DelegatorDto,
+    DelegatorsOverviewDto,
     HostNodeStatsDto,
     KnownAccountDto,
     MonitoredRepDto,
@@ -49,10 +51,9 @@ export class ApiService {
     }
 
     /** Fetches account delegators. */
-    fetchAccountDelegators(address: string, offset: number ): Promise<DelegatorsOverviewDto> {
+    fetchAccountDelegators(address: string, offset: number): Promise<DelegatorsOverviewDto> {
         return this._http
-            .post<DelegatorsOverviewDto>(`${this.spyglassApi}/v1/account/delegators`,
-                { address, size: 50, offset })
+            .post<DelegatorsOverviewDto>(`${this.spyglassApi}/v1/account/delegators`, { address, size: 50, offset })
             .pipe(timeout(SLOW_MS))
             .toPromise();
     }
@@ -60,7 +61,7 @@ export class ApiService {
     /** Fetches 50 confirmed transactions for a given address. */
     fetchConfirmedTransactions(address: string, offset: number, pageSize: number): Promise<ConfirmedTransactionDto[]> {
         return this._http
-            .post<ConfirmedTransactionDto[]>(`${this.spyglassApi}/v1/account/confirmed-transactions`, {
+            .post<ConfirmedTransactionDto[]>(`${this.spyglassApi}/v2/account/confirmed-transactions`, {
                 address,
                 offset,
                 size: pageSize,
@@ -77,8 +78,9 @@ export class ApiService {
             .toPromise();
     }
 
-    getInsights(address: string): Promise<InsightsDto> {
-        return this._http.get<InsightsDto>(`${this.url}/insights/${address}`).pipe(timeout(SLOW_MS)).toPromise();
+    fetchInsights(address: string): Promise<InsightsDto> {
+        return this._http.post<InsightsDto>(`${this.spyglassApi}/v1/account/insights`,
+            { address, includeHeightBalances: true }).pipe(timeout(SLOW_MS)).toPromise();
     }
 
     /** Given a hash, fetches block. */

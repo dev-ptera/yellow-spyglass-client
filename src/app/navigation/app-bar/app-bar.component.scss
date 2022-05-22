@@ -5,6 +5,9 @@
     top: 0;
     width: 100%;
     z-index: 999;
+    &.sm {
+        position: absolute;
+    }
 
     .desktop-search-input {
         margin-right: 32px;
@@ -37,16 +40,6 @@
                 font-family: inherit;
                 font-size: 20px;
             }
-        }
-    }
-
-    .navigation-drawer-content {
-        &.home {
-            height: calc(100vh - 64px);
-            overflow: hidden;
-        }
-        &.home.sm {
-            height: calc(100vh - 56px);
         }
     }
 

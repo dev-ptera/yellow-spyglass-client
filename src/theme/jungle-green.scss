@@ -32,19 +32,19 @@
     .tab-transaction-list {
         .type {
             &.receive {
-                background-color: rgba($primary, .05);
+                background-color: rgba($primary, 0.05);
                 border: solid 1px $primary;
                 color: $primary;
-               // color: map-get($foreground, secondary-text);
+                // color: map-get($foreground, secondary-text);
             }
             &.send {
-                background-color: rgba($warn, .05);
+                background-color: rgba($warn, 0.05);
                 border: solid 1px $warn;
                 color: $warn;
             }
             &.change {
                 $change: map-get(blui.$blui-blue, 500);
-                background-color: rgba($change, .05);
+                background-color: rgba($change, 0.05);
                 border: solid 1px $change;
                 color: $change;
             }
@@ -178,6 +178,9 @@ $jungle-green-theme: map-merge(
 
     .link {
         //  text-decoration-color: rgb($primary, 0.8);
+    }
+    .divider-border {
+        border: solid 1px map-get($theme-foreground, divider);
     }
 
     .app-user-menu .blui-user-menu-avatar {

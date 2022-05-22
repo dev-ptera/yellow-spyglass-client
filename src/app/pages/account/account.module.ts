@@ -19,15 +19,10 @@ import { AccountComponent } from '@app/pages/account/account.component';
 import { TransactionsTabComponent } from '@app/pages/account/tabs/transactions/transactions-tab.component';
 import { DelegatorsTabComponent } from '@app/pages/account/tabs/delegators/delegators-tab.components';
 import { InsightsTabComponent } from '@app/pages/account/tabs/insights/insights-tab.components';
-import {MatTooltipModule} from "@angular/material/tooltip";
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
-    declarations: [
-        AccountComponent,
-        TransactionsTabComponent,
-        DelegatorsTabComponent,
-        InsightsTabComponent,
-    ],
+    declarations: [AccountComponent, TransactionsTabComponent, DelegatorsTabComponent, InsightsTabComponent],
     imports: [
         AppCommonModule,
         BrowserAnimationsModule,
@@ -49,11 +44,6 @@ import {MatTooltipModule} from "@angular/material/tooltip";
         HighchartsChartModule,
         MatTooltipModule,
     ],
-    exports: [
-        AccountComponent,
-        TransactionsTabComponent,
-        DelegatorsTabComponent,
-        InsightsTabComponent,
-    ],
+    exports: [AccountComponent, TransactionsTabComponent, DelegatorsTabComponent, InsightsTabComponent],
 })
 export class AccountModule {}

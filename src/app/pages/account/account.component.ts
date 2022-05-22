@@ -1,16 +1,16 @@
-import {ChangeDetectorRef, Component, OnDestroy, ViewEncapsulation} from '@angular/core';
-import {AccountOverviewDto, ConfirmedTransactionDto, DelegatorDto, ReceivableTransactionDto} from '@app/types/dto';
-import {ViewportService} from '@app/services/viewport/viewport.service';
-import {UtilService} from '@app/services/util/util.service';
-import {ApiService} from '@app/services/api/api.service';
-import {MonkeyCacheService} from '@app/services/monkey-cache/monkey-cache.service';
-import {SearchService} from '@app/services/search/search.service';
-import {PriceService} from '@app/services/price/price.service';
-import {InsightsDto} from '@app/types/dto/InsightsDto';
-import {OnlineRepsService} from '@app/services/online-reps/online-reps.service';
-import {NavigationEnd, Router} from '@angular/router';
-import {Subscription} from 'rxjs';
-import {AliasService} from '@app/services/alias/alias.service';
+import { ChangeDetectorRef, Component, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { AccountOverviewDto, ConfirmedTransactionDto, DelegatorDto, ReceivableTransactionDto } from '@app/types/dto';
+import { ViewportService } from '@app/services/viewport/viewport.service';
+import { UtilService } from '@app/services/util/util.service';
+import { ApiService } from '@app/services/api/api.service';
+import { MonkeyCacheService } from '@app/services/monkey-cache/monkey-cache.service';
+import { SearchService } from '@app/services/search/search.service';
+import { PriceService } from '@app/services/price/price.service';
+import { InsightsDto } from '@app/types/dto/InsightsDto';
+import { OnlineRepsService } from '@app/services/online-reps/online-reps.service';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AliasService } from '@app/services/alias/alias.service';
 
 @Component({
     selector: 'app-account',
@@ -23,19 +23,20 @@ export class AccountComponent implements OnDestroy {
     hasError: boolean;
     address: string;
 
-    pendingBalance: string;
     confirmedBalance: string;
     accountRepresentative: string;
     insights: InsightsDto;
     accountOverview: AccountOverviewDto;
     insightsDisabled: boolean;
-    loadingInsights: boolean;
+    isLoadingInsights: boolean;
     hasInsightsError: boolean;
 
-    delegators: DelegatorDto[] = [];
     weightSum: number;
+    showTabNumber: number;
+    confirmedTxPageIndex: number;
     fundedDelegatorsCount: number;
 
+    delegators: DelegatorDto[];
     receivableTransactions: ReceivableTransactionDto[] = [];
     readonly txPerPage = 50;
 
@@ -45,10 +46,7 @@ export class AccountComponent implements OnDestroy {
     };
 
     paginatorSize = 50;
-    confirmedTxPageIndex = 0;
     routeListener: Subscription;
-
-    showTabNumber = 1;
 
     constructor(
         public vp: ViewportService,
@@ -76,11 +74,29 @@ export class AccountComponent implements OnDestroy {
         }
     }
 
+    private _init(): void {
+        this.address = undefined;
+        this.insights = undefined;
+        this.accountOverview = undefined;
+        this.delegators = [];
+        this.receivableTransactions = [];
+        this.hasError = false;
+        this.isLoading = true;
+        this.hasInsightsError = false;
+        this.isLoadingInsights = false;
+        this.showTabNumber = 1;
+        this.confirmedTxPageIndex = 0;
+        this.fundedDelegatorsCount = 0;
+        this.confirmedTransactions = {
+            all: new Map<number, ConfirmedTransactionDto[]>(),
+            display: [],
+        };
+    }
+
     /** Given a ban address, searches for account. */
     private _searchAccount(address): void {
+        this._init();
         this.address = address;
-        this.isLoading = true;
-        this.hasError = false;
         this._ref.detectChanges();
 
         Promise.all([
@@ -103,37 +119,47 @@ export class AccountComponent implements OnDestroy {
         this.fetchDelegators();
     }
 
-
     /** Called when a user clicks the insights tab for the first time. */
-    fetchInsights(): void {
-        if (!this.insights && !this.insightsDisabled && !this.loadingInsights) {
-            this.loadingInsights = true;
-            this.apiService
-                .getInsights(this.address)
-                .then((data) => {
-                    this.insights = data;
-                    this.loadingInsights = false;
-                    this._ref.detectChanges();
-                })
-                .catch((err) => {
-                    console.error(err);
-                    this.loadingInsights = false;
-                    this.hasInsightsError = true;
-                    this._ref.detectChanges();
-                });
+    fetchInsights(blockCount: number): void {
+        this.insightsDisabled = (blockCount > 100_000);
+        if (this.insights) {
+            return;
         }
+        if (this.isLoadingInsights) {
+            return;
+        }
+        if (this.insightsDisabled) {
+            return;
+        }
+
+        this.isLoadingInsights = true;
+        this.apiService
+            .fetchInsights(this.address)
+            .then((data) => {
+                this.insights = data;
+                this.isLoadingInsights = false;
+                this._ref.detectChanges();
+            })
+            .catch((err) => {
+                console.error(err);
+                this.isLoadingInsights = false;
+                this.hasInsightsError = true;
+                this._ref.detectChanges();
+            });
     }
 
     fetchDelegators(): void {
-        this.apiService.fetchAccountDelegators(this.address, this.delegators.length).then((data) => {
-            this.delegators.push(...data.delegators);
-            this.fundedDelegatorsCount = data.fundedCount;
-            this._ref.detectChanges();
-        }).catch((err) => {
-            console.error(err);
-        })
+        this.apiService
+            .fetchAccountDelegators(this.address, this.delegators.length)
+            .then((data) => {
+                this.delegators.push(...data.delegators);
+                this.fundedDelegatorsCount = data.fundedCount;
+                this._ref.detectChanges();
+            })
+            .catch((err) => {
+                console.error(err);
+            });
     }
-
 
     /**
      * Called whenever a new address has been loaded.
@@ -142,43 +168,18 @@ export class AccountComponent implements OnDestroy {
         data: [AccountOverviewDto, ConfirmedTransactionDto[], ReceivableTransactionDto[]]
     ): void {
         this.accountOverview = data[0];
-        this.weightSum = this.accountOverview.weight;
+        this.confirmedTransactions.all.set(0, data[1]);
+        this.confirmedTransactions.display = data[1];
         this.receivableTransactions = data[2];
-        this.confirmedTxPageIndex = 0;
-        this.insights = undefined;
-        this.loadingInsights = false;
+        this.weightSum = this.accountOverview.weight;
         this.insightsDisabled = this.accountOverview.blockCount > 100_000 || !this.accountOverview.opened;
-        this._prepareAccountOverview(this.accountOverview);
-        this._prepareConfirmed(data[1]);
-    }
-
-    /**
-     * Formats account balance, account pending, and representative.
-     */
-    private _prepareAccountOverview(accountOverview: AccountOverviewDto): void {
-        const approxBalance = accountOverview.balanceRaw !== '0';
-        const approxPending = accountOverview.receivableRaw !== '0';
-        this.confirmedBalance = this._util.convertRawToBan(accountOverview.balanceRaw, { precision: 2, comma: true });
-        if (approxBalance && this.confirmedBalance === '0') {
-            this.confirmedBalance = '~0';
+        this.confirmedBalance = this._util.numberWithCommas(this.accountOverview.balance.toFixed(4));
+        const rep = this.accountOverview.representative;
+        if (rep) {
+            this.accountRepresentative = this._aliasService.has(rep)
+                ? this._aliasService.get(rep)
+                : `${rep.substr(0, 11)}...${rep.substr(rep.length - 6, rep.length)}`;
         }
-        this.pendingBalance = this._util.convertRawToBan(accountOverview.receivableRaw, { precision: 2, comma: true });
-        if (approxPending && this.pendingBalance === '0') {
-            this.pendingBalance = '~0';
-        }
-        const rep = accountOverview.representative;
-        this.accountRepresentative = this._aliasService.has(rep)
-            ? this._aliasService.get(rep)
-            : `${rep.substr(0, 11)}...${rep.substr(rep.length - 6, rep.length)}`;
-    }
-
-    private _prepareConfirmed(confirmedTransactions: ConfirmedTransactionDto[]): void {
-        this.confirmedTransactions = {
-            all: new Map<number, ConfirmedTransactionDto[]>(),
-            display: [],
-        };
-        this.confirmedTransactions.all.set(0, confirmedTransactions);
-        this.confirmedTransactions.display = confirmedTransactions;
     }
 
     /** When a user has more than 50 confirmed transactions, can be called to move to the next page of transactions. */

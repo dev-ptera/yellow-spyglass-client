@@ -19,22 +19,19 @@
     />
 </ng-template>
 
-<ng-template #mobileMonkey>
-
+<ng-template #mobileMonKey>
     <img
-        *ngIf="!vp.sm"
+        *ngIf="vp.sm"
         [src]="apiService.createMonKeyUrl(address)"
         loading="lazy"
-        style="width: 100px; min-width: 100px; margin-right: 16px;"
+        style="width: 100px; height: 100px; min-width: 100px; margin-right: 16px"
     />
-
 </ng-template>
 
 <ng-template #headerContent>
     <div class="account-header" responsive>
-
         <!-- Loading -->
-        <div *ngIf="isLoading" style="display: flex;">
+        <div *ngIf="isLoading" style="display: flex">
             <ng-template [ngTemplateOutlet]="desktopMonKey"></ng-template>
             <div>
                 <div class="app-page-title">Loading</div>
@@ -49,7 +46,6 @@
         <div *ngIf="!isLoading" style="display: flex">
             <ng-template [ngTemplateOutlet]="desktopMonKey"></ng-template>
             <div>
-
                 <!-- First Line -->
                 <div class="app-page-title">
                     <ng-container *ngIf="!isRepresentative()">
@@ -61,16 +57,20 @@
                             {{ accountOverview.principal ? 'Principal Rep' : 'Representative' }}
                         </div>
 
-                        <blui-list-item-tag
-                            *ngIf="!onlineRepService.onlineReps.has(address)"
-                            class="account-rep-offline"
-                            label="Offline"
-                        ></blui-list-item-tag>
-                        <blui-list-item-tag
-                            class="account-rep-online"
+                        <mat-icon
+                            color="primary"
                             *ngIf="onlineRepService.onlineReps.has(address)"
-                            label="Online"
-                        ></blui-list-item-tag>
+                            matTooltipPosition="right"
+                            [matTooltip]="'This representative is online'"
+                            >check_circle</mat-icon
+                        >
+                        <mat-icon
+                            color="warn"
+                            *ngIf="!onlineRepService.onlineReps.has(address)"
+                            matTooltipPosition="right"
+                            [matTooltip]="'This representative is offline'"
+                            >error_outline</mat-icon
+                        >
                     </div>
                 </div>
 
@@ -93,7 +93,7 @@
                     class="text-secondary"
                     style="display: flex; align-items: center; flex-wrap: wrap"
                     [style.fontSize.px]="vp.sm ? 14 : 16"
-                    [style.marginBottom.px]="vp.sm ? 16 : 24"
+                    [style.marginBottom.px]="vp.sm ? 8 : 24"
                 >
                     <div *ngIf="hasAlias(address)" style="display: flex">
                         <ng-container *ngIf="vp.sm"> A.K.A </ng-container>
@@ -110,10 +110,15 @@
                         >
                             Self-Represented
                         </div>
-                        <div *ngIf="accountOverview.representative !== address" style="display: flex; align-items: center">
+                        <div
+                            *ngIf="accountOverview.representative !== address"
+                            style="display: flex; align-items: center"
+                        >
                             Represented by&nbsp;
-                            <span class="link"
-                                  (click)="searchService.emitSearch(accountOverview.representative, $event.ctrlKey)">
+                            <span
+                                class="link"
+                                (click)="searchService.emitSearch(accountOverview.representative, $event.ctrlKey)"
+                            >
                                 {{ accountRepresentative }}
                             </span>
                             <mat-icon
@@ -121,7 +126,8 @@
                                 [matTooltip]="'representative is offline'"
                                 [matTooltipPosition]="'right'"
                                 color="warn"
-                                style="height: 16px; width: 16px; font-size: 16px; margin-left: 8px">
+                                style="height: 16px; width: 16px; font-size: 16px; margin-left: 8px"
+                            >
                                 error_outline
                             </mat-icon>
                         </div>
@@ -130,18 +136,18 @@
 
                 <!-- Price Data -->
                 <div class="account-summary-tags" responsive>
-                    <ng-template *ngIf="vp.sm" [ngTemplateOutlet]="mobileMonkey"></ng-template>
+                    <ng-template [ngTemplateOutlet]="mobileMonKey"></ng-template>
                     <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 16" responsive>
                         <ng-container *ngIf="vp.sm">
                             <div class="account-ban-amount">{{ confirmedBalance }} BAN</div>
                             <div>
                                 <span class="account-btc-amount" [style.marginRight.px]="4">{{
                                     formatBtcPrice(accountOverview.balanceRaw)
-                                    }}</span>
+                                }}</span>
                                 |
                                 <span class="account-usd-amount" [style.marginLeft.px]="4">{{
                                     formatUsdPrice(accountOverview.balanceRaw) | currency
-                                    }}</span>
+                                }}</span>
                             </div>
                         </ng-container>
 
@@ -168,53 +174,65 @@
 <ng-template #bodyContent>
     <div class="account-tabs-container" responsive>
         <div class="tab-buttons">
-            <button mat-flat-button
-                    (click)="showTabNumber = 1"
-                    [class.active]="showTabNumber === 1"
-                    style="border-top-left-radius: 4px; border-right: 0">
+            <button
+                mat-flat-button
+                (click)="showTabNumber = 1"
+                [class.active]="showTabNumber === 1"
+                style="border-top-left-radius: 4px; border-right: 0"
+            >
                 <ng-container *ngIf="vp.sm">
-
+                    <mat-icon>check</mat-icon>
                 </ng-container>
                 <ng-container *ngIf="!vp.sm">
                     Confirmed {{ vp.md ? 'Tx' : 'Transactions' }} ({{ withCommas(accountOverview.blockCount) }})
                 </ng-container>
             </button>
-            <button mat-flat-button
-                    (click)="showTabNumber = 2"
-                    [class.active]="showTabNumber === 2"
-                    style="border-right: 0">
+            <button
+                mat-flat-button
+                (click)="showTabNumber = 2"
+                [class.active]="showTabNumber === 2"
+                style="border-right: 0"
+            >
                 <ng-container *ngIf="vp.sm">
-
+                    <mat-icon>pending</mat-icon>
                 </ng-container>
                 <ng-container *ngIf="!vp.sm">
                     Receivable {{ vp.md ? 'Tx' : 'Transactions' }} ({{ withCommas(receivableTransactions.length) }})
                 </ng-container>
             </button>
-            <button mat-flat-button
-                    (click)="showTabNumber = 3"
-                    [class.active]="showTabNumber === 3"
-                    style="border-right: 0">
+            <button
+                mat-flat-button
+                (click)="showTabNumber = 3"
+                [class.active]="showTabNumber === 3"
+                style="border-right: 0"
+            >
                 <ng-container *ngIf="vp.sm">
-
+                    <mat-icon>how_to_vote</mat-icon>
                 </ng-container>
                 <ng-container *ngIf="!vp.sm">
-                    Delegators ({{withCommas(fundedDelegatorsCount || accountOverview.delegatorsCount)}})
+                    Delegators ({{
+                        withCommas(
+                            fundedDelegatorsCount === undefined
+                                ? accountOverview.delegatorsCount
+                                : fundedDelegatorsCount
+                        )
+                    }})
                 </ng-container>
             </button>
-            <button mat-flat-button
-                    (click)="showTabNumber = 4; fetchInsights();"
-                    [class.active]="showTabNumber === 4"
-                    style="border-top-right-radius: 4px">
+            <button
+                mat-flat-button
+                (click)="showTabNumber = 4; fetchInsights(accountOverview.blockCount)"
+                [class.active]="showTabNumber === 4"
+                style="border-top-right-radius: 4px"
+            >
                 <ng-container *ngIf="vp.sm">
-
+                    <mat-icon>insights</mat-icon>
                 </ng-container>
-                <ng-container *ngIf="!vp.sm">
-                    Insights
-                </ng-container>
+                <ng-container *ngIf="!vp.sm"> Insights </ng-container>
             </button>
         </div>
 
-        <div class="tx-content-container" >
+        <div class="tx-content-container divider-border">
             <account-tx-tab
                 *ngIf="showTabNumber === 1"
                 [paginator]="transactionPaginator"
@@ -233,9 +251,17 @@
                 [weightSum]="weightSum"
                 [loadedDelegatorsCount]="delegators.length"
                 [delegatorsCount]="fundedDelegatorsCount"
-                (loadMoreDelegators)="fetchDelegators()">
-
+                (loadMoreDelegators)="fetchDelegators()"
+            >
             </account-delegators-tab>
+
+            <account-insights-tab
+                *ngIf="showTabNumber === 4"
+                [isAccountOpened]="accountOverview.opened"
+                [blockCount]="accountOverview.blockCount"
+                [hasError]="hasInsightsError"
+                [insights]="insights">
+            </account-insights-tab>
         </div>
     </div>
 </ng-template>
