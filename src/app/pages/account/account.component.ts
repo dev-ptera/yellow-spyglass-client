@@ -121,7 +121,7 @@ export class AccountComponent implements OnDestroy {
 
     /** Called when a user clicks the insights tab for the first time. */
     fetchInsights(blockCount: number): void {
-        this.insightsDisabled = (blockCount > 100_000);
+        this.insightsDisabled = blockCount > 100_000;
         if (this.insights) {
             return;
         }

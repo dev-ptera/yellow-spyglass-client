@@ -4,11 +4,10 @@ export type InsightsDto = {
     firstInTxHash: string;
     firstOutTxUnixTimestamp?: number;
     firstOutTxHash?: string;
-    heightBalances?:
-         Array<{
-    balance: number;
-    height: number;
-}>;
+    heightBalances?: Array<{
+        balance: number;
+        height: number;
+    }>;
     lastInTxUnixTimestamp: number;
     lastInTxHash: string;
     lastOutTxUnixTimestamp?: number;

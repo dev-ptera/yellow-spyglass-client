@@ -4,7 +4,7 @@ import {
     Component,
     Input,
     OnChanges,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from '@angular/core';
 import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
@@ -20,10 +20,7 @@ import * as Highcharts from 'highcharts';
     selector: 'account-insights-tab',
     template: `
         <div class="insights-root" *ngIf="insights" responsive>
-
-            <div class="app-section-title" [style.marginTop.px]="32">
-                Account Balance Over Time
-            </div>
+            <div class="app-section-title" [style.marginTop.px]="32">Account Balance Over Time</div>
             <div class="app-section-subtitle" style="margin-bottom: -16px">
                 {{ getGraphSubtitle() }}
             </div>
@@ -34,9 +31,7 @@ import * as Highcharts from 'highcharts';
 
             <mat-divider style="margin: 48px 0"></mat-divider>
 
-            <div class="app-section-title" style="margin: 32px 0">
-                Account Statistics
-            </div>
+            <div class="app-section-title" style="margin: 32px 0">Account Statistics</div>
 
             <div class="insights-account-stats-container" responsive>
                 <ng-template *ngIf="vp.isMediumOrSmaller()" [ngTemplateOutlet]="received"></ng-template>
@@ -50,9 +45,6 @@ import * as Highcharts from 'highcharts';
                 </mat-card>
             </div>
         </div>
-
-
-
 
         <div class="tab-empty-state" *ngIf="blockCount >= maxInsightsLimit">
             <blui-empty-state
@@ -78,7 +70,6 @@ import * as Highcharts from 'highcharts';
 
         <app-error *ngIf="hasError"></app-error>
 
-
         <ng-template #sent>
             <div class="primary node-monitor-section-title">Sent</div>
             <mat-divider></mat-divider>
@@ -90,7 +81,11 @@ import * as Highcharts from 'highcharts';
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Largest Tx Sent</div>
                     <div blui-subtitle>{{ formatBan(insights.maxAmountSent) }} BAN</div>
-                    <div blui-right-content class="link mat-overline text-secondary" (click)="search(insights.maxAmountSentHash)">
+                    <div
+                        blui-right-content
+                        class="link mat-overline text-secondary"
+                        (click)="search(insights.maxAmountSentHash)"
+                    >
                         hash
                     </div>
                 </blui-info-list-item>
@@ -103,7 +98,11 @@ import * as Highcharts from 'highcharts';
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>First-Sent Date</div>
                     <div blui-subtitle>{{ formatDate(insights.firstOutTxUnixTimestamp) }}</div>
-                    <div blui-right-content class="link mat-overline text-secondary" (click)="search(insights.firstOutTxHash)">
+                    <div
+                        blui-right-content
+                        class="link mat-overline text-secondary"
+                        (click)="search(insights.firstOutTxHash)"
+                    >
                         hash
                     </div>
                 </blui-info-list-item>
@@ -111,7 +110,11 @@ import * as Highcharts from 'highcharts';
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Last-Sent Date</div>
                     <div blui-subtitle>{{ formatDate(insights.lastOutTxUnixTimestamp) }}</div>
-                    <div blui-right-content class="link mat-overline text-secondary" (click)="search(insights.lastOutTxHash)">
+                    <div
+                        blui-right-content
+                        class="link mat-overline text-secondary"
+                        (click)="search(insights.lastOutTxHash)"
+                    >
                         hash
                     </div>
                 </blui-info-list-item>
@@ -151,7 +154,11 @@ import * as Highcharts from 'highcharts';
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Largest Tx Received</div>
                     <div blui-subtitle>{{ formatBan(insights.maxAmountReceived) }} BAN</div>
-                    <div blui-right-content class=" link mat-overline text-secondary" (click)="search(insights.maxAmountReceivedHash)">
+                    <div
+                        blui-right-content
+                        class=" link mat-overline text-secondary"
+                        (click)="search(insights.maxAmountReceivedHash)"
+                    >
                         hash
                     </div>
                 </blui-info-list-item>
@@ -164,14 +171,24 @@ import * as Highcharts from 'highcharts';
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>First-Received Date</div>
                     <div blui-subtitle>{{ formatDate(insights.firstInTxUnixTimestamp) }}</div>
-                    <div blui-right-content class="link mat-overline text-secondary" (click)="search(insights.firstInTxHash)">
+                    <div
+                        blui-right-content
+                        class="link mat-overline text-secondary"
+                        (click)="search(insights.firstInTxHash)"
+                    >
                         hash
                     </div>
                 </blui-info-list-item>
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Last-Received Date</div>
                     <div blui-subtitle>{{ formatDate(insights.lastInTxUnixTimestamp) }}</div>
-                    <div blui-right-content class="link mat-overline text-secondary" (click)="search(insights.lastInTxHash)">hash</div>
+                    <div
+                        blui-right-content
+                        class="link mat-overline text-secondary"
+                        (click)="search(insights.lastInTxHash)"
+                    >
+                        hash
+                    </div>
                 </blui-info-list-item>
 
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
@@ -195,7 +212,11 @@ import * as Highcharts from 'highcharts';
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Account Max Balance</div>
                     <div blui-subtitle>{{ formatBan(insights.maxBalance) }} BAN</div>
-                    <div blui-right-content class="link mat-overline text-secondary" (click)="search(insights.maxBalanceHash)">
+                    <div
+                        blui-right-content
+                        class="link mat-overline text-secondary"
+                        (click)="search(insights.maxBalanceHash)"
+                    >
                         hash
                     </div>
                 </blui-info-list-item>
@@ -244,23 +265,23 @@ export class InsightsTabComponent implements OnChanges {
         Highcharts.setOptions({
             chart: {
                 style: {
-                    fontFamily: 'Helvetica'
-                }
-            }
+                    fontFamily: 'Helvetica',
+                },
+            },
         });
 
         // @ts-ignore
         Highcharts.chart('container', {
             credits: {
-                enabled: false
+                enabled: false,
             },
             chart: {
-                zoomType: 'x'
+                zoomType: 'x',
             },
             title: {
-                text: undefined
+                text: undefined,
             },
-         /*   title: {
+            /*   title: {
                 text: 'Account Balance Over Time'
             },
             subtitle: {
@@ -268,7 +289,7 @@ export class InsightsTabComponent implements OnChanges {
                     'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
             }, */
             xAxis: {
-                type: 'number'
+                type: 'number',
             },
             yAxis: {
                 //type: 'logarithmic',
@@ -279,32 +300,32 @@ export class InsightsTabComponent implements OnChanges {
                         console.log(x);
                     }, */
                 },
-                 type: 'number',
+                type: 'number',
                 title: {
-                    text: undefined
-                }
+                    text: undefined,
+                },
             },
             legend: {
-                enabled: true
+                enabled: true,
             },
             plotOptions: {
                 area: {
                     events: {
                         click: () => {
                             console.log('click');
-                        }
+                        },
                     },
                     fillColor: {
                         linearGradient: {
                             x1: 0,
                             y1: 0,
                             x2: 0,
-                            y2: 1
+                            y2: 1,
                         },
                         stops: [
                             [0, '#4cbf4b'],
-                            [1, Highcharts.color('#4cbf4b').setOpacity(0).get('rgba')]
-                        ]
+                            [1, Highcharts.color('#4cbf4b').setOpacity(0).get('rgba')],
+                        ],
                     },
                     marker: {
                         radius: 2,
@@ -313,21 +334,23 @@ export class InsightsTabComponent implements OnChanges {
                     lineWidth: 1,
                     states: {
                         hover: {
-                            lineWidth: 1
-                        }
+                            lineWidth: 1,
+                        },
                     },
-                    threshold: null
-                }
+                    threshold: null,
+                },
             },
 
-            series: [{
-                turboThreshold: this.maxInsightsLimit,
-              //\  type: 'spline',
-                color: '#249b23',
-                type: 'area',
-                name: 'BAN Balance',
-                data: chartData
-            }]
+            series: [
+                {
+                    turboThreshold: this.maxInsightsLimit,
+                    //\  type: 'spline',
+                    color: '#249b23',
+                    type: 'area',
+                    name: 'BAN Balance',
+                    data: chartData,
+                },
+            ],
         });
     }
 
@@ -358,8 +381,9 @@ export class InsightsTabComponent implements OnChanges {
     }
 
     getGraphSubtitle(): string {
-       return document.ontouchstart === undefined ?
-            'Click and drag in the plot area to zoom in.' : 'Pinch the chart to zoom in.'
+        return document.ontouchstart === undefined
+            ? 'Click and drag in the plot area to zoom in.'
+            : 'Pinch the chart to zoom in.';
     }
 
     numberWithComas(num: number): string {

@@ -87,7 +87,9 @@ type Transaction = {
                     </div>
                 </div>
                 <div blui-subtitle class="hash text-hint mat-body-2">
-                    <span *ngIf="tx.height"><span style="margin-right: 4px">#</span>{{ util.numberWithCommas(tx.height) }}</span>
+                    <span *ngIf="tx.height"
+                        ><span style="margin-right: 4px">#</span>{{ util.numberWithCommas(tx.height) }}</span
+                    >
                     <span style="margin: 0 4px" *ngIf="tx.height">·</span>
                     <span class="link" (click)="searchService.emitSearch(tx.hash, $event.ctrlKey)">{{ tx.hash }}</span>
                 </div>

@@ -79,8 +79,10 @@ export class ApiService {
     }
 
     fetchInsights(address: string): Promise<InsightsDto> {
-        return this._http.post<InsightsDto>(`${this.spyglassApi}/v1/account/insights`,
-            { address, includeHeightBalances: true }).pipe(timeout(SLOW_MS)).toPromise();
+        return this._http
+            .post<InsightsDto>(`${this.spyglassApi}/v1/account/insights`, { address, includeHeightBalances: true })
+            .pipe(timeout(SLOW_MS))
+            .toPromise();
     }
 
     /** Given a hash, fetches block. */
