@@ -1,47 +1,30 @@
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Input,
-    OnChanges,
-    ViewEncapsulation,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
 import { InsightsDto } from '@app/types/dto/InsightsDto';
 import { ViewportService } from '@app/services/viewport/viewport.service';
-import { Options } from 'highcharts';
-// eslint-disable-next-line no-duplicate-imports
-
-// @ts-ignore
 import * as Highcharts from 'highcharts';
-import { last } from 'rxjs/operators';
 
 @Component({
     selector: 'account-insights-tab',
     template: `
         <div class="insights-root" *ngIf="insights" responsive>
-            <div class="app-section-title" [style.marginTop.px]="32">Account Balance Over Time</div>
-            <div class="app-section-subtitle" style="margin-bottom: -16px">
-                {{ getGraphSubtitle() }}
-            </div>
+            <mat-card class="mat-elevation-z0 divider-border">
+                <div class="app-section-title" style="margin-top: 32px">Account Balance Over Time</div>
+                <div class="app-section-subtitle" style="margin-bottom: -16px">
+                    {{ getGraphSubtitle() }}
+                </div>
 
-            <figure responsive class="insights-chart" [style.paddingTop.px]="vp.sm ? 32 : 48">
-                <div id="container"></div>
-            </figure>
-
-            <mat-divider style="margin: 56px 0"></mat-divider>
-
-            <div class="app-section-title" style="margin: 32px 0 8px 0">Account Statistics</div>
+                <figure responsive class="insights-chart" [style.paddingTop.px]="vp.sm ? 32 : 48">
+                    <div id="container"></div>
+                </figure>
+            </mat-card>
 
             <div class="insights-account-stats-container" responsive>
-                <ng-template *ngIf="vp.isMediumOrSmaller()" [ngTemplateOutlet]="received"></ng-template>
-                <mat-card *ngIf="!vp.isMediumOrSmaller()" class="mat-elevation-z0">
+                <mat-card class="mat-elevation-z0 divider-border" [style.marginRight.px]="vp.md || vp.sm ? 0 : 8">
                     <ng-template [ngTemplateOutlet]="received"></ng-template>
                 </mat-card>
-
-                <ng-template *ngIf="vp.isMediumOrSmaller()" [ngTemplateOutlet]="sent"></ng-template>
-                <mat-card *ngIf="!vp.isMediumOrSmaller()" class="mat-elevation-z0">
+                <mat-card class="mat-elevation-z0 divider-border" [style.marginLeft.px]="vp.md || vp.sm ? 0 : 8">
                     <ng-template [ngTemplateOutlet]="sent"></ng-template>
                 </mat-card>
             </div>
@@ -72,7 +55,7 @@ import { last } from 'rxjs/operators';
         <app-error *ngIf="hasError"></app-error>
 
         <ng-template #sent>
-            <div class="primary section-title">Sent</div>
+            <div class="warn section-title">Sent Statistics</div>
             <mat-divider></mat-divider>
             <mat-list [style.paddingTop.px]="0">
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
@@ -145,7 +128,7 @@ import { last } from 'rxjs/operators';
         </ng-template>
 
         <ng-template #received>
-            <div class="primary section-title">Received</div>
+            <div class="primary section-title">Received Statistics</div>
             <mat-divider></mat-divider>
             <mat-list [style.paddingTop.px]="0">
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
@@ -230,15 +213,14 @@ export class InsightsTabComponent implements OnChanges {
     @Input() isAccountOpened: boolean;
 
     Highcharts: typeof Highcharts = Highcharts;
-    accountHistoryChart: Options;
 
     maxInsightsLimit = 100_000;
 
     constructor(
         public vp: ViewportService,
+        private readonly _util: UtilService,
         private readonly _ref: ChangeDetectorRef,
-        private readonly _searchService: SearchService,
-        private readonly _util: UtilService
+        private readonly _searchService: SearchService
     ) {
         this.vp.vpChange.subscribe(() => {
             setTimeout(() => {
@@ -295,13 +277,12 @@ export class InsightsTabComponent implements OnChanges {
 
                 formatter: function () {
                     const toComma = (x: any): string => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
                     let balance = Number(this.y.toFixed(3));
                     if (balance > 100_000) {
                         balance = Math.round(balance);
                     }
                     // @ts-ignore
-                    const lastBlockDiff = Number(this.y) - Number(this.series.processedYData[Number(this.x - 1)]);
+                    const lastBlockDiff = Number(this.y) - Number(this.series.data[Number(this.x - 1)].y);
 
                     return `<div style="font-size: 14px"><div>Block <strong>${
                         this.key

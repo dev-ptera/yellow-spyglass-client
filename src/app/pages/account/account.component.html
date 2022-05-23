@@ -232,7 +232,11 @@
             </button>
         </div>
 
-        <div class="tx-content-container divider-border">
+        <div
+            class="tx-content-container divider-border"
+            [style.backgroundColor]="showTabNumber === 4 ? 'unset' : ''"
+            [class.divider-border]="showTabNumber !== 4"
+        >
             <account-tx-tab
                 *ngIf="showTabNumber === 1"
                 [paginator]="transactionPaginator"
