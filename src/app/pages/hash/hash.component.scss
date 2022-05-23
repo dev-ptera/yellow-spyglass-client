@@ -1,5 +1,7 @@
 .hash-root {
     .hash-searched {
+        display: flex;
+        align-items: center;
         word-break: break-all;
         margin-right: 24px;
     }

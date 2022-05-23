@@ -17,7 +17,7 @@ import { ApiService } from '@app/services/api/api.service';
             </div>
             <div class="app-page-subtitle hash-searched">
                 {{ hash }}
-                <app-copy-button [data]="hash"></app-copy-button>
+                <app-copy-button style="margin-left: 8px" [data]="hash"></app-copy-button>
                 <app-bookmark-button [id]="hash"></app-bookmark-button>
             </div>
         </ng-template>
@@ -43,7 +43,7 @@ import { ApiService } from '@app/services/api/api.service';
                 <div>
                     <span class="app-section-title">Amount</span>
                     <span class="app-section-subtitle"
-                        >{{ block.amount }} RAW | {{ convertRawToBan(block.amount) }}</span
+                        >{{ block.amountRaw }} RAW | {{ block.amount }}</span
                     >
                 </div>
                 <div class="hash-description">Amount of BANANO sent in this transaction</div>

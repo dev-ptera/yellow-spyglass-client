@@ -18,10 +18,12 @@
     }
 }
 .insights-chart {
-    display: flex;
-    justify-content: center;
-    box-sizing: border-box;
-    margin-top: 32px;
+    margin-right: 16px;
+    margin-left: 16px;
+    &.sm {
+        margin-left: 0;
+        margin-right: 0;
+    }
 }
 
 .node-monitor-section-title {

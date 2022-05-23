@@ -6,7 +6,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
     selector: 'delete-bookmark-dialog',
     template: `
         <div [style.maxWidth.px]="vp.sm ? 250 : 350">
-            <h2 mat-dialog-title>Delete bookmark?</h2>
+            <h2 mat-dialog-title>Remove bookmark?</h2>
             <mat-dialog-content class="mat-typography">
                 <div class="mat-subheading-2" style="word-break: break-all; margin-bottom: 24px">{{ data.alias }}</div>
                 <div style="display: flex; justify-content: flex-end;">

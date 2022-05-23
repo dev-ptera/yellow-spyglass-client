@@ -25,7 +25,7 @@ import * as Highcharts from 'highcharts';
                 {{ getGraphSubtitle() }}
             </div>
 
-            <figure [style.paddingTop.px]="vp.sm ? 32 : 48" style="margin-bottom: 32px">
+            <figure responsive class="insights-chart" [style.paddingTop.px]="vp.sm ? 32 : 48">
                 <div id="container"></div>
             </figure>
 
@@ -83,7 +83,7 @@ import * as Highcharts from 'highcharts';
                     <div blui-subtitle>{{ formatBan(insights.maxAmountSent) }} BAN</div>
                     <div
                         blui-right-content
-                        class="link mat-overline text-secondary"
+                        class="link mat-overline text-hint"
                         (click)="search(insights.maxAmountSentHash)"
                     >
                         hash
@@ -100,7 +100,7 @@ import * as Highcharts from 'highcharts';
                     <div blui-subtitle>{{ formatDate(insights.firstOutTxUnixTimestamp) }}</div>
                     <div
                         blui-right-content
-                        class="link mat-overline text-secondary"
+                        class="link mat-overline text-hint"
                         (click)="search(insights.firstOutTxHash)"
                     >
                         hash
@@ -112,7 +112,7 @@ import * as Highcharts from 'highcharts';
                     <div blui-subtitle>{{ formatDate(insights.lastOutTxUnixTimestamp) }}</div>
                     <div
                         blui-right-content
-                        class="link mat-overline text-secondary"
+                        class="link mat-overline text-hint"
                         (click)="search(insights.lastOutTxHash)"
                     >
                         hash
@@ -134,7 +134,7 @@ import * as Highcharts from 'highcharts';
                     <div
                         blui-right-content
                         *ngIf="!vp.sm"
-                        class="link text-secondary"
+                        class="link text-hint"
                         (click)="search(insights.mostCommonRecipientAddress)"
                     >
                         {{ shortenAddr(insights.mostCommonRecipientAddress) }}
@@ -156,7 +156,7 @@ import * as Highcharts from 'highcharts';
                     <div blui-subtitle>{{ formatBan(insights.maxAmountReceived) }} BAN</div>
                     <div
                         blui-right-content
-                        class=" link mat-overline text-secondary"
+                        class=" link mat-overline text-hint"
                         (click)="search(insights.maxAmountReceivedHash)"
                     >
                         hash
@@ -173,7 +173,7 @@ import * as Highcharts from 'highcharts';
                     <div blui-subtitle>{{ formatDate(insights.firstInTxUnixTimestamp) }}</div>
                     <div
                         blui-right-content
-                        class="link mat-overline text-secondary"
+                        class="link mat-overline text-hint"
                         (click)="search(insights.firstInTxHash)"
                     >
                         hash
@@ -184,7 +184,7 @@ import * as Highcharts from 'highcharts';
                     <div blui-subtitle>{{ formatDate(insights.lastInTxUnixTimestamp) }}</div>
                     <div
                         blui-right-content
-                        class="link mat-overline text-secondary"
+                        class="link mat-overline text-hint"
                         (click)="search(insights.lastInTxHash)"
                     >
                         hash
@@ -203,7 +203,7 @@ import * as Highcharts from 'highcharts';
                     <div
                         blui-right-content
                         *ngIf="!vp.sm"
-                        class="link text-secondary"
+                        class="link text-hint"
                         (click)="search(insights.mostCommonSenderAddress)"
                     >
                         {{ shortenAddr(insights.mostCommonSenderAddress) }}
@@ -214,7 +214,7 @@ import * as Highcharts from 'highcharts';
                     <div blui-subtitle>{{ formatBan(insights.maxBalance) }} BAN</div>
                     <div
                         blui-right-content
-                        class="link mat-overline text-secondary"
+                        class="link mat-overline text-hint"
                         (click)="search(insights.maxBalanceHash)"
                     >
                         hash

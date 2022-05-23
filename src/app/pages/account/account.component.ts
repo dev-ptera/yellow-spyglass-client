@@ -105,7 +105,10 @@ export class AccountComponent implements OnDestroy {
             this.apiService.fetchReceivableTransactions(address),
         ])
             .then((data) => {
-                this._prepareNewAccount(data);
+                // Only prepare new account if the loaded data matches the expected address for the page.
+                if (data[0].address === this.address) {
+                    this._prepareNewAccount(data);
+                }
             })
             .catch((err) => {
                 console.error(err);
