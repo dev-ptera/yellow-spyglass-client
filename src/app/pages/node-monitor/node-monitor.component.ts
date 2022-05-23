@@ -161,10 +161,6 @@ import { ApiService } from '@app/services/api/api.service';
                 </ng-container>
             </div>
         </div>
-
-        <!--
-        <app-wave [darkThemeWaveNumber]="14"></app-wave>
-        -->
     `,
     styleUrls: ['./node-monitor.component.scss'],
     encapsulation: ViewEncapsulation.None,
