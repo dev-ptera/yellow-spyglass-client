@@ -1,12 +1,4 @@
-.account-delegator-address-cell {
-    word-break: break-all;
-    cursor: pointer;
-    &:hover {
-        text-decoration: underline;
-    }
-}
-
-.account-delegator-weight {
+ .account-delegator-weight {
     height: 64px;
     display: flex;
     width: 100%;

@@ -48,13 +48,6 @@ type Transaction = {
                 </div>
                 <div blui-title>
                     <div class="tag-row">
-                        <!-- Default type to receive. -->
-                        <!--
-                        <blui-list-item-tag
-                            [label]="tx.type || 'receive'"
-                            [class]="'type ' + tx.type || 'receive'"></blui-list-item-tag>
-                            -->
-
                         <span *ngIf="tx.type !== 'change'" class="amount">
                             {{ tx.type === 'receive' || isPending ? '+' : '-' }}
                             {{ util.numberWithCommas(tx.amount) }}
@@ -100,7 +93,7 @@ type Transaction = {
                     <div class="timestamps">
                         <span class="mat-body-2">{{ dateMap.get(tx.hash).date }}</span>
                         <span class="mat-body-2 text-secondary" [style.fontSize.px]="vp.sm ? 10 : 14">
-                            {{ dateMap.get(tx.hash).diffDays }} days ago
+                            {{ getRelativeTime(dateMap.get(tx.hash).diffDays)}}
                         </span>
                     </div>
                 </div>
@@ -146,7 +139,7 @@ export class TransactionsTabComponent {
         this.transactions.map((tx) => {
             this.dateMap.set(tx.hash, {
                 date: this._formatDateString(tx.timestamp),
-                diffDays: Math.round(Math.abs((currentDate - tx.timestamp) / oneDay)),
+                diffDays: Math.round(((currentDate - tx.timestamp) / oneDay) * 1000) / 1000 ,
             });
         });
     }
@@ -158,6 +151,7 @@ export class TransactionsTabComponent {
     getEmptyStateTitle(): string {
         return `No ${this.isPending ? 'Pending' : 'Receivable'} Transactions`;
     }
+
     getEmptyStateDescription(): string {
         if (this.isPending) {
             return 'This account has already received all incoming payments.';
@@ -170,6 +164,35 @@ export class TransactionsTabComponent {
             return 'receive';
         }
         return tx.type;
+    }
+
+    getRelativeTime(days: number): string {
+        if (days > 365) {
+            const years = Math.round(days / 365);
+            return `${years} year${years > 1 ? 's' : ''} ago`;
+        }
+        if (days > 30) {
+            const months = Math.round(days / 30);
+            return `${months} month${months > 1 ? 's' : ''} ago`;
+        }
+        if (days > 7) {
+            const weeks = Math.round(days / 7);
+            return `${weeks} week${weeks > 1 ? 's' : ''} ago`;
+        }
+        if (days >= 1) {
+            const rounded = Math.round(days);
+            return `${rounded} day${rounded > 1 ? 's' : ''} ago`;
+        }
+        if (days < 1) {
+            const hours = days * 24;
+            if (hours > 1) {
+                const roundedHours = Math.round(hours);
+                return `${roundedHours} hour${roundedHours > 1 ? 's' : ''} ago`;
+            } else {
+                const roundedMinutes = Math.round(hours * 60);
+                return `${roundedMinutes} minute${roundedMinutes > 1 ? 's' : ''} ago`;
+            }
+        }
     }
 
     private _formatDateString(timestamp: number): string {

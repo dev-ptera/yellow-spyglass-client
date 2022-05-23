@@ -123,7 +123,7 @@
                             </span>
                             <mat-icon
                                 *ngIf="!onlineRepService.onlineReps.has(accountOverview.representative)"
-                                [matTooltip]="'representative is offline'"
+                                [matTooltip]="'Account\'s representative is offline'"
                                 [matTooltipPosition]="'right'"
                                 color="warn"
                                 style="height: 16px; width: 16px; font-size: 16px; margin-left: 8px"
@@ -251,6 +251,7 @@
 
             <account-delegators-tab
                 *ngIf="showTabNumber === 3"
+                [address]="accountOverview.address"
                 [delegators]="delegators"
                 [weightSum]="weightSum"
                 [loadedDelegatorsCount]="delegators.length"

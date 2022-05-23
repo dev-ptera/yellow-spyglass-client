@@ -33,11 +33,13 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
                     mat-cell
                     [style.paddingTop.px]="8"
                     [style.paddingBottom.px]="8"
-                    class="account-delegator-address-cell"
+                    style="word-break: break-all"
+                    [class.link]="element.address !== address"
                     *matCellDef="let element"
                     (click)="searchService.emitSearch(element.address, $event.ctrlKey)"
                 >
                     {{ element.address }}
+                    <span *ngIf="element.address === address" class="text-secondary mat-body-2" style="margin-left: 8px;">(This Account)</span>
                 </td>
             </ng-container>
             <ng-container matColumnDef="weight">
@@ -81,6 +83,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
     encapsulation: ViewEncapsulation.None,
 })
 export class DelegatorsTabComponent implements OnChanges {
+    @Input() address: string;
     @Input() delegatorsCount: number;
     @Input() loadedDelegatorsCount: number;
     @Input() delegators: DelegatorDto[];

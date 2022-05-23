@@ -30,7 +30,8 @@ import * as Highcharts from 'highcharts';
             </div>
         </div>
 
-        <div class="tab-empty-state" *ngIf="blockCount >= maxInsightsLimit">
+        <mat-card class="tab-empty-state mat-elevation-z0 divider-border"
+                  *ngIf="blockCount >= maxInsightsLimit">
             <blui-empty-state
                 responsive
                 class="account-empty-state"
@@ -39,9 +40,10 @@ import * as Highcharts from 'highcharts';
             >
                 <mat-icon blui-empty-icon>disc_full</mat-icon>
             </blui-empty-state>
-        </div>
+        </mat-card>
 
-        <div class="tab-empty-state" *ngIf="blockCount < maxInsightsLimit && !insights && !hasError">
+        <mat-card class="tab-empty-state mat-elevation-z0 divider-border"
+                  *ngIf="blockCount < maxInsightsLimit && !insights && !hasError">
             <blui-empty-state
                 responsive
                 class="account-empty-state"
@@ -50,9 +52,11 @@ import * as Highcharts from 'highcharts';
             >
                 <mat-icon blui-empty-icon>pending</mat-icon>
             </blui-empty-state>
-        </div>
+        </mat-card>
 
-        <app-error *ngIf="hasError"></app-error>
+        <mat-card *ngIf="hasError" class="tab-empty-state mat-elevation-z0 divider-border">
+            <app-error></app-error>
+        </mat-card>
 
         <ng-template #sent>
             <div class="warn section-title">Sent Statistics</div>
@@ -112,7 +116,7 @@ import * as Highcharts from 'highcharts';
                         </div>
                         <div *ngIf="!insights.mostCommonRecipientAddress">This account has never sent any BAN.</div>
                     </div>
-                    <div blui-info *ngIf="vp.sm" class="link " (click)="search(insights.mostCommonRecipientAddress)">
+                    <div blui-info *ngIf="vp.sm" class="link text-secondary" (click)="search(insights.mostCommonRecipientAddress)">
                         {{ shortenAddr(insights.mostCommonRecipientAddress) }}
                     </div>
                     <div
@@ -177,7 +181,7 @@ import * as Highcharts from 'highcharts';
                         Received BAN
                         <strong style="margin: 0 4px">{{ insights.mostCommonSenderTxCount }}</strong> times from sender.
                     </div>
-                    <div blui-info *ngIf="vp.sm" class="link" (click)="search(insights.mostCommonSenderAddress)">
+                    <div blui-info *ngIf="vp.sm" class="link text-secondary" (click)="search(insights.mostCommonSenderAddress)">
                         {{ shortenAddr(insights.mostCommonSenderAddress) }}
                     </div>
                     <div
