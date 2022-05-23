@@ -15,6 +15,7 @@ import { Options } from 'highcharts';
 
 // @ts-ignore
 import * as Highcharts from 'highcharts';
+import { last } from 'rxjs/operators';
 
 @Component({
     selector: 'account-insights-tab',
@@ -29,9 +30,9 @@ import * as Highcharts from 'highcharts';
                 <div id="container"></div>
             </figure>
 
-            <mat-divider style="margin: 48px 0"></mat-divider>
+            <mat-divider style="margin: 56px 0"></mat-divider>
 
-            <div class="app-section-title" style="margin: 32px 0">Account Statistics</div>
+            <div class="app-section-title" style="margin: 32px 0 8px 0">Account Statistics</div>
 
             <div class="insights-account-stats-container" responsive>
                 <ng-template *ngIf="vp.isMediumOrSmaller()" [ngTemplateOutlet]="received"></ng-template>
@@ -71,16 +72,16 @@ import * as Highcharts from 'highcharts';
         <app-error *ngIf="hasError"></app-error>
 
         <ng-template #sent>
-            <div class="primary node-monitor-section-title">Sent</div>
+            <div class="primary section-title">Sent</div>
             <mat-divider></mat-divider>
             <mat-list [style.paddingTop.px]="0">
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Total BAN Sent</div>
-                    <div blui-subtitle>{{ formatBan(insights.totalAmountSent) }} BAN</div>
+                    <div blui-subtitle class="text-secondary">{{ formatBan(insights.totalAmountSent) }} BAN</div>
                 </blui-info-list-item>
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Largest Tx Sent</div>
-                    <div blui-subtitle>{{ formatBan(insights.maxAmountSent) }} BAN</div>
+                    <div blui-subtitle class="text-secondary">{{ formatBan(insights.maxAmountSent) }} BAN</div>
                     <div
                         blui-right-content
                         class="link mat-overline text-hint"
@@ -92,12 +93,12 @@ import * as Highcharts from 'highcharts';
 
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title># Tx Sent</div>
-                    <div blui-subtitle>{{ numberWithComas(insights.totalTxSent) }}</div>
+                    <div blui-subtitle class="text-secondary">{{ numberWithComas(insights.totalTxSent) }}</div>
                 </blui-info-list-item>
 
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>First-Sent Date</div>
-                    <div blui-subtitle>{{ formatDate(insights.firstOutTxUnixTimestamp) }}</div>
+                    <div blui-subtitle class="text-secondary">{{ formatDate(insights.firstOutTxUnixTimestamp) }}</div>
                     <div
                         blui-right-content
                         class="link mat-overline text-hint"
@@ -109,7 +110,7 @@ import * as Highcharts from 'highcharts';
 
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Last-Sent Date</div>
-                    <div blui-subtitle>{{ formatDate(insights.lastOutTxUnixTimestamp) }}</div>
+                    <div blui-subtitle class="text-secondary">{{ formatDate(insights.lastOutTxUnixTimestamp) }}</div>
                     <div
                         blui-right-content
                         class="link mat-overline text-hint"
@@ -120,7 +121,7 @@ import * as Highcharts from 'highcharts';
                 </blui-info-list-item>
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Most Common Recipient</div>
-                    <div blui-subtitle>
+                    <div blui-subtitle class="text-secondary">
                         <div *ngIf="insights.mostCommonRecipientAddress">
                             Sent BAN
                             <strong style="margin: 0 4px"> {{ insights.mostCommonRecipientTxCount }} </strong> times to
@@ -144,16 +145,16 @@ import * as Highcharts from 'highcharts';
         </ng-template>
 
         <ng-template #received>
-            <div class="primary node-monitor-section-title">Received</div>
+            <div class="primary section-title">Received</div>
             <mat-divider></mat-divider>
             <mat-list [style.paddingTop.px]="0">
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Total BAN Received</div>
-                    <div blui-subtitle>{{ formatBan(insights.totalAmountReceived) }} BAN</div>
+                    <div blui-subtitle class="text-secondary">{{ formatBan(insights.totalAmountReceived) }} BAN</div>
                 </blui-info-list-item>
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Largest Tx Received</div>
-                    <div blui-subtitle>{{ formatBan(insights.maxAmountReceived) }} BAN</div>
+                    <div blui-subtitle class="text-secondary">{{ formatBan(insights.maxAmountReceived) }} BAN</div>
                     <div
                         blui-right-content
                         class=" link mat-overline text-hint"
@@ -165,12 +166,12 @@ import * as Highcharts from 'highcharts';
 
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title># Tx Received</div>
-                    <div blui-subtitle>{{ numberWithComas(insights.totalTxReceived) }}</div>
+                    <div blui-subtitle class="text-secondary">{{ numberWithComas(insights.totalTxReceived) }}</div>
                 </blui-info-list-item>
 
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>First-Received Date</div>
-                    <div blui-subtitle>{{ formatDate(insights.firstInTxUnixTimestamp) }}</div>
+                    <div blui-subtitle class="text-secondary">{{ formatDate(insights.firstInTxUnixTimestamp) }}</div>
                     <div
                         blui-right-content
                         class="link mat-overline text-hint"
@@ -181,19 +182,15 @@ import * as Highcharts from 'highcharts';
                 </blui-info-list-item>
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Last-Received Date</div>
-                    <div blui-subtitle>{{ formatDate(insights.lastInTxUnixTimestamp) }}</div>
-                    <div
-                        blui-right-content
-                        class="link mat-overline text-hint"
-                        (click)="search(insights.lastInTxHash)"
-                    >
+                    <div blui-subtitle class="text-secondary">{{ formatDate(insights.lastInTxUnixTimestamp) }}</div>
+                    <div blui-right-content class="link mat-overline text-hint" (click)="search(insights.lastInTxHash)">
                         hash
                     </div>
                 </blui-info-list-item>
 
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Most Common Sender</div>
-                    <div blui-subtitle>
+                    <div blui-subtitle class="text-secondary">
                         Received BAN
                         <strong style="margin: 0 4px">{{ insights.mostCommonSenderTxCount }}</strong> times from sender.
                     </div>
@@ -211,7 +208,7 @@ import * as Highcharts from 'highcharts';
                 </blui-info-list-item>
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Account Max Balance</div>
-                    <div blui-subtitle>{{ formatBan(insights.maxBalance) }} BAN</div>
+                    <div blui-subtitle class="text-secondary">{{ formatBan(insights.maxBalance) }} BAN</div>
                     <div
                         blui-right-content
                         class="link mat-overline text-hint"
@@ -291,6 +288,32 @@ export class InsightsTabComponent implements OnChanges {
             xAxis: {
                 type: 'number',
             },
+            tooltip: {
+                lang: {
+                    thousandsSep: ',',
+                },
+
+                formatter: function () {
+                    const toComma = (x: any): string => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+                    let balance = Number(this.y.toFixed(3));
+                    if (balance > 100_000) {
+                        balance = Math.round(balance);
+                    }
+                    // @ts-ignore
+                    const lastBlockDiff = Number(this.y) - Number(this.series.processedYData[Number(this.x - 1)]);
+
+                    return `<div style="font-size: 14px"><div>Block <strong>${
+                        this.key
+                    }</strong></div><br /><div>Balance <strong>${toComma(
+                        balance
+                    )}</strong></div><br /><div style="display: ${
+                        this.x === 0 ? 'none' : 'block'
+                    }"><div style="margin-right: 4px">${lastBlockDiff > 0 ? 'Receive ' : 'Send '}</div><span>${
+                        lastBlockDiff > 0 ? '+' : ''
+                    }</span><strong>${toComma(Number(lastBlockDiff.toFixed(3)))}</strong></div></div>`;
+                },
+            },
             yAxis: {
                 //type: 'logarithmic',
                 labels: {
@@ -313,6 +336,7 @@ export class InsightsTabComponent implements OnChanges {
                     events: {
                         click: () => {
                             console.log('click');
+                            this._util.numberWithCommas('400');
                         },
                     },
                     fillColor: {
@@ -395,65 +419,5 @@ export class InsightsTabComponent implements OnChanges {
             return 'This account needs to receive a block before it can be analyzed.';
         }
         return 'This account has too many transactions to analyze.  Please select an account with less activity.';
-    }
-
-    private _createAccountHistoryChart(dataPoints: Array<{ balance: number; height: number }>): Options {
-        const chartData = [];
-        for (const point of dataPoints) {
-            chartData.push(point.balance);
-        }
-
-        return {
-            chart: {
-                backgroundColor: 'rgba(0,0,0,0)',
-            },
-            tooltip: {
-                enabled: true,
-                valuePrefix: 'sup',
-            },
-            credits: {
-                enabled: false,
-            },
-            title: {
-                text: '',
-            },
-            xAxis: {
-                visible: false,
-                /*  tickmarkPlacement: 'on',
-                tickAmount: dataPoints.length,
-                min: 1,
-                max: dataPoints[dataPoints.length-1].height,
-                startOnTick: true,
-
-               */
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: '',
-                },
-                labels: {
-                    enabled: true,
-                },
-            },
-            series: [
-                {
-                    name: 'Balance (BAN)',
-                    type: 'spline',
-                    color: '#FBDD11',
-                    data: chartData,
-                    pointPlacement: 'on',
-                    dataLabels: {
-                        enabled: false,
-                        style: {
-                            fontSize: '12px',
-                            fontWeight: '400',
-                            fontFamily: 'Open Sans',
-                            textOutline: 'none',
-                        },
-                    },
-                },
-            ],
-        };
     }
 }

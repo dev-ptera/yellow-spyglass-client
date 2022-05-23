@@ -42,9 +42,7 @@ import { ApiService } from '@app/services/api/api.service';
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Amount</span>
-                    <span class="app-section-subtitle"
-                        >{{ block.amountRaw }} RAW | {{ block.amount }}</span
-                    >
+                    <span class="app-section-subtitle">{{ block.amountRaw }} RAW | {{ block.amount }}</span>
                 </div>
                 <div class="hash-description">Amount of BANANO sent in this transaction</div>
             </div>

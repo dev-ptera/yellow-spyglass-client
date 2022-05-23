@@ -26,12 +26,12 @@
     }
 }
 
-.node-monitor-section-title {
+.section-title {
     padding-left: 16px;
-    font-size: 16px;
+    font-size: 20px;
     height: 48px;
     line-height: 48px;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .insights-account-stats-container {
@@ -64,6 +64,13 @@
         }
     }
     .blui-info-list-item-content .blui-info-list-item-title-wrapper {
+        font-size: 0.875rem !important;
         font-weight: 600 !important;
+    }
+    .blui-info-list-item-content .blui-info-list-item-subtitle-wrapper {
+        font-size: 1.125rem !important;
+    }
+    .mat-list-item-content {
+        height: 6rem !important;
     }
 }

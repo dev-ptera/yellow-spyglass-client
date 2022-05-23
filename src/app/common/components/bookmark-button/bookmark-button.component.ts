@@ -7,12 +7,24 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     selector: 'app-bookmark-button',
     styleUrls: ['../copy-button/address-button.scss'],
     template: `
-        <button *ngIf="!isBookmarked" mat-icon-button class="address-action-button" (click)="toggleBookmark()" responsive>
+        <button
+            *ngIf="!isBookmarked"
+            mat-icon-button
+            class="address-action-button"
+            (click)="toggleBookmark()"
+            responsive
+        >
             <mat-icon class="bookmarked-button">favorite_border</mat-icon>
         </button>
 
-
-        <button *ngIf="isBookmarked" mat-icon-button class="address-action-button" (click)="toggleBookmark()" responsive color="warn">
+        <button
+            *ngIf="isBookmarked"
+            mat-icon-button
+            class="address-action-button"
+            (click)="toggleBookmark()"
+            responsive
+            color="warn"
+        >
             <mat-icon class="bookmarked-button">favorite</mat-icon>
         </button>
     `,
