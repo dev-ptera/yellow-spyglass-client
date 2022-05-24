@@ -9,7 +9,7 @@
 <ng-template #bodyContent>
     <div class="app-section-title">BAN Distribution Chart</div>
     <div class="app-section-subtitle">The chart below shows the distribution of banano among all opened accounts.</div>
-    <mat-card class="wallets-chart mat-elevation-z2" responsive>
+    <mat-card class="wallets-chart mat-elevation-z2 divider-border flat-edge" responsive>
         <highcharts-chart
             [update]="true"
             [Highcharts]="Highcharts"
@@ -22,8 +22,10 @@
     <div class="app-section-title">All Accounts</div>
     <div class="app-section-subtitle" [style.marginBottom.px]="12">
         All banano accounts, sorted by balance. Any account with an offline representative is marked with a warning
-        flag. It is encouraged that these accounts change their representative if their current rep is constantly
-        offline.
+        flag.
+        <ng-container *ngIf="!vp.sm">
+            It is encouraged that these accounts change their representative if their current rep is constantly offline.
+        </ng-container>
     </div>
     <ng-template #paginator>
         <app-paginator
@@ -42,7 +44,7 @@
         *ngIf="accountBalances.length > 0"
         [style.width.%]="100"
         [dataSource]="accountBalances"
-        class="wallets-rich-list-table mat-elevation-z2"
+        class="wallets-rich-list-table mat-elevation-z2 divider-border flat-edge"
         responsive
     >
         <ng-container matColumnDef="position">
@@ -60,7 +62,7 @@
                     [matBadgeSize]="'small'"
                     [matBadge]="showWarningBadge(element.representative) ? '!' : undefined"
                 >
-                    #{{ formatIndex(i + 1 + currentPage * pageSize) }}
+                    {{ formatIndex(i + 1 + currentPage * pageSize) }}
                 </span>
             </td>
         </ng-container>
@@ -123,7 +125,3 @@
         </ng-container>
     </div>
 </div>
-
-<!--
-<app-wave [darkThemeWaveNumber]="5"></app-wave>
--->

@@ -106,8 +106,7 @@ export class WalletsComponent implements OnInit {
             const firstBits = address.substring(0, 12);
             const midBits = address.substring(12, 58);
             const lastBits = address.substring(58, 64);
-            // ban_3batmanuenphd7osrez9c45b3uqw9d9u813uqw9d9u81ne8xa6m43e1py56y9p48ap
-            // ban_3batmanuenphd7osrez9c45b3uqw9d9u81ne8xa6m43e1py56y9p48ap69zg
+            8;
             return `<strong class="">${firstBits}</strong><span class="secondary">${midBits}</span><strong class="">${lastBits}</strong>`;
         }
     }

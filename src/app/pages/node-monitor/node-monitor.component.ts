@@ -21,7 +21,7 @@ import { ApiService } from '@app/services/api/api.service';
 
         <ng-template #bodyContent>
             <div class="node-section-wrapper" responsive>
-                <mat-card>
+                <mat-card class="divider-border">
                     <div class="primary node-monitor-section-title">Node</div>
                     <mat-divider></mat-divider>
                     <mat-list [style.paddingTop.px]="0">
@@ -52,7 +52,7 @@ import { ApiService } from '@app/services/api/api.service';
                         </blui-info-list-item>
                     </mat-list>
                 </mat-card>
-                <mat-card>
+                <mat-card class="divider-border">
                     <div class="primary node-monitor-section-title">Block Count</div>
                     <mat-divider></mat-divider>
                     <mat-list [style.paddingTop.px]="0">
@@ -85,7 +85,7 @@ import { ApiService } from '@app/services/api/api.service';
                         </blui-info-list-item>
                     </mat-list>
                 </mat-card>
-                <mat-card>
+                <mat-card class="divider-border">
                     <div class="primary node-monitor-section-title">System Resources</div>
                     <mat-divider></mat-divider>
                     <mat-list [style.paddingTop.px]="0">
@@ -120,7 +120,7 @@ import { ApiService } from '@app/services/api/api.service';
                         </blui-info-list-item>
                     </mat-list>
                 </mat-card>
-                <mat-card>
+                <mat-card class="divider-border">
                     <div class="primary node-monitor-section-title">Connectivity</div>
                     <mat-divider></mat-divider>
                     <mat-list [style.paddingTop.px]="0">

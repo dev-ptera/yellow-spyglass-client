@@ -11,10 +11,12 @@ import { Representative } from '@app/types/modal';
         <mat-card
             style="padding: 12px 12px; margin-bottom: 8px"
             *ngFor="let rep of shownReps; let i = index; trackBy: trackByFn"
-            class="representatives-all-reps-card mat-elevation-z0"
+            class="representatives-all-reps-card mat-elevation-z0 divider-border"
         >
             <div style="align-items: center; display: flex; margin-bottom: 8px">
-                <span [style.fontSize.px]="16" style="margin-right: 16px; font-weight: 600"> #{{ i + 1 }}</span>
+                <span [style.fontSize.px]="16" class="text-secondary" style="margin-right: 16px; font-weight: 600">
+                    #{{ i + 1 }}</span
+                >
                 <blui-list-item-tag *ngIf="rep.principal" label="Principal" class="principal-tag"></blui-list-item-tag>
                 <blui-spacer></blui-spacer>
                 <span
@@ -44,7 +46,7 @@ import { Representative } from '@app/types/modal';
                 {{ rep.address }}
             </div>
             <mat-divider></mat-divider>
-            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; padding-top: 12px">
+            <div style="display: flex; justify-content: space-between; font-size: 0.875rem; padding-top: 12px">
                 <div>
                     <div *ngIf="rep.score">
                         Score:&nbsp;
@@ -54,7 +56,7 @@ import { Representative } from '@app/types/modal';
                     <div *ngIf="rep.uptimePercentages">
                         Uptime:&nbsp;
                         {{ rep.uptimePercentages.month }}% /
-                        <span style="font-size: 10px" class="text-secondary">
+                        <span style="font-size: 11px" class="text-secondary">
                             {{ rep.uptimePercentages.week }}% / {{ rep.uptimePercentages.day }}% (m/w/d)
                         </span>
                     </div>

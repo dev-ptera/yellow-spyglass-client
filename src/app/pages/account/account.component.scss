@@ -65,6 +65,12 @@
 
 .tab-buttons {
     height: 56px;
+    &.sm {
+        height: 80px;
+    }
+    .count-subtitle {
+        margin-top: -12px;
+    }
     button {
         z-index: 2;
         box-sizing: border-box;

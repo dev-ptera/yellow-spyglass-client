@@ -24,7 +24,7 @@
         *ngIf="vp.sm"
         [src]="apiService.createMonKeyUrl(address)"
         loading="lazy"
-        style="width: 100px; height: 100px; min-width: 100px; margin-right: 16px"
+        style="width: 120px; height: 120px; min-width: 120px; margin-right: 16px"
     />
 </ng-template>
 
@@ -92,7 +92,7 @@
                 <div
                     class="text-secondary"
                     style="display: flex; align-items: center; flex-wrap: wrap"
-                    [style.fontSize.px]="vp.sm ? 14 : 16"
+                    [style.fontSize.px]="vp.sm ? 16 : 16"
                     [style.marginBottom.px]="vp.sm ? 8 : 24"
                 >
                     <div *ngIf="hasAlias(address)" style="display: flex">
@@ -173,7 +173,7 @@
 
 <ng-template #bodyContent>
     <div class="account-tabs-container" responsive>
-        <div class="tab-buttons">
+        <div class="tab-buttons" responsive>
             <button
                 mat-flat-button
                 (click)="showTabNumber = 1"
@@ -181,7 +181,10 @@
                 style="border-top-left-radius: 4px; border-right: 0"
             >
                 <ng-container *ngIf="vp.sm">
-                    <mat-icon>check</mat-icon>
+                    <mat-icon>verified</mat-icon>
+                    <div class="count-subtitle">
+                        {{ withCommas(accountOverview.blockCount) }}
+                    </div>
                 </ng-container>
                 <ng-container *ngIf="!vp.sm">
                     Confirmed {{ vp.md ? 'Tx' : 'Transactions' }} ({{ withCommas(accountOverview.blockCount) }})
@@ -195,6 +198,9 @@
             >
                 <ng-container *ngIf="vp.sm">
                     <mat-icon>pending</mat-icon>
+                    <div class="count-subtitle">
+                        {{ receivableTransactions.length }}
+                    </div>
                 </ng-container>
                 <ng-container *ngIf="!vp.sm">
                     Receivable {{ vp.md ? 'Tx' : 'Transactions' }} ({{ withCommas(receivableTransactions.length) }})
@@ -208,6 +214,9 @@
             >
                 <ng-container *ngIf="vp.sm">
                     <mat-icon>how_to_vote</mat-icon>
+                    <div class="count-subtitle">
+                        {{ withCommas(delegators.length) }}
+                    </div>
                 </ng-container>
                 <ng-container *ngIf="!vp.sm">
                     Delegators ({{

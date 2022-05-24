@@ -18,11 +18,13 @@ import { AliasService } from '@app/services/alias/alias.service';
             [dataSource]="largeRepsDataSource"
             #sortAll="matSort"
             matSort
-            class="mat-elevation-z2 all-reps-table"
+            class="mat-elevation-z2 all-reps-table divider-border"
         >
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let i = index" style="padding-right: 12px">{{ i + 1 }}</td>
+                <td mat-cell *matCellDef="let i = index" class="text-secondary" style="padding-right: 12px">
+                    {{ i + 1 }}
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="address">

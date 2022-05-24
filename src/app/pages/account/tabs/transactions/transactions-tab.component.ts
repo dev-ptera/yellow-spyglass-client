@@ -92,7 +92,7 @@ type Transaction = {
                     </div>
                     <div class="timestamps">
                         <span class="mat-body-2">{{ dateMap.get(tx.hash).date }}</span>
-                        <span class="mat-body-2 text-secondary" [style.fontSize.px]="vp.sm ? 10 : 14">
+                        <span class="mat-body-2 text-secondary" [style.fontSize.px]="vp.sm ? 12 : 14">
                             {{ getRelativeTime(dateMap.get(tx.hash).diffDays) }}
                         </span>
                     </div>
@@ -190,7 +190,7 @@ export class TransactionsTabComponent {
                 return `${roundedHours} hour${roundedHours > 1 ? 's' : ''} ago`;
             } else {
                 const roundedMinutes = Math.round(hours * 60);
-                return `${roundedMinutes} minute${roundedMinutes > 1 ? 's' : ''} ago`;
+                return `${roundedMinutes} ${this.vp.sm ? 'min' : 'minute'}${roundedMinutes > 1 ? 's' : ''} ago`;
             }
         }
     }

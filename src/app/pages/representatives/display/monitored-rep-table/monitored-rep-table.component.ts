@@ -20,7 +20,7 @@ import { MonitoredRep, Representative } from '@app/types/modal';
             [dataSource]="monitoredRepsDataSource"
             #sortMonitored="matSort"
             matSort
-            class="mat-elevation-z2 monitored-reps-table"
+            class="mat-elevation-z2 monitored-reps-table divider-border"
             id="large-reps-table"
         >
             <ng-container matColumnDef="name" sticky>

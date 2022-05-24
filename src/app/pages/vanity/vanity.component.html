@@ -11,6 +11,7 @@
 <ng-template #bodyContent>
     <div style="display: flex; justify-content: center; flex-wrap: wrap">
         <mat-card
+            class="divider-border"
             *ngFor="let address of vanityAddresses"
             [style.maxWidth.px]="vp.sm ? 300 : 350"
             [style.margin.px]="vp.sm ? 8 : 16"
