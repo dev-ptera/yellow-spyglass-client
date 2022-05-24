@@ -20,6 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { UptimeMetricComponent } from '@app/pages/representatives/display/metrics/uptime-metric/uptime-metric.component';
 import { ScoreMetricComponent } from '@app/pages/representatives/display/metrics/score-metric/score-metric.component';
+import {MicroRepListComponent} from "@app/pages/representatives/display/micro-rep-list/micro-rep-list.component";
 
 @NgModule({
     declarations: [
@@ -31,6 +32,7 @@ import { ScoreMetricComponent } from '@app/pages/representatives/display/metrics
         WeightChartComponent,
         ScoreMetricComponent,
         UptimeMetricComponent,
+        MicroRepListComponent
     ],
     imports: [
         AppCommonModule,
@@ -58,6 +60,7 @@ import { ScoreMetricComponent } from '@app/pages/representatives/display/metrics
         WeightChartComponent,
         ScoreMetricComponent,
         UptimeMetricComponent,
+        MicroRepListComponent
     ],
 })
 export class RepresentativesModule {}

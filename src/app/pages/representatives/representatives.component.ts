@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { ApiService } from '@app/services/api/api.service';
-import { RepScoreDto } from '@app/types/dto';
+import {MonitoredRepDto, RepScoreDto} from '@app/types/dto';
 import { MatSort } from '@angular/material/sort';
-import { MonitoredRep, Representative } from '@app/types/modal';
+import {MicroRepresentative, MonitoredRep, Representative} from '@app/types/modal';
 
 export type MonitoredRepTableColumns = {
     address: boolean;
@@ -41,6 +41,7 @@ export class RepresentativesComponent implements OnInit {
     onlineWeight: number;
     offlineWeight: number;
     onlineLargeRepsCount = 0;
+    microReps: MicroRepresentative[] = [];
     allLargeReps: Representative[] = [];
     monitoredReps: MonitoredRep[] = [];
     shownLargeReps: Representative[] = [];
@@ -63,16 +64,16 @@ export class RepresentativesComponent implements OnInit {
         uptime: false,
     };
 
-    constructor(public vp: ViewportService, private readonly api: ApiService) {}
+    constructor(public vp: ViewportService, private readonly _api: ApiService) {}
 
     ngOnInit(): void {
         this._parseMonitoredRepsShownColumns();
 
         Promise.all([
-            this.api.fetchLargeRepresentatives(),
-            this.api.fetchMonitoredRepresentatives(),
-            this.api.fetchQuorumStats(),
-            this.api.fetchRepresentativeScores(),
+            this._api.fetchLargeRepresentatives(),
+            this._api.fetchMonitoredRepresentatives(),
+            this._api.fetchQuorumStats(),
+            this._api.fetchRepresentativeScores(),
         ])
             .then((data) => {
                 this.isLoading = false;
@@ -82,6 +83,7 @@ export class RepresentativesComponent implements OnInit {
                 this.offlineWeight = data[2].offlineWeight;
                 this._attachScores(data[3], this.allLargeReps);
                 this._attachScores(data[3], this.monitoredReps);
+                this._countMicroReps(this.monitoredReps);
                 this.filterLargeRepsByStatus();
                 this.onlineLargeRepsCount = this._countOnlineReps(this.allLargeReps);
             })
@@ -107,6 +109,20 @@ export class RepresentativesComponent implements OnInit {
         } else {
             this.allLargeReps.map((rep) => (rep.online ? this.shownLargeReps.push(rep) : undefined));
         }
+    }
+
+    /** Iterates through the list of monitored reps and adds smaller reps to a separate list. */
+    private _countMicroReps(monitoredReps: MonitoredRepDto[]): void {
+        this.microReps = [];
+        monitoredReps.map((rep) => {
+            if (rep.weight < 100_000) {
+                this.microReps.push({
+                    address: rep.address,
+                    weight: rep.weight,
+                });
+            }
+        })
+        this.microReps.sort((a, b) => (a.weight > b.weight) ? 1 : -1);
     }
 
     private _attachScores(scores: RepScoreDto[], repList: Representative[] | MonitoredRep[]): void {
