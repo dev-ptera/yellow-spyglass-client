@@ -1,19 +1,12 @@
-import {ChangeDetectorRef, Component, Input, ViewEncapsulation} from '@angular/core';
-import {ViewportService} from '@app/services/viewport/viewport.service';
-import {SearchService} from '@app/services/search/search.service';
-import {UtilService} from '@app/services/util/util.service';
-import {AliasService} from '@app/services/alias/alias.service';
-import {MicroRepresentative} from "@app/types/modal";
+import { ChangeDetectorRef, Component, Input, ViewEncapsulation } from '@angular/core';
+import { ViewportService } from '@app/services/viewport/viewport.service';
+import { SearchService } from '@app/services/search/search.service';
+import { UtilService } from '@app/services/util/util.service';
+import { AliasService } from '@app/services/alias/alias.service';
+import { MicroRepresentative } from '@app/types/modal';
 
 @Component({
     selector: 'app-micro-rep-list',
-    styles: [
-        `
-            .representatives-micro-list .mat-list-item-content {
-                padding: 0 !important;
-            }
-        `,
-    ],
     template: `
         <mat-card class="mat-elevation-z0 divider-border" style="padding: 0">
             <mat-list [style.paddingTop.px]="0">
@@ -23,24 +16,22 @@ import {MicroRepresentative} from "@app/types/modal";
                     [dense]="false"
                     [divider]="last ? undefined : 'full'"
                 >
-                    <div blui-left-content style="width: 40px" class="text-secondary mat-body-2">
+                    <div blui-left-content [style.width.px]="vp.sm ? 24 : 40" class="text-secondary mat-body-2">
                         {{ i + 1 }}
                     </div>
                     <div blui-title>{{ aliasService.get(rep.address) }}</div>
                     <div blui-subtitle>
                         <span class="link" (click)="routeRepAddress(rep.address)">{{
                             formatAddress(rep.address)
-                            }}</span></div>
-                    <div blui-info>
+                        }}</span>
                     </div>
-                    <div
-                        blui-right-content
-                        style="display: flex; flex-direction: column; align-items: flex-end"
-                    >
+                    <div blui-info></div>
+                    <div blui-right-content style="display: flex; flex-direction: column; align-items: flex-end">
                         <div style="font-size: 0.875rem">{{ formatWeightPercent(rep.weight) }} weight</div>
                         <div style="font-size: 0.75rem; display: flex; align-items: center">
                             <img src="assets/banano-mark.svg" [width]="16" [height]="16" style="margin-right: 6px" />
-                            {{ formatBanWeight(rep.weight) }} BAN</div>
+                            {{ formatBanWeight(rep.weight) }} BAN
+                        </div>
                     </div>
                 </blui-info-list-item>
             </mat-list>

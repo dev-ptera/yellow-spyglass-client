@@ -93,7 +93,7 @@ type Transaction = {
                     <div class="timestamps">
                         <span class="mat-body-2">{{ dateMap.get(tx.hash).date }}</span>
                         <span class="mat-body-2 text-secondary" [style.fontSize.px]="vp.sm ? 10 : 14">
-                            {{ getRelativeTime(dateMap.get(tx.hash).diffDays)}}
+                            {{ getRelativeTime(dateMap.get(tx.hash).diffDays) }}
                         </span>
                     </div>
                 </div>
@@ -139,7 +139,7 @@ export class TransactionsTabComponent {
         this.transactions.map((tx) => {
             this.dateMap.set(tx.hash, {
                 date: this._formatDateString(tx.timestamp),
-                diffDays: Math.round(((currentDate - tx.timestamp) / oneDay) * 1000) / 1000 ,
+                diffDays: Math.round(((currentDate - tx.timestamp) / oneDay) * 1000) / 1000,
             });
         });
     }

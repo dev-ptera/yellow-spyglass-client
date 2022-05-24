@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { ApiService } from '@app/services/api/api.service';
-import {MonitoredRepDto, RepScoreDto} from '@app/types/dto';
+import { MonitoredRepDto, RepScoreDto } from '@app/types/dto';
 import { MatSort } from '@angular/material/sort';
-import {MicroRepresentative, MonitoredRep, Representative} from '@app/types/modal';
+import { MicroRepresentative, MonitoredRep, Representative } from '@app/types/modal';
 
 export type MonitoredRepTableColumns = {
     address: boolean;
@@ -121,8 +121,8 @@ export class RepresentativesComponent implements OnInit {
                     weight: rep.weight,
                 });
             }
-        })
-        this.microReps.sort((a, b) => (a.weight > b.weight) ? 1 : -1);
+        });
+        this.microReps.sort((a, b) => (a.weight > b.weight ? 1 : -1));
     }
 
     private _attachScores(scores: RepScoreDto[], repList: Representative[] | MonitoredRep[]): void {
