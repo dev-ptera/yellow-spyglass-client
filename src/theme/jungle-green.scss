@@ -140,10 +140,7 @@ $jungle-green-theme: map-merge(
     $theme-background: map-get($jungle-green-theme, background);
 
     $primary: map-get($material-theme-primary, 700);
-
     $warn: map-get($material-theme-warn, 500);
-
-    $tag-opacity: 0.06;
 
     /** Common **/
     .sm {
@@ -155,11 +152,9 @@ $jungle-green-theme: map-merge(
     .mat-row:nth-child(even) {
         background-color: map-get(blui.$blui-white, 50);
     }
-
     .mat-row:nth-child(odd) {
         background-color: map-get(blui.$blui-white, 100);
     }
-
     .text-secondary {
         color: map-get($theme-foreground, secondary-text);
     }
@@ -175,96 +170,18 @@ $jungle-green-theme: map-merge(
     .warn {
         color: $warn;
     }
-
-    .link {
-        //  text-decoration-color: rgb($primary, 0.8);
-    }
     .divider-border {
         border: solid 1px map-get($theme-foreground, divider);
     }
-
     .app-user-menu .blui-user-menu-avatar {
         color: map-get(blui.$blui-white, 50);
-    }
-
-    @include network.network-theme($theme-foreground);
-
-    $sticky-border-color: map-get(blui.$blui-black, 100);
-    /**
-    .principal-tag {
-        $tag: map-get(blui.$blui-yellow, 900);
-        border: solid 1px $tag;
-        background-color: rgba($tag, $tag-opacity) !important;
-        color: $tag !important;
-    } **/
-    @include representatives.representatives-theme($sticky-border-color, #f1fff1);
-
-    @include accountPage($theme-foreground, $theme-background, $primary, $warn);
-
-    .desktop-search-input {
-        border: solid 1px map-get($theme-foreground, divider);
-    }
-
-    .mat-tab-group {
-        background-color: map-get(blui.$blui-white, 50);
     }
     .mat-toolbar.mat-primary {
         background-color: $primary;
     }
 
-    $toolbarBgColor: $primary;
-    /* Navigation */
-    /*
-    .blui-drawer .blui-drawer-nav-item-active-highlight {
-        background-color: rgba($toolbarBgColor, 0.16) !important;
-    }
-    .blui-drawer-header .mat-toolbar {
-        background-color: $toolbarBgColor !important;
-    }
-    .mat-toolbar.mat-primary,
-    .navigation-app-bar {
-        $color: map-get(blui.$blui-white, 50);
-        background-color: $toolbarBgColor !important;
-        color: $color;
-        .blui-user-menu-avatar {
-            color: $color;
-            background: unset !important;
-        }
-        &.home {
-            color: map-get($theme-foreground, text);
-            background-color: map-get($theme-background, background) !important;
-            .blui-user-menu-avatar {
-                color: map-get($theme-foreground, text);
-            }
-        }
-    }
-
-    .navigation-search-bar {
-        background-color: map-get($theme-background, card) !important;
-        input {
-            background-color: map-get($theme-background, card) !important;
-        }
-        mat-toolbar-row {
-            border-bottom: solid 1px map-get($theme-foreground, divider);
-        }
-        mat-icon,
-        input {
-            color: map-get($theme-foreground, text) !important;
-        }
-    }
-
-    $online-color: $primary;
-    $offline-color: $warn-red;
-    $rep-border-color: map-get($theme-foreground, divider);
-    $table-address-color: map-get($theme-foreground, text);
-    @mixin principalTag {
-        $tag: map-get(blui.$blui-yellow, 900);
-        border: solid 1px $tag;
-        background-color: rgba($tag, $tag-opacity) !important;
-        color: $tag !important;
-    }
-    @include representatives.representatives-theme(
-            $online-color, $offline-color, $rep-border-color, $table-address-color, principalTag);
-
-     */
+    $sticky-border-color: map-get(blui.$blui-black, 100);
+    @include representatives.representatives-theme($sticky-border-color, #f1fff1);
+    @include accountPage($theme-foreground, $theme-background, $primary, $warn);
+    @include network.network-theme($theme-foreground);
 }

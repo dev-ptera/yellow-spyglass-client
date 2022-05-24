@@ -44,7 +44,7 @@ import { LoadingService } from '@app/services/loading/loading.service';
 
                     <input
                         *ngIf="!vp.sm"
-                        class="desktop-search-input"
+                        class="desktop-search-input divider-border"
                         type="text"
                         tabindex="0"
                         autocapitalize="none"

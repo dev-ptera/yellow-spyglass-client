@@ -9,19 +9,6 @@
         align-items: flex-start;
     }
 
-    .account-monkey {
-        width: 185px;
-        min-width: 150px;
-        &.md {
-            width: 180px;
-        }
-        &.sm {
-            width: 100px;
-            min-width: 100px;
-            margin-right: 16px;
-        }
-    }
-
     .account-balance {
         .account-ban-amount {
             font-size: 24px;
@@ -79,6 +66,7 @@
 .tab-buttons {
     height: 56px;
     button {
+        z-index: 2;
         box-sizing: border-box;
         border-radius: 0;
         border: solid 1px;

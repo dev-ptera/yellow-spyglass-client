@@ -25,6 +25,16 @@
     }
 }
 
+// Used on the micro reps & monitored reps lists.
+.rep-mobile-list-container {
+    padding: 0 16px !important;
+    border-radius: 0 !important;
+    margin-left: -16px;
+    margin-right: -16px;
+    border-left: unset !important;
+    border-right: unset !important;
+}
+
 .monitored-rep-column-toggle-menu {
     .mat-list-item-content {
         line-height: 0;

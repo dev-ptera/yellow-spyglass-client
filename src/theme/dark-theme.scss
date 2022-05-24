@@ -1,0 +1,158 @@
+@use 'node_modules/@brightlayer-ui/colors/palette' as blui;
+@use 'node_modules/@brightlayer-ui/colors-branding/palette' as branding;
+@use 'node_modules/@angular/material' as mat;
+
+@use 'node_modules/@brightlayer-ui/angular-themes/blui-component-theme' as blui-components-theme;
+@use 'node_modules/@brightlayer-ui/angular-themes/darkTheme' as blui-dark;
+@use 'node_modules/@brightlayer-ui/angular-themes/fonts' as blui-fonts;
+@use 'node_modules/@brightlayer-ui/angular-themes/common' as blui-common;
+
+@use './typography' as appTypography;
+@use 'src/app/pages/representatives/representatives.component' as representatives;
+@use 'src/app/pages/network/network.component' as network;
+
+@mixin accountPage($foreground, $background, $primary, $warn) {
+    .tab-buttons button {
+        color: map-get($foreground, secondary-text) !important;
+        background-color: map-get(blui.$blui-white, 50);
+        border-color: map-get($foreground, divider);
+    }
+    .tab-buttons .active {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        border-bottom: solid 2px $primary;
+        color: $primary !important;
+    }
+    .tx-content-container {
+        background-color: map-get(blui.$blui-white, 50);
+    }
+    .account-rep-offline {
+        background-color: $warn;
+    }
+    .tab-transaction-list {
+        .type {
+            &.receive {
+                background-color: rgba($primary, 0.05);
+                border: solid 1px $primary;
+                color: $primary;
+                // color: map-get($foreground, secondary-text);
+            }
+            &.send {
+                background-color: rgba($warn, 0.05);
+                border: solid 1px $warn;
+                color: $warn;
+            }
+            &.change {
+                $change: map-get(blui.$blui-blue, 500);
+                background-color: rgba($change, 0.05);
+                border: solid 1px $change;
+                color: $change;
+            }
+        }
+    }
+}
+
+$material-theme-primary: mat.define-palette(blui.$blui-green, 200);
+$material-theme-accent: mat.define-palette(blui.$blui-green, 200);
+$material-theme-warn: mat.define-palette(blui.$blui-red, 500);
+
+$dark-theme: map-merge(
+        mat.define-dark-theme($material-theme-primary, $material-theme-accent, $material-theme-warn),
+        (
+            foreground: (
+                text: map-get(blui.$blui-black, 50),
+                secondary-text: map-get(blui.$blui-black, 100),
+                hint-text: map-get(blui.$blui-black, 200),
+                base: map-get(blui.$blui-white, 100),
+                divider: rgba(map-get(blui.$blui-black, 200), 0.36),
+                dividers: rgba(map-get(blui.$blui-black, 200), 0.36),
+                disabled: rgba(map-get(blui.$blui-black, 300), 0.36),
+                disabled-button: rgba(white, 0.3),
+                disabled-text: rgba(map-get(blui.$blui-black, 300), 0.36),
+                elevation: map-get(blui.$blui-darkBlack, 900),
+                icon: map-get(blui.$blui-black, 100),
+                icons: map-get(blui.$blui-black, 100),
+                slider-min: map-get(blui.$blui-black, 100),
+                slider-off: rgba(white, 0.3),
+                slider-off-active: rgba(white, 0.3),
+            ),
+            background: (
+                status-bar: map-get(blui.$blui-darkBlack, 900),
+                app-bar: map-get(blui.$blui-darkBlack, 100),
+                background: map-get(blui.$blui-darkBlack, 50),
+                hover: rgba(white, 0.04),
+                card: rgba(map-get(blui.$blui-black, 900), 1),
+                dialog: map-get(blui.$blui-black, 900),
+                disabled-button: rgba(white, 0.12),
+                raised-button: map-get(blui.$blui-black, 500),
+                focused-button: mat.get-color-from-palette(mat.$dark-theme-background-palette, focused-button),
+                selected-button: mat.get-color-from-palette(mat.$dark-theme-background-palette, selected-button),
+                selected-disabled-button:
+                mat.get-color-from-palette(mat.$dark-theme-background-palette, selected-disabled-button),
+                disabled-button-toggle: black,
+                unselected-chip: mat.get-color-from-palette(mat.$dark-theme-background-palette, unselected-chip),
+                disabled-list-option: black,
+            ),
+        )
+);
+
+.dark {
+    @include mat.all-component-themes($dark-theme);
+    @include blui-components-theme.blui-components-theme($dark-theme);
+    @include blui-dark.darktheme($dark-theme);
+    @include blui-fonts.bodyfont();
+    @include blui-common.common();
+    @include appTypography.typography();
+
+    $theme-foreground: map-get($dark-theme, foreground);
+    $theme-background: map-get($dark-theme, background);
+
+    $primary: map-get($material-theme-primary, 200);
+    $warn: map-get($material-theme-warn, 200);
+
+    /** Common **/
+    .sm {
+        .mat-row:nth-child(even),
+        .mat-row:nth-child(odd) {
+            background-color: map-get(blui.$blui-white, 50);
+        }
+    }
+    .mat-row:nth-child(even) {
+        background-color: map-get(blui.$blui-darkBlack, 400);
+    }
+    .mat-row:nth-child(odd) {
+        background-color: map-get(blui.$blui-darkBlack, 300);
+    }
+    .text-secondary {
+        color: map-get($theme-foreground, secondary-text);
+    }
+    .text-hint {
+        color: map-get($theme-foreground, hint-text);
+    }
+    .primary {
+        color: $primary;
+    }
+    .intermediary {
+        color: map-get(blui.$blui-orange, 500);
+    }
+    .warn {
+        color: $warn;
+    }
+    .divider-border {
+        border: solid 1px map-get($theme-foreground, divider);
+    }
+    .app-user-menu .blui-user-menu-avatar {
+        color: map-get(blui.$blui-white, 50);
+    }
+    .mat-toolbar.mat-primary {
+        background-color: map-get(blui.$blui-darkBlack, 100) !important;
+    }
+    .mat-drawer-content {
+        background-color: map-get(blui.$blui-darkBlack, 300) !important;
+    }
+
+    $sticky-border-color: map-get(blui.$blui-black, 100);
+    @include representatives.representatives-theme($sticky-border-color, #f1fff1);
+    @include accountPage($theme-foreground, $theme-background, $primary, $warn);
+    @include network.network-theme($theme-foreground);
+}

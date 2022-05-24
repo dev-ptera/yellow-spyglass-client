@@ -122,7 +122,7 @@ export class RepresentativesComponent implements OnInit {
                 });
             }
         });
-        this.microReps.sort((a, b) => (a.weight > b.weight ? 1 : -1));
+        this.microReps.sort((a, b) => (a.weight < b.weight ? 1 : -1));
     }
 
     private _attachScores(scores: RepScoreDto[], repList: Representative[] | MonitoredRep[]): void {

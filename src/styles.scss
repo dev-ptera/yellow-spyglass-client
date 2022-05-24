@@ -1,6 +1,7 @@
 @use 'node_modules/@brightlayer-ui/colors/palette' as blui;
 @use 'node_modules/@brightlayer-ui/angular-themes/margins' as blui-margins;
 @use './theme/jungle-green';
+@use './theme/dark-theme';
 
 @include blui-margins.reasonable-margins();
 
@@ -29,35 +30,16 @@ html * {
 .mat-button-focus-overlay {
     background-color: transparent !important;
 }
-
-.mat-list-base .mat-list-item.pxb-info-list-item-content.pxb-info-list-item-wrap .mat-list-item-content,
-.pxb-info-list-item-content.pxb-info-list-item-wrap .mat-list-item-content {
-    min-height: 5.5rem !important;
-}
-
-.mat-subheading-2 {
-    line-height: 1.25rem !important;
-}
-
 .mat-simple-snackbar {
     justify-content: center !important;
 }
 .mat-snack-bar-handset {
     justify-content: center;
-    .mat-snack-bar-container {
-        //  width: unset!important;
-    }
 }
 
-// Why can't I use the branding color palettes for my theme?
-// $material-theme-primary: mat-palette($brand-trophy);
-
-// How can I avoid copy pasting all this nonsense just to change some theme colors?
-
-// Mat Toolbar won't allow me to put background image in it?
-
 // Fix Safari scroll issue
-.pxb-drawer-layout {
+/*
+.blui-drawer-layout {
     height: 100% !important;
     .mat-drawer-backdrop {
         z-index: 400;
@@ -68,8 +50,7 @@ html * {
         top: 0;
     }
     .mat-drawer-content {
-        /* MAGIC HAPPENS HERE */
-        transform: translate3d(0px, 0px, 0px);
+        transform: translate3d(0px, 0px, 0px); // HERE!!!!!
         display: contents;
     }
     .navigation-app-bar-container {
@@ -78,6 +59,7 @@ html * {
         box-sizing: border-box;
     }
 }
+*/
 
 .mat-table {
     border-radius: 4px;
@@ -88,47 +70,10 @@ html * {
     line-height: 1.5 !important;
 }
 
-// TODO: Fix this.
-.pxb-list-item-tag-content .pxb-list-item-tag-label {
-    margin-right: 0 !important;
-}
-// TODO: move this to the explorer pages only
-.pxb-info-list-item-content .pxb-info-list-item-title-wrapper {
-    font-weight: 400 !important;
-}
 
 // Disable mat tab list pagination.
 .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
     display: none !important;
-}
-
-/* Common styles for padding, font-sizes, etc. */
-.app-page-root {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    min-height: 100vh;
-    box-sizing: border-box;
-    // TODO: move these paddings to a global style, shared
-    padding: 104px 48px 64px 48px;
-    &.md {
-        padding: 104px 16px 48px 16px;
-    }
-    &.sm {
-        padding: 88px 16px 48px 16px;
-    }
-}
-
-.rep-mobile-list-container {
-    padding: 0 16px !important;
-    border-radius: 0 !important;
-    margin-left: -16px;
-    margin-right: -16px;
-    border-left: unset !important;
-    border-right: unset !important;
 }
 
 // Stupid safari scroll behavior hack.
@@ -143,4 +88,23 @@ html * {
 // Empty state description font weight change
 .blui-empty-state-content .blui-empty-state-description {
     font-weight: 400 !important;
+}
+
+/* Common styles for padding, font-sizes, etc. */
+.app-page-root {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+    padding: 104px 48px 64px 48px;
+    &.md {
+        padding: 104px 16px 48px 16px;
+    }
+    &.sm {
+        padding: 88px 16px 48px 16px;
+    }
 }
