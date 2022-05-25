@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "dist/yellow-spyglass-client",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
