@@ -11,6 +11,35 @@
 @use 'src/app/pages/representatives/representatives.component' as representatives;
 @use 'src/app/pages/network/network.component' as network;
 
+
+
+@mixin navigationBar($foreground) {
+    .navigation-app-bar {
+        .navigation-toolbar-title, .mat-button, .nav-menu-trigger {
+            color: map-get($foreground, text);
+        }
+    }
+    .mat-drawer-backdrop.mat-drawer-shown {
+        background-color: rgb(62 63 62 / 67%);
+    }
+    .desktop-search-input {
+        background-color: unset;
+        color: map-get($foreground, text);
+    }
+    .navigation-app-bar {
+        .navigation-toolbar-title, .mat-button, .nav-menu-trigger {
+            color: map-get($foreground, text);
+        }
+        .mat-button, .nav-menu-trigger {
+            &.active {
+                border-bottom: solid 2px map-get($foreground, text);
+                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+        }
+    }
+}
+
 @mixin accountPage($foreground, $background, $primary, $warn) {
     .tab-buttons button {
         color: map-get($foreground, secondary-text) !important;
@@ -51,6 +80,33 @@
         }
     }
 }
+
+@mixin highcharts($theme-foreground) {
+    .highcharts-data-label text {
+        fill: map-get($theme-foreground, text) !important;
+        font-weight: 400 !important;
+    }
+
+    .highcharts-legend-item text {
+        fill: map-get($theme-foreground, secondary-text) !important;
+    }
+
+    .highcharts-reset-zoom text {
+        fill: map-get($theme-foreground, secondary-text) !important;
+    }
+
+    .insights-chart {
+        #container {
+            background: #13181b !important;
+        }
+        .highcharts-container {
+            rect {
+                fill: #13181b !important;
+            }
+        }
+    }
+}
+
 
 $material-theme-primary: mat.define-palette(blui.$blui-green, 200);
 $material-theme-accent: mat.define-palette(blui.$blui-green, 200);
@@ -128,7 +184,7 @@ $dark-theme: map-merge(
         border-bottom: solid 1px map-get($theme-foreground, divider);
     }
     .mat-drawer-content {
-        background-color: #1d1f21 !important;
+        background-color: #13181b!important;;
     }
     .text-secondary {
         color: map-get($theme-foreground, secondary-text);
@@ -167,4 +223,6 @@ $dark-theme: map-merge(
     @include representatives.representatives-theme($sticky-border-color, #3b3b3b);
     @include accountPage($theme-foreground, $theme-background, $primary, $warn);
     @include network.network-theme($theme-foreground);
+    @include highcharts($theme-foreground);
+    @include navigationBar($theme-foreground);
 }

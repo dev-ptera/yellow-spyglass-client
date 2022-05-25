@@ -90,6 +90,7 @@
 
                 <!-- Third Line -->
                 <div
+                    *ngIf="accountOverview.opened"
                     class="text-secondary"
                     style="display: flex; align-items: center; flex-wrap: wrap"
                     [style.fontSize.px]="vp.sm ? 16 : 16"
@@ -101,7 +102,7 @@
                         {{ getAlias(address) }}
                         <span style="margin: 0 8px">|</span>
                     </div>
-                    <div *ngIf="accountOverview.opened" style="display: flex; align-items: center">
+                    <div style="display: flex; align-items: center">
                         <div
                             *ngIf="accountOverview.representative === address"
                             class="mat-overline"
@@ -135,7 +136,7 @@
                 </div>
 
                 <!-- Price Data -->
-                <div class="account-summary-tags" responsive>
+                <div class="account-summary-tags" responsive *ngIf="accountOverview.opened">
                     <ng-template [ngTemplateOutlet]="mobileMonKey"></ng-template>
                     <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 16" responsive>
                         <ng-container *ngIf="vp.sm">
@@ -230,7 +231,7 @@
             </button>
             <button
                 mat-flat-button
-                (click)="showTabNumber = 4; fetchInsights(accountOverview.blockCount)"
+                (click)="showTabNumber = 4; fetchInsights()"
                 [class.active]="showTabNumber === 4"
                 style="border-top-right-radius: 4px"
             >

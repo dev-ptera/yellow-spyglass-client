@@ -11,6 +11,27 @@
 @use 'src/app/pages/representatives/representatives.component' as representatives;
 @use 'src/app/pages/network/network.component' as network;
 
+@mixin navigationBar($primary) {
+    .app-user-menu .blui-user-menu-avatar {
+        color: map-get(blui.$blui-white, 50);
+    }
+    .mat-toolbar.mat-primary {
+        background-color: $primary;
+    }
+    .navigation-app-bar {
+        .navigation-toolbar-title, .mat-button, .nav-menu-trigger {
+            color: map-get(blui.$blui-white, 50);
+        }
+        .mat-button, .nav-menu-trigger {
+            &.active {
+                border-bottom: solid 2px map-get(blui.$blui-white, 50);
+                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+        }
+    }
+}
+
 @mixin accountPage($foreground, $background, $primary, $warn) {
     .tab-buttons button {
         color: map-get($foreground, secondary-text) !important;
@@ -173,15 +194,10 @@ $jungle-green-theme: map-merge(
     .divider-border {
         border: solid 1px map-get($theme-foreground, divider);
     }
-    .app-user-menu .blui-user-menu-avatar {
-        color: map-get(blui.$blui-white, 50);
-    }
-    .mat-toolbar.mat-primary {
-        background-color: $primary;
-    }
 
     $sticky-border-color: map-get(blui.$blui-black, 100);
     @include representatives.representatives-theme($sticky-border-color, #f1fff1);
     @include accountPage($theme-foreground, $theme-background, $primary, $warn);
     @include network.network-theme($theme-foreground);
+    @include navigationBar($primary);
 }

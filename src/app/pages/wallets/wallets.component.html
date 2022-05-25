@@ -78,7 +78,7 @@
             >
                 <div *ngIf="aliasService.has(element.address)">
                     <span
-                        class="wallets-table-alias link primary"
+                        class="wallets-table-alias link"
                         style="margin-bottom: -2px; word-break: break-word"
                         (click)="routeRepAddress(element.address, $event)"
                         >{{ aliasService.get(element.address) }}</span

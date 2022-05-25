@@ -15,7 +15,7 @@ import * as Highcharts from 'highcharts';
                     {{ getGraphSubtitle() }}
                 </div>
 
-                <figure responsive class="insights-chart" [style.paddingTop.px]="vp.sm ? 32 : 48">
+                <figure responsive class="insights-chart">
                     <div id="container"></div>
                 </figure>
             </mat-card>

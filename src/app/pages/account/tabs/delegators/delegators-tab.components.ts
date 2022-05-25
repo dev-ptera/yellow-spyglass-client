@@ -21,18 +21,17 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
             <span class="account-delegator-weight-sum-description" responsive>BAN Delegated Weight</span>
         </div>
         <mat-divider *ngIf="delegators.length !== 0"></mat-divider>
-        <table mat-table *ngIf="delegators.length > 0" [style.width.%]="100" [dataSource]="delegatorsDatasource">
+        <table mat-table *ngIf="delegators.length > 0" [style.width.%]="100" [dataSource]="delegatorsDatasource" responsive>
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-                <td mat-cell [style.paddingRight.px]="16" *matCellDef="let element; let i = index">#{{ i + 1 }}</td>
+                <td mat-cell class="text-secondary" [style.paddingRight.px]="16" *matCellDef="let element; let i = index">{{ i + 1 }}</td>
             </ng-container>
 
             <ng-container matColumnDef="address">
                 <th mat-header-cell *matHeaderCellDef>Address</th>
                 <td
                     mat-cell
-                    [style.paddingTop.px]="8"
-                    [style.paddingBottom.px]="8"
+                    class="delegators-address-cell"
                     style="word-break: break-all"
                     [class.link]="element.address !== address"
                     *matCellDef="let element"
@@ -42,7 +41,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
                     <span
                         *ngIf="element.address === address"
                         class="text-secondary mat-body-2"
-                        style="margin-left: 8px;"
+                        style="margin-left: 8px;; word-break: normal"
                         >(This Account)</span
                     >
                 </td>

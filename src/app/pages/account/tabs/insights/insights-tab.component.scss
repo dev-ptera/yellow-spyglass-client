@@ -17,11 +17,21 @@
     }
 
     .insights-chart {
+        padding: 16px 0;
         margin-right: 16px;
         margin-left: 16px;
         &.sm {
             margin-left: 0;
             margin-right: 0;
+            #container {
+                padding: 4px;
+            }
+        }
+        #container {
+            padding: 16px;
+            overflow: hidden;
+            border-radius: 4px;
+            box-sizing: border-box;
         }
     }
 

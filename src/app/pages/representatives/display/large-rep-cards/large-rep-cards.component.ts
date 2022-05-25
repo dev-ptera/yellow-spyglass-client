@@ -46,7 +46,7 @@ import { Representative } from '@app/types/modal';
                 {{ rep.address }}
             </div>
             <mat-divider></mat-divider>
-            <div style="display: flex; justify-content: space-between; font-size: 0.875rem; padding-top: 12px">
+            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; padding-top: 12px">
                 <div>
                     <div *ngIf="rep.score">
                         Score:&nbsp;
@@ -55,17 +55,14 @@ import { Representative } from '@app/types/modal';
                     </div>
                     <div *ngIf="rep.uptimePercentages">
                         Uptime:&nbsp;
-                        {{ rep.uptimePercentages.month }}% /
-                        <span style="font-size: 11px" class="text-secondary">
-                            {{ rep.uptimePercentages.week }}% / {{ rep.uptimePercentages.day }}% (m/w/d)
-                        </span>
+                        {{ rep.uptimePercentages.month }}%
                     </div>
                 </div>
                 <div>
                     <div *ngIf="rep.online" style="text-align: right">
                         Weight:&nbsp; {{ formatWeightPercent(rep.weight) }}
                     </div>
-                    <div style="display: flex; align-items: center" class="text-secondary">
+                    <div style="display: flex; align-items: center">
                         <img src="assets/banano-mark.svg" [width]="16" [height]="16" style="margin-right: 6px" />
                         {{ formatBanWeight(rep.weight) }}
                     </div>

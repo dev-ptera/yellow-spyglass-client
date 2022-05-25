@@ -1,5 +1,3 @@
-@use 'node_modules/@brightlayer-ui/colors/palette' as blui;
-
 .navigation-app-bar-container {
     position: fixed;
     top: 0;
@@ -27,11 +25,7 @@
         &.sm {
             padding: 0 8px;
         }
-        .nav-menu-trigger {
-            color: map-get(blui.$blui-white, 50);
-        }
         .navigation-toolbar-title {
-            color: map-get(blui.$blui-white, 50);
             font-weight: 400;
             cursor: pointer;
             font-family: pirateFont, 'Open Sans', 'Arial';

@@ -19,14 +19,16 @@ import { AliasService } from '@app/services/alias/alias.service';
     encapsulation: ViewEncapsulation.None,
 })
 export class AccountComponent implements OnDestroy {
-    isLoading: boolean;
-    hasError: boolean;
-    address: string;
 
+    address: string;
     confirmedBalance: string;
     accountRepresentative: string;
+
     insights: InsightsDto;
     accountOverview: AccountOverviewDto;
+
+    isLoading: boolean;
+    hasError: boolean;
     insightsDisabled: boolean;
     isLoadingInsights: boolean;
     hasInsightsError: boolean;
@@ -82,6 +84,7 @@ export class AccountComponent implements OnDestroy {
         this.receivableTransactions = [];
         this.hasError = false;
         this.isLoading = true;
+        this.insightsDisabled = true;
         this.hasInsightsError = false;
         this.isLoadingInsights = false;
         this.showTabNumber = 1;
@@ -119,12 +122,11 @@ export class AccountComponent implements OnDestroy {
             });
 
         // Delegators
-        this.fetchDelegators();
+        void this.fetchDelegators();
     }
 
     /** Called when a user clicks the insights tab for the first time. */
-    fetchInsights(blockCount: number): void {
-        this.insightsDisabled = blockCount > 100_000;
+    fetchInsights(): void {
         if (this.insights) {
             return;
         }
@@ -140,15 +142,16 @@ export class AccountComponent implements OnDestroy {
             .fetchInsights(this.address)
             .then((data) => {
                 this.insights = data;
-                this.isLoadingInsights = false;
                 this._ref.detectChanges();
             })
             .catch((err) => {
                 console.error(err);
-                this.isLoadingInsights = false;
                 this.hasInsightsError = true;
                 this._ref.detectChanges();
-            });
+            }).finally(() => {
+                this.isLoadingInsights = false;
+
+            })
     }
 
     fetchDelegators(): void {
@@ -176,7 +179,16 @@ export class AccountComponent implements OnDestroy {
         this.receivableTransactions = data[2];
         this.weightSum = this.accountOverview.weight;
         this.insightsDisabled = this.accountOverview.blockCount > 100_000 || !this.accountOverview.opened;
-        this.confirmedBalance = this._util.numberWithCommas(this.accountOverview.balance.toFixed(4));
+
+        if (!this.accountOverview.opened) {
+            return;
+        }
+
+        const balance = this.accountOverview.balance;
+        if (balance) {
+            this.confirmedBalance = this._util.numberWithCommas(balance.toFixed(4));
+        }
+
         const rep = this.accountOverview.representative;
         if (rep) {
             this.accountRepresentative = this._aliasService.has(rep)

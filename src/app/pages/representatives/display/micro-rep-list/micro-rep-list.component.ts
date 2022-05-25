@@ -8,9 +8,7 @@ import { MicroRepresentative } from '@app/types/modal';
 @Component({
     selector: 'app-micro-rep-list',
     template: `
-        <mat-card class="mat-elevation-z0 divider-border"
-                  [class.rep-mobile-list-container]="vp.sm"
-                  style="padding: 0">
+        <mat-card class="mat-elevation-z0 divider-border" [class.rep-mobile-list-container]="vp.sm" style="padding: 0">
             <mat-list [style.paddingTop.px]="0">
                 <blui-info-list-item
                     *ngFor="let rep of microReps; trackBy: trackByFn; let last = last; let i = index"
