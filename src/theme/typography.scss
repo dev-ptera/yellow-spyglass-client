@@ -1,98 +1,91 @@
 @use '@angular/material' as mat;
 
-$custom-typography: mat.define-typography-config(
-    $font-family: '"Open Sans", Arial, Helvetica, sans-serif;',
-    $display-4: mat.define-typography-level(6rem, 1.167, 300),
-    $display-2: mat.define-typography-level(3rem, 1.167, 400),
-    $display-1: mat.define-typography-level(2.125rem, 1.235, 400),
-    $headline: mat.define-typography-level(1.5rem, 1.334, 400),
-    $title: mat.define-typography-level(1.25rem, 1.6, 600),
-    $subheading-2: mat.define-typography-level(1rem, 1.75, 400),
-    $subheading-1: mat.define-typography-level(0.875rem, 1.57, 600),
-    $body-2: mat.define-typography-level(0.875rem, 1.43, 500),
-    $body-1: mat.define-typography-level(1rem, 1.5, 400),
-    $caption: mat.define-typography-level(0.75rem, 1.66, 400),
-    $button: mat.define-typography-level(0.875rem, 1, 600),
-    $input: mat.define-typography-level(inherit, 1.125, 400),
-);
+@mixin typography() {
+    .mat-display-4,
+    .mat-display-3,
+    .mat-display-2 {
+        letter-spacing: 0;
+    }
 
-.mat-display-4,
-.mat-display-3,
-.mat-display-2 {
-    letter-spacing: 0;
-}
+    .mat-display-4,
+    .mat-display-3,
+    .mat-display-2,
+    .mat-display-1,
+    .mat-headline,
+    .mat-title,
+    .mat-subheading-1,
+    .mat-subheading-2,
+    .mat-body-1,
+    .mat-body-2,
+    .mat-caption,
+    .mat-button {
+        margin-bottom: 0;
+    }
 
-.mat-display-4,
-.mat-display-3,
-.mat-display-2,
-.mat-display-1,
-.mat-headline,
-.mat-title,
-.mat-subheading-1,
-.mat-subheading-2,
-.mat-body-1,
-.mat-body-2,
-.mat-caption,
-.mat-button {
-    margin-bottom: 0;
-}
+    .mat-body-2 {
+        font-weight: 600;
+    }
+    .mat-subheading-2 {
+        line-height: 1.25rem !important;
+    }
 
-.mat-body-2 {
-    font-weight: 600;
-}
+    .mat-overline {
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.125rem;
+        line-height: 2.66;
+        text-transform: uppercase;
+    }
 
-.mat-overline {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.125rem;
-    line-height: 2.66;
-    text-transform: uppercase;
-}
-
-.app-page-content {
-    width: 100%;
-    max-width: 1250px;
-}
-.app-page-title {
-    font-size: 48px;
-    display: flex;
-    width: 100%;
-    margin-bottom: 0px;
-}
-.app-page-subtitle {
-    width: 100%;
-    font-size: 16px;
-    margin-bottom: 48px;
-    text-align: left;
-}
-.app-section-title {
-    font-size: 20px;
-}
-.app-section-subtitle {
-    margin-bottom: 32px;
-    font-size: 16px;
-}
-.app-caption {
-    font-size: 14px;
-}
-.sm {
+    .app-page-content {
+        width: 100%;
+        max-width: 1050px;
+    }
     .app-page-title {
-        font-size: 28px;
-        margin-bottom: 4px;
+        font-size: 48px;
+        display: flex;
+        width: 100%;
+        margin-bottom: 0px;
     }
     .app-page-subtitle {
-        font-size: 14px;
-        margin-bottom: 32px;
+        width: 100%;
+        font-size: 16px;
+        margin-bottom: 48px;
         text-align: left;
     }
     .app-section-title {
-        font-size: 20px;
+        font-size: 24px;
     }
     .app-section-subtitle {
-        margin-bottom: 24px;
-        font-size: 14px;
+        margin-bottom: 32px;
+        font-size: 16px;
     }
     .app-caption {
-        font-size: 12px;
+        font-size: 14px;
+    }
+    .sm {
+        .app-page-title {
+            font-size: 32px;
+            margin-bottom: 0px;
+        }
+
+        .app-page-subtitle {
+            font-size: 16px; // used to be 14
+            margin-bottom: 32px;
+            text-align: left;
+        }
+
+        .app-section-title {
+            font-size: 20px;
+        }
+
+        .app-section-subtitle {
+            margin-bottom: 24px;
+            font-size: 16px;
+        }
+
+        .app-caption {
+            font-size: 14px;
+        }
     }
 }

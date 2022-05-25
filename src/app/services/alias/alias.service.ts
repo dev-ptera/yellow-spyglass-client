@@ -11,15 +11,15 @@ export class AliasService {
 
     constructor(private readonly _api: ApiService) {
         this.aliases = new Map<string, string>();
-        this.loadAliases();
+        this._loadAliases();
     }
 
-    loadAliases(): void {
+    private _loadAliases(): void {
         this._api
-            .getAliases()
+            .fetchAliases()
             .then((data: AliasDto[]) => {
                 for (const alias of data) {
-                    this.aliases.set(alias.addr, alias.alias);
+                    this.aliases.set(alias.address, alias.alias);
                 }
             })
             .catch((err) => {

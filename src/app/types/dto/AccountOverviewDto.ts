@@ -1,19 +1,15 @@
-import { ConfirmedTransactionDto } from './ConfirmedTransactionDto';
-import { PendingTransactionDto } from './PendingTransactionDto';
-import { DelegatorDto } from './DelegatorDto';
-
 export type AccountOverviewDto = {
     opened: boolean;
     address: string;
-    balanceRaw: string;
-    pendingRaw: string;
-    completedTxCount: number;
-    pendingTxCount: number;
+    balanceRaw?: string;
+    balance?: number;
+    receivableRaw: string;
+    receivable: number;
+    blockCount: number;
     delegatorsCount: number;
-    representative: string;
+    representative?: string;
     principal: boolean;
-    confirmedTransactions: ConfirmedTransactionDto[];
-    pendingTransactions: PendingTransactionDto[];
-    delegators: DelegatorDto[];
-    delegatorsWeightSum: number;
+
+    /** I currently only know the weight for opened accounts. */
+    weight?: number;
 };

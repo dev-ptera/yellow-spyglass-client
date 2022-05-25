@@ -1,8 +1,8 @@
 <ng-template #titleContent>
     <div responsive>
         <div class="app-page-title">
-            <ng-container *ngIf="!loading">Vanity MonKeys</ng-container>
-            <ng-container *ngIf="loading">Loading</ng-container>
+            <ng-container *ngIf="!isLoading">Vanity MonKeys</ng-container>
+            <ng-container *ngIf="isLoading">Loading</ng-container>
         </div>
         <div class="app-page-subtitle">A showcase of accounts with custom vanity MonKeys.</div>
     </div>
@@ -11,6 +11,7 @@
 <ng-template #bodyContent>
     <div style="display: flex; justify-content: center; flex-wrap: wrap">
         <mat-card
+            class="divider-border"
             *ngFor="let address of vanityAddresses"
             [style.maxWidth.px]="vp.sm ? 300 : 350"
             [style.margin.px]="vp.sm ? 8 : 16"
@@ -32,13 +33,11 @@
 </ng-template>
 
 <div class="vanity-root app-page-root" responsive>
-    <div class="app-page-content">
-        <app-error *ngIf="error"></app-error>
-        <ng-container *ngIf="!error">
+    <div class="app-page-content" style="max-width: 1250px">
+        <app-error *ngIf="hasError"></app-error>
+        <ng-container *ngIf="!hasError">
             <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
-            <ng-template *ngIf="!loading" [ngTemplateOutlet]="bodyContent"></ng-template>
+            <ng-template *ngIf="!isLoading" [ngTemplateOutlet]="bodyContent"></ng-template>
         </ng-container>
     </div>
 </div>
-
-<app-wave [darkThemeWaveNumber]="20"></app-wave>

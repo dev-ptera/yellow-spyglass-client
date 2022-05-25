@@ -1,38 +1,62 @@
-@mixin representatives-theme(
-    $online-color,
-    $offline-color,
-    $rep-card-border-color,
-    $monitored-reps-table-address-color,
-    $principalTag
-) {
-    .principal-tag {
-        @include principalTag();
-    }
-    .monitored-reps-table-address {
-        color: $monitored-reps-table-address-color !important;
-    }
-    .monitored-reps-table .unchecked-blocks {
-        color: $offline-color;
-    }
-    .representatives-all-reps-card {
-        border: solid 1px $rep-card-border-color;
+.expanded .monitored-reps-table {
+    max-height: calc(100vh - 64px);
+    position: fixed;
+    top: 64px;
+    left: 0;
+    z-index: 998;
+}
 
-        .online {
-            color: $online-color !important;
+.monitored-table-edit-button {
+    &.button-1 {
+        margin-right: 16px;
+    }
+    &.expanded {
+        position: fixed;
+        z-index: 999;
+        &.button-1 {
+            margin-right: 0;
+            bottom: 32px;
+            right: 100px;
         }
-
-        .offline {
-            color: $offline-color !important;
+        &.button-2 {
+            bottom: 32px;
+            right: 44px;
         }
     }
-    .rep-mobile-list-container {
-        border: solid 1px $rep-card-border-color;
+}
+
+// Used on the micro reps & monitored reps lists.
+.rep-mobile-list-container {
+    padding: 0 16px !important;
+    border-radius: 0 !important;
+    margin-left: -16px;
+    margin-right: -16px;
+    border-left: unset !important;
+    border-right: unset !important;
+}
+
+.monitored-rep-column-toggle-menu {
+    .mat-list-item-content {
+        line-height: 0;
     }
+    .mat-list-item {
+        div {
+            margin-left: 16px;
+            line-height: 24px;
+        }
+    }
+}
+
+@mixin representatives-theme($sticky-header-border-color, $largeMonitorTableHoverRow) {
     .monitored-reps-table {
-        thead th:nth-child(1),
-        tr td:nth-child(1) {
-            border-right: solid 1px;
-            border-color: $rep-card-border-color;
+        .cdk-header-row th {
+            border-bottom: solid 1px $sticky-header-border-color;
         }
+    }
+    .monitored-reps-table .mat-column-name {
+        border-right: solid 1px $sticky-header-border-color;
+    }
+    .expanded .monitored-reps-table tr:hover {
+        background-color: $largeMonitorTableHoverRow !important;
     }
 }

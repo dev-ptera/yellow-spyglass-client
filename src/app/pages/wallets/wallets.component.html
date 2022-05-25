@@ -1,7 +1,7 @@
 <ng-template #titleContent>
     <div class="app-page-title">
-        <ng-container *ngIf="!loading"> Wallets </ng-container>
-        <ng-container *ngIf="loading"> Loading </ng-container>
+        <ng-container *ngIf="!isLoading"> Wallets </ng-container>
+        <ng-container *ngIf="isLoading"> Loading </ng-container>
     </div>
     <div class="app-page-subtitle">See account distribution statistics and the list of the top banano holders.</div>
 </ng-template>
@@ -9,7 +9,7 @@
 <ng-template #bodyContent>
     <div class="app-section-title">BAN Distribution Chart</div>
     <div class="app-section-subtitle">The chart below shows the distribution of banano among all opened accounts.</div>
-    <mat-card class="wallets-chart mat-elevation-z2" responsive>
+    <mat-card class="wallets-chart mat-elevation-z2 divider-border flat-edge" responsive>
         <highcharts-chart
             [update]="true"
             [Highcharts]="Highcharts"
@@ -20,10 +20,12 @@
     </mat-card>
 
     <div class="app-section-title">All Accounts</div>
-    <div class="app-section-subtitle" [style.marginBottom.px]="4">All banano accounts, sorted by balance.</div>
-    <div class="app-caption" [style.marginBottom.px]="24">
-        Any account with an offline representative is marked with a warning flag. It is encouraged that these accounts
-        change their representative if their current rep is constantly offline.
+    <div class="app-section-subtitle" [style.marginBottom.px]="12">
+        All banano accounts, sorted by balance. Any account with an offline representative is marked with a warning
+        flag.
+        <ng-container *ngIf="!vp.sm">
+            It is encouraged that these accounts change their representative if their current rep is constantly offline.
+        </ng-container>
     </div>
     <ng-template #paginator>
         <app-paginator
@@ -31,23 +33,18 @@
             [pageSize]="pageSize"
             [maxElements]="totalAccounts"
             [(pageIndex)]="currentPage"
-            (pageIndexChange)="loadAccountBalances($event)"
+            (pageIndexChange)="loadRichListPage($event)"
             [disableMove]="loadingNewAccountBalancePage"
         ></app-paginator>
     </ng-template>
     <ng-template [ngTemplateOutlet]="paginator"></ng-template>
-    <ng-container *ngIf="isMegaphone">
-        <button mat-flat-button color="primary" (click)="toot()" style="margin-right: 24px" [disabled]="megaSuccess">
-            <ng-container *ngIf="!megaSuccess">Use Megaphone</ng-container>
-            <ng-container *ngIf="megaSuccess">All is Good</ng-container>
-        </button>
-    </ng-container>
+
     <table
         mat-table
         *ngIf="accountBalances.length > 0"
         [style.width.%]="100"
         [dataSource]="accountBalances"
-        class="wallets-rich-list-table mat-elevation-z2"
+        class="wallets-rich-list-table mat-elevation-z2 divider-border flat-edge"
         responsive
     >
         <ng-container matColumnDef="position">
@@ -59,37 +56,14 @@
                 *matCellDef="let element; let i = index"
             >
                 <span
+                    class="text-secondary"
                     matBadgeColor="warn"
                     matBadgeOverlap="false"
-                    [matBadgeSize]="vp.sm ? 'small' : 'medium'"
+                    [matBadgeSize]="'small'"
                     [matBadge]="showWarningBadge(element.representative) ? '!' : undefined"
                 >
-                    #{{ formatIndex(i + 1 + currentPage * pageSize) }}
+                    {{ formatIndex(i + 1 + currentPage * pageSize) }}
                 </span>
-            </td>
-        </ng-container>
-
-        <ng-container matColumnDef="megaphone">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-            <td mat-cell *matCellDef="let element">
-                <div
-                    style="display: flex"
-                    *ngIf="!megaphone.hasAddress(element.address) && showWarningBadge(element.representative)"
-                >
-                    <button
-                        mat-stroked-button
-                        color="accent"
-                        (click)="megaphone.addAddress(element.address, 2)"
-                        [style.marginRight.px]="16"
-                    >
-                        Add
-                    </button>
-                </div>
-                <ng-container *ngIf="megaphone.hasAddress(element.address)">
-                    <button mat-stroked-button color="warn" (click)="megaphone.removeAddress(element.address)">
-                        Exclude
-                    </button>
-                </ng-container>
             </td>
         </ng-container>
 
@@ -102,14 +76,15 @@
                 class="wallets-address-cell"
                 *matCellDef="let element"
             >
-                <div
-                    *ngIf="aliasService.has(element.address)"
-                    class="wallets-table-alias primary"
-                    style="margin-bottom: -2px; word-break: break-word"
-                >
-                    {{ aliasService.get(element.address) }}
+                <div *ngIf="aliasService.has(element.address)">
+                    <span
+                        class="wallets-table-alias link"
+                        style="margin-bottom: -2px; word-break: break-word"
+                        (click)="routeRepAddress(element.address, $event)"
+                        >{{ aliasService.get(element.address) }}</span
+                    >
                 </div>
-                <a class="address link" style="color: inherit" (click)="routeRepAddress(element.address, $event)">
+                <a class="address link" (click)="routeRepAddress(element.address, $event)">
                     {{ element.address }}
                 </a>
             </td>
@@ -123,11 +98,11 @@
                         src="assets/banano-mark.svg"
                         [width]="vp.sm ? 16 : 18"
                         [height]="vp.sm ? 16 : 18"
-                        style="margin-right: 8px"
+                        style="margin-right: 6px"
                     />
                     {{ formatBanAmount(element.amount) }}
                 </div>
-                <div class="wallets-rich-list-conversion">
+                <div class="wallets-rich-list-conversion text-secondary">
                     <div>
                         {{ formatUsdPrice(element.amount) | currency }} ·
                         {{ formatBtcPrice(element.amount) }}
@@ -143,12 +118,10 @@
 
 <div class="app-page-root" responsive>
     <div class="app-page-content">
-        <app-error *ngIf="error"></app-error>
-        <ng-container *ngIf="!error">
+        <app-error *ngIf="hasError"></app-error>
+        <ng-container *ngIf="!hasError">
             <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
-            <ng-template *ngIf="!loading" [ngTemplateOutlet]="bodyContent"></ng-template>
+            <ng-template *ngIf="!isLoading" [ngTemplateOutlet]="bodyContent"></ng-template>
         </ng-container>
     </div>
 </div>
-
-<app-wave [darkThemeWaveNumber]="5"></app-wave>

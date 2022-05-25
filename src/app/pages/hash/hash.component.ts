@@ -17,7 +17,7 @@ import { ApiService } from '@app/services/api/api.service';
             </div>
             <div class="app-page-subtitle hash-searched">
                 {{ hash }}
-                <app-copy-button [data]="hash"></app-copy-button>
+                <app-copy-button style="margin-left: 8px" [data]="hash"></app-copy-button>
                 <app-bookmark-button [id]="hash"></app-bookmark-button>
             </div>
         </ng-template>
@@ -42,9 +42,7 @@ import { ApiService } from '@app/services/api/api.service';
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Amount</span>
-                    <span class="app-section-subtitle"
-                        >{{ block.amount }} RAW | {{ convertRawToBan(block.amount) }}</span
-                    >
+                    <span class="app-section-subtitle">{{ block.amountRaw }} RAW | {{ block.amount }}</span>
                 </div>
                 <div class="hash-description">Amount of BANANO sent in this transaction</div>
             </div>
@@ -179,7 +177,7 @@ export class HashComponent implements OnDestroy {
         this.routeListener = this._router.events.subscribe((route) => {
             if (route instanceof NavigationEnd) {
                 const splitUrl = this._router.url.split('/');
-                this._searchHash(splitUrl[splitUrl.length-1]);
+                this._searchHash(splitUrl[splitUrl.length - 1]);
             }
         });
     }
@@ -201,7 +199,7 @@ export class HashComponent implements OnDestroy {
         const spin = new Promise((resolve) => setTimeout(resolve, 500));
 
         // Confirmed Transactions
-        Promise.all([this._apiService.block(hash), spin])
+        Promise.all([this._apiService.fetchBlock(hash), spin])
             .then(([blockResponse]) => {
                 this.loading = false;
                 this.block = blockResponse;

@@ -15,7 +15,6 @@ import { ErrorComponent } from '@app/common/components/error/error.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CommaPipe } from '@app/common/directives/comma.directive';
 import { PercentagePipe } from '@app/common/pipes/percentage.pipe';
-import { WaveComponent } from '@app/common/components/wave/wave.component';
 
 @NgModule({
     declarations: [
@@ -29,7 +28,6 @@ import { WaveComponent } from '@app/common/components/wave/wave.component';
         ErrorComponent,
         ResponsiveDirective,
         SafeHtmlPipe,
-        WaveComponent,
     ],
     imports: [CommonModule, EmptyStateModule, MatButtonModule, MatIconModule, MatSnackBarModule, SpacerModule],
     entryComponents: [QrDialogComponent],
@@ -44,7 +42,6 @@ import { WaveComponent } from '@app/common/components/wave/wave.component';
         ErrorComponent,
         ResponsiveDirective,
         SafeHtmlPipe,
-        WaveComponent,
     ],
 })
 export class AppCommonModule {}

@@ -1,28 +1,37 @@
 export type MonitoredRepDto = {
     address: string;
-    weight: number;
     online: boolean;
-    delegatorsCount: number;
+    delegatorsCount?: number;
+    fundedDelegatorsCount?: number;
 
     /* Optional (populated from node-monitor) */
-    protocolVersion?: string;
-    representative?: string;
-    peers?: number;
-    name?: string;
-    version?: string;
-    currentBlock?: number;
-    uncheckedBlocks?: number;
     cementedBlocks?: number;
-    confirmedBlocks?: number;
-    systemUptime?: string;
-    usedMem?: number;
-    totalMem?: number;
     confirmationInfo?: {
         average: number;
     };
-    systemLoad?: number;
-    nodeUptimeStartup?: number;
+    currentBlock?: number;
     location?: string;
     ip?: string;
-    customMonitorPageUrl?: string;
+    name?: string;
+    nodeUptimeStartup?: number;
+    representative?: string;
+    peers?: number;
+    totalMem?: number;
+    systemLoad?: number;
+    uncheckedBlocks?: number;
+    usedMem?: number;
+    version?: string;
+    weight?: number;
+
+    /** Populated these stats from scores. */
+    daysAge: number;
+    principal: boolean;
+    score: number;
+    uptimePercentages?: {
+        day: number;
+        week: number;
+        month: number;
+        semiAnnual: number;
+        year: number;
+    };
 };

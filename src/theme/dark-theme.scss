@@ -1,10 +1,115 @@
 @use 'node_modules/@brightlayer-ui/colors/palette' as blui;
+@use 'node_modules/@brightlayer-ui/colors-branding/palette' as branding;
 @use 'node_modules/@angular/material' as mat;
 
-@import 'src/app/pages/wallets/wallets.component.scss';
-@import 'src/app/pages/representatives/representatives.component.scss';
-@import 'src/app/pages/account/account.component.scss';
-@import 'src/app/pages/network/network.component.scss';
+@use 'node_modules/@brightlayer-ui/angular-themes/blui-component-theme' as blui-components-theme;
+@use 'node_modules/@brightlayer-ui/angular-themes/darkTheme' as blui-dark;
+@use 'node_modules/@brightlayer-ui/angular-themes/fonts' as blui-fonts;
+@use 'node_modules/@brightlayer-ui/angular-themes/common' as blui-common;
+
+@use './typography' as appTypography;
+@use 'src/app/pages/representatives/representatives.component' as representatives;
+@use 'src/app/pages/network/network.component' as network;
+
+@mixin navigationBar($foreground) {
+    .navigation-app-bar {
+        .navigation-toolbar-title,
+        .mat-button,
+        .nav-menu-trigger {
+            color: map-get($foreground, text);
+        }
+    }
+    .mat-drawer-backdrop.mat-drawer-shown {
+        background-color: rgb(62 63 62 / 67%);
+    }
+    .desktop-search-input {
+        background-color: unset;
+        color: map-get($foreground, text);
+    }
+    .navigation-app-bar {
+        .navigation-toolbar-title,
+        .mat-button,
+        .nav-menu-trigger {
+            color: map-get($foreground, text);
+        }
+        .mat-button,
+        .nav-menu-trigger {
+            &.active {
+                border-bottom: solid 2px map-get($foreground, text);
+                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+        }
+    }
+}
+
+@mixin accountPage($foreground, $background, $primary, $warn) {
+    .tab-buttons button {
+        color: map-get($foreground, secondary-text) !important;
+        background-color: map-get(blui.$blui-black, 900) !important;
+        border-color: map-get($foreground, divider);
+    }
+    .tab-buttons .active {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        border-bottom: solid 2px $primary;
+        color: $primary !important;
+    }
+    .tx-content-container {
+        background-color: map-get(blui.$blui-black, 900);
+    }
+    .account-rep-offline {
+        background-color: $warn;
+    }
+    .tab-transaction-list {
+        .type {
+            &.receive {
+                background-color: rgba($primary, 0.05);
+                border: solid 1px $primary;
+                color: $primary;
+                // color: map-get($foreground, secondary-text);
+            }
+            &.send {
+                background-color: rgba($warn, 0.05);
+                border: solid 1px $warn;
+                color: $warn;
+            }
+            &.change {
+                $change: map-get(blui.$blui-blue, 200);
+                background-color: rgba($change, 0.05);
+                border: solid 1px $change;
+                color: $change;
+            }
+        }
+    }
+}
+
+@mixin highcharts($theme-foreground) {
+    .highcharts-data-label text {
+        fill: map-get($theme-foreground, text) !important;
+        font-weight: 400 !important;
+    }
+
+    .highcharts-legend-item text {
+        fill: map-get($theme-foreground, secondary-text) !important;
+    }
+
+    .highcharts-reset-zoom text {
+        fill: map-get($theme-foreground, secondary-text) !important;
+    }
+
+    .insights-chart {
+        $fill: rgba(19, 24, 27, 0.68) !important;
+        #container {
+            background: $fill;
+        }
+        .highcharts-container {
+            rect {
+                fill: $fill;
+            }
+        }
+    }
+}
 
 $material-theme-primary: mat.define-palette(blui.$blui-green, 200);
 $material-theme-accent: mat.define-palette(blui.$blui-green, 200);
@@ -15,8 +120,8 @@ $dark-theme: map-merge(
     (
         foreground: (
             text: map-get(blui.$blui-black, 50),
-            secondary-text: map-get(blui.$blui-black, 100),
-            hint-text: map-get(blui.$blui-black, 200),
+            secondary-text: map-get(blui.$blui-black, 200),
+            hint-text: map-get(blui.$blui-black, 400),
             base: map-get(blui.$blui-white, 100),
             divider: rgba(map-get(blui.$blui-black, 200), 0.36),
             dividers: rgba(map-get(blui.$blui-black, 200), 0.36),
@@ -33,7 +138,7 @@ $dark-theme: map-merge(
         background: (
             status-bar: map-get(blui.$blui-darkBlack, 900),
             app-bar: map-get(blui.$blui-darkBlack, 100),
-            background: map-get(blui.$blui-darkBlack, 300),
+            background: map-get(blui.$blui-darkBlack, 50),
             hover: rgba(white, 0.04),
             card: rgba(map-get(blui.$blui-black, 900), 1),
             dialog: map-get(blui.$blui-black, 900),
@@ -50,177 +155,77 @@ $dark-theme: map-merge(
     )
 );
 
-$theme-foreground: map-get($dark-theme, foreground);
-$theme-background: map-get($dark-theme, background);
+.dark {
+    @include mat.all-component-themes($dark-theme);
+    @include blui-components-theme.blui-components-theme($dark-theme);
+    @include blui-dark.darktheme($dark-theme);
+    @include blui-fonts.bodyfont();
+    @include blui-common.common();
+    @include appTypography.typography();
 
-$primary-green: map-get(blui.$blui-green, 200);
-$warn-red: map-get(blui.$blui-red, 200);
-$tag-opacity: 0.06;
+    $theme-foreground: map-get($dark-theme, foreground);
+    $theme-background: map-get($dark-theme, background);
 
-html,
-body {
-    background-color: map-get($theme-background, background) !important;
-}
+    $primary: map-get($material-theme-primary, 200);
+    $warn: map-get($material-theme-warn, 200);
 
-.mat-tab-group {
-    background-color: map-get(blui.$blui-black, 900);
-}
-
-.blui-user-menu-avatar {
-    color: map-get($theme-foreground, text) !important;
-    background: unset !important;
-}
-
-/* Navigation */
-.blui-drawer .blui-drawer-nav-item-active-highlight {
-    background-color: rgba(30, 99, 15, 0.14) !important;
-}
-.mat-toolbar.mat-primary,
-.navigation-app-bar {
-    background-color: map-get(blui.$blui-black, 800) !important;
-    color: map-get($theme-foreground, text) !important;
-    &.home {
-        background-color: map-get($theme-background, background) !important;
+    /** Common **/
+    .sm {
+        .mat-row:nth-child(even),
+        .mat-row:nth-child(odd) {
+            background-color: map-get(blui.$blui-darkBlack, 100);
+        }
     }
-}
-.navigation-search-bar {
-    background-color: map-get($theme-background, card) !important;
-    input {
-        background-color: map-get($theme-background, card) !important;
+    .mat-row:nth-child(even) {
+        background-color: #192022;
     }
-    mat-toolbar-row {
+    .mat-row:nth-child(odd) {
+        background-color: map-get(blui.$blui-black, 900);
+    }
+    .mat-toolbar.mat-primary {
+        background-color: map-get(blui.$blui-darkBlack, 300) !important;
         border-bottom: solid 1px map-get($theme-foreground, divider);
     }
-    mat-icon,
-    input {
-        color: map-get($theme-foreground, text) !important;
+    .mat-drawer-content {
+        background-color: #13181b !important;
     }
-}
+    .text-secondary {
+        color: map-get($theme-foreground, secondary-text);
+    }
+    .text-hint {
+        color: map-get($theme-foreground, hint-text);
+    }
+    .primary {
+        color: $primary;
+    }
+    .mat-mini-fab.mat-primary {
+        background-color: $primary;
+        color: map-get($theme-background, raised-button);
+    }
+    .intermediary {
+        color: map-get(blui.$blui-orange, 500);
+    }
+    .warn {
+        color: $warn;
+    }
+    .divider-border {
+        border: solid 1px map-get($theme-foreground, divider);
+        box-shadow: none !important;
+    }
+    .app-user-menu .blui-user-menu-avatar {
+        color: map-get(blui.$blui-white, 50);
+    }
+    .principal-tag {
+        font-weight: 600 !important;
+        background-color: rgba($primary, 0.05);
+        border: solid 1px $primary;
+        color: $primary;
+    }
 
-/* General */
-.bookmarked-button {
-    color: map-get(blui.$blui-red, 300);
+    $sticky-border-color: map-get(blui.$blui-black, 100);
+    @include representatives.representatives-theme($sticky-border-color, #3b3b3b);
+    @include accountPage($theme-foreground, $theme-background, $primary, $warn);
+    @include network.network-theme($theme-foreground);
+    @include highcharts($theme-foreground);
+    @include navigationBar($theme-foreground);
 }
-.primary {
-    color: $primary-green !important;
-}
-.intermediary {
-    color: map-get(blui.$blui-yellow, 500);
-}
-.warn {
-    color: $warn-red !important;
-}
-.secondary {
-    color: map-get($theme-foreground, secondary);
-}
-.hint {
-    color: map-get($theme-foreground, hint-text);
-}
-
-.blui-drawer-body-content,
-.mat-table,
-.mat-tab-group,
-.mat-card {
-    box-shadow: none !important;
-    border: solid 1px map-get($theme-foreground, divider);
-    border-radius: 4px;
-}
-.blui-drawer-body-content {
-    box-shadow: none !important;
-    border-right: solid 1px map-get($theme-foreground, divider);
-    border-radius: 0px;
-}
-
-.app-page-root,
-.explore-body {
-    // background-image: url("data:image/svg+xml,%3Csvg width='84' height='48' viewBox='0 0 84 48' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h12v6H0V0zm28 8h12v6H28V8zm14-8h12v6H42V0zm14 0h12v6H56V0zm0 8h12v6H56V8zM42 8h12v6H42V8zm0 16h12v6H42v-6zm14-8h12v6H56v-6zm14 0h12v6H70v-6zm0-16h12v6H70V0zM28 32h12v6H28v-6zM14 16h12v6H14v-6zM0 24h12v6H0v-6zm0 8h12v6H0v-6zm14 0h12v6H14v-6zm14 8h12v6H28v-6zm-14 0h12v6H14v-6zm28 0h12v6H42v-6zm14-8h12v6H56v-6zm0-8h12v6H56v-6zm14 8h12v6H70v-6zm0 8h12v6H70v-6zM14 24h12v6H14v-6zm14-8h12v6H28v-6zM14 8h12v6H14V8zM0 8h12v6H0V8z' fill='%2346bf2c' fill-opacity='0.04' fill-rule='evenodd'/%3E%3C/svg%3E");
-    //  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80' width='80' height='80'%3E%3Cpath fill='%232ca618' fill-opacity='0.06' d='M14 16H9v-2h5V9.87a4 4 0 1 1 2 0V14h5v2h-5v15.95A10 10 0 0 0 23.66 27l-3.46-2 8.2-2.2-2.9 5a12 12 0 0 1-21 0l-2.89-5 8.2 2.2-3.47 2A10 10 0 0 0 14 31.95V16zm40 40h-5v-2h5v-4.13a4 4 0 1 1 2 0V54h5v2h-5v15.95A10 10 0 0 0 63.66 67l-3.47-2 8.2-2.2-2.88 5a12 12 0 0 1-21.02 0l-2.88-5 8.2 2.2-3.47 2A10 10 0 0 0 54 71.95V56zm-39 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm40-40a2 2 0 1 1 0-4 2 2 0 0 1 0 4zM15 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm40 40a2 2 0 1 0 0-4 2 2 0 0 0 0 4z'%3E%3C/path%3E%3C/svg%3E");
-    //  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%232ca618' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
-}
-
-/* Wallets Page */
-$grid-stroke-color: map-get(blui.$blui-gray, 800);
-@include wallets-theme($theme-foreground, $theme-background, $grid-stroke-color);
-.mat-drawer-backdrop.mat-drawer-shown {
-    background-color: rgba(4, 4, 4, 0.62) !important;
-}
-.blui-list-item-tag-content .blui-list-item-tag-label {
-    font-weight: 400 !important;
-}
-
-/* Account Page */
-@mixin repOnlineTag {
-    border: solid 1px $primary-green;
-    background-color: unset !important;
-    color: $primary-green !important;
-}
-@mixin repOfflineTag {
-    border: solid 1px $warn-red;
-    background-color: unset !important;
-    color: $warn-red !important;
-}
-@mixin heightTag {
-    color: map-get($theme-foreground, secondary-text);
-    background-color: rgba(map-get($theme-foreground, secondary-text), $tag-opacity) !important;
-    border: solid 1px map-get($theme-foreground, secondary-text) !important;
-}
-@mixin sendTag {
-    border: solid 1px $warn-red;
-    background-color: rgba($warn-red, $tag-opacity) !important;
-    color: $warn-red !important;
-}
-@mixin receiveTag {
-    border: solid 1px $primary-green;
-    background-color: rgba($primary-green, $tag-opacity) !important;
-    color: $primary-green !important;
-    font-weight: 400;
-}
-@mixin changeTag {
-    border: solid 1px map-get(blui.$blui-blue, 200);
-    background-color: rgba(map-get(blui.$blui-blue, 200), $tag-opacity) !important;
-    color: map-get(blui.$blui-blue, 200) !important;
-    font-weight: 400;
-}
-@mixin sendAmount {
-    color: $warn-red;
-}
-@mixin receiveAmount {
-    color: $primary-green;
-}
-$hashColor: map-get(blui.$blui-gray, 400);
-$pendingBadgeColor: map-get(blui.$blui-orange, 200);
-$delegatorsBadgeColor: map-get(blui.$blui-blue, 200);
-@include account-theme(
-    repOnlineTag,
-    repOfflineTag,
-    heightTag,
-    receiveTag,
-    sendTag,
-    changeTag,
-    receiveAmount,
-    sendAmount,
-    $hashColor,
-    $pendingBadgeColor,
-    $delegatorsBadgeColor
-);
-
-/* Representative Page */
-.insights-chart .highcharts-legend-item text {
-    fill: map-get($theme-foreground, hint-text) !important;
-    font-weight: 400 !important;
-}
-$online-color: $primary-green;
-$offline-color: $warn-red;
-$rep-border-color: map-get($theme-foreground, divider);
-$table-address-color: map-get($theme-foreground, text);
-@mixin principalTag {
-    $tag: map-get(blui.$blui-yellow, 500);
-    border: solid 1px $tag;
-    background-color: rgba($tag, $tag-opacity) !important;
-    color: $tag !important;
-}
-@include representatives-theme($online-color, $offline-color, $rep-border-color, $table-address-color, principalTag);
-
-/* Network Page */
-$network-table-border: solid 1px map-get($theme-foreground, divider);
-@include network-theme($network-table-border);

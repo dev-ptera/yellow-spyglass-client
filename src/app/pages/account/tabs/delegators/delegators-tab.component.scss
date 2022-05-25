@@ -1,24 +1,16 @@
-.account-delegator-address-cell {
-    word-break: break-all;
-    cursor: pointer;
-    &:hover {
-        text-decoration: underline;
-    }
-}
-
 .account-delegator-weight {
-    height: 56px;
+    height: 64px;
     display: flex;
     width: 100%;
     align-items: center;
 
     .account-delegator-weight-sum {
-        margin-left: 24px;
-        font-size: 24px;
+        margin-left: 28px;
+        font-size: 18px;
         font-weight: 600;
         margin-right: 8px;
         &.sm {
-            font-size: 18px;
+            font-size: 16px;
         }
     }
 
@@ -29,4 +21,13 @@
             font-size: 14px;
         }
     }
+}
+
+.delegators-address-cell {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.sm .delegators-address-cell {
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
 }

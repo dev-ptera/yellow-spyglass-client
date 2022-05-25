@@ -80,10 +80,9 @@
     }
 
     .to-from {
-        font-weight: 200;
+        font-weight: 400;
     }
     .amount {
-        margin-left: 8px;
         font-size: 1rem;
         font-weight: 600;
     }
@@ -92,10 +91,5 @@
         > span {
             margin-left: 16px;
         }
-    }
-
-    .blui-info-list-item-partial-divider {
-        left: calc(6rem + 32px) !important;
-        width: calc(100% - calc(6rem + 32px)) !important;
     }
 }

@@ -1,58 +1,21 @@
 @use 'node_modules/@brightlayer-ui/colors/palette' as blui;
-@use 'node_modules/@angular/material' as mat;
-@use 'node_modules/@brightlayer-ui/angular-themes/blui-component-theme';
-@use 'node_modules/@brightlayer-ui/angular-themes/darkTheme';
-@use 'node_modules/@brightlayer-ui/angular-themes/margins';
-@use 'node_modules/@brightlayer-ui/angular-themes/fonts';
-@use 'node_modules/@brightlayer-ui/angular-themes/typography';
-@use 'node_modules/@brightlayer-ui/angular-themes/common';
-@use './theme/typography' as ysg-typography;
+@use 'node_modules/@brightlayer-ui/angular-themes/margins' as blui-margins;
+@use './theme/jungle-green';
+@use './theme/dark-theme';
 
-@include margins.reasonable-margins();
-@include mat.core(ysg-typography.$custom-typography);
+@include blui-margins.reasonable-margins();
+
+html * {
+    font-family: Helvetica;
+}
 
 @font-face {
     font-family: pirateFont;
     src: url('~assets/font/Freebooter-6yn1.ttf');
 }
 
-.light {
-    @import './theme/light-theme';
-    @include common.common();
-    @include mat.all-component-themes($light-theme);
-    @include blui-component-theme.blui-components-theme($light-theme);
-    @include fonts.bodyfont();
-    @import './theme/typography';
-}
-
-.dark {
-    @import './theme/dark-theme';
-    @include common.common();
-    @include mat.all-component-themes($dark-theme);
-    @include blui-component-theme.blui-components-theme($dark-theme);
-    @include fonts.bodyfont();
-    @import './theme/typography';
-}
-
-.mat-tab-label-active {
-    opacity: 1 !important;
-}
-.mat-button-focus-overlay {
-    background-color: transparent !important;
-}
-
-.mat-list-base .mat-list-item.pxb-info-list-item-content.pxb-info-list-item-wrap .mat-list-item-content,
-.pxb-info-list-item-content.pxb-info-list-item-wrap .mat-list-item-content {
-    min-height: 5.5rem !important;
-}
-
-.mat-subheading-2 {
-    line-height: 1.25rem !important;
-}
-
 .link {
     cursor: pointer;
-    text-decoration: none;
     &:hover {
         text-decoration: underline;
     }
@@ -61,25 +24,39 @@
     text-decoration: none !important;
 }
 
+.principal-tag * {
+    font-weight: 600 !important;
+}
+
+.mat-tab-label-active {
+    opacity: 1 !important;
+}
+.mat-button-focus-overlay {
+    background-color: transparent !important;
+}
 .mat-simple-snackbar {
     justify-content: center !important;
 }
 .mat-snack-bar-handset {
     justify-content: center;
-    .mat-snack-bar-container {
-        //  width: unset!important;
-    }
 }
 
-// Why can't I use the branding color palettes for my theme?
-// $material-theme-primary: mat-palette($brand-trophy);
+/*
+.sm .divider-border {
+    border-left: 0!important;
+    border-right: 0!important;
+}
 
-// How can I avoid copy pasting all this nonsense just to change some theme colors?
-
-// Mat Toolbar won't allow me to put background image in it?
+.sm mat-card {
+    border-radius: 0!important;
+}
+.sm .mat-table {
+    border-radius: 0px!important;
+}*/
 
 // Fix Safari scroll issue
-.pxb-drawer-layout {
+/*
+.blui-drawer-layout {
     height: 100% !important;
     .mat-drawer-backdrop {
         z-index: 400;
@@ -90,8 +67,7 @@
         top: 0;
     }
     .mat-drawer-content {
-        /* MAGIC HAPPENS HERE */
-        transform: translate3d(0px, 0px, 0px);
+        transform: translate3d(0px, 0px, 0px); // HERE!!!!!
         display: contents;
     }
     .navigation-app-bar-container {
@@ -100,7 +76,11 @@
         box-sizing: border-box;
     }
 }
+*/
 
+.sm .flat-edge {
+    border-radius: 0;
+}
 .mat-table {
     border-radius: 4px;
     overflow: hidden !important;
@@ -110,18 +90,23 @@
     line-height: 1.5 !important;
 }
 
-// TODO: Fix this.
-.pxb-list-item-tag-content .pxb-list-item-tag-label {
-    margin-right: 0 !important;
-}
-// TODO: move this to the explorer pages only
-.pxb-info-list-item-content .pxb-info-list-item-title-wrapper {
-    font-weight: 400 !important;
-}
-
 // Disable mat tab list pagination.
 .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
     display: none !important;
+}
+
+// Stupid safari scroll behavior hack.
+.sm.blui-drawer-layout {
+    height: 100% !important;
+    &.open {
+        height: 100vh !important;
+        overflow: hidden;
+    }
+}
+
+// Empty state description font weight change
+.blui-empty-state-content .blui-empty-state-description {
+    font-weight: 400 !important;
 }
 
 /* Common styles for padding, font-sizes, etc. */
@@ -132,31 +117,13 @@
     align-items: center;
     width: 100%;
     height: 100%;
+    min-height: 100vh;
     box-sizing: border-box;
-    // TODO: move these paddings to a global style, shared
-    padding: 64px 64px 64px 64px;
+    padding: 104px 48px 64px 48px;
     &.md {
-        padding: 64px 32px 48px 32px;
+        padding: 104px 16px 48px 16px;
     }
     &.sm {
-        padding: 32px 16px 48px 16px;
-    }
-}
-
-.rep-mobile-list-container {
-    padding: 0 16px !important;
-    border-radius: 0 !important;
-    margin-left: -16px;
-    margin-right: -16px;
-    border-left: unset !important;
-    border-right: unset !important;
-}
-
-// Stupid safari scroll behavior hack.
-.sm.blui-drawer-layout {
-    height: 100%!important;
-    &.open {
-        height: 100vh!important;
-        overflow: hidden;
+        padding: 88px 16px 48px 16px;
     }
 }

@@ -9,9 +9,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { AppCommonModule } from '@app/common/app-common.module';
 import { AppUserMenuComponent } from './user-menu/user-menu.component';
 import { FormsModule } from '@angular/forms';
+import { AppBarComponent } from './app-bar/app-bar.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
-    declarations: [NavigationComponent, AppUserMenuComponent],
+    declarations: [NavigationComponent, AppUserMenuComponent, AppBarComponent],
     imports: [
         AppCommonModule,
         BrowserAnimationsModule,
@@ -19,12 +22,14 @@ import { FormsModule } from '@angular/forms';
         DrawerLayoutModule,
         DrawerModule,
         MatButtonModule,
+        MatMenuModule,
         MatToolbarModule,
         RouterModule,
         UserMenuModule,
         FormsModule,
         EmptyStateModule,
+        MatProgressBarModule,
     ],
-    exports: [NavigationComponent, AppUserMenuComponent],
+    exports: [NavigationComponent, AppUserMenuComponent, AppBarComponent],
 })
 export class NavigationModule {}

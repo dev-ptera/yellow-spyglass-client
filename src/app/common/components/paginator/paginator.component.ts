@@ -7,7 +7,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
     selector: 'app-paginator',
     encapsulation: ViewEncapsulation.None,
     template: `
-        <div style="display: flex; align-items: center; height: 56px">
+        <div style="display: flex; align-items: center; height: 56px" class="text-secondary">
             <ng-container *ngIf="maxElements > pageSize">
                 <button
                     mat-icon-button
@@ -22,13 +22,13 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
                 </button>
             </ng-container>
             <blui-spacer></blui-spacer>
-            <div [style.fontSize.px]="vp.sm ? 13 : 16">
+            <div [style.fontSize.px]="vp.sm ? 12 : 14">
                 Showing
-                <strong>{{ getCurrPageMin() }}</strong>
+                <span>{{ getCurrPageMin() }}</span>
                 to
-                <strong>{{ getCurrPageMax() }}</strong>
+                <span>{{ getCurrPageMax() }}</span>
                 of
-                <strong>{{ util.numberWithCommas(maxElements) }}</strong>
+                <span>{{ util.numberWithCommas(maxElements) }}</span>
             </div>
             <blui-spacer></blui-spacer>
             <ng-container *ngIf="maxElements > pageSize">

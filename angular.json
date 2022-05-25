@@ -30,18 +30,23 @@
                         ],
                         "styles": [
                             "src/styles.scss",
+                            "./node_modules/@brightlayer-ui/angular-themes/theme.scss",
                             "./node_modules/@brightlayer-ui/angular-themes/open-sans.scss"
                         ],
                         "scripts": []
                     },
                     "configurations": {
-                        "megaphone": {
-                            "fileReplacements": [
-                                {
-                                    "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.megaphone.ts"
-                                }
-                            ]
+                        "development": {
+                            "buildOptimizer": false,
+                            "optimization": {
+                                "scripts": false,
+                                "styles": false,
+                                "fonts": false
+                            },
+                            "vendorChunk": true,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "namedChunks": true
                         },
                         "production": {
                             "fileReplacements": [
@@ -78,11 +83,11 @@
                         "browserTarget": "yellow-spyglass-client:build"
                     },
                     "configurations": {
+                        "development": {
+                            "browserTarget": "yellow-spyglass-client:build:development"
+                        },
                         "production": {
                             "browserTarget": "yellow-spyglass-client:build:production"
-                        },
-                        "megaphone": {
-                            "browserTarget": "yellow-spyglass-client:build:megaphone"
                         }
                     }
                 },

@@ -13,8 +13,21 @@
     }
 }
 
+.node-section-wrapper:not(.sm) {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    mat-card {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 49%;
+    }
+}
+
 .node-monitor-content.sm {
     mat-card {
+        border-radius: 0;
         box-shadow: none !important;
         margin-left: -16px;
         margin-right: -16px;

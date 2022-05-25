@@ -13,11 +13,8 @@ import { Meta, Title } from '@angular/platform-browser';
     styleUrls: ['./navigation.component.scss'],
 })
 export class NavigationComponent implements OnInit {
-    @ViewChild('searchBar') searchBar: ElementRef;
-
     appbarSearchText = '';
     toolbarTitle: string;
-    toggleSearch = false;
     routeListener: Subscription;
 
     explorerNavGroup = EXPLORER_NAV_GROUP;
@@ -53,25 +50,12 @@ export class NavigationComponent implements OnInit {
         });
     }
 
-    goHome(): void {
-        if (!this.vp.sm) {
-            void this._router.navigate([APP_NAV_ITEMS.home.route]);
-        }
-    }
-
     navigate(url: string): void {
         void this._router.navigateByUrl(url);
     }
 
     isOpen(): boolean {
         return this._stateService.getDrawerOpen();
-    }
-
-    appbarSearch(event: any): void {
-        if (event.key === 'Enter') {
-            this._searchService.emitSearch(this.appbarSearchText, false);
-            this.closeSearch();
-        }
     }
 
     selectItem(navItem: NavItem): void {
@@ -91,17 +75,6 @@ export class NavigationComponent implements OnInit {
         this._stateService.setDrawerOpen(true);
     }
 
-    openSearch(): void {
-        this.toggleSearch = true;
-        // focus the input after the animation completes to avoid a jerky transition
-        setTimeout(() => this.searchBar.nativeElement.focus(), 300);
-    }
-
-    closeSearch(): void {
-        this.appbarSearchText = '';
-        this.toggleSearch = false;
-    }
-
     isHome(): boolean {
         return this._router.url === '/';
     }
@@ -116,10 +89,12 @@ export class NavigationComponent implements OnInit {
                     drawerContent.scroll(0, 0);
                 }
 
-                switch (route.urlAfterRedirects
-                        .replace('explorer/', '')  // Prune creeper legacy routes
-                    .replace('/history', '')
-                    .split('/')[1]) {
+                switch (
+                    route.urlAfterRedirects
+                        .replace('explorer/', '') // Prune creeper legacy routes
+                        .replace('/history', '')
+                        .split('/')[1]
+                ) {
                     case `${APP_NAV_ITEMS.home.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.home.title;
                         this._stateService.setSelectedItem(APP_NAV_ITEMS.home.title);

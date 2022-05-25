@@ -1,11 +1,11 @@
 import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import * as Highcharts from 'highcharts';
 // eslint-disable-next-line no-duplicate-imports
+import * as Highcharts from 'highcharts';
 import { Options } from 'highcharts';
 import HC_bullet from 'highcharts/modules/bullet';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { ApiService } from '@app/services/api/api.service';
-import { NetworkStatsDto, PeerVersionsDto, SpyglassAPIQuorumDto, SupplyDto } from '@app/types/dto';
+import { PeerVersionsDto, QuorumDto, SupplyDto } from '@app/types/dto';
 import { Router } from '@angular/router';
 
 HC_bullet(Highcharts);
@@ -19,16 +19,16 @@ HC_bullet(Highcharts);
 export class NetworkComponent implements OnInit {
     Highcharts: typeof Highcharts = Highcharts;
 
-    loading = true;
-    error = false;
+    isLoading = true;
+    hasError = false;
 
     supplyChartOptions: Options;
     consensusChartOptions: Options;
 
     supply: SupplyDto;
     peerVersions: PeerVersionsDto[];
-    quorum: SpyglassAPIQuorumDto;
     nakamotoCoefficient: number;
+    quorum: QuorumDto;
     totalNumberOfPeers = 0;
 
     constructor(
@@ -45,24 +45,29 @@ export class NetworkComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        void this._apiService
-            .getNetworkStats()
-            .then((response: NetworkStatsDto) => {
-                this.supply = response.supply;
-                this.peerVersions = response.peerVersions;
-                this.quorum = response.spyglassQuorum;
-                this.nakamotoCoefficient = response.nakamotoCoefficient;
-                this.consensusChartOptions = this._createVoteWeightChart(response.spyglassQuorum);
-                this.supplyChartOptions = this._createSupplyChart(response.supply);
+        Promise.all([
+            this._apiService.fetchSupplyStats(),
+            this._apiService.fetchPeerVersions(),
+            this._apiService.fetchNakamotoCoefficient(),
+            this._apiService.fetchQuorumStats(),
+        ])
+            .then((response) => {
+                this.supply = response[0];
+                this.peerVersions = response[1];
+                this.nakamotoCoefficient = response[2].nakamotoCoefficient;
+                this.quorum = response[3];
+                this.consensusChartOptions = this._createVoteWeightChart(this.quorum);
+                this.supplyChartOptions = this._createSupplyChart(this.supply);
                 this.peerVersions.map((version) => {
                     this.totalNumberOfPeers += version.count;
                 });
-                this.loading = false;
             })
             .catch((err) => {
                 console.error(err);
-                this.error = true;
-                this.loading = false;
+                this.hasError = true;
+            })
+            .finally(() => {
+                this.isLoading = false;
             });
     }
 
@@ -117,7 +122,7 @@ export class NetworkComponent implements OnInit {
         };
     }
 
-    private _createVoteWeightChart(quorum: SpyglassAPIQuorumDto): Options {
+    private _createVoteWeightChart(quorum: QuorumDto): Options {
         const format = (num: number): number => Number(parseFloat(String(num * 100)).toFixed(2));
         const data = [
             ['Online', format(quorum.onlinePercent)],

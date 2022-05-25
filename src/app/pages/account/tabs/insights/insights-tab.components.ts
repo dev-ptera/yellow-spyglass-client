@@ -1,99 +1,115 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
 import { InsightsDto } from '@app/types/dto/InsightsDto';
 import { ViewportService } from '@app/services/viewport/viewport.service';
-import { Options } from 'highcharts';
-// eslint-disable-next-line no-duplicate-imports
 import * as Highcharts from 'highcharts';
 
 @Component({
     selector: 'account-insights-tab',
     template: `
         <div class="insights-root" *ngIf="insights" responsive>
-            <div class="app-section-title" responsive [style.marginBottom.px]="16">Account Balance Over Time</div>
-            <div class="insights-chart" responsive>
-                <highcharts-chart
-                    [update]="true"
-                    [Highcharts]="Highcharts"
-                    [options]="accountHistoryChart"
-                    style="pointer-events: none; width: 100%; height: 100%;"
-                    [style.height.px]="vp.sm ? 300 : vp.md ? 350 : 450"
-                ></highcharts-chart>
-            </div>
+            <mat-card class="mat-elevation-z0 divider-border">
+                <div class="app-section-title" style="margin-top: 32px">Account Balance Over Time</div>
+                <div class="app-section-subtitle" style="margin-bottom: -16px">
+                    {{ getGraphSubtitle() }}
+                </div>
 
-            <div class="app-section-title" responsive [style.marginBottom.px]="16" [style.marginTop.px]="32">
-                Account Statistics
-            </div>
+                <figure responsive class="insights-chart">
+                    <div id="container"></div>
+                </figure>
+            </mat-card>
+
             <div class="insights-account-stats-container" responsive>
-                <ng-template *ngIf="vp.isMediumOrSmaller()" [ngTemplateOutlet]="received"></ng-template>
-                <mat-card *ngIf="!vp.isMediumOrSmaller()" class="mat-elevation-z0">
+                <mat-card class="mat-elevation-z0 divider-border" [style.marginRight.px]="vp.md || vp.sm ? 0 : 8">
                     <ng-template [ngTemplateOutlet]="received"></ng-template>
                 </mat-card>
-
-                <ng-template *ngIf="vp.isMediumOrSmaller()" [ngTemplateOutlet]="sent"></ng-template>
-                <mat-card *ngIf="!vp.isMediumOrSmaller()" class="mat-elevation-z0">
+                <mat-card class="mat-elevation-z0 divider-border" [style.marginLeft.px]="vp.md || vp.sm ? 0 : 8">
                     <ng-template [ngTemplateOutlet]="sent"></ng-template>
                 </mat-card>
             </div>
         </div>
-        <blui-empty-state
-            *ngIf="!error && !insights && !disabled"
-            responsive
-            class="account-empty-state"
-            title="Loading"
-            description="One second, counting them 'nanners.  Larger accounts will take longer."
+
+        <mat-card class="tab-empty-state mat-elevation-z0 divider-border" *ngIf="blockCount >= maxInsightsLimit">
+            <blui-empty-state
+                responsive
+                class="account-empty-state"
+                title="No Insights"
+                [description]="getErrorDescription()"
+            >
+                <mat-icon blui-empty-icon>disc_full</mat-icon>
+            </blui-empty-state>
+        </mat-card>
+
+        <mat-card
+            class="tab-empty-state mat-elevation-z0 divider-border"
+            *ngIf="blockCount < maxInsightsLimit && !insights && !hasError"
         >
-            <mat-icon blui-empty-icon>pending</mat-icon>
-        </blui-empty-state>
-        <blui-empty-state
-            *ngIf="disabled"
-            responsive
-            class="account-empty-state"
-            title="No Insights"
-            [description]="getErrorDescription()"
-        >
-            <mat-icon blui-empty-icon>disc_full</mat-icon>
-        </blui-empty-state>
-        <app-error *ngIf="error"></app-error>
+            <blui-empty-state
+                responsive
+                class="account-empty-state"
+                title="Loading"
+                description="One second, counting them 'nanners.  Larger accounts will take longer."
+            >
+                <mat-icon blui-empty-icon>pending</mat-icon>
+            </blui-empty-state>
+        </mat-card>
+
+        <mat-card *ngIf="hasError" class="tab-empty-state mat-elevation-z0 divider-border">
+            <app-error></app-error>
+        </mat-card>
 
         <ng-template #sent>
-            <div class="primary node-monitor-section-title">Sent</div>
+            <div class="warn section-title">Sent Statistics</div>
             <mat-divider></mat-divider>
             <mat-list [style.paddingTop.px]="0">
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Total BAN Sent</div>
-                    <div blui-subtitle>{{ formatBan(insights.totalAmountSentBan) }} BAN</div>
+                    <div blui-subtitle class="text-secondary">{{ formatBan(insights.totalAmountSent) }} BAN</div>
                 </blui-info-list-item>
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Largest Tx Sent</div>
-                    <div blui-subtitle>{{ formatBan(insights.maxAmountSentBan) }} BAN</div>
-                    <div blui-right-content class=" link mat-overline" (click)="search(insights.maxAmountSentHash)">
+                    <div blui-subtitle class="text-secondary">{{ formatBan(insights.maxAmountSent) }} BAN</div>
+                    <div
+                        blui-right-content
+                        class="link mat-overline text-hint"
+                        (click)="search(insights.maxAmountSentHash)"
+                    >
                         hash
                     </div>
                 </blui-info-list-item>
 
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title># Tx Sent</div>
-                    <div blui-subtitle>{{ numberWithComas(insights.totalTxSent) }}</div>
+                    <div blui-subtitle class="text-secondary">{{ numberWithComas(insights.totalTxSent) }}</div>
                 </blui-info-list-item>
 
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>First-Sent Date</div>
-                    <div blui-subtitle>{{ formatDate(insights.firstOutTxUnixTimestamp) }}</div>
-                    <div blui-right-content class="link mat-overline" (click)="search(insights.firstOutTxHash)">
+                    <div blui-subtitle class="text-secondary">{{ formatDate(insights.firstOutTxUnixTimestamp) }}</div>
+                    <div
+                        blui-right-content
+                        class="link mat-overline text-hint"
+                        (click)="search(insights.firstOutTxHash)"
+                    >
                         hash
                     </div>
                 </blui-info-list-item>
 
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Last-Sent Date</div>
-                    <div blui-subtitle>{{ formatDate(insights.lastOutTxUnixTimestamp) }}</div>
-                    <div blui-right-content class="link mat-overline" (click)="search(insights.lastOutTxHash)">hash</div>
+                    <div blui-subtitle class="text-secondary">{{ formatDate(insights.lastOutTxUnixTimestamp) }}</div>
+                    <div
+                        blui-right-content
+                        class="link mat-overline text-hint"
+                        (click)="search(insights.lastOutTxHash)"
+                    >
+                        hash
+                    </div>
                 </blui-info-list-item>
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Most Common Recipient</div>
-                    <div blui-subtitle>
+                    <div blui-subtitle class="text-secondary">
                         <div *ngIf="insights.mostCommonRecipientAddress">
                             Sent BAN
                             <strong style="margin: 0 4px"> {{ insights.mostCommonRecipientTxCount }} </strong> times to
@@ -101,13 +117,18 @@ import * as Highcharts from 'highcharts';
                         </div>
                         <div *ngIf="!insights.mostCommonRecipientAddress">This account has never sent any BAN.</div>
                     </div>
-                    <div blui-info *ngIf="vp.sm" class="link" (click)="search(insights.mostCommonRecipientAddress)">
+                    <div
+                        blui-info
+                        *ngIf="vp.sm"
+                        class="link text-secondary"
+                        (click)="search(insights.mostCommonRecipientAddress)"
+                    >
                         {{ shortenAddr(insights.mostCommonRecipientAddress) }}
                     </div>
                     <div
                         blui-right-content
                         *ngIf="!vp.sm"
-                        class="link"
+                        class="link text-hint"
                         (click)="search(insights.mostCommonRecipientAddress)"
                     >
                         {{ shortenAddr(insights.mostCommonRecipientAddress) }}
@@ -117,50 +138,67 @@ import * as Highcharts from 'highcharts';
         </ng-template>
 
         <ng-template #received>
-            <div class="primary node-monitor-section-title">Received</div>
+            <div class="primary section-title">Received Statistics</div>
             <mat-divider></mat-divider>
             <mat-list [style.paddingTop.px]="0">
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Total BAN Received</div>
-                    <div blui-subtitle>{{ formatBan(insights.totalAmountReceivedBan) }} BAN</div>
+                    <div blui-subtitle class="text-secondary">{{ formatBan(insights.totalAmountReceived) }} BAN</div>
                 </blui-info-list-item>
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Largest Tx Received</div>
-                    <div blui-subtitle>{{ formatBan(insights.maxAmountReceivedBan) }} BAN</div>
-                    <div blui-right-content class=" link mat-overline" (click)="search(insights.maxAmountReceivedHash)">
+                    <div blui-subtitle class="text-secondary">{{ formatBan(insights.maxAmountReceived) }} BAN</div>
+                    <div
+                        blui-right-content
+                        class=" link mat-overline text-hint"
+                        (click)="search(insights.maxAmountReceivedHash)"
+                    >
                         hash
                     </div>
                 </blui-info-list-item>
 
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title># Tx Received</div>
-                    <div blui-subtitle>{{ numberWithComas(insights.totalTxReceived) }}</div>
+                    <div blui-subtitle class="text-secondary">{{ numberWithComas(insights.totalTxReceived) }}</div>
                 </blui-info-list-item>
 
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>First-Received Date</div>
-                    <div blui-subtitle>{{ formatDate(insights.firstInTxUnixTimestamp) }}</div>
-                    <div blui-right-content class="link mat-overline" (click)="search(insights.firstInTxHash)">hash</div>
+                    <div blui-subtitle class="text-secondary">{{ formatDate(insights.firstInTxUnixTimestamp) }}</div>
+                    <div
+                        blui-right-content
+                        class="link mat-overline text-hint"
+                        (click)="search(insights.firstInTxHash)"
+                    >
+                        hash
+                    </div>
                 </blui-info-list-item>
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Last-Received Date</div>
-                    <div blui-subtitle>{{ formatDate(insights.lastInTxUnixTimestamp) }}</div>
-                    <div blui-right-content class="link mat-overline" (click)="search(insights.lastInTxHash)">hash</div>
+                    <div blui-subtitle class="text-secondary">{{ formatDate(insights.lastInTxUnixTimestamp) }}</div>
+                    <div blui-right-content class="link mat-overline text-hint" (click)="search(insights.lastInTxHash)">
+                        hash
+                    </div>
                 </blui-info-list-item>
 
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Most Common Sender</div>
-                    <div blui-subtitle>
+                    <div blui-subtitle class="text-secondary">
                         Received BAN
                         <strong style="margin: 0 4px">{{ insights.mostCommonSenderTxCount }}</strong> times from sender.
                     </div>
-                    <div blui-info *ngIf="vp.sm" class="link" (click)="search(insights.mostCommonSenderAddress)">
+                    <div
+                        blui-info
+                        *ngIf="vp.sm"
+                        class="link text-secondary"
+                        (click)="search(insights.mostCommonSenderAddress)"
+                    >
                         {{ shortenAddr(insights.mostCommonSenderAddress) }}
                     </div>
                     <div
                         blui-right-content
                         *ngIf="!vp.sm"
-                        class="link"
+                        class="link text-hint"
                         (click)="search(insights.mostCommonSenderAddress)"
                     >
                         {{ shortenAddr(insights.mostCommonSenderAddress) }}
@@ -168,8 +206,12 @@ import * as Highcharts from 'highcharts';
                 </blui-info-list-item>
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Account Max Balance</div>
-                    <div blui-subtitle>{{ formatBan(insights.maxBalanceBan) }} BAN</div>
-                    <div blui-right-content class="link mat-overline" (click)="search(insights.maxBalanceHash)">
+                    <div blui-subtitle class="text-secondary">{{ formatBan(insights.maxBalance) }} BAN</div>
+                    <div
+                        blui-right-content
+                        class="link mat-overline text-hint"
+                        (click)="search(insights.maxBalanceHash)"
+                    >
                         hash
                     </div>
                 </blui-info-list-item>
@@ -181,17 +223,19 @@ import * as Highcharts from 'highcharts';
 })
 export class InsightsTabComponent implements OnChanges {
     @Input() insights: InsightsDto;
-    @Input() error: boolean;
-    @Input() disabled: boolean;
-    @Input() unopened: boolean;
+    @Input() hasError: boolean;
+    @Input() blockCount: number;
+    @Input() isAccountOpened: boolean;
 
     Highcharts: typeof Highcharts = Highcharts;
-    accountHistoryChart: Options;
+
+    maxInsightsLimit = 100_000;
 
     constructor(
-        private readonly _searchService: SearchService,
         public vp: ViewportService,
-        private readonly _util: UtilService
+        private readonly _util: UtilService,
+        private readonly _ref: ChangeDetectorRef,
+        private readonly _searchService: SearchService
     ) {
         this.vp.vpChange.subscribe(() => {
             setTimeout(() => {
@@ -202,8 +246,132 @@ export class InsightsTabComponent implements OnChanges {
 
     ngOnChanges(): void {
         if (this.insights) {
-            this.accountHistoryChart = this._createAccountHistoryChart(this.insights.data);
+            const chartData = [];
+            for (const key of Object.keys(this.insights.heightBalances)) {
+                chartData.push([key, this.insights.heightBalances[key]]);
+            }
+            this._graphChart(chartData);
         }
+    }
+
+    private _graphChart(chartData: Array<[]>): void {
+        this._ref.detectChanges();
+        Highcharts.setOptions({
+            chart: {
+                style: {
+                    fontFamily: 'Helvetica',
+                },
+            },
+        });
+
+        // @ts-ignore
+        Highcharts.chart('container', {
+            credits: {
+                enabled: false,
+            },
+            chart: {
+                zoomType: 'x',
+            },
+            title: {
+                text: undefined,
+            },
+            /*   title: {
+                text: 'Account Balance Over Time'
+            },
+            subtitle: {
+                text: document.ontouchstart === undefined ?
+                    'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+            }, */
+            xAxis: {
+                type: 'number',
+            },
+            tooltip: {
+                lang: {
+                    thousandsSep: ',',
+                },
+
+                formatter: function () {
+                    const toComma = (x: any): string => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                    let balance = Number(this.y.toFixed(3));
+                    if (balance > 100_000) {
+                        balance = Math.round(balance);
+                    }
+                    // @ts-ignore
+                    const lastBlockDiff = Number(this.y) - Number(this.series.data[Number(this.x - 1)].y);
+
+                    return `<div style="font-size: 14px"><div>Block <strong>${
+                        this.key
+                    }</strong></div><br /><div>Balance <strong>${toComma(
+                        balance
+                    )}</strong></div><br /><div style="display: ${
+                        this.x === 0 ? 'none' : 'block'
+                    }"><div style="margin-right: 4px">${lastBlockDiff > 0 ? 'Receive ' : 'Send '}</div><span>${
+                        lastBlockDiff > 0 ? '+' : ''
+                    }</span><strong>${toComma(Number(lastBlockDiff.toFixed(3)))}</strong></div></div>`;
+                },
+            },
+            yAxis: {
+                //type: 'logarithmic',
+                labels: {
+                    enabled: true,
+                    /*
+                    formatter: (x) => {
+                        console.log(x);
+                    }, */
+                },
+                type: 'number',
+                title: {
+                    text: undefined,
+                },
+            },
+            legend: {
+                enabled: true,
+            },
+            plotOptions: {
+                area: {
+                    events: {
+                        click: () => {
+                            console.log('click');
+                            this._util.numberWithCommas('400');
+                        },
+                    },
+                    fillColor: {
+                        linearGradient: {
+                            x1: 0,
+                            y1: 0,
+                            x2: 0,
+                            y2: 1,
+                        },
+                        stops: [
+                            [0, '#4cbf4b'],
+                            [1, Highcharts.color('#4cbf4b').setOpacity(0).get('rgba')],
+                        ],
+                    },
+                    marker: {
+                        radius: 2,
+                    },
+                    lineColor: 'gray',
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            lineWidth: 1,
+                        },
+                    },
+                    threshold: null,
+                },
+            },
+
+            series: [
+                {
+                    turboThreshold: this.maxInsightsLimit,
+                    //\  type: 'spline',
+                    color: '#249b23',
+                    type: 'area',
+                    name: 'BAN Balance',
+                    data: chartData,
+                },
+            ],
+        });
     }
 
     search(value: string): void {
@@ -232,74 +400,20 @@ export class InsightsTabComponent implements OnChanges {
         return 'N/A';
     }
 
+    getGraphSubtitle(): string {
+        return document.ontouchstart === undefined
+            ? 'Click and drag in the plot area to zoom in.'
+            : 'Pinch the chart to zoom in.';
+    }
+
     numberWithComas(num: number): string {
         return this._util.numberWithCommas(num);
     }
 
     getErrorDescription(): string {
-        if (this.unopened) {
+        if (!this.isAccountOpened) {
             return 'This account needs to receive a block before it can be analyzed.';
         }
         return 'This account has too many transactions to analyze.  Please select an account with less activity.';
-    }
-
-    private _createAccountHistoryChart(dataPoints: Array<{ balance: number; height: number }>): Options {
-        const chartData = [];
-        for (const point of dataPoints) {
-            chartData.push(point.balance);
-        }
-
-        return {
-            chart: {
-                backgroundColor: 'rgba(0,0,0,0)',
-            },
-            tooltip: {
-                enabled: true,
-                valuePrefix: 'sup',
-            },
-            credits: {
-                enabled: false,
-            },
-            title: {
-                text: '',
-            },
-            xAxis: {
-                visible: false,
-                /*  tickmarkPlacement: 'on',
-                tickAmount: dataPoints.length,
-                min: 1,
-                max: dataPoints[dataPoints.length-1].height,
-                startOnTick: true,
-
-               */
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: '',
-                },
-                labels: {
-                    enabled: true,
-                },
-            },
-            series: [
-                {
-                    name: 'Balance (BAN)',
-                    type: 'spline',
-                    color: '#FBDD11',
-                    data: chartData,
-                    pointPlacement: 'on',
-                    dataLabels: {
-                        enabled: false,
-                        style: {
-                            fontSize: '12px',
-                            fontWeight: '400',
-                            fontFamily: 'Open Sans',
-                            textOutline: 'none',
-                        },
-                    },
-                },
-            ],
-        };
     }
 }

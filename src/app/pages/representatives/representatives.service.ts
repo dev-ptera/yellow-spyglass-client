@@ -10,13 +10,10 @@ export class RepresentativesService {
     }
 
     getMonitoredRepUrl(rep: MonitoredRepDto): string {
-        if (rep.customMonitorPageUrl) {
-            return rep.customMonitorPageUrl;
-        } else if (rep.ip.includes('http') || rep.ip.includes('https')) {
+        if (rep.ip.includes('http') || rep.ip.includes('https')) {
             return rep.ip;
-        } 
-            return `http://${rep.ip}`;
-        
+        }
+        return `http://${rep.ip}`;
     }
 
     formatVersion(version: string): string {

@@ -8,6 +8,7 @@ import { MatSort } from '@angular/material/sort';
 import { AliasService } from '@app/services/alias/alias.service';
 import { RepresentativesService } from '@app/pages/representatives/representatives.service';
 import { MonitoredRepTableColumns } from '@app/pages/representatives/representatives.component';
+import { MonitoredRep, Representative } from '@app/types/modal';
 
 @Component({
     selector: 'app-monitored-rep-table',
@@ -19,7 +20,7 @@ import { MonitoredRepTableColumns } from '@app/pages/representatives/representat
             [dataSource]="monitoredRepsDataSource"
             #sortMonitored="matSort"
             matSort
-            class="mat-elevation-z2 monitored-reps-table"
+            class="mat-elevation-z2 monitored-reps-table divider-border"
             id="large-reps-table"
         >
             <ng-container matColumnDef="name" sticky>
@@ -32,7 +33,7 @@ import { MonitoredRepTableColumns } from '@app/pages/representatives/representat
                     *matCellDef="let element"
                     style="padding-top: 8px; padding-bottom: 8px; padding-right: 8px"
                 >
-                    <span class="link primary" style="font-weight: 600" (click)="repService.openMonitoredRep(element)">
+                    <span class="link" style="font-weight: 400" (click)="repService.openMonitoredRep(element)">
                         {{ element.name }}
                     </span>
                 </td>
@@ -70,9 +71,9 @@ import { MonitoredRepTableColumns } from '@app/pages/representatives/representat
                 </td>
             </ng-container>
 
-            <ng-container matColumnDef="delegatorsCount">
+            <ng-container matColumnDef="fundedDelegatorsCount">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 60px">Delegators</th>
-                <td mat-cell *matCellDef="let element">{{ numberWithCommas(element.delegatorsCount) }}</td>
+                <td mat-cell *matCellDef="let element">{{ numberWithCommas(element.fundedDelegatorsCount) }}</td>
             </ng-container>
 
             <ng-container matColumnDef="peers">
@@ -105,14 +106,14 @@ import { MonitoredRepTableColumns } from '@app/pages/representatives/representat
             </ng-container>
 
             <ng-container matColumnDef="totalMem">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 90px">Memory</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 120px">Memory</th>
                 <td mat-cell *matCellDef="let element">
                     {{ formatMemoryUsage(element) }}
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="nodeUptimeStartup">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 100px">Last Restart</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 110px">Last Restart</th>
                 <td mat-cell *matCellDef="let element">
                     {{ formatUptime(element.nodeUptimeStartup) }}
                 </td>
@@ -121,18 +122,15 @@ import { MonitoredRepTableColumns } from '@app/pages/representatives/representat
             <ng-container matColumnDef="isPrincipal">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 50px">PR</th>
                 <td mat-cell *matCellDef="let element">
-                    <mat-icon
-                        *ngIf="repService.isPR(element.weight, onlineWeight)"
-                        style="font-size: 1.5rem"
-                        class="primary"
-                        >verified</mat-icon
-                    >
+                    <mat-icon *ngIf="element.principal" style="font-size: 1.5rem" class="text-secondary"
+                        >verified
+                    </mat-icon>
                 </td>
             </ng-container>
 
             <!-- TODO: MAKE me a component -->
             <ng-container matColumnDef="uptime">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 140px">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 170px">
                     <div style="text-align: left">
                         Uptime
                         <ng-container *ngIf="!vp.md">
@@ -142,24 +140,7 @@ import { MonitoredRepTableColumns } from '@app/pages/representatives/representat
                     </div>
                 </th>
                 <td mat-cell *matCellDef="let element">
-                    <ng-container *ngIf="largeRepMap.has(element.address)">
-                        <span
-                            [class.warn]="largeRepMap.get(element.address)?.uptimePercentMonth <= 80"
-                            [class.intermediary]="
-                                largeRepMap.get(element.address)?.uptimePercentMonth > 80 &&
-                                largeRepMap.get(element.address)?.uptimePercentMonth <= 95
-                            "
-                            [class.primary]="largeRepMap.get(element.address)?.uptimePercentMonth > 95"
-                        >
-                            {{ largeRepMap.get(element.address)?.uptimePercentMonth
-                            }}<span style="font-size: 11px">% </span>
-                        </span>
-                        <span *ngIf="!vp.md" style="font-size: 11px"
-                            >· {{ largeRepMap.get(element.address)?.uptimePercentWeek }}% ·
-                            {{ largeRepMap.get(element.address)?.uptimePercentDay }}%
-                        </span>
-                    </ng-container>
-                    <ng-container *ngIf="!largeRepMap.has(element.address)">--</ng-container>
+                    <rep-uptime [uptimePercentages]="element.uptimePercentages"></rep-uptime>
                 </td>
             </ng-container>
 
@@ -171,12 +152,12 @@ import { MonitoredRepTableColumns } from '@app/pages/representatives/representat
     encapsulation: ViewEncapsulation.None,
 })
 export class MonitoredRepTableComponent implements OnChanges {
-    @Input() largeReps: RepresentativeDto[] = [];
-    @Input() monitoredReps: MonitoredRepDto[] = [];
+    @Input() largeReps: Representative[] = [];
+    @Input() monitoredReps: MonitoredRep[] = [];
     @Input() onlineWeight: number;
     @Input() shownColumns: MonitoredRepTableColumns;
 
-    largeRepMap: Map<string, RepresentativeDto> = new Map();
+    monitoredRepMap: Map<string, Representative> = new Map();
 
     @ViewChild('sortMonitored') sortMonitored: MatSort;
 
@@ -215,7 +196,7 @@ export class MonitoredRepTableComponent implements OnChanges {
                     return item['weight'];
                 }
                 case 'uptime': {
-                    return this.largeRepMap.get(item['address'])?.uptimePercentMonth;
+                    return this.monitoredRepMap.get(item['address'])?.uptimePercentages.semiAnnual;
                 }
                 default: {
                     return item[property];
@@ -225,9 +206,9 @@ export class MonitoredRepTableComponent implements OnChanges {
     }
 
     private _createNewRepMap(): void {
-        this.largeRepMap.clear();
+        this.monitoredRepMap.clear();
         for (const rep of this.largeReps) {
-            this.largeRepMap.set(rep.address, rep);
+            this.monitoredRepMap.set(rep.address, rep);
         }
     }
 
@@ -239,8 +220,8 @@ export class MonitoredRepTableComponent implements OnChanges {
         if (this.shownColumns.version) {
             displayedColumns.push('version');
         }
-        if (this.shownColumns.delegatorsCount) {
-            displayedColumns.push('delegatorsCount');
+        if (this.shownColumns.fundedDelegatorsCount) {
+            displayedColumns.push('fundedDelegatorsCount');
         }
         if (this.shownColumns.weightBan) {
             displayedColumns.push('weightBan');
@@ -298,7 +279,7 @@ export class MonitoredRepTableComponent implements OnChanges {
     }
 
     formatUptime(seconds = 0): string {
-        return `${this._util.numberWithCommas((seconds / (60 * 60 * 24)).toFixed(1))  } days`;
+        return `${this._util.numberWithCommas((seconds / (60 * 60 * 24)).toFixed(1))} days`;
     }
 
     formatMemoryUsage(rep: MonitoredRepDto): string {

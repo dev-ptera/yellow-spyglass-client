@@ -18,11 +18,13 @@ import { AliasService } from '@app/services/alias/alias.service';
             [dataSource]="largeRepsDataSource"
             #sortAll="matSort"
             matSort
-            class="mat-elevation-z2 all-reps-table"
+            class="mat-elevation-z2 all-reps-table divider-border"
         >
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let i = index" style="padding-right: 12px">{{ i + 1 }}</td>
+                <td mat-cell *matCellDef="let i = index" class="text-secondary" style="padding-right: 12px">
+                    {{ i + 1 }}
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="address">
@@ -59,6 +61,27 @@ import { AliasService } from '@app/services/alias/alias.service';
                 </td>
             </ng-container>
 
+            <ng-container matColumnDef="online">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Online</th>
+                <td
+                    mat-cell
+                    class="representatives-online-cell"
+                    *matCellDef="let element"
+                    [style.color.red]="!element.online"
+                >
+                    <mat-icon style="font-size: 1.5rem" [class.primary]="element.online" [class.warn]="!element.online">
+                        {{ element.online ? 'check' : 'priority_high' }}</mat-icon
+                    >
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="score">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Score</th>
+                <td mat-cell *matCellDef="let element">
+                    <rep-score [score]="element.score"></rep-score>
+                </td>
+            </ng-container>
+
             <ng-container matColumnDef="weight">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Weight</th>
                 <td mat-cell *matCellDef="let element">
@@ -77,12 +100,12 @@ import { AliasService } from '@app/services/alias/alias.service';
                 </td>
             </ng-container>
 
-            <ng-container matColumnDef="delegatorsCount">
+            <ng-container matColumnDef="fundedDelegatorsCount">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Delegators</th>
-                <td mat-cell *matCellDef="let element">{{ numberWithCommas(element.delegatorsCount) }}</td>
+                <td mat-cell *matCellDef="let element">{{ numberWithCommas(element.fundedDelegatorsCount) }}</td>
             </ng-container>
 
-            <ng-container matColumnDef="uptimePercentMonth">
+            <ng-container matColumnDef="uptimeStats.uptimePercentages.month">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>
                     <div style="text-align: left">
                         Uptime
@@ -93,46 +116,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                     </div>
                 </th>
                 <td mat-cell *matCellDef="let element">
-                    <span
-                        [class.warn]="element.uptimePercentMonth <= 80"
-                        [class.intermediary]="element.uptimePercentMonth > 80 && element.uptimePercentMonth <= 95"
-                        [class.primary]="element.uptimePercentMonth > 95"
-                    >
-                        {{ element.uptimePercentMonth }}<span style="font-size: 11px">% </span>
-                    </span>
-                    <span *ngIf="!vp.md" style="font-size: 11px"
-                        >· {{ element.uptimePercentWeek }}% · {{ element.uptimePercentDay }}%
-                    </span>
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="online">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Online</th>
-                <td
-                    mat-cell
-                    class="representatives-online-cell"
-                    *matCellDef="let element"
-                    [style.color.red]="!element.online"
-                >
-                    <mat-icon style="font-size: 1.5rem" [class.primary]="element.online" [class.warn]="!element.online">
-                        {{ element.online ? 'check' : 'priority_high' }}</mat-icon
-                    >
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="score">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Score</th>
-                <td mat-cell *matCellDef="let element">
-                    <span
-                        *ngIf="element.score"
-                        [class.warn]="element.score <= 50"
-                        [class.intermediary]="element.score > 50 && element.score <= 84"
-                        [class.primary]="element.score > 84"
-                    >
-                        {{ element.score }}
-                    </span>
-                    <span *ngIf="element.score" style="font-size: 11px">/ 100</span>
-                    <span *ngIf="!element.score">--</span>
+                    <rep-uptime [uptimePercentages]="element.uptimePercentages"></rep-uptime>
                 </td>
             </ng-container>
 
@@ -161,8 +145,8 @@ export class LargeRepTableComponent implements OnChanges {
         'score',
         'weight',
         'percentWeight',
-        'delegatorsCount',
-        'uptimePercentMonth',
+        'fundedDelegatorsCount',
+        'uptimeStats.uptimePercentages.month',
     ];
     largeRepsDisplayColumnsMd = ['position', 'address', 'online', 'score', 'weight', 'percentWeight'];
 

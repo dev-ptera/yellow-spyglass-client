@@ -16,19 +16,13 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppCommonModule } from '@app/common/app-common.module';
 import { AccountComponent } from '@app/pages/account/account.component';
-import { ConfirmedTabComponent } from '@app/pages/account/tabs/confirmed/confirmed-tab.component';
+import { TransactionsTabComponent } from '@app/pages/account/tabs/transactions/transactions-tab.component';
 import { DelegatorsTabComponent } from '@app/pages/account/tabs/delegators/delegators-tab.components';
-import { PendingTabComponent } from '@app/pages/account/tabs/pending/pending-tab.component';
 import { InsightsTabComponent } from '@app/pages/account/tabs/insights/insights-tab.components';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
-    declarations: [
-        AccountComponent,
-        ConfirmedTabComponent,
-        DelegatorsTabComponent,
-        PendingTabComponent,
-        InsightsTabComponent,
-    ],
+    declarations: [AccountComponent, TransactionsTabComponent, DelegatorsTabComponent, InsightsTabComponent],
     imports: [
         AppCommonModule,
         BrowserAnimationsModule,
@@ -48,13 +42,8 @@ import { InsightsTabComponent } from '@app/pages/account/tabs/insights/insights-
         MatTableModule,
         ReactiveFormsModule,
         HighchartsChartModule,
+        MatTooltipModule,
     ],
-    exports: [
-        AccountComponent,
-        ConfirmedTabComponent,
-        DelegatorsTabComponent,
-        PendingTabComponent,
-        InsightsTabComponent,
-    ],
+    exports: [AccountComponent, TransactionsTabComponent, DelegatorsTabComponent, InsightsTabComponent],
 })
 export class AccountModule {}

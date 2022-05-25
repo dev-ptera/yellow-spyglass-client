@@ -45,7 +45,7 @@ export class AppUserMenuComponent {
 
     toggleLightTheme(): void {
         this.userMenuOpen = false;
-        this._theme.setTheme('light');
+        this._theme.setTheme('jungle-green');
     }
 
     toggleDarkTheme(): void {

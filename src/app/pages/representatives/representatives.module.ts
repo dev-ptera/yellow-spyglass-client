@@ -13,10 +13,14 @@ import { LargeRepTableComponent } from '@app/pages/representatives/display/large
 import { LargeRepCardsComponent } from '@app/pages/representatives/display/large-rep-cards/large-rep-cards.component';
 import { MonitoredRepTableComponent } from '@app/pages/representatives/display/monitored-rep-table/monitored-rep-table.component';
 import { MonitoredRepListComponent } from '@app/pages/representatives/display/monitored-rep-list/monitored-rep-list.component';
-import { MicroRepListComponent } from '@app/pages/representatives/display/micro-rep-list/micro-rep-list.component';
 import { WeightChartComponent } from '@app/pages/representatives/display/weight-chart/weight-chart.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RouterModule } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { UptimeMetricComponent } from '@app/pages/representatives/display/metrics/uptime-metric/uptime-metric.component';
+import { ScoreMetricComponent } from '@app/pages/representatives/display/metrics/score-metric/score-metric.component';
+import { MicroRepListComponent } from '@app/pages/representatives/display/micro-rep-list/micro-rep-list.component';
 
 @NgModule({
     declarations: [
@@ -25,8 +29,10 @@ import { RouterModule } from '@angular/router';
         LargeRepCardsComponent,
         MonitoredRepListComponent,
         MonitoredRepTableComponent,
-        MicroRepListComponent,
         WeightChartComponent,
+        ScoreMetricComponent,
+        UptimeMetricComponent,
+        MicroRepListComponent,
     ],
     imports: [
         AppCommonModule,
@@ -34,6 +40,7 @@ import { RouterModule } from '@angular/router';
         HighchartsChartModule,
         InfoListItemModule,
         ListItemTagModule,
+        MatButtonModule,
         MatCardModule,
         MatTableModule,
         MatSortModule,
@@ -42,6 +49,7 @@ import { RouterModule } from '@angular/router';
         UserMenuModule,
         MatCheckboxModule,
         RouterModule,
+        MatMenuModule,
     ],
     exports: [
         RepresentativesComponent,
@@ -49,8 +57,10 @@ import { RouterModule } from '@angular/router';
         LargeRepCardsComponent,
         MonitoredRepListComponent,
         MonitoredRepTableComponent,
-        MicroRepListComponent,
         WeightChartComponent,
+        ScoreMetricComponent,
+        UptimeMetricComponent,
+        MicroRepListComponent,
     ],
 })
 export class RepresentativesModule {}

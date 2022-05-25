@@ -3,8 +3,8 @@
         <div class="home-title" responsive>Yellow Spyglass</div>
         <img src="assets/spyglass.svg" class="home-spyglass-svg" responsive />
 
-        <div class="app-section-subtitle" style="text-align: center; margin-bottom: 8px">
-            Explore the open seas of the banano network
+        <div class="app-section-subtitle" style="text-align: center; margin-bottom: 16px">
+            A Banano Network Explorer
         </div>
 
         <div class="home-search-bar" responsive>
@@ -23,7 +23,7 @@
                 responsive
                 class="home-search-button"
                 mat-flat-button
-                color="accent"
+                color="primary"
                 [disabled]="loading || !searchFormControl.value"
                 (click)="search(searchFormControl.value, $event)"
             >
@@ -36,6 +36,7 @@
     </div>
 </div>
 
+<!--
 <app-wave
     *ngIf="!vp.sm"
     [darkThemeWaveNumber]="1"
@@ -44,3 +45,4 @@
     maxHeight="750"
 ></app-wave>
 <img *ngIf="vp.sm" style="margin-top: -200px" height="200" src="assets/waves/wave1.svg" />
+-->

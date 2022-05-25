@@ -1,10 +1,8 @@
-import { RepresentativeUptimeDto } from './RepresentativeUptimeDto';
-
 export type RepresentativeDto = {
     address: string;
-    weight: number;
     online: boolean;
-    principal: boolean;
-    delegatorsCount: number;
-    score?: number;
-} & RepresentativeUptimeDto;
+    alias?: string;
+    weight: number;
+    delegatorsCount?: number;
+    fundedDelegatorsCount?: number;
+};

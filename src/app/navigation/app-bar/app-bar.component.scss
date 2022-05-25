@@ -1,0 +1,70 @@
+.navigation-app-bar-container {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+    &.sm {
+        position: absolute;
+    }
+
+    .desktop-search-input {
+        margin-right: 32px;
+        margin-left: 32px;
+        width: 320px;
+        height: 36px;
+        border-radius: 4px;
+        padding: 0 16px;
+    }
+
+    .navigation-app-bar {
+        display: flex;
+        justify-content: center;
+        padding: 0 24px;
+        top: 0;
+        z-index: 200;
+        &.sm {
+            padding: 0 8px;
+        }
+        .navigation-toolbar-title {
+            font-weight: 400;
+            cursor: pointer;
+            font-family: pirateFont, 'Open Sans', 'Arial';
+            font-size: 36px;
+            &.sm {
+                font-family: inherit;
+                font-size: 20px;
+            }
+        }
+    }
+
+    .navigation-app-bar-container {
+        overflow-x: hidden;
+        z-index: 300;
+    }
+
+    .navigation-search-bar {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 0%;
+        transition: width 250ms ease-in-out;
+        overflow: hidden;
+        z-index: 300;
+        &.active {
+            width: 100%;
+        }
+
+        .search-control {
+            flex: 1;
+            font-size: 1rem;
+            border: 0;
+            outline: none;
+            padding-left: 10px;
+
+            &::-ms-clear {
+                height: 0;
+                width: 0;
+            }
+        }
+    }
+}

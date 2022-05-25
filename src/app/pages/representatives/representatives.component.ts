@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { ApiService } from '@app/services/api/api.service';
-import { MicroRepresentativeDto, MonitoredRepDto, RepresentativeDto, RepresentativesResponseDto } from '@app/types/dto';
+import { MonitoredRepDto, RepScoreDto } from '@app/types/dto';
 import { MatSort } from '@angular/material/sort';
+import { MicroRepresentative, MonitoredRep, Representative } from '@app/types/modal';
 
 export type MonitoredRepTableColumns = {
     address: boolean;
     version: boolean;
-    delegatorsCount: boolean;
+    fundedDelegatorsCount: boolean;
     weightBan: boolean;
     weightPercent: boolean;
     peerCount: boolean;
@@ -30,27 +31,27 @@ export class RepresentativesComponent implements OnInit {
     @ViewChild('sortAll') sortAll: MatSort;
     @ViewChild('sortMonitored') sortMonitored: MatSort;
 
-    showOfflineRepsFilter = false;
+    isLoading = true;
+    hasError = false;
+    expandedMonitoredTable = false;
     showOfflineWeight = false;
-    loading = true;
-    error = false;
+    showOfflineReps = false;
     monitoredRepColumnToggle = false;
 
     onlineWeight: number;
     offlineWeight: number;
-    allLargeReps: RepresentativeDto[] = [];
-    monitoredReps: MonitoredRepDto[] = [];
-    microReps: MicroRepresentativeDto[] = [];
     onlineLargeRepsCount = 0;
-    onlineMicroRepsCount = 0;
-    shownLargeReps: RepresentativeDto[] = [];
+    microReps: MicroRepresentative[] = [];
+    allLargeReps: Representative[] = [];
+    monitoredReps: MonitoredRep[] = [];
+    shownLargeReps: Representative[] = [];
     monitoredRepsShownColumnsKey = 'YELLOW_SPYGLASS_MONITORED_REP_COLUMNS';
 
     /* Defaults */
     shownColumns: MonitoredRepTableColumns = {
         address: true,
         version: true,
-        delegatorsCount: false,
+        fundedDelegatorsCount: false,
         weightBan: true,
         weightPercent: false,
         peerCount: true,
@@ -67,27 +68,34 @@ export class RepresentativesComponent implements OnInit {
 
     ngOnInit(): void {
         this._parseMonitoredRepsShownColumns();
-        this._api
-            .representatives()
-            .then((data: RepresentativesResponseDto) => {
-                this.allLargeReps = data.thresholdReps;
-                this.monitoredReps = data.monitoredReps;
-                this.onlineWeight = data.onlineWeight;
-                this.offlineWeight = data.offlineWeight;
-                this.microReps = data.microReps;
-                this.loading = false;
-                data.thresholdReps.map((rep) => (rep.online ? this.onlineLargeRepsCount++ : undefined));
-                data.microReps.map(() => this.onlineMicroRepsCount++);
+
+        Promise.all([
+            this._api.fetchLargeRepresentatives(),
+            this._api.fetchMonitoredRepresentatives(),
+            this._api.fetchQuorumStats(),
+            this._api.fetchRepresentativeScores(),
+        ])
+            .then((data) => {
+                this.isLoading = false;
+                this.allLargeReps = data[0];
+                this.monitoredReps = data[1];
+                this.onlineWeight = data[2].onlineWeight;
+                this.offlineWeight = data[2].offlineWeight;
+                this._attachScores(data[3], this.allLargeReps);
+                this._attachScores(data[3], this.monitoredReps);
+                this._countMicroReps(this.monitoredReps);
                 this.filterLargeRepsByStatus();
+                this.onlineLargeRepsCount = this._countOnlineReps(this.allLargeReps);
             })
             .catch((err) => {
                 console.error(err);
-                this.loading = false;
-                this.error = true;
+                this.isLoading = false;
+                this.hasError = true;
             });
     }
 
-    _parseMonitoredRepsShownColumns(): void {
+    /** Reads local storage to determine which columns we should show on the monitored rep table. */
+    private _parseMonitoredRepsShownColumns(): void {
         const showColumns = localStorage.getItem(this.monitoredRepsShownColumnsKey);
         if (showColumns) {
             this.shownColumns = JSON.parse(showColumns);
@@ -96,14 +104,55 @@ export class RepresentativesComponent implements OnInit {
 
     filterLargeRepsByStatus(): void {
         this.shownLargeReps = [];
-        if (this.showOfflineRepsFilter) {
+        if (this.showOfflineReps) {
             this.shownLargeReps = this.allLargeReps;
         } else {
             this.allLargeReps.map((rep) => (rep.online ? this.shownLargeReps.push(rep) : undefined));
         }
     }
 
-    toggleColumn(column: keyof MonitoredRepTableColumns): void {
+    /** Iterates through the list of monitored reps and adds smaller reps to a separate list. */
+    private _countMicroReps(monitoredReps: MonitoredRepDto[]): void {
+        this.microReps = [];
+        monitoredReps.map((rep) => {
+            if (rep.weight < 100_000) {
+                this.microReps.push({
+                    address: rep.address,
+                    weight: rep.weight,
+                });
+            }
+        });
+        this.microReps.sort((a, b) => (a.weight < b.weight ? 1 : -1));
+    }
+
+    private _attachScores(scores: RepScoreDto[], repList: Representative[] | MonitoredRep[]): void {
+        const scoreMap = new Map<string, RepScoreDto>();
+        scores.map((scoreResponse) => scoreMap.set(scoreResponse.address, scoreResponse));
+        repList.map((rep) => {
+            const scoreResponse = scoreMap.get(rep.address);
+            if (scoreResponse) {
+                scoreResponse.uptimePercentages.day = Number(scoreResponse.uptimePercentages.day.toFixed(1));
+                scoreResponse.uptimePercentages.week = Number(scoreResponse.uptimePercentages.week.toFixed(1));
+                scoreResponse.uptimePercentages.month = Number(scoreResponse.uptimePercentages.month.toFixed(1));
+                rep.uptimePercentages = scoreResponse.uptimePercentages;
+                rep.principal = scoreResponse.principal;
+                rep.score = scoreResponse.score;
+            }
+        });
+    }
+
+    private _countOnlineReps(reps: Representative[]): number {
+        let online = 0;
+        reps.map((rep) => {
+            if (rep.online) {
+                online++;
+            }
+        });
+        return online;
+    }
+
+    toggleColumn(e: Event, column: keyof MonitoredRepTableColumns): void {
+        e.stopPropagation();
         this.shownColumns[column] = !this.shownColumns[column];
         localStorage.setItem(this.monitoredRepsShownColumnsKey, JSON.stringify(this.shownColumns));
     }
