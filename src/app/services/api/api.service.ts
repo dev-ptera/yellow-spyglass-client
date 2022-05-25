@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {environment} from '../../../environments/environment';
 import {
     AccountBalanceDto,
     AccountDistributionStatsDto,
@@ -8,7 +8,6 @@ import {
     AliasDto,
     BlockDto,
     ConfirmedTransactionDto,
-    DelegatorDto,
     DelegatorsOverviewDto,
     HostNodeStatsDto,
     KnownAccountDto,
@@ -22,8 +21,8 @@ import {
     RepScoreDto,
     SupplyDto,
 } from '@app/types/dto';
-import { InsightsDto } from '@app/types/dto/InsightsDto';
-import { timeout } from 'rxjs/operators';
+import {InsightsDto} from '@app/types/dto/InsightsDto';
+import {timeout} from 'rxjs/operators';
 
 const SLOW_MS = 30000;
 const MED_MS = 20000;
@@ -33,7 +32,6 @@ const FAST_MS = 15000;
     providedIn: 'root',
 })
 export class ApiService {
-    url = environment.api;
     spyglassApi = environment.spyglassApi;
 
     createMonKeyUrl(address: string): string {
@@ -78,6 +76,7 @@ export class ApiService {
             .toPromise();
     }
 
+    /** Fetches historic account statistics. */
     fetchInsights(address: string): Promise<InsightsDto> {
         return this._http
             .post<InsightsDto>(`${this.spyglassApi}/v1/account/insights`, { address, includeHeightBalances: true })

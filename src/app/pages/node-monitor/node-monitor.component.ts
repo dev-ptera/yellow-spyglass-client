@@ -15,7 +15,7 @@ import { ApiService } from '@app/services/api/api.service';
             </div>
             <div class="app-page-subtitle">
                 This explorer is powered & maintained by the
-                <span class="link primary" (click)="openMonitoredRep(stats.ip)">batman representative</span>.
+                <span class="link primary" (click)="openMonitoredRep(stats.monitorUrl)">batman representative</span>.
             </div>
         </ng-template>
 

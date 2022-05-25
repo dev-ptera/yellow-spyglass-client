@@ -48,14 +48,6 @@
                             "sourceMap": true,
                             "namedChunks": true
                         },
-                        "megaphone": {
-                            "fileReplacements": [
-                                {
-                                    "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.megaphone.ts"
-                                }
-                            ]
-                        },
                         "production": {
                             "fileReplacements": [
                                 {
@@ -96,9 +88,6 @@
                         },
                         "production": {
                             "browserTarget": "yellow-spyglass-client:build:production"
-                        },
-                        "megaphone": {
-                            "browserTarget": "yellow-spyglass-client:build:megaphone"
                         }
                     }
                 },
