@@ -96,12 +96,13 @@
     }
 
     .insights-chart {
+        $fill: rgba(19, 24, 27, 0.68) !important;
         #container {
-            background: #13181b !important;
+            background: $fill;
         }
         .highcharts-container {
             rect {
-                fill: #13181b !important;
+                fill: $fill;
             }
         }
     }

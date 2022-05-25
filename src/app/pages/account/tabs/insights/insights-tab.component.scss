@@ -24,6 +24,7 @@
             margin-left: 0;
             margin-right: 0;
             #container {
+                box-sizing: border-box;
                 padding: 4px;
             }
         }
@@ -48,10 +49,6 @@
         &.md {
             flex-direction: column;
             margin: 0;
-        }
-        &.sm {
-            margin-left: -16px;
-            margin-right: -16px;
         }
         mat-card {
             box-sizing: border-box;
