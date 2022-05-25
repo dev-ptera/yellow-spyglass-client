@@ -159,7 +159,6 @@ $dark-theme: map-merge(
     @include mat.all-component-themes($dark-theme);
     @include blui-components-theme.blui-components-theme($dark-theme);
     @include blui-dark.darktheme($dark-theme);
-    @include blui-fonts.bodyfont();
     @include blui-common.common();
     @include appTypography.typography();
 

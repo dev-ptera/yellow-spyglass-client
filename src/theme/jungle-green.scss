@@ -156,7 +156,6 @@ $jungle-green-theme: map-merge(
     @include mat.all-component-themes($jungle-green-theme);
     @include blui-components-theme.blui-components-theme($jungle-green-theme);
     @include blui-light.bluetheme($jungle-green-theme);
-    @include blui-fonts.bodyfont();
     @include blui-common.common();
     @include appTypography.typography();
 
