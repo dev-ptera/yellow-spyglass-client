@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { Meta, Title } from '@angular/platform-browser';
-import {NavigationEnd, Router} from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { SearchService } from '@app/services/search/search.service';
 import { DrawerStateService } from '@app/services/drawer-state/drawer-state.service';
 import { APP_NAV_ITEMS } from '../nav-items';
@@ -13,7 +13,6 @@ import { LoadingService } from '@app/services/loading/loading.service';
         <div class="navigation-app-bar-container" responsive>
             <mat-toolbar class="navigation-app-bar mat-elevation-z2" color="primary" responsive>
                 <div style="display: flex; width: 100%; align-items: center">
-
                     <button *ngIf="vp.sm" mat-icon-button (click)="openDrawer.emit()" [style.marginRight.px]="16">
                         <mat-icon>menu</mat-icon>
                     </button>
@@ -22,22 +21,42 @@ import { LoadingService } from '@app/services/loading/loading.service';
                         {{ vp.sm ? toolbarTitle : 'Yellow Spyglass' }}
                     </div>
 
-
                     <div *ngIf="!vp.md && !vp.sm" [style.marginLeft.px]="vp.md ? 24 : 48">
-                        <button mat-button (click)="router.navigate([pages.knownAccounts.route])"
-                            [class.active]="router.url === '/'+pages.knownAccounts.route">
+                        <button
+                            mat-button
+                            (click)="router.navigate([pages.knownAccounts.route])"
+                            [class.active]="router.url === '/' + pages.knownAccounts.route"
+                        >
                             Known Accounts
                         </button>
-                        <button mat-button (click)="router.navigate([pages.network.route])"
-                                [class.active]="router.url === '/'+pages.network.route">Network</button>
-                        <button mat-button (click)="router.navigate([pages.node.route])"
-                                [class.active]="router.url === '/'+pages.node.route">Node</button>
-                        <button mat-button (click)="router.navigate([pages.representatives.route])"
-                                [class.active]="router.url === '/'+pages.representatives.route">
+                        <button
+                            mat-button
+                            (click)="router.navigate([pages.network.route])"
+                            [class.active]="router.url === '/' + pages.network.route"
+                        >
+                            Network
+                        </button>
+                        <button
+                            mat-button
+                            (click)="router.navigate([pages.node.route])"
+                            [class.active]="router.url === '/' + pages.node.route"
+                        >
+                            Node
+                        </button>
+                        <button
+                            mat-button
+                            (click)="router.navigate([pages.representatives.route])"
+                            [class.active]="router.url === '/' + pages.representatives.route"
+                        >
                             Representatives
                         </button>
-                        <button  mat-button (click)="router.navigate([pages.wallets.route])"
-                                 [class.active]="router.url === '/'+pages.wallets.route">Wallets</button>
+                        <button
+                            mat-button
+                            (click)="router.navigate([pages.wallets.route])"
+                            [class.active]="router.url === '/' + pages.wallets.route"
+                        >
+                            Wallets
+                        </button>
                     </div>
 
                     <div *ngIf="vp.md" [style.marginLeft.px]="vp.md ? 24 : 48">

@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {environment} from '../../../environments/environment';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import {
     AccountBalanceDto,
     AccountDistributionStatsDto,
@@ -21,8 +21,8 @@ import {
     RepScoreDto,
     SupplyDto,
 } from '@app/types/dto';
-import {InsightsDto} from '@app/types/dto/InsightsDto';
-import {timeout} from 'rxjs/operators';
+import { InsightsDto } from '@app/types/dto/InsightsDto';
+import { timeout } from 'rxjs/operators';
 
 const SLOW_MS = 30000;
 const MED_MS = 20000;

@@ -19,7 +19,6 @@ import { AliasService } from '@app/services/alias/alias.service';
     encapsulation: ViewEncapsulation.None,
 })
 export class AccountComponent implements OnDestroy {
-
     address: string;
     confirmedBalance: string;
     accountRepresentative: string;
@@ -148,10 +147,10 @@ export class AccountComponent implements OnDestroy {
                 console.error(err);
                 this.hasInsightsError = true;
                 this._ref.detectChanges();
-            }).finally(() => {
-                this.isLoadingInsights = false;
-
             })
+            .finally(() => {
+                this.isLoadingInsights = false;
+            });
     }
 
     fetchDelegators(): void {

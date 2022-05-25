@@ -11,11 +11,11 @@
 @use 'src/app/pages/representatives/representatives.component' as representatives;
 @use 'src/app/pages/network/network.component' as network;
 
-
-
 @mixin navigationBar($foreground) {
     .navigation-app-bar {
-        .navigation-toolbar-title, .mat-button, .nav-menu-trigger {
+        .navigation-toolbar-title,
+        .mat-button,
+        .nav-menu-trigger {
             color: map-get($foreground, text);
         }
     }
@@ -27,10 +27,13 @@
         color: map-get($foreground, text);
     }
     .navigation-app-bar {
-        .navigation-toolbar-title, .mat-button, .nav-menu-trigger {
+        .navigation-toolbar-title,
+        .mat-button,
+        .nav-menu-trigger {
             color: map-get($foreground, text);
         }
-        .mat-button, .nav-menu-trigger {
+        .mat-button,
+        .nav-menu-trigger {
             &.active {
                 border-bottom: solid 2px map-get($foreground, text);
                 border-bottom-right-radius: 0;
@@ -108,7 +111,6 @@
     }
 }
 
-
 $material-theme-primary: mat.define-palette(blui.$blui-green, 200);
 $material-theme-accent: mat.define-palette(blui.$blui-green, 200);
 $material-theme-warn: mat.define-palette(blui.$blui-red, 500);
@@ -185,7 +187,7 @@ $dark-theme: map-merge(
         border-bottom: solid 1px map-get($theme-foreground, divider);
     }
     .mat-drawer-content {
-        background-color: #13181b!important;;
+        background-color: #13181b !important;
     }
     .text-secondary {
         color: map-get($theme-foreground, secondary-text);

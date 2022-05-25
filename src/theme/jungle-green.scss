@@ -19,10 +19,13 @@
         background-color: $primary;
     }
     .navigation-app-bar {
-        .navigation-toolbar-title, .mat-button, .nav-menu-trigger {
+        .navigation-toolbar-title,
+        .mat-button,
+        .nav-menu-trigger {
             color: map-get(blui.$blui-white, 50);
         }
-        .mat-button, .nav-menu-trigger {
+        .mat-button,
+        .nav-menu-trigger {
             &.active {
                 border-bottom: solid 2px map-get(blui.$blui-white, 50);
                 border-bottom-right-radius: 0;

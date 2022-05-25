@@ -21,10 +21,23 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
             <span class="account-delegator-weight-sum-description" responsive>BAN Delegated Weight</span>
         </div>
         <mat-divider *ngIf="delegators.length !== 0"></mat-divider>
-        <table mat-table *ngIf="delegators.length > 0" [style.width.%]="100" [dataSource]="delegatorsDatasource" responsive>
+        <table
+            mat-table
+            *ngIf="delegators.length > 0"
+            [style.width.%]="100"
+            [dataSource]="delegatorsDatasource"
+            responsive
+        >
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-                <td mat-cell class="text-secondary" [style.paddingRight.px]="16" *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+                <td
+                    mat-cell
+                    class="text-secondary"
+                    [style.paddingRight.px]="16"
+                    *matCellDef="let element; let i = index"
+                >
+                    {{ i + 1 }}
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="address">
