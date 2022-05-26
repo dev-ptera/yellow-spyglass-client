@@ -11,6 +11,7 @@ import { OnlineRepsService } from '@app/services/online-reps/online-reps.service
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AliasService } from '@app/services/alias/alias.service';
+import {accountNavItem, hashNavItem} from "../../navigation/nav-items";
 
 @Component({
     selector: 'app-account',
@@ -95,8 +96,24 @@ export class AccountComponent implements OnDestroy {
         };
     }
 
+
+
+    /** Call this method whenever someone has accidently routed to the hash page, but with an address. */
+    private _redirectToHashPage(hash: string): void {
+        void this._router.navigate([`/${hashNavItem.route}/${hash}`]);
+    }
+
     /** Given a ban address, searches for account. */
     private _searchAccount(address): void {
+
+        if (!address) {
+            return;
+        }
+
+        if (!address.startsWith('ban_')) {
+            this._redirectToHashPage(address);
+        }
+
         this._init();
         this.address = address;
         this._ref.detectChanges();
@@ -187,8 +204,9 @@ export class AccountComponent implements OnDestroy {
         }
 
         const balance = this.accountOverview.balance;
-        if (balance) {
-            this.confirmedBalance = this._util.numberWithCommas(balance.toFixed(4));
+        // Make sure 0 is included as well.
+        if (!Number.isNaN(balance)) {
+            this.confirmedBalance = this._util.numberWithCommas(parseFloat(balance.toFixed(4)));
         }
 
         const rep = this.accountOverview.representative;

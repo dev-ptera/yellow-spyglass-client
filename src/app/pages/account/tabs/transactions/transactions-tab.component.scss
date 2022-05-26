@@ -26,6 +26,7 @@
             flex-direction: column;
             justify-content: center;
             text-align: center;
+            margin-left: 12px;
         }
         .small-monkey {
             height: 64px;
@@ -35,12 +36,13 @@
     }
 }
 
-.tab-transaction-list.md {
-    .blui-info-list-item .mat-list-item {
-        .timestamps {
-            flex-direction: column;
-            text-align: right;
-        }
+$mono: monospace;
+
+.tab-transaction-list:not(.sm) {
+    .tag-row,
+    .address-row,
+    .hash-row {
+        margin-bottom: 1px;
     }
 }
 
@@ -53,10 +55,15 @@
         }
         .address {
             word-break: break-all;
+            font-family: $mono !important;
         }
         .address,
-        .hash {
+        .hash-row {
             font-weight: 400;
+            font-family: $mono;
+        }
+        .hash-row {
+            display: inline-flex;
         }
         .height {
             font-size: 12px;
@@ -81,6 +88,7 @@
 
     .to-from {
         font-weight: 400;
+        margin-right: 8px;
     }
     .amount {
         font-size: 1rem;
@@ -88,8 +96,7 @@
     }
     .timestamps {
         display: flex;
-        > span {
-            margin-left: 16px;
-        }
+        flex-direction: column;
+        text-align: right;
     }
 }

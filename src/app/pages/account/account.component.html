@@ -219,9 +219,7 @@
                         {{ withCommas(delegatorCount) }}
                     </div>
                 </ng-container>
-                <ng-container *ngIf="!vp.sm">
-                    Delegators ({{withCommas(delegatorCount)}})
-                </ng-container>
+                <ng-container *ngIf="!vp.sm"> Delegators ({{ withCommas(delegatorCount) }}) </ng-container>
             </button>
             <button
                 mat-flat-button
@@ -244,6 +242,8 @@
             <account-tx-tab
                 *ngIf="showTabNumber === 1"
                 [paginator]="transactionPaginator"
+                [blockCount]="accountOverview.blockCount"
+                [txPerPage]="txPerPage"
                 [transactions]="confirmedTransactions.display"
             ></account-tx-tab>
 

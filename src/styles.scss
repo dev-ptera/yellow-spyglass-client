@@ -7,14 +7,15 @@
 @include blui-margins.reasonable-margins();
 
 // These can change in the future, I'm not too picky.
-$font-family: sans-serif, Segoe UI, Arial;
+$font-family: -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
 
 html {
     * {
         font-family: $font-family;
     }
-    input, highcharts-chart * {
-        font-family: $font-family!important;
+    input,
+    highcharts-chart * {
+        font-family: $font-family !important;
     }
 }
 

@@ -21,7 +21,7 @@ type Transaction = {
     template: `
         <ng-container *ngIf="transactions.length !== 0">
             <ng-template [ngTemplateOutlet]="paginator"></ng-template>
-            <mat-divider></mat-divider>
+            <mat-divider *ngIf="blockCount > txPerPage"></mat-divider>
         </ng-container>
         <mat-list class="tab-transaction-list" *ngIf="transactions.length >= 0" responsive>
             <blui-info-list-item
@@ -53,19 +53,19 @@ type Transaction = {
                             {{ util.numberWithCommas(tx.amount) }}
                         </span>
                     </div>
-                    <div>
+                    <div class="address-row">
                         <ng-container *ngIf="!tx.type || tx.type === 'receive'">
                             <span class="to-from text-secondary">from</span>
-                            <span class="address link" (click)="searchService.emitSearch(tx.address, $event.ctrlKey)">
-                                {{ aliasService.get(tx.address) || tx.address }}
-                            </span>
+                            <span class="address link" (click)="searchService.emitSearch(tx.address, $event.ctrlKey)">{{
+                                aliasService.get(tx.address) || tx.address
+                            }}</span>
                         </ng-container>
 
                         <ng-container *ngIf="tx.type === 'send'">
                             <span class="to-from text-secondary">to</span>
-                            <span class="address link" (click)="searchService.emitSearch(tx.address, $event.ctrlKey)">
-                                {{ aliasService.get(tx.address) || tx.address }}
-                            </span>
+                            <span class="address link" (click)="searchService.emitSearch(tx.address, $event.ctrlKey)">{{
+                                aliasService.get(tx.address) || tx.address
+                            }}</span>
                         </ng-container>
 
                         <ng-container *ngIf="tx.type === 'change'">
@@ -73,20 +73,22 @@ type Transaction = {
                             <span
                                 class="address link"
                                 (click)="searchService.emitSearch(tx.newRepresentative, $event.ctrlKey)"
+                                >{{ aliasService.get(tx.newRepresentative) || tx.newRepresentative }}</span
                             >
-                                {{ aliasService.get(tx.newRepresentative) || tx.newRepresentative }}
-                            </span>
                         </ng-container>
                     </div>
                 </div>
                 <div blui-subtitle class="hash text-hint mat-body-2">
-                    <span *ngIf="tx.height"
-                        ><span style="margin-right: 4px">#</span>{{ util.numberWithCommas(tx.height) }}</span
+                    <span *ngIf="tx.height">
+                        <span style="margin-right: 4px">#</span>{{ util.numberWithCommas(tx.height) }}</span
                     >
                     <span style="margin: 0 4px" *ngIf="tx.height">·</span>
-                    <span class="link" (click)="searchService.emitSearch(tx.hash, $event.ctrlKey)">{{ tx.hash }}</span>
+                    <span class="link hash" (click)="searchService.emitSearch(tx.hash, $event.ctrlKey)">{{
+                        tx.hash
+                    }}</span>
                 </div>
-                <div blui-right-content class="right-content">
+                <div blui-right-content class="right-content"
+                     [style.marginRight.px]="vp.sm ? 0 : 8">
                     <div *ngIf="vp.sm" class="small-monkey">
                         <img [src]="apiService.createMonKeyUrl(tx.address || tx.newRepresentative)" loading="lazy" />
                     </div>
@@ -99,7 +101,7 @@ type Transaction = {
                 </div>
             </blui-info-list-item>
             <ng-container *ngIf="transactions.length !== 0">
-                <mat-divider></mat-divider>
+                <mat-divider *ngIf="blockCount > txPerPage"></mat-divider>
                 <ng-template [ngTemplateOutlet]="paginator"></ng-template>
             </ng-container>
         </mat-list>
@@ -122,6 +124,9 @@ export class TransactionsTabComponent {
     @Input() transactions: Transaction[];
     @Input() isPending: boolean;
     @Input() paginator: TemplateRef<PaginatorComponent>;
+    @Input() blockCount: number;
+    @Input() txPerPage: number;
+
     dateMap: Map<string, { date: string; diffDays: number }> = new Map();
 
     constructor(
@@ -173,7 +178,7 @@ export class TransactionsTabComponent {
         }
         if (days > 30) {
             const months = Math.round(days / 30);
-            return `${months} month${months > 1 ? 's' : ''} ago`;
+            return `${months} ${this.vp.sm ? 'mo' : 'month'}${months > 1 ? 's' : ''} ago`;
         }
         if (days > 7) {
             const weeks = Math.round(days / 7);

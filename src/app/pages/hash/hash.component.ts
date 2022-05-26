@@ -6,14 +6,15 @@ import { SearchService } from '@app/services/search/search.service';
 import { Subscription } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 import { ApiService } from '@app/services/api/api.service';
+import { accountNavItem } from '../../navigation/nav-items';
 
 @Component({
     selector: 'app-hash',
     template: `
         <ng-template #titleContent>
             <div class="app-page-title">
-                <span *ngIf="loading">Loading</span>
-                <span *ngIf="!loading">State Block</span>
+                <span *ngIf="isLoading">Loading</span>
+                <span *ngIf="!isLoading">State Block</span>
             </div>
             <div class="app-page-subtitle hash-searched">
                 {{ hash }}
@@ -30,21 +31,23 @@ import { ApiService } from '@app/services/api/api.service';
                         {{ block.blockAccount }}
                     </span>
                 </div>
-                <div class="hash-description">The account represented by this state block</div>
+                <div class="hash-description text-secondary">The account represented by this state block</div>
             </div>
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Subtype</span>
                     <span class="app-section-subtitle">{{ block.subtype }}</span>
                 </div>
-                <div class="hash-description">Transaction type; can be "send", "receive", or "change"</div>
+                <div class="hash-description text-secondary">
+                    Transaction type; can be "send", "receive", or "change"
+                </div>
             </div>
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Amount</span>
                     <span class="app-section-subtitle">{{ block.amountRaw }} RAW | {{ block.amount }}</span>
                 </div>
-                <div class="hash-description">Amount of BANANO sent in this transaction</div>
+                <div class="hash-description text-secondary">Amount of BANANO sent in this transaction</div>
             </div>
 
             <div class="hash-section" *ngIf="block.subtype !== 'change'">
@@ -61,7 +64,7 @@ import { ApiService } from '@app/services/api/api.service';
                     </span>
                 </div>
 
-                <div class="hash-description">
+                <div class="hash-description text-secondary">
                     <ng-container *ngIf="block.subtype === 'send'">
                         The account that is receiving the transaction
                     </ng-container>
@@ -77,28 +80,30 @@ import { ApiService } from '@app/services/api/api.service';
                         >{{ block.balance }} RAW | {{ convertRawToBan(block.balance) }}</span
                     >
                 </div>
-                <div class="hash-description">Block account balance once this transaction is confirmed</div>
+                <div class="hash-description text-secondary">
+                    Block account balance once this transaction is confirmed
+                </div>
             </div>
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Height</span>
                     <span class="app-section-subtitle">{{ block.height }}</span>
                 </div>
-                <div class="hash-description">Transaction number of this account</div>
+                <div class="hash-description text-secondary">Transaction number of this account</div>
             </div>
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Timestamp</span>
                     <span class="app-section-subtitle">{{ convertUnixToDate(block.timestamp) }}</span>
                 </div>
-                <div class="hash-description">The date and time this block was discovered</div>
+                <div class="hash-description text-secondary">The date and time this block was discovered</div>
             </div>
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Confirmed</span>
                     <span class="app-section-subtitle">{{ block.confirmed }}</span>
                 </div>
-                <div class="hash-description">Whether or not this block is confirmed</div>
+                <div class="hash-description text-secondary">Whether or not this block is confirmed</div>
             </div>
             <div class="hash-section">
                 <div>
@@ -107,7 +112,7 @@ import { ApiService } from '@app/services/api/api.service';
                         block.contents.representative
                     }}</span>
                 </div>
-                <div class="hash-description">The account's representative</div>
+                <div class="hash-description text-secondary">The account's representative</div>
             </div>
             <div class="hash-section" *ngIf="block.subtype !== 'change'">
                 <div>
@@ -120,7 +125,7 @@ import { ApiService } from '@app/services/api/api.service';
                         {{ block.height === 1 ? 'This block opened the account' : block.contents.previous }}</span
                     >
                 </div>
-                <div class="hash-description">The previous block in this account's chain</div>
+                <div class="hash-description text-secondary">The previous block in this account's chain</div>
             </div>
             <div class="hash-section">
                 <div>
@@ -129,7 +134,7 @@ import { ApiService } from '@app/services/api/api.service';
                         block.contents.link
                     }}</span>
                 </div>
-                <div class="hash-description">The corresponding block that started this transaction</div>
+                <div class="hash-description text-secondary">The corresponding block that started this transaction</div>
             </div>
             <div class="hash-section">
                 <div>
@@ -147,10 +152,10 @@ import { ApiService } from '@app/services/api/api.service';
 
         <div class="hash-root app-page-root" responsive>
             <div class="app-page-content">
-                <app-error *ngIf="error"></app-error>
-                <ng-container *ngIf="!error">
+                <app-error *ngIf="hashError"></app-error>
+                <ng-container *ngIf="!hashError">
                     <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
-                    <ng-template *ngIf="!loading" [ngTemplateOutlet]="bodyContent"></ng-template>
+                    <ng-template *ngIf="!isLoading" [ngTemplateOutlet]="bodyContent"></ng-template>
                 </ng-container>
             </div>
         </div>
@@ -161,8 +166,8 @@ import { ApiService } from '@app/services/api/api.service';
 export class HashComponent implements OnDestroy {
     hash: string;
     block: BlockDto;
-    loading: boolean;
-    error: boolean;
+    isLoading: boolean;
+    hashError: boolean;
 
     routeListener: Subscription;
 
@@ -191,24 +196,34 @@ export class HashComponent implements OnDestroy {
     private _searchHash(hash: string): void {
         this.hash = hash;
         this.block = undefined;
-        this.loading = true;
-        this.error = false;
+        this.isLoading = true;
+        this.hashError = false;
 
-        this._ref.detectChanges();
+        if (!hash) {
+            return;
+        }
 
-        const spin = new Promise((resolve) => setTimeout(resolve, 500));
+        if (hash.startsWith('ban_')) {
+            return this._redirectToAddressPage(hash);
+        }
 
-        // Confirmed Transactions
-        Promise.all([this._apiService.fetchBlock(hash), spin])
-            .then(([blockResponse]) => {
-                this.loading = false;
+        this._apiService
+            .fetchBlock(hash)
+            .then((blockResponse) => {
                 this.block = blockResponse;
             })
             .catch((err) => {
                 console.error(err);
-                this.loading = false;
-                this.error = true;
+                this.hashError = true;
+            })
+            .finally(() => {
+                this.isLoading = false;
             });
+    }
+
+    /** Call this method whenever someone has accidently routed to the hash page, but with an address. */
+    private _redirectToAddressPage(address: string): void {
+        void this._router.navigate([`/${accountNavItem.route}/${address}`]);
     }
 
     convertRawToBan(raw: string): string {
