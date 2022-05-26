@@ -1,9 +1,47 @@
 @use 'node_modules/@brightlayer-ui/colors/palette' as blui;
 @use 'node_modules/@brightlayer-ui/angular-themes/margins' as blui-margins;
+@use '@angular/material' as mat;
 @use './theme/jungle-green';
 @use './theme/dark-theme';
 
 @include blui-margins.reasonable-margins();
+
+// These can change in the future, I'm not too picky.
+$font-family: sans-serif, Segoe UI, Arial;
+
+html {
+    * {
+        font-family: $font-family;
+    }
+    input, highcharts-chart * {
+        font-family: $font-family!important;
+    }
+}
+
+// Custom Typography Sizes & Weights
+$custom-typography: mat.define-typography-config(
+    $font-family: $font-family,
+    $display-4: mat.define-typography-level(6rem, 1.167, 300),
+    $display-2: mat.define-typography-level(3rem, 1.167, 400),
+    $display-1: mat.define-typography-level(2.125rem, 1.235, 400),
+    $headline: mat.define-typography-level(1.5rem, 1.334, 400),
+    $title: mat.define-typography-level(1.25rem, 1.6, 600),
+    $subheading-2: mat.define-typography-level(1rem, 1.25, 600),
+    $subheading-1: mat.define-typography-level(0.875rem, 1.57, 600),
+    $body-2: mat.define-typography-level(0.875rem, 1.43, 400),
+    $body-1: mat.define-typography-level(1rem, 1.5, 400),
+    $caption: mat.define-typography-level(0.75rem, 1.66, 400),
+    $button: mat.define-typography-level(0.875rem, 1, 600),
+    $input: mat.define-typography-level(inherit, 1.125, 400),
+);
+
+/*
+** Include the Material base styles
+**
+** NOTE: material theme will use our Brightlayer UI custom typography
+** There is currently not a way to specify different custom fonts for different themes
+*/
+@include mat.core($custom-typography);
 
 @font-face {
     font-family: pirateFont;

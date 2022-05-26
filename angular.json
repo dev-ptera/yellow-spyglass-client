@@ -29,9 +29,7 @@
                             "src/banano.json"
                         ],
                         "styles": [
-                            "src/styles.scss",
-                            "./node_modules/@brightlayer-ui/angular-themes/theme.scss",
-                            "./node_modules/@brightlayer-ui/angular-themes/open-sans.scss"
+                            "src/styles.scss"
                         ],
                         "scripts": []
                     },
@@ -109,9 +107,7 @@
                             "src/assets"
                         ],
                         "styles": [
-                            "src/styles.scss",
-                            "./node_modules/@brightlayer-ui/angular-themes/theme.scss",
-                            "./node_modules/@brightlayer-ui/angular-themes/open-sans.scss"
+                            "src/styles.scss"
                         ],
                         "scripts": []
                     }

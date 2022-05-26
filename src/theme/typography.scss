@@ -1,11 +1,6 @@
 @use '@angular/material' as mat;
 
 @mixin typography() {
-
-    app-root, body, .mat-slide-toggle-content {
-        font-family: Arial, Segoe UI,  Helvetica;
-    }
-
     .mat-display-4,
     .mat-display-3,
     .mat-display-2 {
@@ -26,14 +21,6 @@
     .mat-button {
         margin-bottom: 0;
     }
-
-    .mat-body-2 {
-        font-weight: 600;
-    }
-    .mat-subheading-2 {
-        line-height: 1.25rem !important;
-    }
-
     .mat-overline {
         font-size: 0.75rem;
         font-weight: 600;

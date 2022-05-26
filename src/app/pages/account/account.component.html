@@ -216,17 +216,11 @@
                 <ng-container *ngIf="vp.sm">
                     <mat-icon>how_to_vote</mat-icon>
                     <div class="count-subtitle">
-                        {{ withCommas(delegators.length) }}
+                        {{ withCommas(delegatorCount) }}
                     </div>
                 </ng-container>
                 <ng-container *ngIf="!vp.sm">
-                    Delegators ({{
-                        withCommas(
-                            fundedDelegatorsCount === undefined
-                                ? accountOverview.delegatorsCount
-                                : fundedDelegatorsCount
-                        )
-                    }})
+                    Delegators ({{withCommas(delegatorCount)}})
                 </ng-container>
             </button>
             <button
@@ -265,7 +259,7 @@
                 [delegators]="delegators"
                 [weightSum]="weightSum"
                 [loadedDelegatorsCount]="delegators.length"
-                [delegatorsCount]="fundedDelegatorsCount"
+                [delegatorsCount]="delegatorCount"
                 (loadMoreDelegators)="fetchDelegators()"
             >
             </account-delegators-tab>

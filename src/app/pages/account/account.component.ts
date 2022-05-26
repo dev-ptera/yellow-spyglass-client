@@ -35,7 +35,7 @@ export class AccountComponent implements OnDestroy {
     weightSum: number;
     showTabNumber: number;
     confirmedTxPageIndex: number;
-    fundedDelegatorsCount: number;
+    delegatorCount: number;
 
     delegators: DelegatorDto[];
     receivableTransactions: ReceivableTransactionDto[] = [];
@@ -88,7 +88,7 @@ export class AccountComponent implements OnDestroy {
         this.isLoadingInsights = false;
         this.showTabNumber = 1;
         this.confirmedTxPageIndex = 0;
-        this.fundedDelegatorsCount = 0;
+        this.delegatorCount = 0;
         this.confirmedTransactions = {
             all: new Map<number, ConfirmedTransactionDto[]>(),
             display: [],
@@ -158,8 +158,7 @@ export class AccountComponent implements OnDestroy {
             .fetchAccountDelegators(this.address, this.delegators.length)
             .then((data) => {
                 this.delegators.push(...data.delegators);
-                this.fundedDelegatorsCount = data.fundedCount;
-                this._ref.detectChanges();
+                this.delegatorCount = data.fundedCount;
             })
             .catch((err) => {
                 console.error(err);
@@ -178,6 +177,10 @@ export class AccountComponent implements OnDestroy {
         this.receivableTransactions = data[2];
         this.weightSum = this.accountOverview.weight;
         this.insightsDisabled = this.accountOverview.blockCount > 100_000 || !this.accountOverview.opened;
+
+        if (!this.delegatorCount) {
+            this.delegatorCount = data[0].delegatorsCount;
+        }
 
         if (!this.accountOverview.opened) {
             return;
