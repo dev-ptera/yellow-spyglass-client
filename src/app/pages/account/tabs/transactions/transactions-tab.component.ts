@@ -87,8 +87,7 @@ type Transaction = {
                         tx.hash
                     }}</span>
                 </div>
-                <div blui-right-content class="right-content"
-                     [style.marginRight.px]="vp.sm ? 0 : 8">
+                <div blui-right-content class="right-content" [style.marginRight.px]="vp.sm ? 0 : 8">
                     <div *ngIf="vp.sm" class="small-monkey">
                         <img [src]="apiService.createMonKeyUrl(tx.address || tx.newRepresentative)" loading="lazy" />
                     </div>
