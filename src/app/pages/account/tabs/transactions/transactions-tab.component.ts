@@ -192,10 +192,9 @@ export class TransactionsTabComponent {
             if (hours > 1) {
                 const roundedHours = Math.round(hours);
                 return `${roundedHours} hour${roundedHours > 1 ? 's' : ''} ago`;
-            } else {
-                const roundedMinutes = Math.round(hours * 60);
-                return `${roundedMinutes} ${this.vp.sm ? 'min' : 'minute'}${roundedMinutes > 1 ? 's' : ''} ago`;
             }
+            const roundedMinutes = Math.round(hours * 60);
+            return `${roundedMinutes} ${this.vp.sm ? 'min' : 'minute'}${roundedMinutes > 1 ? 's' : ''} ago`;
         }
     }
 

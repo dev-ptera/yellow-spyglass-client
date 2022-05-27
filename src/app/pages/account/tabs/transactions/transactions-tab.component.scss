@@ -55,15 +55,14 @@ $mono: monospace;
         }
         .address {
             word-break: break-all;
-            font-family: $mono !important;
         }
         .address,
         .hash-row {
             font-weight: 400;
-            font-family: $mono;
         }
         .hash-row {
             display: inline-flex;
+            font-family: $mono;
         }
         .height {
             font-size: 12px;
