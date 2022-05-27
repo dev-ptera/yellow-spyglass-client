@@ -266,7 +266,7 @@
 
             <account-insights-tab
                 *ngIf="showTabNumber === 4"
-                [isAccountOpened]="accountOverview.opened"
+                [isLoadingInsights]="isLoadingInsights"
                 [blockCount]="accountOverview.blockCount"
                 [hasError]="hasInsightsError"
                 [insights]="insights"

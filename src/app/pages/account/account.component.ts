@@ -173,6 +173,9 @@ export class AccountComponent implements OnDestroy {
             .then((data) => {
                 this.delegators.push(...data.delegators);
                 this.delegatorCount = data.fundedCount;
+                if (!this.weightSum) {
+                    this.weightSum = data.weightSum;
+                }
             })
             .catch((err) => {
                 console.error(err);
@@ -189,8 +192,11 @@ export class AccountComponent implements OnDestroy {
         this.confirmedTransactions.all.set(0, data[1]);
         this.confirmedTransactions.display = data[1];
         this.receivableTransactions = data[2];
-        this.weightSum = this.accountOverview.weight;
         this.insightsDisabled = this.accountOverview.blockCount > 100_000 || !this.accountOverview.opened;
+
+        if (this.accountOverview.weight) {
+            this.weightSum = this.accountOverview.weight;
+        }
 
         if (!this.delegatorCount) {
             this.delegatorCount = data[0].delegatorsCount;
