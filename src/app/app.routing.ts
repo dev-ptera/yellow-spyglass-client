@@ -17,20 +17,36 @@ const routes: Routes = [
     { path: APP_NAV_ITEMS.representatives.route, component: RepresentativesComponent },
     { path: APP_NAV_ITEMS.bookmarks.route, component: BookmarksComponent },
     { path: APP_NAV_ITEMS.node.route, component: NodeMonitorComponent },
-    { path: 'status', component: NodeMonitorComponent }, // Match Creeper path
- //   { path: 'status', redirectTo: APP_NAV_ITEMS.node.route, pathMatch: 'full'},
     { path: APP_NAV_ITEMS.wallets.route, component: WalletsComponent },
     { path: APP_NAV_ITEMS.knownAccounts.route, component: KnownAccountsComponent },
     { path: APP_NAV_ITEMS.network.route, component: NetworkComponent },
     { path: APP_NAV_ITEMS.vanity.route, component: VanityComponent },
-    { path: `explorer/${APP_NAV_ITEMS.account.route}/:id/history`, component: AccountComponent }, // Match Creeper path
-    { path: `explorer/${APP_NAV_ITEMS.account.route}/:id`, component: AccountComponent }, // Match Creeper path
     { path: `${APP_NAV_ITEMS.account.route}/:id`, component: AccountComponent },
     { path: `${APP_NAV_ITEMS.hash.route}/:id`, component: HashComponent },
-    { path: `explorer/${APP_NAV_ITEMS.hash.route}/:id`, component: HashComponent }, // Match Creeper path
-    { path: `explorer/block/:id`, component: HashComponent }, // Match Creeper path
-    { path: `explorer/auto/:id`, component: HashComponent }, // Match Creeper path
+
+    // Handle Creeper Legacy Redirects
+    { path: 'status', redirectTo: APP_NAV_ITEMS.node.route, pathMatch: 'full' },
+    { path: `explorer/account/:id/history`, redirectTo: `${APP_NAV_ITEMS.account.route}/:id`,  pathMatch: 'full' }, // Match Creeper path
+    { path: `explorer/account/:id`, redirectTo: `${APP_NAV_ITEMS.account.route}/:id`,  pathMatch: 'full' }, // Match Creeper path
+    { path: `explorer/block/:id`, redirectTo: `${APP_NAV_ITEMS.hash.route}/:id`,  pathMatch: 'full' }, // Match Creeper path
+    { path: `explorer/hash/:id`, redirectTo: `${APP_NAV_ITEMS.hash.route}/:id`,  pathMatch: 'full' }, // Match Creeper path
+    { path: `explorer/auto/:id`, redirectTo: `${APP_NAV_ITEMS.hash.route}/:id`,  pathMatch: 'full' }, // Match Creeper path
+
+
+    //  { path: `explorer/${APP_NAV_ITEMS.hash.route}/:id`, component: HashComponent }, // Match Creeper path
+    //  { path: `explorer/block/:id`, component: HashComponent }, // Match Creeper path
+    //  { path: `explorer/auto/:id`, component: HashComponent }, // Match Creeper path
+    //   { path: `explorer/${APP_NAV_ITEMS.account.route}/:id/history`, component: AccountComponent }, // Match Creeper path
+    //   { path: `explorer/${APP_NAV_ITEMS.account.route}/:id`, component: AccountComponent }, // Match Creeper path
+    //  { path: 'status', component: NodeMonitorComponent }, // Match Creeper path
+
+
+
     { path: '**', redirectTo: '', pathMatch: 'full' },
+
+
+
+
 ];
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
