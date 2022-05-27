@@ -30,21 +30,7 @@ import * as Highcharts from 'highcharts';
             </div>
         </div>
 
-        <mat-card class="tab-empty-state mat-elevation-z0 divider-border" *ngIf="blockCount >= maxInsightsLimit">
-            <blui-empty-state
-                responsive
-                class="account-empty-state"
-                title="No Insights"
-                [description]="getErrorDescription()"
-            >
-                <mat-icon blui-empty-icon>disc_full</mat-icon>
-            </blui-empty-state>
-        </mat-card>
-
-        <mat-card
-            class="tab-empty-state mat-elevation-z0 divider-border"
-            *ngIf="blockCount < maxInsightsLimit && !insights && !hasError"
-        >
+        <mat-card class="tab-empty-state mat-elevation-z0 divider-border" *ngIf="isLoadingInsights">
             <blui-empty-state
                 responsive
                 class="account-empty-state"
@@ -57,6 +43,20 @@ import * as Highcharts from 'highcharts';
 
         <mat-card *ngIf="hasError" class="tab-empty-state mat-elevation-z0 divider-border">
             <app-error></app-error>
+        </mat-card>
+
+        <mat-card
+            class="tab-empty-state mat-elevation-z0 divider-border"
+            *ngIf="!insights && !isLoadingInsights && !hasError"
+        >
+            <blui-empty-state
+                responsive
+                class="account-empty-state"
+                title="No Insights"
+                [description]="getErrorDescription()"
+            >
+                <mat-icon blui-empty-icon>disc_full</mat-icon>
+            </blui-empty-state>
         </mat-card>
 
         <ng-template #sent>
@@ -225,7 +225,7 @@ export class InsightsTabComponent implements OnChanges {
     @Input() insights: InsightsDto;
     @Input() hasError: boolean;
     @Input() blockCount: number;
-    @Input() isAccountOpened: boolean;
+    @Input() isLoadingInsights: boolean;
 
     Highcharts: typeof Highcharts = Highcharts;
 
@@ -411,7 +411,7 @@ export class InsightsTabComponent implements OnChanges {
     }
 
     getErrorDescription(): string {
-        if (!this.isAccountOpened) {
+        if (this.blockCount === 0) {
             return 'This account needs to receive a block before it can be analyzed.';
         }
         return 'This account has too many transactions to analyze.  Please select an account with less activity.';

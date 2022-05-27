@@ -124,7 +124,12 @@ export class DelegatorsTabComponent implements OnChanges {
     ngOnChanges(): void {
         this.isLoading = false;
         this.delegatorsDatasource = [];
-        this.formattedWeight = this.util.numberWithCommas(this.weightSum.toFixed(2));
+
+        if (this.weightSum) {
+            this.formattedWeight = this.util.numberWithCommas(this.weightSum.toFixed(2));
+        } else {
+            this.formattedWeight = '0';
+        }
         this.delegators.map((delegator) => {
             delegator.weight = this.util.numberWithCommas(delegator.weight) as any;
             this.delegatorsDatasource.push(delegator);
