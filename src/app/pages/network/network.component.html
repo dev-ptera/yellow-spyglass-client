@@ -60,7 +60,7 @@
             </tr>
             <tr>
                 <td>Total Supply</td>
-                <td>{{ supply.totalAmount | appComma }}</td>
+                <td>{{ supply.totalAmount - supply.burnedAmount | appComma }}</td>
                 <td>100%</td>
             </tr>
             <tr>
@@ -178,7 +178,3 @@
         </ng-container>
     </div>
 </div>
-
-<!--
-<app-wave [darkThemeWaveNumber]="16"></app-wave>
--->

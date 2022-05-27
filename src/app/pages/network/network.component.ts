@@ -26,10 +26,11 @@ export class NetworkComponent implements OnInit {
     consensusChartOptions: Options;
 
     supply: SupplyDto;
-    peerVersions: PeerVersionsDto[];
-    nakamotoCoefficient: number;
     quorum: QuorumDto;
+    peerVersions: PeerVersionsDto[];
+
     totalNumberOfPeers = 0;
+    nakamotoCoefficient: number;
 
     constructor(
         public vp: ViewportService,
