@@ -27,6 +27,7 @@ const routes: Routes = [
     { path: `${APP_NAV_ITEMS.account.route}/:id`, component: AccountComponent },
     { path: `${APP_NAV_ITEMS.hash.route}/:id`, component: HashComponent },
     { path: `explorer/${APP_NAV_ITEMS.hash.route}/:id`, component: HashComponent }, // Match Creeper path
+    { path: `explorer/block/:id`, component: HashComponent }, // Match Creeper path
     { path: `explorer/auto/:id`, component: HashComponent }, // Match Creeper path
     { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
