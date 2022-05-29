@@ -13,9 +13,10 @@ import { AppBarComponent } from './app-bar/app-bar.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { SearchBarComponent } from './search-bar/search-bar.component';
+import {BoldSearchPipe} from "./search-bar/bold-search.pipe";
 
 @NgModule({
-    declarations: [NavigationComponent, AppUserMenuComponent, AppBarComponent, SearchBarComponent],
+    declarations: [NavigationComponent, AppUserMenuComponent, AppBarComponent, SearchBarComponent, BoldSearchPipe],
     imports: [
         AppCommonModule,
         BrowserAnimationsModule,
@@ -32,6 +33,6 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
         MatMenuModule,
         MatProgressBarModule,
     ],
-    exports: [NavigationComponent, AppUserMenuComponent, AppBarComponent, SearchBarComponent],
+    exports: [NavigationComponent, AppUserMenuComponent, AppBarComponent, SearchBarComponent, BoldSearchPipe],
 })
 export class NavigationModule {}

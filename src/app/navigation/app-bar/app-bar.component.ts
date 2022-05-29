@@ -96,7 +96,7 @@ import { LoadingService } from '@app/services/loading/loading.service';
                         <mat-icon>search</mat-icon>
                     </button>
 
-                    <app-search-bar
+                    <app-search-bar *ngIf="hasToggledMobileSearch"
                         style="display: flex; width: 100%; height: 40px"
                         (closeSearch)="hasToggledMobileSearch = false"
                     ></app-search-bar>

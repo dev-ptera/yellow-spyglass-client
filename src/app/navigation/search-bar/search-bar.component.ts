@@ -21,6 +21,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
     template: `
         <input
             #inputElement
+            [class.red]="trigger.menuOpen"
             [class.desktop-search-input]="!vp.sm"
             class="app-search-bar-input divider-border"
             type="text"
@@ -32,12 +33,12 @@ import { MatMenuTrigger } from '@angular/material/menu';
             (keyup)="filterOrSearch($event)"
             #trigger="matMenuTrigger"
             [matMenuTriggerFor]="menu"
-            (menuOpened)="menuOpened()"
         />
 
         <mat-menu #menu="matMenu" class="alias-search-menu">
-            <button mat-menu-item *ngFor="let item of matchingAccounts" (click)="emitSearch(item.address)">
-                {{ item.alias }}
+            <button mat-menu-item *ngFor="let item of matchingAccounts"
+                    (click)="emitSearch(item.address)"
+                    [innerHTML]="item.alias | boldSearch: inputElement.value">
             </button>
         </mat-menu>
     `,
@@ -77,14 +78,17 @@ export class SearchBarComponent {
             });
     }
 
+    ngAfterViewChecked(): void {
+        if (this.trigger.menuOpen || this.vp.sm) {
+            this.inputElement.nativeElement.focus();
+        }
+    }
+
     filterOrSearch(e: KeyboardEvent): void {
         this.matchingAccounts = [];
         const value = e.target['value'].toLowerCase();
 
         if (!value) {
-            return this.trigger.closeMenu();
-        }
-        if (value.length <= 1) {
             return this.trigger.closeMenu();
         }
 
@@ -123,13 +127,6 @@ export class SearchBarComponent {
         if (this.matchingAccounts.length === 0) {
             this.trigger.closeMenu();
         }
-    }
-
-    menuOpened(): void {
-        setTimeout(() => {
-            console.log('focus menu');
-            this.inputElement.nativeElement.focus();
-        });
     }
 
     private _matchAliases(value: string): void {
