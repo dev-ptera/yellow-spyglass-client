@@ -36,7 +36,6 @@ export class RepresentativesComponent implements OnInit {
     expandedMonitoredTable = false;
     showOfflineWeight = false;
     showOfflineReps = false;
-    monitoredRepColumnToggle = false;
 
     onlineWeight: number;
     offlineWeight: number;
@@ -83,7 +82,7 @@ export class RepresentativesComponent implements OnInit {
                 this.offlineWeight = data[2].offlineWeight;
                 this._attachScores(data[3], this.allLargeReps);
                 this._attachScores(data[3], this.monitoredReps);
-                this._countMicroReps(this.monitoredReps);
+                this._countMicroReps(this.monitoredReps, this.allLargeReps);
                 this.filterLargeRepsByStatus();
                 this.onlineLargeRepsCount = this._countOnlineReps(this.allLargeReps);
             })
@@ -112,9 +111,19 @@ export class RepresentativesComponent implements OnInit {
     }
 
     /** Iterates through the list of monitored reps and adds smaller reps to a separate list. */
-    private _countMicroReps(monitoredReps: MonitoredRepDto[]): void {
+    private _countMicroReps(monitoredReps: MonitoredRepDto[], largeReps: Representative[]): void {
+        // If a monitored representative also appears in the large representative list, update the monitored rep's
+        // weight here.  Sometimes a mis-configured node monitor or syncing node will emit reported weight.
+        // Don't want to accidentally include a large rep in the micro rep list if we can help it.
+        const largeRepMap = new Map<string, Representative>();
+        largeReps.map((rep) => largeRepMap.set(rep.address, rep));
+
         this.microReps = [];
         monitoredReps.map((rep) => {
+            if (largeRepMap.has(rep.address)) {
+                rep.weight = largeRepMap.get(rep.address).weight;
+                return;
+            }
             if (rep.weight < 100_000) {
                 this.microReps.push({
                     address: rep.address,

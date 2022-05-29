@@ -125,11 +125,6 @@ $custom-typography: mat.define-typography-config(
     line-height: 1.5 !important;
 }
 
-// Disable mat tab list pagination.
-.mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
-    display: none !important;
-}
-
 // Stupid safari scroll behavior hack.
 .sm.blui-drawer-layout {
     height: 100% !important;

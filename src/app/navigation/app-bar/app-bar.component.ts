@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { Meta, Title } from '@angular/platform-browser';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { SearchService } from '@app/services/search/search.service';
 import { DrawerStateService } from '@app/services/drawer-state/drawer-state.service';
 import { APP_NAV_ITEMS } from '../nav-items';
@@ -81,16 +81,7 @@ import { LoadingService } from '@app/services/loading/loading.service';
                     <blui-spacer></blui-spacer>
                     <blui-spacer></blui-spacer>
 
-                    <input
-                        *ngIf="!vp.sm"
-                        class="desktop-search-input divider-border"
-                        type="text"
-                        tabindex="0"
-                        autocapitalize="none"
-                        placeholder="Search Address or Transaction Hash"
-                        [(ngModel)]="appbarSearchText"
-                        (keyup)="appbarSearch($event)"
-                    />
+                    <app-search-bar *ngIf="!vp.sm"></app-search-bar>
                     <button *ngIf="vp.sm" mat-icon-button (click)="openSearch()" [style.marginRight.px]="0">
                         <mat-icon>search</mat-icon>
                     </button>
@@ -99,21 +90,16 @@ import { LoadingService } from '@app/services/loading/loading.service';
                 </div>
             </mat-toolbar>
 
-            <mat-toolbar class="navigation-search-bar" [class.active]="toggleSearch" responsive>
-                <mat-toolbar-row style="padding: 0 16px" style="display: flex; width: 100%">
+            <mat-toolbar class="navigation-search-bar" [class.active]="hasToggledMobileSearch" responsive>
+                <mat-toolbar-row style="display: flex; width: 100%; padding: 0 16px">
                     <button mat-icon-button disabled style="margin-left: -8px">
                         <mat-icon>search</mat-icon>
                     </button>
-                    <input
-                        class="search-control"
-                        type="text"
-                        tabindex="0"
-                        autocapitalize="none"
-                        placeholder="Search Address or Transaction Hash"
-                        [(ngModel)]="appbarSearchText"
-                        (keyup)="appbarSearch($event)"
-                        #mobileSearchBar
-                    />
+
+                    <app-search-bar
+                        style="display: flex; width: 100%; height: 40px"
+                        (closeSearch)="hasToggledMobileSearch = false"
+                    ></app-search-bar>
                     <button mat-icon-button (click)="closeSearch()">
                         <mat-icon>close</mat-icon>
                     </button>
@@ -133,17 +119,17 @@ export class AppBarComponent {
     @Input() toolbarTitle: string;
     @Output() openDrawer: EventEmitter<void> = new EventEmitter<void>();
 
-    appbarSearchText: string;
-    toggleSearch = false;
     isLoading = false;
+    hasToggledMobileSearch = false;
+
     pages = APP_NAV_ITEMS;
+    appbarSearchText: string;
 
     constructor(
         public vp: ViewportService,
         public router: Router,
         private readonly _title: Title,
         private readonly _meta: Meta,
-        private readonly _searchService: SearchService,
         private readonly _viewportService: ViewportService,
         private readonly _stateService: DrawerStateService,
         private readonly _loadingService: LoadingService
@@ -156,20 +142,13 @@ export class AppBarComponent {
     }
 
     openSearch(): void {
-        this.toggleSearch = true;
+        this.hasToggledMobileSearch = true;
         // focus the input after the animation completes to avoid a jerky transition
         setTimeout(() => this.searchBar.nativeElement.focus(), 300);
     }
 
-    appbarSearch(event: any): void {
-        if (event.key === 'Enter') {
-            this._searchService.emitSearch(this.appbarSearchText, false);
-            this.closeSearch();
-        }
-    }
-
     closeSearch(): void {
         this.appbarSearchText = '';
-        this.toggleSearch = false;
+        this.hasToggledMobileSearch = false;
     }
 }

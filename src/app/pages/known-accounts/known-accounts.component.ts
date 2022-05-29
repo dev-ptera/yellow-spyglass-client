@@ -17,8 +17,8 @@ import { UtilService } from '@app/services/util/util.service';
 })
 export class KnownAccountsComponent implements OnInit {
     accountsDataSource;
-    loading = true;
-    error = false;
+    isLoading = true;
+    hasError = false;
     displayedColumns = ['alias', 'type', 'owner'];
     @ViewChild('sort') sort: MatSort;
 
@@ -35,15 +35,15 @@ export class KnownAccountsComponent implements OnInit {
         this._api
             .fetchKnownAccounts()
             .then((data: KnownAccountDto[]) => {
-                this.loading = false;
+                this.isLoading = false;
                 this.accountsDataSource = new MatTableDataSource(data);
                 this._ref.detectChanges();
                 this.accountsDataSource.sort = this.sort;
             })
             .catch((err) => {
                 console.error(err);
-                this.error = true;
-                this.loading = false;
+                this.hasError = true;
+                this.isLoading = false;
             });
     }
 

@@ -1,0 +1,19 @@
+.desktop-search-input {
+    margin-right: 32px;
+    margin-left: 32px;
+    width: 320px;
+    box-sizing: border-box;
+    height: 36px;
+    border-radius: 4px;
+    padding: 0 16px;
+}
+
+.alias-search-menu {
+    min-width: 0 !important;
+    min-height: 0 !important;
+    max-width: unset !important;
+    max-height: 400px !important;
+    button {
+        width: 320px !important;
+    }
+}

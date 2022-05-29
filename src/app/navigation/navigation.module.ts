@@ -12,9 +12,10 @@ import { FormsModule } from '@angular/forms';
 import { AppBarComponent } from './app-bar/app-bar.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { SearchBarComponent } from './search-bar/search-bar.component';
 
 @NgModule({
-    declarations: [NavigationComponent, AppUserMenuComponent, AppBarComponent],
+    declarations: [NavigationComponent, AppUserMenuComponent, AppBarComponent, SearchBarComponent],
     imports: [
         AppCommonModule,
         BrowserAnimationsModule,
@@ -28,8 +29,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
         UserMenuModule,
         FormsModule,
         EmptyStateModule,
+        MatMenuModule,
         MatProgressBarModule,
     ],
-    exports: [NavigationComponent, AppUserMenuComponent, AppBarComponent],
+    exports: [NavigationComponent, AppUserMenuComponent, AppBarComponent, SearchBarComponent],
 })
 export class NavigationModule {}

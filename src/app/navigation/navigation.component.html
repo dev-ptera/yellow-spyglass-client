@@ -9,6 +9,7 @@
                     [title]="navItem.title"
                     [subtitle]="navItem.subtitle"
                     [selected]="navItem.title === getSelectedItem()"
+                    [activeItemBackgroundShape]="'round'"
                     (select)="selectItem(navItem)"
                 >
                     <mat-icon blui-icon>{{ navItem.icon }}</mat-icon>
@@ -22,6 +23,7 @@
                     [title]="navItem.title"
                     [subtitle]="navItem.subtitle"
                     [selected]="navItem.title === getSelectedItem()"
+                    [activeItemBackgroundShape]="'round'"
                     (select)="selectItem(navItem)"
                 >
                     <mat-icon blui-icon>{{ navItem.icon }}</mat-icon>

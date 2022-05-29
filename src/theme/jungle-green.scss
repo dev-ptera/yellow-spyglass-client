@@ -18,6 +18,9 @@
     .mat-toolbar.mat-primary {
         background-color: $primary;
     }
+    .blui-drawer .blui-drawer-nav-item-active-highlight {
+        opacity: 0.1;
+    }
     .navigation-app-bar {
         .navigation-toolbar-title,
         .mat-button,

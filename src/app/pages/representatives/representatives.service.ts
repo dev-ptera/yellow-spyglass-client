@@ -22,8 +22,4 @@ export class RepresentativesService {
         }
         return '';
     }
-
-    isPR(repWeight: number, onlineWeight: number): boolean {
-        return repWeight >= onlineWeight * 0.001;
-    }
 }
