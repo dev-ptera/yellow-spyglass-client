@@ -9,10 +9,7 @@ import { ApiService } from '@app/services/api/api.service';
     selector: 'app-monitor',
     template: `
         <ng-template #titleContent>
-            <div class="app-page-title">
-                <span *ngIf="isLoading">Loading</span>
-                <span *ngIf="!isLoading">Node Statistics</span>
-            </div>
+            <div class="app-page-title">Node Statistics</div>
             <div class="app-page-subtitle">
                 This explorer is powered & maintained by the
                 <span class="link primary" (click)="openMonitoredRep(stats.monitorUrl)">batman representative</span>.

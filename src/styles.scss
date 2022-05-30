@@ -76,21 +76,12 @@ $custom-typography: mat.define-typography-config(
     justify-content: center;
 }
 
-/*
-.sm .divider-border {
-    border-left: 0!important;
-    border-right: 0!important;
+.blui-drawer-header-content .blui-drawer-header-text {
+    justify-content: center!important;
 }
-
-.sm mat-card {
-    border-radius: 0!important;
-}
-.sm .mat-table {
-    border-radius: 0px!important;
-}*/
 
 // Fix Safari scroll issue
-/*
+
 .blui-drawer-layout {
     height: 100% !important;
     .mat-drawer-backdrop {
@@ -105,13 +96,7 @@ $custom-typography: mat.define-typography-config(
         transform: translate3d(0px, 0px, 0px); // HERE!!!!!
         display: contents;
     }
-    .navigation-app-bar-container {
-        position: fixed;
-        width: 100vw;
-        box-sizing: border-box;
-    }
 }
-*/
 
 .sm .flat-edge {
     border-radius: 0;
@@ -123,15 +108,6 @@ $custom-typography: mat.define-typography-config(
 
 .mat-form-field {
     line-height: 1.5 !important;
-}
-
-// Stupid safari scroll behavior hack.
-.sm.blui-drawer-layout {
-    height: 100% !important;
-    &.open {
-        height: 100vh !important;
-        overflow: hidden;
-    }
 }
 
 // Empty state description font weight change

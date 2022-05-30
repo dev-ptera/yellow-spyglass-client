@@ -2,7 +2,6 @@ import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, ViewEnca
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { Meta, Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { SearchService } from '@app/services/search/search.service';
 import { DrawerStateService } from '@app/services/drawer-state/drawer-state.service';
 import { APP_NAV_ITEMS } from '../nav-items';
 import { LoadingService } from '@app/services/loading/loading.service';
@@ -17,8 +16,10 @@ import { LoadingService } from '@app/services/loading/loading.service';
                         <mat-icon>menu</mat-icon>
                     </button>
                     <blui-spacer *ngIf="!vp.sm"></blui-spacer>
-                    <div responsive class="navigation-toolbar-title" (click)="router.navigate(['/home'])">
-                        {{ vp.sm ? toolbarTitle : 'Yellow Spyglass' }}
+                    <div responsive style="display: flex; align-items: center" class="navigation-toolbar-title"
+                         (click)="router.navigate(['/home'])">
+                        <span *ngIf="vp.sm">{{ toolbarTitle }}</span>
+                        <img *ngIf="!vp.sm" src="../../../assets/branding/creeper-on-dark-horizontal.svg" style="width: 150px" />
                     </div>
 
                     <div *ngIf="!vp.md && !vp.sm" [style.marginLeft.px]="vp.md ? 24 : 48">
@@ -85,12 +86,12 @@ import { LoadingService } from '@app/services/loading/loading.service';
                     <button *ngIf="vp.sm" mat-icon-button (click)="openSearch()" [style.marginRight.px]="0">
                         <mat-icon>search</mat-icon>
                     </button>
-                    <app-user-menu style="margin-right: 16px"></app-user-menu>
+                    <app-user-menu style="margin-right: 8px"></app-user-menu>
                     <blui-spacer *ngIf="!vp.sm"></blui-spacer>
                 </div>
             </mat-toolbar>
 
-            <mat-toolbar class="navigation-search-bar" [class.active]="hasToggledMobileSearch" responsive>
+            <mat-toolbar class="mobile-search-bar" [class.active]="hasToggledMobileSearch" responsive>
                 <mat-toolbar-row style="display: flex; width: 100%; padding: 0 16px">
                     <button mat-icon-button disabled style="margin-left: -8px">
                         <mat-icon>search</mat-icon>
@@ -105,9 +106,6 @@ import { LoadingService } from '@app/services/loading/loading.service';
                     </button>
                 </mat-toolbar-row>
             </mat-toolbar>
-
-            <mat-progress-bar style="margin-top: 2px" *ngIf="isLoading" color="primary" mode="indeterminate">
-            </mat-progress-bar>
         </div>
     `,
     styleUrls: ['./app-bar.component.scss'],

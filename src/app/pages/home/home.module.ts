@@ -8,17 +8,21 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {NavigationModule} from "../../navigation/navigation.module";
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
     declarations: [HomeComponent],
     imports: [
         AppCommonModule,
+        NavigationModule,
         BrowserAnimationsModule,
         CommonModule,
         MatFormFieldModule,
         ReactiveFormsModule,
         MatInputModule,
         MatButtonModule,
+        MatCardModule,
         MatProgressSpinnerModule,
     ],
     exports: [HomeComponent],

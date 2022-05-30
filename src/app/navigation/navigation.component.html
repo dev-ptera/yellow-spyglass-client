@@ -1,6 +1,8 @@
 <blui-drawer-layout variant="temporary" (backdropClick)="closeDrawer()" width="280" responsive [class.open]="isOpen()">
-    <blui-drawer blui-drawer [open]="isOpen()" [sideBorder]="true" [openOnHover]="false">
-        <blui-drawer-header> </blui-drawer-header>
+    <blui-drawer blui-drawer [open]="isOpen()" [sideBorder]="true">
+        <blui-drawer-header>
+            <img blui-title-content src="../../assets/branding/creeper-on-dark-horizontal.svg" style="width: 150px; text-align: center" />
+        </blui-drawer-header>
         <blui-drawer-body>
             <blui-drawer-nav-group title="Explore" [divider]="true">
                 <blui-drawer-nav-item
@@ -44,9 +46,5 @@
         -->
 
         <router-outlet></router-outlet>
-
-        <!--
-        <img style="position: fixed; bottom: 0" src="assets/bg-footer.svg">
-        -->
     </div>
 </blui-drawer-layout>

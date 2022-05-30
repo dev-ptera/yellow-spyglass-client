@@ -1,48 +1,27 @@
 <div class="app-page-root home-root">
     <div class="home-body" responsive>
-        <div class="home-title" responsive>Yellow Spyglass</div>
-        <img src="assets/spyglass.svg" class="home-spyglass-svg" responsive />
-
-        <div class="app-section-subtitle" style="text-align: center; margin-bottom: 16px">
-            A Banano Network Explorer
+        <img
+             [src]=" isDarkTheme() ?
+             '../assets/branding/creeper-on-dark-vertical.svg' :
+             '../assets/branding/creeper-on-light-vertical.svg'"
+             style="width: 250px" />
+        <div class="app-section-subtitle" style="text-align: center; margin-bottom: 0px; margin-top: 8px;">
+            Tagline goes here.
         </div>
 
         <div class="home-search-bar" responsive>
-            <mat-form-field appearance="outline">
-                <mat-label>Address or Hash</mat-label>
-                <input
-                    matInput
-                    autocomplete="off"
-                    (focus)="touchedIdField = true; idFieldActive = true"
-                    (blur)="idFieldActive = false"
-                    [formControl]="searchFormControl"
-                    (keyup.enter)="search(searchFormControl.value, $event)"
-                />
-            </mat-form-field>
+            <app-search-bar [onlyFocusWhenActivelySearching]="true"></app-search-bar>
+
             <button
                 responsive
                 class="home-search-button"
                 mat-flat-button
                 color="primary"
-                [disabled]="loading || !searchFormControl.value"
+                [disabled]="isSearchDisabled()"
                 (click)="search(searchFormControl.value, $event)"
             >
-                <div [class.home-loading]="loading">
-                    <mat-spinner *ngIf="loading" [diameter]="18" [style.marginRight.px]="16"></mat-spinner>
-                    Search
-                </div>
+                Search
             </button>
         </div>
     </div>
 </div>
-
-<!--
-<app-wave
-    *ngIf="!vp.sm"
-    [darkThemeWaveNumber]="1"
-    [lightThemeWaveNumber]="1"
-    [bottom]="-100"
-    maxHeight="750"
-></app-wave>
-<img *ngIf="vp.sm" style="margin-top: -200px" height="200" src="assets/waves/wave1.svg" />
--->

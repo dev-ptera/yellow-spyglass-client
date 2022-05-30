@@ -18,4 +18,12 @@ export class SearchService {
         const trimmed = search.trim();
         this.search$.next({ search: trimmed, openInNewWindow });
     }
+
+    isValidAddress(address: string): boolean {
+        return address && address.length === 64 && address.startsWith('ban_');
+    }
+
+    isValidBlock(block: string): boolean {
+        return block && block.length === 64;
+    }
 }

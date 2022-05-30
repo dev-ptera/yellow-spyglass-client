@@ -22,7 +22,10 @@
     .mat-drawer-backdrop.mat-drawer-shown {
         background-color: rgb(62 63 62 / 67%);
     }
-    .desktop-search-input {
+    .mat-drawer-container {
+        background-color: #13181b;
+    }
+    .app-search-bar-input {
         background-color: unset;
         color: map-get($foreground, text);
     }

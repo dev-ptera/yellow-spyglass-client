@@ -64,6 +64,7 @@
 }
 
 .tab-buttons {
+    display: flex;
     height: 56px;
     &.sm {
         height: 80px;

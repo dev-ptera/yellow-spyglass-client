@@ -16,13 +16,14 @@ import { AliasDto } from '@app/types/dto';
 import { SearchService } from '@app/services/search/search.service';
 import { MatMenuTrigger } from '@angular/material/menu';
 
+export let APP_SEARCH_BAR_ID = 0;
+
 @Component({
     selector: 'app-search-bar',
     template: `
         <input
-            #inputElement
+            [id]="inputId"
             [class.red]="trigger.menuOpen"
-            [class.desktop-search-input]="!vp.sm"
             class="app-search-bar-input divider-border"
             type="text"
             tabindex="0"
@@ -47,10 +48,12 @@ import { MatMenuTrigger } from '@angular/material/menu';
 })
 export class SearchBarComponent {
     @ViewChild('mobileSearchBar') searchBar: ElementRef;
-    @ViewChild('inputElement') inputElement: ElementRef;
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
     @Input() toolbarTitle: string;
+
+    /** This input is used to turn off the auto-focus logic, only used when the input is being actively used. */
+    @Input() onlyFocusWhenActivelySearching: boolean;
     @Output() closeSearch: EventEmitter<void> = new EventEmitter<void>();
 
     knownAccounts: AliasDto[] = [];
@@ -58,6 +61,9 @@ export class SearchBarComponent {
 
     appbarSearchText: string;
     pages = APP_NAV_ITEMS;
+
+    inputId: string;
+    inputElement: HTMLInputElement;
 
     constructor(
         public router: Router,
@@ -68,6 +74,8 @@ export class SearchBarComponent {
     ) {}
 
     ngOnInit(): void {
+        APP_SEARCH_BAR_ID++;
+        this.inputId = `app_search_bar_input_no_${APP_SEARCH_BAR_ID}`;
         this._api
             .fetchAliases()
             .then((data: AliasDto[]) => {
@@ -78,9 +86,16 @@ export class SearchBarComponent {
             });
     }
 
+    ngAfterViewInit(): void {
+        this.inputElement = document.getElementById(this.inputId) as HTMLInputElement;
+    }
+
     ngAfterViewChecked(): void {
+        if (this.onlyFocusWhenActivelySearching && this.matchingAccounts.length === 0) {
+            return;
+        }
         if (this.trigger.menuOpen || this.vp.sm) {
-            this.inputElement.nativeElement.focus();
+            this.inputElement.focus();
         }
     }
 
@@ -93,14 +108,14 @@ export class SearchBarComponent {
         }
 
         if (e.key === 'Escape' || e.keyCode === 27) {
-            this.inputElement.nativeElement.blur();
-            this.inputElement.nativeElement.value = '';
+            this.inputElement.blur();
+            this.inputElement.value = '';
             return this.trigger.closeMenu();
         }
 
         // Handle Enter Key
         if (e.key === 'Enter' || e.keyCode === 13) {
-            if (this._isValidAddress(value) || this._isValidBlock(value)) {
+            if (this._searchService.isValidAddress(value) || this._searchService.isValidBlock(value)) {
                 return this.emitSearch(value);
             }
 
@@ -119,8 +134,8 @@ export class SearchBarComponent {
         this.closeSearch.emit();
         this.trigger.closeMenu();
         this.matchingAccounts = [];
-        this.inputElement.nativeElement.blur();
-        this.inputElement.nativeElement.value = '';
+        this.inputElement.blur();
+        this.inputElement.value = '';
     }
 
     preventEmptyMenu(): void {
@@ -140,13 +155,5 @@ export class SearchBarComponent {
         } else {
             this.trigger.closeMenu();
         }
-    }
-
-    private _isValidAddress(address: string): boolean {
-        return address && address.length === 64 && address.startsWith('ban_');
-    }
-
-    private _isValidBlock(block: string): boolean {
-        return block && block.length === 64;
     }
 }
