@@ -18,8 +18,7 @@ import { LoadingService } from '@app/services/loading/loading.service';
                     <blui-spacer *ngIf="!vp.sm"></blui-spacer>
                     <div responsive style="display: flex; align-items: center" class="navigation-toolbar-title"
                          (click)="router.navigate(['/home'])">
-                        <span *ngIf="vp.sm">{{ toolbarTitle }}</span>
-                        <img *ngIf="!vp.sm" src="../../../assets/branding/creeper-on-dark-horizontal.svg" style="width: 150px" />
+                        <img src="../../../assets/branding/creeper-on-dark-horizontal.svg" style="width: 150px" />
                     </div>
 
                     <div *ngIf="!vp.md && !vp.sm" [style.marginLeft.px]="vp.md ? 24 : 48">

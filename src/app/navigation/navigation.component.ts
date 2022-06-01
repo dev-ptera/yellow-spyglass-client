@@ -95,7 +95,7 @@ export class NavigationComponent implements OnInit {
                         this._meta.updateTag({
                             name: 'description',
                             content:
-                                'Search banano addresses or transaction hashes; explore the open seas of the banano network',
+                                'The official banano network explorer.  Search banano addresses or transaction hashes.',
                         });
                         break;
                     }
@@ -197,6 +197,6 @@ export class NavigationComponent implements OnInit {
     }
 
     private _makeTitle(page: string): string {
-        return `Yellow Spyglass | ${page}`;
+        return `Creeper | ${page}`;
     }
 }

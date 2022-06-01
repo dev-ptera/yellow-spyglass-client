@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnChanges, OnInit, ViewEncapsulation} from '@angular/core';
 import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
 import { InsightsDto } from '@app/types/dto/InsightsDto';
@@ -221,7 +221,8 @@ import * as Highcharts from 'highcharts';
     styleUrls: ['insights-tab.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class InsightsTabComponent implements OnChanges {
+export class InsightsTabComponent implements OnChanges, OnInit {
+    @Input() address: string;
     @Input() insights: InsightsDto;
     @Input() hasError: boolean;
     @Input() blockCount: number;
@@ -242,6 +243,15 @@ export class InsightsTabComponent implements OnChanges {
                 window.dispatchEvent(new Event('resize'));
             });
         });
+    }
+
+    ngOnInit(): void {
+        window['plausible']('Insights Generated', {
+            props: {
+                address: this.address,
+                size: this.blockCount
+            }
+        })
     }
 
     ngOnChanges(): void {
