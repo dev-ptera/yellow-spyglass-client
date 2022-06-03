@@ -34,9 +34,9 @@ export class NavigationComponent implements OnInit {
         this._searchService.searchEvents().subscribe((data: { search: string; openInNewWindow: boolean }) => {
             if (data.openInNewWindow) {
                 if (data.search.startsWith('ban_')) {
-                    window.open(`https://yellowspyglass.com/${APP_NAV_ITEMS.account.route}/${data.search}`, '_blank');
+                    window.open(`https://creeper.banano.cc/${APP_NAV_ITEMS.account.route}/${data.search}`, '_blank');
                 } else {
-                    window.open(`https://yellowspyglass.com/${APP_NAV_ITEMS.hash.route}/${data.search}`, '_blank');
+                    window.open(`https://creeper.banano.cc/${APP_NAV_ITEMS.hash.route}/${data.search}`, '_blank');
                 }
             } else {
                 if (data.search.startsWith('ban_')) {
@@ -153,7 +153,7 @@ export class NavigationComponent implements OnInit {
                         this._title.setTitle(this._makeTitle('Node'));
                         this._meta.updateTag({
                             name: 'description',
-                            content: 'Node status for the Yellow Spyglass explorer; batman representative',
+                            content: 'Node status for the API host.',
                         });
                         break;
                     }

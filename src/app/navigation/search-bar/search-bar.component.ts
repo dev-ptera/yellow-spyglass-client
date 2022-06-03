@@ -37,10 +37,12 @@ export let APP_SEARCH_BAR_ID = 0;
         />
 
         <mat-menu #menu="matMenu" class="alias-search-menu">
-            <button mat-menu-item *ngFor="let item of matchingAccounts"
-                    (click)="emitSearch(item.address)"
-                    [innerHTML]="item.alias | boldSearch: inputElement.value">
-            </button>
+            <button
+                mat-menu-item
+                *ngFor="let item of matchingAccounts"
+                (click)="emitSearch(item.address)"
+                [innerHTML]="item.alias | boldSearch: inputElement.value"
+            ></button>
         </mat-menu>
     `,
     styleUrls: ['./search-bar.component.scss'],
@@ -55,6 +57,7 @@ export class SearchBarComponent {
     /** This input is used to turn off the auto-focus logic, only used when the input is being actively used. */
     @Input() onlyFocusWhenActivelySearching: boolean;
     @Output() closeSearch: EventEmitter<void> = new EventEmitter<void>();
+    @Output() searchInputChange: EventEmitter<string> = new EventEmitter<string>();
 
     knownAccounts: AliasDto[] = [];
     matchingAccounts: AliasDto[] = [];
@@ -102,6 +105,7 @@ export class SearchBarComponent {
     filterOrSearch(e: KeyboardEvent): void {
         this.matchingAccounts = [];
         const value = e.target['value'].toLowerCase();
+        this.searchInputChange.emit(value);
 
         if (!value) {
             return this.trigger.closeMenu();

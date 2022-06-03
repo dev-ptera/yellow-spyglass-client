@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input, OnChanges, OnInit, ViewEncapsulation} from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
 import { InsightsDto } from '@app/types/dto/InsightsDto';
@@ -73,8 +73,7 @@ import * as Highcharts from 'highcharts';
                     <div
                         blui-right-content
                         class="link mat-overline text-hint"
-                        (click)="search(insights.maxAmountSentHash)"
-                    >
+                        (click)="searchService.emitSearch(insights.maxAmountSentHash, $event.ctrlKey.ctrlKey)">
                         hash
                     </div>
                 </blui-info-list-item>
@@ -90,7 +89,7 @@ import * as Highcharts from 'highcharts';
                     <div
                         blui-right-content
                         class="link mat-overline text-hint"
-                        (click)="search(insights.firstOutTxHash)"
+                        (click)="searchService.emitSearch(insights.firstOutTxHash, $event.ctrlKey)"
                     >
                         hash
                     </div>
@@ -102,7 +101,7 @@ import * as Highcharts from 'highcharts';
                     <div
                         blui-right-content
                         class="link mat-overline text-hint"
-                        (click)="search(insights.lastOutTxHash)"
+                        (click)="searchService.emitSearch(insights.lastOutTxHash, $event.ctrlKey)"
                     >
                         hash
                     </div>
@@ -121,7 +120,7 @@ import * as Highcharts from 'highcharts';
                         blui-info
                         *ngIf="vp.sm"
                         class="link text-secondary"
-                        (click)="search(insights.mostCommonRecipientAddress)"
+                        (click)="searchService.emitSearch(insights.mostCommonRecipientAddress, $event.ctrlKey)"
                     >
                         {{ shortenAddr(insights.mostCommonRecipientAddress) }}
                     </div>
@@ -129,7 +128,7 @@ import * as Highcharts from 'highcharts';
                         blui-right-content
                         *ngIf="!vp.sm"
                         class="link text-hint"
-                        (click)="search(insights.mostCommonRecipientAddress)"
+                        (click)="searchService.emitSearch(insights.mostCommonRecipientAddress, $event.ctrlKey)"
                     >
                         {{ shortenAddr(insights.mostCommonRecipientAddress) }}
                     </div>
@@ -151,7 +150,7 @@ import * as Highcharts from 'highcharts';
                     <div
                         blui-right-content
                         class=" link mat-overline text-hint"
-                        (click)="search(insights.maxAmountReceivedHash)"
+                        (click)="searchService.emitSearch(insights.maxAmountReceivedHash, $event.ctrlKey)"
                     >
                         hash
                     </div>
@@ -168,7 +167,7 @@ import * as Highcharts from 'highcharts';
                     <div
                         blui-right-content
                         class="link mat-overline text-hint"
-                        (click)="search(insights.firstInTxHash)"
+                        (click)="searchService.emitSearch(insights.firstInTxHash, $event.ctrlKey)"
                     >
                         hash
                     </div>
@@ -176,7 +175,7 @@ import * as Highcharts from 'highcharts';
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Last-Received Date</div>
                     <div blui-subtitle class="text-secondary">{{ formatDate(insights.lastInTxUnixTimestamp) }}</div>
-                    <div blui-right-content class="link mat-overline text-hint" (click)="search(insights.lastInTxHash)">
+                    <div blui-right-content class="link mat-overline text-hint" (click)="searchService.emitSearch(insights.lastInTxHash, $event.ctrlKey)">
                         hash
                     </div>
                 </blui-info-list-item>
@@ -191,7 +190,7 @@ import * as Highcharts from 'highcharts';
                         blui-info
                         *ngIf="vp.sm"
                         class="link text-secondary"
-                        (click)="search(insights.mostCommonSenderAddress)"
+                        (click)="searchService.emitSearch(insights.mostCommonSenderAddress, $event.ctrlKey)"
                     >
                         {{ shortenAddr(insights.mostCommonSenderAddress) }}
                     </div>
@@ -199,7 +198,7 @@ import * as Highcharts from 'highcharts';
                         blui-right-content
                         *ngIf="!vp.sm"
                         class="link text-hint"
-                        (click)="search(insights.mostCommonSenderAddress)"
+                        (click)="searchService.emitSearch(insights.mostCommonSenderAddress, $event.ctrlKey)"
                     >
                         {{ shortenAddr(insights.mostCommonSenderAddress) }}
                     </div>
@@ -210,7 +209,7 @@ import * as Highcharts from 'highcharts';
                     <div
                         blui-right-content
                         class="link mat-overline text-hint"
-                        (click)="search(insights.maxBalanceHash)"
+                        (click)="searchService.emitSearch(insights.maxBalanceHash, $event.ctrlKey)"
                     >
                         hash
                     </div>
@@ -234,9 +233,9 @@ export class InsightsTabComponent implements OnChanges, OnInit {
 
     constructor(
         public vp: ViewportService,
+        public searchService: SearchService,
         private readonly _util: UtilService,
         private readonly _ref: ChangeDetectorRef,
-        private readonly _searchService: SearchService
     ) {
         this.vp.vpChange.subscribe(() => {
             setTimeout(() => {
@@ -249,9 +248,9 @@ export class InsightsTabComponent implements OnChanges, OnInit {
         window['plausible']('Insights Generated', {
             props: {
                 address: this.address,
-                size: this.blockCount
-            }
-        })
+                size: this.blockCount,
+            },
+        });
     }
 
     ngOnChanges(): void {
@@ -382,12 +381,6 @@ export class InsightsTabComponent implements OnChanges, OnInit {
                 },
             ],
         });
-    }
-
-    search(value: string): void {
-        if (value) {
-            this._searchService.emitSearch(value);
-        }
     }
 
     formatBan(ban: number): string {

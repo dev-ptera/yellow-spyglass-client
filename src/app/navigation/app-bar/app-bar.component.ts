@@ -16,8 +16,12 @@ import { LoadingService } from '@app/services/loading/loading.service';
                         <mat-icon>menu</mat-icon>
                     </button>
                     <blui-spacer *ngIf="!vp.sm"></blui-spacer>
-                    <div responsive style="display: flex; align-items: center" class="navigation-toolbar-title"
-                         (click)="router.navigate(['/home'])">
+                    <div
+                        responsive
+                        style="display: flex; align-items: center"
+                        class="navigation-toolbar-title"
+                        (click)="router.navigate(['/home'])"
+                    >
                         <img src="../../../assets/branding/creeper-on-dark-horizontal.svg" style="width: 150px" />
                     </div>
 
@@ -96,7 +100,8 @@ import { LoadingService } from '@app/services/loading/loading.service';
                         <mat-icon>search</mat-icon>
                     </button>
 
-                    <app-search-bar *ngIf="hasToggledMobileSearch"
+                    <app-search-bar
+                        *ngIf="hasToggledMobileSearch"
                         style="display: flex; width: 100%; height: 40px"
                         (closeSearch)="hasToggledMobileSearch = false"
                     ></app-search-bar>

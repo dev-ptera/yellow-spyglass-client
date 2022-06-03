@@ -1,27 +1,142 @@
 <div class="app-page-root home-root">
-    <div class="home-body" responsive>
-        <img
-             [src]=" isDarkTheme() ?
-             '../assets/branding/creeper-on-dark-vertical.svg' :
-             '../assets/branding/creeper-on-light-vertical.svg'"
-             style="width: 250px" />
-        <div class="app-section-subtitle" style="text-align: center; margin-bottom: 0px; margin-top: 8px;">
-            Tagline goes here.
+    <div class="home-body" [class.dark]="isDarkTheme()" responsive>
+        <!-- Header -->
+        <div class="home-header-container" [class.dark]="isDarkTheme()" responsive>
+            <div class="home-header-content" responsive>
+                <div class="home-search-bar" responsive>
+                    <app-search-bar
+                        (searchInputChange)="value = $event"
+                        [onlyFocusWhenActivelySearching]="true"
+                    ></app-search-bar>
+                    <button
+                        responsive
+                        class="home-search-button"
+                        mat-flat-button
+                        style="color: #1a1a1a; background-color: #fbdd11"
+                        color="accent"
+                        (click)="search(value, $event)"
+                    >
+                        SEARCH
+                    </button>
+                </div>
+                <div class="home-search-hint" [style.height.px]="showHint ? 40 : 0">
+                    <mat-icon>info</mat-icon>
+                    Please enter a valid banano address or hash
+                </div>
+            </div>
         </div>
 
-        <div class="home-search-bar" responsive>
-            <app-search-bar [onlyFocusWhenActivelySearching]="true"></app-search-bar>
+        <!--Summary Cards -->
+        <div style="display: flex; flex: 1; height: 100%">
+            <div class="home-summary-cards-container" responsive>
+                <div
+                    class="mat-overline summary-text"
+                    style="width: 100%; text-align: center; height: 32px"
+                    [style.marginTop.px]="vp.sm ? 40 : -32"
+                >
+                    Network Summary
+                </div>
+                <mat-card>
+                    <div class="icon-container">
+                        <mat-icon>savings</mat-icon>
+                    </div>
+                    <div class="text-container">
+                        <div class="title">Supply</div>
+                        <div class="desc">
+                            Banano has a circulating supply of <span class="stronger">{{summaryData.circulatingCount | appComma}}</span> BAN with
+                            <span class="stronger">{{summaryData.devFundCount | appComma}}</span> BAN undistributed.
+                        </div>
+                    </div>
+                </mat-card>
 
-            <button
-                responsive
-                class="home-search-button"
-                mat-flat-button
-                color="primary"
-                [disabled]="isSearchDisabled()"
-                (click)="search(searchFormControl.value, $event)"
-            >
-                Search
-            </button>
+                <!--
+                <mat-card>
+                    <div class="icon-container">
+                        <mat-icon>timer</mat-icon>
+                    </div>
+                    <div class="text-container">
+                        <div class="title">Transactions 24H</div>
+                        <div class="desc timestats" style="display: flex; justify-content: space-between">
+                            <div style="flex: 1; padding-right: 16px">
+                                <div><span>1 Min:</span> <span class="stronger">20</span></div>
+                                <div><span>5 Min:</span> <span class="stronger">291</span></div>
+                                <div><span>1 Hour:</span> <span class="stronger">9,291</span></div>
+                            </div>
+                            <div style="flex: 1; padding-left: 16px">
+                                <div><span>6H:</span> <span class="stronger">19,292</span></div>
+                                <div><span>12H:</span> <span class="stronger">190,992</span></div>
+                                <div><span>24H:</span> <span class="stronger">999,999</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
+                -->
+
+                <mat-card>
+                    <div class="icon-container">
+                        <mat-icon>fingerprint</mat-icon>
+                    </div>
+                    <div class="text-container">
+                        <div class="title">Known Accounts</div>
+                        <div class="desc">
+                            <span class="stronger">{{summaryData.knownAccountsCount}}</span> accounts with publicly known aliases.
+                        </div>
+                    </div>
+                </mat-card>
+
+                <mat-card>
+                    <div class="icon-container">
+                        <mat-icon>how_to_vote</mat-icon>
+                    </div>
+                    <div class="text-container">
+                        <div class="title">Representatives</div>
+                        <div class="desc">
+                            There are <span class="stronger">{{summaryData.representativesOnlineCount}}</span> Representatives online,
+                            <span class="stronger">{{summaryData.principalRepsOnlineCount}}</span> of which are Prinicipal Representatives
+                        </div>
+                    </div>
+                </mat-card>
+
+                <mat-card>
+                    <div class="icon-container">
+                        <mat-icon>sell</mat-icon>
+                    </div>
+                    <div class="text-container">
+                        <div class="title">Market Cap</div>
+                        <div class="desc">
+                            Circulating market cap is <span class="stronger">{{marketCap}}</span> with a trading price of
+                            <span class="stronger">1BAN@{{summaryData.bananoPriceUsd}} USD</span>.
+                        </div>
+                    </div>
+                </mat-card>
+
+                <mat-card>
+                    <div class="icon-container">
+                        <mat-icon>storage</mat-icon>
+                    </div>
+                    <div class="text-container">
+                        <div class="title">Ledger Size</div>
+                        <div class="desc">
+                            <div><span class="stronger">{{summaryData.confirmedTransactionsCount | appComma}}</span> transactions confirmed</div>
+                            <div><span class="stronger">{{summaryData.ledgerSizeMB}}GB</span> database size</div>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+
+        <div class="home-footer">
+            <div style="display: flex; align-items: center">
+                <img src="assets/github-icon.svg" style="margin-right: 8px" />
+                <a
+                    href="https://github.com/dev-ptera/yellow-spyglass-client"
+                    target="_blank"
+                    style="text-align: center; margin: 8px 0px"
+                    class="link primary"
+                    [style.color]="!isDarkTheme() && vp.sm ? 'white' : ''"
+                    >Github</a
+                >
+            </div>
         </div>
     </div>
 </div>

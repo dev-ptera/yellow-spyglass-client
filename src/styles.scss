@@ -44,11 +44,6 @@ $custom-typography: mat.define-typography-config(
 */
 @include mat.core($custom-typography);
 
-@font-face {
-    font-family: pirateFont;
-    src: url('~assets/font/Freebooter-6yn1.ttf');
-}
-
 .link {
     cursor: pointer;
     &:hover {
@@ -61,6 +56,10 @@ $custom-typography: mat.define-typography-config(
 
 .principal-tag * {
     font-weight: 600 !important;
+}
+
+.blui-list-item-tag-content .blui-list-item-tag-label {
+    font-size: 11px !important;
 }
 
 .mat-tab-label-active {
@@ -77,7 +76,7 @@ $custom-typography: mat.define-typography-config(
 }
 
 .blui-drawer-header-content .blui-drawer-header-text {
-    justify-content: center!important;
+    justify-content: center !important;
 }
 
 // Fix Safari scroll issue

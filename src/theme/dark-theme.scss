@@ -46,6 +46,39 @@
     }
 }
 
+@mixin homePage($foreground) {
+    .home-header-text {
+        color: map-get(blui.$blui-white, 50);
+    }
+    .home-body {
+        .app-search-bar-input {
+            background: #0b0e10;
+        }
+        .home-header-container {
+            border-bottom: solid 1px map-get($foreground, divider);
+            &.sm {
+                border-bottom: 0;
+            }
+        }
+        .mat-flat-button.mat-primary.mat-button-disabled {
+            background-color: map-get(blui.$blui-vantaBlack, 100);
+        }
+        background-color: map-get(blui.$blui-vantaBlack, 500);
+        .mat-icon {
+            color: map-get(blui.$blui-gray, 500);
+        }
+        .desc {
+            color: map-get($foreground, secondary-text);
+        }
+        .stronger {
+            color: map-get($foreground, text);
+        }
+    }
+    .home-summary-cards-container .icon-container {
+        background: map-get(blui.$blui-black, 900);
+    }
+}
+
 @mixin accountPage($foreground, $background, $primary, $warn) {
     .tab-buttons button {
         color: map-get($foreground, secondary-text) !important;
@@ -115,7 +148,7 @@
 }
 
 $material-theme-primary: mat.define-palette(blui.$blui-green, 200);
-$material-theme-accent: mat.define-palette(blui.$blui-green, 200);
+$material-theme-accent: mat.define-palette(blui.$blui-yellow, 500);
 $material-theme-warn: mat.define-palette(blui.$blui-red, 500);
 
 $dark-theme: map-merge(
@@ -230,4 +263,5 @@ $dark-theme: map-merge(
     @include network.network-theme($theme-foreground);
     @include highcharts($theme-foreground);
     @include navigationBar($theme-foreground);
+    @include homePage($theme-foreground);
 }

@@ -38,6 +38,32 @@
     }
 }
 
+@mixin homePage($greenPalette, $foreground) {
+    .home-header-text {
+        color: map-get(blui.$blui-white, 50);
+    }
+    .home-body {
+        .home-search-hint {
+            color: map-get(blui.$blui-white, 50);
+            mat-icon {
+                color: map-get(blui.$blui-white, 50);
+            }
+        }
+        .mat-icon {
+            color: map-get(blui.$blui-gray, 500);
+        }
+        .desc {
+            color: map-get($foreground, secondary-text);
+        }
+        .stronger {
+            color: map-get($foreground, text);
+        }
+        .summary-text {
+            color: map-get(blui.$blui-white, 100);
+        }
+    }
+}
+
 @mixin accountPage($foreground, $background, $primary, $warn) {
     .tab-buttons button {
         color: map-get($foreground, secondary-text) !important;
@@ -79,30 +105,31 @@
     }
 }
 
+/* For use in src/lib/core/theming/_palette.scss */
 $greenPalette: (
-    50: #eaf7e9,
-    100: #c9ecc9,
-    200: #a6dfa5,
-    300: #82d281,
-    400: #67c966,
-    500: #4cbf4b,
-    600: #45b944,
-    700: #3cb13b,
-    800: #33a933,
-    900: #249b23,
-    A100: #d9ffd9,
-    A200: #a6ffa6,
-    A400: #73ff73,
-    A700: #59ff59,
+    50: #e5f1e6,
+    100: #bdddc0,
+    200: #92c696,
+    300: #66af6c,
+    400: #459e4d,
+    500: #248d2d,
+    600: #208528,
+    700: #1b7a22,
+    800: #16701c,
+    900: #0d5d11,
+    A100: #92ff95,
+    A200: #5fff64,
+    A400: #2cff32,
+    A700: #13ff19,
     contrast: (
         50: #000000,
         100: #000000,
         200: #000000,
         300: #000000,
-        400: #000000,
-        500: #000000,
-        600: #000000,
-        700: #000000,
+        400: #ffffff,
+        500: #ffffff,
+        600: #ffffff,
+        700: #ffffff,
         800: #ffffff,
         900: #ffffff,
         A100: #000000,
@@ -205,4 +232,5 @@ $jungle-green-theme: map-merge(
     @include accountPage($theme-foreground, $theme-background, $primary, $warn);
     @include network.network-theme($theme-foreground);
     @include navigationBar($primary);
+    @include homePage($greenPalette, $theme-foreground);
 }

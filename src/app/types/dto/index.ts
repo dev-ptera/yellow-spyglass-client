@@ -6,6 +6,7 @@ export * from './AliasDto';
 export * from './BlockDto';
 export * from './ConfirmedTransactionDto';
 export * from './DelegatorDto';
+export * from './ExplorerSummaryDto';
 export * from './HostNodeStatsDto';
 export * from './InsightsDto';
 export * from './KnownAccountDto';

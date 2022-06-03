@@ -4,12 +4,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppCommonModule } from '@app/common/app-common.module';
 import { HomeComponent } from '@app/pages/home/home.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import {NavigationModule} from "../../navigation/navigation.module";
-import {MatCardModule} from "@angular/material/card";
+import { NavigationModule } from '../../navigation/navigation.module';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
     declarations: [HomeComponent],
@@ -23,7 +23,8 @@ import {MatCardModule} from "@angular/material/card";
         MatInputModule,
         MatButtonModule,
         MatCardModule,
-        MatProgressSpinnerModule,
+        MatIconModule,
+        FormsModule,
     ],
     exports: [HomeComponent],
 })

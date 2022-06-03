@@ -44,7 +44,7 @@ export class RepresentativesComponent implements OnInit {
     allLargeReps: Representative[] = [];
     monitoredReps: MonitoredRep[] = [];
     shownLargeReps: Representative[] = [];
-    monitoredRepsShownColumnsKey = 'YELLOW_SPYGLASS_MONITORED_REP_COLUMNS';
+    monitoredRepsShownColumnsKey = 'CREEPER_MONITORED_REP_COLUMNS';
 
     /* Defaults */
     shownColumns: MonitoredRepTableColumns = {

@@ -8,7 +8,7 @@ import {
     AliasDto,
     BlockDto,
     ConfirmedTransactionDto,
-    DelegatorsOverviewDto,
+    DelegatorsOverviewDto, ExplorerSummaryDto,
     HostNodeStatsDto,
     KnownAccountDto,
     MonitoredRepDto,
@@ -39,6 +39,14 @@ export class ApiService {
     }
 
     constructor(private readonly _http: HttpClient) {}
+
+    /** Fetches explorer summary information. */
+    fetchExplorerSummaryData(): Promise<ExplorerSummaryDto> {
+        return this._http
+            .get<ExplorerSummaryDto>(`${this.spyglassApi}/v1/explorer-summary`)
+            .pipe(timeout(SLOW_MS))
+            .toPromise();
+    }
 
     /** Fetches account summary information. */
     fetchAccountOverview(address: string): Promise<AccountOverviewDto> {
