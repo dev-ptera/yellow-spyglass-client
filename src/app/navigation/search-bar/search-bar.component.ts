@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { Router } from '@angular/router';
-import { APP_NAV_ITEMS } from '../nav-items';
 import { ApiService } from '@app/services/api/api.service';
 import { AliasDto } from '@app/types/dto';
 import { SearchService } from '@app/services/search/search.service';
@@ -64,7 +63,6 @@ export class SearchBarComponent {
     matchingAccounts: AliasDto[] = [];
 
     appbarSearchText: string;
-    pages = APP_NAV_ITEMS;
 
     inputId: string;
     inputElement: HTMLInputElement;
