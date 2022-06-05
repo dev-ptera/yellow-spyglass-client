@@ -79,6 +79,7 @@
             margin-left: 0;
             margin-right: 0;
             width: 100%;
+            margin: 8px 0 8px 0;
         }
         mat-card {
             width: 360px;
@@ -184,6 +185,6 @@
         padding: 2px 0;
         display: flex;
         justify-content: center;
-        margin-bottom: 8px;
+        margin-bottom: 16px;
     }
 }

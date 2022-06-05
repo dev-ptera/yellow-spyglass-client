@@ -19,7 +19,7 @@ export class HomeComponent implements OnDestroy {
     navigation$;
     value: string;
 
-    marketCap = '$XX,XXX,XX';
+    marketCap = '$xx,xxx,xx';
 
     // @ts-ignore
     summaryData = {
