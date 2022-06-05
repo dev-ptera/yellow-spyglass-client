@@ -52,8 +52,9 @@
                     <div class="text-container">
                         <div class="title">Supply</div>
                         <div class="desc">
-                            Banano has a circulating supply of <span class="stronger">{{summaryData.circulatingCount | appComma}}</span> BAN with
-                            <span class="stronger">{{summaryData.devFundCount | appComma}}</span> BAN undistributed.
+                            Banano has a circulating supply of
+                            <span class="stronger">{{ summaryData.circulatingCount | appComma }}</span> BAN with
+                            <span class="stronger">{{ summaryData.devFundCount | appComma }}</span> BAN undistributed.
                         </div>
                     </div>
                 </mat-card>
@@ -88,7 +89,8 @@
                     <div class="text-container">
                         <div class="title">Known Accounts</div>
                         <div class="desc">
-                            <span class="stronger">{{summaryData.knownAccountsCount}}</span> accounts with publicly known aliases.
+                            <span class="stronger">{{ summaryData.knownAccountsCount }}</span> accounts with publicly
+                            known aliases.
                         </div>
                     </div>
                 </mat-card>
@@ -100,8 +102,10 @@
                     <div class="text-container">
                         <div class="title">Representatives</div>
                         <div class="desc">
-                            There are <span class="stronger">{{summaryData.representativesOnlineCount}}</span> Representatives online,
-                            <span class="stronger">{{summaryData.principalRepsOnlineCount}}</span> of which are Principal Representatives
+                            There are
+                            <span class="stronger">{{ summaryData.representativesOnlineCount }}</span> Representatives
+                            online, <span class="stronger">{{ summaryData.principalRepsOnlineCount }}</span> of which
+                            are Principal Representatives
                         </div>
                     </div>
                 </mat-card>
@@ -113,8 +117,9 @@
                     <div class="text-container">
                         <div class="title">Market Cap</div>
                         <div class="desc">
-                            Circulating market cap is <span class="stronger">{{marketCap}}</span> with a trading price of
-                            <span class="stronger">${{summaryData.bananoPriceUsd}}</span>.
+                            Circulating market cap is <span class="stronger">{{ marketCap }}</span> with a trading price
+                            of <span class="stronger">${{ summaryData.bananoPriceUsd }}</span
+                            >.
                         </div>
                     </div>
                 </mat-card>
@@ -126,8 +131,13 @@
                     <div class="text-container">
                         <div class="title">Ledger Size</div>
                         <div class="desc">
-                            <div><span class="stronger">{{summaryData.confirmedTransactionsCount | appComma}}</span> transactions confirmed</div>
-                            <div><span class="stronger">{{summaryData.ledgerSizeMB}}GB</span> database size</div>
+                            <div>
+                                <span class="stronger">{{ summaryData.confirmedTransactionsCount | appComma }}</span>
+                                transactions confirmed
+                            </div>
+                            <div>
+                                <span class="stronger">{{ summaryData.ledgerSizeMB }}GB</span> database size
+                            </div>
                         </div>
                     </div>
                 </mat-card>
@@ -136,17 +146,15 @@
 
         <div class="home-footer">
             <div style="display: flex; align-items: center">
-
                 <span style="margin-right: 24px">
-
-                <a
-                    href="https://banano.cc"
-                    target="_blank"
-                    style="text-align: center; margin: 8px 0px"
-                    class="link primary"
-                    [style.color]="!isDarkTheme() && vp.sm ? 'white' : ''"
-                >Banano</a
-                >
+                    <a
+                        href="https://banano.cc"
+                        target="_blank"
+                        style="text-align: center; margin: 8px 0px"
+                        class="link primary"
+                        [style.color]="!isDarkTheme() && vp.sm ? 'white' : ''"
+                        >Banano</a
+                    >
                 </span>
 
                 <span>

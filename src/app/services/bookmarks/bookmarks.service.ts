@@ -5,7 +5,7 @@ import { Bookmark } from '@app/types/modal';
     providedIn: 'root',
 })
 export class BookmarksService {
-    bookmarkId = 'YELLOW_SPYGLASS_BOOKMARKS';
+    bookmarkId = 'YELLOW_SPYGLASS_BOOKMARKS'; /* Legacy - Keep it. */
     bookmarkMap: Map<string, Bookmark> = new Map();
 
     /** Reads the bookmarks array from localStorage and parses it into a Bookmark[] */

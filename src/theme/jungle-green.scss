@@ -50,16 +50,19 @@
             }
         }
         $placeholderTextColor: map-get($foreground, text);
-        ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        ::placeholder {
+            /* Chrome, Firefox, Opera, Safari 10.1+ */
             color: $placeholderTextColor;
             opacity: 1; /* Firefox */
         }
 
-        :-ms-input-placeholder { /* Internet Explorer 10-11 */
+        :-ms-input-placeholder {
+            /* Internet Explorer 10-11 */
             color: $placeholderTextColor;
         }
 
-        ::-ms-input-placeholder { /* Microsoft Edge */
+        ::-ms-input-placeholder {
+            /* Microsoft Edge */
             color: $placeholderTextColor;
         }
         .home-search-title {
@@ -242,7 +245,8 @@ $jungle-green-theme: map-merge(
     .divider-border {
         border: solid 1px map-get($theme-foreground, divider);
     }
-    textarea:focus, input:focus{
+    textarea:focus,
+    input:focus {
         border-radius: 4px;
         border: solid 2px map-get($material-theme-accent, 500);
         outline: 0;

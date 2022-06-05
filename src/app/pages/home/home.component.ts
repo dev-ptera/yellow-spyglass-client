@@ -5,8 +5,8 @@ import { UtilService } from '@app/services/util/util.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { SearchService } from '@app/services/search/search.service';
 import { ThemeService } from '@app/services/theme/theme.service';
-import {ApiService} from "@app/services/api/api.service";
-import {ExplorerSummaryDto} from "@app/types/dto";
+import { ApiService } from '@app/services/api/api.service';
+import { ExplorerSummaryDto } from '@app/types/dto';
 
 @Component({
     selector: 'app-home',
@@ -32,7 +32,7 @@ export class HomeComponent implements OnDestroy {
         confirmedTransactionsCount: 'xxx,xxx,xxx',
         ledgerSizeMB: 'xx.xx',
         ledgerDatabaseType: '',
-        bananoPriceUsd: 'x.xx'
+        bananoPriceUsd: 'x.xx',
     } as ExplorerSummaryDto;
 
     constructor(
@@ -41,24 +41,27 @@ export class HomeComponent implements OnDestroy {
         private readonly _searchService: SearchService,
         private readonly _util: UtilService,
         private readonly _router: Router,
-        private readonly _api: ApiService,
+        private readonly _api: ApiService
     ) {}
 
     ngOnInit(): void {
-        this._api.fetchExplorerSummaryData().then((data) => {
-            data.ledgerSizeMB = 187435.7;
-            Object.assign(this.summaryData, data);
-            if (data.ledgerSizeMB) {
-                this.summaryData.ledgerSizeMB = Number((data.ledgerSizeMB / 1024).toFixed(1));
-            }
-            if (data.bananoPriceUsd) {
-                const circulatingMarketValue = Number(data.bananoPriceUsd) * Number(data.circulatingCount);
-                this.marketCap = `$${this._util.numberWithCommas(circulatingMarketValue.toFixed(0))}`;
-                this.summaryData.bananoPriceUsd = data.bananoPriceUsd.toFixed(4) as any;
-            }
-        }).catch((err) => {
-            console.error(err);
-        })
+        this._api
+            .fetchExplorerSummaryData()
+            .then((data) => {
+                data.ledgerSizeMB = 187435.7;
+                Object.assign(this.summaryData, data);
+                if (data.ledgerSizeMB) {
+                    this.summaryData.ledgerSizeMB = Number((data.ledgerSizeMB / 1024).toFixed(1));
+                }
+                if (data.bananoPriceUsd) {
+                    const circulatingMarketValue = Number(data.bananoPriceUsd) * Number(data.circulatingCount);
+                    this.marketCap = `$${this._util.numberWithCommas(circulatingMarketValue.toFixed(0))}`;
+                    this.summaryData.bananoPriceUsd = data.bananoPriceUsd.toFixed(4) as any;
+                }
+            })
+            .catch((err) => {
+                console.error(err);
+            });
     }
 
     ngOnDestroy(): void {

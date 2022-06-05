@@ -73,7 +73,8 @@ import * as Highcharts from 'highcharts';
                     <div
                         blui-right-content
                         class="link mat-overline text-hint"
-                        (click)="searchService.emitSearch(insights.maxAmountSentHash, $event.ctrlKey.ctrlKey)">
+                        (click)="searchService.emitSearch(insights.maxAmountSentHash, $event.ctrlKey.ctrlKey)"
+                    >
                         hash
                     </div>
                 </blui-info-list-item>
@@ -175,7 +176,11 @@ import * as Highcharts from 'highcharts';
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Last-Received Date</div>
                     <div blui-subtitle class="text-secondary">{{ formatDate(insights.lastInTxUnixTimestamp) }}</div>
-                    <div blui-right-content class="link mat-overline text-hint" (click)="searchService.emitSearch(insights.lastInTxHash, $event.ctrlKey)">
+                    <div
+                        blui-right-content
+                        class="link mat-overline text-hint"
+                        (click)="searchService.emitSearch(insights.lastInTxHash, $event.ctrlKey)"
+                    >
                         hash
                     </div>
                 </blui-info-list-item>
@@ -235,7 +240,7 @@ export class InsightsTabComponent implements OnChanges, OnInit {
         public vp: ViewportService,
         public searchService: SearchService,
         private readonly _util: UtilService,
-        private readonly _ref: ChangeDetectorRef,
+        private readonly _ref: ChangeDetectorRef
     ) {
         this.vp.vpChange.subscribe(() => {
             setTimeout(() => {

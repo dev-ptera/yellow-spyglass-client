@@ -9,4 +9,4 @@ export type ExplorerSummaryDto = {
     ledgerSizeMB: number;
     ledgerDatabaseType: string;
     bananoPriceUsd: number;
-}
+};

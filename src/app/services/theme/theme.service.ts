@@ -9,7 +9,7 @@ const DARK_THEME = 'dark';
     providedIn: 'root',
 })
 export class ThemeService {
-    themeLocalStorageId = 'YELLOW_SPYGLASS_THEME';
+    themeLocalStorageId = 'CREEPER_THEME';
     currentTheme: Theme;
 
     constructor() {
