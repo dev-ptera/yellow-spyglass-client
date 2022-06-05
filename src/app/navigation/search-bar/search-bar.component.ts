@@ -28,7 +28,7 @@ export let APP_SEARCH_BAR_ID = 0;
             type="text"
             tabindex="0"
             autocapitalize="none"
-            placeholder="Search by Address, Block, or Alias"
+            [placeholder]="placeholder"
             [(ngModel)]="appbarSearchText"
             (click)="preventEmptyMenu()"
             (keyup)="filterOrSearch($event)"
@@ -52,6 +52,7 @@ export class SearchBarComponent {
     @ViewChild('mobileSearchBar') searchBar: ElementRef;
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
+    @Input() placeholder: string = 'Search by Address, Block or Alias';
     @Input() toolbarTitle: string;
 
     /** This input is used to turn off the auto-focus logic, only used when the input is being actively used. */

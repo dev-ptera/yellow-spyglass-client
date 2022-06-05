@@ -62,6 +62,8 @@
         }
         &.sm {
             background: unset;
+            min-height: unset;
+            height: 400px;
         }
     }
 
@@ -94,7 +96,7 @@
             align-items: center;
             margin-left: 16px;
             .mat-icon {
-                $size: 42px;
+                $size: 40px;
                 font-size: $size;
                 height: $size;
                 width: $size;
@@ -168,6 +170,7 @@
             width: 120px;
             letter-spacing: 1px;
             &.sm {
+                height: 44px;
                 margin-left: 0px;
                 margin-top: 16px;
                 width: 100%;

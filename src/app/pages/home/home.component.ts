@@ -23,16 +23,16 @@ export class HomeComponent implements OnDestroy {
 
     // @ts-ignore
     summaryData = {
-        knownAccountsCount: 'XXX',
-        circulatingCount: 'X,XXX,XXX,XXX',
-        devFundCount: 'XXX,XXX,XXX',
-        totalPrincipalRepsCount: 'XX',
-        representativesOnlineCount: 'XX',
-        principalRepsOnlineCount: 'XX',
-        confirmedTransactionsCount: 'XXX,XXX,XXX',
-        ledgerSizeMB: 'XX.XX',
+        knownAccountsCount: 'xxx',
+        circulatingCount: 'x,xxx,xxx,xxx',
+        devFundCount: 'xxx,xxx,xxx',
+        totalPrincipalRepsCount: 'xx',
+        representativesOnlineCount: 'xx',
+        principalRepsOnlineCount: 'xx',
+        confirmedTransactionsCount: 'xxx,xxx,xxx',
+        ledgerSizeMB: 'xx.xx',
         ledgerDatabaseType: '',
-        bananoPriceUsd: 'X.XX'
+        bananoPriceUsd: 'x.xx'
     } as ExplorerSummaryDto;
 
     constructor(
@@ -46,9 +46,10 @@ export class HomeComponent implements OnDestroy {
 
     ngOnInit(): void {
         this._api.fetchExplorerSummaryData().then((data) => {
+            data.ledgerSizeMB = 187435.7;
             Object.assign(this.summaryData, data);
             if (data.ledgerSizeMB) {
-                data.ledgerSizeMB = data.ledgerSizeMB / 1024;
+                this.summaryData.ledgerSizeMB = Number((data.ledgerSizeMB / 1024).toFixed(1));
             }
             if (data.bananoPriceUsd) {
                 const circulatingMarketValue = Number(data.bananoPriceUsd) * Number(data.circulatingCount);

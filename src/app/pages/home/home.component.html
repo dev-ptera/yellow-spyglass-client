@@ -3,8 +3,17 @@
         <!-- Header -->
         <div class="home-header-container" [class.dark]="isDarkTheme()" responsive>
             <div class="home-header-content" responsive>
+                <!--
+                <div class="home-search-title" style="display: flex; align-items: center; margin-bottom: 16px;"
+                    [class.mat-display-1]="!vp.sm"
+                    [class.mat-headline]="vp.sm">
+                    <img src="assets/bananologo.svg" [style.width.px]="vp.sm ? 150 : 200" style="margin-right: 12px"/>
+                    Block Explorer
+                </div>
+                -->
                 <div class="home-search-bar" responsive>
                     <app-search-bar
+                        placeholder="Search Banano by address, block or alias"
                         (searchInputChange)="value = $event"
                         [onlyFocusWhenActivelySearching]="true"
                     ></app-search-bar>
@@ -92,7 +101,7 @@
                         <div class="title">Representatives</div>
                         <div class="desc">
                             There are <span class="stronger">{{summaryData.representativesOnlineCount}}</span> Representatives online,
-                            <span class="stronger">{{summaryData.principalRepsOnlineCount}}</span> of which are Prinicipal Representatives
+                            <span class="stronger">{{summaryData.principalRepsOnlineCount}}</span> of which are Principal Representatives
                         </div>
                     </div>
                 </mat-card>
@@ -105,7 +114,7 @@
                         <div class="title">Market Cap</div>
                         <div class="desc">
                             Circulating market cap is <span class="stronger">{{marketCap}}</span> with a trading price of
-                            <span class="stronger">1BAN@{{summaryData.bananoPriceUsd}} USD</span>.
+                            <span class="stronger">${{summaryData.bananoPriceUsd}}</span>.
                         </div>
                     </div>
                 </mat-card>

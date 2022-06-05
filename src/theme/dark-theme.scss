@@ -60,6 +60,19 @@
                 border-bottom: 0;
             }
         }
+        $placeholderTextColor: map-get($foreground, text);
+        ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: $placeholderTextColor;
+            opacity: 1; /* Firefox */
+        }
+
+        :-ms-input-placeholder { /* Internet Explorer 10-11 */
+            color: $placeholderTextColor;
+        }
+
+        ::-ms-input-placeholder { /* Microsoft Edge */
+            color: $placeholderTextColor;
+        }
         .mat-flat-button.mat-primary.mat-button-disabled {
             background-color: map-get(blui.$blui-vantaBlack, 100);
         }
@@ -72,6 +85,9 @@
         }
         .stronger {
             color: map-get($foreground, text);
+        }
+        .summary-text {
+            color: map-get($foreground, secondary-text);
         }
     }
     .home-summary-cards-container .icon-container {
@@ -255,6 +271,11 @@ $dark-theme: map-merge(
         background-color: rgba($primary, 0.05);
         border: solid 1px $primary;
         color: $primary;
+    }
+    textarea:focus, input:focus{
+        border-radius: 4px;
+        border: solid 2px map-get($material-theme-accent, 500);
+        outline: 0;
     }
 
     $sticky-border-color: map-get(blui.$blui-black, 100);
