@@ -7,6 +7,7 @@ import { SearchService } from '@app/services/search/search.service';
 import { ThemeService } from '@app/services/theme/theme.service';
 import { ApiService } from '@app/services/api/api.service';
 import { ExplorerSummaryDto } from '@app/types/dto';
+import { APP_NAV_ITEMS } from '../../navigation/nav-items';
 
 @Component({
     selector: 'app-home',
@@ -18,6 +19,7 @@ export class HomeComponent implements OnDestroy {
     showHint: boolean;
     navigation$;
     value: string;
+    routes = APP_NAV_ITEMS;
 
     marketCap = '$xx,xxx,xx';
 

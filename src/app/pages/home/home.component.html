@@ -50,7 +50,7 @@
                         <mat-icon>savings</mat-icon>
                     </div>
                     <div class="text-container">
-                        <div class="title">Supply</div>
+                        <a [routerLink]="routes.network.route" class="title link primary">Supply</a>
                         <div class="desc">
                             Banano has a circulating supply of
                             <span class="stronger">{{ summaryData.circulatingCount | appComma }}</span> BAN with
@@ -87,7 +87,7 @@
                         <mat-icon>fingerprint</mat-icon>
                     </div>
                     <div class="text-container">
-                        <div class="title">Known Accounts</div>
+                        <a [routerLink]="routes.knownAccounts.route" class="title link primary">Known Accounts</a>
                         <div class="desc">
                             <span class="stronger">{{ summaryData.knownAccountsCount }}</span> accounts with publicly
                             known aliases.
@@ -100,7 +100,7 @@
                         <mat-icon>how_to_vote</mat-icon>
                     </div>
                     <div class="text-container">
-                        <div class="title">Representatives</div>
+                        <a [routerLink]="routes.representatives.route" class="title link primary">Representatives</a>
                         <div class="desc">
                             There are
                             <span class="stronger">{{ summaryData.representativesOnlineCount }}</span> Representatives
@@ -115,7 +115,7 @@
                         <mat-icon>sell</mat-icon>
                     </div>
                     <div class="text-container">
-                        <div class="title">Market Cap</div>
+                        <a href="https://www.coingecko.com/en/coins/banano" class="title link primary">Market Cap</a>
                         <div class="desc">
                             Circulating market cap is <span class="stronger">{{ marketCap }}</span> with a trading price
                             of <span class="stronger">${{ summaryData.bananoPriceUsd }}</span
@@ -129,7 +129,7 @@
                         <mat-icon>storage</mat-icon>
                     </div>
                     <div class="text-container">
-                        <div class="title">Ledger Size</div>
+                        <a [routerLink]="routes.node.route" class="title link primary">Ledger Size</a>
                         <div class="desc">
                             <div>
                                 <span class="stronger">{{ summaryData.confirmedTransactionsCount | appComma }}</span>

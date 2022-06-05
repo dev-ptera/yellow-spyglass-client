@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { NavigationModule } from '../../navigation/navigation.module';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     declarations: [HomeComponent],
@@ -25,6 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
         MatCardModule,
         MatIconModule,
         FormsModule,
+        RouterModule,
     ],
     exports: [HomeComponent],
 })
