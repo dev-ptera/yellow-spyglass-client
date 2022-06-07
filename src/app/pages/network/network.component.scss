@@ -1,8 +1,15 @@
 .network-root {
-    .app-page-content:not(.error) {
+    .app-page-content .network-container {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
+    }
+
+    .section-title {
+        font-size: 24px;
+    }
+    .sm .section-title {
+        font-size: 20px;
     }
 
     .status-icon {
