@@ -241,11 +241,13 @@
 </ng-template>
 
 <div class="app-page-root" responsive>
-    <div class="app-page-content" style="max-width: 1200px">
+    <div class="app-page-content" style="max-width: 1200px" >
         <app-error *ngIf="hasError"></app-error>
         <ng-container *ngIf="!hasError">
             <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
-            <ng-template *ngIf="!isLoading" [ngTemplateOutlet]="bodyContent"></ng-template>
+            <div  *ngIf="!isLoading" class="animation-body">
+                <ng-template [ngTemplateOutlet]="bodyContent"></ng-template>
+            </div>
         </ng-container>
     </div>
 </div>

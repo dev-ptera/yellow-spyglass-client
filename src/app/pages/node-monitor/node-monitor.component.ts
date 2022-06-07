@@ -12,7 +12,9 @@ import { ApiService } from '@app/services/api/api.service';
             <div class="app-page-title">Node Statistics</div>
             <div class="app-page-subtitle">
                 This explorer is powered & maintained by the
-                <span class="link primary" (click)="openMonitoredRep(stats.monitorUrl)">batman representative</span>.
+                <span class="link primary"
+                      (click)="openMonitoredRep(stats.monitorUrl)">
+                    batman representative</span>.
             </div>
         </ng-template>
 
@@ -30,7 +32,7 @@ import { ApiService } from '@app/services/api/api.service';
                             <div blui-subtitle>
                                 <span class="link" (click)="search(stats.addressAsRepresentative, $event)">{{
                                     stats.addressAsRepresentative
-                                }}</span>
+                                    }}</span>
                             </div>
                         </blui-info-list-item>
                         <blui-info-list-item divider="full">
@@ -154,7 +156,9 @@ import { ApiService } from '@app/services/api/api.service';
                 <app-error *ngIf="hasError"></app-error>
                 <ng-container *ngIf="!hasError">
                     <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
-                    <ng-template *ngIf="!isLoading" [ngTemplateOutlet]="bodyContent"></ng-template>
+                    <div *ngIf="!isLoading" class="animation-body">
+                        <ng-template [ngTemplateOutlet]="bodyContent"></ng-template>
+                    </div>
                 </ng-container>
             </div>
         </div>

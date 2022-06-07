@@ -155,7 +155,9 @@ import { accountNavItem } from '../../navigation/nav-items';
                 <app-error *ngIf="hashError"></app-error>
                 <ng-container *ngIf="!hashError">
                     <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
-                    <ng-template *ngIf="!isLoading" [ngTemplateOutlet]="bodyContent"></ng-template>
+                    <div *ngIf="!isLoading" class="animation-body network-container">
+                        <ng-template [ngTemplateOutlet]="bodyContent"></ng-template>
+                    </div>
                 </ng-container>
             </div>
         </div>

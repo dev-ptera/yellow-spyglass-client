@@ -95,7 +95,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-left: 16px;
+            margin-left: 1rem;
             .mat-icon {
                 $size: 40px;
                 font-size: $size;
@@ -104,11 +104,12 @@
             }
         }
         .text-container {
-            padding: 16px;
+            padding: 24px 16px 24px 16px;
             width: 100%;
             .title {
+                display: inline-block;
                 text-decoration: underline;
-                font-size: 20px;
+                font-size: 16px;
                 margin-bottom: 8px;
             }
             .desc {
@@ -136,6 +137,7 @@
         height: $inputHeight;
         border-radius: 4px;
         padding: 0 16px;
+        border-width: 2px!important;
     }
 
     .home-search-hint {

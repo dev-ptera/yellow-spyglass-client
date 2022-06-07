@@ -3,6 +3,7 @@
 @use '@angular/material' as mat;
 @use './theme/jungle-green';
 @use './theme/dark-theme';
+@use './theme/animation';
 
 @include blui-margins.reasonable-margins();
 
@@ -132,3 +133,4 @@ $custom-typography: mat.define-typography-config(
         padding: 88px 16px 48px 16px;
     }
 }
+

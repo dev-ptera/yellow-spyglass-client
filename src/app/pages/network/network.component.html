@@ -9,7 +9,7 @@
 
 <ng-template #bodyContent>
     <mat-card responsive style="width: 100%" class="divider-border">
-        <div class="app-section-title">Nakamoto Coefficient</div>
+        <div class="section-title">Nakamoto Coefficient</div>
         <div class="app-section-subtitle" style="margin-bottom: 0px">
             What is the minimum number of entities required to attack the network?
         </div>
@@ -36,7 +36,7 @@
     </mat-card>
 
     <mat-card responsive class="divider-border">
-        <div class="app-section-title">Supply</div>
+        <div class="section-title">Supply</div>
         <div class="app-section-subtitle">How much banano is circulating?</div>
         <div style="display: flex; justify-content: center">
             <highcharts-chart
@@ -77,7 +77,7 @@
     </mat-card>
 
     <mat-card responsive class="divider-border">
-        <div class="app-section-title">Vote weight</div>
+        <div class="section-title">Vote weight</div>
         <div class="app-section-subtitle">How is network voting weight allocated?</div>
         <div style="display: flex; justify-content: center">
             <highcharts-chart
@@ -124,7 +124,7 @@
     </mat-card>
 
     <mat-card responsive class="divider-border">
-        <div class="app-section-title">Protocol</div>
+        <div class="section-title">Protocol</div>
         <div class="app-section-subtitle">What protocol version are nodes running?</div>
         <table class="network-peer-version-table" responsive [style.marginTop.px]="0">
             <tr>
@@ -142,7 +142,7 @@
     </mat-card>
 
     <mat-card responsive class="divider-border">
-        <div class="app-section-title">Quorum</div>
+        <div class="section-title">Quorum</div>
         <div class="app-section-subtitle">How much banano is needed to achieve consensus?</div>
         <!-- Make this a list that has STAT as title, description as subtitle, icon and metric. -->
         <table class="network-quorum-table" responsive [style.marginTop.px]="0">
@@ -171,7 +171,9 @@
         <app-error *ngIf="hasError"></app-error>
         <ng-container *ngIf="!hasError">
             <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
-            <ng-template *ngIf="!isLoading" [ngTemplateOutlet]="bodyContent"></ng-template>
+            <div *ngIf="!isLoading" class="animation-body network-container">
+                <ng-template [ngTemplateOutlet]="bodyContent"></ng-template>
+            </div>
         </ng-container>
     </div>
 </div>

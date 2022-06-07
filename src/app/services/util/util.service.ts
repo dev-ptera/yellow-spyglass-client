@@ -41,14 +41,6 @@ export class UtilService {
         return ban;
     }
 
-    formatHtmlAddress(addr: string): string {
-        const ban = addr.substring(0, 4);
-        const first7 = addr.substring(4, 12);
-        const middle = addr.substring(12, addr.length - 7);
-        const last6 = addr.substring(addr.length - 7, addr.length);
-        return `${ban}<strong>${first7}</strong>${middle}${last6}`;
-    }
-
     shortenAddress(addr: string): string {
         return `${addr.substr(0, 12)}...${addr.substr(addr.length - 6, addr.length)}`;
     }

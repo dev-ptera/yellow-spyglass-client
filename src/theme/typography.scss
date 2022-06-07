@@ -34,7 +34,6 @@
         max-width: 1050px;
     }
     .app-page-title {
-        //    font-weight: 600;
         font-size: 48px;
         display: flex;
         width: 100%;
@@ -43,6 +42,7 @@
     .app-page-subtitle {
         width: 100%;
         font-size: 16px;
+        line-height: 22px;
         margin-bottom: 48px;
         text-align: left;
     }
@@ -52,6 +52,7 @@
     .app-section-subtitle {
         margin-bottom: 32px;
         font-size: 16px;
+        line-height: 22px;
     }
     .app-caption {
         font-size: 14px;
@@ -69,7 +70,8 @@
         }
 
         .app-section-title {
-            font-size: 20px;
+            font-weight: 600;
+            font-size: 16px;
         }
 
         .app-section-subtitle {
