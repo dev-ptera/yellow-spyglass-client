@@ -71,6 +71,9 @@
         .home-search-title {
           //  color: map-get(blui.$blui-white, 50);
         }
+        .title {
+            color: map-get($greenPalette, 500);
+        }
         .mat-icon {
             color: map-get(blui.$blui-gray, 500);
         }

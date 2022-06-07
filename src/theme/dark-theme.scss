@@ -86,6 +86,9 @@
         .desc {
             color: map-get($foreground, secondary-text);
         }
+        .title {
+            color: map-get($foreground, secondary-text);
+        }
         .stronger {
             color: map-get($foreground, text);
         }
