@@ -79,7 +79,7 @@
             margin-left: 0;
             margin-right: 0;
             width: 100%;
-            margin: 8px 0 8px 0;
+            margin: 0.5rem 0 0.5rem 0;
         }
         mat-card {
             width: 360px;
@@ -97,23 +97,23 @@
             align-items: center;
             margin-left: 1rem;
             .mat-icon {
-                $size: 40px;
+                $size: 2.5rem;
                 font-size: $size;
                 height: $size;
                 width: $size;
             }
         }
         .text-container {
-            padding: 24px 16px 24px 16px;
+            padding: 1.5rem 16px 1.5rem 16px;
             width: 100%;
             .title {
                 display: inline-block;
                 text-decoration: underline;
-                font-size: 16px;
-                margin-bottom: 8px;
+                font-size: 1rem;
+                margin-bottom: .5rem;
             }
             .desc {
-                line-height: 22px;
+                line-height: 1.375rem;
                 &.timestats div div {
                     span {
                         display: block;
@@ -125,7 +125,7 @@
         }
     }
 
-    $inputHeight: 62px;
+    $inputHeight: 3.875rem;
     .sm .app-search-bar-input {
         min-width: unset;
         width: 100%;
@@ -174,9 +174,9 @@
             width: 120px;
             letter-spacing: 1px;
             &.sm {
-                height: 44px;
+                height: 2.75rem;
                 margin-left: 0px;
-                margin-top: 16px;
+                margin-top: 1rem;
                 width: 100%;
             }
         }

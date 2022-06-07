@@ -39,6 +39,9 @@
 }
 
 @mixin homePage($greenPalette, $foreground) {
+    .mat-button:not([color]):hover:not(.mat-button-disabled) {
+        background-color: rgb(31 179 46 / 41%);
+    }
     .home-header-text {
         color: map-get(blui.$blui-white, 50);
     }

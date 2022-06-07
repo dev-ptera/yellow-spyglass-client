@@ -53,7 +53,7 @@ import { AliasService } from '@app/services/alias/alias.service';
 
             <ng-template #legend let-repList="repList" let-colorOffset="colorOffset">
                 <div
-                    *ngFor="let rep of repList; let i = index; let last = last"
+                    *ngFor="let rep of repList; let i = index"
                     class="representatives-legend-entry"
                     [style.fontSize.px]="vp.sm ? 12 : 15"
                 >
@@ -63,7 +63,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                     ></div>
                     <div
                         class="link"
-                        [class.representatives-legend-others]="last"
+                        [class.representatives-legend-others]="!rep.address"
                         (click)="routeRepAddress(rep.address, $event)"
                     >
                         <ng-container *ngIf="aliasService.has(rep.address)">
