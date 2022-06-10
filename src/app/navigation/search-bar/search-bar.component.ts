@@ -136,7 +136,7 @@ export class SearchBarComponent {
     traverseList(e: KeyboardEvent): void {
         const menuEl = document.getElementsByClassName('alias-search-menu')[0];
         if (e.key === 'ArrowDown') {
-            if (this.menuActiveIndex < this.matchingAccounts.length-1) {
+            if (this.menuActiveIndex < this.matchingAccounts.length - 1) {
                 this.menuActiveIndex++;
             }
         }
@@ -157,7 +157,7 @@ export class SearchBarComponent {
         this._closeMenu();
         this.matchingAccounts = [];
         this.inputElement.blur();
-       // this.inputElement.value = 'test';
+        // this.inputElement.value = 'test';
     }
 
     preventEmptyMenu(): void {
