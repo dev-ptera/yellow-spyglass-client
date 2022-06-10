@@ -1,12 +1,12 @@
 import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { RepresentativeDto } from '@app/types/dto';
-import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
 import * as Highcharts from 'highcharts';
 // eslint-disable-next-line no-duplicate-imports
 import { Options } from 'highcharts';
 import { AliasService } from '@app/services/alias/alias.service';
+import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
 
 @Component({
     selector: 'app-weight-chart',
@@ -61,10 +61,10 @@ import { AliasService } from '@app/services/alias/alias.service';
                         class="representatives-legend-color"
                         [style.backgroundColor]="pieChartColors[i + colorOffset]"
                     ></div>
-                    <div
-                        class="link"
+                    <a
+                        class="link text"
                         [class.representatives-legend-others]="!rep.address"
-                        (click)="routeRepAddress(rep.address, $event)"
+                        [routerLink]="'/' + navItems.account.route + '/' + rep.address"
                     >
                         <ng-container *ngIf="aliasService.has(rep.address)">
                             {{ aliasService.get(rep.address) }}
@@ -72,7 +72,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                         <ng-container *ngIf="!aliasService.has(rep.address)">
                             {{ rep.name }}
                         </ng-container>
-                    </div>
+                    </a>
                 </div>
             </ng-template>
         </div>
@@ -107,16 +107,12 @@ export class WeightChartComponent implements OnChanges {
     ];
 
     repsChart: Options;
+    navItems = APP_NAV_ITEMS;
     chartShownReps: Array<{ name: string; address: string }> = [];
     chartShownRepsCol1: Array<{ name: string; address: string }> = [];
     chartShownRepsCol2: Array<{ name: string; address: string }> = [];
 
-    constructor(
-        public vp: ViewportService,
-        public aliasService: AliasService,
-        private readonly _util: UtilService,
-        private readonly _searchService: SearchService
-    ) {
+    constructor(public vp: ViewportService, public aliasService: AliasService, private readonly _util: UtilService) {
         this.vp.vpChange.subscribe(() => {
             setTimeout(() => {
                 window.dispatchEvent(new Event('resize'));
@@ -157,7 +153,6 @@ export class WeightChartComponent implements OnChanges {
                 }
             }
 
-            console.log(largeRepWeight);
             let allOthersWeight = this.onlineWeight - largeRepWeight;
 
             if (this.showOfflineWeight) {
@@ -239,11 +234,6 @@ export class WeightChartComponent implements OnChanges {
         };
     }
 
-    routeRepAddress(address: string, e: MouseEvent): void {
-        if (address) {
-            this._searchService.emitSearch(address, e.ctrlKey);
-        }
-    }
     formatChartAddress(addr: string): string {
         return `${addr.substr(0, 11)}...`;
     }

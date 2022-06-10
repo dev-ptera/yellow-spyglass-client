@@ -3,7 +3,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
 import { ApiService } from '@app/services/api/api.service';
 import { MonkeyCacheService } from '@app/services/monkey-cache/monkey-cache.service';
 import { AliasService } from '@app/services/alias/alias.service';
-import { SearchService } from '@app/services/search/search.service';
+import { APP_NAV_ITEMS } from '../../navigation/nav-items';
 
 @Component({
     selector: 'app-vanity',
@@ -13,6 +13,8 @@ export class VanityComponent implements OnInit {
     hasError: boolean;
     isLoading: boolean;
 
+    navItems = APP_NAV_ITEMS;
+
     vanityAddresses = [];
 
     constructor(
@@ -20,8 +22,7 @@ export class VanityComponent implements OnInit {
         public aliasService: AliasService,
         public monkeyCache: MonkeyCacheService,
         private readonly _apiService: ApiService,
-        private readonly _ref: ChangeDetectorRef,
-        private readonly _searchService: SearchService
+        private readonly _ref: ChangeDetectorRef
     ) {}
 
     ngOnInit(): void {
@@ -64,9 +65,5 @@ export class VanityComponent implements OnInit {
             this.isLoading = false;
             this._ref.detectChanges();
         });
-    }
-
-    search(address: string): void {
-        this._searchService.emitSearch(address);
     }
 }

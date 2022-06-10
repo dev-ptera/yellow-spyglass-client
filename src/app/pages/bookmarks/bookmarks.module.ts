@@ -11,6 +11,7 @@ import { AppCommonModule } from '@app/common/app-common.module';
 import { MatInputModule } from '@angular/material/input';
 import { DeleteBookmarkDialog } from '@app/pages/bookmarks/delete-bookmark-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     declarations: [BookmarksComponent, DeleteBookmarkDialog],
@@ -26,6 +27,7 @@ import { MatDialogModule } from '@angular/material/dialog';
         MatInputModule,
         MatDialogModule,
         ReactiveFormsModule,
+        RouterModule,
     ],
     exports: [BookmarksComponent, DeleteBookmarkDialog],
 })

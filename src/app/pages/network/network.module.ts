@@ -13,6 +13,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { MatDividerModule } from '@angular/material/divider';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     declarations: [NetworkComponent],
@@ -34,6 +35,7 @@ import { MatDividerModule } from '@angular/material/divider';
         MatIconModule,
         MatRippleModule,
         MatDividerModule,
+        RouterModule,
         SpacerModule,
     ],
     exports: [NetworkComponent],

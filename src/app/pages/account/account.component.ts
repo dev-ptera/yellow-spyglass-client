@@ -11,7 +11,7 @@ import { OnlineRepsService } from '@app/services/online-reps/online-reps.service
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AliasService } from '@app/services/alias/alias.service';
-import { hashNavItem } from '../../navigation/nav-items';
+import {APP_NAV_ITEMS, hashNavItem} from '../../navigation/nav-items';
 
 @Component({
     selector: 'app-account',
@@ -38,6 +38,8 @@ export class AccountComponent implements OnDestroy {
     confirmedTxPageIndex: number;
     delegatorCount: number;
 
+    navItems = APP_NAV_ITEMS;
+
     delegators: DelegatorDto[];
     receivableTransactions: ReceivableTransactionDto[] = [];
     readonly txPerPage = 50;
@@ -53,7 +55,6 @@ export class AccountComponent implements OnDestroy {
     constructor(
         public vp: ViewportService,
         public apiService: ApiService,
-        public searchService: SearchService,
         public onlineRepService: OnlineRepsService,
         private readonly _router: Router,
         private readonly _util: UtilService,
@@ -98,7 +99,7 @@ export class AccountComponent implements OnDestroy {
 
     /** Call this method whenever someone has accidently routed to the hash page, but with an address. */
     private _redirectToHashPage(hash: string): void {
-        void this._router.navigate([`/${hashNavItem.route}/${hash}`]);
+        void this._router.navigate([`/${hashNavItem.route}/${hash}`], { replaceUrl: true });
     }
 
     /** Given a ban address, searches for account. */

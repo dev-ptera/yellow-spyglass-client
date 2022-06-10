@@ -4,10 +4,11 @@ import { KnownAccountsComponent } from '@app/pages/known-accounts/known-accounts
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { AppCommonModule } from '@app/common/app-common.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     declarations: [KnownAccountsComponent],
-    imports: [AppCommonModule, CommonModule, MatTableModule, MatSortModule],
+    imports: [AppCommonModule, CommonModule, MatTableModule, MatSortModule, RouterModule],
     exports: [KnownAccountsComponent],
 })
 export class KnownAccountsModule {}

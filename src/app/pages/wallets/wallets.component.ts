@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
-import { SearchService } from '@app/services/search/search.service';
 import { ApiService } from '@app/services/api/api.service';
 import { Options } from 'highcharts';
 // eslint-disable-next-line no-duplicate-imports
@@ -10,6 +9,8 @@ import { PriceService } from '@app/services/price/price.service';
 import { AccountBalanceDto, AccountDistributionStatsDto } from '@app/types/dto';
 import { OnlineRepsService } from '@app/services/online-reps/online-reps.service';
 import { AliasService } from '@app/services/alias/alias.service';
+import { APP_NAV_ITEMS } from '../../navigation/nav-items';
+import {ThemeService} from "@app/services/theme/theme.service";
 
 @Component({
     selector: 'app-wallets',
@@ -19,6 +20,7 @@ import { AliasService } from '@app/services/alias/alias.service';
 export class WalletsComponent implements OnInit {
     currentPage = 0;
     readonly pageSize = 25;
+    navItems = APP_NAV_ITEMS;
 
     isLoading = true;
     hasError = false;
@@ -33,10 +35,10 @@ export class WalletsComponent implements OnInit {
     constructor(
         public util: UtilService,
         public vp: ViewportService,
-        public searchService: SearchService,
         public aliasService: AliasService,
         private readonly _api: ApiService,
         private readonly _ref: ChangeDetectorRef,
+        private readonly _themeService: ThemeService,
         private readonly _priceService: PriceService,
         private readonly _onlineRepsService: OnlineRepsService
     ) {
@@ -97,20 +99,6 @@ export class WalletsComponent implements OnInit {
         return this._onlineRepsService.onlineReps.size > 0 && !this._onlineRepsService.onlineReps.has(rep);
     }
 
-    routeRepAddress(address: string, e: MouseEvent): void {
-        this.searchService.emitSearch(address, e.ctrlKey);
-    }
-
-    formatAccountAddress(address: string): string {
-        if (address) {
-            const firstBits = address.substring(0, 12);
-            const midBits = address.substring(12, 58);
-            const lastBits = address.substring(58, 64);
-            8;
-            return `<strong class="">${firstBits}</strong><span class="secondary">${midBits}</span><strong class="">${lastBits}</strong>`;
-        }
-    }
-
     private _createDistributionChart(data: AccountDistributionStatsDto): Options {
         return {
             chart: {
@@ -150,6 +138,7 @@ export class WalletsComponent implements OnInit {
                 labels: {
                     enabled: false,
                 },
+                gridLineColor: this._themeService.isLightMode() ? 'rgba(66, 78, 84, 0.12)' : 'rgb(161, 167, 170, .36)',
             },
             plotOptions: {
                 column: {

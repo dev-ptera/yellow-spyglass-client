@@ -46,6 +46,7 @@ $custom-typography: mat.define-typography-config(
 @include mat.core($custom-typography);
 
 .link {
+    text-decoration: none;
     cursor: pointer;
     &:hover {
         text-decoration: underline;
@@ -133,4 +134,3 @@ $custom-typography: mat.define-typography-config(
         padding: 88px 16px 48px 16px;
     }
 }
-

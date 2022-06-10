@@ -157,13 +157,10 @@
     }
 
     .insights-chart {
-        $fill: rgba(19, 24, 27, 0.68) !important;
-        #container {
-            background: $fill;
-        }
+        $fill: rgb(19, 24, 27) !important;
         .highcharts-container {
-            rect {
-                fill: $fill;
+            .highcharts-background {
+                fill: #1d2529bd;
             }
         }
     }
@@ -245,6 +242,9 @@ $dark-theme: map-merge(
     }
     .mat-drawer-content {
         background-color: #13181b !important;
+    }
+    .text {
+        color: map-get($theme-foreground, text);
     }
     .text-secondary {
         color: map-get($theme-foreground, secondary-text);

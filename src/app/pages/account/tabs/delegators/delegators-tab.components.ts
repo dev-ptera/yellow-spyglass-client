@@ -1,17 +1,8 @@
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    Output,
-    ViewEncapsulation,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
 import { DelegatorDto } from '@app/types/dto/DelegatorDto';
-import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
+import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
 
 @Component({
     selector: 'account-delegators-tab',
@@ -48,9 +39,10 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
                     style="word-break: break-all"
                     [class.link]="element.address !== address"
                     *matCellDef="let element"
-                    (click)="searchService.emitSearch(element.address, $event.ctrlKey)"
                 >
-                    {{ element.address }}
+                    <a class="text link" [routerLink]="'/' + navItems.account.route + '/' + element.address">
+                        {{ element.address }}
+                    </a>
                     <span
                         *ngIf="element.address === address"
                         class="text-secondary mat-body-2"
@@ -109,17 +101,14 @@ export class DelegatorsTabComponent implements OnChanges {
 
     isLoading: boolean;
 
+    navItems = APP_NAV_ITEMS;
+
     columns = ['position', 'address', 'weight'];
     delegatorsDatasource;
 
     formattedWeight: string;
 
-    constructor(
-        public vp: ViewportService,
-        public util: UtilService,
-        public searchService: SearchService,
-        private readonly _ref: ChangeDetectorRef
-    ) {}
+    constructor(public vp: ViewportService, public util: UtilService, private readonly _ref: ChangeDetectorRef) {}
 
     ngOnChanges(): void {
         this.isLoading = false;

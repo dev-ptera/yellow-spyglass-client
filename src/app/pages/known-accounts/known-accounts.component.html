@@ -21,21 +21,21 @@
         <ng-container matColumnDef="alias">
             <th mat-header-cell *matHeaderCellDef mat-sort-header [style.paddingLeft.px]="vp.sm ? 20 : 24">Account</th>
             <td mat-cell *matCellDef="let element" class="known-accounts-alias-cell">
-                <span
-                    class="link"
+                <a
+                    class="link text"
                     style="word-break: break-word; font-weight: 600"
-                    (click)="routeRepAddress(element.address, $event)"
-                    >{{ element.alias }}</span
+                    [routerLink]="'/' + navItems.account.route + '/' + element.address"
+                    >{{ element.alias }}</a
                 >
                 <br />
-                <span
+                <a
                     class="link text-secondary"
                     style="word-break: break-word; font-family: monospace"
                     *ngIf="!vp.sm"
-                    (click)="routeRepAddress(element.address, $event)"
+                    [routerLink]="'/' + navItems.account.route + '/' + element.address"
                 >
                     {{ formatAddr(element.address) }}
-                </span>
+                </a>
             </td>
         </ng-container>
 

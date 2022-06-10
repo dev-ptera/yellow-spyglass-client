@@ -13,7 +13,7 @@ import { QrDialogComponent } from '@app/common/components/qr-dialog/qr-dialog.co
 import { PaginatorComponent } from '@app/common/components/paginator/paginator.component';
 import { ErrorComponent } from '@app/common/components/error/error.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { CommaPipe } from '@app/common/directives/comma.directive';
+import { CommaPipe } from '@app/common/pipes/comma.directive';
 import { PercentagePipe } from '@app/common/pipes/percentage.pipe';
 
 @NgModule({

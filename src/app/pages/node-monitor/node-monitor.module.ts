@@ -5,10 +5,11 @@ import { AppCommonModule } from '@app/common/app-common.module';
 import { InfoListItemModule } from '@brightlayer-ui/angular-components';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     declarations: [NodeMonitorComponent],
-    imports: [AppCommonModule, CommonModule, InfoListItemModule, MatListModule, MatCardModule],
+    imports: [AppCommonModule, CommonModule, InfoListItemModule, MatListModule, MatCardModule, RouterModule],
     exports: [NodeMonitorComponent],
 })
 export class NodeMonitorModule {}

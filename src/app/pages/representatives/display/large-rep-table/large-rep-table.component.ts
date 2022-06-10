@@ -1,12 +1,12 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { RepresentativeDto } from '@app/types/dto';
-import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 // eslint-disable-next-line no-duplicate-imports
 import { AliasService } from '@app/services/alias/alias.service';
+import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
 
 @Component({
     selector: 'app-large-rep-table',
@@ -41,10 +41,10 @@ import { AliasService } from '@app/services/alias/alias.service';
                                 label="Principal"
                                 style="margin-right: 12px"
                             ></blui-list-item-tag>
-                            <span
-                                class="link"
+                            <a
+                                class="link text"
                                 style="font-weight: 600"
-                                (click)="routeRepAddress(element.address, $event)"
+                                [routerLink]="'/' + navItems.account.route + '/' + element.address"
                             >
                                 <div
                                     *ngIf="aliasService.get(element.address)"
@@ -55,7 +55,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                                 <ng-container *ngIf="!aliasService.get(element.address)">
                                     {{ formatAddress(element.address) }}
                                 </ng-container>
-                            </span>
+                            </a>
                         </div>
                     </div>
                 </td>
@@ -137,6 +137,7 @@ export class LargeRepTableComponent implements OnChanges {
 
     @ViewChild('sortAll') sortAll: MatSort;
 
+    navItems = APP_NAV_ITEMS;
     largeRepsDataSource;
     largeRepsDisplayColumnsLg = [
         'position',
@@ -154,7 +155,6 @@ export class LargeRepTableComponent implements OnChanges {
         public vp: ViewportService,
         public aliasService: AliasService,
         private readonly _util: UtilService,
-        private readonly _searchService: SearchService,
         private readonly _ref: ChangeDetectorRef
     ) {}
 
@@ -181,12 +181,6 @@ export class LargeRepTableComponent implements OnChanges {
 
     formatAddress(addr: string): string {
         return this._util.shortenAddress(addr);
-    }
-
-    routeRepAddress(address: string, e: MouseEvent): void {
-        if (address) {
-            this._searchService.emitSearch(address, e.ctrlKey);
-        }
     }
 
     numberWithCommas(count: number): string {

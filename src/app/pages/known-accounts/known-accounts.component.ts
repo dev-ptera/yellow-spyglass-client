@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ApiService } from '@app/services/api/api.service';
 import { KnownAccountDto } from '@app/types/dto';
-import { SearchService } from '@app/services/search/search.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -17,6 +16,7 @@ import { UtilService } from '@app/services/util/util.service';
 })
 export class KnownAccountsComponent implements OnInit {
     accountsDataSource;
+    navItems = APP_NAV_ITEMS;
     isLoading = true;
     hasError = false;
     displayedColumns = ['alias', 'type', 'owner'];
@@ -25,7 +25,6 @@ export class KnownAccountsComponent implements OnInit {
     constructor(
         private readonly _ref: ChangeDetectorRef,
         private readonly _api: ApiService,
-        private readonly _searchService: SearchService,
         private readonly _router: Router,
         private readonly _util: UtilService,
         public vp: ViewportService
@@ -53,9 +52,5 @@ export class KnownAccountsComponent implements OnInit {
 
     formatAddr(addr: string): string {
         return this.vp.md ? this._util.shortenAddress(addr) : addr;
-    }
-
-    routeRepAddress(address: string, e: MouseEvent): void {
-        this._searchService.emitSearch(address, e.ctrlKey);
     }
 }

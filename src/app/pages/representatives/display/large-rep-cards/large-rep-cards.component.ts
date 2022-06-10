@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, Component, Input, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
-import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
 import { AliasService } from '@app/services/alias/alias.service';
 import { Representative } from '@app/types/modal';
+import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
 
 @Component({
     selector: 'app-large-rep-cards',
@@ -32,19 +32,21 @@ import { Representative } from '@app/types/modal';
                 </span>
             </div>
 
-            <div
+            <a
                 *ngIf="aliasService.has(rep.address)"
-                style="font-size: 0.875rem; font-weight: 600"
-                (click)="routeRepAddress(rep.address, $event)"
+                class="text link"
+                style="font-size: 0.875rem; font-weight: 600; display: block"
+                [routerLink]="'/' + navItems.account.route + '/' + rep.address"
             >
                 {{ aliasService.get(rep.address) }}
-            </div>
-            <div
-                style="font-size: 0.875rem; word-break: break-all; margin-bottom: 8px"
-                (click)="routeRepAddress(rep.address, $event)"
+            </a>
+            <a
+                class="text link"
+                style="font-size: 0.875rem; word-break: break-all; margin-bottom: 8px; display: block"
+                [routerLink]="'/' + navItems.account.route + '/' + rep.address"
             >
                 {{ rep.address }}
-            </div>
+            </a>
             <mat-divider></mat-divider>
             <div style="display: flex; justify-content: space-between; font-size: 0.75rem; padding-top: 12px">
                 <div>
@@ -76,17 +78,14 @@ export class LargeRepCardsComponent {
     @Input() shownReps: Representative[] = [];
     @Input() onlineWeight: number;
 
+    navItems = APP_NAV_ITEMS;
+
     constructor(
         public vp: ViewportService,
         public aliasService: AliasService,
         private readonly _util: UtilService,
-        private readonly _searchService: SearchService,
         private readonly _ref: ChangeDetectorRef
     ) {}
-
-    numberWithCommas(count: number): string {
-        return `${this._util.numberWithCommas(count)}`;
-    }
 
     formatWeightPercent(weight: number): string {
         return `${((weight / this.onlineWeight) * 100).toFixed(3).replace(/\.?0+$/, '')}%`;
@@ -98,15 +97,5 @@ export class LargeRepCardsComponent {
 
     trackByFn(index: number): number {
         return index;
-    }
-
-    formatAddress(addr: string): string {
-        return this._util.shortenAddress(addr);
-    }
-
-    routeRepAddress(address: string, e: MouseEvent): void {
-        if (address) {
-            this._searchService.emitSearch(address, e.ctrlKey);
-        }
     }
 }

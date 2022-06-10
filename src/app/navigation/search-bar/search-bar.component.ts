@@ -27,10 +27,11 @@ export let APP_SEARCH_BAR_ID = 0;
             type="text"
             tabindex="0"
             autocapitalize="none"
+            autocomplete="off"
             [placeholder]="placeholder"
             [(ngModel)]="appbarSearchText"
             (click)="preventEmptyMenu()"
-            (keyup)="filterOrSearch($event)"
+            (keyup)="filterOrSearch($event); traverseList($event)"
             #trigger="matMenuTrigger"
             [matMenuTriggerFor]="menu"
         />
@@ -38,8 +39,9 @@ export let APP_SEARCH_BAR_ID = 0;
         <mat-menu #menu="matMenu" class="alias-search-menu">
             <button
                 mat-menu-item
-                *ngFor="let item of matchingAccounts"
+                *ngFor="let item of matchingAccounts; let i = index"
                 (click)="emitSearch(item.address)"
+                [class.yellow]="menuActiveIndex === i"
                 [innerHTML]="item.alias | boldSearch: inputElement.value"
             ></button>
         </mat-menu>
@@ -63,6 +65,8 @@ export class SearchBarComponent {
     matchingAccounts: AliasDto[] = [];
 
     appbarSearchText: string;
+    menuActiveIndex = 0;
+    menuEl: HTMLElement;
 
     inputId: string;
     inputElement: HTMLInputElement;
@@ -107,13 +111,13 @@ export class SearchBarComponent {
         this.searchInputChange.emit(value);
 
         if (!value) {
-            return this.trigger.closeMenu();
+            return this._closeMenu();
         }
 
         if (e.key === 'Escape' || e.keyCode === 27) {
             this.inputElement.blur();
             this.inputElement.value = '';
-            return this.trigger.closeMenu();
+            return this._closeMenu();
         }
 
         // Handle Enter Key
@@ -124,26 +128,43 @@ export class SearchBarComponent {
 
             // Match aliases, then if there's a single match, search for it.
             this._matchAliases(value);
-            if (this.matchingAccounts.length === 1) {
-                this.emitSearch(this.matchingAccounts[0].address);
-            }
+            this.emitSearch(this.matchingAccounts[this.menuActiveIndex].address);
         } else {
             this._matchAliases(value);
+        }
+    }
+
+    traverseList(e: KeyboardEvent): void {
+        const menuEl = document.getElementsByClassName('alias-search-menu')[0];
+        if (e.key === 'ArrowDown') {
+            if (this.menuActiveIndex < this.matchingAccounts.length) {
+                this.menuActiveIndex++;
+            }
+        }
+        if (e.key === 'ArrowUp') {
+            if (this.menuActiveIndex !== 0) {
+                this.menuActiveIndex--;
+            }
+        }
+        if (menuEl) {
+            const scrollDistance = 48 * this.menuActiveIndex - 48 * 3;
+            console.log(scrollDistance);
+            menuEl.scrollTop = scrollDistance;
         }
     }
 
     emitSearch(value: string): void {
         this._searchService.emitSearch(value, false);
         this.closeSearch.emit();
-        this.trigger.closeMenu();
+        this._closeMenu();
         this.matchingAccounts = [];
         this.inputElement.blur();
-        this.inputElement.value = '';
+        this.inputElement.value = 'test';
     }
 
     preventEmptyMenu(): void {
         if (this.matchingAccounts.length === 0) {
-            this.trigger.closeMenu();
+            this._closeMenu();
         }
     }
 
@@ -156,7 +177,12 @@ export class SearchBarComponent {
         if (this.matchingAccounts.length > 0) {
             this.trigger.openMenu();
         } else {
-            this.trigger.closeMenu();
+            this._closeMenu();
         }
+    }
+
+    private _closeMenu(): void {
+        this.menuActiveIndex = 0;
+        this.trigger.closeMenu();
     }
 }

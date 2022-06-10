@@ -14,13 +14,17 @@
 }
 
 .wallets-rich-list-table {
-    .mat-cell {
-        font-size: 15px !important;
-    }
     &.sm .mat-cell {
         padding-top: 24px !important;
         padding-bottom: 24px !important;
-        font-size: 15px !important;
+    }
+    &.sm {
+        .address {
+            font-size: 0.875rem !important;
+        }
+    }
+    .address {
+        font-size: 1rem;
     }
 
     .wallets-table-alias {
@@ -32,9 +36,6 @@
     }
 
     .wallets-rich-list-conversion {
-        font-size: 14px !important;
-    }
-    &.sm .wallets-rich-list-conversion {
         font-size: 12px !important;
     }
 }

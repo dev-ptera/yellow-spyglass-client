@@ -69,7 +69,7 @@
             color: $placeholderTextColor;
         }
         .home-search-title {
-          //  color: map-get(blui.$blui-white, 50);
+            //  color: map-get(blui.$blui-white, 50);
         }
         .title {
             color: map-get($greenPalette, 500);
@@ -232,6 +232,9 @@ $jungle-green-theme: map-merge(
     }
     .mat-row:nth-child(odd) {
         background-color: map-get(blui.$blui-white, 100);
+    }
+    .text {
+        color: map-get($theme-foreground, text);
     }
     .text-secondary {
         color: map-get($theme-foreground, secondary-text);

@@ -116,12 +116,12 @@
                             style="display: flex; align-items: center"
                         >
                             Represented by&nbsp;
-                            <span
-                                class="link"
-                                (click)="searchService.emitSearch(accountOverview.representative, $event.ctrlKey)"
+                            <a
+                                class="link text-secondary"
+                                [routerLink]="'/' + navItems.account.route + '/' + accountOverview.representative"
                             >
                                 {{ accountRepresentative }}
-                            </span>
+                            </a>
                             <mat-icon
                                 *ngIf="!onlineRepService.onlineReps.has(accountOverview.representative)"
                                 [matTooltip]="'Account\'s representative is offline'"

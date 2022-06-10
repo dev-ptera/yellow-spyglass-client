@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
-import { MonitoredRepDto, RepresentativeDto } from '@app/types/dto';
-import { SearchService } from '@app/services/search/search.service';
+import { MonitoredRepDto } from '@app/types/dto';
 import { UtilService } from '@app/services/util/util.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -9,6 +8,7 @@ import { AliasService } from '@app/services/alias/alias.service';
 import { RepresentativesService } from '@app/pages/representatives/representatives.service';
 import { MonitoredRepTableColumns } from '@app/pages/representatives/representatives.component';
 import { MonitoredRep, Representative } from '@app/types/modal';
+import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
 
 @Component({
     selector: 'app-monitored-rep-table',
@@ -33,18 +33,18 @@ import { MonitoredRep, Representative } from '@app/types/modal';
                     *matCellDef="let element"
                     style="padding-top: 8px; padding-bottom: 8px; padding-right: 8px"
                 >
-                    <span class="link" style="font-weight: 400" (click)="repService.openMonitoredRep(element)">
+                    <a class="link text" style="font-weight: 400" [href]="repService.getMonitoredRepUrl(element)">
                         {{ element.name }}
-                    </span>
+                    </a>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="address">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 190px">Address</th>
                 <td class="representatives-weight-cell" mat-cell *matCellDef="let element">
-                    <span (click)="routeRepAddress(element.address, $event)" class="link">
-                        {{ formatShortAddress(element.address) }}</span
-                    >
+                    <a class="link text" [routerLink]="'/' + navItems.account.route + '/' + element.address">
+                        {{ formatShortAddress(element.address) }}
+                    </a>
                 </td>
             </ng-container>
 
@@ -157,10 +157,10 @@ export class MonitoredRepTableComponent implements OnChanges {
     @Input() onlineWeight: number;
     @Input() shownColumns: MonitoredRepTableColumns;
 
-    monitoredRepMap: Map<string, Representative> = new Map();
-
     @ViewChild('sortMonitored') sortMonitored: MatSort;
 
+    monitoredRepMap: Map<string, Representative> = new Map();
+    navItems = APP_NAV_ITEMS;
     monitoredRepsDataSource;
 
     constructor(
@@ -168,7 +168,6 @@ export class MonitoredRepTableComponent implements OnChanges {
         public aliasService: AliasService,
         public repService: RepresentativesService,
         private readonly _util: UtilService,
-        private readonly _searchService: SearchService,
         private readonly _ref: ChangeDetectorRef
     ) {}
 
@@ -258,12 +257,6 @@ export class MonitoredRepTableComponent implements OnChanges {
 
     numberWithCommas(count: number): string {
         return `${this._util.numberWithCommas(count)}`;
-    }
-
-    routeRepAddress(address: string, e: MouseEvent): void {
-        if (address) {
-            this._searchService.emitSearch(address, e.ctrlKey);
-        }
     }
 
     formatWeightPercent(weight: number): string {

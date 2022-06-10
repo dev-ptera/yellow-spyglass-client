@@ -6,7 +6,7 @@
 <ng-template #bodyContent>
     <div class="app-section-title">BAN Distribution Chart</div>
     <div class="app-section-subtitle">The chart below shows the distribution of banano among all opened accounts.</div>
-    <mat-card class="wallets-chart mat-elevation-z2 divider-border flat-edge" responsive>
+    <mat-card class="wallets-chart mat-elevation-z2 divider-border" responsive>
         <highcharts-chart
             [update]="true"
             [Highcharts]="Highcharts"
@@ -41,7 +41,7 @@
         *ngIf="accountBalances.length > 0"
         [style.width.%]="100"
         [dataSource]="accountBalances"
-        class="wallets-rich-list-table mat-elevation-z2 divider-border flat-edge"
+        class="wallets-rich-list-table mat-elevation-z2 divider-border"
         responsive
     >
         <ng-container matColumnDef="position">
@@ -74,14 +74,16 @@
                 *matCellDef="let element"
             >
                 <div *ngIf="aliasService.has(element.address)">
-                    <span
-                        class="wallets-table-alias link"
+                    <a
+                        class="wallets-table-alias link primary"
                         style="margin-bottom: -2px; word-break: break-word"
-                        (click)="routeRepAddress(element.address, $event)"
-                        >{{ aliasService.get(element.address) }}</span
+                        [routerLink]="'/' + navItems.account.route + '/' + element.address"
+                        >{{ aliasService.get(element.address) }}</a
                     >
                 </div>
-                <a class="address link" (click)="routeRepAddress(element.address, $event)">
+
+                <a class="address link text"
+                    [routerLink]="'/' + navItems.account.route + '/' + element.address">
                     {{ element.address }}
                 </a>
             </td>
@@ -89,19 +91,15 @@
         <ng-container matColumnDef="ban">
             <th mat-header-cell [style.paddingLeft.px]="16" *matHeaderCellDef>Amount</th>
             <td mat-cell style="padding: 8px 16px 8px 16px" *matCellDef="let element">
-                <div style="display: flex; align-items: center">
+                <div style="display: flex; align-items: center; font-size: 16px">
                     <!--<span [style.fontSize.px]="vp.sm ? 8 : 12">🍌</span>-->
-                    <img
-                        src="assets/banano-mark.svg"
-                        [width]="vp.sm ? 16 : 18"
-                        [height]="vp.sm ? 16 : 18"
-                        style="margin-right: 6px"
-                    />
                     {{ formatBanAmount(element.amount) }}
                 </div>
                 <div class="wallets-rich-list-conversion text-secondary">
                     <div>
-                        {{ formatUsdPrice(element.amount) | currency }} ·
+                        {{ formatUsdPrice(element.amount) | currency }}
+                        <ng-container *ngIf="!vp.sm">·</ng-container>
+                        <br *ngIf="vp.sm" />
                         {{ formatBtcPrice(element.amount) }}
                     </div>
                 </div>
@@ -118,7 +116,7 @@
         <app-error *ngIf="hasError"></app-error>
         <ng-container *ngIf="!hasError">
             <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
-            <div  *ngIf="!isLoading" class="animation-body">
+            <div *ngIf="!isLoading" class="animation-body">
                 <ng-template [ngTemplateOutlet]="bodyContent"></ng-template>
             </div>
         </ng-container>

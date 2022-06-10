@@ -3,9 +3,9 @@ import { Bookmark } from '@app/types/modal';
 import { BookmarksService } from '@app/services/bookmarks/bookmarks.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { FormControl } from '@angular/forms';
-import { SearchService } from '@app/services/search/search.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteBookmarkDialog } from '@app/pages/bookmarks/delete-bookmark-dialog.component';
+import { APP_NAV_ITEMS } from '../../navigation/nav-items';
 
 @Component({
     selector: 'app-bookmarks',
@@ -29,12 +29,12 @@ import { DeleteBookmarkDialog } from '@app/pages/bookmarks/delete-bookmark-dialo
                                 >
                                     <mat-icon>edit</mat-icon>
                                 </button>
-                                <span
-                                    class="bookmarks-data"
-                                    (click)="searchService.emitSearch(element.id, $event.ctrlKey)"
+                                <a
+                                    class="bookmarks-data text link"
+                                    [routerLink]="'/' + navItems.account.route + '/' + element.id"
                                 >
                                     {{ element.alias }}
-                                </span>
+                                </a>
                             </div>
                             <div class="bookmarks-data-cell" *ngIf="element.id === currentEditId">
                                 <mat-form-field appearance="outline" style="width: 100%">
@@ -95,12 +95,13 @@ export class BookmarksComponent implements OnInit {
     bookmarks: Bookmark[];
     columns = ['data', 'actions'];
 
+    navItems = APP_NAV_ITEMS;
+
     currentEditId: string;
     formControl: FormControl = new FormControl();
 
     constructor(
         public vp: ViewportService,
-        public searchService: SearchService,
         private readonly _dialog: MatDialog,
         private readonly _bookmarkService: BookmarksService
     ) {}

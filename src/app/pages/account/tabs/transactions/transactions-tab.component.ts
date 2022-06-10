@@ -1,10 +1,10 @@
 import { Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { SearchService } from '@app/services/search/search.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { PaginatorComponent } from '@app/common/components/paginator/paginator.component';
 import { UtilService } from '@app/services/util/util.service';
 import { AliasService } from '@app/services/alias/alias.service';
 import { ApiService } from '@app/services/api/api.service';
+import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
 
 type Transaction = {
     amount?: number;
@@ -56,25 +56,28 @@ type Transaction = {
                     <div class="address-row">
                         <ng-container *ngIf="!tx.type || tx.type === 'receive'">
                             <span class="to-from text-secondary">from</span>
-                            <span class="address link" (click)="searchService.emitSearch(tx.address, $event.ctrlKey)">{{
-                                aliasService.get(tx.address) || tx.address
-                            }}</span>
+                            <a class="address link text" [routerLink]="'/' + navItems.account.route + '/' + tx.address">
+                                {{ aliasService.get(tx.address) || tx.address }}
+                            </a>
                         </ng-container>
 
                         <ng-container *ngIf="tx.type === 'send'">
                             <span class="to-from text-secondary">to</span>
-                            <span class="address link" (click)="searchService.emitSearch(tx.address, $event.ctrlKey)">{{
-                                aliasService.get(tx.address) || tx.address
-                            }}</span>
+                            <a
+                                class="address link text"
+                                [routerLink]="'/' + navItems.account.route + '/' + tx.address"
+                                >{{ aliasService.get(tx.address) || tx.address }}</a
+                            >
                         </ng-container>
 
                         <ng-container *ngIf="tx.type === 'change'">
                             <span class="to-from text-secondary">to</span>
-                            <span
-                                class="address link"
-                                (click)="searchService.emitSearch(tx.newRepresentative, $event.ctrlKey)"
-                                >{{ aliasService.get(tx.newRepresentative) || tx.newRepresentative }}</span
+                            <a
+                                class="address link text"
+                                [routerLink]="'/' + navItems.account.route + '/' + tx.newRepresentative"
                             >
+                                {{ aliasService.get(tx.newRepresentative) || tx.newRepresentative }}
+                            </a>
                         </ng-container>
                     </div>
                 </div>
@@ -83,9 +86,9 @@ type Transaction = {
                         <span style="margin-right: 4px">#</span>{{ util.numberWithCommas(tx.height) }}</span
                     >
                     <span style="margin: 0 4px" *ngIf="tx.height">·</span>
-                    <span class="link hash" (click)="searchService.emitSearch(tx.hash, $event.ctrlKey)">{{
-                        tx.hash
-                    }}</span>
+                    <a class="link hash text-hint" [routerLink]="'/' + navItems.hash.route + '/' + tx.hash"
+                        >{{ tx.hash }}
+                    </a>
                 </div>
                 <div blui-right-content class="right-content" [style.marginRight.px]="vp.sm ? 0 : 8">
                     <div *ngIf="vp.sm" class="small-monkey">
@@ -126,12 +129,12 @@ export class TransactionsTabComponent {
     @Input() blockCount: number;
     @Input() txPerPage: number;
 
+    navItems = APP_NAV_ITEMS;
     dateMap: Map<string, { date: string; diffDays: number }> = new Map();
 
     constructor(
         public aliasService: AliasService,
         public apiService: ApiService,
-        public searchService: SearchService,
         public vp: ViewportService,
         public util: UtilService
     ) {}

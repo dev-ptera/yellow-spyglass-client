@@ -11,19 +11,31 @@
 <ng-template #bodyContent>
     <div style="display: flex; justify-content: center; flex-wrap: wrap">
         <mat-card
-            class="divider-border"
+            class="divider-border alias-card"
             *ngFor="let address of vanityAddresses"
             [style.maxWidth.px]="vp.sm ? 300 : 350"
             [style.margin.px]="vp.sm ? 8 : 16"
         >
             <ng-container *ngIf="aliasService.has(address)">
-                <div mat-card-title (click)="search(address)" class="link">{{ aliasService.get(address) }}</div>
-                <div mat-card-subtitle (click)="search(address)" style="word-wrap: break-word" class="link">
+                <div mat-card-title class="link" [routerLink]="'/' + navItems.account.route + '/' + address">
+                    {{ aliasService.get(address) }}
+                </div>
+                <div
+                    mat-card-subtitle
+                    style="word-wrap: break-word"
+                    class="link"
+                    [routerLink]="'/' + navItems.account.route + '/' + address"
+                >
                     {{ address }}
                 </div>
             </ng-container>
             <ng-container *ngIf="!aliasService.has(address)">
-                <div mat-card-title (click)="search(address)" style="word-wrap: break-word" class="link">
+                <div
+                    mat-card-title
+                    [routerLink]="'/' + navItems.account.route + '/' + address"
+                    style="word-wrap: break-word"
+                    class="link"
+                >
                     {{ address }}
                 </div>
             </ng-container>

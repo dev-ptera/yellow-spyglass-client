@@ -1,11 +1,11 @@
 import { ChangeDetectorRef, Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { MonitoredRepDto } from '@app/types/dto';
-import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
 import { MatSort } from '@angular/material/sort';
 import { AliasService } from '@app/services/alias/alias.service';
 import { RepresentativesService } from '@app/pages/representatives/representatives.service';
+import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
 
 @Component({
     selector: 'app-monitored-rep-list',
@@ -20,15 +20,13 @@ import { RepresentativesService } from '@app/pages/representatives/representativ
                     [divider]="last ? undefined : 'full'"
                 >
                     <div blui-title style="font-weight: 600">
-                        <div class="link" (click)="repService.openMonitoredRep(rep)">{{ rep.name }}</div>
+                        <a class="link text" [href]="repService.getMonitoredRepUrl(rep)">{{ rep.name }}</a>
                     </div>
                     <div blui-info style="font-size: 0.875rem" class="text-secondary">{{ formatInfoLine(rep) }}</div>
-                    <div
-                        blui-subtitle
-                        style="font-size: 0.875rem; padding-right: 16px"
-                        (click)="routeRepAddress(rep.address, $event)"
-                    >
-                        {{ rep.address }}
+                    <div blui-subtitle style="font-size: 0.875rem; padding-right: 16px">
+                        <a class="link text" [routerLink]="'/' + navItems.account.route + '/' + rep.address">
+                            {{ rep.address }}
+                        </a>
                     </div>
                     <div blui-right-content style="display: flex; flex-direction: column; align-items: flex-end">
                         <div style="font-size: 0.875rem">{{ formatWeightPercent(rep.weight) }} weight</div>
@@ -57,12 +55,13 @@ export class MonitoredRepListComponent {
 
     @ViewChild('sortMonitored') sortMonitored: MatSort;
 
+    navItems = APP_NAV_ITEMS;
+
     constructor(
         public vp: ViewportService,
         public aliasService: AliasService,
         public repService: RepresentativesService,
         private readonly _util: UtilService,
-        private readonly _searchService: SearchService,
         private readonly _ref: ChangeDetectorRef
     ) {}
 
@@ -74,18 +73,8 @@ export class MonitoredRepListComponent {
         return `${this._util.numberWithCommas(count)}`;
     }
 
-    routeRepAddress(address: string, e: MouseEvent): void {
-        if (address) {
-            this._searchService.emitSearch(address, e.ctrlKey);
-        }
-    }
-
     formatWeightPercent(weight: number): string {
         return `${((weight / this.onlineWeight) * 100).toFixed(3).replace(/\.?0+$/, '')}%`;
-    }
-
-    formatAddress(addr: string): string {
-        return this._util.shortenAddress(addr);
     }
 
     formatBanWeight(weight: number): string {

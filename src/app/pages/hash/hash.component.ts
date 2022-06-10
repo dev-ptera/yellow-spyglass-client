@@ -6,7 +6,7 @@ import { SearchService } from '@app/services/search/search.service';
 import { Subscription } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 import { ApiService } from '@app/services/api/api.service';
-import { accountNavItem } from '../../navigation/nav-items';
+import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
 
 @Component({
     selector: 'app-hash',
@@ -27,9 +27,12 @@ import { accountNavItem } from '../../navigation/nav-items';
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Block Account</span>
-                    <span class="app-section-subtitle link" (click)="search(block.blockAccount, $event)">
+                    <a
+                        class="app-section-subtitle link text"
+                        [routerLink]="'/' + routes.account.route + '/' + block.blockAccount"
+                    >
                         {{ block.blockAccount }}
-                    </span>
+                    </a>
                 </div>
                 <div class="hash-description text-secondary">The account represented by this state block</div>
             </div>
@@ -53,15 +56,21 @@ import { accountNavItem } from '../../navigation/nav-items';
             <div class="hash-section" *ngIf="block.subtype !== 'change'">
                 <div *ngIf="block.subtype === 'send'">
                     <span class="app-section-title">Recipient</span>
-                    <span class="app-section-subtitle link" (click)="search(block.contents.linkAsAccount, $event)">
+                    <a
+                        class="app-section-subtitle link text"
+                        [routerLink]="'/' + routes.account.route + '/' + block.contents.linkAsAccount"
+                    >
                         {{ block.contents.linkAsAccount }}
-                    </span>
+                    </a>
                 </div>
                 <div *ngIf="block.subtype === 'receive'">
                     <span class="app-section-title">Sender</span>
-                    <span class="app-section-subtitle link" (click)="search(block.sourceAccount, $event)">
+                    <a
+                        class="app-section-subtitle link text"
+                        [routerLink]="'/' + routes.account.route + '/' + block.sourceAccount"
+                    >
                         {{ block.sourceAccount }}
-                    </span>
+                    </a>
                 </div>
 
                 <div class="hash-description text-secondary">
@@ -76,9 +85,9 @@ import { accountNavItem } from '../../navigation/nav-items';
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Balance</span>
-                    <span class="app-section-subtitle"
-                        >{{ block.balance }} RAW | {{ convertRawToBan(block.balance) }}</span
-                    >
+                    <span class="app-section-subtitle">
+                        {{ block.balance }} RAW | {{ convertRawToBan(block.balance) }}
+                    </span>
                 </div>
                 <div class="hash-description text-secondary">
                     Block account balance once this transaction is confirmed
@@ -108,21 +117,24 @@ import { accountNavItem } from '../../navigation/nav-items';
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Representative</span>
-                    <span class="app-section-subtitle link" (click)="search(block.contents.representative, $event)">{{
-                        block.contents.representative
-                    }}</span>
+                    <a
+                        class="app-section-subtitle link text"
+                        [routerLink]="'/' + routes.account.route + '/' + block.contents.representative"
+                    >
+                        {{ block.contents.representative }}
+                    </a>
                 </div>
                 <div class="hash-description text-secondary">The account's representative</div>
             </div>
             <div class="hash-section" *ngIf="block.subtype !== 'change'">
                 <div>
                     <span class="app-section-title">Previous Block</span>
-                    <span
-                        class="app-section-subtitle"
+                    <a
+                        class="app-section-subtitle text"
                         [class.link]="block.height !== 1"
-                        (click)="search(block.contents.previous, $event)"
+                        [routerLink]="'/' + routes.hash.route + '/' + block.contents.previous"
                     >
-                        {{ block.height === 1 ? 'This block opened the account' : block.contents.previous }}</span
+                        {{ block.height === 1 ? 'This block opened the account' : block.contents.previous }}</a
                     >
                 </div>
                 <div class="hash-description text-secondary">The previous block in this account's chain</div>
@@ -130,9 +142,12 @@ import { accountNavItem } from '../../navigation/nav-items';
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Link</span>
-                    <span class="app-section-subtitle link" (click)="search(block.contents.link, $event)">{{
-                        block.contents.link
-                    }}</span>
+                    <a
+                        class="app-section-subtitle link text"
+                        [routerLink]="'/' + routes.hash.route + '/' + block.contents.link"
+                    >
+                        {{ block.contents.link }}
+                    </a>
                 </div>
                 <div class="hash-description text-secondary">The corresponding block that started this transaction</div>
             </div>
@@ -171,6 +186,7 @@ export class HashComponent implements OnDestroy {
     isLoading: boolean;
     hashError: boolean;
 
+    routes = APP_NAV_ITEMS;
     routeListener: Subscription;
 
     constructor(
@@ -178,8 +194,7 @@ export class HashComponent implements OnDestroy {
         private readonly _router: Router,
         private readonly _apiService: ApiService,
         private readonly _util: UtilService,
-        private readonly _ref: ChangeDetectorRef,
-        private readonly _searchService: SearchService
+        private readonly _ref: ChangeDetectorRef
     ) {
         this.routeListener = this._router.events.subscribe((route) => {
             if (route instanceof NavigationEnd) {
@@ -225,7 +240,7 @@ export class HashComponent implements OnDestroy {
 
     /** Call this method whenever someone has accidently routed to the hash page, but with an address. */
     private _redirectToAddressPage(address: string): void {
-        void this._router.navigate([`/${accountNavItem.route}/${address}`]);
+        void this._router.navigate([`/${accountNavItem.route}/${address}`], { replaceUrl: true });
     }
 
     convertRawToBan(raw: string): string {
@@ -239,9 +254,10 @@ export class HashComponent implements OnDestroy {
         return `${new Date(time * 1000).toLocaleDateString()} ${new Date(time * 1000).toLocaleTimeString()}`;
     }
 
+    /*
     search(value: string, e: MouseEvent): void {
         if (value !== '0000000000000000000000000000000000000000000000000000000000000000') {
             this._searchService.emitSearch(value, e.ctrlKey);
         }
-    }
+    } */
 }

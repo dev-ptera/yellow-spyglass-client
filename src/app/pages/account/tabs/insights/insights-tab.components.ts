@@ -1,9 +1,10 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, ViewEncapsulation } from '@angular/core';
-import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
 import { InsightsDto } from '@app/types/dto/InsightsDto';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import * as Highcharts from 'highcharts';
+import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
+import {ThemeService} from "@app/services/theme/theme.service";
 
 @Component({
     selector: 'account-insights-tab',
@@ -70,13 +71,13 @@ import * as Highcharts from 'highcharts';
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Largest Tx Sent</div>
                     <div blui-subtitle class="text-secondary">{{ formatBan(insights.maxAmountSent) }} BAN</div>
-                    <div
+                    <a
                         blui-right-content
                         class="link mat-overline text-hint"
-                        (click)="searchService.emitSearch(insights.maxAmountSentHash, $event.ctrlKey.ctrlKey)"
+                        [routerLink]="'/' + navItems.hash.route + '/' + insights.maxAmountSentHash"
                     >
                         hash
-                    </div>
+                    </a>
                 </blui-info-list-item>
 
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
@@ -87,25 +88,25 @@ import * as Highcharts from 'highcharts';
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>First-Sent Date</div>
                     <div blui-subtitle class="text-secondary">{{ formatDate(insights.firstOutTxUnixTimestamp) }}</div>
-                    <div
+                    <a
                         blui-right-content
                         class="link mat-overline text-hint"
-                        (click)="searchService.emitSearch(insights.firstOutTxHash, $event.ctrlKey)"
+                        [routerLink]="'/' + navItems.hash.route + '/' + insights.firstOutTxHash"
                     >
                         hash
-                    </div>
+                    </a>
                 </blui-info-list-item>
 
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Last-Sent Date</div>
                     <div blui-subtitle class="text-secondary">{{ formatDate(insights.lastOutTxUnixTimestamp) }}</div>
-                    <div
+                    <a
                         blui-right-content
                         class="link mat-overline text-hint"
-                        (click)="searchService.emitSearch(insights.lastOutTxHash, $event.ctrlKey)"
+                        [routerLink]="'/' + navItems.hash.route + '/' + insights.lastOutTxHash"
                     >
                         hash
-                    </div>
+                    </a>
                 </blui-info-list-item>
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Most Common Recipient</div>
@@ -117,22 +118,22 @@ import * as Highcharts from 'highcharts';
                         </div>
                         <div *ngIf="!insights.mostCommonRecipientAddress">This account has never sent any BAN.</div>
                     </div>
-                    <div
+                    <a
                         blui-info
                         *ngIf="vp.sm"
                         class="link text-secondary"
-                        (click)="searchService.emitSearch(insights.mostCommonRecipientAddress, $event.ctrlKey)"
+                        [routerLink]="'/' + navItems.account.route + '/' + insights.mostCommonRecipientAddress"
                     >
                         {{ shortenAddr(insights.mostCommonRecipientAddress) }}
-                    </div>
-                    <div
+                    </a>
+                    <a
                         blui-right-content
                         *ngIf="!vp.sm"
                         class="link text-hint"
-                        (click)="searchService.emitSearch(insights.mostCommonRecipientAddress, $event.ctrlKey)"
+                        [routerLink]="'/' + navItems.account.route + '/' + insights.mostCommonRecipientAdress"
                     >
                         {{ shortenAddr(insights.mostCommonRecipientAddress) }}
-                    </div>
+                    </a>
                 </blui-info-list-item>
             </mat-list>
         </ng-template>
@@ -148,13 +149,13 @@ import * as Highcharts from 'highcharts';
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Largest Tx Received</div>
                     <div blui-subtitle class="text-secondary">{{ formatBan(insights.maxAmountReceived) }} BAN</div>
-                    <div
+                    <a
                         blui-right-content
-                        class=" link mat-overline text-hint"
-                        (click)="searchService.emitSearch(insights.maxAmountReceivedHash, $event.ctrlKey)"
+                        class="link mat-overline text-hint"
+                        [routerLink]="'/' + navItems.hash.route + '/' + insights.maxAmountReceivedHash"
                     >
                         hash
-                    </div>
+                    </a>
                 </blui-info-list-item>
 
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
@@ -165,24 +166,24 @@ import * as Highcharts from 'highcharts';
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>First-Received Date</div>
                     <div blui-subtitle class="text-secondary">{{ formatDate(insights.firstInTxUnixTimestamp) }}</div>
-                    <div
+                    <a
                         blui-right-content
                         class="link mat-overline text-hint"
-                        (click)="searchService.emitSearch(insights.firstInTxHash, $event.ctrlKey)"
+                        [routerLink]="'/' + navItems.hash.route + '/' + insights.firstInTxHash"
                     >
                         hash
-                    </div>
+                    </a>
                 </blui-info-list-item>
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Last-Received Date</div>
                     <div blui-subtitle class="text-secondary">{{ formatDate(insights.lastInTxUnixTimestamp) }}</div>
-                    <div
+                    <a
                         blui-right-content
                         class="link mat-overline text-hint"
-                        (click)="searchService.emitSearch(insights.lastInTxHash, $event.ctrlKey)"
+                        [routerLink]="'/' + navItems.hash.route + '/' + insights.lastInTxHash"
                     >
                         hash
-                    </div>
+                    </a>
                 </blui-info-list-item>
 
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
@@ -191,33 +192,33 @@ import * as Highcharts from 'highcharts';
                         Received BAN
                         <strong style="margin: 0 4px">{{ insights.mostCommonSenderTxCount }}</strong> times from sender.
                     </div>
-                    <div
+                    <a
                         blui-info
                         *ngIf="vp.sm"
                         class="link text-secondary"
-                        (click)="searchService.emitSearch(insights.mostCommonSenderAddress, $event.ctrlKey)"
+                        [routerLink]="'/' + navItems.account.route + '/' + insights.mostCommonSenderAddress"
                     >
                         {{ shortenAddr(insights.mostCommonSenderAddress) }}
-                    </div>
-                    <div
+                    </a>
+                    <a
                         blui-right-content
                         *ngIf="!vp.sm"
                         class="link text-hint"
-                        (click)="searchService.emitSearch(insights.mostCommonSenderAddress, $event.ctrlKey)"
+                        [routerLink]="'/' + navItems.account.route + '/' + insights.mostCommonSenderAddress"
                     >
                         {{ shortenAddr(insights.mostCommonSenderAddress) }}
-                    </div>
+                    </a>
                 </blui-info-list-item>
                 <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
                     <div blui-title>Account Max Balance</div>
                     <div blui-subtitle class="text-secondary">{{ formatBan(insights.maxBalance) }} BAN</div>
-                    <div
+                    <a
                         blui-right-content
                         class="link mat-overline text-hint"
-                        (click)="searchService.emitSearch(insights.maxBalanceHash, $event.ctrlKey)"
+                        [routerLink]="'/' + navItems.hash.route + '/' + insights.maxBalanceHash"
                     >
                         hash
-                    </div>
+                    </a>
                 </blui-info-list-item>
             </mat-list>
         </ng-template>
@@ -232,14 +233,15 @@ export class InsightsTabComponent implements OnChanges, OnInit {
     @Input() blockCount: number;
     @Input() isLoadingInsights: boolean;
 
+    navItems = APP_NAV_ITEMS;
     Highcharts: typeof Highcharts = Highcharts;
 
     maxInsightsLimit = 100_000;
 
     constructor(
         public vp: ViewportService,
-        public searchService: SearchService,
         private readonly _util: UtilService,
+        private readonly _themeService: ThemeService,
         private readonly _ref: ChangeDetectorRef
     ) {
         this.vp.vpChange.subscribe(() => {
@@ -310,8 +312,11 @@ export class InsightsTabComponent implements OnChanges, OnInit {
                     if (balance > 100_000) {
                         balance = Math.round(balance);
                     }
-                    // @ts-ignore
-                    const lastBlockDiff = Number(this.y) - Number(this.series.data[Number(this.x - 1)].y);
+
+                    let lastBlockDiff = 0;
+                    if (this.x !== 0) {
+                        lastBlockDiff = Number(this.y) - Number(this.series.data[Number(this.x - 1)].y);
+                    }
 
                     return `<div style="font-size: 14px"><div>Block <strong>${
                         this.key
@@ -333,6 +338,7 @@ export class InsightsTabComponent implements OnChanges, OnInit {
                         console.log(x);
                     }, */
                 },
+                gridLineColor: this._themeService.isLightMode() ? 'rgba(66, 78, 84, 0.12)' : 'rgb(161, 167, 170, .36)',
                 type: 'number',
                 title: {
                     text: undefined,
@@ -345,7 +351,7 @@ export class InsightsTabComponent implements OnChanges, OnInit {
                 area: {
                     events: {
                         click: () => {
-                            console.log('click');
+                            //  console.log('click');
                             this._util.numberWithCommas('400');
                         },
                     },

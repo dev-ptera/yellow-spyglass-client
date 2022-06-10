@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { UtilService } from '@app/services/util/util.service';
-import { SearchService } from '@app/services/search/search.service';
 import { HostNodeStatsDto } from '@app/types/dto';
 import { ApiService } from '@app/services/api/api.service';
+import { APP_NAV_ITEMS } from '../../navigation/nav-items';
 
 @Component({
     selector: 'app-monitor',
@@ -12,9 +12,7 @@ import { ApiService } from '@app/services/api/api.service';
             <div class="app-page-title">Node Statistics</div>
             <div class="app-page-subtitle">
                 This explorer is powered & maintained by the
-                <span class="link primary"
-                      (click)="openMonitoredRep(stats.monitorUrl)">
-                    batman representative</span>.
+                <a class="link primary" [href]="getMonitoredRepUrl(stats.monitorUrl)"> batman representative</a>.
             </div>
         </ng-template>
 
@@ -24,15 +22,18 @@ import { ApiService } from '@app/services/api/api.service';
                     <div class="primary node-monitor-section-title">Node</div>
                     <mat-divider></mat-divider>
                     <mat-list [style.paddingTop.px]="0">
-                        <blui-info-list-item [wrapSubtitle]="true" divider="full">
+                        <blui-info-list-item [wrapSubtitle]="true" divider="full" *ngIf="stats.addressAsRepresentative">
                             <div blui-icon>
                                 <mat-icon>how_to_vote</mat-icon>
                             </div>
                             <div blui-title>Address</div>
                             <div blui-subtitle>
-                                <span class="link" (click)="search(stats.addressAsRepresentative, $event)">{{
-                                    stats.addressAsRepresentative
-                                    }}</span>
+                                <a
+                                    class="link text-secondary"
+                                    [routerLink]="'/' + navItems.account + '/' + stats.addressAsRepresentative"
+                                >
+                                    {{ stats.addressAsRepresentative }}</a
+                                >
                             </div>
                         </blui-info-list-item>
                         <blui-info-list-item divider="full">
@@ -170,13 +171,9 @@ export class NodeMonitorComponent implements OnInit {
     stats: HostNodeStatsDto;
     isLoading = true;
     hasError = false;
+    navItems = APP_NAV_ITEMS;
 
-    constructor(
-        private readonly _api: ApiService,
-        public vp: ViewportService,
-        public util: UtilService,
-        private readonly _searchService: SearchService
-    ) {}
+    constructor(private readonly _api: ApiService, public vp: ViewportService, public util: UtilService) {}
 
     ngOnInit(): void {
         this._api
@@ -190,10 +187,6 @@ export class NodeMonitorComponent implements OnInit {
                 this.isLoading = false;
                 this.hasError = true;
             });
-    }
-
-    search(value: string, e: MouseEvent): void {
-        this._searchService.emitSearch(value, e.ctrlKey);
     }
 
     formatMemory(mem: number): string {
@@ -235,7 +228,7 @@ export class NodeMonitorComponent implements OnInit {
         }
     }
 
-    openMonitoredRep(ip: string): void {
-        window.open(`http://${ip}`, '_blank');
+    getMonitoredRepUrl(ip: string): string {
+        return `http://${ip}`;
     }
 }

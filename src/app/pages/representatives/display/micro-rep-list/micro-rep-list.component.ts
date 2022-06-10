@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, Component, Input, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
-import { SearchService } from '@app/services/search/search.service';
 import { UtilService } from '@app/services/util/util.service';
 import { AliasService } from '@app/services/alias/alias.service';
 import { MicroRepresentative } from '@app/types/modal';
+import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
 
 @Component({
     selector: 'app-micro-rep-list',
@@ -19,11 +19,15 @@ import { MicroRepresentative } from '@app/types/modal';
                     <div blui-left-content [style.width.px]="vp.sm ? 24 : 40" class="text-secondary mat-body-2">
                         {{ i + 1 }}
                     </div>
-                    <div blui-title>{{ aliasService.get(rep.address) }}</div>
+                    <div blui-title>
+                        <a class="link text" [routerLink]="'/' + navItems.account.route + '/' + rep.address">
+                            {{ aliasService.get(rep.address) }}
+                        </a>
+                    </div>
                     <div blui-subtitle>
-                        <span class="link" (click)="routeRepAddress(rep.address)">{{
-                            formatAddress(rep.address)
-                        }}</span>
+                        <a class="link text" [routerLink]="'/' + navItems.account.route + '/' + rep.address">
+                            {{ formatAddress(rep.address) }}
+                        </a>
                     </div>
                     <div blui-info></div>
                     <div blui-right-content style="display: flex; flex-direction: column; align-items: flex-end">
@@ -42,12 +46,12 @@ import { MicroRepresentative } from '@app/types/modal';
 export class MicroRepListComponent {
     @Input() microReps: MicroRepresentative[] = [];
     @Input() onlineWeight: number;
+    navItems = APP_NAV_ITEMS;
 
     constructor(
         public vp: ViewportService,
         public aliasService: AliasService,
         private readonly _util: UtilService,
-        private readonly _searchService: SearchService,
         private readonly _ref: ChangeDetectorRef
     ) {}
 
@@ -57,12 +61,6 @@ export class MicroRepListComponent {
 
     numberWithCommas(count: number): string {
         return `${this._util.numberWithCommas(count)}`;
-    }
-
-    routeRepAddress(address: string): void {
-        if (address) {
-            this._searchService.emitSearch(address);
-        }
     }
 
     formatWeightPercent(weight: number): string {

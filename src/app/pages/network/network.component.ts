@@ -7,6 +7,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
 import { ApiService } from '@app/services/api/api.service';
 import { PeerVersionsDto, QuorumDto, SupplyDto } from '@app/types/dto';
 import { Router } from '@angular/router';
+import { APP_NAV_ITEMS } from '../../navigation/nav-items';
 
 HC_bullet(Highcharts);
 
@@ -22,6 +23,8 @@ export class NetworkComponent implements OnInit {
     isLoading = true;
     hasError = false;
 
+    navItems = APP_NAV_ITEMS;
+
     supplyChartOptions: Options;
     consensusChartOptions: Options;
 
@@ -34,7 +37,6 @@ export class NetworkComponent implements OnInit {
 
     constructor(
         public vp: ViewportService,
-        private readonly _router: Router,
         private readonly _apiService: ApiService,
         private readonly _ref: ChangeDetectorRef
     ) {
@@ -74,10 +76,6 @@ export class NetworkComponent implements OnInit {
 
     calcPeerVersionPercentage(count: number): any {
         return Math.round((count / this.totalNumberOfPeers) * 100);
-    }
-
-    goRepsPage(): void {
-        void this._router.navigate(['/representatives']);
     }
 
     private _createSupplyChart(supply: SupplyDto): Options {

@@ -20,6 +20,7 @@ import { TransactionsTabComponent } from '@app/pages/account/tabs/transactions/t
 import { DelegatorsTabComponent } from '@app/pages/account/tabs/delegators/delegators-tab.components';
 import { InsightsTabComponent } from '@app/pages/account/tabs/insights/insights-tab.components';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     declarations: [AccountComponent, TransactionsTabComponent, DelegatorsTabComponent, InsightsTabComponent],
@@ -40,6 +41,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatProgressSpinnerModule,
         MatTabsModule,
         MatTableModule,
+        RouterModule,
         ReactiveFormsModule,
         HighchartsChartModule,
         MatTooltipModule,
