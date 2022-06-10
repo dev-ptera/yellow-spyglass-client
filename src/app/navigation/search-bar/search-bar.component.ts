@@ -66,7 +66,6 @@ export class SearchBarComponent {
 
     appbarSearchText: string;
     menuActiveIndex = 0;
-    menuEl: HTMLElement;
 
     inputId: string;
     inputElement: HTMLInputElement;
@@ -137,7 +136,7 @@ export class SearchBarComponent {
     traverseList(e: KeyboardEvent): void {
         const menuEl = document.getElementsByClassName('alias-search-menu')[0];
         if (e.key === 'ArrowDown') {
-            if (this.menuActiveIndex < this.matchingAccounts.length) {
+            if (this.menuActiveIndex < this.matchingAccounts.length-1) {
                 this.menuActiveIndex++;
             }
         }
@@ -148,7 +147,6 @@ export class SearchBarComponent {
         }
         if (menuEl) {
             const scrollDistance = 48 * this.menuActiveIndex - 48 * 3;
-            console.log(scrollDistance);
             menuEl.scrollTop = scrollDistance;
         }
     }
@@ -159,7 +157,7 @@ export class SearchBarComponent {
         this._closeMenu();
         this.matchingAccounts = [];
         this.inputElement.blur();
-        this.inputElement.value = 'test';
+       // this.inputElement.value = 'test';
     }
 
     preventEmptyMenu(): void {
