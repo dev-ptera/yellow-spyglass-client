@@ -28,9 +28,9 @@ import { APP_NAV_ITEMS } from '../../navigation/nav-items';
                             </div>
                             <div blui-title>Address</div>
                             <div blui-subtitle>
-                                <a
-                                    class="link text-secondary"
-                                    [routerLink]="'/' + navItems.account + '/' + stats.addressAsRepresentative"
+                                <a style="color: inherit"
+                                    class="link"
+                                    [routerLink]="'/' + navItems.account.route + '/' + stats.addressAsRepresentative"
                                 >
                                     {{ stats.addressAsRepresentative }}</a
                                 >

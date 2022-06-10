@@ -130,7 +130,7 @@ import { ThemeService } from '@app/services/theme/theme.service';
                         blui-right-content
                         *ngIf="!vp.sm"
                         class="link text-hint"
-                        [routerLink]="'/' + navItems.account.route + '/' + insights.mostCommonRecipientAdress"
+                        [routerLink]="'/' + navItems.account.route + '/' + insights.mostCommonRecipientAddress"
                     >
                         {{ shortenAddr(insights.mostCommonRecipientAddress) }}
                     </a>
