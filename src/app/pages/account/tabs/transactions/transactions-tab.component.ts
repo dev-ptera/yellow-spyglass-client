@@ -56,34 +56,41 @@ type Transaction = {
                     <div class="address-row">
                         <ng-container *ngIf="!tx.type || tx.type === 'receive'">
                             <span class="to-from text-secondary">from</span>
-                            <a class="address link text" [routerLink]="'/' + navItems.account.route + '/' + tx.address">
-                                {{ aliasService.get(tx.address) || tx.address }}
-                            </a>
+                            <span>
+                                <a
+                                    class="address link text"
+                                    [routerLink]="'/' + navItems.account.route + '/' + tx.address"
+                                    >{{ aliasService.get(tx.address) || tx.address }}</a
+                                >
+                            </span>
                         </ng-container>
 
                         <ng-container *ngIf="tx.type === 'send'">
                             <span class="to-from text-secondary">to</span>
-                            <a
-                                class="address link text"
-                                [routerLink]="'/' + navItems.account.route + '/' + tx.address"
-                                >{{ aliasService.get(tx.address) || tx.address }}</a
-                            >
+                            <span>
+                                <a
+                                    class="address link text"
+                                    [routerLink]="'/' + navItems.account.route + '/' + tx.address"
+                                    >{{ aliasService.get(tx.address) || tx.address }}
+                                </a>
+                            </span>
                         </ng-container>
 
                         <ng-container *ngIf="tx.type === 'change'">
                             <span class="to-from text-secondary">to</span>
-                            <a
-                                class="address link text"
-                                [routerLink]="'/' + navItems.account.route + '/' + tx.newRepresentative"
-                            >
-                                {{ aliasService.get(tx.newRepresentative) || tx.newRepresentative }}
-                            </a>
+                            <span
+                                ><a
+                                    class="address link text"
+                                    [routerLink]="'/' + navItems.account.route + '/' + tx.newRepresentative"
+                                    >{{ aliasService.get(tx.newRepresentative) || tx.newRepresentative }}</a
+                                >
+                            </span>
                         </ng-container>
                     </div>
                 </div>
                 <div blui-subtitle class="hash text-hint mat-body-2">
                     <span *ngIf="tx.height">
-                        <span style="margin-right: 4px">#</span>{{ util.numberWithCommas(tx.height) }}</span
+                        <span style="margin-right: 0px">#</span>{{ util.numberWithCommas(tx.height) }}</span
                     >
                     <span style="margin: 0 4px" *ngIf="tx.height">·</span>
                     <a class="link hash text-hint" [routerLink]="'/' + navItems.hash.route + '/' + tx.hash"
@@ -156,7 +163,10 @@ export class TransactionsTabComponent {
     }
 
     getEmptyStateTitle(): string {
-        return `No ${this.isPending ? 'Pending' : 'Receivable'} Transactions`;
+        if (this.isPending) {
+            return 'No Pending Transactions';
+        }
+        return 'No Confirmed Transactions';
     }
 
     getEmptyStateDescription(): string {

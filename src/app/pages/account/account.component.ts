@@ -11,7 +11,7 @@ import { OnlineRepsService } from '@app/services/online-reps/online-reps.service
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AliasService } from '@app/services/alias/alias.service';
-import {APP_NAV_ITEMS, hashNavItem} from '../../navigation/nav-items';
+import { APP_NAV_ITEMS, hashNavItem } from '../../navigation/nav-items';
 
 @Component({
     selector: 'app-account',

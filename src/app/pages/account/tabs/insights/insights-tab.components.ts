@@ -4,7 +4,7 @@ import { InsightsDto } from '@app/types/dto/InsightsDto';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import * as Highcharts from 'highcharts';
 import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
-import {ThemeService} from "@app/services/theme/theme.service";
+import { ThemeService } from '@app/services/theme/theme.service';
 
 @Component({
     selector: 'account-insights-tab',

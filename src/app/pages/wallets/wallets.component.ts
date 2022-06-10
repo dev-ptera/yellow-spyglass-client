@@ -10,7 +10,7 @@ import { AccountBalanceDto, AccountDistributionStatsDto } from '@app/types/dto';
 import { OnlineRepsService } from '@app/services/online-reps/online-reps.service';
 import { AliasService } from '@app/services/alias/alias.service';
 import { APP_NAV_ITEMS } from '../../navigation/nav-items';
-import {ThemeService} from "@app/services/theme/theme.service";
+import { ThemeService } from '@app/services/theme/theme.service';
 
 @Component({
     selector: 'app-wallets',
