@@ -99,6 +99,10 @@ export class WalletsComponent implements OnInit {
         return this._onlineRepsService.onlineReps.size > 0 && !this._onlineRepsService.onlineReps.has(rep);
     }
 
+    isLightTheme(): boolean {
+        return this._themeService.isLightMode();
+    }
+
     private _createDistributionChart(data: AccountDistributionStatsDto): Options {
         return {
             chart: {
@@ -138,7 +142,7 @@ export class WalletsComponent implements OnInit {
                 labels: {
                     enabled: false,
                 },
-                gridLineColor: this._themeService.isLightMode() ? 'rgba(66, 78, 84, 0.12)' : 'rgb(161, 167, 170, .36)',
+                gridLineColor: this.isLightTheme() ? 'rgba(66, 78, 84, 0.12)' : 'rgb(161, 167, 170, .36)',
             },
             plotOptions: {
                 column: {

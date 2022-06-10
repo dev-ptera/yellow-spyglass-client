@@ -92,6 +92,21 @@
             <td mat-cell style="padding: 8px 16px 8px 16px" *matCellDef="let element">
                 <div style="display: flex; align-items: center; font-size: 16px">
                     <!--<span [style.fontSize.px]="vp.sm ? 8 : 12">🍌</span>-->
+                    <!--
+                    <img
+                        *ngIf="!vp.sm && isLightTheme()"
+                        src="assets/banano-mark-green.svg"
+                        [width]="18"
+                        [height]="18"
+                        style="margin-right: 6px"
+                    />
+                    <img
+                        *ngIf="!vp.sm && !isLightTheme()"
+                        src="assets/banano-mark.svg"
+                        [width]="18"
+                        [height]="18"
+                        style="margin-right: 6px"
+                    /> -->
                     {{ formatBanAmount(element.amount) }}
                 </div>
                 <div class="wallets-rich-list-conversion text-secondary">
