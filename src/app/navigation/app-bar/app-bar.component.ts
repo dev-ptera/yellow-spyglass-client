@@ -16,14 +16,14 @@ import { LoadingService } from '@app/services/loading/loading.service';
                         <mat-icon>menu</mat-icon>
                     </button>
                     <blui-spacer *ngIf="!vp.sm"></blui-spacer>
-                    <div
+                    <a
                         responsive
                         style="display: flex; align-items: center"
                         class="navigation-toolbar-title"
-                        (click)="router.navigate(['/home'])"
+                        [routerLink]="'/home'"
                     >
                         <img src="../../../assets/branding/creeper-on-dark-horizontal.svg" style="width: 150px" />
-                    </div>
+                    </a>
 
                     <div *ngIf="!vp.md && !vp.sm" [style.marginLeft.px]="vp.md ? 24 : 48">
                         <button
