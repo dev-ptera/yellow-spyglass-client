@@ -135,7 +135,7 @@ export class SearchBarComponent {
 
     traverseList(e: KeyboardEvent): void {
         const menuEl = document.getElementsByClassName('alias-search-menu')[0];
-        if (e.key === 'ArrowDown') {
+        if (e.key === 'ArrowDown' || e.key === 'Tab') {
             if (this.menuActiveIndex < this.matchingAccounts.length - 1) {
                 this.menuActiveIndex++;
             }
