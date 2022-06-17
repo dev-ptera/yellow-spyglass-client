@@ -7,7 +7,7 @@ import { ApiService } from '@app/services/api/api.service';
 import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
 
 type Transaction = {
-    timestampHovered: boolean;
+    timestampHovered?: boolean;
     amount?: number;
     hash: string;
     type?: 'receive' | 'send' | 'change';

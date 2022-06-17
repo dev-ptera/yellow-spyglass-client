@@ -232,6 +232,18 @@
                 </ng-container>
                 <ng-container *ngIf="!vp.sm"> Insights </ng-container>
             </button>
+
+            <button *ngIf="!vp.sm"
+                mat-flat-button
+                (click)="showTabNumber = 5; fetchNfts()"
+                [class.active]="showTabNumber === 5"
+                style="border-top-right-radius: 4px"
+            >
+                <ng-container *ngIf="vp.sm">
+                    <mat-icon>image</mat-icon>
+                </ng-container>
+                <ng-container *ngIf="!vp.sm"> NFTs </ng-container>
+            </button>
         </div>
 
         <div
@@ -274,6 +286,15 @@
                 [address]="address"
             >
             </account-insights-tab>
+
+            <account-nfts-tab
+                *ngIf="showTabNumber === 5"
+                [address]="address"
+                [nfts]="nfts"
+                [isLoadingNFTs]="isLoadingNFTs"
+            >
+            </account-nfts-tab>
+
         </div>
     </div>
 </ng-template>

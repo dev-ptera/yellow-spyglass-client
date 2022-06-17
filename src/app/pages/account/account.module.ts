@@ -21,9 +21,10 @@ import { DelegatorsTabComponent } from '@app/pages/account/tabs/delegators/deleg
 import { InsightsTabComponent } from '@app/pages/account/tabs/insights/insights-tab.components';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
+import {NftsTabComponents} from "@app/pages/account/tabs/nfts/nfts-tab.components";
 
 @NgModule({
-    declarations: [AccountComponent, TransactionsTabComponent, DelegatorsTabComponent, InsightsTabComponent],
+    declarations: [AccountComponent, TransactionsTabComponent, DelegatorsTabComponent, InsightsTabComponent, NftsTabComponents],
     imports: [
         AppCommonModule,
         BrowserAnimationsModule,
@@ -46,6 +47,6 @@ import { RouterModule } from '@angular/router';
         HighchartsChartModule,
         MatTooltipModule,
     ],
-    exports: [AccountComponent, TransactionsTabComponent, DelegatorsTabComponent, InsightsTabComponent],
+    exports: [AccountComponent, TransactionsTabComponent, DelegatorsTabComponent, InsightsTabComponent, NftsTabComponents],
 })
 export class AccountModule {}

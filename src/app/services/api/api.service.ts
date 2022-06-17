@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import {
     AccountBalanceDto,
-    AccountDistributionStatsDto,
+    AccountDistributionStatsDto, AccountNFTDto,
     AccountOverviewDto,
     AliasDto,
     BlockDto,
@@ -44,6 +44,11 @@ export class ApiService {
     /** Fetches account summary information. */
     fetchAccountOverview(address: string): Promise<AccountOverviewDto> {
         return this._http.get<AccountOverviewDto>(`${this.spyglassApi}/v1/account/overview/${address}`).toPromise();
+    }
+
+    /** Fetches account summary information. */
+    fetchAccountNFTs(address: string): Promise<AccountNFTDto[]> {
+        return this._http.get<AccountNFTDto[]>(`${this.spyglassApi}/v1/account/nfts/${address}`).toPromise();
     }
 
     /** Fetches account delegators. */

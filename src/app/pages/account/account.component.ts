@@ -1,5 +1,11 @@
 import { ChangeDetectorRef, Component, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { AccountOverviewDto, ConfirmedTransactionDto, DelegatorDto, ReceivableTransactionDto } from '@app/types/dto';
+import {
+    AccountNFTDto,
+    AccountOverviewDto,
+    ConfirmedTransactionDto,
+    DelegatorDto,
+    ReceivableTransactionDto
+} from '@app/types/dto';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { UtilService } from '@app/services/util/util.service';
 import { ApiService } from '@app/services/api/api.service';
@@ -31,6 +37,7 @@ export class AccountComponent implements OnDestroy {
     insightsDisabled: boolean;
     isLoadingInsights: boolean;
     hasInsightsError: boolean;
+    isLoadingNFTs: boolean;
 
     weightSum: number;
     showTabNumber: number;
@@ -42,6 +49,7 @@ export class AccountComponent implements OnDestroy {
     MAX_INSIGHTS = 100_000;
 
     delegators: DelegatorDto[];
+    nfts: AccountNFTDto[];
     receivableTransactions: ReceivableTransactionDto[] = [];
     readonly txPerPage = 50;
 
@@ -270,6 +278,18 @@ export class AccountComponent implements OnDestroy {
             const lastBits = address.substring(58, 64);
             return `<strong class="">${firstBits}</strong><span class="secondary">${midBits}</span><strong class="">${lastBits}</strong>`;
         }
+    }
+
+    fetchNfts(): void {
+        this.nfts = [];
+        this.isLoadingNFTs = true;
+        this.apiService.fetchAccountNFTs(this.address).then((data) => {
+            this.nfts = data;
+        }).catch((err) => {
+            console.error(err);
+        }).finally(() => {
+            this.isLoadingNFTs = false
+        })
     }
 
     hasAlias(address: string): boolean {
