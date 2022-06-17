@@ -7,6 +7,7 @@ import { ApiService } from '@app/services/api/api.service';
 import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
 
 type Transaction = {
+    timestampHovered: boolean;
     amount?: number;
     hash: string;
     type?: 'receive' | 'send' | 'change';
@@ -101,10 +102,17 @@ type Transaction = {
                     <div *ngIf="vp.sm" class="small-monkey">
                         <img [src]="apiService.createMonKeyUrl(tx.address || tx.newRepresentative)" loading="lazy" />
                     </div>
-                    <div class="timestamps">
+                    <div class="timestamps" >
                         <span class="mat-body-2">{{ dateMap.get(tx.hash).date }}</span>
-                        <span class="mat-body-2 text-secondary" [style.fontSize.px]="vp.sm ? 12 : 14">
+                        <span class="mat-body-2 text-secondary" [style.fontSize.px]="vp.sm ? 12 : 14"
+                              (mouseenter)="tx.timestampHovered=true"
+                              (mouseleave)="tx.timestampHovered=false">
+                            <ng-container *ngIf="!tx.timestampHovered">
                             {{ getRelativeTime(dateMap.get(tx.hash).diffDays) }}
+                            </ng-container>
+                            <ng-container *ngIf="tx.timestampHovered">
+                            {{ getTime(tx.timestamp) }}
+                            </ng-container>
                         </span>
                     </div>
                 </div>
@@ -181,6 +189,12 @@ export class TransactionsTabComponent {
             return 'receive';
         }
         return tx.type;
+    }
+
+    getTime(timestamp: number): string {
+        if (timestamp) {
+            return new Date(timestamp * 1000).toLocaleTimeString();
+        }
     }
 
     getRelativeTime(days: number): string {
