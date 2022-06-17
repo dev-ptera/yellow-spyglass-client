@@ -285,7 +285,15 @@ $dark-theme: map-merge(
         outline: 0;
     }
 
-    $sticky-border-color: map-get(blui.$blui-black, 100);
+    .ph-row div {
+        background-color: #101010;
+    }
+    .ph-item:before {
+        background: linear-gradient(to right, rgb(255 0 0 / 0%) 46%, rgb(29, 37, 41) 50%, rgba(255, 255, 255, 0) 54%)
+            50% 50%;
+    }
+
+    $sticky-border-color: map-get($theme-foreground, divider);
     @include representatives.representatives-theme($sticky-border-color, #3b3b3b);
     @include accountPage($theme-foreground, $theme-background, $primary, $warn);
     @include network.network-theme($theme-foreground);

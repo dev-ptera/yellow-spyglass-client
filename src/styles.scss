@@ -4,6 +4,7 @@
 @use './theme/jungle-green';
 @use './theme/dark-theme';
 @use './theme/animation';
+@use '~placeholder-loading/src/scss/placeholder-loading';
 
 @include blui-margins.reasonable-margins();
 
@@ -61,7 +62,7 @@ $custom-typography: mat.define-typography-config(
 }
 
 .blui-list-item-tag-content .blui-list-item-tag-label {
-    font-size: 11px !important;
+    font-size: 10px !important;
 }
 
 .mat-tab-label-active {
@@ -114,6 +115,24 @@ $custom-typography: mat.define-typography-config(
 // Empty state description font weight change
 .blui-empty-state-content .blui-empty-state-description {
     font-weight: 400 !important;
+}
+
+.mat-card .mat-divider-horizontal {
+    position: absolute;
+    left: 0;
+    width: 100%;
+}
+
+.blui-user-menu-overlay {
+    .mat-toolbar {
+        //    border-bottom: 0!important;
+    }
+}
+.mat-bottom-sheet-container {
+    padding: 0 !important;
+    .mat-toolbar {
+        // border-bottom: 0!important;
+    }
 }
 
 /* Common styles for padding, font-sizes, etc. */

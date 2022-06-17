@@ -261,6 +261,10 @@ $jungle-green-theme: map-merge(
         outline: 0;
     }
 
+    .ph-row div {
+        background-color: #f5f5f5;
+    }
+
     $sticky-border-color: map-get(blui.$blui-black, 100);
     @include representatives.representatives-theme($sticky-border-color, #f1fff1);
     @include accountPage($theme-foreground, $theme-background, $primary, $warn);

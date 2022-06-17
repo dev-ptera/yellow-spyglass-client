@@ -26,7 +26,7 @@
             flex-direction: column;
             justify-content: center;
             text-align: center;
-            margin-left: 12px;
+            margin-left: 0px;
         }
         .small-monkey {
             height: 64px;
@@ -73,6 +73,10 @@ $mono: monospace;
         .right-content {
             margin-left: 24px;
         }
+    }
+    .blui-list-item-tag-content {
+        width: 52px;
+        text-align: center;
     }
     .blui-info-list-item .blui-info-list-item-subtitle-wrapper {
         font-size: 0.75rem;

@@ -172,6 +172,7 @@
         <app-error *ngIf="hasError"></app-error>
         <ng-container *ngIf="!hasError">
             <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
+            <!--<app-network-loading [show]="isLoading"></app-network-loading>-->
             <div *ngIf="!isLoading" class="animation-body network-container">
                 <ng-template [ngTemplateOutlet]="bodyContent"></ng-template>
             </div>

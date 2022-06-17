@@ -14,9 +14,10 @@ import { MatRippleModule } from '@angular/material/core';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { MatDividerModule } from '@angular/material/divider';
 import { RouterModule } from '@angular/router';
+import { NetworkLoadingComponent } from '@app/pages/network/network-loading.component';
 
 @NgModule({
-    declarations: [NetworkComponent],
+    declarations: [NetworkComponent, NetworkLoadingComponent],
     imports: [
         AppCommonModule,
         CommonModule,
@@ -38,6 +39,6 @@ import { RouterModule } from '@angular/router';
         RouterModule,
         SpacerModule,
     ],
-    exports: [NetworkComponent],
+    exports: [NetworkComponent, NetworkLoadingComponent],
 })
 export class NetworkModule {}

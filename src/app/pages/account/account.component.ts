@@ -4,7 +4,6 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
 import { UtilService } from '@app/services/util/util.service';
 import { ApiService } from '@app/services/api/api.service';
 import { MonkeyCacheService } from '@app/services/monkey-cache/monkey-cache.service';
-import { SearchService } from '@app/services/search/search.service';
 import { PriceService } from '@app/services/price/price.service';
 import { InsightsDto } from '@app/types/dto/InsightsDto';
 import { OnlineRepsService } from '@app/services/online-reps/online-reps.service';
@@ -39,6 +38,8 @@ export class AccountComponent implements OnDestroy {
     delegatorCount: number;
 
     navItems = APP_NAV_ITEMS;
+
+    MAX_INSIGHTS = 100_000;
 
     delegators: DelegatorDto[];
     receivableTransactions: ReceivableTransactionDto[] = [];
@@ -193,7 +194,7 @@ export class AccountComponent implements OnDestroy {
         this.confirmedTransactions.all.set(0, data[1]);
         this.confirmedTransactions.display = data[1];
         this.receivableTransactions = data[2];
-        this.insightsDisabled = this.accountOverview.blockCount > 100_000 || !this.accountOverview.opened;
+        this.insightsDisabled = this.accountOverview.blockCount > this.MAX_INSIGHTS || !this.accountOverview.opened;
 
         if (this.accountOverview.weight) {
             this.weightSum = this.accountOverview.weight;

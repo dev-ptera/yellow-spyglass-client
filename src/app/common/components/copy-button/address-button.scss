@@ -15,7 +15,6 @@
 .address-action-button {
     margin-left: 4px;
     * {
-
         overflow: visible;
     }
     @include adjustSize(30px, 20px);
@@ -23,7 +22,6 @@
 .address-action-button.sm {
     margin-top: -4px;
     margin-left: 4px;
-
 
     @include adjustSize(24px, 16px);
 }

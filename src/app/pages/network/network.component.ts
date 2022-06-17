@@ -6,7 +6,6 @@ import HC_bullet from 'highcharts/modules/bullet';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { ApiService } from '@app/services/api/api.service';
 import { PeerVersionsDto, QuorumDto, SupplyDto } from '@app/types/dto';
-import { Router } from '@angular/router';
 import { APP_NAV_ITEMS } from '../../navigation/nav-items';
 
 HC_bullet(Highcharts);

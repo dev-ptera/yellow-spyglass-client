@@ -11,7 +11,7 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
 @Component({
     selector: 'app-weight-chart',
     template: `
-        <div class="representatives-chart-container" responsive>
+        <mat-card class="representatives-chart-container divider-border" responsive>
             <div class="representatives-chart" responsive>
                 <highcharts-chart
                     [update]="true"
@@ -75,7 +75,7 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
                     </a>
                 </div>
             </ng-template>
-        </div>
+        </mat-card>
     `,
     styleUrls: ['./weight-chart.component.scss'],
     encapsulation: ViewEncapsulation.None,

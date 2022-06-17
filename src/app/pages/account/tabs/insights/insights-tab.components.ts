@@ -232,11 +232,10 @@ export class InsightsTabComponent implements OnChanges, OnInit {
     @Input() hasError: boolean;
     @Input() blockCount: number;
     @Input() isLoadingInsights: boolean;
+    @Input() maxInsightsLimit;
 
     navItems = APP_NAV_ITEMS;
     Highcharts: typeof Highcharts = Highcharts;
-
-    maxInsightsLimit = 100_000;
 
     constructor(
         public vp: ViewportService,
