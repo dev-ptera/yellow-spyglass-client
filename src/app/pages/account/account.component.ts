@@ -304,6 +304,10 @@ export class AccountComponent implements OnDestroy {
         }
     }
 
+    log(): void {
+        console.log('hi');
+    }
+
     hasAlias(address: string): boolean {
         return this._aliasService.has(address);
     }

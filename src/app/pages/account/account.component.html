@@ -82,9 +82,18 @@
                 >
                     <span [innerHTML]="formatAccountAddress(address)"></span>
                     <div style="display: flex" [style.marginLeft.px]="vp.sm ? 4 : 16">
-                        <app-copy-button [data]="address"></app-copy-button>
-                        <app-qr-button [address]="address"></app-qr-button>
-                        <app-bookmark-button [id]="address"></app-bookmark-button>
+                        <ng-container *ngIf="!vp.sm && !vp.md">
+                            <app-copy-button [data]="address"></app-copy-button>
+                            <app-qr-button [address]="address"></app-qr-button>
+                            <app-bookmark-button [id]="address"></app-bookmark-button>
+                            <app-csv-button [address]="address"
+                                            [blockCount]="accountOverview?.blockCount"
+                                            [maxTransactionsLimit]="MAX_INSIGHTS"></app-csv-button>
+                        </ng-container>
+                        <app-account-actions-menu *ngIf="vp.sm || vp.md"
+                            [blockCount]="accountOverview.blockCount"
+                            [maxTransactionsHistory]="MAX_INSIGHTS" [data]="address"
+                        ></app-account-actions-menu>
                     </div>
                 </div>
 

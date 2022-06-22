@@ -1,6 +1,5 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { QrDialogComponent } from '../qr-dialog/qr-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import {AccountActionsService} from "@app/services/account-actions/account-actions.service";
 
 @Component({
     selector: 'app-qr-button',
@@ -15,13 +14,9 @@ import { MatDialog } from '@angular/material/dialog';
 export class QrButtonComponent {
     @Input() address: string;
 
-    constructor(public dialog: MatDialog) {}
+    constructor(private readonly _accountActionsService: AccountActionsService) {}
 
     openDialog(): void {
-        this.dialog.open(QrDialogComponent, {
-            data: {
-                address: this.address,
-            },
-        });
+        this._accountActionsService.openAccountQRCode(this.address);
     }
 }

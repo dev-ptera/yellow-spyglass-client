@@ -1,7 +1,12 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { EmptyStateModule, InfoListItemModule, ListItemTagModule } from '@brightlayer-ui/angular-components';
+import {
+    EmptyStateModule,
+    InfoListItemModule,
+    ListItemTagModule,
+    UserMenuModule
+} from '@brightlayer-ui/angular-components';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,11 +27,13 @@ import { InsightsTabComponent } from '@app/pages/account/tabs/insights/insights-
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import {NftsTabComponents} from "@app/pages/account/tabs/nfts/nfts-tab.components";
+import {AccountActionsMenuComponent} from "@app/pages/account/account-actions-menu/account-actions-menu.component";
 
 @NgModule({
-    declarations: [AccountComponent, TransactionsTabComponent, DelegatorsTabComponent, InsightsTabComponent, NftsTabComponents],
+    declarations: [AccountComponent, AccountActionsMenuComponent, TransactionsTabComponent, DelegatorsTabComponent, InsightsTabComponent, NftsTabComponents],
     imports: [
         AppCommonModule,
+
         BrowserAnimationsModule,
         CommonModule,
         EmptyStateModule,
@@ -46,7 +53,8 @@ import {NftsTabComponents} from "@app/pages/account/tabs/nfts/nfts-tab.component
         ReactiveFormsModule,
         HighchartsChartModule,
         MatTooltipModule,
+        UserMenuModule,
     ],
-    exports: [AccountComponent, TransactionsTabComponent, DelegatorsTabComponent, InsightsTabComponent, NftsTabComponents],
+    exports: [AccountComponent, AccountActionsMenuComponent, TransactionsTabComponent, DelegatorsTabComponent, InsightsTabComponent, NftsTabComponents],
 })
 export class AccountModule {}

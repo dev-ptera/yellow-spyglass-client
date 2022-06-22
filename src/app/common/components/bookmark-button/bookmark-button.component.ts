@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { BookmarksService } from '@app/services/bookmarks/bookmarks.service';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {AccountActionsService} from "@app/services/account-actions/account-actions.service";
 
 @Component({
     selector: 'app-bookmark-button',
@@ -36,7 +36,8 @@ export class BookmarkButtonComponent implements OnChanges {
 
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
-    constructor(private readonly _bookmarkService: BookmarksService, private readonly _snackBar: MatSnackBar) {}
+    constructor(private readonly _bookmarkService: BookmarksService,
+                private readonly _accountActionService: AccountActionsService) {}
 
     ngOnChanges(): void {
         this.checkIsBookmarked();
@@ -47,18 +48,6 @@ export class BookmarkButtonComponent implements OnChanges {
     }
 
     toggleBookmark(): void {
-        if (this.isBookmarked) {
-            this._bookmarkService.removeBookmark(this.id);
-        } else {
-            this._bookmarkService.addBookmark({
-                id: this.id,
-                alias: this.id,
-            });
-        }
-        this.isBookmarked = !this.isBookmarked;
-        this._snackBar.open(this.isBookmarked ? 'Added Bookmark' : 'Removed Bookmark', undefined, {
-            panelClass: 'mat-subheader2',
-            duration: 1250,
-        });
+        this.isBookmarked = this._accountActionService.toggleBookmark(this.id);
     }
 }

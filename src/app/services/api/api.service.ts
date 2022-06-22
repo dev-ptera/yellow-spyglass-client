@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { saveAs } from 'file-saver';
 import {
     AccountBalanceDto,
     AccountDistributionStatsDto, AccountNFTDto,
@@ -162,6 +163,23 @@ export class ApiService {
                 includeRepresentative: true,
             })
             .toPromise();
+    }
+
+    /** Fetches all transaction history for a given account. */
+    downloadAccountTransactions(address: string): Promise<void> {
+        const fileName = `tx-${address}.csv`;
+        return this._http
+            .post(`${this.spyglassApi}/v1/account/export`, { address }, { responseType: 'text' })
+            .toPromise()
+            .then((data) => {
+                const blob = new Blob([data], { type: 'application/text' });
+                saveAs(blob, fileName);
+                return Promise.resolve();
+            })
+            .catch((err) => {
+                const jsonErr = JSON.parse(err.error);
+                return Promise.reject(jsonErr);
+            });
     }
 
     /** Fetches banano price data. */

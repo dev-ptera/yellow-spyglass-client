@@ -1,5 +1,5 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {AccountActionsService} from "@app/services/account-actions/account-actions.service";
 
 @Component({
     selector: 'app-copy-button',
@@ -14,17 +14,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class CopyButtonComponent {
     @Input() data: string;
 
-    constructor(private readonly _snackBar: MatSnackBar) {}
+    constructor(private readonly _accountActionsService: AccountActionsService) {}
 
     copyToClipboard(): void {
-        const el = document.createElement('textarea');
-        el.value = this.data;
-        document.body.appendChild(el);
-        el.select();
-        document.execCommand('copy');
-        document.body.removeChild(el);
-        this._snackBar.open(el.value.startsWith('ban_') ? 'Copied Address' : 'Copied Hash', undefined, {
-            duration: 1000,
-        });
+        this._accountActionsService.copyDataToClipboard(this.data);
     }
 }
