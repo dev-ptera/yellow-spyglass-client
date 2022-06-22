@@ -33,9 +33,12 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
                     *matCellDef="let element"
                     style="padding-top: 8px; padding-bottom: 8px; padding-right: 8px"
                 >
-                    <a class="link text" style="font-weight: 400" [href]="repService.getMonitoredRepUrl(element)">
-                        {{ element.name }}
-                    </a>
+                    <div style="display: flex; align-items: center">
+                        <mat-icon style="height: 14px; width: 14px; margin-right: 6px">open_in_new</mat-icon>
+                        <a class="link text" style="font-weight: 400" target="_blank" [href]="repService.getMonitoredRepUrl(element)">
+                            {{ element.name }}
+                        </a>
+                    </div>
                 </td>
             </ng-container>
 

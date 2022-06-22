@@ -228,7 +228,7 @@
                 mat-flat-button
                 (click)="shownTabNumber = 4; fetchInsights()"
                 [class.active]="shownTabNumber === 4"
-                style="border-right: 0"
+                style="border-top-right-radius: 4px"
             >
                 <ng-container *ngIf="vp.sm">
                     <mat-icon>insights</mat-icon>
@@ -236,7 +236,7 @@
                 <ng-container *ngIf="!vp.sm"> Insights </ng-container>
             </button>
 
-
+            <!--
             <button
                 mat-flat-button
                 (click)="shownTabNumber = 5; fetchNfts()"
@@ -248,6 +248,7 @@
                 </ng-container>
                 <ng-container *ngIf="!vp.sm"> NFTs </ng-container>
             </button>
+            -->
         </div>
 
         <div
