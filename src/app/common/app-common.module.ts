@@ -15,7 +15,7 @@ import { ErrorComponent } from '@app/common/components/error/error.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CommaPipe } from '@app/common/pipes/comma.directive';
 import { PercentagePipe } from '@app/common/pipes/percentage.pipe';
-import {CsvButtonComponent} from "@app/common/components/csv-button/csv-button.component";
+import { CsvButtonComponent } from '@app/common/components/csv-button/csv-button.component';
 
 @NgModule({
     declarations: [

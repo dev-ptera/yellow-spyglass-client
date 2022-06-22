@@ -4,7 +4,7 @@ import {
     AccountOverviewDto,
     ConfirmedTransactionDto,
     DelegatorDto,
-    ReceivableTransactionDto
+    ReceivableTransactionDto,
 } from '@app/types/dto';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { UtilService } from '@app/services/util/util.service';
@@ -191,14 +191,18 @@ export class AccountComponent implements OnDestroy {
 
         this.nfts = [];
         this.isLoadingNFTs = true;
-        this.apiService.fetchAccountNFTs(this.address).then((data) => {
-            this.nfts = data;
-        }).catch((err) => {
-            console.error(err);
-            this.hasNFTsError = true;
-        }).finally(() => {
-            this.isLoadingNFTs = false
-        })
+        this.apiService
+            .fetchAccountNFTs(this.address)
+            .then((data) => {
+                this.nfts = data;
+            })
+            .catch((err) => {
+                console.error(err);
+                this.hasNFTsError = true;
+            })
+            .finally(() => {
+                this.isLoadingNFTs = false;
+            });
     }
 
     fetchDelegators(): void {

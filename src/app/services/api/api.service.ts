@@ -4,7 +4,8 @@ import { environment } from '../../../environments/environment';
 import { saveAs } from 'file-saver';
 import {
     AccountBalanceDto,
-    AccountDistributionStatsDto, AccountNFTDto,
+    AccountDistributionStatsDto,
+    AccountNFTDto,
     AccountOverviewDto,
     AliasDto,
     BlockDto,

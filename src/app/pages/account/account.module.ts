@@ -5,7 +5,7 @@ import {
     EmptyStateModule,
     InfoListItemModule,
     ListItemTagModule,
-    UserMenuModule
+    UserMenuModule,
 } from '@brightlayer-ui/angular-components';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -26,11 +26,18 @@ import { DelegatorsTabComponent } from '@app/pages/account/tabs/delegators/deleg
 import { InsightsTabComponent } from '@app/pages/account/tabs/insights/insights-tab.components';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
-import {NftsTabComponents} from "@app/pages/account/tabs/nfts/nfts-tab.components";
-import {AccountActionsMenuComponent} from "@app/pages/account/account-actions-menu/account-actions-menu.component";
+import { NftsTabComponents } from '@app/pages/account/tabs/nfts/nfts-tab.components';
+import { AccountActionsMenuComponent } from '@app/pages/account/account-actions-menu/account-actions-menu.component';
 
 @NgModule({
-    declarations: [AccountComponent, AccountActionsMenuComponent, TransactionsTabComponent, DelegatorsTabComponent, InsightsTabComponent, NftsTabComponents],
+    declarations: [
+        AccountComponent,
+        AccountActionsMenuComponent,
+        TransactionsTabComponent,
+        DelegatorsTabComponent,
+        InsightsTabComponent,
+        NftsTabComponents,
+    ],
     imports: [
         AppCommonModule,
 
@@ -55,6 +62,13 @@ import {AccountActionsMenuComponent} from "@app/pages/account/account-actions-me
         MatTooltipModule,
         UserMenuModule,
     ],
-    exports: [AccountComponent, AccountActionsMenuComponent, TransactionsTabComponent, DelegatorsTabComponent, InsightsTabComponent, NftsTabComponents],
+    exports: [
+        AccountComponent,
+        AccountActionsMenuComponent,
+        TransactionsTabComponent,
+        DelegatorsTabComponent,
+        InsightsTabComponent,
+        NftsTabComponents,
+    ],
 })
 export class AccountModule {}

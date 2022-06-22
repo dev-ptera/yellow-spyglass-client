@@ -102,16 +102,19 @@ type Transaction = {
                     <div *ngIf="vp.sm" class="small-monkey">
                         <img [src]="apiService.createMonKeyUrl(tx.address || tx.newRepresentative)" loading="lazy" />
                     </div>
-                    <div class="timestamps" >
+                    <div class="timestamps">
                         <span class="mat-body-2">{{ dateMap.get(tx.hash).date }}</span>
-                        <span class="mat-body-2 text-secondary" [style.fontSize.px]="vp.sm ? 12 : 14"
-                              (mouseenter)="tx.timestampHovered=true"
-                              (mouseleave)="tx.timestampHovered=false">
+                        <span
+                            class="mat-body-2 text-secondary"
+                            [style.fontSize.px]="vp.sm ? 12 : 14"
+                            (mouseenter)="tx.timestampHovered = true"
+                            (mouseleave)="tx.timestampHovered = false"
+                        >
                             <ng-container *ngIf="!tx.timestampHovered">
-                            {{ getRelativeTime(dateMap.get(tx.hash).diffDays) }}
+                                {{ getRelativeTime(dateMap.get(tx.hash).diffDays) }}
                             </ng-container>
                             <ng-container *ngIf="tx.timestampHovered">
-                            {{ getTime(tx.timestamp) }}
+                                {{ getTime(tx.timestamp) }}
                             </ng-container>
                         </span>
                     </div>

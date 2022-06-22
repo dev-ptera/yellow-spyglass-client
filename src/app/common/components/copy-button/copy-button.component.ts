@@ -1,5 +1,5 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import {AccountActionsService} from "@app/services/account-actions/account-actions.service";
+import { AccountActionsService } from '@app/services/account-actions/account-actions.service';
 
 @Component({
     selector: 'app-copy-button',

@@ -1,12 +1,17 @@
-import {Component, Input, ViewEncapsulation} from '@angular/core';
-import {AccountActionsService} from "@app/services/account-actions/account-actions.service";
+import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { AccountActionsService } from '@app/services/account-actions/account-actions.service';
 
 @Component({
     selector: 'app-csv-button',
     styleUrls: ['../copy-button/address-button.scss'],
     template: `
-        <button *ngIf="blockCount <= maxTransactionsLimit"
-                mat-icon-button class="address-action-button" responsive (click)="downloadTxHistory()">
+        <button
+            *ngIf="blockCount <= maxTransactionsLimit"
+            mat-icon-button
+            class="address-action-button"
+            responsive
+            (click)="downloadTxHistory()"
+        >
             <mat-icon>download</mat-icon>
         </button>
     `,
@@ -19,8 +24,7 @@ export class CsvButtonComponent {
 
     isLoading: boolean;
 
-    constructor(
-                private readonly _accountActionsService: AccountActionsService) {}
+    constructor(private readonly _accountActionsService: AccountActionsService) {}
 
     downloadTxHistory(): void {
         if (this.isLoading) {
@@ -29,6 +33,6 @@ export class CsvButtonComponent {
         this.isLoading = true;
         this._accountActionsService.downloadTxHistory(this.address).finally(() => {
             this.isLoading = false;
-        })
+        });
     }
 }

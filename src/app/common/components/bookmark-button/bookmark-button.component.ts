@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { BookmarksService } from '@app/services/bookmarks/bookmarks.service';
 import { MatMenuTrigger } from '@angular/material/menu';
-import {AccountActionsService} from "@app/services/account-actions/account-actions.service";
+import { AccountActionsService } from '@app/services/account-actions/account-actions.service';
 
 @Component({
     selector: 'app-bookmark-button',
@@ -36,8 +36,10 @@ export class BookmarkButtonComponent implements OnChanges {
 
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
-    constructor(private readonly _bookmarkService: BookmarksService,
-                private readonly _accountActionService: AccountActionsService) {}
+    constructor(
+        private readonly _bookmarkService: BookmarksService,
+        private readonly _accountActionService: AccountActionsService
+    ) {}
 
     ngOnChanges(): void {
         this.checkIsBookmarked();
