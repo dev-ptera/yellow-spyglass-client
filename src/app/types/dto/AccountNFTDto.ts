@@ -10,4 +10,5 @@ export type AccountNFTDto = {
     receive_hash:string,
     rep: string,
     quantity: number
+    isExpanded: boolean;
 }

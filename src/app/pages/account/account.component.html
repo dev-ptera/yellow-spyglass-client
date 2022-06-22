@@ -177,8 +177,8 @@
         <div class="tab-buttons" responsive>
             <button
                 mat-flat-button
-                (click)="showTabNumber = 1"
-                [class.active]="showTabNumber === 1"
+                (click)="shownTabNumber = 1"
+                [class.active]="shownTabNumber === 1"
                 style="border-top-left-radius: 4px; border-right: 0"
             >
                 <ng-container *ngIf="vp.sm">
@@ -191,10 +191,11 @@
                     Confirmed {{ vp.md ? 'Tx' : 'Transactions' }} ({{ withCommas(accountOverview.blockCount) }})
                 </ng-container>
             </button>
+
             <button
                 mat-flat-button
-                (click)="showTabNumber = 2"
-                [class.active]="showTabNumber === 2"
+                (click)="shownTabNumber = 2"
+                [class.active]="shownTabNumber === 2"
                 style="border-right: 0"
             >
                 <ng-container *ngIf="vp.sm">
@@ -207,10 +208,11 @@
                     Receivable {{ vp.md ? 'Tx' : 'Transactions' }} ({{ withCommas(receivableTransactions.length) }})
                 </ng-container>
             </button>
+
             <button
                 mat-flat-button
-                (click)="showTabNumber = 3"
-                [class.active]="showTabNumber === 3"
+                (click)="shownTabNumber = 3"
+                [class.active]="shownTabNumber === 3"
                 style="border-right: 0"
             >
                 <ng-container *ngIf="vp.sm">
@@ -221,11 +223,12 @@
                 </ng-container>
                 <ng-container *ngIf="!vp.sm"> Delegators ({{ withCommas(delegatorCount) }}) </ng-container>
             </button>
+
             <button
                 mat-flat-button
-                (click)="showTabNumber = 4; fetchInsights()"
-                [class.active]="showTabNumber === 4"
-                style="border-top-right-radius: 4px"
+                (click)="shownTabNumber = 4; fetchInsights()"
+                [class.active]="shownTabNumber === 4"
+                style="border-right: 0"
             >
                 <ng-container *ngIf="vp.sm">
                     <mat-icon>insights</mat-icon>
@@ -233,10 +236,11 @@
                 <ng-container *ngIf="!vp.sm"> Insights </ng-container>
             </button>
 
-            <button *ngIf="!vp.sm"
+
+            <button
                 mat-flat-button
-                (click)="showTabNumber = 5; fetchNfts()"
-                [class.active]="showTabNumber === 5"
+                (click)="shownTabNumber = 5; fetchNfts()"
+                [class.active]="shownTabNumber === 5"
                 style="border-top-right-radius: 4px"
             >
                 <ng-container *ngIf="vp.sm">
@@ -247,12 +251,13 @@
         </div>
 
         <div
+            responsive
             class="tx-content-container divider-border"
-            [style.backgroundColor]="showTabNumber === 4 ? 'unset' : ''"
-            [class.divider-border]="showTabNumber !== 4"
+            [style.backgroundColor]="shownTabNumber === 4 || shownTabNumber === 5 ? 'unset' : ''"
+            [class.divider-border]="shownTabNumber !== 4 && shownTabNumber !== 5"
         >
             <account-tx-tab
-                *ngIf="showTabNumber === 1"
+                *ngIf="shownTabNumber === 1"
                 [paginator]="transactionPaginator"
                 [blockCount]="accountOverview.blockCount"
                 [txPerPage]="txPerPage"
@@ -260,13 +265,13 @@
             ></account-tx-tab>
 
             <account-tx-tab
-                *ngIf="showTabNumber === 2"
+                *ngIf="shownTabNumber === 2"
                 [transactions]="receivableTransactions"
                 [isPending]="true"
             ></account-tx-tab>
 
             <account-delegators-tab
-                *ngIf="showTabNumber === 3"
+                *ngIf="shownTabNumber === 3"
                 [address]="accountOverview.address"
                 [delegators]="delegators"
                 [weightSum]="weightSum"
@@ -277,7 +282,7 @@
             </account-delegators-tab>
 
             <account-insights-tab
-                *ngIf="showTabNumber === 4"
+                *ngIf="shownTabNumber === 4"
                 [isLoadingInsights]="isLoadingInsights"
                 [blockCount]="accountOverview.blockCount"
                 [hasError]="hasInsightsError"
@@ -288,10 +293,11 @@
             </account-insights-tab>
 
             <account-nfts-tab
-                *ngIf="showTabNumber === 5"
+                *ngIf="shownTabNumber === 5"
                 [address]="address"
                 [nfts]="nfts"
                 [isLoadingNFTs]="isLoadingNFTs"
+                [hasError]="hasNFTsError"
             >
             </account-nfts-tab>
 

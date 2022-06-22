@@ -38,9 +38,10 @@ export class AccountComponent implements OnDestroy {
     isLoadingInsights: boolean;
     hasInsightsError: boolean;
     isLoadingNFTs: boolean;
+    hasNFTsError: boolean;
 
     weightSum: number;
-    showTabNumber: number;
+    shownTabNumber: number;
     confirmedTxPageIndex: number;
     delegatorCount: number;
 
@@ -89,6 +90,7 @@ export class AccountComponent implements OnDestroy {
     private _init(): void {
         this.address = undefined;
         this.insights = undefined;
+        this.nfts = undefined;
         this.accountOverview = undefined;
         this.delegators = [];
         this.receivableTransactions = [];
@@ -96,10 +98,12 @@ export class AccountComponent implements OnDestroy {
         this.isLoading = true;
         this.insightsDisabled = true;
         this.hasInsightsError = false;
+        this.hasNFTsError = false;
         this.isLoadingInsights = false;
-        this.showTabNumber = 1;
+        this.shownTabNumber = 1;
         this.confirmedTxPageIndex = 0;
         this.delegatorCount = 0;
+        this.weightSum = 0;
         this.confirmedTransactions = {
             all: new Map<number, ConfirmedTransactionDto[]>(),
             display: [],
@@ -175,6 +179,26 @@ export class AccountComponent implements OnDestroy {
             .finally(() => {
                 this.isLoadingInsights = false;
             });
+    }
+
+    fetchNfts(): void {
+        if (this.nfts) {
+            return;
+        }
+        if (this.isLoadingNFTs) {
+            return;
+        }
+
+        this.nfts = [];
+        this.isLoadingNFTs = true;
+        this.apiService.fetchAccountNFTs(this.address).then((data) => {
+            this.nfts = data;
+        }).catch((err) => {
+            console.error(err);
+            this.hasNFTsError = true;
+        }).finally(() => {
+            this.isLoadingNFTs = false
+        })
     }
 
     fetchDelegators(): void {
@@ -278,18 +302,6 @@ export class AccountComponent implements OnDestroy {
             const lastBits = address.substring(58, 64);
             return `<strong class="">${firstBits}</strong><span class="secondary">${midBits}</span><strong class="">${lastBits}</strong>`;
         }
-    }
-
-    fetchNfts(): void {
-        this.nfts = [];
-        this.isLoadingNFTs = true;
-        this.apiService.fetchAccountNFTs(this.address).then((data) => {
-            this.nfts = data;
-        }).catch((err) => {
-            console.error(err);
-        }).finally(() => {
-            this.isLoadingNFTs = false
-        })
     }
 
     hasAlias(address: string): boolean {

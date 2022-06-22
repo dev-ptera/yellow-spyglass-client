@@ -5,5 +5,5 @@
 export const environment = {
     megaphone: false,
     production: false,
-    spyglassApi: 'http://192.168.1.200:3001/banano',
+    spyglassApi: 'https://api.creeper.banano.cc/banano',
 };
