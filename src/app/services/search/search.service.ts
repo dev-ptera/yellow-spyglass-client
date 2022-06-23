@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import {APP_NAV_ITEMS} from "../../navigation/nav-items";
-import {Router} from "@angular/router";
+import { APP_NAV_ITEMS } from '../../navigation/nav-items';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root',

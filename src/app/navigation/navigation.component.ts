@@ -34,32 +34,37 @@ export class NavigationComponent {
         void this._router.navigateByUrl(url);
     }
 
-    isOpen(): boolean {
-        return this._stateService.getDrawerOpen();
-    }
-
-    selectItem(navItem: NavItem): void {
-        this.navigate(navItem.route);
-        this._stateService.setDrawerOpen(false);
-    }
-
-    getSelectedItem(): string {
-        return this._stateService.getSelectedItem();
+    openDrawer(): void {
+        this._stateService.setDrawerOpen(true);
     }
 
     closeDrawer(): void {
         this._stateService.setDrawerOpen(false);
     }
 
-    openDrawer(): void {
-        this._stateService.setDrawerOpen(true);
+    isDrawerOpen(): boolean {
+        return this._stateService.getDrawerOpen();
+    }
+
+    setSelectedNavItem(navItem: NavItem): void {
+        this.navigate(navItem.route);
+        this._stateService.setDrawerOpen(false);
+    }
+
+    getSelectedNavItem(): string {
+        return this._stateService.getSelectedItem();
     }
 
     isHome(): boolean {
         return this._router.url === '/';
     }
 
-    // Observes route changes and changes app title & sets selected item
+    /** Changes the browser tab title. */
+    private _makeTitle(page: string): string {
+        return `Creeper | ${page}`;
+    }
+
+    /** Observes route changes and changes app title & sets selected item. */
     private _listenForRouteChanges(): void {
         this.routeListener = this._router.events.subscribe((route) => {
             if (route instanceof NavigationEnd) {
@@ -177,9 +182,5 @@ export class NavigationComponent {
                 }
             }
         });
-    }
-
-    private _makeTitle(page: string): string {
-        return `Creeper | ${page}`;
     }
 }

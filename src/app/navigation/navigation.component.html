@@ -1,5 +1,11 @@
-<blui-drawer-layout variant="temporary" (backdropClick)="closeDrawer()" width="280" responsive [class.open]="isOpen()">
-    <blui-drawer blui-drawer [open]="isOpen()" [sideBorder]="true">
+<blui-drawer-layout
+    variant="temporary"
+    (backdropClick)="closeDrawer()"
+    width="280"
+    responsive
+    [class.open]="isDrawerOpen()"
+>
+    <blui-drawer blui-drawer [open]="isDrawerOpen()" [sideBorder]="true">
         <blui-drawer-header>
             <!--
             <img blui-title-content src="../../assets/branding/creeper-on-dark-horizontal.svg" style="width: 150px; text-align: center" />
@@ -12,8 +18,8 @@
                     [divider]="true"
                     [title]="navItem.title"
                     [subtitle]="navItem.subtitle"
-                    [selected]="navItem.title === getSelectedItem()"
-                    (select)="selectItem(navItem)"
+                    [selected]="navItem.title === getSelectedNavItem()"
+                    (select)="setSelectedNavItem(navItem)"
                 >
                     <mat-icon blui-icon>{{ navItem.icon }}</mat-icon>
                 </blui-drawer-nav-item>
@@ -25,8 +31,8 @@
                     [divider]="true"
                     [title]="navItem.title"
                     [subtitle]="navItem.subtitle"
-                    [selected]="navItem.title === getSelectedItem()"
-                    (select)="selectItem(navItem)"
+                    [selected]="navItem.title === getSelectedNavItem()"
+                    (select)="setSelectedNavItem(navItem)"
                 >
                     <mat-icon blui-icon>{{ navItem.icon }}</mat-icon>
                 </blui-drawer-nav-item>
