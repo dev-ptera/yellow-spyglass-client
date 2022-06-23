@@ -29,16 +29,4 @@ export class ViewportService {
                 this.vpChange.next(this.breakpoint);
             });
     }
-
-    isSmall(): boolean {
-        return this.sm;
-    }
-
-    isMedium(): boolean {
-        return this.md;
-    }
-
-    isMediumOrSmaller(): boolean {
-        return this.md || this.sm;
-    }
 }
