@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ViewportService } from '../services/viewport/viewport.service';
@@ -11,7 +11,7 @@ import { Meta, Title } from '@angular/platform-browser';
     selector: 'app-navigation',
     templateUrl: './navigation.component.html',
 })
-export class NavigationComponent implements OnInit {
+export class NavigationComponent {
     toolbarTitle: string;
     routeListener: Subscription;
 
@@ -28,24 +28,6 @@ export class NavigationComponent implements OnInit {
         private readonly _stateService: DrawerStateService
     ) {
         this._listenForRouteChanges();
-    }
-
-    ngOnInit(): void {
-        this._searchService.searchEvents().subscribe((data: { search: string; openInNewWindow: boolean }) => {
-            if (data.openInNewWindow) {
-                if (data.search.startsWith('ban_')) {
-                    window.open(`https://creeper.banano.cc/${APP_NAV_ITEMS.account.route}/${data.search}`, '_blank');
-                } else {
-                    window.open(`https://creeper.banano.cc/${APP_NAV_ITEMS.hash.route}/${data.search}`, '_blank');
-                }
-            } else {
-                if (data.search.startsWith('ban_')) {
-                    void this._router.navigate([`${APP_NAV_ITEMS.account.route}/${data.search}`]);
-                } else {
-                    void this._router.navigate([`${APP_NAV_ITEMS.hash.route}/${data.search}`]);
-                }
-            }
-        });
     }
 
     navigate(url: string): void {
@@ -81,6 +63,7 @@ export class NavigationComponent implements OnInit {
     private _listenForRouteChanges(): void {
         this.routeListener = this._router.events.subscribe((route) => {
             if (route instanceof NavigationEnd) {
+                this._stateService.setSelectedItem(undefined);
                 window.scrollTo(0, 0);
                 const drawerContent = document.getElementsByClassName('mat-sidenav-content')[0];
                 if (drawerContent) {

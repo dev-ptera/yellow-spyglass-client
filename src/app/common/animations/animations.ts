@@ -1,5 +1,6 @@
 import { style, transition, trigger, animate } from '@angular/animations';
 
+/** This is an experimental file, see the networking page for a sample placeholder loading screen. */
 export const faded = trigger('fade', [
     transition(':enter', [
         // using status here for transition
