@@ -61,7 +61,8 @@ export class ApiService {
                 });
         });
 
-        Promise.race([req1, req2]).then((faster: string) => {
+        // REQ 2 not included for now; api.creeper is not returning correct timestmaps.
+        Promise.race([req1]).then((faster: string) => {
             this.apiToUseSubject.next(faster);
         }).catch((err) => {
             console.error(err);
@@ -279,5 +280,11 @@ export class ApiService {
         return this._http
             .post<KnownAccountDto[]>(`${this.api}/v1/known/accounts`, { includeOwner: true, includeType: true })
             .toPromise();
+    }
+
+    /** Given a hash, fetches block. */
+    async fetchBlockFromAddressHeight(address: string, height: number): Promise<BlockDto> {
+        await this._hasPingedApi();
+        return this._http.post<BlockDto>(`${this.api}/v1/account/block-at-height`, { address, height }).toPromise();
     }
 }

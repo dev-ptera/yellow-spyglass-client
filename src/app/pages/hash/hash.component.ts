@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, OnDestroy, ViewEncapsulation } from '@ang
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { BlockDto } from '@app/types/dto/BlockDto';
 import { UtilService } from '@app/services/util/util.service';
-import { SearchService } from '@app/services/search/search.service';
 import { Subscription } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 import { ApiService } from '@app/services/api/api.service';
