@@ -1,11 +1,11 @@
 <ng-template #titleContent>
     <div class="app-page-title">Wallets</div>
-    <div class="app-page-subtitle">See account distribution statistics and the list of the top banano holders.</div>
+    <div class="app-page-subtitle">See account distribution statistics and the list of the top Banano holders.</div>
 </ng-template>
 
 <ng-template #bodyContent>
     <div class="app-section-title">BAN Distribution Chart</div>
-    <div class="app-section-subtitle">The chart below shows the distribution of banano among all opened accounts.</div>
+    <div class="app-section-subtitle">The chart below shows the distribution of Banano among all opened accounts.</div>
     <mat-card class="wallets-chart mat-elevation-z2 divider-border" responsive>
         <highcharts-chart
             [update]="true"
@@ -18,7 +18,7 @@
 
     <div class="app-section-title">All Accounts</div>
     <div class="app-section-subtitle" [style.marginBottom.px]="12">
-        All banano accounts, sorted by balance. Any account with an offline representative is marked with a warning
+        All Banano accounts, sorted by balance. Any account with an offline representative is marked with a warning
         flag.
         <ng-container *ngIf="!vp.sm">
             It is encouraged that these accounts change their representative if their current rep is constantly offline.
