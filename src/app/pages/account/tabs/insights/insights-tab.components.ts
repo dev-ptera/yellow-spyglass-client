@@ -359,9 +359,8 @@ export class InsightsTabComponent implements OnChanges, OnInit {
                             if (this.isLoadingBlock) {
                                 return;
                             }
-                            const height = Number(e.point.x) + 1;
+                            const height = Number(e.point.name);
                             this.isLoadingBlock = true;
-
                             this._apiService.fetchBlockFromAddressHeight(this.address, height)
                                 .then((block) => {
                                     this._searchService.emitSearch(block.hash, false)
