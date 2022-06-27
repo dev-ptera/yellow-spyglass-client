@@ -8,7 +8,7 @@ This is a [Banano](https://banano.cc/) network explorer, written in Angular.  It
 See address history & block hash information
 
 #### [Wallets](https://www.yellowspyglass.com/wallets)
-See banano distribution by account balance & the list of top banano holders
+See Banano distribution by account balance & the list of top Banano holders
 
 #### [Known Accounts](https://www.yellowspyglass.com/known-accounts)
 A list of exchanges, developer funds, and other known addresses
@@ -17,10 +17,10 @@ A list of exchanges, developer funds, and other known addresses
 A showcase of custom vanity monKeys, for special monkeys. 
 
 #### [Network](https://www.yellowspyglass.com/network)
-Distribution, Quorum, & Nakamoto Coefficient statistics for banano.
+Distribution, Quorum, & Nakamoto Coefficient statistics for Banano.
 
 #### [Representatives](https://www.yellowspyglass.com/representatives)
-The list of representatives that process transactions on the banano network.
+The list of representatives that process transactions on the Banano network.
 
 #### [Node](https://www.yellowspyglass.com/monitor)
 Information about the node running the Yellow Spyglass.
