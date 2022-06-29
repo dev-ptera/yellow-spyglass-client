@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {
     EmptyStateModule,
@@ -28,6 +28,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { NftsTabComponents } from '@app/pages/account/tabs/nfts/nfts-tab.components';
 import { AccountActionsMenuComponent } from '@app/pages/account/account-actions-menu/account-actions-menu.component';
+import { BrpdTabComponent } from '@app/pages/account/tabs/brpd/brpd-tab.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
     declarations: [
@@ -37,6 +41,7 @@ import { AccountActionsMenuComponent } from '@app/pages/account/account-actions-
         DelegatorsTabComponent,
         InsightsTabComponent,
         NftsTabComponents,
+        BrpdTabComponent,
     ],
     imports: [
         AppCommonModule,
@@ -46,21 +51,26 @@ import { AccountActionsMenuComponent } from '@app/pages/account/account-actions-
         EmptyStateModule,
         InfoListItemModule,
         ListItemTagModule,
+        MatExpansionModule,
+        MatChipsModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        MatInputModule,
         MatBadgeModule,
         MatButtonModule,
         MatCardModule,
         MatDialogModule,
         MatFormFieldModule,
         MatIconModule,
-        MatInputModule,
         MatProgressSpinnerModule,
         MatTabsModule,
         MatTableModule,
         RouterModule,
-        ReactiveFormsModule,
+        MatSliderModule,
         HighchartsChartModule,
         MatTooltipModule,
         UserMenuModule,
+        FormsModule,
     ],
     exports: [
         AccountComponent,
@@ -69,6 +79,7 @@ import { AccountActionsMenuComponent } from '@app/pages/account/account-actions-
         DelegatorsTabComponent,
         InsightsTabComponent,
         NftsTabComponents,
+        BrpdTabComponent,
     ],
 })
 export class AccountModule {}

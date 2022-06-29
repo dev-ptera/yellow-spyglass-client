@@ -5,8 +5,9 @@ import { UtilService } from '@app/services/util/util.service';
 import { AliasService } from '@app/services/alias/alias.service';
 import { ApiService } from '@app/services/api/api.service';
 import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
+import { TransactionsService } from '@app/pages/account/tabs/transactions/transactions.service';
 
-type Transaction = {
+export type Transaction = {
     timestampHovered?: boolean;
     amount?: number;
     hash: string;
@@ -44,7 +45,7 @@ type Transaction = {
                     <blui-list-item-tag
                         [label]="tx.type || 'receive'"
                         class="type"
-                        [class]="createTagClass(tx)"
+                        [class]="txService.createTagClass(tx, isPending)"
                     ></blui-list-item-tag>
                 </div>
                 <div blui-title>
@@ -111,10 +112,10 @@ type Transaction = {
                             (mouseleave)="tx.timestampHovered = false"
                         >
                             <ng-container *ngIf="!tx.timestampHovered">
-                                {{ getRelativeTime(dateMap.get(tx.hash).diffDays) }}
+                                {{ dateMap.get(tx.hash).relativeTime }}
                             </ng-container>
                             <ng-container *ngIf="tx.timestampHovered">
-                                {{ getTime(tx.timestamp) }}
+                                {{ txService.getTime(tx.timestamp) }}
                             </ng-container>
                         </span>
                     </div>
@@ -130,8 +131,8 @@ type Transaction = {
             <blui-empty-state
                 responsive
                 class="account-empty-state"
-                [title]="getEmptyStateTitle()"
-                [description]="getEmptyStateDescription()"
+                [title]="txService.getEmptyStateTitle(isPending)"
+                [description]="txService.getEmptyStateDescription(isPending)"
             >
                 <mat-icon blui-empty-icon>paid</mat-icon>
             </blui-empty-state>
@@ -148,94 +149,21 @@ export class TransactionsTabComponent {
     @Input() txPerPage: number;
 
     navItems = APP_NAV_ITEMS;
-    dateMap: Map<string, { date: string; diffDays: number }> = new Map();
+    dateMap: Map<string, { date: string; diffDays: number; relativeTime: string }> = new Map();
 
     constructor(
-        public aliasService: AliasService,
-        public apiService: ApiService,
+        public util: UtilService,
         public vp: ViewportService,
-        public util: UtilService
+        public apiService: ApiService,
+        public aliasService: AliasService,
+        public txService: TransactionsService
     ) {}
 
     ngOnChanges(): void {
-        this.dateMap.clear();
-        const currentDate = new Date().getTime() / 1000;
-        const oneDay = 24 * 60 * 60; // hours*minutes*seconds*milliseconds
-        this.transactions.map((tx) => {
-            this.dateMap.set(tx.hash, {
-                date: this._formatDateString(tx.timestamp),
-                diffDays: Math.round(((currentDate - tx.timestamp) / oneDay) * 1000) / 1000,
-            });
-        });
+        this.txService.createDateMap(this.transactions, this.dateMap);
     }
 
     trackByFn(index: number): number {
         return index;
-    }
-
-    getEmptyStateTitle(): string {
-        if (this.isPending) {
-            return 'No Pending Transactions';
-        }
-        return 'No Confirmed Transactions';
-    }
-
-    getEmptyStateDescription(): string {
-        if (this.isPending) {
-            return 'This account has already received all incoming payments.';
-        }
-        return 'This account has not received or sent anything yet.';
-    }
-
-    createTagClass(tx: Transaction): string {
-        if (this.isPending) {
-            return 'receive';
-        }
-        return tx.type;
-    }
-
-    getTime(timestamp: number): string {
-        if (timestamp) {
-            return new Date(timestamp * 1000).toLocaleTimeString();
-        }
-    }
-
-    getRelativeTime(days: number): string {
-        if (days > 365) {
-            const years = Math.round(days / 365);
-            return `${years} year${years > 1 ? 's' : ''} ago`;
-        }
-        if (days > 30) {
-            const months = Math.round(days / 30);
-            return `${months} ${this.vp.sm ? 'mo' : 'month'}${months > 1 ? 's' : ''} ago`;
-        }
-        if (days > 7) {
-            const weeks = Math.round(days / 7);
-            return `${weeks} week${weeks > 1 ? 's' : ''} ago`;
-        }
-        if (days >= 1) {
-            const rounded = Math.round(days);
-            return `${rounded} day${rounded > 1 ? 's' : ''} ago`;
-        }
-        if (days < 1) {
-            const hours = days * 24;
-            if (hours > 1) {
-                const roundedHours = Math.round(hours);
-                return `${roundedHours} hour${roundedHours > 1 ? 's' : ''} ago`;
-            }
-            const roundedMinutes = Math.round(hours * 60);
-            return `${roundedMinutes} ${this.vp.sm ? 'min' : 'minute'}${roundedMinutes > 1 ? 's' : ''} ago`;
-        }
-    }
-
-    private _formatDateString(timestamp: number): string {
-        if (!timestamp) {
-            return '';
-        }
-
-        const date = new Date(timestamp * 1000);
-        return `${date.getMonth() > 8 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`}/${
-            date.getDate() > 9 ? date.getDate() : `0${date.getDate()}`
-        }/${this.vp.sm ? date.getFullYear().toString().substring(2, 4) : `${date.getFullYear()}`}`;
     }
 }

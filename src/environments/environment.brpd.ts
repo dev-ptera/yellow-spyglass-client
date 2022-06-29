@@ -5,7 +5,7 @@
 export const environment = {
     megaphone: false,
     production: false,
-    brpd: false,
+    brpd: true,
     api1: 'http://localhost:3001/banano',
     //api2: 'https://api.spyglass.pw/banano'
     api2: 'https://api.creeper.banano.cc/banano',

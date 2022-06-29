@@ -271,12 +271,18 @@
             [class.divider-border]="shownTabNumber !== 4 && shownTabNumber !== 5"
         >
             <account-tx-tab
-                *ngIf="shownTabNumber === 1"
+                *ngIf="shownTabNumber === 1 && !isBrpd"
                 [paginator]="transactionPaginator"
                 [blockCount]="accountOverview.blockCount"
                 [txPerPage]="txPerPage"
                 [transactions]="confirmedTransactions.display"
             ></account-tx-tab>
+
+            <account-brpd-tab
+                *ngIf="shownTabNumber === 1 && isBrpd"
+                [address]="address"
+                [blockCount]="accountOverview.blockCount"
+            ></account-brpd-tab>
 
             <account-tx-tab
                 *ngIf="shownTabNumber === 2"

@@ -107,7 +107,8 @@
     .account-rep-offline {
         background-color: $warn;
     }
-    .tab-transaction-list {
+    .tab-transaction-list,
+    .brpd-tab-transaction-list {
         .type {
             &.receive {
                 background-color: rgba($primary, 0.05);

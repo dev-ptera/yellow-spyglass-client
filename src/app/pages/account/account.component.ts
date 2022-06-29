@@ -17,6 +17,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AliasService } from '@app/services/alias/alias.service';
 import { APP_NAV_ITEMS, hashNavItem } from '../../navigation/nav-items';
+import { environment } from '../../../environments/environment';
 
 @Component({
     selector: 'app-account',
@@ -39,6 +40,7 @@ export class AccountComponent implements OnDestroy {
     hasInsightsError: boolean;
     isLoadingNFTs: boolean;
     hasNFTsError: boolean;
+    isBrpd: boolean;
 
     weightSum: number;
     shownTabNumber: number;
@@ -49,8 +51,8 @@ export class AccountComponent implements OnDestroy {
 
     MAX_INSIGHTS = 100_000;
 
-    delegators: DelegatorDto[];
     nfts: AccountNFTDto[];
+    delegators: DelegatorDto[];
     receivableTransactions: ReceivableTransactionDto[] = [];
     readonly txPerPage = 50;
 
@@ -73,6 +75,7 @@ export class AccountComponent implements OnDestroy {
         private readonly _monkeyCache: MonkeyCacheService,
         private readonly _aliasService: AliasService
     ) {
+        this.isBrpd = environment.brpd;
         this.routeListener = this._router.events.subscribe((route) => {
             if (route instanceof NavigationEnd) {
                 const splitUrl = this._router.url.replace('/history', '').split('/');
@@ -306,10 +309,6 @@ export class AccountComponent implements OnDestroy {
             const lastBits = address.substring(58, 64);
             return `<strong class="">${firstBits}</strong><span class="secondary">${midBits}</span><strong class="">${lastBits}</strong>`;
         }
-    }
-
-    log(): void {
-        console.log('hi');
     }
 
     hasAlias(address: string): boolean {

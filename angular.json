@@ -46,6 +46,24 @@
                             "sourceMap": true,
                             "namedChunks": true
                         },
+                        "brpd": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.brpd.ts"
+                                }
+                            ],
+                            "buildOptimizer": false,
+                            "optimization": {
+                                "scripts": false,
+                                "styles": false,
+                                "fonts": false
+                            },
+                            "vendorChunk": true,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "namedChunks": true
+                        },
                         "production": {
                             "fileReplacements": [
                                 {
@@ -81,6 +99,9 @@
                         "browserTarget": "yellow-spyglass-client:build"
                     },
                     "configurations": {
+                        "brpd": {
+                            "browserTarget": "yellow-spyglass-client:build:brpd"
+                        },
                         "development": {
                             "browserTarget": "yellow-spyglass-client:build:development"
                         },

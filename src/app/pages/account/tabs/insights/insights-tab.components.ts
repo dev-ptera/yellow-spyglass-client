@@ -5,8 +5,8 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
 import * as Highcharts from 'highcharts';
 import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
 import { ThemeService } from '@app/services/theme/theme.service';
-import {ApiService} from "@app/services/api/api.service";
-import {SearchService} from "@app/services/search/search.service";
+import { ApiService } from '@app/services/api/api.service';
+import { SearchService } from '@app/services/search/search.service';
 
 @Component({
     selector: 'account-insights-tab',
@@ -246,7 +246,7 @@ export class InsightsTabComponent implements OnChanges, OnInit {
         private readonly _themeService: ThemeService,
         private readonly _apiService: ApiService,
         private readonly _ref: ChangeDetectorRef,
-        private readonly _searchService: SearchService,
+        private readonly _searchService: SearchService
     ) {
         this.vp.vpChange.subscribe(() => {
             setTimeout(() => {
@@ -355,20 +355,22 @@ export class InsightsTabComponent implements OnChanges, OnInit {
                 area: {
                     events: {
                         click: (e: any) => {
-
                             if (this.isLoadingBlock) {
                                 return;
                             }
                             const height = Number(e.point.name);
                             this.isLoadingBlock = true;
-                            this._apiService.fetchBlockFromAddressHeight(this.address, height)
+                            this._apiService
+                                .fetchBlockFromAddressHeight(this.address, height)
                                 .then((block) => {
-                                    this._searchService.emitSearch(block.hash, false)
-                                }).catch((err) => {
+                                    this._searchService.emitSearch(block.hash, false);
+                                })
+                                .catch((err) => {
                                     console.error(err);
-                                }).finally(() => {
+                                })
+                                .finally(() => {
                                     this.isLoadingBlock = false;
-                            });
+                                });
                         },
                     },
                     fillColor: {

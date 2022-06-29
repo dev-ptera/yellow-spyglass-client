@@ -25,15 +25,15 @@ import {
     SupplyDto,
 } from '@app/types/dto';
 import { InsightsDto } from '@app/types/dto/InsightsDto';
-import {Subject} from "rxjs";
+import { Subject } from 'rxjs';
+import { FilterDialogData } from '@app/pages/account/tabs/brpd/brpd-tab.component';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ApiService {
-
     api: string;
-    apiToUseSubject = new Subject<string>;
+    apiToUseSubject = new Subject<string>();
 
     constructor(private readonly _http: HttpClient) {
         this._pingServers();
@@ -45,16 +45,20 @@ export class ApiService {
         const api2 = environment.api2;
         const req1 = new Promise((resolve) => {
             // TODO: Replace this with an actual PING endpoint.  Make this as fast as possible.
-            this._http.get<any>(`${api1}/v1/representatives/online`)
-                .toPromise().then(() => resolve(api1))
+            this._http
+                .get<any>(`${api1}/v1/representatives/online`)
+                .toPromise()
+                .then(() => resolve(api1))
                 .catch((err) => {
                     console.error(err);
                     resolve(api2); // If error, resolve the opposite api.
                 });
         });
         const req2 = new Promise((resolve) => {
-            this._http.get<any>(`${api2}/v1/representatives/online`)
-                .toPromise().then(() => resolve(api2))
+            this._http
+                .get<any>(`${api2}/v1/representatives/online`)
+                .toPromise()
+                .then(() => resolve(api2))
                 .catch((err) => {
                     console.error(err);
                     resolve(api1);
@@ -62,11 +66,13 @@ export class ApiService {
         });
 
         // REQ 2 not included for now; api.creeper is not returning correct timestmaps.
-        Promise.race([req1]).then((faster: string) => {
-            this.apiToUseSubject.next(faster);
-        }).catch((err) => {
-            console.error(err);
-        })
+        Promise.race([req1])
+            .then((faster: string) => {
+                this.apiToUseSubject.next(faster);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
     }
 
     /** Resolves after the API to use has been set. */
@@ -78,7 +84,7 @@ export class ApiService {
                 this.apiToUseSubject.subscribe((fastestApi) => {
                     this.api = fastestApi;
                     resolve();
-                })
+                });
             }
         });
     }
@@ -115,7 +121,11 @@ export class ApiService {
     }
 
     /** Fetches 50 confirmed transactions for a given address. */
-    async fetchConfirmedTransactions(address: string, offset: number, pageSize: number): Promise<ConfirmedTransactionDto[]> {
+    async fetchConfirmedTransactions(
+        address: string,
+        offset: number,
+        pageSize: number
+    ): Promise<ConfirmedTransactionDto[]> {
         await this._hasPingedApi();
         return this._http
             .post<ConfirmedTransactionDto[]>(`${this.api}/v2/account/confirmed-transactions`, {
@@ -219,9 +229,7 @@ export class ApiService {
     /** Fetches how many bad actors required to compromise network. */
     async fetchNakamotoCoefficient(): Promise<NakamotoCoefficientDto> {
         await this._hasPingedApi();
-        return this._http
-            .get<NakamotoCoefficientDto>(`${this.api}/v1/network/nakamoto-coefficient`)
-            .toPromise();
+        return this._http.get<NakamotoCoefficientDto>(`${this.api}/v1/network/nakamoto-coefficient`).toPromise();
     }
 
     /** Fetches list of accounts with their respective balance & representative. */
@@ -286,5 +294,26 @@ export class ApiService {
     async fetchBlockFromAddressHeight(address: string, height: number): Promise<BlockDto> {
         await this._hasPingedApi();
         return this._http.post<BlockDto>(`${this.api}/v1/account/block-at-height`, { address, height }).toPromise();
+    }
+
+    async fetchFilteredTransaction(
+        address: string,
+        size: number,
+        offset: number,
+        filters?: FilterDialogData
+    ): Promise<ConfirmedTransactionDto[]> {
+        await this._hasPingedApi();
+        const url = `${this.api}/v2/account/confirmed-transactions`;
+        const filterAddresses =
+            filters && filters.filterAddresses ? filters.filterAddresses.split(',').map((x) => x.trim()) : [];
+        return this._http
+            .post<ConfirmedTransactionDto[]>(url, {
+                address,
+                size,
+                offset,
+                ...filters,
+                filterAddresses,
+            })
+            .toPromise();
     }
 }

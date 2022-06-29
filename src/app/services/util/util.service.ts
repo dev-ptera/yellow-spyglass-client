@@ -6,7 +6,6 @@ import { Subtype } from '@dev-ptera/nano-node-rpc';
     providedIn: 'root',
 })
 export class UtilService {
-
     // TODO, I have a pipe for this already; why is this here?
     numberWithCommas(x: number | string): string {
         if (!x && x !== 0) {

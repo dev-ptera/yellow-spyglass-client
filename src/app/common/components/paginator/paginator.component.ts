@@ -22,13 +22,16 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
                 </button>
             </ng-container>
             <blui-spacer></blui-spacer>
-            <div [style.fontSize.px]="vp.sm ? 12 : 14">
+            <div *ngIf="!showPageNumberOnly" [style.fontSize.px]="vp.sm ? 12 : 14" >
                 Showing
                 <span>{{ getCurrPageMin() }}</span>
                 to
                 <span>{{ getCurrPageMax() }}</span>
                 of
                 <span>{{ util.numberWithCommas(maxElements) }}</span>
+            </div>
+            <div *ngIf="showPageNumberOnly" [style.fontSize.px]="vp.sm ? 12 : 14" >
+                Page {{pageIndex + 1}} <span style="margin: 0 8px">·</span> {{ pageSize }} items / page
             </div>
             <blui-spacer></blui-spacer>
             <ng-container *ngIf="maxElements > pageSize">
@@ -52,6 +55,7 @@ export class PaginatorComponent implements OnChanges {
     @Input() pageSize: number;
     @Input() maxElements: number;
     @Input() disableMove = false;
+    @Input() showPageNumberOnly = false;
 
     @Output() pageIndexChange: EventEmitter<number> = new EventEmitter<number>();
 
