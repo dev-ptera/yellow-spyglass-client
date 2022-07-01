@@ -45,7 +45,7 @@ export class AccountService {
         let offset = 0;
         try {
             const displayed = this.confirmedTransactions.all.get(this.maxPageLoaded);
-            offset = (blockCount - displayed[displayed.length-1].height) + 1;
+            offset = blockCount - displayed[displayed.length - 1].height + 1;
         } catch (err) {}
 
         try {

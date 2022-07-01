@@ -22,7 +22,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
                 </button>
             </ng-container>
             <blui-spacer></blui-spacer>
-            <div *ngIf="!showPageNumberOnly" [style.fontSize.px]="vp.sm ? 12 : 14" >
+            <div *ngIf="!showPageNumberOnly" [style.fontSize.px]="vp.sm ? 12 : 14">
                 Showing
                 <span>{{ getCurrPageMin() }}</span>
                 to
@@ -30,8 +30,8 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
                 of
                 <span>{{ util.numberWithCommas(maxElements) }}</span>
             </div>
-            <div *ngIf="showPageNumberOnly" [style.fontSize.px]="vp.sm ? 12 : 14" >
-                Page {{pageIndex + 1}} <span style="margin: 0 8px">·</span> {{ pageSize }} items / page
+            <div *ngIf="showPageNumberOnly" [style.fontSize.px]="vp.sm ? 12 : 14">
+                Page {{ pageIndex + 1 }} <span style="margin: 0 8px">·</span> {{ pageSize }} items / page
             </div>
             <blui-spacer></blui-spacer>
             <ng-container *ngIf="maxElements > pageSize">
@@ -43,7 +43,12 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
                 >
                     <mat-icon>chevron_right</mat-icon>
                 </button>
-                <button mat-icon-button [disabled]="isMaxPageNum() || disableMove" (click)="lastPage()">
+                <button
+                    *ngIf="enableFastForward"
+                    mat-icon-button
+                    [disabled]="isMaxPageNum() || disableMove"
+                    (click)="lastPage()"
+                >
                     <mat-icon>last_page</mat-icon>
                 </button>
             </ng-container>
@@ -56,6 +61,7 @@ export class PaginatorComponent implements OnChanges {
     @Input() maxElements: number;
     @Input() disableMove = false;
     @Input() showPageNumberOnly = false;
+    @Input() enableFastForward = true;
 
     @Output() pageIndexChange: EventEmitter<number> = new EventEmitter<number>();
 
