@@ -24,6 +24,11 @@ export type FilterDialogData = {
     templateUrl: 'brpd-tab.component.html',
     styles: [
         `
+            .social-media-icon {
+                width: 14px;
+                margin-right: 8px;
+                opacity: .75;
+            }
             textarea:focus,
             input:focus {
                 border-radius: 4px;
@@ -93,6 +98,11 @@ export class BrpdTabComponent {
             .then((data) => {
                 this.transactions = data;
                 this.txService.createDateMap(this.transactions, this.dateMap);
+                const pageAddressSet = new Set<string>();
+                data.map((tx) => {
+                    pageAddressSet.add(tx.address);
+                })
+                this.aliasService.populateAliasesFromSet(pageAddressSet);
             })
             .catch((err) => {
                 console.error(err);
@@ -123,28 +133,6 @@ export class BrpdTabComponent {
         };
     }
 
-    fetchRemoteNicknames(): void {
-        const noAlias = new Set<string>();
-        this.transactions.map((tx) => {
-            if (!this.aliasService.has(tx.address)) {
-                noAlias.add(tx.address);
-            }
-        });
-
-        const tipBot = [];
-        Array.from(noAlias).map((address) => {
-            //   tipBot.push(this.apiService.fetchTipbotNickname(address));
-        });
-
-        Promise.all(tipBot)
-            .then((data) => {
-                console.log(data);
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }
-
     hasNickname(address: string): boolean {
         return this.aliasService.has(address);
     }
@@ -166,8 +154,6 @@ export class BrpdTabComponent {
         console.log(page);
         this.loadCurrentPage();
     }
-
-    hasFilter(): void {}
 
     private _loadNewAccount(): void {
         this.pageIndex = 0;

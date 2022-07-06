@@ -7,10 +7,14 @@ import { Injectable } from '@angular/core';
 })
 /** Fetches account aliases on initialization. */
 export class AliasService {
-    private readonly aliases: Map<string, string>;
+    private readonly aliases: Map<string, { alias: string, socialMedia: string }>;
+    private readonly accountsWithNoAlias: Set<string>;
+
+
 
     constructor(private readonly _api: ApiService) {
-        this.aliases = new Map<string, string>();
+        this.aliases = new Map();
+        this.accountsWithNoAlias = new Set();
         this._loadAliases();
     }
 
@@ -18,8 +22,8 @@ export class AliasService {
         this._api
             .fetchAliases()
             .then((data: AliasDto[]) => {
-                for (const alias of data) {
-                    this.aliases.set(alias.address, alias.alias);
+                for (const account of data) {
+                    this.aliases.set(account.address, { alias: account.alias, socialMedia: undefined});
                 }
             })
             .catch((err) => {
@@ -27,11 +31,41 @@ export class AliasService {
             });
     }
 
+    populateAliasesFromSet(addresses: Set<string>): void  {
+        addresses.forEach((address) => {
+            if (address && !this.accountsWithNoAlias.has(address) && !this.aliases.has(address)) {
+                this._api.fetchSocialMediaAccount(address).then((data) => {
+                    if (data.alias) {
+                        this.aliases.set(address, { alias: data.alias, socialMedia: data.platform});
+                    } else {
+                        this.accountsWithNoAlias.add(address);
+                    }
+                }).catch((err) => {
+                    console.error(err);
+                    this.accountsWithNoAlias.add(address);
+                })
+            }
+        })
+    }
+
     has(address: string): boolean {
         return this.aliases.has(address);
     }
 
-    get(address: string): string {
+    getAlias(address: string): string {
+        if (this.has(address)) {
+            return this.aliases.get(address).alias;
+        }
+    }
+
+    getSocialMedia(address: string): string {
+        if (this.has(address)) {
+            return this.aliases.get(address).socialMedia;
+        }
+    }
+
+    get(address: string): { alias: string, socialMedia: string} {
         return this.aliases.get(address);
     }
+
 }

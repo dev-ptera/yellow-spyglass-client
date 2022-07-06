@@ -18,7 +18,7 @@
         >
             <ng-container *ngIf="aliasService.has(address)">
                 <div mat-card-title class="link" [routerLink]="'/' + navItems.account.route + '/' + address">
-                    {{ aliasService.get(address) }}
+                    {{ aliasService.getAlias(address) }}
                 </div>
                 <div
                     mat-card-subtitle

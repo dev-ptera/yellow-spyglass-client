@@ -62,7 +62,7 @@ export type Transaction = {
                                 <a
                                     class="address link text"
                                     [routerLink]="'/' + navItems.account.route + '/' + tx.address"
-                                    >{{ aliasService.get(tx.address) || tx.address }}</a
+                                >{{ aliasService.getAlias(tx.address) || tx.address }}</a
                                 >
                             </span>
                         </ng-container>
@@ -73,7 +73,7 @@ export type Transaction = {
                                 <a
                                     class="address link text"
                                     [routerLink]="'/' + navItems.account.route + '/' + tx.address"
-                                    >{{ aliasService.get(tx.address) || tx.address }}
+                                >{{ aliasService.getAlias(tx.address) || tx.address }}
                                 </a>
                             </span>
                         </ng-container>
@@ -81,11 +81,11 @@ export type Transaction = {
                         <ng-container *ngIf="tx.type === 'change'">
                             <span class="to-from text-secondary">to</span>
                             <span
-                                ><a
-                                    class="address link text"
-                                    [routerLink]="'/' + navItems.account.route + '/' + tx.newRepresentative"
-                                    >{{ aliasService.get(tx.newRepresentative) || tx.newRepresentative }}</a
-                                >
+                            ><a
+                                class="address link text"
+                                [routerLink]="'/' + navItems.account.route + '/' + tx.newRepresentative"
+                            >{{ aliasService.getAlias(tx.newRepresentative) || tx.newRepresentative }}</a
+                            >
                             </span>
                         </ng-container>
                     </div>
@@ -96,12 +96,12 @@ export type Transaction = {
                     >
                     <span style="margin: 0 4px" *ngIf="tx.height">·</span>
                     <a class="link hash text-hint" [routerLink]="'/' + navItems.hash.route + '/' + tx.hash"
-                        >{{ tx.hash }}
+                    >{{ tx.hash }}
                     </a>
                 </div>
                 <div blui-right-content class="right-content" [style.marginRight.px]="vp.sm ? 0 : 8">
                     <div *ngIf="vp.sm" class="small-monkey">
-                        <img [src]="apiService.createMonKeyUrl(tx.address || tx.newRepresentative)" loading="lazy" />
+                        <img [src]="apiService.createMonKeyUrl(tx.address || tx.newRepresentative)" loading="lazy"/>
                     </div>
                     <div class="timestamps">
                         <span class="mat-body-2">{{ dateMap.get(tx.hash).date }}</span>

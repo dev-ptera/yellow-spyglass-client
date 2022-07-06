@@ -139,11 +139,11 @@
                 *ngIf="tx.height"
                 [routerLink]="'/' + navItems.hash.route + '/' + tx.hash"
                 class="link"
-                style="font-family: monospace"
+                style="font-family: monospace; margin-right: 24px"
             >
                 <span style="margin-right: 0px" style="font-size: 14px">#</span>{{ util.numberWithCommas(tx.height) }}
             </div>
-            <div style="margin: 0 12px">·</div>
+
             <blui-list-item-tag
                 style="margin-right: 24px; width: 60px; text-align: center"
                 [label]="tx.type || 'receive'"
@@ -151,14 +151,17 @@
                 [class]="txService.createTagClass(tx, isPending)"
             ></blui-list-item-tag>
 
-            <div class="amount" style="width: 200px">
+            <div class="amount"
+                 [class.primary]="tx.type === 'receive'"
+                 [class.warn]="tx.type === 'send'"
+                 style="width: 200px">
                 <ng-container *ngIf="tx.type !== 'change'">
                     {{ tx.type === 'receive' || isPending ? '+' : '-' }}
                     {{ formatNumber(tx.amount) }}
                     BAN
                 </ng-container>
             </div>
-            <div (mouseenter)="tx.hover = true" (mouseleave)="tx.hover = false">
+            <div (mouseenter)="tx.hover = true" (mouseleave)="tx.hover = false" style="margin-right: 24px">
                 <button
                     mat-icon-button
                     *ngIf="tx.hover"
@@ -176,12 +179,16 @@
                     >{{ util.shortenAddress(tx.address || tx.newRepresentative) }}
                 </a>
             </div>
+
+            <img *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'twitter'" src="assets/social-media/twitter.svg" class="social-media-icon" />
+            <img *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'discord'" src="assets/social-media/discord.svg"  class="social-media-icon"  />
+            <img *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'telegram'" src="assets/social-media/telegram.svg"  class="social-media-icon"  />
             <a
-                style="margin-left: 24px; font-weight: 600; font-size: 14px"
+                style="font-weight: 600; font-size: 14px"
                 class="link text primary"
                 *ngIf="hasNickname(tx.address || tx.newRepresentative)"
                 [routerLink]="'/' + navItems.account.route + '/' + (tx.address || tx.newRepresentative)"
-                >{{ aliasService.get(tx.address || tx.newRepresentative) }}
+                >{{ aliasService.getAlias(tx.address || tx.newRepresentative) }}
             </a>
             <blui-spacer></blui-spacer>
             <div style="margin-right: 8px">
@@ -207,7 +214,7 @@
     <ng-template [ngTemplateOutlet]="transactionPaginator"></ng-template>
 </div>
 
-<div *ngIf="isLoading">Loading</div>
+<div *ngIf="isLoading" class="mat-headline mat-secondary" style="padding: 32px">Loading</div>
 <div *ngIf="!isLoading && transactions.length === 0" class="tab-empty-state">
     <blui-empty-state
         responsive

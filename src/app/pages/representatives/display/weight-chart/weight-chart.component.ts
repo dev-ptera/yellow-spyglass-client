@@ -14,27 +14,27 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
         <mat-card class="representatives-chart-container divider-border" responsive>
             <div class="representatives-chart" responsive>
                 <highcharts-chart
-                    [update]="true"
-                    [Highcharts]="Highcharts"
-                    [options]="repsChart"
-                    style="pointer-events: none"
-                    [style.width.px]="vp.sm ? 350 : vp.md ? 650 : 800"
-                    [style.height.px]="vp.sm ? 300 : vp.md ? 320 : 360"
+                        [update]="true"
+                        [Highcharts]="Highcharts"
+                        [options]="repsChart"
+                        style="pointer-events: none"
+                        [style.width.px]="vp.sm ? 350 : vp.md ? 650 : 800"
+                        [style.height.px]="vp.sm ? 300 : vp.md ? 320 : 360"
                 ></highcharts-chart>
             </div>
             <div class="representatives-legend" responsive>
                 <ng-container *ngIf="!vp.md && !vp.sm">
                     <div>
                         <ng-template
-                            [ngTemplateOutlet]="legend"
-                            [ngTemplateOutletContext]="{ repList: chartShownRepsCol1, colorOffset: 0 }"
+                                [ngTemplateOutlet]="legend"
+                                [ngTemplateOutletContext]="{ repList: chartShownRepsCol1, colorOffset: 0 }"
                         >
                         </ng-template>
                     </div>
                     <div [style.marginLeft.px]="vp.md ? 0 : 24">
                         <ng-template
-                            [ngTemplateOutlet]="legend"
-                            [ngTemplateOutletContext]="{
+                                [ngTemplateOutlet]="legend"
+                                [ngTemplateOutletContext]="{
                                 repList: chartShownRepsCol2,
                                 colorOffset: chartShownRepsCol1.length
                             }"
@@ -44,8 +44,8 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
                 </ng-container>
                 <ng-container *ngIf="vp.md || vp.sm">
                     <ng-template
-                        [ngTemplateOutlet]="legend"
-                        [ngTemplateOutletContext]="{ repList: chartShownReps, colorOffset: 0 }"
+                            [ngTemplateOutlet]="legend"
+                            [ngTemplateOutletContext]="{ repList: chartShownReps, colorOffset: 0 }"
                     >
                     </ng-template>
                 </ng-container>
@@ -53,21 +53,21 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
 
             <ng-template #legend let-repList="repList" let-colorOffset="colorOffset">
                 <div
-                    *ngFor="let rep of repList; let i = index"
-                    class="representatives-legend-entry"
-                    [style.fontSize.px]="vp.sm ? 12 : 15"
+                        *ngFor="let rep of repList; let i = index"
+                        class="representatives-legend-entry"
+                        [style.fontSize.px]="vp.sm ? 12 : 15"
                 >
                     <div
-                        class="representatives-legend-color"
-                        [style.backgroundColor]="pieChartColors[i + colorOffset]"
+                            class="representatives-legend-color"
+                            [style.backgroundColor]="pieChartColors[i + colorOffset]"
                     ></div>
                     <a
-                        class="link text"
-                        [class.representatives-legend-others]="!rep.address"
-                        [routerLink]="'/' + navItems.account.route + '/' + rep.address"
+                            class="link text"
+                            [class.representatives-legend-others]="!rep.address"
+                            [routerLink]="'/' + navItems.account.route + '/' + rep.address"
                     >
                         <ng-container *ngIf="aliasService.has(rep.address)">
-                            {{ aliasService.get(rep.address) }}
+                            {{ aliasService.getAlias(rep.address) }}
                         </ng-container>
                         <ng-container *ngIf="!aliasService.has(rep.address)">
                             {{ rep.name }}

@@ -20,4 +20,5 @@ export * from './ReceivableTransactionDto';
 export * from './RepresentativeDto';
 export * from './RepScoreDto';
 export * from './RepresentativeUptimeDto';
+export * from './SocialMediaAccountAliasDto';
 export * from './SupplyDto';

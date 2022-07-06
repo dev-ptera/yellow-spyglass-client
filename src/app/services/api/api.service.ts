@@ -21,7 +21,7 @@ import {
     QuorumDto,
     ReceivableTransactionDto,
     RepresentativeDto,
-    RepScoreDto,
+    RepScoreDto, SocialMediaAccountAliasDto,
     SupplyDto,
 } from '@app/types/dto';
 import { InsightsDto } from '@app/types/dto/InsightsDto';
@@ -314,6 +314,14 @@ export class ApiService {
                 ...filters,
                 filterAddresses,
             })
+            .toPromise();
+    }
+
+    /** Fetches an address's discord/twitter/telegram alias, if any. */
+    async fetchSocialMediaAccount(address: string): Promise<SocialMediaAccountAliasDto> {
+        await this._hasPingedApi();
+        return this._http
+            .get<SocialMediaAccountAliasDto>(`${this.api}/v1/known/social-media/${address}`)
             .toPromise();
     }
 }
