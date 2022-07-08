@@ -180,6 +180,7 @@
                 </a>
             </div>
 
+            <img *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'jungletv'" src="assets/social-media/jtv.png" class="social-media-icon" />
             <img *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'twitter'" src="assets/social-media/twitter.svg" class="social-media-icon" />
             <img *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'discord'" src="assets/social-media/discord.svg"  class="social-media-icon"  />
             <img *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'telegram'" src="assets/social-media/telegram.svg"  class="social-media-icon"  />
