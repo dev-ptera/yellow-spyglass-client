@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { saveAs } from 'file-saver';
+
 import {
     AccountBalanceDto,
     AccountDistributionStatsDto,
@@ -21,18 +22,20 @@ import {
     QuorumDto,
     ReceivableTransactionDto,
     RepresentativeDto,
-    RepScoreDto, SocialMediaAccountAliasDto,
+    RepScoreDto,
+    SocialMediaAccountAliasDto,
     SupplyDto,
 } from '@app/types/dto';
 import { InsightsDto } from '@app/types/dto/InsightsDto';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { FilterDialogData } from '@app/pages/account/tabs/brpd/brpd-tab.component';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ApiService {
-    api: string;
+    httpApi: string;
+    wsApi: string;
     apiToUseSubject = new Subject<string>();
 
     constructor(private readonly _http: HttpClient) {
@@ -78,11 +81,12 @@ export class ApiService {
     /** Resolves after the API to use has been set. */
     private _hasPingedApi(): Promise<void> {
         return new Promise((resolve) => {
-            if (this.api) {
+            if (this.httpApi) {
                 resolve();
             } else {
                 this.apiToUseSubject.subscribe((fastestApi) => {
-                    this.api = fastestApi;
+                    this.httpApi = fastestApi;
+                    this.wsApi = fastestApi.replace('http', 'ws').replace('https', 'wss');
                     resolve();
                 });
             }
@@ -97,26 +101,26 @@ export class ApiService {
     /** Fetches explorer summary information. */
     async fetchExplorerSummaryData(): Promise<ExplorerSummaryDto> {
         await this._hasPingedApi();
-        return this._http.get<ExplorerSummaryDto>(`${this.api}/v1/explorer-summary`).toPromise();
+        return this._http.get<ExplorerSummaryDto>(`${this.httpApi}/v1/explorer-summary`).toPromise();
     }
 
     /** Fetches account summary information. */
     async fetchAccountOverview(address: string): Promise<AccountOverviewDto> {
         await this._hasPingedApi();
-        return this._http.get<AccountOverviewDto>(`${this.api}/v1/account/overview/${address}`).toPromise();
+        return this._http.get<AccountOverviewDto>(`${this.httpApi}/v1/account/overview/${address}`).toPromise();
     }
 
     /** Fetches account summary information. */
     async fetchAccountNFTs(address: string): Promise<AccountNFTDto[]> {
         await this._hasPingedApi();
-        return this._http.get<AccountNFTDto[]>(`${this.api}/v1/account/nfts/${address}`).toPromise();
+        return this._http.get<AccountNFTDto[]>(`${this.httpApi}/v1/account/nfts/${address}`).toPromise();
     }
 
     /** Fetches account delegators. */
     async fetchAccountDelegators(address: string, offset: number): Promise<DelegatorsOverviewDto> {
         await this._hasPingedApi();
         return this._http
-            .post<DelegatorsOverviewDto>(`${this.api}/v1/account/delegators`, { address, size: 50, offset })
+            .post<DelegatorsOverviewDto>(`${this.httpApi}/v1/account/delegators`, { address, size: 50, offset })
             .toPromise();
     }
 
@@ -128,7 +132,7 @@ export class ApiService {
     ): Promise<ConfirmedTransactionDto[]> {
         await this._hasPingedApi();
         return this._http
-            .post<ConfirmedTransactionDto[]>(`${this.api}/v2/account/confirmed-transactions`, {
+            .post<ConfirmedTransactionDto[]>(`${this.httpApi}/v2/account/confirmed-transactions`, {
                 address,
                 offset,
                 size: pageSize,
@@ -140,7 +144,7 @@ export class ApiService {
     async fetchReceivableTransactions(address: string): Promise<ReceivableTransactionDto[]> {
         await this._hasPingedApi();
         return this._http
-            .post<ReceivableTransactionDto[]>(`${this.api}/v1/account/receivable-transactions`, { address })
+            .post<ReceivableTransactionDto[]>(`${this.httpApi}/v1/account/receivable-transactions`, { address })
             .toPromise();
     }
 
@@ -148,26 +152,26 @@ export class ApiService {
     async fetchInsights(address: string): Promise<InsightsDto> {
         await this._hasPingedApi();
         return this._http
-            .post<InsightsDto>(`${this.api}/v1/account/insights`, { address, includeHeightBalances: true })
+            .post<InsightsDto>(`${this.httpApi}/v1/account/insights`, { address, includeHeightBalances: true })
             .toPromise();
     }
 
     /** Given a hash, fetches block. */
     async fetchBlock(hash: string): Promise<BlockDto> {
         await this._hasPingedApi();
-        return this._http.get<BlockDto>(`${this.api}/v1/block/${hash}`).toPromise();
+        return this._http.get<BlockDto>(`${this.httpApi}/v1/block/${hash}`).toPromise();
     }
 
     /** Fetches list of known vanities addresses. */
     async fetchKnownVanities(): Promise<string[]> {
         await this._hasPingedApi();
-        return this._http.get<string[]>(`${this.api}/v1/known/vanities`).toPromise();
+        return this._http.get<string[]>(`${this.httpApi}/v1/known/vanities`).toPromise();
     }
 
     /** Fetches server stats & info. */
     async fetchHostNodeStats(): Promise<HostNodeStatsDto> {
         await this._hasPingedApi();
-        return this._http.get<HostNodeStatsDto>(`${this.api}/v1/network/node-stats`).toPromise();
+        return this._http.get<HostNodeStatsDto>(`${this.httpApi}/v1/network/node-stats`).toPromise();
     }
 
     /** Fetches monKey avatar for a given account. */
@@ -183,7 +187,7 @@ export class ApiService {
     async fetchLargeRepresentatives(): Promise<RepresentativeDto[]> {
         await this._hasPingedApi();
         return this._http
-            .post<RepresentativeDto[]>(`${this.api}/v1/representatives`, {
+            .post<RepresentativeDto[]>(`${this.httpApi}/v1/representatives`, {
                 minimumWeight: 100_000,
                 includeDelegatorCount: true,
             })
@@ -193,50 +197,50 @@ export class ApiService {
     /** Fetches monitored representatives stats. */
     async fetchMonitoredRepresentatives(): Promise<MonitoredRepDto[]> {
         await this._hasPingedApi();
-        return this._http.get<MonitoredRepDto[]>(`${this.api}/v1/representatives/monitored`).toPromise();
+        return this._http.get<MonitoredRepDto[]>(`${this.httpApi}/v1/representatives/monitored`).toPromise();
     }
 
     /** Fetches representatives stats. */
     async fetchRepresentativeScores(): Promise<RepScoreDto[]> {
         await this._hasPingedApi();
-        return this._http.get<RepScoreDto[]>(`${this.api}/v1/representatives/scores`).toPromise();
+        return this._http.get<RepScoreDto[]>(`${this.httpApi}/v1/representatives/scores`).toPromise();
     }
 
     /** Fetches distribute buckets; how many accounts own (1-10 ban, 10-100, etc). */
     async fetchDistributionStats(): Promise<AccountDistributionStatsDto> {
         await this._hasPingedApi();
-        return this._http.get<AccountDistributionStatsDto>(`${this.api}/v1/distribution/buckets`).toPromise();
+        return this._http.get<AccountDistributionStatsDto>(`${this.httpApi}/v1/distribution/buckets`).toPromise();
     }
 
     /** Fetches quorum details. */
     async fetchQuorumStats(): Promise<QuorumDto> {
         await this._hasPingedApi();
-        return this._http.get<QuorumDto>(`${this.api}/v1/network/quorum`).toPromise();
+        return this._http.get<QuorumDto>(`${this.httpApi}/v1/network/quorum`).toPromise();
     }
 
     /** Fetches Supply details. */
     async fetchSupplyStats(): Promise<SupplyDto> {
         await this._hasPingedApi();
-        return this._http.get<SupplyDto>(`${this.api}/v1/distribution/supply`).toPromise();
+        return this._http.get<SupplyDto>(`${this.httpApi}/v1/distribution/supply`).toPromise();
     }
 
     /** Fetches Peer details. */
     async fetchPeerVersions(): Promise<PeerVersionsDto[]> {
         await this._hasPingedApi();
-        return this._http.get<PeerVersionsDto[]>(`${this.api}/v1/network/peers`).toPromise();
+        return this._http.get<PeerVersionsDto[]>(`${this.httpApi}/v1/network/peers`).toPromise();
     }
 
     /** Fetches how many bad actors required to compromise network. */
     async fetchNakamotoCoefficient(): Promise<NakamotoCoefficientDto> {
         await this._hasPingedApi();
-        return this._http.get<NakamotoCoefficientDto>(`${this.api}/v1/network/nakamoto-coefficient`).toPromise();
+        return this._http.get<NakamotoCoefficientDto>(`${this.httpApi}/v1/network/nakamoto-coefficient`).toPromise();
     }
 
     /** Fetches list of accounts with their respective balance & representative. */
     async fetchRichListSegment(offset: number, size: number): Promise<AccountBalanceDto[]> {
         await this._hasPingedApi();
         return this._http
-            .post<AccountBalanceDto[]>(`${this.api}/v1/distribution/rich-list`, {
+            .post<AccountBalanceDto[]>(`${this.httpApi}/v1/distribution/rich-list`, {
                 offset,
                 size,
                 includeRepresentative: true,
@@ -249,7 +253,7 @@ export class ApiService {
         await this._hasPingedApi();
         const fileName = `tx-${address}.csv`;
         return this._http
-            .post(`${this.api}/v1/account/export`, { address }, { responseType: 'text' })
+            .post(`${this.httpApi}/v1/account/export`, { address }, { responseType: 'text' })
             .toPromise()
             .then((data) => {
                 const blob = new Blob([data], { type: 'application/text' });
@@ -265,20 +269,20 @@ export class ApiService {
     /** Fetches banano price data. */
     async fetchPriceInfo(): Promise<PriceDataDto> {
         await this._hasPingedApi();
-        return this._http.get<PriceDataDto>(`${this.api}/v1/price`).toPromise();
+        return this._http.get<PriceDataDto>(`${this.httpApi}/v1/price`).toPromise();
     }
 
     /** Fetches list of representatives that are considered online. */
     async fetchOnlineRepresentatives(): Promise<string[]> {
         await this._hasPingedApi();
-        return this._http.get<string[]>(`${this.api}/v1/representatives/online`).toPromise();
+        return this._http.get<string[]>(`${this.httpApi}/v1/representatives/online`).toPromise();
     }
 
     /** Fetches list of aliases. */
     async fetchAliases(): Promise<AliasDto[]> {
         await this._hasPingedApi();
         return this._http
-            .post<AliasDto[]>(`${this.api}/v1/known/accounts`, { includeOwner: false, includeType: false })
+            .post<AliasDto[]>(`${this.httpApi}/v1/known/accounts`, { includeOwner: false, includeType: false })
             .toPromise();
     }
 
@@ -286,14 +290,14 @@ export class ApiService {
     async fetchKnownAccounts(): Promise<KnownAccountDto[]> {
         await this._hasPingedApi();
         return this._http
-            .post<KnownAccountDto[]>(`${this.api}/v1/known/accounts`, { includeOwner: true, includeType: true })
+            .post<KnownAccountDto[]>(`${this.httpApi}/v1/known/accounts`, { includeOwner: true, includeType: true })
             .toPromise();
     }
 
     /** Given a hash, fetches block. */
     async fetchBlockFromAddressHeight(address: string, height: number): Promise<BlockDto> {
         await this._hasPingedApi();
-        return this._http.post<BlockDto>(`${this.api}/v1/account/block-at-height`, { address, height }).toPromise();
+        return this._http.post<BlockDto>(`${this.httpApi}/v1/account/block-at-height`, { address, height }).toPromise();
     }
 
     async fetchFilteredTransaction(
@@ -303,7 +307,7 @@ export class ApiService {
         filters?: FilterDialogData
     ): Promise<ConfirmedTransactionDto[]> {
         await this._hasPingedApi();
-        const url = `${this.api}/v2/account/confirmed-transactions`;
+        const url = `${this.httpApi}/v2/account/confirmed-transactions`;
         const filterAddresses =
             filters && filters.filterAddresses ? filters.filterAddresses.split(',').map((x) => x.trim()) : [];
         return this._http
@@ -321,7 +325,26 @@ export class ApiService {
     async fetchSocialMediaAccount(address: string): Promise<SocialMediaAccountAliasDto> {
         await this._hasPingedApi();
         return this._http
-            .get<SocialMediaAccountAliasDto>(`${this.api}/v1/known/social-media/${address}`)
+            .get<SocialMediaAccountAliasDto>(`${this.httpApi}/v1/known/social-media/${address}`)
             .toPromise();
+    }
+
+    async fetchAccountInsightsWS(address: string): Promise<Observable<number | InsightsDto>> {
+        await this._hasPingedApi();
+        const subject = new Subject<number | InsightsDto>();
+        const socket = new WebSocket(`${this.wsApi}/v1/account/insights`);
+        socket.onopen = (): void => {
+            socket.send(JSON.stringify({ address, includeHeightBalances: true }));
+        };
+        socket.onmessage = (msg): void => {
+            const data = msg.data;
+            if (isNaN(Number(data))) {
+                subject.next(JSON.parse(data) as InsightsDto);
+                socket.close();
+            } else {
+                subject.next(Number(data));
+            }
+        };
+        return subject;
     }
 }

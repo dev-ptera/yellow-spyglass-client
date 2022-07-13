@@ -123,6 +123,9 @@
 
 <ng-container *ngIf="transactions.length !== 0">
     <ng-template [ngTemplateOutlet]="transactionPaginator"></ng-template>
+</ng-container>
+
+<ng-container *ngIf="transactions.length !== 0 || hasFiltersApplied">
     <ng-template [ngTemplateOutlet]="filters"></ng-template>
     <mat-divider></mat-divider>
 </ng-container>
@@ -151,25 +154,31 @@
                 [class]="txService.createTagClass(tx, isPending)"
             ></blui-list-item-tag>
 
-            <div class="amount"
-                 [class.primary]="tx.type === 'receive'"
-                 [class.warn]="tx.type === 'send'"
-                 style="width: 200px">
+            <div
+                class="amount"
+                [class.primary]="tx.type === 'receive'"
+                [class.warn]="tx.type === 'send'"
+                style="width: 200px"
+            >
                 <ng-container *ngIf="tx.type !== 'change'">
                     {{ tx.type === 'receive' || isPending ? '+' : '-' }}
                     {{ formatNumber(tx.amount) }}
                     BAN
                 </ng-container>
             </div>
-            <div (mouseenter)="tx.hover = true" (mouseleave)="tx.hover = false" style="margin-right: 24px">
+            <div
+                (mouseenter)="tx.hoverAddress = true"
+                (mouseleave)="tx.hoverAddress = false"
+                style="margin-right: 24px"
+            >
                 <button
                     mat-icon-button
-                    *ngIf="tx.hover"
-                    (click)="copy(tx)"
+                    *ngIf="tx.hoverAddress"
+                    (click)="copyAddress(tx)"
                     style="cursor: pointer; height: 24px; width: 24px; margin-right: 4px; line-height: 24px"
                 >
                     <mat-icon style="font-size: 16px">
-                        {{ tx.showCopiedIcon ? 'check_circle' : 'copy_all' }}
+                        {{ tx.showCopiedAddressIcon ? 'check_circle' : 'copy_all' }}
                     </mat-icon>
                 </button>
                 <a
@@ -180,17 +189,57 @@
                 </a>
             </div>
 
-            <img *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'jungletv'" src="assets/social-media/jtv.png" class="social-media-icon" />
-            <img *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'twitter'" src="assets/social-media/twitter.svg" class="social-media-icon" />
-            <img *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'discord'" src="assets/social-media/discord.svg"  class="social-media-icon"  />
-            <img *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'telegram'" src="assets/social-media/telegram.svg"  class="social-media-icon"  />
+            <img
+                *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'jungletv'"
+                src="assets/social-media/jtv.png"
+                class="social-media-icon"
+            />
+            <img
+                *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'twitter'"
+                src="assets/social-media/twitter.svg"
+                class="social-media-icon"
+            />
+            <img
+                *ngIf="
+                    aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'discord' && !tx.hoverPlatform
+                "
+                src="assets/social-media/discord.svg"
+                class="social-media-icon"
+            />
+            <img
+                *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'telegram'"
+                src="assets/social-media/telegram.svg"
+                class="social-media-icon"
+            />
             <a
                 style="font-weight: 600; font-size: 14px"
                 class="link text primary"
                 *ngIf="hasNickname(tx.address || tx.newRepresentative)"
                 [routerLink]="'/' + navItems.account.route + '/' + (tx.address || tx.newRepresentative)"
-                >{{ aliasService.getAlias(tx.address || tx.newRepresentative) }}
-            </a>
+                ><ng-container *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'discord'"
+                    >ID:
+                </ng-container>
+                {{ aliasService.getAlias(tx.address || tx.newRepresentative) }}</a
+            >
+
+            <button
+                mat-icon-button
+                *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'discord'"
+                (click)="copyDiscordId(tx)"
+                style="
+                    cursor: pointer;
+                    height: 24px;
+                    width: 24px;
+                    margin-right: 4px;
+                    margin-left: 4px;
+                    line-height: 24px;
+                "
+            >
+                <mat-icon style="font-size: 16px">
+                    {{ tx.showCopiedPlatformIdIcon ? 'check_circle' : 'person_search' }}
+                </mat-icon>
+            </button>
+
             <blui-spacer></blui-spacer>
             <div style="margin-right: 8px">
                 <div style="display: flex; flex-direction: column">
@@ -215,8 +264,13 @@
     <ng-template [ngTemplateOutlet]="transactionPaginator"></ng-template>
 </div>
 
-<div *ngIf="isLoading" class="mat-headline mat-secondary" style="padding: 32px">Loading</div>
-<div *ngIf="!isLoading && transactions.length === 0" class="tab-empty-state">
+<div *ngIf="isLoading && transactions.length === 0" class="tab-empty-state">
+    <blui-empty-state responsive class="account-empty-state" title="Loading">
+        <mat-icon blui-empty-icon>pending</mat-icon>
+    </blui-empty-state>
+</div>
+
+<div *ngIf="!isLoading && transactions.length === 0 && !hasFiltersApplied" class="tab-empty-state">
     <blui-empty-state
         responsive
         class="account-empty-state"
@@ -224,5 +278,15 @@
         [description]="txService.getEmptyStateDescription(isPending)"
     >
         <mat-icon blui-empty-icon>paid</mat-icon>
+    </blui-empty-state>
+</div>
+<div *ngIf="!isLoading && transactions.length === 0 && hasFiltersApplied" class="tab-empty-state">
+    <blui-empty-state
+        responsive
+        class="account-empty-state"
+        title="No Filtered Data"
+        description="Please adjust your filters and try again."
+    >
+        <mat-icon blui-empty-icon>travel_explore</mat-icon>
     </blui-empty-state>
 </div>

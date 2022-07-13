@@ -1,14 +1,18 @@
-import { Injectable } from '@angular/core';
-import { FilterDialogData } from '@app/pages/account/tabs/brpd/brpd-tab.component';
-import { ApiService } from '@app/services/api/api.service';
-import { Transaction } from '@app/pages/account/tabs/transactions/transactions-tab.component';
+import {Injectable} from '@angular/core';
+import {FilterDialogData} from '@app/pages/account/tabs/brpd/brpd-tab.component';
+import {ApiService} from '@app/services/api/api.service';
+import {Transaction} from '@app/pages/account/tabs/transactions/transactions-tab.component';
+import {InsightsDto} from "@app/types/dto";
 
 @Injectable({
     providedIn: 'root',
 })
 export class AccountService {
+
+    insights: InsightsDto;
     isLoadingTransactions: boolean;
     maxPageLoaded: number;
+    loadedAddress: string;
 
     confirmedTransactions: {
         all: Map<number, Transaction[]>;
@@ -18,13 +22,25 @@ export class AccountService {
         this.forgetTransactions();
     }
 
+    /** Call this function to forget all the previous loaded transactions for an account.  Clears all pagination history. */
     forgetTransactions(): void {
+        this.insights = undefined;
         this.maxPageLoaded = 0;
         this.confirmedTransactions = {
             all: new Map<number, Transaction[]>(),
         };
     }
 
+    setLoadedAddress(newAddress: string): void {
+        this.forgetTransactions();
+        this.loadedAddress = newAddress;
+    }
+
+    shouldLoadInsights(): boolean {
+        return !this.insights;
+    }
+
+    /** Checks if we have historically loaded the page; if so display it.  It otherwise fetches the page remotely. */
     async loadTransactionsPage(
         address: string,
         page: number,
@@ -46,7 +62,9 @@ export class AccountService {
         try {
             const displayed = this.confirmedTransactions.all.get(this.maxPageLoaded);
             offset = blockCount - displayed[displayed.length - 1].height + 1;
-        } catch (err) {}
+        } catch (err) {
+         //   console.error(err);
+        }
 
         try {
             const data = (await this._apiService.fetchFilteredTransaction(

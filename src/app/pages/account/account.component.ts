@@ -18,6 +18,7 @@ import { Subscription } from 'rxjs';
 import { AliasService } from '@app/services/alias/alias.service';
 import { APP_NAV_ITEMS, hashNavItem } from '../../navigation/nav-items';
 import { environment } from '../../../environments/environment';
+import {AccountService} from "@app/pages/account/account.service";
 
 @Component({
     selector: 'app-account',
@@ -30,14 +31,10 @@ export class AccountComponent implements OnDestroy {
     confirmedBalance: string;
     accountRepresentative: string;
 
-    insights: InsightsDto;
     accountOverview: AccountOverviewDto;
 
     isLoading: boolean;
     hasError: boolean;
-    insightsDisabled: boolean;
-    isLoadingInsights: boolean;
-    hasInsightsError: boolean;
     isLoadingNFTs: boolean;
     hasNFTsError: boolean;
     isBrpd: boolean;
@@ -48,8 +45,6 @@ export class AccountComponent implements OnDestroy {
     delegatorCount: number;
 
     navItems = APP_NAV_ITEMS;
-
-    MAX_INSIGHTS = 100_000;
 
     nfts: AccountNFTDto[];
     delegators: DelegatorDto[];
@@ -73,7 +68,8 @@ export class AccountComponent implements OnDestroy {
         private readonly _priceService: PriceService,
         private readonly _ref: ChangeDetectorRef,
         private readonly _monkeyCache: MonkeyCacheService,
-        private readonly _aliasService: AliasService
+        private readonly _aliasService: AliasService,
+        private readonly _accountService: AccountService,
     ) {
         this.isBrpd = environment.brpd;
         this.routeListener = this._router.events.subscribe((route) => {
@@ -92,17 +88,13 @@ export class AccountComponent implements OnDestroy {
 
     private _init(): void {
         this.address = undefined;
-        this.insights = undefined;
         this.nfts = undefined;
         this.accountOverview = undefined;
         this.delegators = [];
         this.receivableTransactions = [];
         this.hasError = false;
         this.isLoading = true;
-        this.insightsDisabled = true;
-        this.hasInsightsError = false;
         this.hasNFTsError = false;
-        this.isLoadingInsights = false;
         this.shownTabNumber = 1;
         this.confirmedTxPageIndex = 0;
         this.delegatorCount = 0;
@@ -130,6 +122,7 @@ export class AccountComponent implements OnDestroy {
 
         this._init();
         this.address = address;
+        this._accountService.setLoadedAddress(address);
         this._ref.detectChanges();
 
         Promise.all([
@@ -153,35 +146,6 @@ export class AccountComponent implements OnDestroy {
 
         // Delegators
         void this.fetchDelegators();
-    }
-
-    /** Called when a user clicks the insights tab for the first time. */
-    fetchInsights(): void {
-        if (this.insights) {
-            return;
-        }
-        if (this.isLoadingInsights) {
-            return;
-        }
-        if (this.insightsDisabled) {
-            return;
-        }
-
-        this.isLoadingInsights = true;
-        this.apiService
-            .fetchInsights(this.address)
-            .then((data) => {
-                this.insights = data;
-                this._ref.detectChanges();
-            })
-            .catch((err) => {
-                console.error(err);
-                this.hasInsightsError = true;
-                this._ref.detectChanges();
-            })
-            .finally(() => {
-                this.isLoadingInsights = false;
-            });
     }
 
     fetchNfts(): void {
@@ -233,7 +197,6 @@ export class AccountComponent implements OnDestroy {
         this.confirmedTransactions.all.set(0, data[1]);
         this.confirmedTransactions.display = data[1];
         this.receivableTransactions = data[2];
-        this.insightsDisabled = this.accountOverview.blockCount > this.MAX_INSIGHTS || !this.accountOverview.opened;
 
         if (this.accountOverview.weight) {
             this.weightSum = this.accountOverview.weight;

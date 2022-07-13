@@ -12,13 +12,13 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
     selector: 'app-large-rep-table',
     template: `
         <table
-                mat-table
-                [hidden]="vp.sm"
-                responsive
-                [dataSource]="largeRepsDataSource"
-                #sortAll="matSort"
-                matSort
-                class="mat-elevation-z2 all-reps-table divider-border"
+            mat-table
+            [hidden]="vp.sm"
+            responsive
+            [dataSource]="largeRepsDataSource"
+            #sortAll="matSort"
+            matSort
+            class="mat-elevation-z2 all-reps-table divider-border"
         >
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef></th>
@@ -36,19 +36,19 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
                         </div>
                         <div style="display: flex; align-items: center; z-index: 1">
                             <blui-list-item-tag
-                                    *ngIf="element.principal"
-                                    class="principal-tag"
-                                    label="Principal"
-                                    style="margin-right: 12px"
+                                *ngIf="element.principal"
+                                class="principal-tag"
+                                label="Principal"
+                                style="margin-right: 12px"
                             ></blui-list-item-tag>
                             <a
-                                    class="link text"
-                                    style="font-weight: 600"
-                                    [routerLink]="'/' + navItems.account.route + '/' + element.address"
+                                class="link text"
+                                style="font-weight: 600"
+                                [routerLink]="'/' + navItems.account.route + '/' + element.address"
                             >
                                 <div
-                                        *ngIf="aliasService.getAlias(element.address)"
-                                        style="white-space: nowrap; text-overflow: ellipsis; max-width: 210px; overflow: hidden"
+                                    *ngIf="aliasService.getAlias(element.address)"
+                                    style="white-space: nowrap; text-overflow: ellipsis; max-width: 210px; overflow: hidden"
                                 >
                                     {{ aliasService.getAlias(element.address) }}
                                 </div>
@@ -64,10 +64,10 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
             <ng-container matColumnDef="online">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Online</th>
                 <td
-                        mat-cell
-                        class="representatives-online-cell"
-                        *matCellDef="let element"
-                        [style.color.red]="!element.online"
+                    mat-cell
+                    class="representatives-online-cell"
+                    *matCellDef="let element"
+                    [style.color.red]="!element.online"
                 >
                     <mat-icon style="font-size: 1.5rem" [class.primary]="element.online" [class.warn]="!element.online">
                         {{ element.online ? 'check' : 'priority_high' }}</mat-icon
@@ -110,7 +110,7 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
                     <div style="text-align: left">
                         Uptime
                         <ng-container *ngIf="!vp.md">
-                            <br/>
+                            <br />
                             <div style="font-size: 10px; margin-top: -4px">month · week · day</div>
                         </ng-container>
                     </div>
@@ -122,9 +122,9 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
 
             <tr mat-header-row *matHeaderRowDef="vp.md ? largeRepsDisplayColumnsMd : largeRepsDisplayColumnsLg"></tr>
             <tr
-                    mat-row
-                    style="height: 48px"
-                    *matRowDef="let row; columns: vp.md ? largeRepsDisplayColumnsMd : largeRepsDisplayColumnsLg"
+                mat-row
+                style="height: 48px"
+                *matRowDef="let row; columns: vp.md ? largeRepsDisplayColumnsMd : largeRepsDisplayColumnsLg"
             ></tr>
         </table>
     `,

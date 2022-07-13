@@ -240,7 +240,7 @@
 
             <button
                 mat-flat-button
-                (click)="shownTabNumber = 4; fetchInsights()"
+                (click)="shownTabNumber = 4"
                 [class.active]="shownTabNumber === 4"
                 style="border-top-right-radius: 4px"
             >
@@ -304,11 +304,7 @@
 
             <account-insights-tab
                 *ngIf="shownTabNumber === 4"
-                [isLoadingInsights]="isLoadingInsights"
                 [blockCount]="accountOverview.blockCount"
-                [hasError]="hasInsightsError"
-                [insights]="insights"
-                [maxInsightsLimit]="MAX_INSIGHTS"
                 [address]="address"
             >
             </account-insights-tab>

@@ -8,6 +8,7 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
 import { TransactionsService } from '@app/pages/account/tabs/transactions/transactions.service';
 import { Transaction } from '../transactions/transactions-tab.component';
 import { AccountService } from '@app/pages/account/account.service';
+import { map } from 'rxjs/operators';
 
 export type FilterDialogData = {
     includeReceive: boolean;
@@ -27,7 +28,7 @@ export type FilterDialogData = {
             .social-media-icon {
                 width: 14px;
                 margin-right: 8px;
-                opacity: .75;
+                opacity: 0.75;
             }
             textarea:focus,
             input:focus {
@@ -46,7 +47,7 @@ export class BrpdTabComponent {
     @Input() paginator: TemplateRef<PaginatorComponent>;
 
     DEFAULT_PAGE_SIZE = 50;
-    pageIndex: number = 0;
+    pageIndex = 0;
     pageSize = this.DEFAULT_PAGE_SIZE;
 
     hasFiltersApplied: boolean;
@@ -92,7 +93,6 @@ export class BrpdTabComponent {
             return;
         }
         this.isLoading = true;
-
         this.accountService
             .loadTransactionsPage(this.address, this.pageIndex, this.pageSize, this.blockCount, this.filterData)
             .then((data) => {
@@ -101,8 +101,8 @@ export class BrpdTabComponent {
                 const pageAddressSet = new Set<string>();
                 data.map((tx) => {
                     pageAddressSet.add(tx.address);
-                })
-                this.aliasService.populateAliasesFromSet(pageAddressSet);
+                });
+                this.aliasService.fetchSocialMediaAliases(pageAddressSet);
             })
             .catch((err) => {
                 console.error(err);
@@ -112,11 +112,20 @@ export class BrpdTabComponent {
             });
     }
 
-    copy(item: any): void {
+    copyAddress(item: Transaction): void {
         void navigator.clipboard.writeText(item.address || item.newRepresentative);
-        item.showCopiedIcon = true;
+        item.showCopiedAddressIcon = true;
         setTimeout(() => {
-            item.showCopiedIcon = false;
+            item.showCopiedAddressIcon = false;
+        }, 700);
+    }
+
+    copyDiscordId(item: Transaction): void {
+        const discordId = this.aliasService.getSocialMediaUserId(item.address || item.newRepresentative);
+        void navigator.clipboard.writeText(String(discordId));
+        item.showCopiedPlatformIdIcon = true;
+        setTimeout(() => {
+            item.showCopiedPlatformIdIcon = false;
         }, 700);
     }
 

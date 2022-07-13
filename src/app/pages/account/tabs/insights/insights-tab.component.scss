@@ -7,6 +7,11 @@
         padding-bottom: 0;
         padding-top: 0;
         margin-bottom: 16px;
+        .blui-empty-state-empty-icon-wrapper * {
+            font-size: 96px!important;
+            height: 100%;
+            width: 100%;
+        }
     }
     .app-section-title,
     .app-section-subtitle {
