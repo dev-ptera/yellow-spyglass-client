@@ -30,7 +30,7 @@ export class InsightsTabComponent implements OnInit {
     isLoadingInsights: boolean;
     isInsightsDisabled: boolean;
     isLoadingInsightsWebsocket: boolean;
-    
+
     insights: InsightsDto;
 
     constructor(

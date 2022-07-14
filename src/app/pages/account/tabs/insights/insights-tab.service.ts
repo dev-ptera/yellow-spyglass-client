@@ -5,7 +5,6 @@ import { InsightsDto } from '@app/types/dto';
     providedIn: 'root',
 })
 export class InsightsTabService {
-
     private insights: InsightsDto;
 
     forgetAccount(): void {
