@@ -1,15 +1,15 @@
-import {Injectable} from '@angular/core';
-import {FilterDialogData} from '@app/pages/account/tabs/brpd/brpd-tab.component';
-import {ApiService} from '@app/services/api/api.service';
-import {Transaction} from '@app/pages/account/tabs/transactions/transactions-tab.component';
-import {InsightsDto} from "@app/types/dto";
+import { Injectable } from '@angular/core';
+import { FilterDialogData } from '@app/pages/account/tabs/brpd/brpd-tab.component';
+import { ApiService } from '@app/services/api/api.service';
+import { Transaction } from '@app/pages/account/tabs/transactions/transactions-tab.component';
+import { InsightsDto } from '@app/types/dto';
+import { DelegatorsTabService } from '@app/pages/account/tabs/delegators/delegators-tab.service';
+import { InsightsTabService } from '@app/pages/account/tabs/insights/insights-tab.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AccountService {
-
-    insights: InsightsDto;
     isLoadingTransactions: boolean;
     maxPageLoaded: number;
     loadedAddress: string;
@@ -18,13 +18,18 @@ export class AccountService {
         all: Map<number, Transaction[]>;
     };
 
-    constructor(private readonly _apiService: ApiService) {
+    constructor(
+        private readonly _apiService: ApiService,
+        private readonly _delegatorsTabService: DelegatorsTabService,
+        private readonly _insightsTabService: InsightsTabService
+    ) {
         this.forgetTransactions();
     }
 
     /** Call this function to forget all the previous loaded transactions for an account.  Clears all pagination history. */
     forgetTransactions(): void {
-        this.insights = undefined;
+        this._delegatorsTabService.forgetAccount();
+        this._insightsTabService.forgetAccount();
         this.maxPageLoaded = 0;
         this.confirmedTransactions = {
             all: new Map<number, Transaction[]>(),
@@ -34,10 +39,6 @@ export class AccountService {
     setLoadedAddress(newAddress: string): void {
         this.forgetTransactions();
         this.loadedAddress = newAddress;
-    }
-
-    shouldLoadInsights(): boolean {
-        return !this.insights;
     }
 
     /** Checks if we have historically loaded the page; if so display it.  It otherwise fetches the page remotely. */
@@ -63,7 +64,7 @@ export class AccountService {
             const displayed = this.confirmedTransactions.all.get(this.maxPageLoaded);
             offset = blockCount - displayed[displayed.length - 1].height + 1;
         } catch (err) {
-         //   console.error(err);
+            //   console.error(err);
         }
 
         try {

@@ -1,13 +1,13 @@
-import {ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
-import {UtilService} from '@app/services/util/util.service';
-import {InsightsDto} from '@app/types/dto/InsightsDto';
-import {ViewportService} from '@app/services/viewport/viewport.service';
+import { ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { InsightsDto } from '@app/types/dto/InsightsDto';
+import { ApiService } from '@app/services/api/api.service';
+import { UtilService } from '@app/services/util/util.service';
+import { ViewportService } from '@app/services/viewport/viewport.service';
+import { ThemeService } from '@app/services/theme/theme.service';
+import { SearchService } from '@app/services/search/search.service';
+import { InsightsTabService } from '@app/pages/account/tabs/insights/insights-tab.service';
 import * as Highcharts from 'highcharts';
-import {APP_NAV_ITEMS} from '../../../../navigation/nav-items';
-import {ThemeService} from '@app/services/theme/theme.service';
-import {ApiService} from '@app/services/api/api.service';
-import {SearchService} from '@app/services/search/search.service';
-import {AccountService} from "@app/pages/account/account.service";
+import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
 
 @Component({
     selector: 'account-insights-tab',
@@ -18,12 +18,11 @@ import {AccountService} from "@app/pages/account/account.service";
 export class InsightsTabComponent implements OnInit {
     @Input() address: string;
     @Input() blockCount: number;
+    @Input() maxInsightsLimit: number;
 
     navItems = APP_NAV_ITEMS;
     Highcharts: typeof Highcharts = Highcharts;
 
-    insights: InsightsDto;
-    maxInsightsLimit = 100_000;
     blocksLoaded = 0;
 
     hasError: boolean;
@@ -31,15 +30,17 @@ export class InsightsTabComponent implements OnInit {
     isLoadingInsights: boolean;
     isInsightsDisabled: boolean;
     isLoadingInsightsWebsocket: boolean;
+    
+    insights: InsightsDto;
 
     constructor(
         public vp: ViewportService,
         private readonly _util: UtilService,
-        private readonly _accountService: AccountService,
-        private readonly _themeService: ThemeService,
-        private readonly _apiService: ApiService,
         private readonly _ref: ChangeDetectorRef,
-        private readonly _searchService: SearchService
+        private readonly _apiService: ApiService,
+        private readonly _themeService: ThemeService,
+        private readonly _searchService: SearchService,
+        private readonly _insightsTabService: InsightsTabService
     ) {
         this.vp.vpChange.subscribe(() => {
             setTimeout(() => {
@@ -59,12 +60,11 @@ export class InsightsTabComponent implements OnInit {
         this.isInsightsDisabled = this.blockCount > this.maxInsightsLimit || !this.blockCount;
 
         // Already loaded insights for this account.
-        if (this._accountService.shouldLoadInsights()) {
+        if (this._insightsTabService.shouldLoadInsights()) {
             this.fetchInsights();
         } else {
-            this._formatChartData(this._accountService.insights);
+            this._formatChartData(this._insightsTabService.getInsights());
         }
-
     }
 
     /** Called when a user clicks the insights tab for the first time. */
@@ -81,19 +81,22 @@ export class InsightsTabComponent implements OnInit {
         /** If there are a large amount of transactions to sift through, use the websockets endpoint. */
         if (this.blockCount > 10_000) {
             this.isLoadingInsightsWebsocket = true;
-            this._apiService.fetchAccountInsightsWS(this.address).then((ws) => {
-                ws.subscribe((data) => {
-                    if (typeof data === 'number') {
-                        this.blocksLoaded = data;
-                    } else if (data) {
-                        this._formatChartData(data);
-                    }
+            this._apiService
+                .fetchAccountInsightsWS(this.address)
+                .then((ws) => {
+                    ws.subscribe((data) => {
+                        if (typeof data === 'number') {
+                            this.blocksLoaded = data;
+                        } else if (data) {
+                            this._formatChartData(data);
+                        }
+                    });
                 })
-            }).catch((err) => {
-                console.error(err);
-            })
+                .catch((err) => {
+                    console.error(err);
+                });
 
-        /** Otherwise use the POST request. */
+            /** Otherwise use the POST request. */
         } else {
             this._apiService
                 .fetchInsights(this.address)
@@ -102,14 +105,13 @@ export class InsightsTabComponent implements OnInit {
                 })
                 .catch((err) => {
                     console.error(err);
-                })
+                });
         }
     }
 
-
     private _formatChartData(data: InsightsDto): void {
         this.insights = data;
-        this._accountService.insights = data;
+        this._insightsTabService.setInsights(data);
         this.isLoadingInsights = false;
         this.isLoadingInsightsWebsocket = false;
         const chartData = [];

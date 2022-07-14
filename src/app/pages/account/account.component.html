@@ -294,18 +294,13 @@
             <account-delegators-tab
                 *ngIf="shownTabNumber === 3"
                 [address]="accountOverview.address"
-                [delegators]="delegators"
-                [weightSum]="weightSum"
-                [loadedDelegatorsCount]="delegators.length"
-                [delegatorsCount]="delegatorCount"
-                (loadMoreDelegators)="fetchDelegators()"
-            >
-            </account-delegators-tab>
+            ></account-delegators-tab>
 
             <account-insights-tab
                 *ngIf="shownTabNumber === 4"
-                [blockCount]="accountOverview.blockCount"
                 [address]="address"
+                [maxInsightsLimit]="MAX_INSIGHTS"
+                [blockCount]="accountOverview.blockCount"
             >
             </account-insights-tab>
 

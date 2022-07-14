@@ -8,7 +8,6 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
 import { TransactionsService } from '@app/pages/account/tabs/transactions/transactions.service';
 import { Transaction } from '../transactions/transactions-tab.component';
 import { AccountService } from '@app/pages/account/account.service';
-import { map } from 'rxjs/operators';
 
 export type FilterDialogData = {
     includeReceive: boolean;
@@ -25,9 +24,21 @@ export type FilterDialogData = {
     templateUrl: 'brpd-tab.component.html',
     styles: [
         `
+            .social-media-button {
+                cursor: pointer;
+                height: 24px;
+                width: 24px;
+                line-height: unset;
+                margin-right: 4px;
+            }
+            .social-media-button .mat-button-wrapper {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
             .social-media-icon {
                 width: 14px;
-                margin-right: 8px;
+                line-height: 24px;
                 opacity: 0.75;
             }
             textarea:focus,
@@ -120,7 +131,7 @@ export class BrpdTabComponent {
         }, 700);
     }
 
-    copyDiscordId(item: Transaction): void {
+    copyPlatformUserId(item: Transaction): void {
         const discordId = this.aliasService.getSocialMediaUserId(item.address || item.newRepresentative);
         void navigator.clipboard.writeText(String(discordId));
         item.showCopiedPlatformIdIcon = true;
@@ -160,7 +171,6 @@ export class BrpdTabComponent {
     /** Move the pagination logic into this page. */
     changePage(page: number): void {
         this.pageIndex = page;
-        console.log(page);
         this.loadCurrentPage();
     }
 

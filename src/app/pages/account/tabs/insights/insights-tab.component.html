@@ -28,9 +28,10 @@
         description="One second, counting them 'nanners.  Larger accounts will take longer."
     >
         <div blui-empty-icon>
-            <mat-spinner *ngIf="isLoadingInsightsWebsocket"
-                         [value]="(blocksLoaded / blockCount) * 100"
-                         mode="determinate"
+            <mat-spinner
+                *ngIf="isLoadingInsightsWebsocket"
+                [value]="(blocksLoaded / blockCount) * 100"
+                mode="determinate"
             ></mat-spinner>
             <mat-icon *ngIf="!isLoadingInsightsWebsocket" style="height: 100%; width: 100%; font-size: 96px">
                 pending
@@ -43,20 +44,11 @@
     <app-error></app-error>
 </mat-card>
 
-<mat-card
-    class="tab-empty-state mat-elevation-z0 divider-border"
-    *ngIf="!insights && !isLoadingInsights && !hasError"
->
-    <blui-empty-state
-        responsive
-        class="account-empty-state"
-        title="No Insights"
-        [description]="getErrorDescription()"
-    >
+<mat-card class="tab-empty-state mat-elevation-z0 divider-border" *ngIf="!insights && !isLoadingInsights && !hasError">
+    <blui-empty-state responsive class="account-empty-state" title="No Insights" [description]="getErrorDescription()">
         <mat-icon blui-empty-icon>disc_full</mat-icon>
     </blui-empty-state>
 </mat-card>
-
 
 <ng-template #sent>
     <div class="warn section-title">Sent Statistics</div>

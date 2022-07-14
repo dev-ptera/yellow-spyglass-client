@@ -11,14 +11,14 @@ import { UtilService } from '@app/services/util/util.service';
 import { ApiService } from '@app/services/api/api.service';
 import { MonkeyCacheService } from '@app/services/monkey-cache/monkey-cache.service';
 import { PriceService } from '@app/services/price/price.service';
-import { InsightsDto } from '@app/types/dto/InsightsDto';
 import { OnlineRepsService } from '@app/services/online-reps/online-reps.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AliasService } from '@app/services/alias/alias.service';
 import { APP_NAV_ITEMS, hashNavItem } from '../../navigation/nav-items';
 import { environment } from '../../../environments/environment';
-import {AccountService} from "@app/pages/account/account.service";
+import { AccountService } from '@app/pages/account/account.service';
+import { DelegatorsTabService } from '@app/pages/account/tabs/delegators/delegators-tab.service';
 
 @Component({
     selector: 'app-account',
@@ -27,6 +27,8 @@ import {AccountService} from "@app/pages/account/account.service";
     encapsulation: ViewEncapsulation.None,
 })
 export class AccountComponent implements OnDestroy {
+    MAX_INSIGHTS = 100_000;
+
     address: string;
     confirmedBalance: string;
     accountRepresentative: string;
@@ -70,6 +72,7 @@ export class AccountComponent implements OnDestroy {
         private readonly _monkeyCache: MonkeyCacheService,
         private readonly _aliasService: AliasService,
         private readonly _accountService: AccountService,
+        private readonly _delegatorsTabService: DelegatorsTabService
     ) {
         this.isBrpd = environment.brpd;
         this.routeListener = this._router.events.subscribe((route) => {
@@ -145,7 +148,12 @@ export class AccountComponent implements OnDestroy {
             });
 
         // Delegators
-        void this.fetchDelegators();
+        void this._delegatorsTabService.fetchDelegators(address, true).then(() => {
+            const weightedDelegatorsCount = this._delegatorsTabService.getWeightedDelegatorsCount();
+            if (weightedDelegatorsCount) {
+                this.delegatorCount = weightedDelegatorsCount;
+            }
+        });
     }
 
     fetchNfts(): void {
@@ -169,21 +177,6 @@ export class AccountComponent implements OnDestroy {
             })
             .finally(() => {
                 this.isLoadingNFTs = false;
-            });
-    }
-
-    fetchDelegators(): void {
-        this.apiService
-            .fetchAccountDelegators(this.address, this.delegators.length)
-            .then((data) => {
-                this.delegators.push(...data.delegators);
-                this.delegatorCount = data.fundedCount;
-                if (!this.weightSum) {
-                    this.weightSum = data.weightSum;
-                }
-            })
-            .catch((err) => {
-                console.error(err);
             });
     }
 
