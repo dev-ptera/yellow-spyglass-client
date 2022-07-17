@@ -33,7 +33,10 @@ export class TransactionsService {
         const currentDate = new Date().getTime() / 1000;
         const oneDay = 24 * 60 * 60; // hours*minutes*seconds*milliseconds
         transactions.map((tx) => {
-            const diffDays = Math.round(((currentDate - tx.timestamp) / oneDay) * 1000) / 1000;
+
+            const diffDays = tx.timestamp ?
+                Math.round(((currentDate - tx.timestamp) / oneDay) * 1000) / 1000 :
+                undefined;
             dateMap.set(tx.hash, {
                 date: this._formatDateString(tx.timestamp),
                 diffDays,
@@ -52,6 +55,10 @@ export class TransactionsService {
 
     /** Given a number of days, returns a string representation of time. */
     getRelativeTime(days: number): string {
+        if (!days) {
+            return '';
+        }
+
         if (days > 365) {
             const years = Math.round(days / 365);
             return `${years} year${years > 1 ? 's' : ''} ago`;
@@ -88,7 +95,7 @@ export class TransactionsService {
 
     private _formatDateString(timestamp: number): string {
         if (!timestamp) {
-            return '';
+            return 'Unknown';
         }
 
         const date = new Date(timestamp * 1000);
