@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 })
 /** Fetches account aliases on initialization. */
 export class AliasService {
-    private readonly aliases: Map<string, { alias: string; socialMedia: string; platformUserId: number }>;
+    private readonly aliases: Map<string, { alias: string; socialMedia: string; platformUserId: string }>;
     private readonly accountsWithNoAlias: Set<string>;
 
     constructor(private readonly _api: ApiService) {
@@ -67,7 +67,7 @@ export class AliasService {
         }
     }
 
-    getSocialMediaUserId(address: string): number {
+    getSocialMediaUserId(address: string): string {
         if (this.has(address)) {
             return this.aliases.get(address).platformUserId;
         }
