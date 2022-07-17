@@ -6,7 +6,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 @Component({
     selector: 'app-qr-dialog',
     template: `
-        <h1 mat-dialog-title>Address</h1>
+        <h1 mat-dialog-title style="text-align: center">Address</h1>
         <div mat-dialog-content>
             <canvas id="qr-code-dialog" style="display: block"></canvas>
         </div>
