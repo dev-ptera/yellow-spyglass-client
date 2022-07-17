@@ -50,7 +50,6 @@ export class HomeComponent implements OnDestroy {
         this._api
             .fetchExplorerSummaryData()
             .then((data) => {
-                data.ledgerSizeMB = 187435.7;
                 Object.assign(this.summaryData, data);
                 if (data.ledgerSizeMB) {
                     this.summaryData.ledgerSizeMB = Number((data.ledgerSizeMB / 1024).toFixed(1));
