@@ -8,6 +8,8 @@ import { SearchService } from '@app/services/search/search.service';
 import { InsightsTabService } from '@app/pages/account/tabs/insights/insights-tab.service';
 import * as Highcharts from 'highcharts';
 import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
+import HighchartsBoost from 'highcharts/modules/boost';
+
 
 @Component({
     selector: 'account-insights-tab',
@@ -68,6 +70,7 @@ export class InsightsTabComponent implements OnInit {
     }
 
     /** Called when a user clicks the insights tab for the first time. */
+    // TODO: Move me to the service.
     fetchInsights(): void {
         if (this.isLoadingInsights) {
             return;
@@ -110,6 +113,9 @@ export class InsightsTabComponent implements OnInit {
     }
 
     private _formatChartData(data: InsightsDto): void {
+        if (data.heightBalances.length > 100_000) {
+            HighchartsBoost(Highcharts);
+        }
         this.insights = data;
         this._insightsTabService.setInsights(data);
         this.isLoadingInsights = false;
@@ -142,13 +148,6 @@ export class InsightsTabComponent implements OnInit {
             title: {
                 text: undefined,
             },
-            /*   title: {
-                text: 'Account Balance Over Time'
-            },
-            subtitle: {
-                text: document.ontouchstart === undefined ?
-                    'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
-            }, */
             xAxis: {
                 type: 'number',
             },
@@ -194,6 +193,9 @@ export class InsightsTabComponent implements OnInit {
                 title: {
                     text: undefined,
                 },
+            },
+            boost: {
+                seriesThreshold: 50_000,
             },
             legend: {
                 enabled: true,
@@ -245,7 +247,6 @@ export class InsightsTabComponent implements OnInit {
                     threshold: null,
                 },
             },
-
             series: [
                 {
                     turboThreshold: this.maxInsightsLimit,
