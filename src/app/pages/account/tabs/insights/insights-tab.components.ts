@@ -52,13 +52,6 @@ export class InsightsTabComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        window['plausible']('Insights Generated', {
-            props: {
-                address: this.address,
-                size: this.blockCount,
-            },
-        });
-
         this.isInsightsDisabled = this.blockCount > this.maxInsightsLimit || !this.blockCount;
 
         // Already loaded insights for this account.
