@@ -1,9 +1,9 @@
 <ng-template #transactionPaginator>
     <ng-container
         *ngIf="
-            transactions.length > 0 &&
+            displayedTransactions.length > 0 &&
             blockCount > appliedPageSize &&
-            (pageIndex !== 0 || transactions.length >= appliedPageSize)
+            (pageIndex !== 0 || displayedTransactions.length >= appliedPageSize)
         "
     >
         <app-paginator
@@ -121,17 +121,17 @@
     </mat-accordion>
 </ng-template>
 
-<ng-container *ngIf="transactions.length !== 0">
+<ng-container *ngIf="displayedTransactions.length !== 0">
     <ng-template [ngTemplateOutlet]="transactionPaginator"></ng-template>
 </ng-container>
 
-<ng-container *ngIf="transactions.length !== 0 || hasFiltersApplied">
+<ng-container *ngIf="displayedTransactions.length !== 0 && !isPending">
     <ng-template [ngTemplateOutlet]="filters"></ng-template>
     <mat-divider></mat-divider>
 </ng-container>
 
 <div class="brpd-tab-transaction-list">
-    <div *ngFor="let tx of transactions; trackBy: trackByFn; let last = last">
+    <div *ngFor="let tx of displayedTransactions; trackBy: trackByFn; let last = last">
         <div style="display: flex; align-items: center">
             <img
                 [src]="apiService.createMonKeyUrl(tx.address || tx.newRepresentative)"
@@ -284,13 +284,13 @@
     <ng-template [ngTemplateOutlet]="transactionPaginator"></ng-template>
 </div>
 
-<div *ngIf="isLoading && transactions.length === 0" class="tab-empty-state">
+<div *ngIf="isLoading && displayedTransactions.length === 0" class="tab-empty-state">
     <blui-empty-state responsive class="account-empty-state" title="Loading">
         <mat-icon blui-empty-icon>pending</mat-icon>
     </blui-empty-state>
 </div>
 
-<div *ngIf="!isLoading && transactions.length === 0 && !hasFiltersApplied" class="tab-empty-state">
+<div *ngIf="!isLoading && displayedTransactions.length === 0 && !hasFiltersApplied" class="tab-empty-state">
     <blui-empty-state
         responsive
         class="account-empty-state"
@@ -300,7 +300,7 @@
         <mat-icon blui-empty-icon>paid</mat-icon>
     </blui-empty-state>
 </div>
-<div *ngIf="!isLoading && transactions.length === 0 && hasFiltersApplied" class="tab-empty-state">
+<div *ngIf="!isLoading && displayedTransactions.length === 0 && hasFiltersApplied" class="tab-empty-state">
     <blui-empty-state
         responsive
         class="account-empty-state"

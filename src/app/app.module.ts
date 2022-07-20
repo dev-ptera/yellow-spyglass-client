@@ -13,14 +13,13 @@ import { VanityModule } from '@app/pages/vanity/vanity.module';
 import { HomeModule } from '@app/pages/home/home.module';
 import { AccountModule } from '@app/pages/account/account.module';
 import { HashModule } from '@app/pages/hash/hash.module';
-import {PlausibleService} from "@app/services/plausible/plausible.service";
+import { PlausibleService } from '@app/services/plausible/plausible.service';
 
 @Component({
     selector: 'app-root',
     template: `<app-navigation></app-navigation>`,
 })
 export class AppComponent {
-
     constructor(plausibleService: PlausibleService) {
         plausibleService.loadAnalytics();
     }

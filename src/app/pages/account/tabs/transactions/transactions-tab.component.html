@@ -4,8 +4,8 @@
         [maxElements]="blockCount"
         [pageSize]="txPerPage"
         [pageIndex]="confirmedTxPageIndex"
-        [disableMove]="txService.isLoadingTransactions"
-        (pageIndexChange)="changePage($event)"
+        [disableMove]="txService.isLoadingConfirmedTransactions"
+        (pageIndexChange)="loadConfirmedTransactionsPage($event)"
     >
     </app-paginator>
 </ng-template>

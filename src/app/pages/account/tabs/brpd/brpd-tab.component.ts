@@ -38,7 +38,7 @@ export class BrpdTabComponent {
     navItems = APP_NAV_ITEMS;
 
     filterData: FilterDialogData;
-    transactions: Transaction[] = [];
+    displayedTransactions: Transaction[] = [];
 
     dateMap: Map<string, { date: string; diffDays: number; relativeTime: string }> = new Map();
 
@@ -51,7 +51,13 @@ export class BrpdTabComponent {
     ) {}
 
     ngOnInit(): void {
-        this._loadNewAccount();
+        if (this.isPending) {
+            this.displayedTransactions = this.txService.receivableTransactions;
+            this.txService.createDateMap(this.displayedTransactions, this.dateMap);
+        } else {
+            this._loadNewAccount();
+            this.loadConfirmedTransactionsPage();
+        }
     }
 
     applyFilters(): void {
@@ -65,16 +71,16 @@ export class BrpdTabComponent {
         this.hasFiltersApplied ||= Boolean(!this.filterData.includeSend);
         this.hasFiltersApplied ||= Boolean(!this.filterData.includeChange);
         this.hasFiltersApplied ||= Boolean(!this.filterData.includeReceive);
-        this.loadCurrentPage();
+        this.loadConfirmedTransactionsPage();
     }
 
-    loadCurrentPage(): void {
+    loadConfirmedTransactionsPage(): void {
         if (this.isLoading) {
             return;
         }
         this.isLoading = true;
         this.txService
-            .loadTransactionsPage(
+            .loadConfirmedTransactionsPage(
                 this.address,
                 this.pageIndex,
                 this.pageSize,
@@ -82,8 +88,8 @@ export class BrpdTabComponent {
                 this.hasFiltersApplied ? this.filterData : undefined
             )
             .then((data) => {
-                this.transactions = data;
-                this.txService.createDateMap(this.transactions, this.dateMap);
+                this.displayedTransactions = data;
+                this.txService.createDateMap(this.displayedTransactions, this.dateMap);
                 const pageAddressSet = new Set<string>();
                 data.map((tx) => {
                     pageAddressSet.add(tx.address);
@@ -146,14 +152,14 @@ export class BrpdTabComponent {
     /** Move the pagination logic into this page. */
     changePage(page: number): void {
         this.pageIndex = page;
-        this.loadCurrentPage();
+        this.loadConfirmedTransactionsPage();
     }
 
     private _loadNewAccount(): void {
         this.pageIndex = 0;
-        this.transactions = [];
+        this.displayedTransactions = [];
         this.txService.forgetAccount();
         this.resetFilters();
-        this.loadCurrentPage();
+        this.loadConfirmedTransactionsPage();
     }
 }

@@ -34,14 +34,25 @@ export class TransactionsTabComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.changePage(0);
+        if (this.isPending) {
+            this.displayedTransactions = this.txService.receivableTransactions;
+            this.txService.createDateMap(this.displayedTransactions, this.dateMap);
+        } else {
+            this.loadConfirmedTransactionsPage(0);
+        }
     }
 
     /** When a user has more than 50 confirmed transactions, can be called to move to the next page of transactions. */
-    changePage(pageNumber: number): void {
+    loadConfirmedTransactionsPage(pageNumber: number): void {
         this.confirmedTxPageIndex = pageNumber;
         this.txService
-            .loadTransactionsPage(this.address, this.confirmedTxPageIndex, this.txPerPage, this.blockCount, undefined)
+            .loadConfirmedTransactionsPage(
+                this.address,
+                this.confirmedTxPageIndex,
+                this.txPerPage,
+                this.blockCount,
+                undefined
+            )
             .then((data: ConfirmedTransactionDto[]) => {
                 this.displayedTransactions = data;
                 this.txService.createDateMap(this.displayedTransactions, this.dateMap);

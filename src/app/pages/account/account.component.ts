@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { AccountNFTDto, AccountOverviewDto } from '@app/types/dto';
+import { AccountOverviewDto } from '@app/types/dto';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { UtilService } from '@app/services/util/util.service';
 import { ApiService } from '@app/services/api/api.service';
@@ -28,25 +28,17 @@ export class AccountComponent implements OnDestroy {
     confirmedBalance: string;
     accountRepresentative: string;
 
-    accountOverview: AccountOverviewDto;
-
     isLoading: boolean;
     hasError: boolean;
-    isLoadingNFTs: boolean;
-    hasNFTsError: boolean;
-    isBrpd: boolean;
+    isBRPD = environment.brpd;
 
-    weightSum: number;
-    shownTabNumber: number;
-    confirmedTxPageIndex: number;
     delegatorCount: number;
+    shownTabNumber: number;
+    receivableTransactionsCount: number;
 
     navItems = APP_NAV_ITEMS;
-
-    nfts: AccountNFTDto[];
-
     routeListener: Subscription;
-    receivableTransactions = [];
+    accountOverview: AccountOverviewDto;
 
     constructor(
         public vp: ViewportService,
@@ -62,7 +54,6 @@ export class AccountComponent implements OnDestroy {
         private readonly _insightsTabService: InsightsTabService,
         private readonly _delegatorsTabService: DelegatorsTabService
     ) {
-        this.isBrpd = environment.brpd;
         this.routeListener = this._router.events.subscribe((route) => {
             if (route instanceof NavigationEnd) {
                 const splitUrl = this._router.url.replace('/history', '').split('/');
@@ -80,15 +71,12 @@ export class AccountComponent implements OnDestroy {
     /** Call this method whenever a new address is searched. */
     private _resetPage(): void {
         this.address = undefined;
-        this.nfts = undefined;
         this.accountOverview = undefined;
         this.hasError = false;
         this.isLoading = true;
-        this.hasNFTsError = false;
         this.shownTabNumber = 1;
-        this.confirmedTxPageIndex = 0;
         this.delegatorCount = 0;
-        this.weightSum = 0;
+        this.receivableTransactionsCount = 0;
 
         // Managing tabs state.  Reset them all.
         this._txTabService.forgetAccount();
@@ -117,13 +105,15 @@ export class AccountComponent implements OnDestroy {
 
         Promise.all([
             this.apiService.fetchAccountOverview(address),
-            this._txTabService.loadTransactionsPage(address, 0, 50, undefined, undefined),
+            this._txTabService.loadConfirmedTransactionsPage(address, 0, 50, undefined, undefined),
+            this._txTabService.loadReceivableTransactions(address),
         ])
             .then((data) => {
                 // Only prepare new account if the loaded data matches the expected address for the page.
                 if (data[0].address === this.address) {
                     this._prepareNewAccount(data[0]);
                 }
+                this.receivableTransactionsCount = data[2].length;
             })
             .catch((err) => {
                 console.error(err);
@@ -145,10 +135,6 @@ export class AccountComponent implements OnDestroy {
     /** Called whenever a new address has been loaded. */
     private _prepareNewAccount(accountOverview: AccountOverviewDto): void {
         this.accountOverview = accountOverview;
-
-        if (this.accountOverview.weight) {
-            this.weightSum = this.accountOverview.weight;
-        }
 
         if (!this.delegatorCount) {
             this.delegatorCount = accountOverview.delegatorsCount;
@@ -214,30 +200,4 @@ export class AccountComponent implements OnDestroy {
     withCommas(x: number): string {
         return this._util.numberWithCommas(x);
     }
-
-    /**
-    private _fetchNFTs(): void {
-        if (this.nfts) {
-            return;
-        }
-        if (this.isLoadingNFTs) {
-            return;
-        }
-
-        this.nfts = [];
-        this.isLoadingNFTs = true;
-        this.apiService
-            .fetchAccountNFTs(this.address)
-            .then((data) => {
-                this.nfts = data;
-            })
-            .catch((err) => {
-                console.error(err);
-                this.hasNFTsError = true;
-            })
-            .finally(() => {
-                this.isLoadingNFTs = false;
-            });
-    }
-    */
 }

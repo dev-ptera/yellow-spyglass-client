@@ -150,7 +150,10 @@ export class ApiService {
     async fetchReceivableTransactions(address: string): Promise<ReceivableTransactionDto[]> {
         await this._hasPingedApi();
         return this._http
-            .post<ReceivableTransactionDto[]>(`${this.httpApi}/v1/account/receivable-transactions`, { address })
+            .post<ReceivableTransactionDto[]>(`${this.httpApi}/v1/account/receivable-transactions`, {
+                address,
+                size: 50,
+            })
             .toPromise();
     }
 

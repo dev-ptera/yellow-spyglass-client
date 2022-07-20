@@ -137,7 +137,7 @@
                     </div>
                 </div>
 
-                <!-- Price Data -->
+                <!-- Opened Account Price Data -->
                 <div class="account-summary-tags" responsive *ngIf="accountOverview.opened">
                     <ng-template [ngTemplateOutlet]="mobileMonKey"></ng-template>
                     <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 16" responsive>
@@ -165,6 +165,45 @@
                             ·
                             <span class="account-usd-amount text-secondary" [style.marginLeft.px]="8">
                                 {{ formatUsdPrice(accountOverview.balanceRaw) | currency }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Unopened Account Price Data -->
+                <div
+                    class="account-summary-tags"
+                    responsive
+                    *ngIf="!accountOverview.opened && receivableTransactionsCount !== 0"
+                >
+                    <ng-template [ngTemplateOutlet]="mobileMonKey"></ng-template>
+                    <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 16" responsive>
+                        <ng-container *ngIf="vp.sm">
+                            <div class="account-ban-amount">
+                                {{ withCommas(accountOverview.receivable) }} Receivable BAN
+                            </div>
+                            <div class="text-secondary">
+                                <span class="account-btc-amount" [style.marginRight.px]="4">{{
+                                    formatBtcPrice(accountOverview.receivableRaw)
+                                }}</span>
+                                |
+                                <span class="account-usd-amount" [style.marginLeft.px]="4">{{
+                                    formatUsdPrice(accountOverview.receivableRaw) | currency
+                                }}</span>
+                            </div>
+                        </ng-container>
+
+                        <div *ngIf="!vp.sm" style="display: flex; align-items: center">
+                            <span class="account-ban-amount" [style.marginRight.px]="8">
+                                {{ withCommas(accountOverview.receivable) }} Receivable BAN
+                            </span>
+                            ·
+                            <span class="account-btc-amount text-secondary" style="margin: 0 8px">
+                                {{ formatBtcPrice(accountOverview.receivableRaw) }}</span
+                            >
+                            ·
+                            <span class="account-usd-amount text-secondary" [style.marginLeft.px]="8">
+                                {{ formatUsdPrice(accountOverview.receivableRaw) | currency }}
                             </span>
                         </div>
                     </div>
@@ -203,11 +242,11 @@
                 <ng-container *ngIf="vp.sm">
                     <mat-icon>pending</mat-icon>
                     <div class="count-subtitle">
-                        {{ receivableTransactions.length }}
+                        {{ receivableTransactionsCount }}
                     </div>
                 </ng-container>
                 <ng-container *ngIf="!vp.sm">
-                    Receivable {{ vp.md ? 'Tx' : 'Transactions' }} ({{ withCommas(receivableTransactions.length) }})
+                    Receivable {{ vp.md ? 'Tx' : 'Transactions' }} ({{ receivableTransactionsCount }})
                 </ng-container>
             </button>
 
@@ -260,19 +299,28 @@
             [class.divider-border]="shownTabNumber !== 4 && shownTabNumber !== 5"
         >
             <account-tx-tab
-                *ngIf="shownTabNumber === 1 && !isBrpd"
-                [blockCount]="accountOverview.blockCount"
-                [txPerPage]="txPerPage"
+                *ngIf="shownTabNumber === 1 && !isBRPD"
                 [address]="address"
+                [blockCount]="accountOverview.blockCount"
             ></account-tx-tab>
 
             <account-brpd-tab
-                *ngIf="shownTabNumber === 1 && isBrpd"
+                *ngIf="shownTabNumber === 1 && isBRPD"
                 [address]="address"
                 [blockCount]="accountOverview.blockCount"
             ></account-brpd-tab>
 
-            <account-tx-tab *ngIf="shownTabNumber === 2" [isPending]="true" [address]="address"></account-tx-tab>
+            <account-tx-tab
+                *ngIf="shownTabNumber === 2 && !isBRPD"
+                [address]="address"
+                [isPending]="true"
+            ></account-tx-tab>
+
+            <account-brpd-tab
+                *ngIf="shownTabNumber === 2 && isBRPD"
+                [address]="address"
+                [isPending]="true"
+            ></account-brpd-tab>
 
             <account-delegators-tab *ngIf="shownTabNumber === 3" [address]="address"></account-delegators-tab>
 
@@ -284,6 +332,7 @@
             >
             </account-insights-tab>
 
+            <!--
             <account-nfts-tab
                 *ngIf="shownTabNumber === 5"
                 [address]="address"
@@ -292,6 +341,7 @@
                 [hasError]="hasNFTsError"
             >
             </account-nfts-tab>
+            -->
         </div>
     </div>
 </ng-template>

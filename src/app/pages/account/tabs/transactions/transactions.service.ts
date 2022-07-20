@@ -25,19 +25,46 @@ export type Transaction = {
 /** This class handles data transformations for the transactions list. */
 export class TransactionsService {
     maxPageLoaded: number;
-    isLoadingTransactions: boolean;
+    isLoadingConfirmedTransactions: boolean;
+    isLoadingReceivableTransactions: boolean;
+
     confirmedTransactions: {
         all: Map<number, Transaction[]>;
         display: ConfirmedTransactionDto[];
     };
 
+    receivableTransactions: Transaction[];
+
     constructor(private readonly _vp: ViewportService, private readonly _apiService: ApiService) {
         this.forgetAccount();
     }
 
+    // TODO, maybe this should not even return the data?
+    loadReceivableTransactions(address: string): Promise<Transaction[]> {
+        if (this.isLoadingReceivableTransactions) {
+            return;
+        }
+
+        this.isLoadingReceivableTransactions = true;
+        return new Promise((resolve) => {
+            this._apiService
+                .fetchReceivableTransactions(address)
+                .then((data) => {
+                    this.receivableTransactions = data;
+                    resolve(data);
+                })
+                .catch((err) => {
+                    console.error(err);
+                })
+                .finally(() => {
+                    this.isLoadingReceivableTransactions = false;
+                });
+        });
+    }
+
     /** Checks if we have historically loaded the page.  If we have, display it.
      * It otherwise fetches the page remotely. */
-    async loadTransactionsPage(
+    async loadConfirmedTransactionsPage(
         address: string,
         page: number,
         pageSize: number,
@@ -50,11 +77,11 @@ export class TransactionsService {
         }
 
         // Do not double-load.
-        if (this.isLoadingTransactions) {
+        if (this.isLoadingConfirmedTransactions) {
             return;
         }
 
-        this.isLoadingTransactions = true;
+        this.isLoadingConfirmedTransactions = true;
 
         let offset = 0;
 
@@ -64,13 +91,11 @@ export class TransactionsService {
                 const displayed = this.confirmedTransactions.all.get(this.maxPageLoaded);
                 offset = blockCount - displayed[displayed.length - 1].height + 1;
             } catch (err) {
-                console.error(err);
+              //  console.error(err);
             }
         } else {
             offset = page * pageSize;
         }
-
-        console.log(offset);
 
         try {
             const data = (await this._apiService.fetchConfirmedTransactions(
@@ -80,7 +105,7 @@ export class TransactionsService {
                 filterData
             )) as Transaction[];
             this.confirmedTransactions.all.set(page, data);
-            this.isLoadingTransactions = false;
+            this.isLoadingConfirmedTransactions = false;
 
             if (page >= this.maxPageLoaded) {
                 this.maxPageLoaded = page;
@@ -88,7 +113,7 @@ export class TransactionsService {
 
             return data;
         } catch (err) {
-            this.isLoadingTransactions = false;
+            this.isLoadingConfirmedTransactions = false;
             console.error(err);
         }
     }
@@ -135,7 +160,7 @@ export class TransactionsService {
         }
     }
 
-    /** Given a number of days, returns a string representation of time. */
+    /** Given a number of days, returns a string representation of time (e.g 3 weeks ago). */
     getRelativeTime(days: number): string {
         if (!days) {
             return '';
@@ -168,6 +193,7 @@ export class TransactionsService {
         }
     }
 
+    /** Creates a css class for each transactions' SEND/RECEIVE/CHANGE tag. */
     createTagClass(tx: Transaction, isPending: boolean): string {
         if (isPending) {
             return 'receive';
@@ -175,6 +201,17 @@ export class TransactionsService {
         return tx.type;
     }
 
+    /** Removes all stored information for an account. Confirmed/Receivable Transactions & Current Page number (confirmed) */
+    forgetAccount(): void {
+        this.maxPageLoaded = 0;
+        this.receivableTransactions = [];
+        this.confirmedTransactions = {
+            all: new Map<number, ConfirmedTransactionDto[]>(),
+            display: [],
+        };
+    }
+
+    /** Given a timestamp, returns a date (e.g 10/08/2022) */
     private _formatDateString(timestamp: number): string {
         if (!timestamp) {
             return 'Unknown';
@@ -184,13 +221,5 @@ export class TransactionsService {
         return `${date.getMonth() > 8 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`}/${
             date.getDate() > 9 ? date.getDate() : `0${date.getDate()}`
         }/${this._vp.sm ? date.getFullYear().toString().substring(2, 4) : `${date.getFullYear()}`}`;
-    }
-
-    forgetAccount(): void {
-        this.maxPageLoaded = 0;
-        this.confirmedTransactions = {
-            all: new Map<number, ConfirmedTransactionDto[]>(),
-            display: [],
-        };
     }
 }
