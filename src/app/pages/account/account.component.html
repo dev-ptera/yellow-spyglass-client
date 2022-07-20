@@ -1,15 +1,3 @@
-<ng-template #transactionPaginator>
-    <app-paginator
-        *ngIf="accountOverview.blockCount > 50"
-        [maxElements]="accountOverview.blockCount"
-        [pageSize]="paginatorSize"
-        [pageIndex]="confirmedTxPageIndex"
-        [disableMove]="isLoading"
-        (pageIndexChange)="changePage($event)"
-    >
-    </app-paginator>
-</ng-template>
-
 <ng-template #desktopMonKey>
     <img
         *ngIf="!vp.sm"
@@ -273,10 +261,9 @@
         >
             <account-tx-tab
                 *ngIf="shownTabNumber === 1 && !isBrpd"
-                [paginator]="transactionPaginator"
                 [blockCount]="accountOverview.blockCount"
                 [txPerPage]="txPerPage"
-                [transactions]="confirmedTransactions.display"
+                [address]="address"
             ></account-tx-tab>
 
             <account-brpd-tab
@@ -285,16 +272,9 @@
                 [blockCount]="accountOverview.blockCount"
             ></account-brpd-tab>
 
-            <account-tx-tab
-                *ngIf="shownTabNumber === 2"
-                [transactions]="receivableTransactions"
-                [isPending]="true"
-            ></account-tx-tab>
+            <account-tx-tab *ngIf="shownTabNumber === 2" [isPending]="true" [address]="address"></account-tx-tab>
 
-            <account-delegators-tab
-                *ngIf="shownTabNumber === 3"
-                [address]="accountOverview.address"
-            ></account-delegators-tab>
+            <account-delegators-tab *ngIf="shownTabNumber === 3" [address]="address"></account-delegators-tab>
 
             <account-insights-tab
                 *ngIf="shownTabNumber === 4"

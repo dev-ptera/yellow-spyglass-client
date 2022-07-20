@@ -1,13 +1,10 @@
-import { Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
-import { PaginatorComponent } from '@app/common/components/paginator/paginator.component';
 import { UtilService } from '@app/services/util/util.service';
 import { AliasService } from '@app/services/alias/alias.service';
 import { ApiService } from '@app/services/api/api.service';
 import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
-import { TransactionsService } from '@app/pages/account/tabs/transactions/transactions.service';
-import { Transaction } from '../transactions/transactions-tab.component';
-import { AccountService } from '@app/pages/account/account.service';
+import { Transaction, TransactionsService } from '@app/pages/account/tabs/transactions/transactions.service';
 
 export type FilterDialogData = {
     includeReceive: boolean;
@@ -22,40 +19,13 @@ export type FilterDialogData = {
 @Component({
     selector: 'account-brpd-tab',
     templateUrl: 'brpd-tab.component.html',
-    styles: [
-        `
-            .social-media-button {
-                cursor: pointer;
-                height: 24px;
-                width: 24px;
-                line-height: unset;
-                margin-right: 4px;
-            }
-            .social-media-button .mat-button-wrapper {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-            .social-media-icon {
-                width: 14px;
-                line-height: 24px;
-                opacity: 0.75;
-            }
-            textarea:focus,
-            input:focus {
-                border-radius: 4px;
-                border: none !important;
-                outline: 0;
-            }
-        `,
-    ],
+    styleUrls: ['brpd-tab.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
 export class BrpdTabComponent {
     @Input() isPending: boolean;
     @Input() blockCount: number;
     @Input() address: string;
-    @Input() paginator: TemplateRef<PaginatorComponent>;
 
     DEFAULT_PAGE_SIZE = 50;
     pageIndex = 0;
@@ -77,19 +47,17 @@ export class BrpdTabComponent {
         public vp: ViewportService,
         public apiService: ApiService,
         public aliasService: AliasService,
-        public txService: TransactionsService,
-        public accountService: AccountService
+        public txService: TransactionsService
     ) {}
 
-    ngOnChanges(): void {
+    ngOnInit(): void {
         this._loadNewAccount();
     }
 
     applyFilters(): void {
         this.pageIndex = 0;
         this.appliedPageSize = this.pageSize;
-        this.accountService.forgetTransactions();
-        this.loadCurrentPage();
+        this.txService.forgetAccount();
         this.hasFiltersApplied = false;
         this.hasFiltersApplied ||= Boolean(this.filterData.maxAmount);
         this.hasFiltersApplied ||= Boolean(this.filterData.minAmount);
@@ -97,6 +65,7 @@ export class BrpdTabComponent {
         this.hasFiltersApplied ||= Boolean(!this.filterData.includeSend);
         this.hasFiltersApplied ||= Boolean(!this.filterData.includeChange);
         this.hasFiltersApplied ||= Boolean(!this.filterData.includeReceive);
+        this.loadCurrentPage();
     }
 
     loadCurrentPage(): void {
@@ -104,8 +73,14 @@ export class BrpdTabComponent {
             return;
         }
         this.isLoading = true;
-        this.accountService
-            .loadTransactionsPage(this.address, this.pageIndex, this.pageSize, this.blockCount, this.filterData)
+        this.txService
+            .loadTransactionsPage(
+                this.address,
+                this.pageIndex,
+                this.pageSize,
+                this.blockCount,
+                this.hasFiltersApplied ? this.filterData : undefined
+            )
             .then((data) => {
                 this.transactions = data;
                 this.txService.createDateMap(this.transactions, this.dateMap);
@@ -177,7 +152,7 @@ export class BrpdTabComponent {
     private _loadNewAccount(): void {
         this.pageIndex = 0;
         this.transactions = [];
-        this.accountService.forgetTransactions();
+        this.txService.forgetAccount();
         this.resetFilters();
         this.loadCurrentPage();
     }

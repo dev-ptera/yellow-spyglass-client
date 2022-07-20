@@ -1,14 +1,97 @@
 import { Injectable } from '@angular/core';
-import { Transaction } from '@app/pages/account/tabs/transactions/transactions-tab.component';
 import { ViewportService } from '@app/services/viewport/viewport.service';
+import { FilterDialogData } from '@app/pages/account/tabs/brpd/brpd-tab.component';
+import { ApiService } from '@app/services/api/api.service';
+import { ConfirmedTransactionDto } from '@app/types/dto';
+
+export type Transaction = {
+    timestampHovered?: boolean;
+    amount?: number;
+    hash: string;
+    type?: 'receive' | 'send' | 'change';
+    height?: number;
+    address?: string;
+    timestamp: number;
+    newRepresentative?: string;
+    showCopiedAddressIcon?: boolean;
+    hoverPlatform?: boolean;
+    hoverAddress?: boolean;
+    showCopiedPlatformIdIcon?: boolean;
+};
 
 @Injectable({
     providedIn: 'root',
 })
-
 /** This class handles data transformations for the transactions list. */
 export class TransactionsService {
-    constructor(private readonly _vp: ViewportService) {}
+    maxPageLoaded: number;
+    isLoadingTransactions: boolean;
+    confirmedTransactions: {
+        all: Map<number, Transaction[]>;
+        display: ConfirmedTransactionDto[];
+    };
+
+    constructor(private readonly _vp: ViewportService, private readonly _apiService: ApiService) {
+        this.forgetAccount();
+    }
+
+    /** Checks if we have historically loaded the page.  If we have, display it.
+     * It otherwise fetches the page remotely. */
+    async loadTransactionsPage(
+        address: string,
+        page: number,
+        pageSize: number,
+        blockCount: number,
+        filterData: FilterDialogData
+    ): Promise<Transaction[]> {
+        // If we have previously loaded the page, return the page.
+        if (this.confirmedTransactions.all.has(page)) {
+            return this.confirmedTransactions.all.get(page);
+        }
+
+        // Do not double-load.
+        if (this.isLoadingTransactions) {
+            return;
+        }
+
+        this.isLoadingTransactions = true;
+
+        let offset = 0;
+
+        if (filterData) {
+            try {
+                // Get the offset based on the height of the last-loaded transaction.
+                const displayed = this.confirmedTransactions.all.get(this.maxPageLoaded);
+                offset = blockCount - displayed[displayed.length - 1].height + 1;
+            } catch (err) {
+                console.error(err);
+            }
+        } else {
+            offset = page * pageSize;
+        }
+
+        console.log(offset);
+
+        try {
+            const data = (await this._apiService.fetchConfirmedTransactions(
+                address,
+                pageSize,
+                offset,
+                filterData
+            )) as Transaction[];
+            this.confirmedTransactions.all.set(page, data);
+            this.isLoadingTransactions = false;
+
+            if (page >= this.maxPageLoaded) {
+                this.maxPageLoaded = page;
+            }
+
+            return data;
+        } catch (err) {
+            this.isLoadingTransactions = false;
+            console.error(err);
+        }
+    }
 
     getEmptyStateTitle(isPending: boolean): string {
         if (isPending) {
@@ -33,10 +116,9 @@ export class TransactionsService {
         const currentDate = new Date().getTime() / 1000;
         const oneDay = 24 * 60 * 60; // hours*minutes*seconds*milliseconds
         transactions.map((tx) => {
-
-            const diffDays = tx.timestamp ?
-                Math.round(((currentDate - tx.timestamp) / oneDay) * 1000) / 1000 :
-                undefined;
+            const diffDays = tx.timestamp
+                ? Math.round(((currentDate - tx.timestamp) / oneDay) * 1000) / 1000
+                : undefined;
             dateMap.set(tx.hash, {
                 date: this._formatDateString(tx.timestamp),
                 diffDays,
@@ -102,5 +184,13 @@ export class TransactionsService {
         return `${date.getMonth() > 8 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`}/${
             date.getDate() > 9 ? date.getDate() : `0${date.getDate()}`
         }/${this._vp.sm ? date.getFullYear().toString().substring(2, 4) : `${date.getFullYear()}`}`;
+    }
+
+    forgetAccount(): void {
+        this.maxPageLoaded = 0;
+        this.confirmedTransactions = {
+            all: new Map<number, ConfirmedTransactionDto[]>(),
+            display: [],
+        };
     }
 }

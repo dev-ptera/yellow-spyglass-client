@@ -1,0 +1,23 @@
+.social-media-button {
+    cursor: pointer;
+    height: 24px;
+    width: 24px;
+    line-height: unset;
+    margin-right: 4px;
+}
+.social-media-button .mat-button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.social-media-icon {
+    width: 14px;
+    line-height: 24px;
+    opacity: 0.75;
+}
+textarea:focus,
+input:focus {
+    border-radius: 4px;
+    border: none !important;
+    outline: 0;
+}
