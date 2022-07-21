@@ -79,7 +79,8 @@ export class AccountComponent implements OnDestroy {
         this.receivableTransactionsCount = 0;
 
         // Managing tabs state.  Reset them all.
-        this._txTabService.forgetAccount();
+        this._txTabService.forgetConfirmedTransactions();
+        this._txTabService.forgetReceivableTransactions();
         this._insightsTabService.forgetAccount();
         this._delegatorsTabService.forgetAccount();
     }

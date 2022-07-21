@@ -54,6 +54,7 @@ export class BrpdTabComponent {
         if (this.isPending) {
             this.displayedTransactions = this.txService.receivableTransactions;
             this.txService.createDateMap(this.displayedTransactions, this.dateMap);
+            this.fetchSocialMediaAccounts(this.displayedTransactions);
         } else {
             this._loadNewAccount();
             this.loadConfirmedTransactionsPage();
@@ -63,7 +64,8 @@ export class BrpdTabComponent {
     applyFilters(): void {
         this.pageIndex = 0;
         this.appliedPageSize = this.pageSize;
-        this.txService.forgetAccount();
+        this.displayedTransactions = [];
+        this.txService.forgetConfirmedTransactions();
         this.hasFiltersApplied = false;
         this.hasFiltersApplied ||= Boolean(this.filterData.maxAmount);
         this.hasFiltersApplied ||= Boolean(this.filterData.minAmount);
@@ -90,11 +92,7 @@ export class BrpdTabComponent {
             .then((data) => {
                 this.displayedTransactions = data;
                 this.txService.createDateMap(this.displayedTransactions, this.dateMap);
-                const pageAddressSet = new Set<string>();
-                data.map((tx) => {
-                    pageAddressSet.add(tx.address);
-                });
-                this.aliasService.fetchSocialMediaAliases(pageAddressSet);
+                this.fetchSocialMediaAccounts(data);
             })
             .catch((err) => {
                 console.error(err);
@@ -102,6 +100,14 @@ export class BrpdTabComponent {
             .finally(() => {
                 this.isLoading = false;
             });
+    }
+
+    fetchSocialMediaAccounts(transactions: Transaction[]): void {
+        const pageAddressSet = new Set<string>();
+        transactions.map((tx) => {
+            pageAddressSet.add(tx.address);
+        });
+        this.aliasService.fetchSocialMediaAliases(pageAddressSet);
     }
 
     copyAddress(item: Transaction): void {
@@ -123,7 +129,6 @@ export class BrpdTabComponent {
 
     resetFilters(): void {
         this.pageSize = this.DEFAULT_PAGE_SIZE;
-        this.hasFiltersApplied = false;
         this.filterData = {
             includeReceive: true,
             includeChange: true,
@@ -158,7 +163,6 @@ export class BrpdTabComponent {
     private _loadNewAccount(): void {
         this.pageIndex = 0;
         this.displayedTransactions = [];
-        this.txService.forgetAccount();
         this.resetFilters();
         this.loadConfirmedTransactionsPage();
     }

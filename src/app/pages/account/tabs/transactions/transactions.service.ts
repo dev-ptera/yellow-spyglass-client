@@ -36,10 +36,9 @@ export class TransactionsService {
     receivableTransactions: Transaction[];
 
     constructor(private readonly _vp: ViewportService, private readonly _apiService: ApiService) {
-        this.forgetAccount();
+        this.forgetConfirmedTransactions();
     }
 
-    // TODO, maybe this should not even return the data?
     loadReceivableTransactions(address: string): Promise<Transaction[]> {
         if (this.isLoadingReceivableTransactions) {
             return;
@@ -50,6 +49,7 @@ export class TransactionsService {
             this._apiService
                 .fetchReceivableTransactions(address)
                 .then((data) => {
+                    console.log('saving receivable transactions');
                     this.receivableTransactions = data;
                     resolve(data);
                 })
@@ -150,7 +150,6 @@ export class TransactionsService {
                 relativeTime: this.getRelativeTime(diffDays),
             });
         });
-        return;
     }
 
     /** Converts timestamp to local time (e.g. 05:32:19 AM) . */
@@ -202,13 +201,16 @@ export class TransactionsService {
     }
 
     /** Removes all stored information for an account. Confirmed/Receivable Transactions & Current Page number (confirmed) */
-    forgetAccount(): void {
+    forgetConfirmedTransactions(): void {
         this.maxPageLoaded = 0;
-        this.receivableTransactions = [];
         this.confirmedTransactions = {
             all: new Map<number, ConfirmedTransactionDto[]>(),
             display: [],
         };
+    }
+
+    forgetReceivableTransactions(): void {
+        this.receivableTransactions = [];
     }
 
     /** Given a timestamp, returns a date (e.g 10/08/2022) */

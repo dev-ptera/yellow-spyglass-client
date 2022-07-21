@@ -125,7 +125,7 @@
     <ng-template [ngTemplateOutlet]="transactionPaginator"></ng-template>
 </ng-container>
 
-<ng-container *ngIf="displayedTransactions.length !== 0 && !isPending">
+<ng-container *ngIf="blockCount > 0 && !isPending">
     <ng-template [ngTemplateOutlet]="filters"></ng-template>
     <mat-divider></mat-divider>
 </ng-container>
@@ -284,13 +284,13 @@
     <ng-template [ngTemplateOutlet]="transactionPaginator"></ng-template>
 </div>
 
-<div *ngIf="isLoading && displayedTransactions.length === 0" class="tab-empty-state">
+<div *ngIf="isLoading" class="tab-empty-state">
     <blui-empty-state responsive class="account-empty-state" title="Loading">
         <mat-icon blui-empty-icon>pending</mat-icon>
     </blui-empty-state>
 </div>
 
-<div *ngIf="!isLoading && displayedTransactions.length === 0 && !hasFiltersApplied" class="tab-empty-state">
+<div *ngIf="blockCount === 0 || (displayedTransactions.length === 0 && isPending)" class="tab-empty-state">
     <blui-empty-state
         responsive
         class="account-empty-state"
