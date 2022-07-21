@@ -251,7 +251,7 @@ export class HashComponent implements OnDestroy {
 
     convertUnixToDate(time: number): string {
         if (time === 0) {
-            return 'Unknown'
+            return 'Unknown';
         }
 
         return `${new Date(time * 1000).toLocaleDateString()} ${new Date(time * 1000).toLocaleTimeString()}`;

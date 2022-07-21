@@ -10,7 +10,6 @@ import * as Highcharts from 'highcharts';
 import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
 import HighchartsBoost from 'highcharts/modules/boost';
 
-
 @Component({
     selector: 'account-insights-tab',
     templateUrl: 'insights-tab.component.html',

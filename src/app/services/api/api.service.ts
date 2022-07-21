@@ -110,10 +110,32 @@ export class ApiService {
         return this._http.get<AccountOverviewDto>(`${this.httpApi}/v1/account/overview/${address}`).toPromise();
     }
 
-    /** Fetches account summary information. */
+    /** Fetches NFTs that an account owns. */
     async fetchAccountNFTs(address: string): Promise<AccountNFTDto[]> {
         await this._hasPingedApi();
         return this._http.get<AccountNFTDto[]>(`${this.httpApi}/v1/account/nfts/${address}`).toPromise();
+    }
+
+    /** Fetches confirmed transactions that meets filtered criteria. */
+    async fetchConfirmedTransactions(
+        address: string,
+        size: number,
+        offset: number,
+        filters?: FilterDialogData
+    ): Promise<ConfirmedTransactionDto[]> {
+        await this._hasPingedApi();
+        const url = `${this.httpApi}/v2/account/confirmed-transactions`;
+        const filterAddresses =
+            filters && filters.filterAddresses ? filters.filterAddresses.split(',').map((x) => x.trim()) : [];
+        return this._http
+            .post<ConfirmedTransactionDto[]>(url, {
+                address,
+                size,
+                offset,
+                ...filters,
+                filterAddresses,
+            })
+            .toPromise();
     }
 
     /** Fetches account delegators. */
@@ -124,27 +146,14 @@ export class ApiService {
             .toPromise();
     }
 
-    /** Fetches 50 confirmed transactions for a given address. */
-    async fetchConfirmedTransactions(
-        address: string,
-        offset: number,
-        pageSize: number
-    ): Promise<ConfirmedTransactionDto[]> {
-        await this._hasPingedApi();
-        return this._http
-            .post<ConfirmedTransactionDto[]>(`${this.httpApi}/v2/account/confirmed-transactions`, {
-                address,
-                offset,
-                size: pageSize,
-            })
-            .toPromise();
-    }
-
     /** Fetches 50 receivable transactions for a given address. */
     async fetchReceivableTransactions(address: string): Promise<ReceivableTransactionDto[]> {
         await this._hasPingedApi();
         return this._http
-            .post<ReceivableTransactionDto[]>(`${this.httpApi}/v1/account/receivable-transactions`, { address })
+            .post<ReceivableTransactionDto[]>(`${this.httpApi}/v1/account/receivable-transactions`, {
+                address,
+                size: 50,
+            })
             .toPromise();
     }
 
@@ -300,27 +309,6 @@ export class ApiService {
         return this._http.post<BlockDto>(`${this.httpApi}/v1/account/block-at-height`, { address, height }).toPromise();
     }
 
-    async fetchFilteredTransaction(
-        address: string,
-        size: number,
-        offset: number,
-        filters?: FilterDialogData
-    ): Promise<ConfirmedTransactionDto[]> {
-        await this._hasPingedApi();
-        const url = `${this.httpApi}/v2/account/confirmed-transactions`;
-        const filterAddresses =
-            filters && filters.filterAddresses ? filters.filterAddresses.split(',').map((x) => x.trim()) : [];
-        return this._http
-            .post<ConfirmedTransactionDto[]>(url, {
-                address,
-                size,
-                offset,
-                ...filters,
-                filterAddresses,
-            })
-            .toPromise();
-    }
-
     /** Fetches an address's discord/twitter/telegram alias, if any. */
     async fetchSocialMediaAccount(address: string): Promise<SocialMediaAccountAliasDto> {
         await this._hasPingedApi();
@@ -329,6 +317,7 @@ export class ApiService {
             .toPromise();
     }
 
+    /** Fetches account insights & provides incremental updates to feed into a progress spinner. */
     async fetchAccountInsightsWS(address: string): Promise<Observable<number | InsightsDto>> {
         await this._hasPingedApi();
         const subject = new Subject<number | InsightsDto>();

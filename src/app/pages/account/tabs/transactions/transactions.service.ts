@@ -1,14 +1,122 @@
 import { Injectable } from '@angular/core';
-import { Transaction } from '@app/pages/account/tabs/transactions/transactions-tab.component';
 import { ViewportService } from '@app/services/viewport/viewport.service';
+import { FilterDialogData } from '@app/pages/account/tabs/brpd/brpd-tab.component';
+import { ApiService } from '@app/services/api/api.service';
+import { ConfirmedTransactionDto } from '@app/types/dto';
+
+export type Transaction = {
+    timestampHovered?: boolean;
+    amount?: number;
+    hash: string;
+    type?: 'receive' | 'send' | 'change';
+    height?: number;
+    address?: string;
+    timestamp: number;
+    newRepresentative?: string;
+    showCopiedAddressIcon?: boolean;
+    hoverPlatform?: boolean;
+    hoverAddress?: boolean;
+    showCopiedPlatformIdIcon?: boolean;
+};
 
 @Injectable({
     providedIn: 'root',
 })
-
 /** This class handles data transformations for the transactions list. */
 export class TransactionsService {
-    constructor(private readonly _vp: ViewportService) {}
+    maxPageLoaded: number;
+    isLoadingConfirmedTransactions: boolean;
+    isLoadingReceivableTransactions: boolean;
+
+    confirmedTransactions: {
+        all: Map<number, Transaction[]>;
+        display: ConfirmedTransactionDto[];
+    };
+
+    receivableTransactions: Transaction[];
+
+    constructor(private readonly _vp: ViewportService, private readonly _apiService: ApiService) {
+        this.forgetConfirmedTransactions();
+    }
+
+    loadReceivableTransactions(address: string): Promise<Transaction[]> {
+        if (this.isLoadingReceivableTransactions) {
+            return;
+        }
+
+        this.isLoadingReceivableTransactions = true;
+        return new Promise((resolve) => {
+            this._apiService
+                .fetchReceivableTransactions(address)
+                .then((data) => {
+                    console.log('saving receivable transactions');
+                    this.receivableTransactions = data;
+                    resolve(data);
+                })
+                .catch((err) => {
+                    console.error(err);
+                })
+                .finally(() => {
+                    this.isLoadingReceivableTransactions = false;
+                });
+        });
+    }
+
+    /** Checks if we have historically loaded the page.  If we have, display it.
+     * It otherwise fetches the page remotely. */
+    async loadConfirmedTransactionsPage(
+        address: string,
+        page: number,
+        pageSize: number,
+        blockCount: number,
+        filterData: FilterDialogData
+    ): Promise<Transaction[]> {
+        // If we have previously loaded the page, return the page.
+        if (this.confirmedTransactions.all.has(page)) {
+            return this.confirmedTransactions.all.get(page);
+        }
+
+        // Do not double-load.
+        if (this.isLoadingConfirmedTransactions) {
+            return;
+        }
+
+        this.isLoadingConfirmedTransactions = true;
+
+        let offset = 0;
+
+        if (filterData) {
+            try {
+                // Get the offset based on the height of the last-loaded transaction.
+                const displayed = this.confirmedTransactions.all.get(this.maxPageLoaded);
+                offset = blockCount - displayed[displayed.length - 1].height + 1;
+            } catch (err) {
+              //  console.error(err);
+            }
+        } else {
+            offset = page * pageSize;
+        }
+
+        try {
+            const data = (await this._apiService.fetchConfirmedTransactions(
+                address,
+                pageSize,
+                offset,
+                filterData
+            )) as Transaction[];
+            this.confirmedTransactions.all.set(page, data);
+            this.isLoadingConfirmedTransactions = false;
+
+            if (page >= this.maxPageLoaded) {
+                this.maxPageLoaded = page;
+            }
+
+            return data;
+        } catch (err) {
+            this.isLoadingConfirmedTransactions = false;
+            console.error(err);
+        }
+    }
 
     getEmptyStateTitle(isPending: boolean): string {
         if (isPending) {
@@ -33,17 +141,15 @@ export class TransactionsService {
         const currentDate = new Date().getTime() / 1000;
         const oneDay = 24 * 60 * 60; // hours*minutes*seconds*milliseconds
         transactions.map((tx) => {
-
-            const diffDays = tx.timestamp ?
-                Math.round(((currentDate - tx.timestamp) / oneDay) * 1000) / 1000 :
-                undefined;
+            const diffDays = tx.timestamp
+                ? Math.round(((currentDate - tx.timestamp) / oneDay) * 1000) / 1000
+                : undefined;
             dateMap.set(tx.hash, {
                 date: this._formatDateString(tx.timestamp),
                 diffDays,
                 relativeTime: this.getRelativeTime(diffDays),
             });
         });
-        return;
     }
 
     /** Converts timestamp to local time (e.g. 05:32:19 AM) . */
@@ -53,7 +159,7 @@ export class TransactionsService {
         }
     }
 
-    /** Given a number of days, returns a string representation of time. */
+    /** Given a number of days, returns a string representation of time (e.g 3 weeks ago). */
     getRelativeTime(days: number): string {
         if (!days) {
             return '';
@@ -86,6 +192,7 @@ export class TransactionsService {
         }
     }
 
+    /** Creates a css class for each transactions' SEND/RECEIVE/CHANGE tag. */
     createTagClass(tx: Transaction, isPending: boolean): string {
         if (isPending) {
             return 'receive';
@@ -93,6 +200,20 @@ export class TransactionsService {
         return tx.type;
     }
 
+    /** Removes all stored information for an account. Confirmed/Receivable Transactions & Current Page number (confirmed) */
+    forgetConfirmedTransactions(): void {
+        this.maxPageLoaded = 0;
+        this.confirmedTransactions = {
+            all: new Map<number, ConfirmedTransactionDto[]>(),
+            display: [],
+        };
+    }
+
+    forgetReceivableTransactions(): void {
+        this.receivableTransactions = [];
+    }
+
+    /** Given a timestamp, returns a date (e.g 10/08/2022) */
     private _formatDateString(timestamp: number): string {
         if (!timestamp) {
             return 'Unknown';
