@@ -59,6 +59,8 @@ export class BrpdTabComponent {
             this._loadNewAccount();
             this.loadConfirmedTransactionsPage();
         }
+
+        this.aliasService.fetchSocialMediaAliases(new Set([this.address]));
     }
 
     applyFilters(): void {

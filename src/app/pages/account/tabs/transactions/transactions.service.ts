@@ -91,7 +91,7 @@ export class TransactionsService {
                 const displayed = this.confirmedTransactions.all.get(this.maxPageLoaded);
                 offset = blockCount - displayed[displayed.length - 1].height + 1;
             } catch (err) {
-              //  console.error(err);
+                //  console.error(err);
             }
         } else {
             offset = page * pageSize;

@@ -16,6 +16,7 @@ export class AliasService {
         this._loadAliases();
     }
 
+    /** Loads a minified address/alias pair for quick searching. */
     private _loadAliases(): void {
         this._api
             .fetchAliases()
@@ -33,6 +34,7 @@ export class AliasService {
             });
     }
 
+    /** Given a set of addresses, makes a series of calls to see if there's any social media data around these accounts. */
     fetchSocialMediaAliases(addresses: Set<string>): void {
         addresses.forEach((address) => {
             if (address && !this.accountsWithNoAlias.has(address) && !this.aliases.has(address)) {

@@ -168,6 +168,10 @@ export class SearchBarComponent {
 
     private _matchAliases(value: string): void {
         this.knownAccounts.map((account) => {
+            if (!account.alias) {
+                return;
+            }
+
             if (account.alias.toLowerCase().includes(value)) {
                 this.matchingAccounts.push(account);
             }
