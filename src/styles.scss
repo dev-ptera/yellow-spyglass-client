@@ -56,6 +56,11 @@ $custom-typography: mat.define-typography-config(
     text-decoration: none !important;
 }
 
+
+mat-card, .mat-table, .account-header {
+   // border-radius: 12px!important;
+}
+
 .principal-tag * {
     font-weight: 600 !important;
 }

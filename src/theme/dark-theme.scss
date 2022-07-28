@@ -113,6 +113,9 @@
         border-bottom: solid 2px $primary;
         color: $primary !important;
     }
+    .account-header {
+        background-color: map-get($background, card);
+    }
     .tx-content-container {
         background-color: map-get(blui.$blui-black, 900);
     }

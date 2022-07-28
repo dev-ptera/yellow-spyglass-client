@@ -27,7 +27,7 @@ export class BrpdTabComponent {
     @Input() blockCount: number;
     @Input() address: string;
 
-    DEFAULT_PAGE_SIZE = 50;
+    DEFAULT_PAGE_SIZE = 500;
     pageIndex = 0;
     pageSize = this.DEFAULT_PAGE_SIZE;
 
