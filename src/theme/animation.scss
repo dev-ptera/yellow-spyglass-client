@@ -42,3 +42,7 @@ $distance: 10px;
     -webkit-animation: animation-body 0.25s linear both;
     animation: animation-body 0.25s linear both;
 }
+.animation-content > * {
+    -webkit-animation: animation-body 0.125s linear both;
+    animation: animation-body 0.125s linear both;
+}

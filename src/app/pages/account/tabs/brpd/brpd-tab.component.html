@@ -1,137 +1,26 @@
-<ng-template #transactionPaginator>
+<ng-template #transactionPaginator let-top="top">
     <ng-container
-        *ngIf="
-            displayedTransactions.length > 0 &&
-            blockCount > appliedPageSize &&
-            (pageIndex !== 0 || displayedTransactions.length >= appliedPageSize)
-        "
+        *ngIf="showPaginator()"
     >
+        <mat-divider *ngIf="!top"></mat-divider>
         <app-paginator
-            [maxElements]="blockCount"
+            [blockCount]="blockCount"
             [showPageNumberOnly]="true"
-            [pageSize]="appliedPageSize"
+            [pageSize]="txService.filterData.size"
             [pageIndex]="pageIndex"
-            [disableMove]="isLoading"
-            [enableFastForward]="!hasFiltersApplied"
+            [disableMove]="isLoading()"
+            [enableFastForward]="enableFastForward()"
             (pageIndexChange)="changePage($event)"
         >
         </app-paginator>
-        <mat-divider></mat-divider>
+        <mat-divider *ngIf="top"></mat-divider>
     </ng-container>
 </ng-template>
 
-<ng-template #filters>
-    <mat-accordion class="mat-elevation-z0">
-        <mat-expansion-panel class="mat-elevation-z0">
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    <mat-icon style="margin-right: 12px">tune</mat-icon>
-                    Transaction Filters
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div style="margin: 16px 0">
-                <div style="margin-bottom: 8px">Use the knobs below to filter your transaction history.</div>
 
-                <div style="display: flex; justify-content: space-between; align-items: center">
-                    <mat-chip-list multiple style="display: flex; justify-content: space-between">
-                        <mat-chip
-                            variant="outline"
-                            color="primary"
-                            (click)="filterData.includeReceive = !filterData.includeReceive"
-                            [selected]="filterData.includeReceive"
-                        >
-                            <mat-icon matChipAvatar style="font-size: 16px">download</mat-icon>
-                            Received
-                        </mat-chip>
-                        <mat-chip
-                            variant="outline"
-                            color="primary"
-                            (click)="filterData.includeSend = !filterData.includeSend"
-                            [selected]="filterData.includeSend"
-                        >
-                            <mat-icon matChipAvatar style="font-size: 16px">upload</mat-icon>
-                            Sent
-                        </mat-chip>
-                        <mat-chip
-                            variant="outline"
-                            color="primary"
-                            (click)="filterData.includeChange = !filterData.includeChange"
-                            [selected]="filterData.includeChange"
-                        >
-                            <mat-icon matChipAvatar style="font-size: 16px">how_to_vote</mat-icon>
-                            Change
-                        </mat-chip>
-                    </mat-chip-list>
-                    <div>
-                        <mat-form-field
-                            blui-input
-                            style="width: 200px; margin-top: 24px; margin-right: 16px"
-                            appearance="fill"
-                        >
-                            <mat-label>Min BAN</mat-label>
-                            <input matInput type="number" [(ngModel)]="filterData.minAmount" />
-                        </mat-form-field>
-                        <mat-form-field blui-input style="width: 200px" appearance="fill">
-                            <mat-label>Max BAN</mat-label>
-                            <input matInput type="number" [(ngModel)]="filterData.maxAmount" />
-                        </mat-form-field>
-                    </div>
-                </div>
-
-                <div style="display: flex; justify-content: space-between; align-items: center">
-                    <div>
-                        <div class="mat-subheading-2">Page Size ({{ pageSize }})</div>
-                        <mat-slider
-                            color="accent"
-                            style="width: 300px; margin-right: 24px"
-                            thumbLabel
-                            min="1"
-                            max="500"
-                            step="1"
-                            value="50"
-                            [(ngModel)]="pageSize"
-                        ></mat-slider>
-                    </div>
-                    <mat-form-field style="width: 60%" appearance="fill">
-                        <mat-label>Filter Addresses</mat-label>
-                        <textarea
-                            matInput
-                            type="text"
-                            [(ngModel)]="filterData.filterAddresses"
-                            placeholder="address1, address2, etc"
-                        ></textarea>
-                    </mat-form-field>
-                </div>
-
-                <button
-                    style="width: 150px"
-                    mat-flat-button
-                    color="primary"
-                    (click)="applyFilters()"
-                    [disabled]="isLoading"
-                >
-                    Apply
-                </button>
-
-                <button style="width: 150px; margin-left: 24px" (click)="resetFilters()" mat-stroked-button>
-                    Reset
-                </button>
-            </div>
-        </mat-expansion-panel>
-    </mat-accordion>
-</ng-template>
-
-<ng-container *ngIf="displayedTransactions.length !== 0">
-    <ng-template [ngTemplateOutlet]="transactionPaginator"></ng-template>
-</ng-container>
-
-<ng-container *ngIf="blockCount > 0 && !isPending">
-    <ng-template [ngTemplateOutlet]="filters"></ng-template>
-    <mat-divider></mat-divider>
-</ng-container>
-
-<div class="brpd-tab-transaction-list">
-    <div *ngFor="let tx of displayedTransactions; trackBy: trackByFn; let last = last">
+<div class="brpd-tab-transaction-list animation-content">
+    <ng-template *ngTemplateOutlet="transactionPaginator; context: { top: true }"></ng-template>
+    <div *ngFor="let tx of getDisplayedTransactions(); trackBy: trackByFn; let last = last" style="position: relative">
         <div style="display: flex; align-items: center">
             <img
                 [src]="apiService.createMonKeyUrl(tx.address || tx.newRepresentative)"
@@ -194,7 +83,7 @@
                 *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'jungletv'"
                 src="assets/social-media/jtv.png"
                 class="social-media-icon"
-                style="margin-right: 4px"
+                style="margin-right: 8px"
             />
 
             <!-- Twitter -->
@@ -261,16 +150,18 @@
                 -->
             </a>
             <blui-spacer></blui-spacer>
-            <div style="margin-right: 8px">
-                <div style="display: flex; flex-direction: column">
-                    <span class="mat-body-2" style="margin-bottom: -4px">{{ dateMap.get(tx.hash).date }}</span>
+            <div style="margin-right: 12px">
+                <div style="display: flex; flex-direction: column; align-items: end">
+                    <span class="mat-body-2" style="margin-bottom: -4px">
+                        {{ txService.dateMap.get(tx.hash).date }}
+                    </span>
                     <span
                         class="mat-body-2 text-secondary"
                         (mouseenter)="tx.timestampHovered = true"
                         (mouseleave)="tx.timestampHovered = false"
                     >
                         <ng-container *ngIf="!tx.timestampHovered">
-                            {{ dateMap.get(tx.hash).relativeTime }}
+                            {{ txService.dateMap.get(tx.hash).relativeTime }}
                         </ng-container>
                         <ng-container *ngIf="tx.timestampHovered">
                             {{ txService.getTime(tx.timestamp) }}
@@ -280,33 +171,38 @@
             </div>
         </div>
         <mat-divider *ngIf="!last"></mat-divider>
+        <div class="invisible-full-address">
+            {{ tx.address }}
+        </div>
     </div>
-    <ng-template [ngTemplateOutlet]="transactionPaginator"></ng-template>
-</div>
 
-<div *ngIf="isLoading" class="tab-empty-state">
-    <blui-empty-state responsive class="account-empty-state" title="Loading">
-        <mat-icon blui-empty-icon>pending</mat-icon>
-    </blui-empty-state>
-</div>
+    <div *ngIf="showLoadingEmptyState()" class="tab-empty-state">
+        <blui-empty-state responsive class="account-empty-state" title="Loading" description="Fetching the next couple transactions">
+            <mat-icon blui-empty-icon>travel_explore</mat-icon>
+        </blui-empty-state>
+    </div>
 
-<div *ngIf="blockCount === 0 || (displayedTransactions.length === 0 && isPending)" class="tab-empty-state">
-    <blui-empty-state
-        responsive
-        class="account-empty-state"
-        [title]="txService.getEmptyStateTitle(isPending)"
-        [description]="txService.getEmptyStateDescription(isPending)"
-    >
-        <mat-icon blui-empty-icon>paid</mat-icon>
-    </blui-empty-state>
-</div>
-<div *ngIf="!isLoading && displayedTransactions.length === 0 && hasFiltersApplied" class="tab-empty-state">
-    <blui-empty-state
-        responsive
-        class="account-empty-state"
-        title="No Filtered Data"
-        description="Please adjust your filters and try again."
-    >
-        <mat-icon blui-empty-icon>travel_explore</mat-icon>
-    </blui-empty-state>
+    <div *ngIf="blockCount === 0 || (getDisplayedTransactions().length === 0 && isPending)" class="tab-empty-state">
+        <blui-empty-state
+            responsive
+            class="account-empty-state"
+            [title]="txService.getEmptyStateTitle(isPending)"
+            [description]="txService.getEmptyStateDescription(isPending)"
+        >
+            <mat-icon blui-empty-icon>paid</mat-icon>
+        </blui-empty-state>
+    </div>
+
+    <div *ngIf="!isLoading() && getDisplayedTransactions().length === 0 && txService.hasFiltersApplied()" class="tab-empty-state">
+        <blui-empty-state
+            responsive
+            class="account-empty-state"
+            title="No Filtered Data"
+            description="Please adjust your filters and try again."
+        >
+            <mat-icon blui-empty-icon>travel_explore</mat-icon>
+        </blui-empty-state>
+    </div>
+
+    <ng-template *ngTemplateOutlet="transactionPaginator; context: { top: false }"></ng-template>
 </div>

@@ -21,3 +21,17 @@ input:focus {
     border: none !important;
     outline: 0;
 }
+
+.brpd-tab-transaction-list {
+    overflow: hidden;
+}
+
+.invisible-full-address {
+    position: absolute;
+    color: transparent;
+    z-index: 0;
+    left: -100px;
+    font-size: 1px !important;
+    letter-spacing: 100vw;
+    bottom: 0px;
+}

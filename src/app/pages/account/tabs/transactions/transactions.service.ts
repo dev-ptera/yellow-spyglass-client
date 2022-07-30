@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
-import { FilterDialogData } from '@app/pages/account/tabs/brpd/brpd-tab.component';
 import { ApiService } from '@app/services/api/api.service';
 import { ConfirmedTransactionDto } from '@app/types/dto';
+import {Observable, Subject, Subscription} from 'rxjs';
+import {environment} from "../../../../../environments/environment";
 
 export type Transaction = {
     timestampHovered?: boolean;
@@ -19,39 +20,76 @@ export type Transaction = {
     showCopiedPlatformIdIcon?: boolean;
 };
 
+export type FilterDialogData = {
+    includeReceive: boolean;
+    includeSend: boolean;
+    includeChange: boolean;
+    maxAmount: number;
+    minAmount: number;
+    maxBlock: number;
+    minBlock: number;
+    filterAddresses: string;
+    update?: boolean;
+    size: number;
+    excludedAddresses: string;
+    reverse: boolean;
+    showKnownAccounts: boolean;
+};
+
 @Injectable({
     providedIn: 'root',
 })
 /** This class handles data transformations for the transactions list. */
 export class TransactionsService {
     maxPageLoaded: number;
+
     isLoadingConfirmedTransactions: boolean;
     isLoadingReceivableTransactions: boolean;
+    filterData: FilterDialogData;
 
     confirmedTransactions: {
         all: Map<number, Transaction[]>;
-        display: ConfirmedTransactionDto[];
+        display: Transaction[];
     };
 
     receivableTransactions: Transaction[];
 
+    // Map hashes to dates and relative timestamps.
+    dateMap: Map<string, { date: string; diffDays: number; relativeTime: string }> = new Map();
+
+    /* Private */
+    private readonly pageLoad$ = new Subject<Transaction[]>();
+
+    /* These fields need to be populated when an account is loaded for the first time. */
+    address: string;
+    private blockCount: number;
+
+    accountOverviewListener: Subscription;
+
     constructor(private readonly _vp: ViewportService, private readonly _apiService: ApiService) {
-        this.forgetConfirmedTransactions();
+        this.forgetAccount();
+
+        this.accountOverviewListener = this._apiService.accountLoadedSubject.subscribe((overview) => {
+            this.address = overview.address;
+            this.blockCount = overview.blockCount;
+        })
     }
 
-    loadReceivableTransactions(address: string): Promise<Transaction[]> {
+    emitPageLoad(): Observable<Transaction[]> {
+        return this.pageLoad$;
+    }
+
+    loadReceivableTransactions(address: string): Promise<void> {
         if (this.isLoadingReceivableTransactions) {
             return;
         }
 
         this.isLoadingReceivableTransactions = true;
-        return new Promise((resolve) => {
+        return new Promise(() => {
             this._apiService
                 .fetchReceivableTransactions(address)
                 .then((data) => {
-                    console.log('saving receivable transactions');
                     this.receivableTransactions = data;
-                    resolve(data);
                 })
                 .catch((err) => {
                     console.error(err);
@@ -62,18 +100,24 @@ export class TransactionsService {
         });
     }
 
+    private _onFetchPage(data: Transaction[], page: number): void {
+        this.confirmedTransactions.display = data;
+        this.isLoadingConfirmedTransactions = false;
+        this.createDateMap(data, this.dateMap);
+        this.confirmedTransactions.all.set(page, data);
+        if (page >= this.maxPageLoaded) {
+            this.maxPageLoaded = page;
+        }
+        this.pageLoad$.next(data);
+    }
+
     /** Checks if we have historically loaded the page.  If we have, display it.
      * It otherwise fetches the page remotely. */
-    async loadConfirmedTransactionsPage(
-        address: string,
-        page: number,
-        pageSize: number,
-        blockCount: number,
-        filterData: FilterDialogData
-    ): Promise<Transaction[]> {
+    async loadConfirmedTransactionsPage(page: number, pageSize: number, filterData?: FilterDialogData): Promise<void> {
         // If we have previously loaded the page, return the page.
         if (this.confirmedTransactions.all.has(page)) {
-            return this.confirmedTransactions.all.get(page);
+            const data = this.confirmedTransactions.all.get(page);
+            this._onFetchPage(data, page);
         }
 
         // Do not double-load.
@@ -89,7 +133,7 @@ export class TransactionsService {
             try {
                 // Get the offset based on the height of the last-loaded transaction.
                 const displayed = this.confirmedTransactions.all.get(this.maxPageLoaded);
-                offset = blockCount - displayed[displayed.length - 1].height + 1;
+                offset = this.blockCount - displayed[displayed.length - 1].height + 1;
             } catch (err) {
                 //  console.error(err);
             }
@@ -98,20 +142,14 @@ export class TransactionsService {
         }
 
         try {
+          //  this.confirmedTransactions.display = [];
             const data = (await this._apiService.fetchConfirmedTransactions(
-                address,
+                this.address,
                 pageSize,
                 offset,
-                filterData
+                this.filterData
             )) as Transaction[];
-            this.confirmedTransactions.all.set(page, data);
-            this.isLoadingConfirmedTransactions = false;
-
-            if (page >= this.maxPageLoaded) {
-                this.maxPageLoaded = page;
-            }
-
-            return data;
+            this._onFetchPage(data, page);
         } catch (err) {
             this.isLoadingConfirmedTransactions = false;
             console.error(err);
@@ -201,16 +239,25 @@ export class TransactionsService {
     }
 
     /** Removes all stored information for an account. Confirmed/Receivable Transactions & Current Page number (confirmed) */
-    forgetConfirmedTransactions(): void {
+    forgetAccount(): void {
         this.maxPageLoaded = 0;
+        this.address = undefined;
+        this.blockCount = undefined;
+        this.dateMap.clear();
+        this.receivableTransactions = [];
         this.confirmedTransactions = {
             all: new Map<number, ConfirmedTransactionDto[]>(),
             display: [],
         };
     }
 
-    forgetReceivableTransactions(): void {
-        this.receivableTransactions = [];
+    forgetConfirmedTransactions(): void {
+        this.maxPageLoaded = 0;
+        this.dateMap.clear();
+        this.confirmedTransactions = {
+            all: new Map<number, ConfirmedTransactionDto[]>(),
+            display: [],
+        };
     }
 
     /** Given a timestamp, returns a date (e.g 10/08/2022) */
@@ -223,5 +270,27 @@ export class TransactionsService {
         return `${date.getMonth() > 8 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`}/${
             date.getDate() > 9 ? date.getDate() : `0${date.getDate()}`
         }/${this._vp.sm ? date.getFullYear().toString().substring(2, 4) : `${date.getFullYear()}`}`;
+    }
+
+    setFilters(filters: FilterDialogData): void {
+        this.filterData = Object.assign({}, filters);
+    }
+
+    /** Returns true if there are filters that prevent blocks from showing in the list.  Omits 'reverse' */
+    hasFiltersApplied(): boolean {
+        let hasFilters = false
+        if (this.filterData) {
+            hasFilters ||= Boolean(this.filterData.filterAddresses);
+            hasFilters ||= Boolean(this.filterData.excludedAddresses);
+            hasFilters ||= Boolean(this.filterData.minBlock);
+            hasFilters ||= Boolean(this.filterData.maxBlock);
+            hasFilters ||= Boolean(this.filterData.minAmount);
+            hasFilters ||= Boolean(this.filterData.maxAmount);
+            hasFilters ||= Boolean(!this.filterData.includeReceive);
+            hasFilters ||= Boolean(!this.filterData.includeChange);
+            hasFilters ||= Boolean(!this.filterData.includeSend);
+            hasFilters ||= this.filterData.showKnownAccounts;
+        }
+        return hasFilters;
     }
 }

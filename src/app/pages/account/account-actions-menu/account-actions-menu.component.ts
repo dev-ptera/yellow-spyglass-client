@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { AccountActionsService } from '@app/services/account-actions/account-actions.service';
 import { BookmarksService } from '@app/services/bookmarks/bookmarks.service';
 
@@ -38,6 +38,15 @@ import { BookmarksService } from '@app/services/bookmarks/bookmarks.service';
                     <mat-icon blui-icon>download</mat-icon>
                     <div blui-title>Download History</div>
                 </blui-info-list-item>
+                <blui-info-list-item
+                    [dense]="true"
+                    (click)="
+                        showFilter = !showFilter; showFilterChange.emit(showFilter); accountActionsMenuOpen = false
+                    "
+                >
+                    <mat-icon blui-icon>tune</mat-icon>
+                    <div blui-title>Show Filters</div>
+                </blui-info-list-item>
             </mat-nav-list>
         </blui-user-menu>
     `,
@@ -47,6 +56,8 @@ export class AccountActionsMenuComponent {
     @Input() data: string;
     @Input() blockCount: number;
     @Input() maxTransactionsHistory: number;
+    @Input() showFilter: boolean;
+    @Output() showFilterChange = new EventEmitter<boolean>();
 
     accountActionsMenuOpen = false;
     isBookmarked: boolean;

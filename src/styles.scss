@@ -56,9 +56,10 @@ $custom-typography: mat.define-typography-config(
     text-decoration: none !important;
 }
 
-
-mat-card, .mat-table, .account-header {
-   // border-radius: 12px!important;
+mat-card,
+.mat-table,
+.account-header {
+    // border-radius: 12px!important;
 }
 
 .principal-tag * {
@@ -87,8 +88,7 @@ mat-card, .mat-table, .account-header {
 }
 
 // Fix Safari scroll issue
-
-.blui-drawer-layout {
+.blui-drawer-layout.sm {
     height: 100% !important;
     .mat-drawer-backdrop {
         z-index: 400;

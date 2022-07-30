@@ -17,12 +17,12 @@ export class TransactionsTabComponent implements OnInit {
     @Input() address: string;
     @Input() isPending: boolean;
     @Input() blockCount: number;
+    @Input() txPerPage: number;
 
     displayedTransactions: Transaction[] = [];
     navItems = APP_NAV_ITEMS;
     dateMap: Map<string, { date: string; diffDays: number; relativeTime: string }> = new Map();
     confirmedTxPageIndex = 0;
-    readonly txPerPage = 50;
     isLoading: boolean;
 
     constructor(
@@ -46,15 +46,9 @@ export class TransactionsTabComponent implements OnInit {
     loadConfirmedTransactionsPage(pageNumber: number): void {
         this.confirmedTxPageIndex = pageNumber;
         this.txService
-            .loadConfirmedTransactionsPage(
-                this.address,
-                this.confirmedTxPageIndex,
-                this.txPerPage,
-                this.blockCount,
-                undefined
-            )
-            .then((data: ConfirmedTransactionDto[]) => {
-                this.displayedTransactions = data;
+            .loadConfirmedTransactionsPage(this.confirmedTxPageIndex, this.txPerPage)
+            .then((data: any) => {
+                this.displayedTransactions = []; // SUBSCRIBE!!!!
                 this.txService.createDateMap(this.displayedTransactions, this.dateMap);
             })
             .catch((err) => {

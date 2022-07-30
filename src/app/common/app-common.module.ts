@@ -16,22 +16,47 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CommaPipe } from '@app/common/pipes/comma.directive';
 import { PercentagePipe } from '@app/common/pipes/percentage.pipe';
 import { CsvButtonComponent } from '@app/common/components/csv-button/csv-button.component';
+import { FilterButtonComponent } from '@app/common/components/filter-button/filter-button.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormsModule } from '@angular/forms';
+import { FilterDrawerComponent } from '@app/common/components/filter-drawer/filter-drawer.component';
 
 @NgModule({
     declarations: [
         BookmarkButtonComponent,
         CsvButtonComponent,
+        FilterButtonComponent,
         CommaPipe,
         CopyButtonComponent,
         QrButtonComponent,
         QrDialogComponent,
         PaginatorComponent,
         PercentagePipe,
+        FilterDrawerComponent,
         ErrorComponent,
         ResponsiveDirective,
         SafeHtmlPipe,
     ],
-    imports: [CommonModule, EmptyStateModule, MatButtonModule, MatIconModule, MatSnackBarModule, SpacerModule],
+    imports: [
+        CommonModule,
+        EmptyStateModule,
+        MatButtonModule,
+        MatIconModule,
+        MatSnackBarModule,
+        SpacerModule,
+        MatChipsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSliderModule,
+        MatDividerModule,
+        MatCheckboxModule,
+        FormsModule,
+    ],
     entryComponents: [QrDialogComponent],
     exports: [
         BookmarkButtonComponent,
@@ -44,6 +69,8 @@ import { CsvButtonComponent } from '@app/common/components/csv-button/csv-button
         PercentagePipe,
         ErrorComponent,
         ResponsiveDirective,
+        FilterDrawerComponent,
+        FilterButtonComponent,
         SafeHtmlPipe,
     ],
 })

@@ -32,6 +32,8 @@ import { BrpdTabComponent } from '@app/pages/account/tabs/brpd/brpd-tab.componen
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
     declarations: [
@@ -45,7 +47,7 @@ import { MatSliderModule } from '@angular/material/slider';
     ],
     imports: [
         AppCommonModule,
-
+        MatSidenavModule,
         BrowserAnimationsModule,
         CommonModule,
         EmptyStateModule,
@@ -71,6 +73,7 @@ import { MatSliderModule } from '@angular/material/slider';
         MatTooltipModule,
         UserMenuModule,
         FormsModule,
+        MatCheckboxModule,
     ],
     exports: [
         AccountComponent,

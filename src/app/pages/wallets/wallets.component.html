@@ -28,7 +28,7 @@
         <app-paginator
             responsive
             [pageSize]="pageSize"
-            [maxElements]="totalAccounts"
+            [blockCount]="totalAccounts"
             [(pageIndex)]="currentPage"
             (pageIndexChange)="loadRichListPage($event)"
             [disableMove]="loadingNewAccountBalancePage"

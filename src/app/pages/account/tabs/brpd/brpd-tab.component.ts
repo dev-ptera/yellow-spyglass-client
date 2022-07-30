@@ -1,20 +1,11 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { UtilService } from '@app/services/util/util.service';
 import { AliasService } from '@app/services/alias/alias.service';
 import { ApiService } from '@app/services/api/api.service';
 import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
 import { Transaction, TransactionsService } from '@app/pages/account/tabs/transactions/transactions.service';
-
-export type FilterDialogData = {
-    includeReceive: boolean;
-    includeSend: boolean;
-    includeChange: boolean;
-    maxAmount: number;
-    minAmount: number;
-    filterAddresses: string;
-    update?: boolean;
-};
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'account-brpd-tab',
@@ -22,25 +13,15 @@ export type FilterDialogData = {
     styleUrls: ['brpd-tab.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class BrpdTabComponent {
+export class BrpdTabComponent implements OnInit, OnDestroy {
+    @Input() address: string;
     @Input() isPending: boolean;
     @Input() blockCount: number;
-    @Input() address: string;
 
-    DEFAULT_PAGE_SIZE = 500;
     pageIndex = 0;
-    pageSize = this.DEFAULT_PAGE_SIZE;
-
-    hasFiltersApplied: boolean;
-
-    appliedPageSize = this.pageSize;
-    isLoading: boolean;
+    pageSize: number;
     navItems = APP_NAV_ITEMS;
-
-    filterData: FilterDialogData;
-    displayedTransactions: Transaction[] = [];
-
-    dateMap: Map<string, { date: string; diffDays: number; relativeTime: string }> = new Map();
+    pageLoad$: Subscription;
 
     constructor(
         public util: UtilService,
@@ -51,6 +32,13 @@ export class BrpdTabComponent {
     ) {}
 
     ngOnInit(): void {
+        this.fetchSocialMediaAccounts(this.txService.confirmedTransactions.display);
+        this.pageLoad$ = this.txService.emitPageLoad().subscribe((data) => {
+             this.fetchSocialMediaAccounts(data);
+        });
+
+        /*
+
         if (this.isPending) {
             this.displayedTransactions = this.txService.receivableTransactions;
             this.txService.createDateMap(this.displayedTransactions, this.dateMap);
@@ -58,50 +46,26 @@ export class BrpdTabComponent {
         } else {
             this._loadNewAccount();
             this.loadConfirmedTransactionsPage();
-        }
+        } */
 
         this.aliasService.fetchSocialMediaAliases(new Set([this.address]));
     }
 
-    applyFilters(): void {
-        this.pageIndex = 0;
-        this.appliedPageSize = this.pageSize;
-        this.displayedTransactions = [];
-        this.txService.forgetConfirmedTransactions();
-        this.hasFiltersApplied = false;
-        this.hasFiltersApplied ||= Boolean(this.filterData.maxAmount);
-        this.hasFiltersApplied ||= Boolean(this.filterData.minAmount);
-        this.hasFiltersApplied ||= Boolean(this.filterData.filterAddresses);
-        this.hasFiltersApplied ||= Boolean(!this.filterData.includeSend);
-        this.hasFiltersApplied ||= Boolean(!this.filterData.includeChange);
-        this.hasFiltersApplied ||= Boolean(!this.filterData.includeReceive);
-        this.loadConfirmedTransactionsPage();
+    ngOnDestroy(): void {
+        if (this.pageLoad$) {
+            this.pageLoad$.unsubscribe();
+        }
+    }
+
+    enableFastForward(): boolean {
+        return !this.txService.hasFiltersApplied();
     }
 
     loadConfirmedTransactionsPage(): void {
-        if (this.isLoading) {
-            return;
-        }
-        this.isLoading = true;
-        this.txService
-            .loadConfirmedTransactionsPage(
-                this.address,
-                this.pageIndex,
-                this.pageSize,
-                this.blockCount,
-                this.hasFiltersApplied ? this.filterData : undefined
-            )
-            .then((data) => {
-                this.displayedTransactions = data;
-                this.txService.createDateMap(this.displayedTransactions, this.dateMap);
-                this.fetchSocialMediaAccounts(data);
-            })
-            .catch((err) => {
-                console.error(err);
-            })
-            .finally(() => {
-                this.isLoading = false;
-            });
+        const pageSize = this.txService.filterData.size;
+        this.txService.loadConfirmedTransactionsPage(this.pageIndex, pageSize).catch((err) => {
+            console.error(err);
+        });
     }
 
     fetchSocialMediaAccounts(transactions: Transaction[]): void {
@@ -129,18 +93,6 @@ export class BrpdTabComponent {
         }, 700);
     }
 
-    resetFilters(): void {
-        this.pageSize = this.DEFAULT_PAGE_SIZE;
-        this.filterData = {
-            includeReceive: true,
-            includeChange: true,
-            includeSend: true,
-            maxAmount: undefined,
-            minAmount: undefined,
-            filterAddresses: '',
-        };
-    }
-
     hasNickname(address: string): boolean {
         return this.aliasService.has(address);
     }
@@ -156,16 +108,32 @@ export class BrpdTabComponent {
         return this.util.numberWithCommas(Number(x.toFixed(4)));
     }
 
+    getDisplayedTransactions(): Transaction[] {
+        if (this.isPending) {
+            return this.txService.receivableTransactions;
+        }
+        return this.txService.confirmedTransactions.display;
+    }
+
     /** Move the pagination logic into this page. */
     changePage(page: number): void {
         this.pageIndex = page;
         this.loadConfirmedTransactionsPage();
     }
 
-    private _loadNewAccount(): void {
-        this.pageIndex = 0;
-        this.displayedTransactions = [];
-        this.resetFilters();
-        this.loadConfirmedTransactionsPage();
+    showLoadingEmptyState(): boolean {
+        return this.isPending ?
+            this.txService.isLoadingReceivableTransactions :
+            this.txService.isLoadingConfirmedTransactions && this.txService.confirmedTransactions.display.length === 0;
+    }
+
+    isLoading(): boolean {
+        return this.isPending ?
+            this.txService.isLoadingReceivableTransactions :
+            this.txService.isLoadingConfirmedTransactions;
+    }
+
+    showPaginator(): boolean {
+        return this.blockCount > this.txService.filterData.size;
     }
 }
