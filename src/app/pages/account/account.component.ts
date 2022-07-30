@@ -66,7 +66,7 @@ export class AccountComponent implements OnDestroy {
 
         this.accountOverviewListener = this.apiService.accountLoadedSubject.subscribe((overview) => {
             this._prepareNewAccount(overview);
-        })
+        });
     }
 
     ngOnDestroy(): void {

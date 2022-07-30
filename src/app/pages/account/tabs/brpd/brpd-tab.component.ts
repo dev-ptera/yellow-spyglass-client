@@ -34,7 +34,10 @@ export class BrpdTabComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.fetchSocialMediaAccounts(this.txService.confirmedTransactions.display);
         this.pageLoad$ = this.txService.emitPageLoad().subscribe((data) => {
-             this.fetchSocialMediaAccounts(data);
+            this.fetchSocialMediaAccounts(data);
+            if (this.txService.maxPageLoaded === 0) {
+                this.pageIndex = 0;
+            }
         });
 
         /*
@@ -122,18 +125,31 @@ export class BrpdTabComponent implements OnInit, OnDestroy {
     }
 
     showLoadingEmptyState(): boolean {
-        return this.isPending ?
-            this.txService.isLoadingReceivableTransactions :
-            this.txService.isLoadingConfirmedTransactions && this.txService.confirmedTransactions.display.length === 0;
+        return this.isPending
+            ? this.txService.isLoadingReceivableTransactions
+            : this.txService.isLoadingConfirmedTransactions &&
+                  this.txService.confirmedTransactions.display.length === 0;
     }
 
     isLoading(): boolean {
-        return this.isPending ?
-            this.txService.isLoadingReceivableTransactions :
-            this.txService.isLoadingConfirmedTransactions;
+        return this.isPending
+            ? this.txService.isLoadingReceivableTransactions
+            : this.txService.isLoadingConfirmedTransactions;
     }
 
+    disableEntirePaginator(): boolean {
+        return this.isLoading() ;
+    }
+
+    // Next button should be disabled if the displayed content is less than page size.
+    disableNextButton(): boolean {
+        return this.txService.confirmedTransactions.display.length < this.txService.filterData.size;
+    }
+
+    // Show the paginator if there's more blocks to show than can be allowed on the page,
+    // And hide it if the first page's result set is smaller than the expected page size.
     showPaginator(): boolean {
-        return this.blockCount > this.txService.filterData.size;
+        return (this.blockCount > this.txService.filterData.size)
+            && (this.pageIndex !== 0 || this.txService.confirmedTransactions.display.length === this.txService.filterData.size);
     }
 }

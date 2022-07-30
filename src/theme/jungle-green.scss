@@ -92,7 +92,7 @@
 @mixin accountPage($foreground, $background, $primary, $warn) {
     .tab-buttons button {
         color: map-get($foreground, secondary-text) !important;
-        background-color: map-get(blui.$blui-white, 50)!important;
+        background-color: map-get(blui.$blui-white, 50) !important;
         border-color: map-get($foreground, divider);
     }
     .tab-buttons .active {

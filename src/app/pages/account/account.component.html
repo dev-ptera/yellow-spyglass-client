@@ -355,9 +355,9 @@
     style="z-index: 4"
     style="width: 100%"
 >
-    <mat-sidenav [mode]="vp.md || vp.sm ? 'over' : 'side'" class="filter-drawer" [opened]="showFilter" position="end">
+    <mat-sidenav [mode]="vp.md || vp.sm ? 'over' : 'side'" class="filter-drawer" [opened]="showFilter" position="end" [disableClose]="true">
         <app-transaction-filter-drawer
-            (search)="vp.md || vp.sm ? showFilter=false : undefined"
+            (search)="vp.md || vp.sm ? (showFilter = false) : undefined"
             [defaultPageSize]="isBRPD ? DEFAULT_BRPD_TX_SIZE : DEFAULT_TX_SIZE"
         ></app-transaction-filter-drawer>
     </mat-sidenav>

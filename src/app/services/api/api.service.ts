@@ -110,12 +110,10 @@ export class ApiService {
     /** Fetches account summary information. Emits an event when loaded. */
     async fetchAccountOverview(address: string): Promise<void> {
         await this._hasPingedApi();
-        try {
-            const overview = await this._http.get<AccountOverviewDto>(`${this.httpApi}/v1/account/overview/${address}`).toPromise();
-            this.accountLoadedSubject.next(overview);
-        } catch (err) {
-            console.error(err);
-        }
+        const overview = await this._http
+            .get<AccountOverviewDto>(`${this.httpApi}/v1/account/overview/${address}`)
+            .toPromise();
+        this.accountLoadedSubject.next(overview);
     }
 
     /** Fetches NFTs that an account owns. */
@@ -144,7 +142,7 @@ export class ApiService {
                 offset,
                 ...filters,
                 filterAddresses,
-                excludedAddresses
+                excludedAddresses,
             })
             .toPromise();
     }

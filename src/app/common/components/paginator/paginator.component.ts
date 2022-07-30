@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
 import { UtilService } from '@app/services/util/util.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
-import {Subscription} from "rxjs";
-import {TransactionsService} from "@app/pages/account/tabs/transactions/transactions.service";
+import { TransactionsService } from '@app/pages/account/tabs/transactions/transactions.service';
 
 /** Paginator component.  Pages start at index 0. */
 @Component({
@@ -39,7 +38,7 @@ import {TransactionsService} from "@app/pages/account/tabs/transactions/transact
             <ng-container *ngIf="blockCount > pageSize">
                 <button
                     mat-icon-button
-                    [disabled]="isMaxPageNum() || disableMove"
+                    [disabled]="isMaxPageNum() || disableMove || manualDisableNext"
                     [style.marginRight.px]="vp.sm ? 0 : 8"
                     (click)="goNextPage()"
                 >
@@ -48,7 +47,7 @@ import {TransactionsService} from "@app/pages/account/tabs/transactions/transact
                 <button
                     *ngIf="enableFastForward"
                     mat-icon-button
-                    [disabled]="isMaxPageNum() || disableMove"
+                    [disabled]="isMaxPageNum() || disableMove || manualDisableNext"
                     (click)="goLastPage()"
                 >
                     <mat-icon>last_page</mat-icon>
@@ -63,23 +62,19 @@ export class PaginatorComponent implements OnChanges {
     @Input() disableMove = false;
     @Input() showPageNumberOnly = false;
     @Input() enableFastForward = true;
+    @Input() manualDisableNext = false;
 
     @Input() pageIndex = 0;
     @Output() pageIndexChange: EventEmitter<number> = new EventEmitter<number>();
 
     maxPageNumber: number;
 
-    pageLoad$: Subscription;
+    constructor(
+        public util: UtilService,
+        public vp: ViewportService,
+        private readonly _txService: TransactionsService
+    ) {}
 
-    constructor(public util: UtilService, public vp: ViewportService, private readonly _txService: TransactionsService) {}
-
-    ngOnInit(): void {
-        this.pageLoad$ = this._txService.emitPageLoad().subscribe(() => {
-            if (this._txService.maxPageLoaded === 0) {
-               // this.goFirstPage();
-            }
-        });
-    }
 
     ngOnChanges(): void {
         this.maxPageNumber = Math.ceil(this.blockCount / this.pageSize) - 1;

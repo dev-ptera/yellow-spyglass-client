@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { ApiService } from '@app/services/api/api.service';
 import { ConfirmedTransactionDto } from '@app/types/dto';
-import {Observable, Subject, Subscription} from 'rxjs';
-import {environment} from "../../../../../environments/environment";
+import { Observable, Subject, Subscription } from 'rxjs';
 
 export type Transaction = {
     timestampHovered?: boolean;
@@ -72,7 +71,7 @@ export class TransactionsService {
         this.accountOverviewListener = this._apiService.accountLoadedSubject.subscribe((overview) => {
             this.address = overview.address;
             this.blockCount = overview.blockCount;
-        })
+        });
     }
 
     emitPageLoad(): Observable<Transaction[]> {
@@ -113,11 +112,16 @@ export class TransactionsService {
 
     /** Checks if we have historically loaded the page.  If we have, display it.
      * It otherwise fetches the page remotely. */
-    async loadConfirmedTransactionsPage(page: number, pageSize: number, filterData?: FilterDialogData): Promise<void> {
+    async loadConfirmedTransactionsPage(page: number, pageSize: number): Promise<void> {
+
+        if (!this.address) {
+            console.error('No address has been specified in search');
+        }
+
         // If we have previously loaded the page, return the page.
         if (this.confirmedTransactions.all.has(page)) {
             const data = this.confirmedTransactions.all.get(page);
-            this._onFetchPage(data, page);
+            return this._onFetchPage(data, page);
         }
 
         // Do not double-load.
@@ -129,10 +133,11 @@ export class TransactionsService {
 
         let offset = 0;
 
-        if (filterData) {
+
+        if (this.hasFiltersApplied()) {
             try {
                 // Get the offset based on the height of the last-loaded transaction.
-                const displayed = this.confirmedTransactions.all.get(this.maxPageLoaded);
+                const displayed = this.confirmedTransactions.display;
                 offset = this.blockCount - displayed[displayed.length - 1].height + 1;
             } catch (err) {
                 //  console.error(err);
@@ -142,7 +147,7 @@ export class TransactionsService {
         }
 
         try {
-          //  this.confirmedTransactions.display = [];
+            //  this.confirmedTransactions.display = [];
             const data = (await this._apiService.fetchConfirmedTransactions(
                 this.address,
                 pageSize,
@@ -278,7 +283,7 @@ export class TransactionsService {
 
     /** Returns true if there are filters that prevent blocks from showing in the list.  Omits 'reverse' */
     hasFiltersApplied(): boolean {
-        let hasFilters = false
+        let hasFilters = false;
         if (this.filterData) {
             hasFilters ||= Boolean(this.filterData.filterAddresses);
             hasFilters ||= Boolean(this.filterData.excludedAddresses);
