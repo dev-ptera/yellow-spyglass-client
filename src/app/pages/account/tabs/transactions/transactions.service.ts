@@ -89,6 +89,7 @@ export class TransactionsService {
                 .fetchReceivableTransactions(address)
                 .then((data) => {
                     this.receivableTransactions = data;
+                    this.updateDateMap(data, this.dateMap);
                 })
                 .catch((err) => {
                     console.error(err);
@@ -102,7 +103,7 @@ export class TransactionsService {
     private _onFetchPage(data: Transaction[], page: number): void {
         this.confirmedTransactions.display = data;
         this.isLoadingConfirmedTransactions = false;
-        this.createDateMap(data, this.dateMap);
+        this.updateDateMap(data, this.dateMap);
         this.confirmedTransactions.all.set(page, data);
         if (page >= this.maxPageLoaded) {
             this.maxPageLoaded = page;
@@ -176,11 +177,10 @@ export class TransactionsService {
     }
 
     /** Populates map of hash->date info */
-    createDateMap(
+    updateDateMap(
         transactions: Transaction[],
         dateMap: Map<string, { date: string; diffDays: number; relativeTime: string }>
     ): void {
-        dateMap.clear();
         const currentDate = new Date().getTime() / 1000;
         const oneDay = 24 * 60 * 60; // hours*minutes*seconds*milliseconds
         transactions.map((tx) => {

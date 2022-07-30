@@ -36,7 +36,7 @@ export class TransactionsTabComponent implements OnInit {
     ngOnInit(): void {
         if (this.isPending) {
             this.displayedTransactions = this.txService.receivableTransactions;
-            this.txService.createDateMap(this.displayedTransactions, this.dateMap);
+            this.txService.updateDateMap(this.displayedTransactions, this.dateMap);
         } else {
             this.loadConfirmedTransactionsPage(0);
         }
@@ -49,7 +49,7 @@ export class TransactionsTabComponent implements OnInit {
             .loadConfirmedTransactionsPage(this.confirmedTxPageIndex, this.txPerPage)
             .then((data: any) => {
                 this.displayedTransactions = []; // SUBSCRIBE!!!!
-                this.txService.createDateMap(this.displayedTransactions, this.dateMap);
+                this.txService.updateDateMap(this.displayedTransactions, this.dateMap);
             })
             .catch((err) => {
                 console.error(err);
