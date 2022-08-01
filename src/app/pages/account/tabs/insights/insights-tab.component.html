@@ -59,7 +59,7 @@
             <div blui-subtitle class="text-secondary">{{ formatBan(insights.totalAmountSent) }} BAN</div>
         </blui-info-list-item>
         <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
-            <div blui-title>Largest Tx Sent</div>
+            <div blui-title>Largest Transaction Sent</div>
             <div blui-subtitle class="text-secondary">{{ formatBan(insights.maxAmountSent) }} BAN</div>
             <a
                 blui-right-content
@@ -71,7 +71,7 @@
         </blui-info-list-item>
 
         <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
-            <div blui-title># Tx Sent</div>
+            <div blui-title>No. Transactions Sent</div>
             <div blui-subtitle class="text-secondary">{{ numberWithComas(insights.totalTxSent) }}</div>
         </blui-info-list-item>
 
@@ -98,7 +98,7 @@
                 hash
             </a>
         </blui-info-list-item>
-        <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+        <blui-info-list-item [wrapSubtitle]="true" [hidePadding]="true">
             <div blui-title>Most Common Recipient</div>
             <div blui-subtitle class="text-secondary">
                 <div *ngIf="insights.mostCommonRecipientAddress">
@@ -137,7 +137,7 @@
             <div blui-subtitle class="text-secondary">{{ formatBan(insights.totalAmountReceived) }} BAN</div>
         </blui-info-list-item>
         <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
-            <div blui-title>Largest Tx Received</div>
+            <div blui-title>Largest Transaction Received</div>
             <div blui-subtitle class="text-secondary">{{ formatBan(insights.maxAmountReceived) }} BAN</div>
             <a
                 blui-right-content
@@ -149,7 +149,7 @@
         </blui-info-list-item>
 
         <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
-            <div blui-title># Tx Received</div>
+            <div blui-title>No. Transactions Received</div>
             <div blui-subtitle class="text-secondary">{{ numberWithComas(insights.totalTxReceived) }}</div>
         </blui-info-list-item>
 
@@ -199,7 +199,7 @@
                 {{ shortenAddr(insights.mostCommonSenderAddress) }}
             </a>
         </blui-info-list-item>
-        <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
+        <blui-info-list-item [wrapSubtitle]="true" [hidePadding]="true">
             <div blui-title>Account Max Balance</div>
             <div blui-subtitle class="text-secondary">{{ formatBan(insights.maxBalance) }} BAN</div>
             <a
