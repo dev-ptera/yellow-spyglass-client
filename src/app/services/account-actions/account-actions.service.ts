@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { QrDialogComponent } from '@app/common/components/qr-dialog/qr-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApiService } from '@app/services/api/api.service';
 import { BookmarksService } from '@app/services/bookmarks/bookmarks.service';
+import { QrDialogComponent } from '@app/pages/account/qr-dialog/qr-dialog.component';
 
 @Injectable({
     providedIn: 'root',

@@ -13,7 +13,7 @@ import { APP_NAV_ITEMS, hashNavItem } from '../../navigation/nav-items';
 import { environment } from '../../../environments/environment';
 import { DelegatorsTabService } from '@app/pages/account/tabs/delegators/delegators-tab.service';
 import { InsightsTabService } from '@app/pages/account/tabs/insights/insights-tab.service';
-import {TransactionsService} from "@app/services/transactions/transactions.service";
+import { TransactionsService } from '@app/services/transactions/transactions.service';
 
 @Component({
     selector: 'app-account',

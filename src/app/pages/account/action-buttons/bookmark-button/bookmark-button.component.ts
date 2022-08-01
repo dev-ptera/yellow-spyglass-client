@@ -6,6 +6,7 @@ import { AccountActionsService } from '@app/services/account-actions/account-act
 @Component({
     selector: 'app-bookmark-button',
     styleUrls: ['../copy-button/address-button.scss'],
+    encapsulation: ViewEncapsulation.None,
     template: `
         <button
             *ngIf="!isBookmarked"
@@ -28,7 +29,6 @@ import { AccountActionsService } from '@app/services/account-actions/account-act
             <mat-icon class="bookmarked-button">favorite</mat-icon>
         </button>
     `,
-    encapsulation: ViewEncapsulation.None,
 })
 export class BookmarkButtonComponent implements OnChanges {
     @Input() id: string;

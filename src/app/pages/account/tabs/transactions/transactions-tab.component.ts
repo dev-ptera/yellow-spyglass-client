@@ -4,7 +4,7 @@ import { UtilService } from '@app/services/util/util.service';
 import { AliasService } from '@app/services/alias/alias.service';
 import { ApiService } from '@app/services/api/api.service';
 import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
-import {Transaction, TransactionsService} from "@app/services/transactions/transactions.service";
+import { Transaction, TransactionsService } from '@app/services/transactions/transactions.service';
 
 @Component({
     selector: 'account-tx-tab',

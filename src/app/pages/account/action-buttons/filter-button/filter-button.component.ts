@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angu
 @Component({
     selector: 'app-filter-button',
     styleUrls: ['../copy-button/address-button.scss'],
+    encapsulation: ViewEncapsulation.None,
     template: `
         <button
             mat-icon-button
@@ -13,7 +14,6 @@ import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angu
             <mat-icon>tune</mat-icon>
         </button>
     `,
-    encapsulation: ViewEncapsulation.None,
 })
 export class FilterButtonComponent {
     @Input() showFilter: boolean;

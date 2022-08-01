@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } 
 import { UtilService } from '@app/services/util/util.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { Subscription } from 'rxjs';
-import {TransactionsService} from "@app/services/transactions/transactions.service";
+import { TransactionsService } from '@app/services/transactions/transactions.service';
 
 /** Paginator component.  Pages start at index 0. */
 @Component({
