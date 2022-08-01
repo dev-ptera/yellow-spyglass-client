@@ -8,11 +8,13 @@
 
 <div class="brpd-tab-transaction-list animation-content">
     <ng-template *ngTemplateOutlet="transactionPaginator; context: { top: true }"></ng-template>
+
     <app-casual-view
         *ngIf="!isBRPD()"
         [transactions]="getDisplayedTransactions()"
         [isPending]="isPending"
     ></app-casual-view>
+
     <app-compact-view
         *ngIf="isBRPD()"
         [transactions]="getDisplayedTransactions()"
