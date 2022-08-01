@@ -92,12 +92,13 @@
 @mixin accountPage($foreground, $background, $primary, $warn) {
     .tab-buttons button {
         color: map-get($foreground, secondary-text) !important;
-        background-color: map-get(blui.$blui-white, 50) !important;
+        background-color: map-get(blui.$blui-white, 100) !important;
         border-color: map-get($foreground, divider);
     }
     .tab-buttons .active {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
+        background-color: map-get(blui.$blui-white, 50) !important;
         border-bottom: solid 2px $primary;
         color: $primary !important;
     }

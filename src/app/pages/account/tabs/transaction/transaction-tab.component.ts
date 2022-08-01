@@ -6,14 +6,14 @@ import { ApiService } from '@app/services/api/api.service';
 import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
 import { Subscription } from 'rxjs';
 import { Transaction, TransactionsService } from '@app/services/transactions/transactions.service';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
-    selector: 'account-brpd-tab',
-    templateUrl: 'brpd-tab.component.html',
-    styleUrls: ['brpd-tab.component.scss'],
+    selector: 'account-tx-tab',
+    templateUrl: 'transaction-tab.component.html',
     encapsulation: ViewEncapsulation.None,
 })
-export class BrpdTabComponent implements OnInit, OnDestroy {
+export class TransactionTabComponent implements OnInit, OnDestroy {
     @Input() address: string;
     @Input() isPending: boolean;
     @Input() blockCount: number;
@@ -22,7 +22,6 @@ export class BrpdTabComponent implements OnInit, OnDestroy {
     pageSize: number;
     navItems = APP_NAV_ITEMS;
     pageLoad$: Subscription;
-
     hasError: boolean;
 
     constructor(
@@ -57,38 +56,6 @@ export class BrpdTabComponent implements OnInit, OnDestroy {
         }
     }
 
-    copyAddress(item: Transaction): void {
-        void navigator.clipboard.writeText(item.address || item.newRepresentative);
-        item.showCopiedAddressIcon = true;
-        setTimeout(() => {
-            item.showCopiedAddressIcon = false;
-        }, 700);
-    }
-
-    copyPlatformUserId(item: Transaction): void {
-        const discordId = this.aliasService.getSocialMediaUserId(item.address || item.newRepresentative);
-        void navigator.clipboard.writeText(String(discordId));
-        item.showCopiedPlatformIdIcon = true;
-        setTimeout(() => {
-            item.showCopiedPlatformIdIcon = false;
-        }, 700);
-    }
-
-    hasNickname(address: string): boolean {
-        return this.aliasService.has(address);
-    }
-
-    trackByFn(index: number, tx: Transaction): number {
-        return index;
-    }
-
-    formatNumber(x: number): string {
-        if (isNaN(x)) {
-            return;
-        }
-        return this.util.numberWithCommas(Number(x.toFixed(4)));
-    }
-
     getDisplayedTransactions(): Transaction[] {
         if (this.isPending) {
             return this.txService.receivableTransactions;
@@ -109,7 +76,15 @@ export class BrpdTabComponent implements OnInit, OnDestroy {
             : this.txService.isLoadingConfirmedTransactions;
     }
 
+    isBRPD(): boolean {
+        return environment.brpd;
+    }
+
     private _fetchSocialMediaAccounts(transactions: Transaction[]): void {
+        if (!this.isBRPD()) {
+            return;
+        }
+
         const pageAddressSet = new Set<string>();
         transactions.map((tx) => {
             pageAddressSet.add(tx.address);

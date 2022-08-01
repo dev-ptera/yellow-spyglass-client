@@ -305,28 +305,11 @@
             [class.divider-border]="shownTabNumber !== 4 && shownTabNumber !== 5"
         >
             <account-tx-tab
-                *ngIf="shownTabNumber === 1 && !isBRPD"
+                *ngIf="shownTabNumber === 1"
                 [address]="address"
                 [blockCount]="accountOverview.blockCount"
             ></account-tx-tab>
-
-            <account-brpd-tab
-                *ngIf="shownTabNumber === 1 && isBRPD"
-                [address]="address"
-                [blockCount]="accountOverview.blockCount"
-            ></account-brpd-tab>
-
-            <account-tx-tab
-                *ngIf="shownTabNumber === 2 && !isBRPD"
-                [address]="address"
-                [isPending]="true"
-            ></account-tx-tab>
-
-            <account-brpd-tab
-                *ngIf="shownTabNumber === 2 && isBRPD"
-                [address]="address"
-                [isPending]="true"
-            ></account-brpd-tab>
+            <account-tx-tab *ngIf="shownTabNumber === 2" [address]="address" [isPending]="true"></account-tx-tab>
 
             <account-delegators-tab *ngIf="shownTabNumber === 3" [address]="address"></account-delegators-tab>
 
