@@ -4,23 +4,24 @@ import { AccountActionsService } from '@app/services/account-actions/account-act
 @Component({
     selector: 'app-csv-button',
     styleUrls: ['../copy-button/address-button.scss'],
+    encapsulation: ViewEncapsulation.None,
     template: `
         <button
             *ngIf="blockCount <= maxTransactionsLimit"
             mat-icon-button
             class="address-action-button"
+            [disabled]="isLoading"
             responsive
             (click)="downloadTxHistory()"
         >
             <mat-icon>download</mat-icon>
         </button>
     `,
-    encapsulation: ViewEncapsulation.None,
 })
 export class CsvButtonComponent {
     @Input() address: string;
-    @Input() maxTransactionsLimit: number;
     @Input() blockCount: number;
+    @Input() maxTransactionsLimit: number;
 
     isLoading: boolean;
 

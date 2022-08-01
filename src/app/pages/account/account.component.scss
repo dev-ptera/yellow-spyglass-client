@@ -5,8 +5,9 @@
     margin-bottom: 40px;
     background: white;
     border-radius: 16px;
-    padding: 12px 0;
-   // border: none!important;
+    padding: 8px 0;
+    padding-right: 16px;
+    // border: none!important;
     &.sm {
         padding: 0;
         margin-bottom: 8px;
@@ -88,7 +89,7 @@
         margin-top: -12px;
     }
     button {
-        z-index: 2;
+        z-index: 1;
         box-sizing: border-box;
         border-radius: 0;
         border: solid 1px;
@@ -121,5 +122,12 @@
     }
     .tab-empty-state {
         padding: 64px 16px;
+    }
+}
+
+.filter-drawer {
+    input,
+    textarea {
+        border: 0 !important;
     }
 }

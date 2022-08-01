@@ -68,6 +68,7 @@ export class NavigationComponent {
     private _listenForRouteChanges(): void {
         this.routeListener = this._router.events.subscribe((route) => {
             if (route instanceof NavigationEnd) {
+                document.body.style.overflow = 'auto'; // Helps fight drawer overflow when a sidenav is opened.
                 this._stateService.setSelectedItem(undefined);
                 window.scrollTo(0, 0);
                 const drawerContent = document.getElementsByClassName('mat-sidenav-content')[0];

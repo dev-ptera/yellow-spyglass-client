@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
 import { UtilService } from '@app/services/util/util.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
+import { Subscription } from 'rxjs';
+import { TransactionsService } from '@app/services/transactions/transactions.service';
 
 /** Paginator component.  Pages start at index 0. */
 @Component({
@@ -8,16 +10,20 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
     encapsulation: ViewEncapsulation.None,
     template: `
         <div style="display: flex; align-items: center; height: 56px" class="text-secondary">
-            <ng-container *ngIf="maxElements > pageSize">
+            <ng-container *ngIf="blockCount > pageSize">
                 <button
                     mat-icon-button
-                    [disabled]="pageIndex === 0 || disableMove"
+                    [disabled]="displayedPageNumber === 0 || txService.isLoadingConfirmedTransactions"
                     [style.marginRight.px]="vp.sm ? 0 : 8"
-                    (click)="firstPage()"
+                    (click)="goFirstPage()"
                 >
                     <mat-icon>first_page</mat-icon>
                 </button>
-                <button mat-icon-button [disabled]="pageIndex === 0 || disableMove" (click)="prevPage()">
+                <button
+                    mat-icon-button
+                    [disabled]="displayedPageNumber === 0 || txService.isLoadingConfirmedTransactions"
+                    (click)="goPrevPage()"
+                >
                     <mat-icon>chevron_left</mat-icon>
                 </button>
             </ng-container>
@@ -28,26 +34,35 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
                 to
                 <span>{{ getCurrPageMax() }}</span>
                 of
-                <span>{{ util.numberWithCommas(maxElements) }}</span>
+                <span>{{ util.numberWithCommas(blockCount) }}</span>
             </div>
             <div *ngIf="showPageNumberOnly" [style.fontSize.px]="vp.sm ? 12 : 14">
-                Page {{ pageIndex + 1 }} <span style="margin: 0 8px">·</span> {{ pageSize }} items / page
+                Page {{ displayedPageNumber + 1 }} <span style="margin: 0 8px">·</span> {{ pageSize }} items / page
             </div>
+            <mat-spinner
+                *ngIf="txService.isLoadingConfirmedTransactions"
+                [diameter]="16"
+                style="margin-left: 12px; margin-right: -28px"
+            ></mat-spinner>
             <blui-spacer></blui-spacer>
-            <ng-container *ngIf="maxElements > pageSize">
+            <ng-container *ngIf="blockCount > pageSize">
                 <button
                     mat-icon-button
-                    [disabled]="isMaxPageNum() || disableMove"
+                    [disabled]="
+                        isMaxPageNum() || txService.isLoadingConfirmedTransactions || txService.hasReachedLastPage()
+                    "
                     [style.marginRight.px]="vp.sm ? 0 : 8"
-                    (click)="nextPage()"
+                    (click)="goNextPage()"
                 >
                     <mat-icon>chevron_right</mat-icon>
                 </button>
                 <button
-                    *ngIf="enableFastForward"
+                    *ngIf="!txService.hasFiltersApplied()"
                     mat-icon-button
-                    [disabled]="isMaxPageNum() || disableMove"
-                    (click)="lastPage()"
+                    [disabled]="
+                        isMaxPageNum() || txService.isLoadingConfirmedTransactions || txService.hasReachedLastPage()
+                    "
+                    (click)="goLastPage()"
                 >
                     <mat-icon>last_page</mat-icon>
                 </button>
@@ -56,52 +71,67 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
     `,
 })
 export class PaginatorComponent implements OnChanges {
-    @Input() pageIndex = 0;
-    @Input() pageSize: number;
-    @Input() maxElements: number;
-    @Input() disableMove = false;
+    @Input() blockCount: number;
     @Input() showPageNumberOnly = false;
-    @Input() enableFastForward = true;
 
-    @Output() pageIndexChange: EventEmitter<number> = new EventEmitter<number>();
+    pageSize: number;
+    displayedPageNumber: number;
 
-    maxPageNumber: number;
+    private readonly pageLoad$: Subscription;
+    private maxPageNumber: number;
 
-    constructor(public util: UtilService, public vp: ViewportService) {}
+    constructor(public util: UtilService, public vp: ViewportService, public txService: TransactionsService) {
+        // Initial state
+        this.displayedPageNumber = 0;
+        this.pageSize = this.txService.filterData.size;
+
+        this.pageLoad$ = this.txService.emitPageLoad().subscribe(() => {
+            this.displayedPageNumber = this.txService.confirmedTransactions.currentPage;
+            this.pageSize = this.txService.filterData.size;
+        });
+    }
+
+    ngOnDestroy(): void {
+        if (this.pageLoad$) {
+            this.pageLoad$.unsubscribe();
+        }
+    }
 
     ngOnChanges(): void {
-        this.maxPageNumber = Math.floor(this.maxElements / this.pageSize);
+        this.maxPageNumber = Math.ceil(this.blockCount / this.pageSize) - 1;
     }
 
     isMaxPageNum(): boolean {
-        return this.pageIndex === this.maxPageNumber;
+        return this.displayedPageNumber === this.maxPageNumber;
     }
 
-    firstPage(): void {
-        this.pageIndex = 0;
-        this.pageIndexChange.emit(this.pageIndex);
+    goFirstPage(): void {
+        this.loadPage(0);
     }
 
-    prevPage(): void {
-        this.pageIndex -= 1;
-        this.pageIndexChange.emit(this.pageIndex);
+    goPrevPage(): void {
+        this.loadPage(this.displayedPageNumber - 1);
     }
 
-    nextPage(): void {
-        this.pageIndex++;
-        this.pageIndexChange.emit(this.pageIndex);
+    goNextPage(): void {
+        this.loadPage(this.displayedPageNumber + 1);
     }
 
-    lastPage(): void {
-        this.pageIndex = this.maxPageNumber;
-        this.pageIndexChange.emit(this.pageIndex);
+    goLastPage(): void {
+        this.loadPage(this.maxPageNumber);
     }
 
     getCurrPageMin(): string {
-        return this.util.numberWithCommas(this.pageIndex * this.pageSize + 1);
+        return this.util.numberWithCommas(this.displayedPageNumber * this.pageSize + 1);
     }
 
     getCurrPageMax(): string {
-        return this.util.numberWithCommas(Math.min(this.maxElements, (this.pageIndex + 1) * this.pageSize));
+        return this.util.numberWithCommas(Math.min(this.blockCount, (this.displayedPageNumber + 1) * this.pageSize));
+    }
+
+    loadPage(page: number): void {
+        void this.txService.loadConfirmedTransactionsPage(page, this.pageSize).catch((err) => {
+            console.error(err);
+        });
     }
 }

@@ -76,15 +76,21 @@
                             <app-qr-button [address]="address"></app-qr-button>
                             <app-bookmark-button [id]="address"></app-bookmark-button>
                             <app-csv-button
+                                *ngIf="accountOverview.opened"
                                 [address]="address"
                                 [blockCount]="accountOverview?.blockCount"
                                 [maxTransactionsLimit]="MAX_INSIGHTS"
                             ></app-csv-button>
+                            <app-filter-button
+                                [(showFilter)]="showFilter"
+                                *ngIf="accountOverview.opened"
+                            ></app-filter-button>
                         </ng-container>
                         <app-account-actions-menu
                             *ngIf="vp.sm || vp.md"
                             [blockCount]="accountOverview.blockCount"
                             [maxTransactionsHistory]="MAX_INSIGHTS"
+                            [(showFilter)]="showFilter"
                             [data]="address"
                         ></app-account-actions-menu>
                     </div>
@@ -174,7 +180,7 @@
                 <div
                     class="account-summary-tags"
                     responsive
-                    *ngIf="!accountOverview.opened && receivableTransactionsCount !== 0"
+                    *ngIf="!accountOverview.opened && getReceivableTransactionsCount() !== 0"
                 >
                     <ng-template [ngTemplateOutlet]="mobileMonKey"></ng-template>
                     <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 16" responsive>
@@ -242,11 +248,11 @@
                 <ng-container *ngIf="vp.sm">
                     <mat-icon>pending</mat-icon>
                     <div class="count-subtitle">
-                        {{ receivableTransactionsCount }}
+                        {{ getReceivableTransactionsCount() }}
                     </div>
                 </ng-container>
                 <ng-container *ngIf="!vp.sm">
-                    Receivable {{ vp.md ? 'Tx' : 'Transactions' }} ({{ receivableTransactionsCount }})
+                    Receivable {{ vp.md ? 'Tx' : 'Transactions' }} ({{ getReceivableTransactionsCount() }})
                 </ng-container>
             </button>
 
@@ -299,28 +305,11 @@
             [class.divider-border]="shownTabNumber !== 4 && shownTabNumber !== 5"
         >
             <account-tx-tab
-                *ngIf="shownTabNumber === 1 && !isBRPD"
+                *ngIf="shownTabNumber === 1"
                 [address]="address"
                 [blockCount]="accountOverview.blockCount"
             ></account-tx-tab>
-
-            <account-brpd-tab
-                *ngIf="shownTabNumber === 1 && isBRPD"
-                [address]="address"
-                [blockCount]="accountOverview.blockCount"
-            ></account-brpd-tab>
-
-            <account-tx-tab
-                *ngIf="shownTabNumber === 2 && !isBRPD"
-                [address]="address"
-                [isPending]="true"
-            ></account-tx-tab>
-
-            <account-brpd-tab
-                *ngIf="shownTabNumber === 2 && isBRPD"
-                [address]="address"
-                [isPending]="true"
-            ></account-brpd-tab>
+            <account-tx-tab *ngIf="shownTabNumber === 2" [address]="address" [isPending]="true"></account-tx-tab>
 
             <account-delegators-tab *ngIf="shownTabNumber === 3" [address]="address"></account-delegators-tab>
 
@@ -346,14 +335,37 @@
     </div>
 </ng-template>
 
-<div class="app-page-root" responsive>
-    <div class="app-page-content" style="max-width: 1100px">
-        <app-error *ngIf="hasError"></app-error>
-        <ng-container *ngIf="!hasError">
-            <ng-template [ngTemplateOutlet]="headerContent"></ng-template>
-            <div *ngIf="!isLoading" class="animation-body">
-                <ng-template [ngTemplateOutlet]="bodyContent"></ng-template>
+<mat-sidenav-container
+    [hasBackdrop]="vp.sm || vp.md"
+    (backdropClick)="showFilter = false"
+    style="z-index: 4"
+    style="width: 100%"
+>
+    <mat-sidenav
+        [mode]="vp.md || vp.sm ? 'over' : 'side'"
+        class="filter-drawer"
+        (opened)="disableBodyScrollWhenOpen()"
+        (closed)="disableBodyScrollWhenOpen()"
+        [opened]="showFilter"
+        position="end"
+        [disableClose]="true"
+    >
+        <app-transaction-filter-drawer
+            (search)="vp.md || vp.sm ? (showFilter = false) : undefined"
+            [defaultPageSize]="isBRPD ? DEFAULT_BRPD_TX_SIZE : DEFAULT_TX_SIZE"
+        ></app-transaction-filter-drawer>
+    </mat-sidenav>
+    <mat-sidenav-content style="height: 100vh">
+        <div class="app-page-root" responsive style="height: unset">
+            <div class="app-page-content" style="max-width: 1100px">
+                <app-error *ngIf="hasError"></app-error>
+                <ng-container *ngIf="!hasError">
+                    <ng-template [ngTemplateOutlet]="headerContent"></ng-template>
+                    <div *ngIf="!isLoading" class="animation-body">
+                        <ng-template [ngTemplateOutlet]="bodyContent"></ng-template>
+                    </div>
+                </ng-container>
             </div>
-        </ng-container>
-    </div>
-</div>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

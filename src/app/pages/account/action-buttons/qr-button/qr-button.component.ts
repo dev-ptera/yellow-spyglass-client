@@ -4,12 +4,12 @@ import { AccountActionsService } from '@app/services/account-actions/account-act
 @Component({
     selector: 'app-qr-button',
     styleUrls: ['../copy-button/address-button.scss'],
+    encapsulation: ViewEncapsulation.None,
     template: `
         <button mat-icon-button class="address-action-button" responsive (click)="openDialog()">
             <mat-icon>qr_code_scanner</mat-icon>
         </button>
     `,
-    encapsulation: ViewEncapsulation.None,
 })
 export class QrButtonComponent {
     @Input() address: string;

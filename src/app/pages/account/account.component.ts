@@ -12,8 +12,8 @@ import { AliasService } from '@app/services/alias/alias.service';
 import { APP_NAV_ITEMS, hashNavItem } from '../../navigation/nav-items';
 import { environment } from '../../../environments/environment';
 import { DelegatorsTabService } from '@app/pages/account/tabs/delegators/delegators-tab.service';
-import { TransactionsService } from '@app/pages/account/tabs/transactions/transactions.service';
 import { InsightsTabService } from '@app/pages/account/tabs/insights/insights-tab.service';
+import { TransactionsService } from '@app/services/transactions/transactions.service';
 
 @Component({
     selector: 'app-account',
@@ -30,14 +30,17 @@ export class AccountComponent implements OnDestroy {
 
     isLoading: boolean;
     hasError: boolean;
+    showFilter = false;
     isBRPD = environment.brpd;
 
     delegatorCount: number;
     shownTabNumber: number;
-    receivableTransactionsCount: number;
 
+    DEFAULT_BRPD_TX_SIZE = this.vp.sm ? 50 : 250;
+    DEFAULT_TX_SIZE = 50;
     navItems = APP_NAV_ITEMS;
     routeListener: Subscription;
+    accountOverviewListener: Subscription;
     accountOverview: AccountOverviewDto;
 
     constructor(
@@ -60,11 +63,18 @@ export class AccountComponent implements OnDestroy {
                 this._searchAccount(splitUrl[splitUrl.length - 1]);
             }
         });
+
+        this.accountOverviewListener = this.apiService.accountLoadedSubject.subscribe((overview) => {
+            this._prepareNewAccount(overview);
+        });
     }
 
     ngOnDestroy(): void {
         if (this.routeListener) {
             this.routeListener.unsubscribe();
+        }
+        if (this.accountOverviewListener) {
+            this.accountOverviewListener.unsubscribe();
         }
     }
 
@@ -76,11 +86,9 @@ export class AccountComponent implements OnDestroy {
         this.isLoading = true;
         this.shownTabNumber = 1;
         this.delegatorCount = 0;
-        this.receivableTransactionsCount = 0;
 
         // Managing tabs state.  Reset them all.
-        this._txTabService.forgetConfirmedTransactions();
-        this._txTabService.forgetReceivableTransactions();
+        this._txTabService.forgetAccount();
         this._insightsTabService.forgetAccount();
         this._delegatorsTabService.forgetAccount();
     }
@@ -104,18 +112,17 @@ export class AccountComponent implements OnDestroy {
         this.address = address;
         this._ref.detectChanges();
 
+        const pageSize = this.isBRPD ? this.DEFAULT_BRPD_TX_SIZE : this.DEFAULT_TX_SIZE;
+
+        // Fetch receivable transactions
+        void this._txTabService.loadReceivableTransactions(address);
+
+        // Fetch overview & confirmed transactions, don't show page until both are loaded.
+        this._txTabService.address = address;
         Promise.all([
             this.apiService.fetchAccountOverview(address),
-            this._txTabService.loadConfirmedTransactionsPage(address, 0, 50, undefined, undefined),
-            this._txTabService.loadReceivableTransactions(address),
+            this._txTabService.loadConfirmedTransactionsPage(0, pageSize),
         ])
-            .then((data) => {
-                // Only prepare new account if the loaded data matches the expected address for the page.
-                if (data[0].address === this.address) {
-                    this._prepareNewAccount(data[0]);
-                }
-                this.receivableTransactionsCount = data[2].length;
-            })
             .catch((err) => {
                 console.error(err);
                 this.hasError = true;
@@ -200,5 +207,13 @@ export class AccountComponent implements OnDestroy {
 
     withCommas(x: number): string {
         return this._util.numberWithCommas(x);
+    }
+
+    getReceivableTransactionsCount(): number {
+        return this._txTabService.receivableTransactions.length;
+    }
+
+    disableBodyScrollWhenOpen(): void {
+        document.body.style.overflow = this.showFilter ? 'hidden' : 'auto';
     }
 }

@@ -28,7 +28,7 @@ import {
 } from '@app/types/dto';
 import { InsightsDto } from '@app/types/dto/InsightsDto';
 import { Observable, Subject } from 'rxjs';
-import { FilterDialogData } from '@app/pages/account/tabs/brpd/brpd-tab.component';
+import { FilterDialogData } from '@app/services/transactions/transactions.service';
 
 @Injectable({
     providedIn: 'root',
@@ -37,6 +37,7 @@ export class ApiService {
     httpApi: string;
     wsApi: string;
     apiToUseSubject = new Subject<string>();
+    accountLoadedSubject = new Subject<AccountOverviewDto>();
 
     constructor(private readonly _http: HttpClient) {
         this._pingServers();
@@ -57,6 +58,7 @@ export class ApiService {
                     resolve(api2); // If error, resolve the opposite api.
                 });
         });
+        /*
         const req2 = new Promise((resolve) => {
             this._http
                 .get<any>(`${api2}/v1/representatives/online`)
@@ -67,6 +69,7 @@ export class ApiService {
                     resolve(api1);
                 });
         });
+         */
 
         // REQ 2 not included for now; api.creeper is not returning correct timestmaps.
         Promise.race([req1])
@@ -104,10 +107,13 @@ export class ApiService {
         return this._http.get<ExplorerSummaryDto>(`${this.httpApi}/v1/explorer-summary`).toPromise();
     }
 
-    /** Fetches account summary information. */
-    async fetchAccountOverview(address: string): Promise<AccountOverviewDto> {
+    /** Fetches account summary information. Emits an event when loaded. */
+    async fetchAccountOverview(address: string): Promise<void> {
         await this._hasPingedApi();
-        return this._http.get<AccountOverviewDto>(`${this.httpApi}/v1/account/overview/${address}`).toPromise();
+        const overview = await this._http
+            .get<AccountOverviewDto>(`${this.httpApi}/v1/account/overview/${address}`)
+            .toPromise();
+        this.accountLoadedSubject.next(overview);
     }
 
     /** Fetches NFTs that an account owns. */
@@ -127,6 +133,8 @@ export class ApiService {
         const url = `${this.httpApi}/v2/account/confirmed-transactions`;
         const filterAddresses =
             filters && filters.filterAddresses ? filters.filterAddresses.split(',').map((x) => x.trim()) : [];
+        const excludedAddresses =
+            filters && filters.excludedAddresses ? filters.excludedAddresses.split(',').map((x) => x.trim()) : [];
         return this._http
             .post<ConfirmedTransactionDto[]>(url, {
                 address,
@@ -134,6 +142,7 @@ export class ApiService {
                 offset,
                 ...filters,
                 filterAddresses,
+                excludedAddresses,
             })
             .toPromise();
     }
