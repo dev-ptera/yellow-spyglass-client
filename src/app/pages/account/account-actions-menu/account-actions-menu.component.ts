@@ -30,23 +30,25 @@ import { BookmarksService } from '@app/services/bookmarks/bookmarks.service';
                     <mat-icon blui-icon>qr_code_scanner</mat-icon>
                     <div blui-title>Scan Address</div>
                 </blui-info-list-item>
-                <blui-info-list-item
-                    *ngIf="blockCount <= maxTransactionsHistory"
-                    [dense]="true"
-                    (click)="downloadHistory(); accountActionsMenuOpen = false"
-                >
-                    <mat-icon blui-icon>download</mat-icon>
-                    <div blui-title>Download History</div>
-                </blui-info-list-item>
-                <blui-info-list-item
-                    [dense]="true"
-                    (click)="
-                        showFilter = !showFilter; showFilterChange.emit(showFilter); accountActionsMenuOpen = false
-                    "
-                >
-                    <mat-icon blui-icon>tune</mat-icon>
-                    <div blui-title>Show Filters</div>
-                </blui-info-list-item>
+                <ng-container *ngIf="blockCount > 0">
+                    <blui-info-list-item
+                        *ngIf="blockCount <= maxTransactionsHistory"
+                        [dense]="true"
+                        (click)="downloadHistory(); accountActionsMenuOpen = false"
+                    >
+                        <mat-icon blui-icon>download</mat-icon>
+                        <div blui-title>Download History</div>
+                    </blui-info-list-item>
+                    <blui-info-list-item
+                        [dense]="true"
+                        (click)="
+                            showFilter = !showFilter; showFilterChange.emit(showFilter); accountActionsMenuOpen = false
+                        "
+                    >
+                        <mat-icon blui-icon>tune</mat-icon>
+                        <div blui-title>Show Filters</div>
+                    </blui-info-list-item>
+                </ng-container>
             </mat-nav-list>
         </blui-user-menu>
     `,

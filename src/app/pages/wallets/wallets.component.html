@@ -127,7 +127,12 @@
 
 <div class="app-page-root" responsive>
     <div class="app-page-content">
-        <app-error *ngIf="hasError"></app-error>
+        <app-error
+            *ngIf="hasError"
+            title="Try again later"
+            description="The list of wallets is being updated right now"
+            icon="sync_problem"
+        ></app-error>
         <ng-container *ngIf="!hasError">
             <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
             <div *ngIf="!isLoading" class="animation-body">

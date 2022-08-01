@@ -76,11 +76,15 @@
                             <app-qr-button [address]="address"></app-qr-button>
                             <app-bookmark-button [id]="address"></app-bookmark-button>
                             <app-csv-button
+                                *ngIf="accountOverview.opened"
                                 [address]="address"
                                 [blockCount]="accountOverview?.blockCount"
                                 [maxTransactionsLimit]="MAX_INSIGHTS"
                             ></app-csv-button>
-                            <app-filter-button [(showFilter)]="showFilter"></app-filter-button>
+                            <app-filter-button
+                                [(showFilter)]="showFilter"
+                                *ngIf="accountOverview.opened"
+                            ></app-filter-button>
                         </ng-container>
                         <app-account-actions-menu
                             *ngIf="vp.sm || vp.md"
@@ -304,7 +308,6 @@
                 *ngIf="shownTabNumber === 1 && !isBRPD"
                 [address]="address"
                 [blockCount]="accountOverview.blockCount"
-                [txPerPage]="DEFAULT_TX_SIZE"
             ></account-tx-tab>
 
             <account-brpd-tab
@@ -355,7 +358,15 @@
     style="z-index: 4"
     style="width: 100%"
 >
-    <mat-sidenav [mode]="vp.md || vp.sm ? 'over' : 'side'" class="filter-drawer" [opened]="showFilter" position="end" [disableClose]="true">
+    <mat-sidenav
+        [mode]="vp.md || vp.sm ? 'over' : 'side'"
+        class="filter-drawer"
+        (opened)="disableBodyScrollWhenOpen()"
+        (closed)="disableBodyScrollWhenOpen()"
+        [opened]="showFilter"
+        position="end"
+        [disableClose]="true"
+    >
         <app-transaction-filter-drawer
             (search)="vp.md || vp.sm ? (showFilter = false) : undefined"
             [defaultPageSize]="isBRPD ? DEFAULT_BRPD_TX_SIZE : DEFAULT_TX_SIZE"

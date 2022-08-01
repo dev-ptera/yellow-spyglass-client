@@ -25,6 +25,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { FilterDrawerComponent } from '@app/common/components/filter-drawer/filter-drawer.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
     declarations: [
@@ -56,6 +57,7 @@ import { FilterDrawerComponent } from '@app/common/components/filter-drawer/filt
         MatDividerModule,
         MatCheckboxModule,
         FormsModule,
+        MatProgressSpinnerModule,
     ],
     entryComponents: [QrDialogComponent],
     exports: [

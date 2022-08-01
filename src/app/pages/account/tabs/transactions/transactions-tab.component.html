@@ -1,23 +1,15 @@
-<ng-template #transactionPaginator>
-    <app-paginator
-        *ngIf="blockCount > 50"
-        [blockCount]="blockCount"
-        [pageSize]="txPerPage"
-        [pageIndex]="confirmedTxPageIndex"
-        [disableMove]="txService.isLoadingConfirmedTransactions"
-        (pageIndexChange)="loadConfirmedTransactionsPage($event)"
-    >
-    </app-paginator>
+<ng-template #transactionPaginator let-top="top">
+    <ng-container *ngIf="txService.showConfirmedTransactionsPaginator()">
+        <mat-divider *ngIf="!top"></mat-divider>
+        <app-paginator [blockCount]="blockCount" [showPageNumberOnly]="false"> </app-paginator>
+        <mat-divider *ngIf="top"></mat-divider>
+    </ng-container>
 </ng-template>
 
-<ng-container *ngIf="displayedTransactions.length !== 0">
-    <ng-template [ngTemplateOutlet]="transactionPaginator"></ng-template>
-    <mat-divider *ngIf="blockCount > txPerPage"></mat-divider>
-</ng-container>
-
-<mat-list class="tab-transaction-list" *ngIf="displayedTransactions.length >= 0" responsive>
+<mat-list class="tab-transaction-list" *ngIf="getDisplayedTransactions().length >= 0" responsive>
+    <ng-template *ngTemplateOutlet="transactionPaginator; context: { top: true }"></ng-template>
     <blui-info-list-item
-        *ngFor="let tx of displayedTransactions; trackBy: trackByFn; let last = last"
+        *ngFor="let tx of getDisplayedTransactions(); trackBy: trackByFn; let last = last"
         [divider]="last ? undefined : 'full'"
         [wrapTitle]="true"
         [wrapSubtitle]="false"
@@ -88,7 +80,7 @@
                 <img [src]="apiService.createMonKeyUrl(tx.address || tx.newRepresentative)" loading="lazy" />
             </div>
             <div class="timestamps">
-                <span class="mat-body-2">{{ dateMap.get(tx.hash).date }}</span>
+                <span class="mat-body-2">{{ txService.dateMap.get(tx.hash).date }}</span>
                 <span
                     class="mat-body-2 text-secondary"
                     [style.fontSize.px]="vp.sm ? 12 : 14"
@@ -96,7 +88,7 @@
                     (mouseleave)="tx.timestampHovered = false"
                 >
                     <ng-container *ngIf="!tx.timestampHovered">
-                        {{ dateMap.get(tx.hash).relativeTime }}
+                        {{ txService.dateMap.get(tx.hash).relativeTime }}
                     </ng-container>
                     <ng-container *ngIf="tx.timestampHovered">
                         {{ txService.getTime(tx.timestamp) }}
@@ -105,13 +97,10 @@
             </div>
         </div>
     </blui-info-list-item>
-    <ng-container *ngIf="displayedTransactions.length !== 0">
-        <mat-divider *ngIf="blockCount > txPerPage"></mat-divider>
-        <ng-template [ngTemplateOutlet]="transactionPaginator"></ng-template>
-    </ng-container>
+    <ng-template *ngTemplateOutlet="transactionPaginator; context: { top: false }"></ng-template>
 </mat-list>
 
-<div *ngIf="displayedTransactions.length === 0" class="tab-empty-state">
+<div *ngIf="getDisplayedTransactions().length === 0" class="tab-empty-state">
     <blui-empty-state
         responsive
         class="account-empty-state"

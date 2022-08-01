@@ -4,8 +4,8 @@ import { UtilService } from '@app/services/util/util.service';
 import { AliasService } from '@app/services/alias/alias.service';
 import { ApiService } from '@app/services/api/api.service';
 import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
-import { Transaction, TransactionsService } from '@app/pages/account/tabs/transactions/transactions.service';
 import { Subscription } from 'rxjs';
+import {Transaction, TransactionsService} from "@app/services/transactions/transactions.service";
 
 @Component({
     selector: 'account-brpd-tab',
@@ -23,6 +23,8 @@ export class BrpdTabComponent implements OnInit, OnDestroy {
     navItems = APP_NAV_ITEMS;
     pageLoad$: Subscription;
 
+    hasError: boolean;
+
     constructor(
         public util: UtilService,
         public vp: ViewportService,
@@ -32,51 +34,27 @@ export class BrpdTabComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        this.fetchSocialMediaAccounts(this.txService.confirmedTransactions.display);
+        // Fetch the alias for the displayed account.
+        this.aliasService.fetchSocialMediaAliases(new Set([this.address]));
+
+        // Listen for page change events & fetch social media accounts as required.
         this.pageLoad$ = this.txService.emitPageLoad().subscribe((data) => {
-            this.fetchSocialMediaAccounts(data);
-            if (this.txService.maxPageLoaded === 0) {
-                this.pageIndex = 0;
-            }
+            this._fetchSocialMediaAccounts(data);
+            this.pageIndex = this.txService.confirmedTransactions.currentPage;
         });
 
-        /*
-
+        // On load, fetch social media accounts.
         if (this.isPending) {
-            this.displayedTransactions = this.txService.receivableTransactions;
-            this.txService.createDateMap(this.displayedTransactions, this.dateMap);
-            this.fetchSocialMediaAccounts(this.displayedTransactions);
+            this._fetchSocialMediaAccounts(this.txService.receivableTransactions);
         } else {
-            this._loadNewAccount();
-            this.loadConfirmedTransactionsPage();
-        } */
-
-        this.aliasService.fetchSocialMediaAliases(new Set([this.address]));
+            this._fetchSocialMediaAccounts(this.txService.confirmedTransactions.display);
+        }
     }
 
     ngOnDestroy(): void {
         if (this.pageLoad$) {
             this.pageLoad$.unsubscribe();
         }
-    }
-
-    enableFastForward(): boolean {
-        return !this.txService.hasFiltersApplied();
-    }
-
-    loadConfirmedTransactionsPage(): void {
-        const pageSize = this.txService.filterData.size;
-        this.txService.loadConfirmedTransactionsPage(this.pageIndex, pageSize).catch((err) => {
-            console.error(err);
-        });
-    }
-
-    fetchSocialMediaAccounts(transactions: Transaction[]): void {
-        const pageAddressSet = new Set<string>();
-        transactions.map((tx) => {
-            pageAddressSet.add(tx.address);
-        });
-        this.aliasService.fetchSocialMediaAliases(pageAddressSet);
     }
 
     copyAddress(item: Transaction): void {
@@ -100,8 +78,8 @@ export class BrpdTabComponent implements OnInit, OnDestroy {
         return this.aliasService.has(address);
     }
 
-    trackByFn(index: number): number {
-        return index;
+    trackByFn(index: number, tx: Transaction): number {
+        return tx.height;
     }
 
     formatNumber(x: number): string {
@@ -118,12 +96,6 @@ export class BrpdTabComponent implements OnInit, OnDestroy {
         return this.txService.confirmedTransactions.display;
     }
 
-    /** Move the pagination logic into this page. */
-    changePage(page: number): void {
-        this.pageIndex = page;
-        this.loadConfirmedTransactionsPage();
-    }
-
     showLoadingEmptyState(): boolean {
         return this.isPending
             ? this.txService.isLoadingReceivableTransactions
@@ -137,19 +109,11 @@ export class BrpdTabComponent implements OnInit, OnDestroy {
             : this.txService.isLoadingConfirmedTransactions;
     }
 
-    disableEntirePaginator(): boolean {
-        return this.isLoading() ;
-    }
-
-    // Next button should be disabled if the displayed content is less than page size.
-    disableNextButton(): boolean {
-        return this.txService.confirmedTransactions.display.length < this.txService.filterData.size;
-    }
-
-    // Show the paginator if there's more blocks to show than can be allowed on the page,
-    // And hide it if the first page's result set is smaller than the expected page size.
-    showPaginator(): boolean {
-        return (this.blockCount > this.txService.filterData.size)
-            && (this.pageIndex !== 0 || this.txService.confirmedTransactions.display.length === this.txService.filterData.size);
+    private _fetchSocialMediaAccounts(transactions: Transaction[]): void {
+        const pageAddressSet = new Set<string>();
+        transactions.map((tx) => {
+            pageAddressSet.add(tx.address);
+        });
+        this.aliasService.fetchSocialMediaAliases(pageAddressSet);
     }
 }

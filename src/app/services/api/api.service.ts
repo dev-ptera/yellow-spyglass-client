@@ -28,7 +28,7 @@ import {
 } from '@app/types/dto';
 import { InsightsDto } from '@app/types/dto/InsightsDto';
 import { Observable, Subject } from 'rxjs';
-import { FilterDialogData } from '@app/pages/account/tabs/transactions/transactions.service';
+import {FilterDialogData} from "@app/services/transactions/transactions.service";
 
 @Injectable({
     providedIn: 'root',

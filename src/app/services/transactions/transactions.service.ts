@@ -49,6 +49,7 @@ export class TransactionsService {
     confirmedTransactions: {
         all: Map<number, Transaction[]>;
         display: Transaction[];
+        currentPage: number;
     };
 
     receivableTransactions: Transaction[];
@@ -89,7 +90,7 @@ export class TransactionsService {
                 .fetchReceivableTransactions(address)
                 .then((data) => {
                     this.receivableTransactions = data;
-                    this.updateDateMap(data, this.dateMap);
+                    this.updateDateMap(data);
                 })
                 .catch((err) => {
                     console.error(err);
@@ -103,7 +104,8 @@ export class TransactionsService {
     private _onFetchPage(data: Transaction[], page: number): void {
         this.confirmedTransactions.display = data;
         this.isLoadingConfirmedTransactions = false;
-        this.updateDateMap(data, this.dateMap);
+        this.confirmedTransactions.currentPage = page;
+        this.updateDateMap(data);
         this.confirmedTransactions.all.set(page, data);
         if (page >= this.maxPageLoaded) {
             this.maxPageLoaded = page;
@@ -114,7 +116,6 @@ export class TransactionsService {
     /** Checks if we have historically loaded the page.  If we have, display it.
      * It otherwise fetches the page remotely. */
     async loadConfirmedTransactionsPage(page: number, pageSize: number): Promise<void> {
-
         if (!this.address) {
             console.error('No address has been specified in search');
         }
@@ -134,12 +135,14 @@ export class TransactionsService {
 
         let offset = 0;
 
-
         if (this.hasFiltersApplied()) {
             try {
                 // Get the offset based on the height of the last-loaded transaction.
                 const displayed = this.confirmedTransactions.display;
                 offset = this.blockCount - displayed[displayed.length - 1].height + 1;
+                if (this.filterData.reverse) {
+                    offset = displayed[displayed.length - 1].height;
+                }
             } catch (err) {
                 //  console.error(err);
             }
@@ -176,18 +179,27 @@ export class TransactionsService {
         return 'This account has not received or sent anything yet.';
     }
 
+    showConfirmedTransactionsPaginator(): boolean {
+        if (this.hasFiltersApplied()) {
+            // Hide if the displayed results are less than the page size.
+            return (
+                this.confirmedTransactions.currentPage !== 0 ||
+                this.confirmedTransactions.display.length === this.filterData.size
+            );
+        }
+        // Show the paginator if there's more blocks to show than can be allowed on the page,
+        return this.blockCount > this.filterData.size;
+    }
+
     /** Populates map of hash->date info */
-    updateDateMap(
-        transactions: Transaction[],
-        dateMap: Map<string, { date: string; diffDays: number; relativeTime: string }>
-    ): void {
+    updateDateMap(transactions: Transaction[]): void {
         const currentDate = new Date().getTime() / 1000;
         const oneDay = 24 * 60 * 60; // hours*minutes*seconds*milliseconds
         transactions.map((tx) => {
             const diffDays = tx.timestamp
                 ? Math.round(((currentDate - tx.timestamp) / oneDay) * 1000) / 1000
                 : undefined;
-            dateMap.set(tx.hash, {
+            this.dateMap.set(tx.hash, {
                 date: this._formatDateString(tx.timestamp),
                 diffDays,
                 relativeTime: this.getRelativeTime(diffDays),
@@ -251,6 +263,7 @@ export class TransactionsService {
         this.dateMap.clear();
         this.receivableTransactions = [];
         this.confirmedTransactions = {
+            currentPage: 0,
             all: new Map<number, ConfirmedTransactionDto[]>(),
             display: [],
         };
@@ -258,11 +271,23 @@ export class TransactionsService {
 
     forgetConfirmedTransactions(): void {
         this.maxPageLoaded = 0;
-        this.dateMap.clear();
         this.confirmedTransactions = {
+            currentPage: 0,
             all: new Map<number, ConfirmedTransactionDto[]>(),
             display: [],
         };
+    }
+
+    /** Returns true if the user has landed on the last page. */
+    hasReachedLastPage(): boolean {
+        return (
+            this.confirmedTransactions.currentPage === this._calcMaxPageNumber(this.filterData.size) ||
+            (this.hasFiltersApplied() && this.filterData.size > this.confirmedTransactions.display.length)
+        );
+    }
+
+    private _calcMaxPageNumber(size: number): number {
+        return Math.ceil(this.blockCount / size) - 1;
     }
 
     /** Given a timestamp, returns a date (e.g 10/08/2022) */

@@ -12,8 +12,8 @@ import { AliasService } from '@app/services/alias/alias.service';
 import { APP_NAV_ITEMS, hashNavItem } from '../../navigation/nav-items';
 import { environment } from '../../../environments/environment';
 import { DelegatorsTabService } from '@app/pages/account/tabs/delegators/delegators-tab.service';
-import { TransactionsService } from '@app/pages/account/tabs/transactions/transactions.service';
 import { InsightsTabService } from '@app/pages/account/tabs/insights/insights-tab.service';
+import {TransactionsService} from "@app/services/transactions/transactions.service";
 
 @Component({
     selector: 'app-account',
@@ -211,5 +211,9 @@ export class AccountComponent implements OnDestroy {
 
     getReceivableTransactionsCount(): number {
         return this._txTabService.receivableTransactions.length;
+    }
+
+    disableBodyScrollWhenOpen(): void {
+        document.body.style.overflow = this.showFilter ? 'hidden' : 'auto';
     }
 }

@@ -1,16 +1,19 @@
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { FilterDialogData, TransactionsService } from '@app/services/transactions/transactions.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
-import { FilterDialogData, TransactionsService } from '@app/pages/account/tabs/transactions/transactions.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
     selector: 'app-transaction-filter-drawer',
     template: `
-        <div class="filter-container" [style.height]="vp.sm ? '100%' : '100vh'"
-        >
-            <div style="overflow: auto; height: 100%" [style.marginTop.px]="64">
-
+        <div class="filter-container" [style.height]="vp.sm ? '100%' : '100vh'">
+            <div
+                style="height: 100%; overflow:auto; box-sizing: border-box; padding-left: 16px; padding-right: 16px"
+                [style.marginBottom.px]="32"
+                [style.marginTop.px]="80"
+            >
                 <ng-container *ngIf="!vp.sm">
-                    <div class="mat-headline" >Transaction Filters</div>
+                    <div class="mat-headline">Transaction Filters</div>
                     <div style="margin-bottom: 24px">Use the knobs below to filter your transaction history.</div>
                 </ng-container>
 
@@ -111,7 +114,7 @@ import { FilterDialogData, TransactionsService } from '@app/pages/account/tabs/t
                 <div style="display: flex; justify-content: space-between; align-items: center">
                     <mat-slider
                         color="primary"
-                        style="width: 60%; margin-left: -8px; margin-right: -8px"
+                        style="width: 60%; margin:0; box-sizing: border-box"
                         thumbLabel
                         min="10"
                         max="500"
@@ -124,19 +127,20 @@ import { FilterDialogData, TransactionsService } from '@app/pages/account/tabs/t
 
                 <div style="width: 100%; margin-top: 16px;">
                     <mat-checkbox color="primary" [(ngModel)]="localFilters.reverse">
-                        Reverse Search <span class="mat-hint">(Start Block 1)</span></mat-checkbox
-                    >
+                        Reverse Search <span class="mat-hint">(Start at Block 1)</span>
+                    </mat-checkbox>
                 </div>
-                <div style="width: 100%; margin-top: 24px; margin-bottom: 16px">
-                    <mat-checkbox color="primary" [(ngModel)]="localFilters.showKnownAccounts"
-                        >Only Show Known Accounts</mat-checkbox
-                    >
+                <div style="width: 100%; margin-top: 16px; margin-bottom: 16px" *ngIf="isBRPD()">
+                    <mat-checkbox color="primary" [(ngModel)]="localFilters.showKnownAccounts">
+                        Only Show Known Accounts
+                    </mat-checkbox>
                 </div>
-
             </div>
             <blui-spacer></blui-spacer>
-            <mat-divider style="margin-left: -16px; margin-right: -16px"></mat-divider>
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 0; flex: 1 1 0px">
+            <mat-divider></mat-divider>
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; padding: 16px; flex: 1 1 0px"
+            >
                 <button
                     style="width: 130px"
                     mat-flat-button
@@ -154,18 +158,17 @@ import { FilterDialogData, TransactionsService } from '@app/pages/account/tabs/t
     encapsulation: ViewEncapsulation.None,
     styles: [
         `
-        .filter-container {
-            padding: 16px;
-            padding-bottom: 0;
-            box-sizing: border-box;
-            width: 340px;
-            display: flex;
-            flex-direction: column;
-        }
-        .filter-container .mat-chip-list-wrapper {
-            margin: 0
-        }`
-    ]
+            .filter-container {
+                box-sizing: border-box;
+                width: 340px;
+                display: flex;
+                flex-direction: column;
+            }
+            .filter-container .mat-chip-list-wrapper {
+                margin: 0;
+            }
+        `,
+    ],
 })
 export class FilterDrawerComponent {
     @Input() defaultPageSize;
@@ -185,6 +188,10 @@ export class FilterDrawerComponent {
         this.txService.setFilters(this.localFilters);
         void this.txService.loadConfirmedTransactionsPage(0, this.localFilters.size);
         this.search.emit();
+    }
+
+    isBRPD(): boolean {
+        return environment.brpd;
     }
 
     /** Results filters to their default state. */

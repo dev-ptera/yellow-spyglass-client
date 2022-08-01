@@ -1,24 +1,18 @@
 <ng-template #transactionPaginator let-top="top">
-    <ng-container *ngIf="showPaginator()">
+    <ng-container *ngIf="!isPending && txService.showConfirmedTransactionsPaginator()">
         <mat-divider *ngIf="!top"></mat-divider>
-        <app-paginator
-            [blockCount]="blockCount"
-            [showPageNumberOnly]="true"
-            [pageSize]="txService.filterData.size"
-            [pageIndex]="pageIndex"
-            [disableMove]="disableEntirePaginator()"
-            [enableFastForward]="enableFastForward()"
-            [manualDisableNext]="disableNextButton()"
-            (pageIndexChange)="changePage($event)"
-        >
-        </app-paginator>
+        <app-paginator [blockCount]="blockCount" [showPageNumberOnly]="true"> </app-paginator>
         <mat-divider *ngIf="top"></mat-divider>
     </ng-container>
 </ng-template>
 
 <div class="brpd-tab-transaction-list animation-content">
     <ng-template *ngTemplateOutlet="transactionPaginator; context: { top: true }"></ng-template>
-    <div *ngFor="let tx of getDisplayedTransactions(); trackBy: trackByFn; let last = last" style="position: relative">
+    <div
+        *ngFor="let tx of getDisplayedTransactions(); trackBy: trackByFn; let last = last"
+        style="position: relative"
+        class="animation-content"
+    >
         <div style="display: flex; align-items: center">
             <img
                 [src]="apiService.createMonKeyUrl(tx.address || tx.newRepresentative)"
@@ -175,11 +169,7 @@
     </div>
 
     <div *ngIf="showLoadingEmptyState()" class="tab-empty-state">
-        <blui-empty-state
-            responsive
-            class="account-empty-state"
-            title="Loading..."
-        >
+        <blui-empty-state responsive class="account-empty-state" title="Loading...">
             <mat-icon blui-empty-icon>travel_explore</mat-icon>
         </blui-empty-state>
     </div>

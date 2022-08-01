@@ -8,6 +8,7 @@ export class DrawerStateService {
     private selectedItem: string;
 
     setDrawerOpen(drawerOpen: boolean): void {
+        document.body.style.overflow = drawerOpen ? 'hidden' : 'auto'; // Fight content scroll on drawer open.
         this.drawerOpen = drawerOpen;
     }
 
