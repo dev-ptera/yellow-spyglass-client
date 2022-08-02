@@ -115,8 +115,10 @@ export class AccountComponent implements OnDestroy {
         // Fetch receivable tx
         void this._txTabService.loadReceivableTransactions(address);
 
-        // Fetch overview & confirmed transactions, don't show page until both are loaded.
         this._txTabService.address = address;
+        this._txTabService.setFilters(this._txTabService.createNewFilterObject());
+
+        // Fetch overview & confirmed transactions.  An event is emitted when account overview is loaded.
         void Promise.all([
             this.apiService.fetchAccountOverview(address),
             this._txTabService.loadConfirmedTransactionsPage(0, pageSize),

@@ -79,6 +79,7 @@ export class TxPaginatorComponent implements OnChanges {
         this.pageLoad$ = this.txService.emitPageLoad().subscribe(() => {
             this.displayedPageNumber = this.txService.confirmedTransactions.currentPage;
             this.pageSize = this.txService.filterData.size;
+            this._calcMaxPageNumber();
         });
     }
 
@@ -89,6 +90,10 @@ export class TxPaginatorComponent implements OnChanges {
     }
 
     ngOnChanges(): void {
+        this._calcMaxPageNumber();
+    }
+
+    private _calcMaxPageNumber(): void {
         this.maxPageNumber = Math.ceil(this.blockCount / this.pageSize) - 1;
     }
 
