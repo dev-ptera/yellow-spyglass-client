@@ -5,7 +5,6 @@
         "ng": "ng",
         "start": "ng serve -c development --open --host 0.0.0.0",
         "start:brpd": "ng serve -c brpd --open --host 0.0.0.0",
-        "start:megaphone": "ng serve -c megaphone --open --host 0.0.0.0",
         "build": "ng build -c production",
         "build:brpd": "ng build -c brpd",
         "test": "ng test",
