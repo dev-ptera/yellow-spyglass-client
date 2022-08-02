@@ -213,17 +213,15 @@ export class AccountComponent implements OnDestroy {
 
     showFilterActionButton(): boolean {
         return (
-            this.accountOverview
-            && this.accountOverview.opened
-            && (this.accountOverview.blockCount <= this.MAX_INSIGHTS || this.isBRPD)
+            this.accountOverview &&
+            this.accountOverview.opened &&
+            (this.accountOverview.blockCount <= this.MAX_INSIGHTS || this.isBRPD)
         );
     }
 
     showCSVExportActionButton(): boolean {
         return (
-            this.accountOverview
-            && this.accountOverview.opened
-            && this.accountOverview.blockCount <= this.MAX_INSIGHTS
+            this.accountOverview && this.accountOverview.opened && this.accountOverview.blockCount <= this.MAX_INSIGHTS
         );
     }
 }

@@ -85,10 +85,12 @@ export class TransactionTabComponent implements OnInit, OnDestroy {
     }
 
     showErrorEmptyState(): boolean {
-        return !this.isLoading()
-            && !this.showNoTransactionsEmptyState()
-            && !this.txService.hasFiltersApplied()
-            && this.getDisplayedTransactions().length === 0;
+        return (
+            !this.isLoading() &&
+            !this.showNoTransactionsEmptyState() &&
+            !this.txService.hasFiltersApplied() &&
+            this.getDisplayedTransactions().length === 0
+        );
     }
 
     private _fetchSocialMediaAccounts(transactions: Transaction[]): void {

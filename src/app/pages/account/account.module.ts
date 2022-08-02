@@ -38,7 +38,7 @@ import { QrDialogComponent } from '@app/pages/account/qr-dialog/qr-dialog.compon
 import { CasualViewComponent } from '@app/pages/account/tabs/transaction/casual-view/casual-view.component';
 import { CompactViewComponent } from '@app/pages/account/tabs/transaction/compact-view/compact-view.component';
 import { TransactionTabComponent } from './tabs/transaction/transaction-tab.component';
-import {TxPaginatorComponent} from "@app/pages/account/tabs/transaction/paginator/paginator.component";
+import { TxPaginatorComponent } from '@app/pages/account/tabs/transaction/paginator/paginator.component';
 
 @NgModule({
     declarations: [

@@ -177,7 +177,7 @@ body {
     .address-action-button {
         margin-left: 8px;
         * {
-            overflow: visible!important;
+            overflow: visible !important;
         }
         @include adjustSize(30px, 20px);
     }

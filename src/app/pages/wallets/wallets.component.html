@@ -101,8 +101,12 @@
                         [height]="18"
                         style="margin-right: 6px"
                     /> -->
-                    <img src="assets/banano-mark.svg" [width]="vp.sm ? 16 : 18" [height]="vp.sm ? 16 : 18"
-                    [style.marginRight.px]="vp.sm ? 4 : 6"/>
+                    <img
+                        src="assets/banano-mark.svg"
+                        [width]="vp.sm ? 16 : 18"
+                        [height]="vp.sm ? 16 : 18"
+                        [style.marginRight.px]="vp.sm ? 4 : 6"
+                    />
                     {{ formatBanAmount(element.amount) }}
                 </div>
                 <div class="wallets-rich-list-conversion text-secondary">
