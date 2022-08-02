@@ -234,6 +234,22 @@ $dark-theme: map-merge(
             background-color: map-get(blui.$blui-darkBlack, 100);
         }
     }
+
+    // BLUI Overrides:
+    .mat-flat-button.mat-primary {
+        background-color: $primary!important;
+        color: map-get(blui.$blui-black, 900);
+    }
+    .mat-form-field.mat-primary:not(.mat-form-field-disabled).mat-form-field-appearance-fill .mat-form-field-flex + .mat-form-field-underline .mat-form-field-ripple {
+        background-color: $primary!important;
+    }
+    .mat-mini-fab.mat-primary {
+        background-color: $primary;
+        color: map-get($theme-background, raised-button);
+    }
+
+
+    /** Alternating table row colors. */
     .mat-row:nth-child(even) {
         background-color: #192022;
     }
@@ -259,10 +275,6 @@ $dark-theme: map-merge(
     .primary {
         color: $primary;
     }
-    .mat-mini-fab.mat-primary {
-        background-color: $primary;
-        color: map-get($theme-background, raised-button);
-    }
     .intermediary {
         color: map-get(blui.$blui-orange, 500);
     }
@@ -282,6 +294,8 @@ $dark-theme: map-merge(
         border: solid 1px $primary;
         color: $primary;
     }
+
+    // Highlight normal input yellow border.
     textarea:focus,
     input:focus {
         border-radius: 4px;
@@ -289,6 +303,7 @@ $dark-theme: map-merge(
         outline: 0;
     }
 
+    // Placeholder loading (remove later)
     .ph-row div {
         background-color: #101010;
     }

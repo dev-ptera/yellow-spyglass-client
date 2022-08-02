@@ -98,10 +98,15 @@
     .tab-buttons .active {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
-        background-color: map-get(blui.$blui-white, 50) !important;
+ //       background-color: map-get(blui.$blui-white, 50) !important;
         border-bottom: solid 2px $primary;
         color: $primary !important;
     }
+
+    .tab-buttons:not(.sm) .active {
+        background-color: map-get(blui.$blui-white, 50) !important;
+    }
+
     .account-header {
         // background-color: map-get($background, card);
     }

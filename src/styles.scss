@@ -163,7 +163,6 @@ mat-card,
     width: $buttonSize !important;
     height: $buttonSize !important;
     line-height: $buttonSize !important;
-
     .mat-icon {
         line-height: $buttonSize !important;
         height: $iconSize !important;
@@ -172,7 +171,6 @@ mat-card,
         vertical-align: inherit !important;
     }
 }
-
 body {
     .address-action-button {
         margin-left: 8px;
@@ -187,4 +185,18 @@ body {
 
         @include adjustSize(24px, 16px);
     }
+}
+
+/** Hide number arrows */
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
 }
