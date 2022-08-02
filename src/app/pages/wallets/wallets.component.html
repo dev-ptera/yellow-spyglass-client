@@ -25,15 +25,16 @@
         </ng-container>
     </div>
     <ng-template #paginator>
-        <app-paginator
+        <app-wallet-paginator
             responsive
             [pageSize]="pageSize"
-            [blockCount]="totalAccounts"
+            [maxElements]="totalAccounts"
             [(pageIndex)]="currentPage"
             (pageIndexChange)="loadRichListPage($event)"
             [disableMove]="loadingNewAccountBalancePage"
-        ></app-paginator>
+        ></app-wallet-paginator>
     </ng-template>
+
     <ng-template [ngTemplateOutlet]="paginator"></ng-template>
 
     <table
@@ -99,19 +100,13 @@
                         [width]="18"
                         [height]="18"
                         style="margin-right: 6px"
-                    />
-                    <img
-                        *ngIf="!vp.sm && !isLightTheme()"
-                        src="assets/banano-mark.svg"
-                        [width]="18"
-                        [height]="18"
-                        style="margin-right: 6px"
                     /> -->
+                    <img src="assets/banano-mark.svg" [width]="18" [height]="18" style="margin-right: 6px" />
                     {{ formatBanAmount(element.amount) }}
                 </div>
                 <div class="wallets-rich-list-conversion text-secondary">
                     <div>
-                        {{ formatUsdPrice(element.amount) | currency }}
+                        {{ formatUsdPrice(element.amount) | currency: 'USD':'symbol':'1.0' }}
                         <ng-container *ngIf="!vp.sm">·</ng-container>
                         <br *ngIf="vp.sm" />
                         {{ formatBtcPrice(element.amount) }}

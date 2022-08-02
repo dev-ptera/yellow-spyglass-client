@@ -17,9 +17,9 @@
 </ng-template>
 
 <ng-template #headerContent>
-    <div class="account-header divider-border" responsive>
+    <div class="account-header" responsive>
         <!-- Loading -->
-        <div *ngIf="isLoading" style="display: flex">
+        <div *ngIf="!accountOverview" style="display: flex">
             <ng-template [ngTemplateOutlet]="desktopMonKey"></ng-template>
             <div>
                 <div class="app-page-title">Loading</div>
@@ -31,8 +31,8 @@
             </div>
         </div>
 
-        <!--<mat-card *ngIf="!isLoading" style="display: flex; width: 100%" class="divider-border mat-elevation-z0"> -->
-        <div *ngIf="!isLoading" style="display: flex">
+        <!-- Not Loading -->
+        <div *ngIf="accountOverview" style="display: flex">
             <ng-template [ngTemplateOutlet]="desktopMonKey"></ng-template>
             <div>
                 <!-- First Line -->
@@ -75,23 +75,18 @@
                             <app-copy-button [data]="address"></app-copy-button>
                             <app-qr-button [address]="address"></app-qr-button>
                             <app-bookmark-button [id]="address"></app-bookmark-button>
-                            <app-csv-button
-                                *ngIf="accountOverview.opened"
-                                [address]="address"
-                                [blockCount]="accountOverview?.blockCount"
-                                [maxTransactionsLimit]="MAX_INSIGHTS"
-                            ></app-csv-button>
+                            <app-csv-button *ngIf="showCSVExportActionButton()" [address]="address"></app-csv-button>
                             <app-filter-button
+                                *ngIf="showFilterActionButton()"
                                 [(showFilter)]="showFilter"
-                                *ngIf="accountOverview.opened"
                             ></app-filter-button>
                         </ng-container>
                         <app-account-actions-menu
                             *ngIf="vp.sm || vp.md"
-                            [blockCount]="accountOverview.blockCount"
-                            [maxTransactionsHistory]="MAX_INSIGHTS"
-                            [(showFilter)]="showFilter"
                             [data]="address"
+                            [(showFilter)]="showFilter"
+                            [showFilterActionButton]="showFilterActionButton()"
+                            [showCSVExportActionButton]="showCSVExportActionButton()"
                         ></app-account-actions-menu>
                     </div>
                 </div>
@@ -351,6 +346,7 @@
         [disableClose]="true"
     >
         <app-transaction-filter-drawer
+            *ngIf="accountOverview"
             (search)="vp.md || vp.sm ? (showFilter = false) : undefined"
             [defaultPageSize]="isBRPD ? DEFAULT_BRPD_TX_SIZE : DEFAULT_TX_SIZE"
         ></app-transaction-filter-drawer>
@@ -358,12 +354,13 @@
     <mat-sidenav-content style="height: 100vh">
         <div class="app-page-root" responsive style="height: unset">
             <div class="app-page-content" style="max-width: 1100px">
-                <app-error *ngIf="hasError"></app-error>
-                <ng-container *ngIf="!hasError">
-                    <ng-template [ngTemplateOutlet]="headerContent"></ng-template>
-                    <div *ngIf="!isLoading" class="animation-body">
-                        <ng-template [ngTemplateOutlet]="bodyContent"></ng-template>
-                    </div>
+                <ng-template [ngTemplateOutlet]="headerContent"></ng-template>
+                <div *ngIf="accountOverview" class="animation-body">
+                    <ng-template [ngTemplateOutlet]="bodyContent"></ng-template>
+                </div>
+                <ng-container *ngIf="hasError">
+                    <mat-divider></mat-divider>
+                    <app-error></app-error>
                 </ng-container>
             </div>
         </div>

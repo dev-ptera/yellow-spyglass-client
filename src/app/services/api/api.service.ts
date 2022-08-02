@@ -107,13 +107,14 @@ export class ApiService {
         return this._http.get<ExplorerSummaryDto>(`${this.httpApi}/v1/explorer-summary`).toPromise();
     }
 
-    /** Fetches account summary information. Emits an event when loaded. */
-    async fetchAccountOverview(address: string): Promise<void> {
+    /** Fetches account summary information. Also emits an event via `accountLoadedSubject` when loaded. */
+    async fetchAccountOverview(address: string): Promise<AccountOverviewDto> {
         await this._hasPingedApi();
         const overview = await this._http
             .get<AccountOverviewDto>(`${this.httpApi}/v1/account/overview/${address}`)
             .toPromise();
         this.accountLoadedSubject.next(overview);
+        return overview;
     }
 
     /** Fetches NFTs that an account owns. */

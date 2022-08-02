@@ -28,9 +28,8 @@ export class AccountComponent implements OnDestroy {
     confirmedBalance: string;
     accountRepresentative: string;
 
-    isLoading: boolean;
+    showFilter: boolean;
     hasError: boolean;
-    showFilter = false;
     isBRPD = environment.brpd;
 
     delegatorCount: number;
@@ -83,7 +82,6 @@ export class AccountComponent implements OnDestroy {
         this.address = undefined;
         this.accountOverview = undefined;
         this.hasError = false;
-        this.isLoading = true;
         this.shownTabNumber = 1;
         this.delegatorCount = 0;
 
@@ -114,22 +112,18 @@ export class AccountComponent implements OnDestroy {
 
         const pageSize = this.isBRPD ? this.DEFAULT_BRPD_TX_SIZE : this.DEFAULT_TX_SIZE;
 
-        // Fetch receivable transactions
+        // Fetch receivable tx
         void this._txTabService.loadReceivableTransactions(address);
 
         // Fetch overview & confirmed transactions, don't show page until both are loaded.
         this._txTabService.address = address;
-        Promise.all([
+        void Promise.all([
             this.apiService.fetchAccountOverview(address),
             this._txTabService.loadConfirmedTransactionsPage(0, pageSize),
-        ])
-            .catch((err) => {
-                console.error(err);
-                this.hasError = true;
-            })
-            .finally(() => {
-                this.isLoading = false;
-            });
+        ]).catch((err) => {
+            console.error(err);
+            this.hasError = true;
+        });
 
         // Load delegators ahead of time so we can get the weighted delegators count as well.
         void this._delegatorsTabService.fetchDelegators(address, true).then(() => {
@@ -215,5 +209,21 @@ export class AccountComponent implements OnDestroy {
 
     disableBodyScrollWhenOpen(): void {
         document.body.style.overflow = this.showFilter ? 'hidden' : 'auto';
+    }
+
+    showFilterActionButton(): boolean {
+        return (
+            this.accountOverview
+            && this.accountOverview.opened
+            && (this.accountOverview.blockCount <= this.MAX_INSIGHTS || this.isBRPD)
+        );
+    }
+
+    showCSVExportActionButton(): boolean {
+        return (
+            this.accountOverview
+            && this.accountOverview.opened
+            && this.accountOverview.blockCount <= this.MAX_INSIGHTS
+        );
     }
 }

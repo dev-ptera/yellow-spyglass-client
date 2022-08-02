@@ -8,17 +8,22 @@ import { AppCommonModule } from '@app/common/app-common.module';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
+import { WalletPaginatorComponent } from '@app/pages/wallets/paginator/paginator.component';
+import { SpacerModule } from '@brightlayer-ui/angular-components';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-    declarations: [WalletsComponent],
+    declarations: [WalletsComponent, WalletPaginatorComponent],
     imports: [
         AppCommonModule,
         CommonModule,
         HighchartsChartModule,
         MatBadgeModule,
         MatButtonModule,
+        MatIconModule,
         MatCardModule,
         MatTableModule,
+        SpacerModule,
         RouterModule,
     ],
     exports: [WalletsComponent],

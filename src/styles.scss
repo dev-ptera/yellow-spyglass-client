@@ -157,3 +157,34 @@ mat-card,
         padding: 88px 16px 48px 16px;
     }
 }
+
+// Shared action button styles
+@mixin adjustSize($buttonSize, $iconSize) {
+    width: $buttonSize !important;
+    height: $buttonSize !important;
+    line-height: $buttonSize !important;
+
+    .mat-icon {
+        line-height: $buttonSize !important;
+        height: $iconSize !important;
+        width: $iconSize !important;
+        font-size: $iconSize !important;
+        vertical-align: inherit !important;
+    }
+}
+
+body {
+    .address-action-button {
+        margin-left: 8px;
+        * {
+            overflow: visible!important;
+        }
+        @include adjustSize(30px, 20px);
+    }
+    .address-action-button.sm {
+        margin-top: -4px;
+        margin-left: 4px;
+
+        @include adjustSize(24px, 16px);
+    }
+}

@@ -1,6 +1,7 @@
 import { ApiService } from '@app/services/api/api.service';
 import { AliasDto } from '@app/types/dto';
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root',
@@ -36,6 +37,9 @@ export class AliasService {
 
     /** Given a set of addresses, makes a series of calls to see if there's any social media data around these accounts. */
     fetchSocialMediaAliases(addresses: Set<string>): void {
+        if (!environment.brpd) {
+            return;
+        }
         addresses.forEach((address) => {
             if (address && !this.accountsWithNoAlias.has(address) && !this.aliases.has(address)) {
                 this._api

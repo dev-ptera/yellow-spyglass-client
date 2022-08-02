@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angu
 
 @Component({
     selector: 'app-filter-button',
-    styleUrls: ['../copy-button/address-button.scss'],
     encapsulation: ViewEncapsulation.None,
     template: `
         <button

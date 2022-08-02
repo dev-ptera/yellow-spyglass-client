@@ -30,25 +30,24 @@ import { BookmarksService } from '@app/services/bookmarks/bookmarks.service';
                     <mat-icon blui-icon>qr_code_scanner</mat-icon>
                     <div blui-title>Scan Address</div>
                 </blui-info-list-item>
-                <ng-container *ngIf="blockCount > 0">
-                    <blui-info-list-item
-                        *ngIf="blockCount <= maxTransactionsHistory"
-                        [dense]="true"
-                        (click)="downloadHistory(); accountActionsMenuOpen = false"
-                    >
-                        <mat-icon blui-icon>download</mat-icon>
-                        <div blui-title>Download History</div>
-                    </blui-info-list-item>
-                    <blui-info-list-item
-                        [dense]="true"
-                        (click)="
-                            showFilter = !showFilter; showFilterChange.emit(showFilter); accountActionsMenuOpen = false
-                        "
-                    >
-                        <mat-icon blui-icon>tune</mat-icon>
-                        <div blui-title>Show Filters</div>
-                    </blui-info-list-item>
-                </ng-container>
+                <blui-info-list-item
+                    *ngIf="showCSVExportActionButton"
+                    [dense]="true"
+                    (click)="downloadHistory(); accountActionsMenuOpen = false"
+                >
+                    <mat-icon blui-icon>download</mat-icon>
+                    <div blui-title>Download History</div>
+                </blui-info-list-item>
+                <blui-info-list-item
+                    *ngIf="showFilterActionButton"
+                    [dense]="true"
+                    (click)="
+                        showFilter = !showFilter; showFilterChange.emit(showFilter); accountActionsMenuOpen = false
+                    "
+                >
+                    <mat-icon blui-icon>tune</mat-icon>
+                    <div blui-title>Show Filters</div>
+                </blui-info-list-item>
             </mat-nav-list>
         </blui-user-menu>
     `,
@@ -56,14 +55,14 @@ import { BookmarksService } from '@app/services/bookmarks/bookmarks.service';
 })
 export class AccountActionsMenuComponent {
     @Input() data: string;
-    @Input() blockCount: number;
-    @Input() maxTransactionsHistory: number;
+    @Input() showCSVExportActionButton: boolean;
+    @Input() showFilterActionButton: boolean;
     @Input() showFilter: boolean;
     @Output() showFilterChange = new EventEmitter<boolean>();
 
-    accountActionsMenuOpen = false;
     isBookmarked: boolean;
     isDownloadingHistory: boolean;
+    accountActionsMenuOpen = false;
 
     constructor(
         private readonly _bookmarkService: BookmarksService,

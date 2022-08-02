@@ -2,7 +2,6 @@ import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { UtilService } from '@app/services/util/util.service';
 import { AliasService } from '@app/services/alias/alias.service';
-import { ApiService } from '@app/services/api/api.service';
 import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
 import { Subscription } from 'rxjs';
 import { Transaction, TransactionsService } from '@app/services/transactions/transactions.service';
@@ -18,16 +17,13 @@ export class TransactionTabComponent implements OnInit, OnDestroy {
     @Input() isPending: boolean;
     @Input() blockCount: number;
 
-    pageIndex = 0;
-    pageSize: number;
     navItems = APP_NAV_ITEMS;
     pageLoad$: Subscription;
-    hasError: boolean;
+    isBRPD = environment.brpd;
 
     constructor(
         public util: UtilService,
         public vp: ViewportService,
-        public apiService: ApiService,
         public aliasService: AliasService,
         public txService: TransactionsService
     ) {}
@@ -39,7 +35,6 @@ export class TransactionTabComponent implements OnInit, OnDestroy {
         // Listen for page change events & fetch social media accounts as required.
         this.pageLoad$ = this.txService.emitPageLoad().subscribe((data) => {
             this._fetchSocialMediaAccounts(data);
-            this.pageIndex = this.txService.confirmedTransactions.currentPage;
         });
 
         // On load, fetch social media accounts.
@@ -63,6 +58,16 @@ export class TransactionTabComponent implements OnInit, OnDestroy {
         return this.txService.confirmedTransactions.display;
     }
 
+    isLoading(): boolean {
+        return this.isPending
+            ? this.txService.isLoadingReceivableTransactions
+            : this.txService.isLoadingConfirmedTransactions;
+    }
+
+    showNoTransactionsEmptyState(): boolean {
+        return this.blockCount === 0 || (this.getDisplayedTransactions().length === 0 && this.isPending);
+    }
+
     showLoadingEmptyState(): boolean {
         return this.isPending
             ? this.txService.isLoadingReceivableTransactions
@@ -70,18 +75,23 @@ export class TransactionTabComponent implements OnInit, OnDestroy {
                   this.txService.confirmedTransactions.display.length === 0;
     }
 
-    isLoading(): boolean {
-        return this.isPending
-            ? this.txService.isLoadingReceivableTransactions
-            : this.txService.isLoadingConfirmedTransactions;
+    showNoFilteredResultsEmptyState(): boolean {
+        return (
+            this.blockCount > 0 &&
+            !this.isLoading() &&
+            this.txService.hasFiltersApplied() &&
+            this.getDisplayedTransactions().length === 0
+        );
     }
 
-    isBRPD(): boolean {
-        return environment.brpd;
+    showErrorEmptyState(): boolean {
+        return !this.isLoading()
+            && !this.showNoTransactionsEmptyState()
+            && this.getDisplayedTransactions().length === 0;
     }
 
     private _fetchSocialMediaAccounts(transactions: Transaction[]): void {
-        if (!this.isBRPD()) {
+        if (!this.isBRPD) {
             return;
         }
 

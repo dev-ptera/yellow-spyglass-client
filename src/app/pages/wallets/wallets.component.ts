@@ -84,7 +84,7 @@ export class WalletsComponent implements OnInit {
     }
 
     formatBanAmount(ban: number): string {
-        return `${this.util.numberWithCommas(ban.toFixed(ban > 10000 ? 0 : 3))} `;
+        return `${this.util.numberWithCommas(ban.toFixed(ban > 10000 ? 0 : 4))} `;
     }
 
     formatUsdPrice(ban: number): number {

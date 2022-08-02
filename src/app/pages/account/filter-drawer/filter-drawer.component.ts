@@ -160,7 +160,7 @@ import { environment } from '../../../../environments/environment';
         `
             .filter-container {
                 box-sizing: border-box;
-                width: 340px;
+                width: 345px;
                 display: flex;
                 flex-direction: column;
             }
@@ -196,22 +196,6 @@ export class FilterDrawerComponent {
 
     /** Results filters to their default state. */
     resetFilters(): void {
-        this.localFilters = Object.assign(
-            {},
-            {
-                includeReceive: true,
-                includeChange: true,
-                includeSend: true,
-                maxAmount: undefined,
-                maxBlock: undefined,
-                minBlock: undefined,
-                size: this.defaultPageSize,
-                minAmount: undefined,
-                filterAddresses: '',
-                excludedAddresses: '',
-                reverse: false,
-                showKnownAccounts: false,
-            }
-        );
+        this.localFilters = this.txService.createNewFilterObject();
     }
 }

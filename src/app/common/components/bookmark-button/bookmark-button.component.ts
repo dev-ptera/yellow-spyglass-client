@@ -5,7 +5,6 @@ import { AccountActionsService } from '@app/services/account-actions/account-act
 
 @Component({
     selector: 'app-bookmark-button',
-    styleUrls: ['../copy-button/address-button.scss'],
     encapsulation: ViewEncapsulation.None,
     template: `
         <button

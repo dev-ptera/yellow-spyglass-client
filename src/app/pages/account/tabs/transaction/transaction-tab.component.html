@@ -1,7 +1,7 @@
 <ng-template #transactionPaginator let-top="top">
     <ng-container *ngIf="!isPending && txService.showConfirmedTransactionsPaginator()">
         <mat-divider *ngIf="!top"></mat-divider>
-        <app-paginator [blockCount]="blockCount" [showPageNumberOnly]="true"> </app-paginator>
+        <app-tx-paginator [blockCount]="blockCount"> </app-tx-paginator>
         <mat-divider *ngIf="top"></mat-divider>
     </ng-container>
 </ng-template>
@@ -10,13 +10,13 @@
     <ng-template *ngTemplateOutlet="transactionPaginator; context: { top: true }"></ng-template>
 
     <app-casual-view
-        *ngIf="!isBRPD()"
+        *ngIf="!isBRPD"
         [transactions]="getDisplayedTransactions()"
         [isPending]="isPending"
     ></app-casual-view>
 
     <app-compact-view
-        *ngIf="isBRPD()"
+        *ngIf="isBRPD"
         [transactions]="getDisplayedTransactions()"
         [isPending]="isPending"
     ></app-compact-view>
@@ -27,28 +27,33 @@
         </blui-empty-state>
     </div>
 
-    <div *ngIf="blockCount === 0 || (getDisplayedTransactions().length === 0 && isPending)" class="tab-empty-state">
-        <blui-empty-state
-            responsive
-            class="account-empty-state"
-            [title]="txService.getEmptyStateTitle(isPending)"
-            [description]="txService.getEmptyStateDescription(isPending)"
-        >
-            <mat-icon blui-empty-icon>paid</mat-icon>
-        </blui-empty-state>
-    </div>
-
-    <div
-        *ngIf="!isLoading() && getDisplayedTransactions().length === 0 && txService.hasFiltersApplied()"
-        class="tab-empty-state"
-    >
+    <div *ngIf="showNoFilteredResultsEmptyState()" class="tab-empty-state">
         <blui-empty-state
             responsive
             class="account-empty-state"
             title="No Filtered Data"
-            description="Please adjust your filters and try again."
+            description="No results meet your search criteria; please adjust your filters and try again."
         >
-            <mat-icon blui-empty-icon>travel_explore</mat-icon>
+            <mat-icon blui-empty-icon>waterfall_chart</mat-icon>
+        </blui-empty-state>
+    </div>
+
+    <div *ngIf="showErrorEmptyState()" class="tab-empty-state">
+        <app-error></app-error>
+    </div>
+
+    <div *ngIf="showNoTransactionsEmptyState()" class="tab-empty-state">
+        <blui-empty-state
+            responsive
+            class="account-empty-state"
+            [title]="isPending ? 'No Receivable Transactions' : 'No Confirmed Transactions'"
+            [description]="
+                isPending
+                    ? 'This account has already received all incoming payments.'
+                    : 'This account has not received or sent anything yet.'
+            "
+        >
+            <mat-icon blui-empty-icon>paid</mat-icon>
         </blui-empty-state>
     </div>
 

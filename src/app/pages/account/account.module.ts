@@ -30,25 +30,22 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { BookmarkButtonComponent } from '@app/pages/account/action-buttons/bookmark-button/bookmark-button.component';
 import { CsvButtonComponent } from '@app/pages/account/action-buttons/csv-button/csv-button.component';
 import { FilterButtonComponent } from '@app/pages/account/action-buttons/filter-button/filter-button.component';
-import { CopyButtonComponent } from '@app/pages/account/action-buttons/copy-button/copy-button.component';
 import { QrButtonComponent } from '@app/pages/account/action-buttons/qr-button/qr-button.component';
 import { FilterDrawerComponent } from '@app/pages/account/filter-drawer/filter-drawer.component';
 import { QrDialogComponent } from '@app/pages/account/qr-dialog/qr-dialog.component';
 import { CasualViewComponent } from '@app/pages/account/tabs/transaction/casual-view/casual-view.component';
 import { CompactViewComponent } from '@app/pages/account/tabs/transaction/compact-view/compact-view.component';
 import { TransactionTabComponent } from './tabs/transaction/transaction-tab.component';
+import {TxPaginatorComponent} from "@app/pages/account/tabs/transaction/paginator/paginator.component";
 
 @NgModule({
     declarations: [
         AccountComponent,
         AccountActionsMenuComponent,
-        BookmarkButtonComponent,
         CasualViewComponent,
         CompactViewComponent,
-        CopyButtonComponent,
         CsvButtonComponent,
         DelegatorsTabComponent,
         FilterButtonComponent,
@@ -58,6 +55,7 @@ import { TransactionTabComponent } from './tabs/transaction/transaction-tab.comp
         QrButtonComponent,
         QrDialogComponent,
         TransactionTabComponent,
+        TxPaginatorComponent,
     ],
     imports: [
         AppCommonModule,

@@ -6,7 +6,7 @@ import { TransactionsService } from '@app/services/transactions/transactions.ser
 
 /** Paginator component.  Pages start at index 0. */
 @Component({
-    selector: 'app-paginator',
+    selector: 'app-tx-paginator',
     encapsulation: ViewEncapsulation.None,
     template: `
         <div style="display: flex; align-items: center; height: 56px" class="text-secondary">
@@ -28,15 +28,7 @@ import { TransactionsService } from '@app/services/transactions/transactions.ser
                 </button>
             </ng-container>
             <blui-spacer></blui-spacer>
-            <div *ngIf="!showPageNumberOnly" [style.fontSize.px]="vp.sm ? 12 : 14">
-                Showing
-                <span>{{ getCurrPageMin() }}</span>
-                to
-                <span>{{ getCurrPageMax() }}</span>
-                of
-                <span>{{ util.numberWithCommas(blockCount) }}</span>
-            </div>
-            <div *ngIf="showPageNumberOnly" [style.fontSize.px]="vp.sm ? 12 : 14">
+            <div [style.fontSize.px]="vp.sm ? 12 : 14">
                 Page {{ displayedPageNumber + 1 }} <span style="margin: 0 8px">·</span> {{ pageSize }} items / page
             </div>
             <mat-spinner
@@ -70,9 +62,8 @@ import { TransactionsService } from '@app/services/transactions/transactions.ser
         </div>
     `,
 })
-export class PaginatorComponent implements OnChanges {
+export class TxPaginatorComponent implements OnChanges {
     @Input() blockCount: number;
-    @Input() showPageNumberOnly = false;
 
     pageSize: number;
     displayedPageNumber: number;

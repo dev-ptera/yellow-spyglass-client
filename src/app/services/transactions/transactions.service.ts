@@ -3,6 +3,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
 import { ApiService } from '@app/services/api/api.service';
 import { ConfirmedTransactionDto } from '@app/types/dto';
 import { Observable, Subject, Subscription } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export type Transaction = {
     timestampHovered?: boolean;
@@ -72,6 +73,9 @@ export class TransactionsService {
         this.accountOverviewListener = this._apiService.accountLoadedSubject.subscribe((overview) => {
             this.address = overview.address;
             this.blockCount = overview.blockCount;
+
+            // Reset filters whenever a new account is loaded.
+            this.setFilters(this.createNewFilterObject());
         });
     }
 
@@ -113,8 +117,7 @@ export class TransactionsService {
         this.pageLoad$.next(data);
     }
 
-    /** Checks if we have historically loaded the page.  If we have, display it.
-     * It otherwise fetches the page remotely. */
+    /** Loads the correct page of transactions to display. */
     async loadConfirmedTransactionsPage(page: number, pageSize: number): Promise<void> {
         if (!this.address) {
             console.error('No address has been specified in search');
@@ -163,20 +166,6 @@ export class TransactionsService {
             this.isLoadingConfirmedTransactions = false;
             console.error(err);
         }
-    }
-
-    getEmptyStateTitle(isPending: boolean): string {
-        if (isPending) {
-            return 'No Pending Transactions';
-        }
-        return 'No Confirmed Transactions';
-    }
-
-    getEmptyStateDescription(isPending: boolean): string {
-        if (isPending) {
-            return 'This account has already received all incoming payments.';
-        }
-        return 'This account has not received or sent anything yet.';
     }
 
     showConfirmedTransactionsPaginator(): boolean {
@@ -288,6 +277,30 @@ export class TransactionsService {
 
     private _calcMaxPageNumber(size: number): number {
         return Math.ceil(this.blockCount / size) - 1;
+    }
+
+    isBRPD(): boolean {
+        return environment.brpd;
+    }
+
+    createNewFilterObject(): FilterDialogData {
+        return Object.assign(
+            {},
+            {
+                includeReceive: true,
+                includeChange: true,
+                includeSend: true,
+                maxAmount: undefined,
+                maxBlock: undefined,
+                minBlock: undefined,
+                size: this.isBRPD() ? 250 : 50,
+                minAmount: undefined,
+                filterAddresses: '',
+                excludedAddresses: '',
+                reverse: false,
+                showKnownAccounts: false,
+            }
+        );
     }
 
     /** Given a timestamp, returns a date (e.g 10/08/2022) */
