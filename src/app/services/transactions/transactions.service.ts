@@ -33,7 +33,8 @@ export type FilterDialogData = {
     size: number;
     excludedAddresses: string;
     reverse: boolean;
-    showKnownAccounts: boolean;
+    onlyIncludeKnownAccounts: boolean;
+    onlyIncludeUnknownAccounts: boolean;
 };
 
 @Injectable({
@@ -298,7 +299,8 @@ export class TransactionsService {
                 filterAddresses: '',
                 excludedAddresses: '',
                 reverse: false,
-                showKnownAccounts: false,
+                onlyIncludeKnownAccounts: false,
+                onlyIncludeUnknownAccounts: false,
             }
         );
     }
@@ -332,7 +334,7 @@ export class TransactionsService {
             hasFilters ||= Boolean(!this.filterData.includeReceive);
             hasFilters ||= Boolean(!this.filterData.includeChange);
             hasFilters ||= Boolean(!this.filterData.includeSend);
-            hasFilters ||= this.filterData.showKnownAccounts;
+            hasFilters ||= this.filterData.onlyIncludeKnownAccounts;
         }
         return hasFilters;
     }

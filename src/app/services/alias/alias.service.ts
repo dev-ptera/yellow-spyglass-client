@@ -1,5 +1,5 @@
 import { ApiService } from '@app/services/api/api.service';
-import { AliasDto } from '@app/types/dto';
+import {AliasDto, SocialMediaAccountAliasDto} from '@app/types/dto';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 
@@ -18,6 +18,7 @@ export class AliasService {
     }
 
     /** Loads a minified address/alias pair for quick searching. */
+    // TODO: I am called in 2x places.  Stop this.
     private _loadAliases(): void {
         this._api
             .fetchAliases()

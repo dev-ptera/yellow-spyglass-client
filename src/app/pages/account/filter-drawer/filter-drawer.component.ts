@@ -50,16 +50,16 @@ import { environment } from '../../../../environments/environment';
                 <div style="margin-top: 24px; display: flex; align-items: center; justify-content: space-between">
                     <div style="width: 48%">
                         <mat-form-field blui-input style="width: 100%" appearance="fill">
-                            <img src="assets/banano-mark-gray.svg" width="20" matSuffix />
+                            <img src="assets/banano-mark-gray.svg" width="20" matSuffix/>
                             <mat-label>Min BAN</mat-label>
-                            <input matInput type="number" [(ngModel)]="localFilters.minAmount" name="min ban" />
+                            <input matInput type="number" [(ngModel)]="localFilters.minAmount" name="min ban"/>
                         </mat-form-field>
                     </div>
                     <div style="width: 48%">
                         <mat-form-field blui-input style="width: 100%" appearance="fill">
-                            <img src="assets/banano-mark-gray.svg" width="20" matSuffix />
+                            <img src="assets/banano-mark-gray.svg" width="20" matSuffix/>
                             <mat-label>Max BAN</mat-label>
-                            <input matInput type="number" [(ngModel)]="localFilters.maxAmount" name="max ban" />
+                            <input matInput type="number" [(ngModel)]="localFilters.maxAmount" name="max ban"/>
                         </mat-form-field>
                     </div>
                 </div>
@@ -69,14 +69,14 @@ import { environment } from '../../../../environments/environment';
                         <mat-form-field blui-input style="width: 100%" appearance="fill">
                             <mat-label>Min Block</mat-label>
                             <mat-icon matSuffix>start</mat-icon>
-                            <input matInput type="number" [(ngModel)]="localFilters.minBlock" name="min block" />
+                            <input matInput type="number" [(ngModel)]="localFilters.minBlock" name="min block"/>
                         </mat-form-field>
                     </div>
                     <div style="width: 48%">
                         <mat-form-field blui-input style="width: 100%" appearance="fill">
                             <mat-label>Max Block</mat-label>
                             <mat-icon matSuffix style="transform: rotate(180deg)">start</mat-icon>
-                            <input matInput type="number" [(ngModel)]="localFilters.maxBlock" name="max block" />
+                            <input matInput type="number" [(ngModel)]="localFilters.maxBlock" name="max block"/>
                         </mat-form-field>
                     </div>
                 </div>
@@ -131,8 +131,13 @@ import { environment } from '../../../../environments/environment';
                     </mat-checkbox>
                 </div>
                 <div style="width: 100%; margin-top: 16px; margin-bottom: 16px" *ngIf="isBRPD()">
-                    <mat-checkbox color="primary" [(ngModel)]="localFilters.showKnownAccounts">
+                    <mat-checkbox color="primary" [(ngModel)]="localFilters.onlyIncludeKnownAccounts">
                         Only Show Known Accounts
+                    </mat-checkbox>
+                </div>
+                <div style="width: 100%; margin-top: 16px; margin-bottom: 16px" *ngIf="isBRPD()">
+                    <mat-checkbox color="primary" [(ngModel)]="localFilters.onlyIncludeUnknownAccounts">
+                        Only Show Unknown Accounts
                     </mat-checkbox>
                 </div>
             </div>
