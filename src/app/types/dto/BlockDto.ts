@@ -1,23 +1,29 @@
-export type BlockDto = {
-    blockAccount: string;
-    amount: number;
-    amountRaw: string;
-    balance: string;
-    height: number;
-    hash: string;
-    timestamp: number;
+export type Block = {
+    block_account: string;
+    amount: string;
+    balance?: string;
+    height: string;
+    local_timestamp: string;
     confirmed: boolean;
-    subtype: 'send' | 'receive' | 'change';
-    sourceAccount: string;
     contents: {
-        type: 'state';
+        type: string;
         account: string;
-        previous: string;
+        previous:string;
         representative: string;
         balance: string;
+        balance_decimal: string;
         link: string;
-        linkAsAccount: string;
+        link_as_account: string;
         signature: string;
-        work: string;
+        work:string;
+    }
+    subtype: string;
+    pending?: string;
+    source_account?: string;
+}
+
+export type BlockDtoV2 = {
+    blocks: {
+        [hash: string]: Block;
     };
-};
+}

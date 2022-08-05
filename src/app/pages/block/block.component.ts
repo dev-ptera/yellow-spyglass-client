@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
-import { BlockDto } from '@app/types/dto/BlockDto';
+import {Block, BlockDtoV2} from '@app/types/dto/BlockDto';
 import { UtilService } from '@app/services/util/util.service';
 import { Subscription } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
@@ -28,9 +28,9 @@ import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
                     <span class="app-section-title">Block Account</span>
                     <a
                         class="app-section-subtitle link text"
-                        [routerLink]="'/' + routes.account.route + '/' + block.blockAccount"
+                        [routerLink]="'/' + routes.account.route + '/' + block.block_account"
                     >
-                        {{ block.blockAccount }}
+                        {{ block.block_account }}
                     </a>
                 </div>
                 <div class="hash-description text-secondary">The account represented by this state block</div>
@@ -47,7 +47,7 @@ import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Amount</span>
-                    <span class="app-section-subtitle">{{ block.amountRaw }} RAW | {{ block.amount }}</span>
+                    <span class="app-section-subtitle">{{ block.amount }} RAW | {{ block.amount_decimal | appComma  }} BAN</span>
                 </div>
                 <div class="hash-description text-secondary">Amount of BANANO sent in this transaction</div>
             </div>
@@ -57,18 +57,18 @@ import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
                     <span class="app-section-title">Recipient</span>
                     <a
                         class="app-section-subtitle link text"
-                        [routerLink]="'/' + routes.account.route + '/' + block.contents.linkAsAccount"
+                        [routerLink]="'/' + routes.account.route + '/' + block.contents.account"
                     >
-                        {{ block.contents.linkAsAccount }}
+                        {{ block.contents.account }}
                     </a>
                 </div>
                 <div *ngIf="block.subtype === 'receive'">
                     <span class="app-section-title">Sender</span>
                     <a
                         class="app-section-subtitle link text"
-                        [routerLink]="'/' + routes.account.route + '/' + block.sourceAccount"
+                        [routerLink]="'/' + routes.account.route + '/' + block.contents.account"
                     >
-                        {{ block.sourceAccount }}
+                        {{ block.contents.account }}
                     </a>
                 </div>
 
@@ -76,7 +76,7 @@ import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
                     <ng-container *ngIf="block.subtype === 'send'">
                         The account that is receiving the transaction
                     </ng-container>
-                    <ng-container *ngIf="block.subtype === 'receive' || block.subtype === 'open'">
+                    <ng-container *ngIf="block.subtype === 'receive'">
                         The account that sent the transaction
                     </ng-container>
                 </div>
@@ -85,7 +85,7 @@ import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
                 <div>
                     <span class="app-section-title">Balance</span>
                     <span class="app-section-subtitle">
-                        {{ block.balance }} RAW | {{ convertRawToBan(block.balance) }}
+                        {{ block.balance }} RAW | {{ block.balance_decimal | appComma }} BAN
                     </span>
                 </div>
                 <div class="hash-description text-secondary">
@@ -95,14 +95,14 @@ import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Height</span>
-                    <span class="app-section-subtitle">{{ block.height }}</span>
+                    <span class="app-section-subtitle">{{ block.height | appComma }}</span>
                 </div>
                 <div class="hash-description text-secondary">Transaction number of this account</div>
             </div>
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Timestamp</span>
-                    <span class="app-section-subtitle">{{ convertUnixToDate(block.timestamp) }}</span>
+                    <span class="app-section-subtitle">{{ convertUnixToDate(block.local_timestamp) }}</span>
                 </div>
                 <div class="hash-description text-secondary">The date and time this block was discovered</div>
             </div>
@@ -125,6 +125,19 @@ import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
                 </div>
                 <div class="hash-description text-secondary">The account's representative</div>
             </div>
+            <div class="hash-section"
+                 *ngIf="block.successor && block.successor !== '0000000000000000000000000000000000000000000000000000000000000000'">
+                <div>
+                    <span class="app-section-title">Next Block</span>
+                    <a
+                        class="app-section-subtitle text"
+                        [class.link]="block.height !== 1"
+                        [routerLink]="'/' + routes.hash.route + '/' + block.successor"
+                    >{{ block.successor }}
+                    </a>
+                </div>
+                <div class="hash-description text-secondary">The next block in this account's chain</div>
+            </div>
             <div class="hash-section" *ngIf="block.subtype !== 'change'">
                 <div>
                     <span class="app-section-title">Previous Block</span>
@@ -138,7 +151,7 @@ import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
                 </div>
                 <div class="hash-description text-secondary">The previous block in this account's chain</div>
             </div>
-            <div class="hash-section">
+            <div class="hash-section" *ngIf="block.subtype === 'receive'">
                 <div>
                     <span class="app-section-title">Link</span>
                     <a
@@ -162,12 +175,26 @@ import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
                     <span class="app-section-subtitle">{{ block.contents.work }}</span>
                 </div>
             </div>
+
+
+            <div class="hash-section">
+                <span class="app-section-title">Original Block Content</span>
+                <pre style="font-family: monospace" class="original-block-content">{{ block | json  }}</pre>
+            </div>
         </ng-template>
 
-        <div class="hash-root app-page-root" responsive>
+        <div class="hash-root app-page-root" responsive [style.justifyContent.center]="hasError">
             <div class="app-page-content">
-                <app-error *ngIf="hashError"></app-error>
-                <ng-container *ngIf="!hashError">
+
+                <div *ngIf="hasError" style="display: flex; justify-content: center;">
+                    <blui-empty-state style="max-width: 420px; margin-top: 64px"
+                                      title="Unknown Block"
+                                      description="The block you requested in not found.  Please double-check the hash entered is correct or try again later.">
+                        <button blui-actions mat-flat-button color="primary" (click)="goBack()">Go Back</button>
+                        <mat-icon blui-empty-icon>info</mat-icon>
+                    </blui-empty-state>
+                </div>
+                <ng-container *ngIf="!hasError">
                     <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
                     <div *ngIf="!isLoading" class="animation-body network-container">
                         <ng-template [ngTemplateOutlet]="bodyContent"></ng-template>
@@ -176,14 +203,14 @@ import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
             </div>
         </div>
     `,
-    styleUrls: ['./hash.component.scss'],
+    styleUrls: ['./block.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class HashComponent implements OnDestroy {
+export class BlockComponent implements OnDestroy {
     hash: string;
-    block: BlockDto;
+    block: Block;
     isLoading: boolean;
-    hashError: boolean;
+    hasError: boolean;
 
     routes = APP_NAV_ITEMS;
     routeListener: Subscription;
@@ -209,11 +236,15 @@ export class HashComponent implements OnDestroy {
         }
     }
 
+    goBack(): void {
+        window.history.back();
+    }
+
     private _searchHash(hash: string): void {
         this.hash = hash;
         this.block = undefined;
         this.isLoading = true;
-        this.hashError = false;
+        this.hasError = false;
 
         if (!hash) {
             return;
@@ -226,11 +257,11 @@ export class HashComponent implements OnDestroy {
         this._apiService
             .fetchBlock(hash)
             .then((blockResponse) => {
-                this.block = blockResponse;
+                this.block = blockResponse.blocks[hash];
             })
             .catch((err) => {
                 console.error(err);
-                this.hashError = true;
+                this.hasError = true;
             })
             .finally(() => {
                 this.isLoading = false;
@@ -242,19 +273,13 @@ export class HashComponent implements OnDestroy {
         void this._router.navigate([`/${accountNavItem.route}/${address}`], { replaceUrl: true });
     }
 
-    convertRawToBan(raw: string): string {
-        return `${this._util.convertRawToBan(raw, {
-            precision: 10,
-            comma: true,
-        })} BAN`;
-    }
-
-    convertUnixToDate(time: number): string {
-        if (time === 0) {
+    convertUnixToDate(time: string): string {
+        const ts = Number(time);
+        if (ts === 0) {
             return 'Unknown';
         }
 
-        return `${new Date(time * 1000).toLocaleDateString()} ${new Date(time * 1000).toLocaleTimeString()}`;
+        return `${new Date(ts * 1000).toLocaleDateString()} ${new Date(ts * 1000).toLocaleTimeString()}`;
     }
 
     /*

@@ -5,6 +5,7 @@ export * from './AccountNFTDto';
 export * from './AccountOverviewDto';
 export * from './AliasDto';
 export * from './BlockDto';
+export * from './BlockAtHeightDto';
 export * from './ConfirmedTransactionDto';
 export * from './DelegatorDto';
 export * from './ExplorerSummaryDto';

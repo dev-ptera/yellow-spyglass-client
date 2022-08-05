@@ -12,7 +12,7 @@ import { NetworkModule } from '@app/pages/network/network.module';
 import { VanityModule } from '@app/pages/vanity/vanity.module';
 import { HomeModule } from '@app/pages/home/home.module';
 import { AccountModule } from '@app/pages/account/account.module';
-import { HashModule } from '@app/pages/hash/hash.module';
+import { BlockModule } from '@app/pages/block/block.module';
 import { PlausibleService } from '@app/services/plausible/plausible.service';
 
 @Component({
@@ -31,7 +31,7 @@ export class AppComponent {
         AccountModule,
         AppRoutingModule,
         BookmarksModule,
-        HashModule,
+        BlockModule,
         HttpClientModule,
         HomeModule,
         KnownAccountsModule,

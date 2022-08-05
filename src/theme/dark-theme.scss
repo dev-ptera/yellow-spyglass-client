@@ -312,6 +312,10 @@ $dark-theme: map-merge(
             50% 50%;
     }
 
+    .original-block-content {
+        background-color: map-get(blui.$blui-black, 900);
+    }
+
     $sticky-border-color: map-get($theme-foreground, divider);
     @include representatives.representatives-theme($sticky-border-color, #3b3b3b);
     @include accountPage($theme-foreground, $theme-background, $primary, $warn);

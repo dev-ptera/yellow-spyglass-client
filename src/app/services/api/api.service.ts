@@ -8,8 +8,8 @@ import {
     AccountDistributionStatsDto,
     AccountNFTDto,
     AccountOverviewDto,
-    AliasDto,
-    BlockDto,
+    AliasDto, BlockAtHeightDto,
+    BlockDtoV2,
     ConfirmedTransactionDto,
     DelegatorsOverviewDto,
     ExplorerSummaryDto,
@@ -175,12 +175,6 @@ export class ApiService {
             .toPromise();
     }
 
-    /** Given a hash, fetches block. */
-    async fetchBlock(hash: string): Promise<BlockDto> {
-        await this._hasPingedApi();
-        return this._http.get<BlockDto>(`${this.httpApi}/v1/block/${hash}`).toPromise();
-    }
-
     /** Fetches list of known vanities addresses. */
     async fetchKnownVanities(): Promise<string[]> {
         await this._hasPingedApi();
@@ -314,9 +308,15 @@ export class ApiService {
     }
 
     /** Given a hash, fetches block. */
-    async fetchBlockFromAddressHeight(address: string, height: number): Promise<BlockDto> {
+    async fetchBlock(hash: string): Promise<BlockDtoV2> {
         await this._hasPingedApi();
-        return this._http.post<BlockDto>(`${this.httpApi}/v1/account/block-at-height`, { address, height }).toPromise();
+        return this._http.get<BlockDtoV2>(`${this.httpApi}/v2/block/${hash}`).toPromise();
+    }
+
+    /** Given a hash, fetches block. */
+    async fetchBlockFromAddressHeight(address: string, height: number): Promise<BlockAtHeightDto> {
+        await this._hasPingedApi();
+        return this._http.post<BlockAtHeightDto>(`${this.httpApi}/v2/account/block-at-height`, { address, height }).toPromise();
     }
 
     /** Fetches an address's discord/twitter/telegram alias, if any. */

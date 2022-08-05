@@ -10,7 +10,7 @@ import { NetworkComponent } from '@app/pages/network/network.component';
 import { VanityComponent } from '@app/pages/vanity/vanity.component';
 import { HomeComponent } from '@app/pages/home/home.component';
 import { AccountComponent } from '@app/pages/account/account.component';
-import { HashComponent } from '@app/pages/hash/hash.component';
+import { BlockComponent } from '@app/pages/block/block.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -22,7 +22,7 @@ const routes: Routes = [
     { path: APP_NAV_ITEMS.network.route, component: NetworkComponent },
     { path: APP_NAV_ITEMS.vanity.route, component: VanityComponent },
     { path: `${APP_NAV_ITEMS.account.route}/:id`, component: AccountComponent },
-    { path: `${APP_NAV_ITEMS.hash.route}/:id`, component: HashComponent },
+    { path: `${APP_NAV_ITEMS.hash.route}/:id`, component: BlockComponent },
 
     // Handle Creeper Legacy Redirects
     { path: 'status', redirectTo: APP_NAV_ITEMS.node.route, pathMatch: 'full' },
@@ -32,13 +32,7 @@ const routes: Routes = [
     { path: `explorer/hash/:id`, redirectTo: `${APP_NAV_ITEMS.hash.route}/:id`, pathMatch: 'full' }, // Match Creeper path
     { path: `explorer/auto/:id`, redirectTo: `${APP_NAV_ITEMS.hash.route}/:id`, pathMatch: 'full' }, // Match Creeper path
 
-    //  { path: `explorer/${APP_NAV_ITEMS.hash.route}/:id`, component: HashComponent }, // Match Creeper path
-    //  { path: `explorer/block/:id`, component: HashComponent }, // Match Creeper path
-    //  { path: `explorer/auto/:id`, component: HashComponent }, // Match Creeper path
-    //   { path: `explorer/${APP_NAV_ITEMS.account.route}/:id/history`, component: AccountComponent }, // Match Creeper path
-    //   { path: `explorer/${APP_NAV_ITEMS.account.route}/:id`, component: AccountComponent }, // Match Creeper path
-    //  { path: 'status', component: NodeMonitorComponent }, // Match Creeper path
-
+    // Catch all
     { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 @NgModule({
