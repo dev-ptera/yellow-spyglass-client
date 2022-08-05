@@ -117,14 +117,6 @@ export class TxPaginatorComponent implements OnChanges {
         this.loadPage(this.maxPageNumber);
     }
 
-    getCurrPageMin(): string {
-        return this.util.numberWithCommas(this.displayedPageNumber * this.pageSize + 1);
-    }
-
-    getCurrPageMax(): string {
-        return this.util.numberWithCommas(Math.min(this.blockCount, (this.displayedPageNumber + 1) * this.pageSize));
-    }
-
     loadPage(page: number): void {
         void this.txService.loadConfirmedTransactionsPage(page, this.pageSize).catch((err) => {
             console.error(err);
