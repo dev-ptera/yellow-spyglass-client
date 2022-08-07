@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
-import {Block, BlockDtoV2} from '@app/types/dto/BlockDto';
+import { Block, BlockDtoV2 } from '@app/types/dto/BlockDto';
 import { UtilService } from '@app/services/util/util.service';
 import { Subscription } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
@@ -47,7 +47,9 @@ import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Amount</span>
-                    <span class="app-section-subtitle">{{ block.amount }} RAW | {{ block.amount_decimal | appComma  }} BAN</span>
+                    <span class="app-section-subtitle"
+                        >{{ block.amount }} RAW | {{ block.amount_decimal | appComma }} BAN</span
+                    >
                 </div>
                 <div class="hash-description text-secondary">Amount of BANANO sent in this transaction</div>
             </div>
@@ -125,15 +127,20 @@ import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
                 </div>
                 <div class="hash-description text-secondary">The account's representative</div>
             </div>
-            <div class="hash-section"
-                 *ngIf="block.successor && block.successor !== '0000000000000000000000000000000000000000000000000000000000000000'">
+            <div
+                class="hash-section"
+                *ngIf="
+                    block.successor &&
+                    block.successor !== '0000000000000000000000000000000000000000000000000000000000000000'
+                "
+            >
                 <div>
                     <span class="app-section-title">Next Block</span>
                     <a
                         class="app-section-subtitle text"
                         [class.link]="block.height !== 1"
                         [routerLink]="'/' + routes.hash.route + '/' + block.successor"
-                    >{{ block.successor }}
+                        >{{ block.successor }}
                     </a>
                 </div>
                 <div class="hash-description text-secondary">The next block in this account's chain</div>
@@ -176,20 +183,20 @@ import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
                 </div>
             </div>
 
-
             <div class="hash-section">
                 <span class="app-section-title">Original Block Content</span>
-                <pre style="font-family: monospace" class="original-block-content">{{ block | json  }}</pre>
+                <pre style="font-family: monospace" class="original-block-content">{{ block | json }}</pre>
             </div>
         </ng-template>
 
         <div class="hash-root app-page-root" responsive [style.justifyContent.center]="hasError">
             <div class="app-page-content">
-
                 <div *ngIf="hasError" style="display: flex; justify-content: center;">
-                    <blui-empty-state style="max-width: 420px; margin-top: 64px"
-                                      title="Unknown Block"
-                                      description="The block you requested in not found.  Please double-check the hash entered is correct or try again later.">
+                    <blui-empty-state
+                        style="max-width: 420px; margin-top: 64px"
+                        title="Unknown Block"
+                        description="The block you requested in not found.  Please double-check the hash entered is correct or try again later."
+                    >
                         <button blui-actions mat-flat-button color="primary" (click)="goBack()">Go Back</button>
                         <mat-icon blui-empty-icon>info</mat-icon>
                     </blui-empty-state>

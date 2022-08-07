@@ -9,7 +9,6 @@ export class CommaPipe implements PipeTransform {
     removeInsigFigs(x: number): number {
         if (x > 100_000) {
             return Number(x.toFixed(0));
-
         }
         if (x > 10_000) {
             return Number(x.toFixed(2));
@@ -18,12 +17,12 @@ export class CommaPipe implements PipeTransform {
             return Number(x.toFixed(4));
         }
         if (x > 1) {
-            return  Number(x.toFixed(5));
+            return Number(x.toFixed(5));
         }
-        return  Number(x.toFixed(6));
+        return Number(x.toFixed(6));
     }
 
     numberWithCommas(x: number): string {
-        return x.toLocaleString("en");
+        return x.toLocaleString('en');
     }
 }

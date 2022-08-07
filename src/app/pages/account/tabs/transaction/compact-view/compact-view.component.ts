@@ -133,9 +133,7 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                     *ngIf="hasNickname(tx.address || tx.newRepresentative)"
                     [routerLink]="'/' + navItems.account.route + '/' + (tx.address || tx.newRepresentative)"
                 >
-
-                    <ng-container
-                        *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'discord'">
+                    <ng-container *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'discord'">
                         ID:
                     </ng-container>
 

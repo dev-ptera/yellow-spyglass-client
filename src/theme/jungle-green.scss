@@ -98,7 +98,7 @@
     .tab-buttons .active {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
- //       background-color: map-get(blui.$blui-white, 50) !important;
+        //       background-color: map-get(blui.$blui-white, 50) !important;
         border-bottom: solid 2px $primary;
         color: $primary !important;
     }

@@ -1,4 +1,3 @@
-
 export type BlockAtHeightDto = {
     hash: string;
     block_account: string;
@@ -13,15 +12,15 @@ export type BlockAtHeightDto = {
     contents: {
         type: string;
         account: string;
-        previous:string;
+        previous: string;
         representative: string;
         balance: string;
         balance_decimal: string;
         link: string;
         link_as_account: string;
         signature: string;
-        work:string;
-    },
+        work: string;
+    };
     subtype: string;
     source_account: string;
-}
+};

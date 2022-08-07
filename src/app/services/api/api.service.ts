@@ -8,7 +8,8 @@ import {
     AccountDistributionStatsDto,
     AccountNFTDto,
     AccountOverviewDto,
-    AliasDto, BlockAtHeightDto,
+    AliasDto,
+    BlockAtHeightDto,
     BlockDtoV2,
     ConfirmedTransactionDto,
     DelegatorsOverviewDto,
@@ -316,7 +317,9 @@ export class ApiService {
     /** Given a hash, fetches block. */
     async fetchBlockFromAddressHeight(address: string, height: number): Promise<BlockAtHeightDto> {
         await this._hasPingedApi();
-        return this._http.post<BlockAtHeightDto>(`${this.httpApi}/v2/account/block-at-height`, { address, height }).toPromise();
+        return this._http
+            .post<BlockAtHeightDto>(`${this.httpApi}/v2/account/block-at-height`, { address, height })
+            .toPromise();
     }
 
     /** Fetches an address's discord/twitter/telegram alias, if any. */

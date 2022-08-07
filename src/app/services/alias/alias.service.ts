@@ -1,5 +1,5 @@
 import { ApiService } from '@app/services/api/api.service';
-import {AliasDto, SocialMediaAccountAliasDto} from '@app/types/dto';
+import { AliasDto, SocialMediaAccountAliasDto } from '@app/types/dto';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 
