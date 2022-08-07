@@ -1,10 +1,12 @@
 export type Block = {
     block_account: string;
     amount: string;
+    amount_decimal: string;
     balance?: string;
     height: string;
     local_timestamp: string;
     confirmed: boolean;
+    successor?: string;
     contents: {
         type: string;
         account: string;

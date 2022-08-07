@@ -57,18 +57,18 @@ import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
                     <span class="app-section-title">Recipient</span>
                     <a
                         class="app-section-subtitle link text"
-                        [routerLink]="'/' + routes.account.route + '/' + block.contents.account"
+                        [routerLink]="'/' + routes.account.route + '/' + block.contents.link_as_account"
                     >
-                        {{ block.contents.account }}
+                        {{ block.contents.link_as_account }}
                     </a>
                 </div>
                 <div *ngIf="block.subtype === 'receive'">
                     <span class="app-section-title">Sender</span>
                     <a
                         class="app-section-subtitle link text"
-                        [routerLink]="'/' + routes.account.route + '/' + block.contents.account"
+                        [routerLink]="'/' + routes.account.route + '/' + block.source_account"
                     >
-                        {{ block.contents.account }}
+                        {{ block.source_account }}
                     </a>
                 </div>
 
