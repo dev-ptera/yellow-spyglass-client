@@ -1,13 +1,13 @@
 import { Component, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UtilService } from '@app/services/util/util.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { SearchService } from '@app/services/search/search.service';
 import { ThemeService } from '@app/services/theme/theme.service';
 import { ApiService } from '@app/services/api/api.service';
-import { ExplorerSummaryDto } from '@app/types/dto';
+import { DiscordResponseDto, ExplorerSummaryDto } from '@app/types/dto';
 import { APP_NAV_ITEMS } from '../../navigation/nav-items';
+import { environment } from '../../../environments/environment';
 
 @Component({
     selector: 'app-home',
@@ -72,11 +72,27 @@ export class HomeComponent implements OnDestroy {
     }
 
     search(searchValue: string, e: MouseEvent): void {
+        const ctrl = e.ctrlKey;
+
+        // BRPD feature only - given a user id, searches their address.
+        if (environment.brpd && this.isSearchDisabled() && searchValue.length === 18) {
+            this._api
+                .fetchDiscordWalletFromUserId(searchValue)
+                .then((data: DiscordResponseDto[]) => {
+                    this._searchService.emitSearch(data[0].address, ctrl);
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+            return;
+        }
+
         if (this.isSearchDisabled()) {
             this.showHint = true;
             return;
         }
-        this._searchService.emitSearch(searchValue, e.ctrlKey);
+
+        this._searchService.emitSearch(searchValue, ctrl);
     }
 
     isDarkTheme(): boolean {

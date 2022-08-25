@@ -6,6 +6,8 @@ import { DrawerStateService } from '../services/drawer-state/drawer-state.servic
 import { APP_NAV_ITEMS, EXPLORER_NAV_GROUP, NavItem, NETWORK_NAV_GROUP } from './nav-items';
 import { SearchService } from '@app/services/search/search.service';
 import { Meta, Title } from '@angular/platform-browser';
+import { environment } from '../../environments/environment';
+import { UtilService } from '@app/services/util/util.service';
 
 @Component({
     selector: 'app-navigation',
@@ -23,6 +25,7 @@ export class NavigationComponent {
         private readonly _title: Title,
         private readonly _meta: Meta,
         private readonly _router: Router,
+        private readonly _utilService: UtilService,
         private readonly _searchService: SearchService,
         private readonly _viewportService: ViewportService,
         private readonly _stateService: DrawerStateService
@@ -90,7 +93,13 @@ export class NavigationComponent {
                     }
                     case `${APP_NAV_ITEMS.account.route}`: {
                         this.toolbarTitle = APP_NAV_ITEMS.account.title;
-                        this._title.setTitle(this._makeTitle('Account'));
+                        if (environment.brpd) {
+                            const address = route.urlAfterRedirects.split('/')[2];
+                            const shortenedAddress = this._utilService.shortenAddress(address);
+                            this._title.setTitle(shortenedAddress);
+                        } else {
+                            this._title.setTitle(this._makeTitle('Account'));
+                        }
                         this._meta.updateTag({
                             name: 'description',
                             content: 'Explore account transaction history and delegators.',

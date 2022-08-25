@@ -11,9 +11,10 @@ import {
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { Router } from '@angular/router';
 import { ApiService } from '@app/services/api/api.service';
-import { AliasDto } from '@app/types/dto';
+import { AliasDto, DiscordResponseDto } from '@app/types/dto';
 import { SearchService } from '@app/services/search/search.service';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { environment } from '../../../environments/environment';
 
 export let APP_SEARCH_BAR_ID = 0;
 
@@ -127,7 +128,22 @@ export class SearchBarComponent {
 
             // Match aliases, then if there's a single match, search for it.
             this._matchAliases(value);
-            this.emitSearch(this.matchingAccounts[this.menuActiveIndex].address);
+            const match = this.matchingAccounts[this.menuActiveIndex];
+            if (match) {
+                this.emitSearch(match.address);
+            }
+
+            // BRPD feature only - given a user id, searches their address.
+            if (environment.brpd) {
+                this._api
+                    .fetchDiscordWalletFromUserId(value)
+                    .then((data: DiscordResponseDto[]) => {
+                        this.emitSearch(data[0].address);
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                    });
+            }
         } else {
             this._matchAliases(value);
         }

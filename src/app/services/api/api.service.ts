@@ -13,6 +13,7 @@ import {
     BlockDtoV2,
     ConfirmedTransactionDto,
     DelegatorsOverviewDto,
+    DiscordResponseDto,
     ExplorerSummaryDto,
     HostNodeStatsDto,
     KnownAccountDto,
@@ -106,6 +107,12 @@ export class ApiService {
     async fetchExplorerSummaryData(): Promise<ExplorerSummaryDto> {
         await this._hasPingedApi();
         return this._http.get<ExplorerSummaryDto>(`${this.httpApi}/v1/explorer-summary`).toPromise();
+    }
+
+    /** Fetches explorer summary information. */
+    async fetchDiscordWalletFromUserId(id: string): Promise<DiscordResponseDto[]> {
+        await this._hasPingedApi();
+        return this._http.get<any>(`https://bananobotapi.banano.cc/wfu/${id}`).toPromise();
     }
 
     /** Fetches account summary information. Also emits an event via `accountLoadedSubject` when loaded. */
