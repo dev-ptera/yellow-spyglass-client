@@ -100,7 +100,7 @@ export class ApiService {
 
     /** Given an address, returns a monKey API URL. */
     createMonKeyUrl(address: string): string {
-        return `https://monkey.banano.cc/api/v1/monkey/${address}`;
+        return `https://monkey.banano.cc/api/v1/monkey/${address}?svc=creeper`;
     }
 
     /** Fetches explorer summary information. */
@@ -200,7 +200,7 @@ export class ApiService {
         await this._hasPingedApi();
         const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
         return this._http
-            .get(`https://monkey.banano.cc/api/v1/monkey/${address}`, { headers, responseType: 'text' })
+            .get(`https://monkey.banano.cc/api/v1/monkey/${address}?svc=creeper`, { headers, responseType: 'text' })
             .toPromise<string>();
     }
 
