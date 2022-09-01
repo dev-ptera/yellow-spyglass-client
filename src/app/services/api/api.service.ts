@@ -50,7 +50,6 @@ export class ApiService {
         const api1 = environment.api1;
         const api2 = environment.api2;
         const req1 = new Promise((resolve) => {
-            // TODO: Replace this with an actual PING endpoint.  Make this as fast as possible.
             this._http
                 .get<any>(`${api1}/v1/representatives/online`)
                 .toPromise()
@@ -60,7 +59,7 @@ export class ApiService {
                     resolve(api2); // If error, resolve the opposite api.
                 });
         });
-        /*
+
         const req2 = new Promise((resolve) => {
             this._http
                 .get<any>(`${api2}/v1/representatives/online`)
@@ -71,10 +70,8 @@ export class ApiService {
                     resolve(api1);
                 });
         });
-         */
 
-        // REQ 2 not included for now; api.creeper is not returning correct timestmaps.
-        Promise.race([req1])
+        Promise.race([req1, req2])
             .then((faster: string) => {
                 this.apiToUseSubject.next(faster);
             })
@@ -199,9 +196,8 @@ export class ApiService {
     async fetchMonKey(address: string): Promise<string> {
         await this._hasPingedApi();
         const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
-        return this._http
-            .get(`https://monkey.banano.cc/api/v1/monkey/${address}?svc=creeper`, { headers, responseType: 'text' })
-            .toPromise<string>();
+        const monkeyUrl = this.createMonKeyUrl(address);
+        return this._http.get(monkeyUrl, { headers, responseType: 'text' }).toPromise<string>();
     }
 
     /** Fetches representatives stats. */
