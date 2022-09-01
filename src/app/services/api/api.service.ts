@@ -197,9 +197,7 @@ export class ApiService {
         await this._hasPingedApi();
         const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
         const monkeyUrl = this.createMonKeyUrl(address);
-        return this._http
-            .get(monkeyUrl, { headers, responseType: 'text' })
-            .toPromise<string>();
+        return this._http.get(monkeyUrl, { headers, responseType: 'text' }).toPromise<string>();
     }
 
     /** Fetches representatives stats. */
