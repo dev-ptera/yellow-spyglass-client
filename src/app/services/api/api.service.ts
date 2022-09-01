@@ -196,8 +196,9 @@ export class ApiService {
     async fetchMonKey(address: string): Promise<string> {
         await this._hasPingedApi();
         const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
+        const monkeyUrl = this.createMonKeyUrl(address);
         return this._http
-            .get(`https://monkey.banano.cc/api/v1/monkey/${address}?svc=creeper`, { headers, responseType: 'text' })
+            .get(monkeyUrl, { headers, responseType: 'text' })
             .toPromise<string>();
     }
 
