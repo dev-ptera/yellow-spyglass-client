@@ -20,68 +20,54 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                 [hidePadding]="true"
                 style="position: relative"
             >
-                <div blui-icon>
+                <!--
+                <div blui-left-content style="justify-content: left; margin-right: 8px; font-size: 0.875rem; font-family: monospace">
+                    <span *ngIf="tx.height" style="font-weight: 400; font-family: monospace" class="text-hint">
+                        #{{ util.numberWithCommas(tx.height) }}
+                    </span>
+                </div>
+                -->
+                <div blui-icon
+                     style="margin-right: 8px">
                     <img
                         [src]="apiService.createMonKeyUrl(tx.address || tx.newRepresentative)"
                         loading="lazy"
-                        style="margin-right: 8px"
                     />
-                </div>
-                <div blui-left-content [style.width.px]="vp.sm ? 64 : 72" style="justify-content: left">
-                    <blui-list-item-tag
-                        [label]="tx.type || 'receive'"
-                        class="type"
-                        [class]="txService.createTagClass(tx, isPending)"
-                    ></blui-list-item-tag>
                 </div>
                 <div blui-title>
                     <div class="tag-row">
+                        <blui-list-item-tag style="margin-right: 12px"
+                            [label]="tx.type || 'receive'"
+                            class="type"
+                            [class]="txService.createTagClass(tx, isPending)"
+                        ></blui-list-item-tag>
                         <span *ngIf="tx.type !== 'change'" class="amount">
                             {{ tx.type === 'receive' || isPending ? '+' : '-' }}
                             {{ util.numberWithCommas(tx.amount) }}
                         </span>
+
+                        <div class="primary" style="font-size: 16px; margin-left: 12px">
+                            {{ aliasService.getAlias(tx.address) }}
+                        </div>
                     </div>
-                    <div class="address-row">
-                        <ng-container *ngIf="!tx.type || tx.type === 'receive'">
-                            <span class="to-from text-secondary">from</span>
-                            <span>
-                                <a
-                                    class="address link text"
-                                    [routerLink]="'/' + navItems.account.route + '/' + tx.address"
-                                    >{{ aliasService.getAlias(tx.address) || tx.address }}</a
-                                >
-                            </span>
-                        </ng-container>
-
-                        <ng-container *ngIf="tx.type === 'send'">
-                            <span class="to-from text-secondary">to</span>
-                            <span>
-                                <a
-                                    class="address link text"
-                                    [routerLink]="'/' + navItems.account.route + '/' + tx.address"
-                                    >{{ aliasService.getAlias(tx.address) || tx.address }}
-                                </a>
-                            </span>
-                        </ng-container>
-
-                        <ng-container *ngIf="tx.type === 'change'">
-                            <span class="to-from text-secondary">to</span>
-                            <span
-                                ><a
-                                    class="address link text"
-                                    [routerLink]="'/' + navItems.account.route + '/' + tx.newRepresentative"
-                                    >{{ aliasService.getAlias(tx.newRepresentative) || tx.newRepresentative }}</a
-                                >
-                            </span>
-                        </ng-container>
+                    <div class="address-row" style="margin: 4px 0">
+                        <a *ngIf="!tx.type || tx.type !== 'change'"
+                            class="address link text"
+                            [routerLink]="'/' + navItems.account.route + '/' + tx.address"
+                            >{{ tx.address }}</a>
+                        <a *ngIf="tx.type === 'change'"
+                            class="address link text"
+                            [routerLink]="'/' + navItems.account.route + '/' + tx.newRepresentative"
+                            >{{ aliasService.getAlias(tx.newRepresentative) || tx.newRepresentative }}</a
+                        >
                     </div>
                 </div>
-                <div blui-subtitle class="hash text-hint mat-body-2">
+                <div blui-subtitle class="hash mat-body-2">
                     <span *ngIf="tx.height">
-                        <span style="margin-right: 0px">#</span>{{ util.numberWithCommas(tx.height) }}
+                        <span style="margin-right: 0px">Block #</span>{{ util.numberWithCommas(tx.height) }}
                     </span>
-                    <span style="margin: 0 4px" *ngIf="tx.height">·</span>
-                    <a class="link hash text-hint" [routerLink]="'/' + navItems.hash.route + '/' + tx.hash">
+                    <span style="margin: 2px" *ngIf="tx.height">·</span>
+                    <a class="link hash text-hint" style="opacity: .7" [routerLink]="'/' + navItems.hash.route + '/' + tx.hash">
                         {{ tx.hash }}
                     </a>
                 </div>
@@ -93,6 +79,7 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                         <span class="mat-body-2">{{ txService.dateMap.get(tx.hash).date }}</span>
                         <span
                             class="mat-body-2 text-secondary"
+                            style="margin-top: 0"
                             [style.fontSize.px]="vp.sm ? 12 : 14"
                             (mouseenter)="tx.timestampHovered = true"
                             (mouseleave)="tx.timestampHovered = false"

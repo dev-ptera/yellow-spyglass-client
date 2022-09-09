@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { AccountOverviewDto } from '@app/types/dto';
+import {AccountNFTDto, AccountOverviewDto} from '@app/types/dto';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { UtilService } from '@app/services/util/util.service';
 import { ApiService } from '@app/services/api/api.service';
@@ -24,12 +24,15 @@ import { TransactionsService } from '@app/services/transactions/transactions.ser
 export class AccountComponent implements OnDestroy {
     MAX_INSIGHTS = 100_000;
 
+    nfts: AccountNFTDto[];
+    isLoadingNFTs: boolean;
     address: string;
     confirmedBalance: string;
     accountRepresentative: string;
 
     showFilter: boolean;
     hasError: boolean;
+    hasNFTsError: boolean;
     isBRPD = environment.brpd;
 
     delegatorCount: number;
@@ -84,6 +87,9 @@ export class AccountComponent implements OnDestroy {
         this.hasError = false;
         this.shownTabNumber = 1;
         this.delegatorCount = 0;
+        this.nfts = undefined;
+        this.isLoadingNFTs = false;
+        this.hasNFTsError = false;
 
         // Managing tabs state.  Reset them all.
         this._txTabService.forgetAccount();
@@ -219,6 +225,27 @@ export class AccountComponent implements OnDestroy {
             this.accountOverview.opened &&
             (this.accountOverview.blockCount <= this.MAX_INSIGHTS || this.isBRPD)
         );
+    }
+
+
+    fetchNfts(): void {
+        if (this.nfts) {
+            return;
+        }
+        if (this.isLoadingNFTs) {
+            return;
+        }
+
+        this.nfts = [];
+        this.isLoadingNFTs = true;
+        this.apiService.fetchAccountNFTs(this.address).then((data) => {
+            this.nfts = data;
+        }).catch((err) => {
+            console.error(err);
+            this.hasNFTsError = true;
+        }).finally(() => {
+            this.isLoadingNFTs = false
+        })
     }
 
     showCSVExportActionButton(): boolean {

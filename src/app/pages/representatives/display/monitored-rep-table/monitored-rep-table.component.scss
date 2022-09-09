@@ -18,6 +18,10 @@
     max-width: 100%;
     overflow: auto !important;
 
+    .representatives-address-cell * {
+        font-family: monospace;
+    }
+
     thead th:nth-child(2) {
         padding-left: 16px;
     }

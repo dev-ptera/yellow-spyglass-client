@@ -40,20 +40,26 @@ $mono: monospace;
 
 .tab-transaction-list:not(.sm) {
     .tag-row,
-    .address-row,
     .hash-row {
         margin-bottom: 1px;
     }
 }
 
+
+.blui-info-list-item-icon-wrapper {
+    order: 3!important;
+}
+
 .tab-transaction-list {
     padding-top: 0px;
+
     .blui-info-list-item {
         .tag-row {
             display: flex;
             align-items: center;
         }
         .address {
+            font-family: monospace;
             word-break: break-all;
         }
         .address,

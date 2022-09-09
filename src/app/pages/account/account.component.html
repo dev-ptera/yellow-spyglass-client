@@ -17,7 +17,7 @@
 </ng-template>
 
 <ng-template #headerContent>
-    <div class="account-header" responsive>
+    <mat-card class="account-header" responsive>
         <!-- Loading -->
         <div *ngIf="!accountOverview" style="display: flex">
             <ng-template [ngTemplateOutlet]="desktopMonKey"></ng-template>
@@ -69,7 +69,9 @@
                     class="app-page-subtitle"
                     [style.marginBottom.px]="vp.sm ? 8 : 4"
                 >
-                    <span [innerHTML]="formatAccountAddress(address)"></span>
+                    <span class="account-address-wrapper">
+                        <span [innerHTML]="formatAccountAddress(address)"></span>
+                    </span>
                     <div style="display: flex" [style.marginLeft.px]="vp.sm ? 4 : 16">
                         <ng-container *ngIf="!vp.sm && !vp.md">
                             <app-copy-button [data]="address"></app-copy-button>
@@ -211,7 +213,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </mat-card>
 </ng-template>
 
 <ng-template #bodyContent>
@@ -221,33 +223,14 @@
                 mat-flat-button
                 (click)="shownTabNumber = 1"
                 [class.active]="shownTabNumber === 1"
-                style="border-top-left-radius: 4px; border-right: 0"
+                style="border-top-left-radius: 8px; border-right: 0"
             >
                 <ng-container *ngIf="vp.sm">
                     <mat-icon>verified</mat-icon>
-                    <div class="count-subtitle">
-                        {{ withCommas(accountOverview.blockCount) }}
-                    </div>
+                    Transactions
                 </ng-container>
                 <ng-container *ngIf="!vp.sm">
-                    Confirmed {{ vp.md ? 'Tx' : 'Transactions' }} ({{ withCommas(accountOverview.blockCount) }})
-                </ng-container>
-            </button>
-
-            <button
-                mat-flat-button
-                (click)="shownTabNumber = 2"
-                [class.active]="shownTabNumber === 2"
-                style="border-right: 0"
-            >
-                <ng-container *ngIf="vp.sm">
-                    <mat-icon>pending</mat-icon>
-                    <div class="count-subtitle">
-                        {{ getReceivableTransactionsCount() }}
-                    </div>
-                </ng-container>
-                <ng-container *ngIf="!vp.sm">
-                    Receivable {{ vp.md ? 'Tx' : 'Transactions' }} ({{ getReceivableTransactionsCount() }})
+                    Transactions
                 </ng-container>
             </button>
 
@@ -256,6 +239,7 @@
                 (click)="shownTabNumber = 3"
                 [class.active]="shownTabNumber === 3"
                 style="border-right: 0"
+                *ngIf="delegatorCount > 0"
             >
                 <ng-container *ngIf="vp.sm">
                     <mat-icon>how_to_vote</mat-icon>
@@ -270,7 +254,7 @@
                 mat-flat-button
                 (click)="shownTabNumber = 4"
                 [class.active]="shownTabNumber === 4"
-                style="border-top-right-radius: 4px"
+                style="border-top-right-radius: 16px"
             >
                 <ng-container *ngIf="vp.sm">
                     <mat-icon>insights</mat-icon>
@@ -296,15 +280,28 @@
         <div
             responsive
             class="tx-content-container divider-border"
+            style="border-top-left-radius: 0"
             [style.backgroundColor]="shownTabNumber === 4 || shownTabNumber === 5 ? 'unset' : ''"
             [class.divider-border]="shownTabNumber !== 4 && shownTabNumber !== 5"
         >
+
+
+            <ng-container *ngIf="getReceivableTransactionsCount() > 0">
+                <div class="mat-headline" style="padding: 1rem; margin-bottom: 0">Receivable Transactions</div>
+                <mat-divider></mat-divider>
+                <account-tx-tab  [address]="address" [isPending]="true"></account-tx-tab>
+                <mat-divider></mat-divider>
+            </ng-container>
+
+
+            <div class="mat-headline" style="padding: 1rem; margin-bottom: 0">Confirmed Transactions</div>
+            <mat-divider></mat-divider>
             <account-tx-tab
+                style="margin-top:8px"
                 *ngIf="shownTabNumber === 1"
                 [address]="address"
                 [blockCount]="accountOverview.blockCount"
             ></account-tx-tab>
-            <account-tx-tab *ngIf="shownTabNumber === 2" [address]="address" [isPending]="true"></account-tx-tab>
 
             <account-delegators-tab *ngIf="shownTabNumber === 3" [address]="address"></account-delegators-tab>
 

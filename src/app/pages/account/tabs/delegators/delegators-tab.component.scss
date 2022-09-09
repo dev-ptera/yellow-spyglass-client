@@ -26,6 +26,9 @@
 .delegators-address-cell {
     padding-top: 8px;
     padding-bottom: 8px;
+    * {
+        font-family: monospace;
+    }
 }
 .sm .delegators-address-cell {
     padding-top: 16px !important;
