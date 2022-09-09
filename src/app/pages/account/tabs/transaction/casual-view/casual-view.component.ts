@@ -41,7 +41,11 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                         </div>
                     </div>
                     <div class="address-row">
-                        <div class="primary" *ngIf="vp.sm && aliasService.has(tx.address)" style="font-size: 0.875rem; margin-top: 12px">
+                        <div
+                            class="primary"
+                            *ngIf="vp.sm && aliasService.has(tx.address)"
+                            style="font-size: 0.875rem; margin-top: 12px"
+                        >
                             {{ aliasService.getAlias(tx.address) }}
                         </div>
                         <a
@@ -64,7 +68,6 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                 </div>
 
                 <div blui-right-content class="right-content" [style.marginRight.px]="vp.sm ? 0 : 8">
-
                     <div style="margin-right: 52px" *ngIf="!vp.sm">
                         <ng-template *ngTemplateOutlet="hash; context: { tx: tx }"></ng-template>
                     </div>
@@ -84,10 +87,9 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                             (mouseenter)="tx.timestampHovered = true"
                             (mouseleave)="tx.timestampHovered = false"
                         >
-                            <mat-icon
-                                *ngIf="!vp.sm"
-                                class="text-secondary meta-icon"
-                                style="margin-right: 4px">schedule</mat-icon>
+                            <mat-icon *ngIf="!vp.sm" class="text-secondary meta-icon" style="margin-right: 4px"
+                                >schedule</mat-icon
+                            >
                             <ng-container *ngIf="!tx.timestampHovered">
                                 {{ txService.dateMap.get(tx.hash).relativeTime }}
                             </ng-container>
@@ -101,19 +103,17 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
         </mat-list>
 
         <ng-template #hash let-tx="tx">
-            <div class="block-info"
+            <div
+                class="block-info"
                 [style.flexDirection]="vp.sm ? 'row' : 'column'"
-                [style.alignItems]="vp.sm ? 'center' : ''">
+                [style.alignItems]="vp.sm ? 'center' : ''"
+            >
                 <div *ngIf="tx.height">
                     <span style="margin-right: 4px">Block No.</span>{{ util.numberWithCommas(tx.height) }}
                 </div>
                 <div style="margin: 0 12px" *ngIf="tx.height && vp.sm">·</div>
                 <div style="display: flex; align-items: center">
-                    <mat-icon
-                        class="text-secondary meta-icon"
-                        style="margin-right: 4px">
-                        receipt
-                    </mat-icon>
+                    <mat-icon class="text-secondary meta-icon" style="margin-right: 4px"> receipt </mat-icon>
                     <a
                         class="link text-hint"
                         style="font-family: monospace"

@@ -101,7 +101,8 @@ $mono: monospace;
         min-width: unset !important;
     }
 
-    .block-info, .timestamps {
+    .block-info,
+    .timestamps {
         display: flex;
         flex-direction: column;
         font-size: 14px;

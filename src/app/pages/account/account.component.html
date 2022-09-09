@@ -236,8 +236,8 @@
                 style="border-right: 0"
                 *ngIf="delegatorCount > 0"
             >
-                    <mat-icon style="margin-right: 8px">how_to_vote</mat-icon>
-                    <span>Delegators</span>
+                <mat-icon style="margin-right: 8px">how_to_vote</mat-icon>
+                <span>Delegators</span>
             </button>
 
             <button
@@ -272,9 +272,7 @@
             [style.backgroundColor]="shownTabNumber === 4 || shownTabNumber === 5 ? 'unset' : ''"
             [class.divider-border]="shownTabNumber !== 4 && shownTabNumber !== 5"
         >
-
-            <ng-container
-                *ngIf="shownTabNumber === 1">
+            <ng-container *ngIf="shownTabNumber === 1">
                 <ng-container *ngIf="getReceivableTransactionsCount() > 0">
                     <div class="mat-headline" style="padding: 1rem; margin-bottom: 0">Receivable Transactions</div>
                     <mat-divider></mat-divider>
