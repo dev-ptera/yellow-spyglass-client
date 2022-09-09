@@ -3,7 +3,7 @@
         *ngIf="!vp.sm"
         [src]="apiService.createMonKeyUrl(address)"
         loading="lazy"
-        style="min-width: 220px; height: 220px; margin-top: -12px; margin-right: 16px"
+        style="min-width: 200px; height: 200px; margin-top: -12px; margin-right: 16px"
     />
 </ng-template>
 
@@ -34,16 +34,16 @@
         <!-- Not Loading -->
         <div *ngIf="accountOverview" style="display: flex">
             <ng-template [ngTemplateOutlet]="desktopMonKey"></ng-template>
-            <div>
+            <div style="display: flex; flex-direction: column">
                 <!-- First Line -->
-                <div class="app-page-title">
+                <div style="font-size: 32px; margin-bottom: 16px">
                     <ng-container *ngIf="!isRepresentative()">
                         <span *ngIf="accountOverview.opened"> Account </span>
                         <span *ngIf="!accountOverview.opened"> Unopened Account </span>
                     </ng-container>
                     <div *ngIf="isRepresentative()" style="display: flex; align-items: center">
                         <div style="margin-right: 16px">
-                            {{ accountOverview.principal ? 'Principal Rep' : 'Representative' }}
+                            {{ accountOverview.principal ? 'Principal Representative' : 'Representative' }}
                         </div>
 
                         <mat-icon
@@ -143,7 +143,7 @@
                 <!-- Opened Account Price Data -->
                 <div class="account-summary-tags" responsive *ngIf="accountOverview.opened">
                     <ng-template [ngTemplateOutlet]="mobileMonKey"></ng-template>
-                    <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 16" responsive>
+                    <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 0" responsive>
                         <ng-container *ngIf="vp.sm">
                             <div class="account-ban-amount">{{ confirmedBalance }} BAN</div>
                             <div class="text-secondary">
@@ -229,9 +229,7 @@
                     <mat-icon>verified</mat-icon>
                     Transactions
                 </ng-container>
-                <ng-container *ngIf="!vp.sm">
-                    Transactions
-                </ng-container>
+                <ng-container *ngIf="!vp.sm"> Transactions </ng-container>
             </button>
 
             <button
@@ -285,23 +283,23 @@
             [class.divider-border]="shownTabNumber !== 4 && shownTabNumber !== 5"
         >
 
+            <ng-container
+                *ngIf="shownTabNumber === 1">
+                <ng-container *ngIf="getReceivableTransactionsCount() > 0">
+                    <div class="mat-headline" style="padding: 1rem; margin-bottom: 0">Receivable Transactions</div>
+                    <mat-divider></mat-divider>
+                    <account-tx-tab [address]="address" [isPending]="true"></account-tx-tab>
+                    <mat-divider></mat-divider>
+                </ng-container>
 
-            <ng-container *ngIf="getReceivableTransactionsCount() > 0">
-                <div class="mat-headline" style="padding: 1rem; margin-bottom: 0">Receivable Transactions</div>
+                <div class="mat-headline" style="padding: 1rem; margin-bottom: 0">Confirmed Transactions</div>
                 <mat-divider></mat-divider>
-                <account-tx-tab  [address]="address" [isPending]="true"></account-tx-tab>
-                <mat-divider></mat-divider>
+                <account-tx-tab
+                    style="margin-top: 8px"
+                    [address]="address"
+                    [blockCount]="accountOverview.blockCount"
+                ></account-tx-tab>
             </ng-container>
-
-
-            <div class="mat-headline" style="padding: 1rem; margin-bottom: 0">Confirmed Transactions</div>
-            <mat-divider></mat-divider>
-            <account-tx-tab
-                style="margin-top:8px"
-                *ngIf="shownTabNumber === 1"
-                [address]="address"
-                [blockCount]="accountOverview.blockCount"
-            ></account-tx-tab>
 
             <account-delegators-tab *ngIf="shownTabNumber === 3" [address]="address"></account-delegators-tab>
 

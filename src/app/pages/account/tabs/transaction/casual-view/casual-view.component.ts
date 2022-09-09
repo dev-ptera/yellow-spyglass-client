@@ -27,16 +27,13 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                     </span>
                 </div>
                 -->
-                <div blui-icon
-                     style="margin-right: 8px">
-                    <img
-                        [src]="apiService.createMonKeyUrl(tx.address || tx.newRepresentative)"
-                        loading="lazy"
-                    />
+                <div blui-icon style="margin-right: 8px">
+                    <img [src]="apiService.createMonKeyUrl(tx.address || tx.newRepresentative)" loading="lazy" />
                 </div>
                 <div blui-title>
                     <div class="tag-row">
-                        <blui-list-item-tag style="margin-right: 12px"
+                        <blui-list-item-tag
+                            style="margin-right: 12px"
                             [label]="tx.type || 'receive'"
                             class="type"
                             [class]="txService.createTagClass(tx, isPending)"
@@ -51,11 +48,14 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                         </div>
                     </div>
                     <div class="address-row" style="margin: 4px 0">
-                        <a *ngIf="!tx.type || tx.type !== 'change'"
+                        <a
+                            *ngIf="!tx.type || tx.type !== 'change'"
                             class="address link text"
                             [routerLink]="'/' + navItems.account.route + '/' + tx.address"
-                            >{{ tx.address }}</a>
-                        <a *ngIf="tx.type === 'change'"
+                            >{{ tx.address }}</a
+                        >
+                        <a
+                            *ngIf="tx.type === 'change'"
                             class="address link text"
                             [routerLink]="'/' + navItems.account.route + '/' + tx.newRepresentative"
                             >{{ aliasService.getAlias(tx.newRepresentative) || tx.newRepresentative }}</a
@@ -67,7 +67,11 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                         <span style="margin-right: 0px">Block #</span>{{ util.numberWithCommas(tx.height) }}
                     </span>
                     <span style="margin: 2px" *ngIf="tx.height">·</span>
-                    <a class="link hash text-hint" style="opacity: .7" [routerLink]="'/' + navItems.hash.route + '/' + tx.hash">
+                    <a
+                        class="link hash text-hint"
+                        style="opacity: .7"
+                        [routerLink]="'/' + navItems.hash.route + '/' + tx.hash"
+                    >
                         {{ tx.hash }}
                     </a>
                 </div>
