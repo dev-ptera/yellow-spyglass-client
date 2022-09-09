@@ -56,6 +56,11 @@ $mono: monospace;
         .tag-row {
             display: flex;
             align-items: center;
+            flex-wrap: wrap;
+        }
+        .address-row {
+            max-width: 32ch;
+            margin: 8px 0;
         }
         .address {
             font-family: monospace;
@@ -80,7 +85,6 @@ $mono: monospace;
         }
     }
     .blui-list-item-tag-content {
-        width: 52px;
         text-align: center;
     }
     .blui-info-list-item .blui-info-list-item-subtitle-wrapper {
@@ -97,17 +101,23 @@ $mono: monospace;
         min-width: unset !important;
     }
 
-    .to-from {
-        font-weight: 400;
-        margin-right: 4px;
+    .block-info, .timestamps {
+        display: flex;
+        flex-direction: column;
+        font-size: 14px;
+        text-align: right;
+    }
+
+    .meta-icon {
+        font-size: 14px;
+        height: 14px;
+        width: 14px;
+        line-height: 14px;
     }
     .amount {
         font-size: 1rem;
         font-weight: 600;
-    }
-    .timestamps {
-        display: flex;
-        flex-direction: column;
-        text-align: right;
+        margin-right: 12px;
+        margin-left: 12px;
     }
 }

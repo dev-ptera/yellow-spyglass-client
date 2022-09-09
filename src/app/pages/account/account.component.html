@@ -17,7 +17,7 @@
 </ng-template>
 
 <ng-template #headerContent>
-    <mat-card class="account-header" responsive>
+    <mat-card class="account-header divider-border mat-elevation-z0" responsive>
         <!-- Loading -->
         <div *ngIf="!accountOverview" style="display: flex">
             <ng-template [ngTemplateOutlet]="desktopMonKey"></ng-template>
@@ -223,13 +223,10 @@
                 mat-flat-button
                 (click)="shownTabNumber = 1"
                 [class.active]="shownTabNumber === 1"
-                style="border-top-left-radius: 8px; border-right: 0"
+                style="border-top-left-radius: 16px; border-right: 0"
             >
-                <ng-container *ngIf="vp.sm">
-                    <mat-icon>verified</mat-icon>
-                    Transactions
-                </ng-container>
-                <ng-container *ngIf="!vp.sm"> Transactions </ng-container>
+                <mat-icon style="margin-right: 8px">verified</mat-icon>
+                <span>Transactions</span>
             </button>
 
             <button
@@ -239,13 +236,8 @@
                 style="border-right: 0"
                 *ngIf="delegatorCount > 0"
             >
-                <ng-container *ngIf="vp.sm">
-                    <mat-icon>how_to_vote</mat-icon>
-                    <div class="count-subtitle">
-                        {{ withCommas(delegatorCount) }}
-                    </div>
-                </ng-container>
-                <ng-container *ngIf="!vp.sm"> Delegators ({{ withCommas(delegatorCount) }}) </ng-container>
+                    <mat-icon style="margin-right: 8px">how_to_vote</mat-icon>
+                    <span>Delegators</span>
             </button>
 
             <button
@@ -254,10 +246,8 @@
                 [class.active]="shownTabNumber === 4"
                 style="border-top-right-radius: 16px"
             >
-                <ng-container *ngIf="vp.sm">
-                    <mat-icon>insights</mat-icon>
-                </ng-container>
-                <ng-container *ngIf="!vp.sm"> Insights </ng-container>
+                <mat-icon style="margin-right: 8px">insights</mat-icon>
+                <span>Insights</span>
             </button>
 
             <!--
