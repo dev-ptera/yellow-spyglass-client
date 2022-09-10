@@ -8,6 +8,7 @@ import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angu
             mat-icon-button
             class="address-action-button"
             responsive
+            matTooltip="Show Tx Filters"
             (click)="showFilter = !showFilter; showFilterChange.emit(showFilter)"
         >
             <mat-icon>tune</mat-icon>

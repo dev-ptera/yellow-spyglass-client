@@ -77,11 +77,6 @@
                             <app-copy-button [data]="address"></app-copy-button>
                             <app-qr-button [address]="address"></app-qr-button>
                             <app-bookmark-button [id]="address"></app-bookmark-button>
-                            <app-csv-button *ngIf="showCSVExportActionButton()" [address]="address"></app-csv-button>
-                            <app-filter-button
-                                *ngIf="showFilterActionButton()"
-                                [(showFilter)]="showFilter"
-                            ></app-filter-button>
                         </ng-container>
                         <app-account-actions-menu
                             *ngIf="vp.sm || vp.md"
@@ -316,11 +311,21 @@
                     [style.borderTopLeftRadius.px]="getReceivableTransactionsCount() > 0 ? 16 : 0">
                     <ng-container>
 
-                        <div style="padding: 16px 0 16px 28px">
-                            <span [style.fontSize.px]="vp.sm ? 14 : 16">{{ accountOverview.blockCount | appComma }}</span>
-                            <span [style.fontSize.px]="vp.sm ? 14 : 16" style="margin-left: 8px" class="text-secondary"
-                            >Confirmed Transactions</span
-                            >
+                        <div style="padding: 16px 8px 16px 28px; display: flex; justify-content: space-between; align-items: center">
+                            <div>
+                                <span [style.fontSize.px]="vp.sm ? 14 : 16">{{ accountOverview.blockCount | appComma }}</span>
+                                <span [style.fontSize.px]="vp.sm ? 14 : 16" style="margin-left: 8px" class="text-secondary">
+                                Confirmed Transactions
+                            </span>
+                            </div>
+                            <div>
+                                <app-csv-button *ngIf="showCSVExportActionButton()" [address]="address"></app-csv-button>
+                                <app-filter-button
+                                    *ngIf="showFilterActionButton()"
+                                    style="margin-left: 8px"
+                                    [(showFilter)]="showFilter"
+                                ></app-filter-button>
+                            </div>
                         </div>
                         <mat-divider></mat-divider>
                     </ng-container>

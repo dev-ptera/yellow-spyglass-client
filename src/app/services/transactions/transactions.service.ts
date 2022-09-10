@@ -187,7 +187,7 @@ export class TransactionsService {
         const oneDay = 24 * 60 * 60; // hours*minutes*seconds*milliseconds
         transactions.map((tx) => {
             const diffDays = tx.timestamp
-                ? Math.round(((currentDate - tx.timestamp) / oneDay) * 1000) / 1000
+                ? ((currentDate - tx.timestamp) / oneDay)
                 : undefined;
             this.dateMap.set(tx.hash, {
                 date: this._formatDateString(tx.timestamp),
@@ -233,7 +233,12 @@ export class TransactionsService {
                 return `${roundedHours} hour${roundedHours > 1 ? 's' : ''} ago`;
             }
             const roundedMinutes = Math.round(hours * 60);
-            return `${roundedMinutes} ${this._vp.sm ? 'min' : 'minute'}${roundedMinutes > 1 ? 's' : ''} ago`;
+            if (roundedMinutes >= 1) {
+                return `${roundedMinutes} min${roundedMinutes > 1 ? 's' : ''} ago`;
+            }
+            const seconds = Math.round(days * 24 * 60 * 60);
+            return `${seconds} sec ago`;
+
         }
     }
 

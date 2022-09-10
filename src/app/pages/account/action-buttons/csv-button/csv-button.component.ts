@@ -10,6 +10,7 @@ import { AccountActionsService } from '@app/services/account-actions/account-act
             class="address-action-button"
             [disabled]="isLoading"
             responsive
+            matTooltip="Download Transaction History"
             (click)="downloadTxHistory()"
         >
             <mat-icon>download</mat-icon>
