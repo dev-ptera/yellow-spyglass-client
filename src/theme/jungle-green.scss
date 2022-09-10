@@ -142,6 +142,12 @@
                 border: solid 1px $change;
                 color: $change;
             }
+            &.open {
+                $open: map-get(blui.$blui-purple, 500);
+                background-color: rgba($open, 0.05);
+                border: solid 1px $open;
+                color: $open;
+            }
         }
     }
 }
@@ -191,7 +197,7 @@ $jungle-green-theme: map-merge(
             secondary-text: map-get(blui.$blui-gray, 500),
             hint-text: map-get(blui.$blui-black, 200),
             base: map-get(blui.$blui-darkBlack, 900),
-            divider: rgba(66, 78, 84, 0.12),
+            divider: rgba(66, 78, 84, 0.10),
             dividers: mat.get-color-from-palette(mat.$light-theme-foreground-palette, dividers),
             disabled: rgba(66, 78, 84, 0.3),
             disabled-button: rgba(black, 0.26),

@@ -32,8 +32,8 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                         ></blui-list-item-tag>
 
                         <span *ngIf="tx.type !== 'change'" class="amount">
-                            {{ tx.type === 'receive' || isPending ? '+' : '-' }}
-                            {{ util.numberWithCommas(tx.amount) }}
+                            {{ tx.type === 'receive' || tx.type === 'open' || isPending ? '+' : '-' }}
+                            {{ tx.amount | appComma }}
                         </span>
 
                         <div class="primary" *ngIf="!vp.sm" style="font-size: 1rem">

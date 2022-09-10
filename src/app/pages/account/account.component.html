@@ -36,14 +36,14 @@
             <ng-template [ngTemplateOutlet]="desktopMonKey"></ng-template>
             <div style="display: flex; flex-direction: column">
                 <!-- First Line -->
-                <div [style.fontSize.px]="vp.sm ? 28 : 32" style="margin-bottom: 4px">
+                <div class="app-page-title" style="margin-bottom: 4px">
                     <ng-container *ngIf="!isRepresentative()">
                         <span *ngIf="accountOverview.opened"> Account </span>
                         <span *ngIf="!accountOverview.opened"> Unopened Account </span>
                     </ng-container>
                     <div *ngIf="isRepresentative()" style="display: flex; align-items: center">
                         <div style="margin-right: 16px">
-                            {{ accountOverview.principal ? 'Principal Representative' : 'Representative' }}
+                            {{ accountOverview.principal ? vp.sm ? 'Principal Rep' : 'Principal Representative' : 'Representative' }}
                         </div>
 
                         <mat-icon
@@ -229,6 +229,7 @@
             >
                 <mat-icon style="margin-right: 8px">verified</mat-icon>
                 <span>Transactions</span>
+                <span [style.marginLeft.px]="vp.sm ? 0 : 4">({{ accountOverview.blockCount | appComma }})</span>
             </button>
 
             <button
@@ -313,13 +314,16 @@
 
                 <mat-card style="padding: 0" class="divider-border"
                     [style.borderTopLeftRadius.px]="getReceivableTransactionsCount() > 0 ? 16 : 0">
-                    <div style="padding: 16px 0 16px 28px">
-                        <span [style.fontSize.px]="vp.sm ? 14 : 16">{{ accountOverview.blockCount | appComma }}</span>
-                        <span [style.fontSize.px]="vp.sm ? 14 : 16" style="margin-left: 8px" class="text-secondary"
+                    <ng-container>
+
+                        <div style="padding: 16px 0 16px 28px">
+                            <span [style.fontSize.px]="vp.sm ? 14 : 16">{{ accountOverview.blockCount | appComma }}</span>
+                            <span [style.fontSize.px]="vp.sm ? 14 : 16" style="margin-left: 8px" class="text-secondary"
                             >Confirmed Transactions</span
-                        >
-                    </div>
-                    <mat-divider></mat-divider>
+                            >
+                        </div>
+                        <mat-divider></mat-divider>
+                    </ng-container>
                     <account-tx-tab
                         style="margin-top: 8px"
                         [address]="address"

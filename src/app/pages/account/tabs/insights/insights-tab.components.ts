@@ -161,7 +161,7 @@ export class InsightsTabComponent implements OnInit {
                     }
 
                     return `<div style="font-size: 14px"><div>Block <strong>${
-                        this.key
+                        toComma(this.key)
                     }</strong></div><br /><div>Balance <strong>${toComma(
                         balance
                     )}</strong></div><br /><div style="display: ${
@@ -252,10 +252,6 @@ export class InsightsTabComponent implements OnInit {
         });
     }
 
-    formatBan(ban: number): string {
-        return this._util.numberWithCommas(ban);
-    }
-
     shortenAddr(addr: string): string {
         if (!addr) {
             return 'N/A';
@@ -276,10 +272,6 @@ export class InsightsTabComponent implements OnInit {
         return document.ontouchstart === undefined
             ? 'Click and drag in the plot area to zoom in.'
             : 'Pinch the chart to zoom in.';
-    }
-
-    numberWithComas(num: number): string {
-        return this._util.numberWithCommas(num);
     }
 
     getErrorDescription(): string {

@@ -2,15 +2,15 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({ name: 'appComma' })
 export class CommaPipe implements PipeTransform {
-    transform(value: string | number): string {
+    transform(value: string | number, sigfigs?: number): string {
         return this.numberWithCommas(this.removeInsigFigs(Number(value)));
     }
 
     removeInsigFigs(x: number): number {
         if (x > 100_000) {
-            return Number(x.toFixed(0));
+            return Number(x.toFixed(2));
         }
-        if (x > 10_000) {
+        if (x > 1_000) {
             return Number(x.toFixed(2));
         }
         if (x > 100) {

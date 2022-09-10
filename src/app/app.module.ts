@@ -20,7 +20,7 @@ import { PlausibleService } from '@app/services/plausible/plausible.service';
     template: `<app-navigation></app-navigation>`,
 })
 export class AppComponent {
-    constructor(plausibleService: PlausibleService) {
+    constructor(plausibleService: PlausibleService ) {
         plausibleService.loadAnalytics();
     }
 }

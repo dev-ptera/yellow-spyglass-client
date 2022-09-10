@@ -56,11 +56,11 @@
     <mat-list [style.paddingTop.px]="0">
         <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
             <div blui-title>Total BAN Sent</div>
-            <div blui-subtitle class="text-secondary">{{ formatBan(insights.totalAmountSent) }} BAN</div>
+            <div blui-subtitle class="text-secondary">{{ insights.totalAmountSent | appComma }} BAN</div>
         </blui-info-list-item>
         <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
             <div blui-title>Largest Transaction Sent</div>
-            <div blui-subtitle class="text-secondary">{{ formatBan(insights.maxAmountSent) }} BAN</div>
+            <div blui-subtitle class="text-secondary">{{ insights.maxAmountSent | appComma }} BAN</div>
             <a
                 blui-right-content
                 class="link mat-overline text-hint"
@@ -72,7 +72,7 @@
 
         <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
             <div blui-title>No. Transactions Sent</div>
-            <div blui-subtitle class="text-secondary">{{ numberWithComas(insights.totalTxSent) }}</div>
+            <div blui-subtitle class="text-secondary">{{ insights.totalTxSent | appComma }}</div>
         </blui-info-list-item>
 
         <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
@@ -134,11 +134,11 @@
     <mat-list [style.paddingTop.px]="0">
         <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
             <div blui-title>Total BAN Received</div>
-            <div blui-subtitle class="text-secondary">{{ formatBan(insights.totalAmountReceived) }} BAN</div>
+            <div blui-subtitle class="text-secondary">{{ insights.totalAmountReceived | appComma }} BAN</div>
         </blui-info-list-item>
         <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
             <div blui-title>Largest Transaction Received</div>
-            <div blui-subtitle class="text-secondary">{{ formatBan(insights.maxAmountReceived) }} BAN</div>
+            <div blui-subtitle class="text-secondary">{{ insights.maxAmountReceived | appComma }} BAN</div>
             <a
                 blui-right-content
                 class="link mat-overline text-hint"
@@ -150,7 +150,7 @@
 
         <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
             <div blui-title>No. Transactions Received</div>
-            <div blui-subtitle class="text-secondary">{{ numberWithComas(insights.totalTxReceived) }}</div>
+            <div blui-subtitle class="text-secondary">{{ insights.totalTxReceived | appComma }}</div>
         </blui-info-list-item>
 
         <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
@@ -201,7 +201,7 @@
         </blui-info-list-item>
         <blui-info-list-item [wrapSubtitle]="true" [hidePadding]="true">
             <div blui-title>Account Max Balance</div>
-            <div blui-subtitle class="text-secondary">{{ formatBan(insights.maxBalance) }} BAN</div>
+            <div blui-subtitle class="text-secondary">{{ insights.maxBalance | appComma }} BAN</div>
             <a
                 blui-right-content
                 class="link mat-overline text-hint"
