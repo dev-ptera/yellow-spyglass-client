@@ -14,7 +14,7 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
         <div
             *ngFor="let tx of transactions; trackBy: trackByFn; let last = last"
             style="position: relative"
-            class="animation-content"
+            class="animation-content brpd-tab-transaction-list"
         >
             <div style="display: flex; align-items: center">
                 <img
@@ -22,18 +22,18 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                     loading="lazy"
                     style="height: 50px; width: 50px; margin-right: 12px"
                 />
-                <div
+                <a
                     *ngIf="tx.height"
                     [routerLink]="'/' + navItems.hash.route + '/' + tx.hash"
-                    class="link"
+                    class="link text"
                     style="font-family: monospace; margin-right: 24px"
                 >
                     <span style="margin-right: 0px" style="font-size: 14px">#</span
                     >{{ util.numberWithCommas(tx.height) }}
-                </div>
+                </a>
 
                 <blui-list-item-tag
-                    style="margin-right: 24px; width: 60px; text-align: center"
+                    style="margin-right: 24px; width: 68px; text-align: center"
                     [label]="tx.type || 'receive'"
                     class="type"
                     [class]="txService.createTagClass(tx, isPending)"

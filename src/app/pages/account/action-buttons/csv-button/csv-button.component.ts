@@ -6,6 +6,7 @@ import { AccountActionsService } from '@app/services/account-actions/account-act
     encapsulation: ViewEncapsulation.None,
     template: `
         <button
+            *ngIf="!isLoading"
             mat-icon-button
             class="address-action-button"
             [disabled]="isLoading"
@@ -15,6 +16,8 @@ import { AccountActionsService } from '@app/services/account-actions/account-act
         >
             <mat-icon>download</mat-icon>
         </button>
+        <mat-spinner *ngIf="isLoading" style="margin-right: 4px"
+                     color="primary" diameter="20"></mat-spinner>
     `,
 })
 export class CsvButtonComponent {
