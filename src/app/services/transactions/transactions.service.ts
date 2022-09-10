@@ -186,9 +186,7 @@ export class TransactionsService {
         const currentDate = new Date().getTime() / 1000;
         const oneDay = 24 * 60 * 60; // hours*minutes*seconds*milliseconds
         transactions.map((tx) => {
-            const diffDays = tx.timestamp
-                ? ((currentDate - tx.timestamp) / oneDay)
-                : undefined;
+            const diffDays = tx.timestamp ? (currentDate - tx.timestamp) / oneDay : undefined;
             this.dateMap.set(tx.hash, {
                 date: this._formatDateString(tx.timestamp),
                 diffDays,
@@ -238,7 +236,6 @@ export class TransactionsService {
             }
             const seconds = Math.round(days * 24 * 60 * 60);
             return `${seconds} sec ago`;
-
         }
     }
 

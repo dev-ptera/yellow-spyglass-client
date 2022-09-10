@@ -20,6 +20,10 @@
                 margin-bottom: -4px;
             }
         }
+        .address-row {
+            max-width: 32ch;
+            margin: 8px 0;
+        }
         .right-content {
             align-items: center;
             display: flex;
@@ -38,12 +42,6 @@
 
 $mono: monospace;
 
-.tab-transaction-list:not(.sm) {
-    .tag-row,
-    .hash-row {
-        margin-bottom: 1px;
-    }
-}
 
 .blui-info-list-item-icon-wrapper {
     order: 3 !important;
@@ -53,46 +51,45 @@ $mono: monospace;
     padding-top: 0px;
 
     .blui-info-list-item {
+        .mat-list-item {
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
         .tag-row {
             display: flex;
             align-items: center;
             flex-wrap: wrap;
         }
         .address-row {
+            box-sizing: border-box;
             max-width: 32ch;
-            margin: 8px 0;
+            margin-top: 8px;
         }
         .address * {
             font-family: monospace;
             word-break: break-all;
             font-weight: 400;
         }
-        .hash-row {
-            display: inline-flex;
-            font-family: $mono;
-        }
-        .height {
-            font-size: 12px;
-            background-color: unset;
-            font-weight: 600;
-            margin-right: 8px;
-        }
         .right-content {
             margin-left: 24px;
         }
     }
+
     .blui-list-item-tag-content {
         min-width: 52px;
         text-align: center;
     }
+
     .blui-info-list-item .blui-info-list-item-subtitle-wrapper {
         font-size: 0.75rem;
     }
+
     .blui-info-list-item-icon-wrapper > * {
         height: 6rem !important;
         width: 6rem !important;
         font-size: 6rem !important;
     }
+
     .blui-info-list-item-icon-wrapper {
         max-width: unset !important;
         width: unset !important;

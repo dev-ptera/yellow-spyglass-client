@@ -54,13 +54,12 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                             [routerLink]="'/' + navItems.account.route + '/' + tx.address"
                             [innerHTML]="tx.address | colorAddress"
                         ></a>
-                        <!--
                         <a
                             *ngIf="tx.type === 'change'"
                             class="address link text"
                             [routerLink]="'/' + navItems.account.route + '/' + tx.newRepresentative"
-                            >{{ aliasService.getAlias(tx.newRepresentative) || tx.newRepresentative }}</a
-                        > -->
+                            [innerHTML]="tx.newRepresentative | colorAddress"
+                        ></a>
                     </div>
                 </div>
 

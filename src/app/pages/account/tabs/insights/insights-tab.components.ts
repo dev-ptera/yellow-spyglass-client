@@ -160,9 +160,9 @@ export class InsightsTabComponent implements OnInit {
                         lastBlockDiff = Number(this.y) - Number(this.series.data[Number(this.x - 1)].y);
                     }
 
-                    return `<div style="font-size: 14px"><div>Block <strong>${
-                        toComma(this.key)
-                    }</strong></div><br /><div>Balance <strong>${toComma(
+                    return `<div style="font-size: 14px"><div>Block <strong>${toComma(
+                        this.key
+                    )}</strong></div><br /><div>Balance <strong>${toComma(
                         balance
                     )}</strong></div><br /><div style="display: ${
                         this.x === 0 ? 'none' : 'block'
