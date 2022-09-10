@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CopyButtonComponent } from '@app/common/components/copy-button/copy-button.component';
 import { BookmarkButtonComponent } from '@app/common/components/bookmark-button/bookmark-button.component';
+import { ColorAddressPipe } from '@app/common/pipes/color-address.pipe';
 
 @NgModule({
     declarations: [
@@ -28,6 +29,7 @@ import { BookmarkButtonComponent } from '@app/common/components/bookmark-button/
         PercentagePipe,
         ResponsiveDirective,
         SafeHtmlPipe,
+        ColorAddressPipe,
     ],
     imports: [
         CommonModule,
@@ -51,6 +53,7 @@ import { BookmarkButtonComponent } from '@app/common/components/bookmark-button/
         PercentagePipe,
         ResponsiveDirective,
         SafeHtmlPipe,
+        ColorAddressPipe,
     ],
 })
 export class AppCommonModule {}

@@ -125,6 +125,12 @@
                 color: $primary;
                 // color: map-get($foreground, secondary-text);
             }
+            &.receivable {
+                $receivable: map-get(blui.$blui-orange, 500);
+                background-color: rgba($receivable, 0.05);
+                border: solid 1px $receivable;
+                color: $receivable;
+            }
             &.send {
                 background-color: rgba($warn, 0.05);
                 border: solid 1px $warn;

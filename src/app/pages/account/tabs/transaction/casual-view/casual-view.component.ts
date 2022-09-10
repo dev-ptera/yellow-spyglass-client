@@ -44,7 +44,7 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                         <div
                             class="primary"
                             *ngIf="vp.sm && aliasService.has(tx.address)"
-                            style="font-size: 0.875rem; margin-top: 12px"
+                            style="font-size: 0.875rem; margin: 12px 0 8px 0"
                         >
                             {{ aliasService.getAlias(tx.address) }}
                         </div>
@@ -52,14 +52,15 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                             *ngIf="!tx.type || tx.type !== 'change'"
                             class="address link text"
                             [routerLink]="'/' + navItems.account.route + '/' + tx.address"
-                            >{{ tx.address }}</a
-                        >
+                            [innerHTML]="tx.address | colorAddress"
+                        ></a>
+                        <!--
                         <a
                             *ngIf="tx.type === 'change'"
                             class="address link text"
                             [routerLink]="'/' + navItems.account.route + '/' + tx.newRepresentative"
                             >{{ aliasService.getAlias(tx.newRepresentative) || tx.newRepresentative }}</a
-                        >
+                        > -->
                     </div>
                 </div>
 
@@ -68,7 +69,7 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                 </div>
 
                 <div blui-right-content class="right-content" [style.marginRight.px]="vp.sm ? 0 : 8">
-                    <div style="margin-right: 52px" *ngIf="!vp.sm">
+                    <div *ngIf="!vp.sm">
                         <ng-template *ngTemplateOutlet="hash; context: { tx: tx }"></ng-template>
                     </div>
 
@@ -76,20 +77,20 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                         <img [src]="apiService.createMonKeyUrl(tx.address || tx.newRepresentative)" loading="lazy" />
                     </div>
 
-                    <div class="timestamps">
+                    <div class="timestamps" [style.minWidth.px]="vp.sm ? 0 : 150">
                         <div>
                             {{ txService.dateMap.get(tx.hash).date }}
                         </div>
                         <div
                             class="text-hint"
-                            style="margin-top: 0; display: flex; align-items: center"
+                            style="margin-top: 0; display: flex; align-items: center; justify-content: flex-end"
                             [style.fontSize.px]="vp.sm ? 12 : 14"
                             (mouseenter)="tx.timestampHovered = true"
                             (mouseleave)="tx.timestampHovered = false"
                         >
                             <mat-icon *ngIf="!vp.sm" class="text-secondary meta-icon" style="margin-right: 4px"
-                                >schedule</mat-icon
-                            >
+                                >schedule
+                            </mat-icon>
                             <ng-container *ngIf="!tx.timestampHovered">
                                 {{ txService.dateMap.get(tx.hash).relativeTime }}
                             </ng-container>
@@ -113,7 +114,7 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                 </div>
                 <div style="margin: 0 12px" *ngIf="tx.height && vp.sm">·</div>
                 <div style="display: flex; align-items: center">
-                    <mat-icon class="text-secondary meta-icon" style="margin-right: 4px"> receipt </mat-icon>
+                    <mat-icon class="text-secondary meta-icon" style="margin-right: 4px"> receipt</mat-icon>
                     <a
                         class="link text-hint"
                         style="font-family: monospace"

@@ -142,6 +142,12 @@
                 border: solid 1px $change;
                 color: $change;
             }
+            &.receivable {
+                $receivable: map-get(blui.$blui-orange, 200);
+                background-color: rgba($receivable, 0.05);
+                border: solid 1px $receivable;
+                color: $receivable;
+            }
         }
     }
 }

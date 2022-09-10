@@ -36,7 +36,7 @@
             <ng-template [ngTemplateOutlet]="desktopMonKey"></ng-template>
             <div style="display: flex; flex-direction: column">
                 <!-- First Line -->
-                <div style="font-size: 32px; margin-bottom: 16px">
+                <div [style.fontSize.px]="vp.sm ? 28 : 32" style="margin-bottom: 4px">
                     <ng-container *ngIf="!isRepresentative()">
                         <span *ngIf="accountOverview.opened"> Account </span>
                         <span *ngIf="!accountOverview.opened"> Unopened Account </span>
@@ -112,6 +112,7 @@
                             *ngIf="accountOverview.representative === address"
                             class="mat-overline"
                             style="line-height: unset"
+                            [style.marginTop.px]="2"
                             [style.fontSize.px]="12"
                         >
                             Self-Represented
@@ -220,6 +221,7 @@
     <div class="account-tabs-container" responsive>
         <div class="tab-buttons" responsive>
             <button
+                blui-inline
                 mat-flat-button
                 (click)="shownTabNumber = 1"
                 [class.active]="shownTabNumber === 1"
@@ -230,6 +232,7 @@
             </button>
 
             <button
+                blui-inline
                 mat-flat-button
                 (click)="shownTabNumber = 3"
                 [class.active]="shownTabNumber === 3"
@@ -241,6 +244,7 @@
             </button>
 
             <button
+                blui-inline
                 mat-flat-button
                 (click)="shownTabNumber = 4"
                 [class.active]="shownTabNumber === 4"
@@ -269,24 +273,59 @@
             responsive
             class="tx-content-container divider-border"
             style="border-top-left-radius: 0"
-            [style.backgroundColor]="shownTabNumber === 4 || shownTabNumber === 5 ? 'unset' : ''"
-            [class.divider-border]="shownTabNumber !== 4 && shownTabNumber !== 5"
+            [style.backgroundColor]="
+                shownTabNumber === 4 || shownTabNumber === 5 || shownTabNumber === 1 ? 'unset' : ''
+            "
+            [class.divider-border]="shownTabNumber !== 4 && shownTabNumber !== 5 && shownTabNumber !== 1"
         >
             <ng-container *ngIf="shownTabNumber === 1">
-                <ng-container *ngIf="getReceivableTransactionsCount() > 0">
-                    <div class="mat-headline" style="padding: 1rem; margin-bottom: 0">Receivable Transactions</div>
-                    <mat-divider></mat-divider>
-                    <account-tx-tab [address]="address" [isPending]="true"></account-tx-tab>
-                    <mat-divider></mat-divider>
-                </ng-container>
+                <mat-accordion
+                    *ngIf="getReceivableTransactionsCount() > 0"
+                    style="
+                        display: flex;
+                        width: 100%;
+                        padding: 0;
+                        margin-bottom: 16px;
+                        border-radius: 16px;
+                        overflow: hidden;
+                        border-top-left-radius: 0;
+                    "
+                    class="divider-border"
+                >
+                    <mat-expansion-panel style="width: 100%" [expanded]="true">
+                        <mat-expansion-panel-header style="height: 56px">
+                            <mat-panel-title style="font-weight: 400">
+                                <span [style.fontSize.px]="vp.sm ? 14 : 16">
+                                    {{ getReceivableTransactionsCount() | appComma }}
+                                </span>
+                                <span
+                                    [style.fontSize.px]="vp.sm ? 14 : 16"
+                                    style="margin-left: 8px"
+                                    class="text-secondary"
+                                >
+                                    Receivable Transactions
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <account-tx-tab [address]="address" [isPending]="true"></account-tx-tab>
+                    </mat-expansion-panel>
+                </mat-accordion>
 
-                <div class="mat-headline" style="padding: 1rem; margin-bottom: 0">Confirmed Transactions</div>
-                <mat-divider></mat-divider>
-                <account-tx-tab
-                    style="margin-top: 8px"
-                    [address]="address"
-                    [blockCount]="accountOverview.blockCount"
-                ></account-tx-tab>
+                <mat-card style="padding: 0" class="divider-border"
+                    [style.borderTopLeftRadius.px]="getReceivableTransactionsCount() > 0 ? 16 : 0">
+                    <div style="padding: 16px 0 16px 28px">
+                        <span [style.fontSize.px]="vp.sm ? 14 : 16">{{ accountOverview.blockCount | appComma }}</span>
+                        <span [style.fontSize.px]="vp.sm ? 14 : 16" style="margin-left: 8px" class="text-secondary"
+                            >Confirmed Transactions</span
+                        >
+                    </div>
+                    <mat-divider></mat-divider>
+                    <account-tx-tab
+                        style="margin-top: 8px"
+                        [address]="address"
+                        [blockCount]="accountOverview.blockCount"
+                    ></account-tx-tab>
+                </mat-card>
             </ng-container>
 
             <account-delegators-tab *ngIf="shownTabNumber === 3" [address]="address"></account-delegators-tab>
@@ -330,6 +369,7 @@
     >
         <app-transaction-filter-drawer
             *ngIf="accountOverview"
+            (close)="showFilter = false"
             (search)="vp.md || vp.sm ? (showFilter = false) : undefined"
             [defaultPageSize]="isBRPD ? DEFAULT_BRPD_TX_SIZE : DEFAULT_TX_SIZE"
         ></app-transaction-filter-drawer>

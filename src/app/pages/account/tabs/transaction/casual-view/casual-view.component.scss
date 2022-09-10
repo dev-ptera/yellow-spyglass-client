@@ -62,12 +62,9 @@ $mono: monospace;
             max-width: 32ch;
             margin: 8px 0;
         }
-        .address {
+        .address * {
             font-family: monospace;
             word-break: break-all;
-        }
-        .address,
-        .hash-row {
             font-weight: 400;
         }
         .hash-row {
@@ -85,6 +82,7 @@ $mono: monospace;
         }
     }
     .blui-list-item-tag-content {
+        min-width: 52px;
         text-align: center;
     }
     .blui-info-list-item .blui-info-list-item-subtitle-wrapper {
@@ -113,7 +111,9 @@ $mono: monospace;
         font-size: 14px;
         height: 14px;
         width: 14px;
+        min-width: 14px;
         line-height: 14px;
+        box-sizing: border-box;
     }
     .amount {
         font-size: 1rem;

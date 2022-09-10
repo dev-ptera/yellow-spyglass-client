@@ -240,7 +240,7 @@ export class TransactionsService {
     /** Creates a css class for each transactions' SEND/RECEIVE/CHANGE tag. */
     createTagClass(tx: Transaction, isPending: boolean): string {
         if (isPending) {
-            return 'receive';
+            return 'receivable';
         }
         return tx.type;
     }

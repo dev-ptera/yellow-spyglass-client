@@ -102,6 +102,13 @@
         //width: 20%;
     }
 }
+.account-tabs-container .tab-buttons .mat-button-base {
+    padding: 0 56px;
+}
+
+.tx-content-container .mat-expansion-panel-body {
+    padding: 0;
+}
 
 .account-tabs-container {
     &.sm {
@@ -109,7 +116,7 @@
         margin-left: -16px;
         .tab-buttons {
             width: 100%;
-            height: 80px;
+            height: 64px;
             display: flex;
             button {
                 padding: 0;
