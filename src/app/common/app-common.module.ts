@@ -19,7 +19,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CopyButtonComponent } from '@app/common/components/copy-button/copy-button.component';
 import { BookmarkButtonComponent } from '@app/common/components/bookmark-button/bookmark-button.component';
 import { ColorAddressPipe } from '@app/common/pipes/color-address.pipe';
-import {MatTooltipModule} from "@angular/material/tooltip";
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
     declarations: [

@@ -43,7 +43,13 @@
                     </ng-container>
                     <div *ngIf="isRepresentative()" style="display: flex; align-items: center">
                         <div style="margin-right: 16px">
-                            {{ accountOverview.principal ? vp.sm ? 'Principal Rep' : 'Principal Representative' : 'Representative' }}
+                            {{
+                                accountOverview.principal
+                                    ? vp.sm
+                                        ? 'Principal Rep'
+                                        : 'Principal Representative'
+                                    : 'Representative'
+                            }}
                         </div>
 
                         <mat-icon
@@ -307,19 +313,37 @@
                     </mat-expansion-panel>
                 </mat-accordion>
 
-                <mat-card style="padding: 0" class="divider-border"
-                    [style.borderTopLeftRadius.px]="getReceivableTransactionsCount() > 0 ? 16 : 0">
+                <mat-card
+                    style="padding: 0"
+                    class="divider-border"
+                    [style.borderTopLeftRadius.px]="getReceivableTransactionsCount() > 0 ? 16 : 0"
+                >
                     <ng-container>
-
-                        <div style="padding: 16px 8px 16px 28px; display: flex; justify-content: space-between; align-items: center">
+                        <div
+                            style="
+                                padding: 16px 8px 16px 28px;
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                            "
+                        >
                             <div>
-                                <span [style.fontSize.px]="vp.sm ? 14 : 16">{{ accountOverview.blockCount | appComma }}</span>
-                                <span [style.fontSize.px]="vp.sm ? 14 : 16" style="margin-left: 8px" class="text-secondary">
-                                Confirmed Transactions
-                            </span>
+                                <span [style.fontSize.px]="vp.sm ? 14 : 16">{{
+                                    accountOverview.blockCount | appComma
+                                }}</span>
+                                <span
+                                    [style.fontSize.px]="vp.sm ? 14 : 16"
+                                    style="margin-left: 8px"
+                                    class="text-secondary"
+                                >
+                                    Confirmed Transactions
+                                </span>
                             </div>
                             <div>
-                                <app-csv-button *ngIf="showCSVExportActionButton()" [address]="address"></app-csv-button>
+                                <app-csv-button
+                                    *ngIf="showCSVExportActionButton()"
+                                    [address]="address"
+                                ></app-csv-button>
                                 <app-filter-button
                                     *ngIf="showFilterActionButton()"
                                     style="margin-left: 8px"
