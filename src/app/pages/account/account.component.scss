@@ -25,9 +25,11 @@
     }
 
     .account-balance {
-        .account-ban-amount {
+        .before-decimal {
             font-size: 24px;
-            font-weight: 600;
+        }
+        .after-decimal {
+            font-size: 16px;
         }
         .account-btc-amount {
             font-size: 16px;

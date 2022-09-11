@@ -146,8 +146,10 @@
                 <div class="account-summary-tags" responsive *ngIf="accountOverview.opened">
                     <ng-template [ngTemplateOutlet]="mobileMonKey"></ng-template>
                     <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 0" responsive>
+
                         <ng-container *ngIf="vp.sm">
-                            <div class="account-ban-amount">{{ confirmedBalance }} BAN</div>
+                            <div class="account-ban-amount">{{ confirmedBalance }}</div>
+                            <span>BAN</span>
                             <div class="text-secondary">
                                 <span class="account-btc-amount" [style.marginRight.px]="4">{{
                                     formatBtcPrice(accountOverview.balanceRaw)
@@ -159,10 +161,13 @@
                             </div>
                         </ng-container>
 
-                        <div *ngIf="!vp.sm" style="display: flex; align-items: center">
-                            <span class="account-ban-amount" [style.marginRight.px]="8">
-                                {{ confirmedBalance }} BAN
-                            </span>
+                        <div *ngIf="!vp.sm" style="display: flex; align-items: center; line-height: 24px">
+                            <div style="margin-right: 8px">
+                                <span [style.marginRight.px]="8" [innerHTML]="confirmedBalance | appLittleDecimal">
+                                    {{ confirmedBalance }}
+                                </span>
+                                <span style="font-size: 16px">BAN</span>
+                            </div>
                             ·
                             <span class="account-btc-amount text-secondary" style="margin: 0 8px">
                                 {{ formatBtcPrice(accountOverview.balanceRaw) }}</span
@@ -176,6 +181,7 @@
                 </div>
 
                 <!-- Unopened Account Price Data -->
+                <!--
                 <div
                     class="account-summary-tags"
                     responsive
@@ -212,7 +218,7 @@
                             </span>
                         </div>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
     </mat-card>
@@ -242,7 +248,8 @@
                 *ngIf="delegatorCount > 0"
             >
                 <mat-icon style="margin-right: 8px">how_to_vote</mat-icon>
-                <span>Delegators</span>
+                <span>Delegators ({{ delegatorCount }})</span>
+
             </button>
 
             <button
@@ -315,7 +322,7 @@
 
                 <mat-card
                     style="padding: 0"
-                    class="divider-border"
+                    class="divider-border mat-elevation-z0"
                     [style.borderTopLeftRadius.px]="getReceivableTransactionsCount() > 0 ? 16 : 0"
                 >
                     <ng-container>
