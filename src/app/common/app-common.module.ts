@@ -20,7 +20,7 @@ import { CopyButtonComponent } from '@app/common/components/copy-button/copy-but
 import { BookmarkButtonComponent } from '@app/common/components/bookmark-button/bookmark-button.component';
 import { ColorAddressPipe } from '@app/common/pipes/color-address.pipe';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import {LittleDecimalPipe} from "@app/common/pipes/little-decimal.pipe";
+import { LittleDecimalPipe } from '@app/common/pipes/little-decimal.pipe';
 
 @NgModule({
     declarations: [
@@ -32,7 +32,7 @@ import {LittleDecimalPipe} from "@app/common/pipes/little-decimal.pipe";
         ResponsiveDirective,
         SafeHtmlPipe,
         ColorAddressPipe,
-        LittleDecimalPipe
+        LittleDecimalPipe,
     ],
     imports: [
         CommonModule,
@@ -58,8 +58,7 @@ import {LittleDecimalPipe} from "@app/common/pipes/little-decimal.pipe";
         ResponsiveDirective,
         SafeHtmlPipe,
         ColorAddressPipe,
-        LittleDecimalPipe
+        LittleDecimalPipe,
     ],
-
 })
 export class AppCommonModule {}

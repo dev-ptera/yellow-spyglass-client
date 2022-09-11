@@ -12,8 +12,9 @@ import { APP_NAV_ITEMS } from '../../navigation/nav-items';
             <div class="app-page-title">Node Statistics</div>
             <div class="app-page-subtitle">
                 This explorer is powered & maintained by the
-                <a class="link primary"
-                   [routerLink]="'/' + navItems.account.route + '/' + batman"> batman representative</a>.
+                <a class="link primary" [routerLink]="'/' + navItems.account.route + '/' + batman">
+                    batman representative</a
+                >.
             </div>
         </ng-template>
 
@@ -34,7 +35,7 @@ import { APP_NAV_ITEMS } from '../../navigation/nav-items';
                                     class="link"
                                     [routerLink]="'/' + navItems.account.route + '/' + batman"
                                 >
-                                    {{batman}}
+                                    {{ batman }}
                                 </a>
                             </div>
                         </blui-info-list-item>

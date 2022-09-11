@@ -16,8 +16,7 @@ import { AccountActionsService } from '@app/services/account-actions/account-act
         >
             <mat-icon>download</mat-icon>
         </button>
-        <mat-spinner *ngIf="isLoading" style="margin-right: 4px"
-                     color="primary" diameter="20"></mat-spinner>
+        <mat-spinner *ngIf="isLoading" style="margin-right: 4px" color="primary" diameter="20"></mat-spinner>
     `,
 })
 export class CsvButtonComponent {

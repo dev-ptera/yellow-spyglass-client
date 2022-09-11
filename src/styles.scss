@@ -106,15 +106,15 @@ mat-card,
 
 .sm {
     .flat-top {
-        border-top-left-radius: 0!important;
-        border-top-right-radius: 0!important;
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
     }
 }
 
-.sm .flat-edge { // TODO: Remove me or rename me.
+.sm .flat-edge {
+    // TODO: Remove me or rename me.
     border-radius: 0;
 }
-
 
 .mat-table {
     border-radius: 4px;

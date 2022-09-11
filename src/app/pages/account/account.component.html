@@ -144,7 +144,6 @@
                 <div class="account-summary-tags" responsive *ngIf="accountOverview.opened">
                     <ng-template [ngTemplateOutlet]="mobileMonKey"></ng-template>
                     <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 0" responsive>
-
                         <ng-container *ngIf="vp.sm">
                             <div class="account-ban-amount">{{ confirmedBalance }}</div>
                             <span>BAN</span>
@@ -159,7 +158,10 @@
                             </div>
                         </ng-container>
 
-                        <div *ngIf="!vp.sm" style="display: flex; align-items: center; margin: 16px 0; line-height: 24px;">
+                        <div
+                            *ngIf="!vp.sm"
+                            style="display: flex; align-items: center; margin: 16px 0; line-height: 24px"
+                        >
                             <div style="margin-right: 8px">
                                 <span [style.marginRight.px]="8" [innerHTML]="confirmedBalance | appLittleDecimal">
                                     {{ confirmedBalance }}
@@ -247,7 +249,6 @@
             >
                 <mat-icon style="margin-right: 8px">how_to_vote</mat-icon>
                 <span>Delegators ({{ delegatorCount }})</span>
-
             </button>
 
             <button

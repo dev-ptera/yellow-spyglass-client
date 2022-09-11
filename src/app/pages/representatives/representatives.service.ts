@@ -14,7 +14,6 @@ export class RepresentativesService {
         url = url.replace('/api.php', '');
         url = url.replace('/api', '');
 
-
         if (url.includes('http') || url.includes('https')) {
             return url;
         }
