@@ -41,19 +41,13 @@
 }
 
 $mono: monospace;
-
-
-.blui-info-list-item-icon-wrapper {
-    order: 3 !important;
-}
-
 .tab-transaction-list {
     padding-top: 0px;
 
     .blui-info-list-item {
         .mat-list-item {
-            padding-top: 8px;
-            padding-bottom: 8px;
+            padding-top: 4px;
+            padding-bottom: 4px;
         }
         .tag-row {
             display: flex;

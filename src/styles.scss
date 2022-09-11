@@ -105,11 +105,10 @@ mat-card,
 }
 
 .sm {
-
-}
-.flat-top {
-    border-top-left-radius: 0!important;
-    border-top-right-radius: 0!important;
+    .flat-top {
+        border-top-left-radius: 0!important;
+        border-top-right-radius: 0!important;
+    }
 }
 
 .sm .flat-edge { // TODO: Remove me or rename me.

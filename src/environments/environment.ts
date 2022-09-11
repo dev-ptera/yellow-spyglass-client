@@ -5,7 +5,8 @@
 export const environment = {
     production: false,
     brpd: false,
-    // api1: 'http://localhost:3001/banano',
-    api1: 'https://api.spyglass.pw/banano',
-    api2: 'https://api.creeper.banano.cc/banano',
+     api1: 'http://localhost:3001/banano',
+    api2: 'http://localhost:3001/banano',
+   // api1: 'https://api.spyglass.pw/banano',
+   // api2: 'https://api.creeper.banano.cc/banano',
 };

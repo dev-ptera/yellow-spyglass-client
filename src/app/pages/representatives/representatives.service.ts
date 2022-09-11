@@ -10,10 +10,15 @@ export class RepresentativesService {
     }
 
     getMonitoredRepUrl(rep: MonitoredRepDto): string {
-        if (rep.ip.includes('http') || rep.ip.includes('https')) {
-            return rep.ip;
+        let url = rep.ip;
+        url = url.replace('/api.php', '');
+        url = url.replace('/api', '');
+
+
+        if (url.includes('http') || url.includes('https')) {
+            return url;
         }
-        return `http://${rep.ip}`;
+        return `http://${url}`;
     }
 
     formatVersion(version: string): string {

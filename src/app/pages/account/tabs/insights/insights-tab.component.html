@@ -1,5 +1,5 @@
 <div class="insights-root" *ngIf="insights" responsive>
-    <mat-card class="mat-elevation-z0 divider-border flat-top">
+    <mat-card class="mat-elevation-z0 divider-border flat-top" style="border-top-left-radius: 0">
         <div class="app-section-title" style="margin-top: 32px">Account Balance Over Time</div>
         <div class="app-section-subtitle" style="margin-bottom: -16px">
             {{ getGraphSubtitle() }}
@@ -111,6 +111,7 @@
             <a
                 blui-info
                 *ngIf="vp.sm"
+                style="font-family: monospace"
                 class="link text-secondary"
                 [routerLink]="'/' + navItems.account.route + '/' + insights.mostCommonRecipientAddress"
             >
@@ -119,6 +120,7 @@
             <a
                 blui-right-content
                 *ngIf="!vp.sm"
+                style="font-family: monospace"
                 class="link text-hint"
                 [routerLink]="'/' + navItems.account.route + '/' + insights.mostCommonRecipientAddress"
             >
@@ -186,6 +188,7 @@
                 blui-info
                 *ngIf="vp.sm"
                 class="link text-secondary"
+                style="font-family: monospace"
                 [routerLink]="'/' + navItems.account.route + '/' + insights.mostCommonSenderAddress"
             >
                 {{ shortenAddr(insights.mostCommonSenderAddress) }}
@@ -194,6 +197,7 @@
                 blui-right-content
                 *ngIf="!vp.sm"
                 class="link text-hint"
+                style="font-family: monospace"
                 [routerLink]="'/' + navItems.account.route + '/' + insights.mostCommonSenderAddress"
             >
                 {{ shortenAddr(insights.mostCommonSenderAddress) }}
