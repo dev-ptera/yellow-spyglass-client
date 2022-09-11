@@ -120,6 +120,7 @@
     .brpd-tab-transaction-list {
         .type {
             &.receive {
+                $receive: $primary;
                 background-color: rgba($primary, 0.05);
                 border: solid 1px $primary;
                 color: $primary;
@@ -274,7 +275,8 @@ $jungle-green-theme: map-merge(
         color: $warn;
     }
     .divider-border {
-        border: solid 1px map-get($theme-foreground, divider);
+        box-shadow: none !important;
+        border: solid 1px map-get(blui.$blui-black, 100);
     }
     textarea:focus,
     input:focus {

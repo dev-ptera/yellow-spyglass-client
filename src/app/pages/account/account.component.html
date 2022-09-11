@@ -21,10 +21,10 @@
         <!-- Loading -->
         <div *ngIf="!accountOverview" style="display: flex">
             <ng-template [ngTemplateOutlet]="desktopMonKey"></ng-template>
-            <div>
+            <div style="display: flex; flex-direction: column; justify-content: center">
                 <div class="app-page-title">Loading</div>
                 <div
-                    class="app-page-subtitle"
+                    class="app-page-subtitle account-address-wrapper"
                     style="word-break: break-all"
                     [innerHTML]="formatAccountAddress(address)"
                 ></div>
@@ -34,7 +34,7 @@
         <!-- Not Loading -->
         <div *ngIf="accountOverview" style="display: flex">
             <ng-template [ngTemplateOutlet]="desktopMonKey"></ng-template>
-            <div style="display: flex; flex-direction: column">
+            <div style="display: flex; flex-direction: column; justify-content: center">
                 <!-- First Line -->
                 <div class="app-page-title" style="margin-bottom: 4px">
                     <ng-container *ngIf="!isRepresentative()">
@@ -100,12 +100,10 @@
                     class="text-secondary"
                     style="display: flex; align-items: center; flex-wrap: wrap"
                     [style.fontSize.px]="vp.sm ? 16 : 16"
-                    [style.marginBottom.px]="vp.sm ? 8 : 24"
+                    [style.marginBottom.px]="vp.sm ? 8 : 0"
                 >
                     <div *ngIf="hasAlias(address)" style="display: flex">
-                        <ng-container *ngIf="vp.sm"> A.K.A </ng-container>
-                        <ng-container *ngIf="!vp.sm"> Also known as </ng-container>
-                        {{ getAlias(address) }}
+                        <span>Known as &ldquo;{{ getAlias(address) }}&rdquo;</span>
                         <span style="margin: 0 8px">|</span>
                     </div>
                     <div style="display: flex; align-items: center">
@@ -161,7 +159,7 @@
                             </div>
                         </ng-container>
 
-                        <div *ngIf="!vp.sm" style="display: flex; align-items: center; line-height: 24px">
+                        <div *ngIf="!vp.sm" style="display: flex; align-items: center; margin: 16px 0; line-height: 24px;">
                             <div style="margin-right: 8px">
                                 <span [style.marginRight.px]="8" [innerHTML]="confirmedBalance | appLittleDecimal">
                                     {{ confirmedBalance }}

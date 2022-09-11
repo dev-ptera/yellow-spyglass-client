@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({ name: 'appComma' })
 export class CommaPipe implements PipeTransform {
-    transform(value: string | number, sigfigs?: number): string {
+    transform(value: string | number): string {
         return this.numberWithCommas(this.removeInsigFigs(Number(value)));
     }
 

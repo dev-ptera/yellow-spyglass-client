@@ -5,7 +5,13 @@ export class LittleDecimalPipe implements PipeTransform {
     transform(value: number): string {
         const before = String(value).split('.')[0];
         const after = String(value).split('.')[1];
-        return `<span class="before-decimal">${before}</span>${after === '0' ? '' : '.'}<span class="after-decimal">${after}</span>`
 
+        let results = '';
+        results = `<span class="before-decimal">${before}</span>`;
+
+        if (after) {
+            return `${results}.<span class="after-decimal">${after}</span>`;
+        }
+        return results;
     }
 }
