@@ -9,7 +9,7 @@ import { AccountActionsService } from '@app/services/account-actions/account-act
             responsive
             mat-icon-button
             class="address-action-button"
-            [matTooltip]="isCompact ? 'Show Relaxed View' : 'Show Condensed View'"
+            [matTooltip]="isCompact ? 'Show Relaxed View' : 'Show Compact View'"
             (click)="isCompact = !isCompact; isCompactChange.emit(isCompact)"
         >
             <mat-icon>{{ isCompact ? 'unfold_more' : 'unfold_less'}}</mat-icon>
