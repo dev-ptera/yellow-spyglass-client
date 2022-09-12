@@ -1,5 +1,8 @@
 <ng-template #titleContent>
-    <div class="app-page-title">Representatives</div>
+    <div class="app-page-title" style="display: flex; align-items: center">
+        <div>Representatives</div>
+        <app-load-spinner *ngIf="isLoading"></app-load-spinner>
+    </div>
     <div class="app-page-subtitle">
         Representatives validate transactions on the Banano network. See all representatives below.
     </div>

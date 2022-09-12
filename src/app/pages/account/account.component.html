@@ -22,7 +22,10 @@
         <div *ngIf="!accountOverview" style="display: flex">
             <ng-template [ngTemplateOutlet]="desktopMonKey"></ng-template>
             <div style="display: flex; flex-direction: column; justify-content: center">
-                <div class="app-page-title">Loading</div>
+                <div class="app-page-title" style="display: flex; align-items: center">
+                    <div>Loading</div>
+                    <app-load-spinner *ngIf="!accountOverview"></app-load-spinner>
+                </div>
                 <div
                     class="app-page-subtitle account-address-wrapper"
                     style="word-break: break-all"
@@ -162,7 +165,6 @@
                         >
                             <div style="margin-right: 8px">
                                 <span [style.marginRight.px]="8" [innerHTML]="confirmedBalance | appLittleDecimal">
-                                    {{ confirmedBalance }}
                                 </span>
                                 <span style="font-size: 16px">BAN</span>
                             </div>

@@ -9,7 +9,10 @@ import { APP_NAV_ITEMS } from '../../navigation/nav-items';
     selector: 'app-monitor',
     template: `
         <ng-template #titleContent>
-            <div class="app-page-title">Node Statistics</div>
+            <div class="app-page-title" style="display: flex; align-items: center">
+                <div>Node Statistics</div>
+                <app-load-spinner *ngIf="isLoading"></app-load-spinner>
+            </div>
             <div class="app-page-subtitle">
                 This explorer is powered & maintained by the
                 <a class="link primary" [routerLink]="'/' + navItems.account.route + '/' + batman">

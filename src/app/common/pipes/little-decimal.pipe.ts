@@ -6,6 +6,8 @@ export class LittleDecimalPipe implements PipeTransform {
         const before = String(value).split('.')[0];
         const after = String(value).split('.')[1];
 
+        console.log(value);
+
         let results = '';
         results = `<span class="before-decimal">${before}</span>`;
 

@@ -1,6 +1,9 @@
 <ng-template #titleContent>
     <div responsive>
-        <div class="app-page-title">Network</div>
+        <div class="app-page-title" style="display: flex; align-items: center">
+            <div>Network</div>
+            <app-load-spinner *ngIf="isLoading"></app-load-spinner>
+        </div>
         <div class="app-page-subtitle">
             Banano network overview, including supply, quorum and voting weight statistics.
         </div>
