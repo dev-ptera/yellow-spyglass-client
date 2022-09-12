@@ -1,7 +1,7 @@
 <ng-template #titleContent>
     <div class="app-page-title">Representatives</div>
     <div class="app-page-subtitle">
-        Representatives process transactions on the BANANO network. See all representatives below.
+        Representatives process transactions on the Banano network. See all representatives below.
     </div>
 </ng-template>
 
@@ -215,7 +215,7 @@
         <span class="app-caption">({{ onlineLargeRepsCount }} of {{ allLargeReps.length }} online)</span>
     </div>
     <div class="app-section-subtitle">
-        List of representatives with at least 100,000 BANANO weight delegated towards them.
+        List of representatives with at least 100,000 Banano weight delegated towards them.
     </div>
     <mat-slide-toggle
         color="primary"
@@ -238,7 +238,7 @@
             <span class="app-caption" style="margin-left: 8px">({{ microReps.length }})</span>
         </div>
         <div class="app-section-subtitle">
-            Online representatives with less than 100,000 BANANO weight delegated towards them.
+            Online representatives with less than 100,000 Banano weight delegated towards them.
         </div>
         <app-micro-rep-list [onlineWeight]="onlineWeight" [microReps]="microReps"></app-micro-rep-list>
     </ng-container>
