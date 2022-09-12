@@ -15,6 +15,7 @@ import { environment } from '../../../../../environments/environment';
 export class TransactionTabComponent implements OnInit, OnDestroy {
     @Input() address: string;
     @Input() isPending: boolean;
+    @Input() isCompact: boolean;
     @Input() blockCount: number;
 
     navItems = APP_NAV_ITEMS;
@@ -49,6 +50,10 @@ export class TransactionTabComponent implements OnInit, OnDestroy {
         if (this.pageLoad$) {
             this.pageLoad$.unsubscribe();
         }
+    }
+
+    showCompactView(): boolean {
+        return (this.isCompact || this.isBRPD) && !this.vp.sm;
     }
 
     getDisplayedTransactions(): Transaction[] {

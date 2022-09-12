@@ -43,12 +43,11 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                     class="amount"
                     [class.primary]="tx.type === 'receive'"
                     [class.warn]="tx.type === 'send'"
-                    style="width: 200px"
+                    style="width: 220px"
                 >
                     <ng-container *ngIf="tx.type !== 'change'">
                         {{ tx.type === 'receive' || isPending ? '+' : '-' }}
                         {{ formatNumber(tx.amount) }}
-                        BAN
                     </ng-container>
                 </div>
                 <div
@@ -184,7 +183,7 @@ export class CompactViewComponent {
         public txService: TransactionsService
     ) {}
 
-    trackByFn(index: number, tx: Transaction): number {
+    trackByFn(index: number): number {
         return index;
     }
 

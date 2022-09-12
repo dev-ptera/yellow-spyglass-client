@@ -45,6 +45,8 @@ export class AccountComponent implements OnDestroy {
     accountOverviewListener: Subscription;
     accountOverview: AccountOverviewDto;
 
+    isCompact: boolean;
+
     constructor(
         public vp: ViewportService,
         public apiService: ApiService,

@@ -354,12 +354,14 @@
                                     style="margin-left: 8px"
                                     [(showFilter)]="showFilter"
                                 ></app-filter-button>
+                                <app-tx-view-button [(isCompact)]="isCompact" *ngIf="!vp.sm"></app-tx-view-button>
                             </div>
                         </div>
                         <mat-divider></mat-divider>
                     </ng-container>
                     <account-tx-tab
                         style="margin-top: 8px"
+                        [isCompact]="isCompact"
                         [address]="address"
                         [blockCount]="accountOverview.blockCount"
                     ></account-tx-tab>

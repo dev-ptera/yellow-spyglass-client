@@ -24,7 +24,10 @@
         }
     }
     .address {
-        font-family: monospace;
+        font-size: 15px!important;
+        * {
+            font-family: monospace!important;
+        }
     }
 
     .wallets-table-alias {
