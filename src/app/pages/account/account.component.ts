@@ -214,7 +214,7 @@ export class AccountComponent implements OnDestroy {
             ? this.vp.sm
                 ? 'Principal Rep'
                 : 'Principal Representative'
-            : 'Representative'
+            : 'Representative';
     }
 
     getReceivableTransactionsCount(): number {

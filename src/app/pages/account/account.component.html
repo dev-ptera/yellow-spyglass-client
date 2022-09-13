@@ -25,7 +25,6 @@
 
 <ng-template #headerContent>
     <mat-card class="account-header divider-border mat-elevation-z0" responsive>
-
         <!-- Loading -->
         <div *ngIf="!accountOverview" style="display: flex">
             <ng-template [ngTemplateOutlet]="desktopMonKey"></ng-template>
@@ -46,7 +45,6 @@
         <div *ngIf="accountOverview" style="display: flex">
             <ng-template [ngTemplateOutlet]="desktopMonKey"></ng-template>
             <div class="account-overview-wrapper">
-
                 <!-- First Line -->
                 <div class="app-page-title">
                     <ng-container *ngIf="!isRepresentative()">
@@ -54,7 +52,7 @@
                         <span *ngIf="!accountOverview.opened"> Unopened Account </span>
                     </ng-container>
                     <div *ngIf="isRepresentative()" style="display: flex; align-items: center">
-                        <div style="margin-right: 16px"> {{ getRepresentativeLabel() }} </div>
+                        <div style="margin-right: 16px">{{ getRepresentativeLabel() }}</div>
 
                         <mat-icon
                             color="primary"
@@ -148,7 +146,6 @@
                 <div class="account-summary-tags" responsive *ngIf="accountOverview.opened">
                     <ng-template [ngTemplateOutlet]="mobileMonKey"></ng-template>
                     <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 0" responsive>
-
                         <ng-container *ngIf="vp.sm">
                             <ng-template [ngTemplateOutlet]="accountBalance"></ng-template>
                             <div class="text-secondary">
@@ -301,8 +298,10 @@
                                     Confirmed Transactions
                                 </span>
                             </div>
-                            <div *ngIf="accountOverview.opened && !vp.sm"
-                                style="display: flex; justify-content: center; align-items: center" >
+                            <div
+                                *ngIf="accountOverview.opened && !vp.sm"
+                                style="display: flex; justify-content: center; align-items: center"
+                            >
                                 <app-csv-button
                                     *ngIf="showCSVExportActionButton()"
                                     [address]="address"
