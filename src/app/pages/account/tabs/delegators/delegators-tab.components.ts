@@ -11,7 +11,7 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
         <ng-container *ngIf="delegatorService.hasDelegators()">
             <div class="account-delegator-weight">
                 <span class="account-delegator-weight-sum" responsive>{{ delegatorService.getWeight() }}</span>
-                <span class="account-delegator-weight-sum-description" responsive>BAN Delegated Weight</span>
+                <span class="account-delegator-weight-sum-description text-secondary" responsive>BAN Delegated Weight</span>
             </div>
             <mat-divider></mat-divider>
             <table mat-table [style.width.%]="100" [dataSource]="delegatorService.getTableDataSource()" responsive>

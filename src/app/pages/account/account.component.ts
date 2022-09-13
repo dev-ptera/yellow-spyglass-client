@@ -27,7 +27,7 @@ export class AccountComponent implements OnDestroy {
     nfts: AccountNFTDto[];
     isLoadingNFTs: boolean;
     address: string;
-    confirmedBalance: string;
+    confirmedBalance: number;
     accountRepresentative: string;
 
     showFilter: boolean;
@@ -156,11 +156,7 @@ export class AccountComponent implements OnDestroy {
             return;
         }
 
-        const balance = this.accountOverview.balance;
-        // Make sure 0 is included as well.
-        if (!isNaN(balance)) {
-            this.confirmedBalance = this._util.numberWithCommas(parseFloat(balance.toFixed(4)));
-        }
+        this.confirmedBalance = this.accountOverview.balance;
 
         const rep = this.accountOverview.representative;
         if (rep) {

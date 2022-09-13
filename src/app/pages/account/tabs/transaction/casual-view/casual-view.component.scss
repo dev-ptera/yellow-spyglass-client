@@ -5,8 +5,8 @@
     }
 
     .blui-info-list-item .mat-list-item {
-        padding-top: 16px;
-        padding-bottom: 16px;
+        padding-top: 20px;
+        padding-bottom: 20px;
 
         .blui-info-list-item-icon-wrapper {
             display: none;
@@ -21,7 +21,13 @@
             }
         }
         .address-row {
-            margin: 8px 0;
+            margin: 12px 0;
+            .address {
+                line-height: 1.125rem;
+                max-width: 32ch;
+                display: block;
+                font-size: 0.875rem !important;
+            }
         }
         .right-content {
             align-items: center;

@@ -80,7 +80,7 @@
                     <span class="account-address-wrapper mono">
                         <span [innerHTML]="formatAccountAddress(address)"></span>
                     </span>
-                    <div style="display: flex" [style.marginLeft.px]="vp.sm ? 4 : 16">
+                    <div style="display: flex" [style.marginLeft.px]="vp.sm ? 8 : 16">
                         <ng-container *ngIf="!vp.sm && !vp.md">
                             <app-copy-button [data]="address"></app-copy-button>
                             <app-qr-button [address]="address"></app-qr-button>
@@ -88,6 +88,7 @@
                         </ng-container>
                         <app-account-actions-menu
                             *ngIf="vp.sm || vp.md"
+
                             [data]="address"
                             [(showFilter)]="showFilter"
                             [showFilterActionButton]="showFilterActionButton()"
@@ -100,12 +101,15 @@
                 <div
                     *ngIf="accountOverview.opened"
                     class="text-secondary"
-                    style="display: flex; align-items: center; flex-wrap: wrap; margin: 4px 0"
+                    style="display: flex; flex-wrap: wrap; margin: 4px 0"
+                    [style.flexDirection]="vp.sm ? 'column' : 'row'"
+                    [style.alignItems]="vp.sm ? 'start' : 'center'"
                     [style.fontSize.px]="vp.sm ? 16 : 16"
                 >
-                    <div *ngIf="hasAlias(address)" style="display: flex">
+                    <div *ngIf="hasAlias(address)" style="display: flex"
+                        [style.marginBottom.px]="vp.sm ? 8 : 0">
                         <span>Known as &ldquo;{{ getAlias(address) }}&rdquo;</span>
-                        <span style="margin: 0 8px">|</span>
+                        <span *ngIf="!vp.sm" style="margin: 0 8px">|</span>
                     </div>
                     <div style="display: flex; align-items: center">
                         <div
@@ -146,8 +150,10 @@
                     <ng-template [ngTemplateOutlet]="mobileMonKey"></ng-template>
                     <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 0" responsive>
                         <ng-container *ngIf="vp.sm">
-                            <div class="account-ban-amount">{{ confirmedBalance }}</div>
-                            <span>BAN</span>
+                            <div>
+                                <span [innerHTML]="confirmedBalance | appComma | appLittleDecimal"></span>
+                                <span style="margin-left: 8px">BAN</span>
+                            </div>
                             <div class="text-secondary">
                                 <span class="account-btc-amount" [style.marginRight.px]="4">{{
                                     formatBtcPrice(accountOverview.balanceRaw)
@@ -164,7 +170,8 @@
                             style="display: flex; align-items: center; margin: 16px 0; line-height: 24px"
                         >
                             <div style="margin-right: 8px">
-                                <span [style.marginRight.px]="8" [innerHTML]="confirmedBalance | appLittleDecimal">
+                                <span [style.marginRight.px]="8"
+                                      [innerHTML]="confirmedBalance | appComma | appLittleDecimal">
                                 </span>
                                 <span style="font-size: 16px">BAN</span>
                             </div>
@@ -179,46 +186,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Unopened Account Price Data -->
-                <!--
-                <div
-                    class="account-summary-tags"
-                    responsive
-                    *ngIf="!accountOverview.opened && getReceivableTransactionsCount() !== 0"
-                >
-                    <ng-template [ngTemplateOutlet]="mobileMonKey"></ng-template>
-                    <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 16" responsive>
-                        <ng-container *ngIf="vp.sm">
-                            <div class="account-ban-amount">
-                                {{ withCommas(accountOverview.receivable) }} Receivable BAN
-                            </div>
-                            <div class="text-secondary">
-                                <span class="account-btc-amount" [style.marginRight.px]="4">{{
-                                    formatBtcPrice(accountOverview.receivableRaw)
-                                }}</span>
-                                |
-                                <span class="account-usd-amount" [style.marginLeft.px]="4">{{
-                                    formatUsdPrice(accountOverview.receivableRaw) | currency
-                                }}</span>
-                            </div>
-                        </ng-container>
-
-                        <div *ngIf="!vp.sm" style="display: flex; align-items: center">
-                            <span class="account-ban-amount" [style.marginRight.px]="8">
-                                {{ withCommas(accountOverview.receivable) }} Receivable BAN
-                            </span>
-                            ·
-                            <span class="account-btc-amount text-secondary" style="margin: 0 8px">
-                                {{ formatBtcPrice(accountOverview.receivableRaw) }}</span
-                            >
-                            ·
-                            <span class="account-usd-amount text-secondary" [style.marginLeft.px]="8">
-                                {{ formatUsdPrice(accountOverview.receivableRaw) | currency }}
-                            </span>
-                        </div>
-                    </div>
-                </div>-->
             </div>
         </div>
     </mat-card>
@@ -235,9 +202,9 @@
                 [class.active]="shownTabNumber === 1"
                 style="border-top-left-radius: 16px; border-right: 0"
             >
-                <mat-icon style="margin-right: 8px">verified</mat-icon>
+                <mat-icon>verified</mat-icon>
                 <span>Transactions</span>
-                <span [style.marginLeft.px]="vp.sm ? 0 : 4">({{ accountOverview.blockCount | appComma }})</span>
+                <span *ngIf="!vp.sm"  [style.marginLeft.px]="vp.sm ? 0 : 4">({{ accountOverview.blockCount | appComma }})</span>
             </button>
 
             <button
@@ -250,8 +217,9 @@
                 style="border-right: 0"
                 *ngIf="delegatorCount > 0"
             >
-                <mat-icon style="margin-right: 8px">how_to_vote</mat-icon>
-                <span>Delegators ({{ delegatorCount }})</span>
+                <mat-icon>how_to_vote</mat-icon>
+                <span>Delegators</span>
+                <span *ngIf="!vp.sm" [style.marginLeft.px]="vp.sm ? 0 : 4">({{ delegatorCount | appComma }})</span>
             </button>
 
             <button
@@ -262,7 +230,7 @@
                 [class.active]="shownTabNumber === 4"
                 style="border-top-right-radius: 16px"
             >
-                <mat-icon style="margin-right: 8px">insights</mat-icon>
+                <mat-icon>insights</mat-icon>
                 <span>Insights</span>
             </button>
 
@@ -312,7 +280,7 @@
                                 </span>
                                 <span
                                     [style.fontSize.px]="vp.sm ? 14 : 16"
-                                    style="margin-left: 8px"
+                                    style="margin-left: 4px"
                                     class="text-secondary"
                                 >
                                     Receivable Transactions
@@ -326,6 +294,8 @@
                 <mat-card
                     style="padding: 0"
                     class="divider-border mat-elevation-z0"
+
+                    [style.border-top-right-radius]="vp.sm ? 0 : 16"
                     [style.borderTopLeftRadius.px]="getReceivableTransactionsCount() > 0 ? 16 : 0"
                 >
                     <ng-container>
@@ -337,19 +307,19 @@
                                 align-items: center;
                             "
                         >
-                            <div>
+                            <div style="font-weight: 600">
                                 <span [style.fontSize.px]="vp.sm ? 14 : 16">{{
                                     accountOverview.blockCount | appComma
                                 }}</span>
                                 <span
                                     [style.fontSize.px]="vp.sm ? 14 : 16"
-                                    style="margin-left: 8px"
+                                    style="margin-left: 4px"
                                     class="text-secondary"
                                 >
                                     Confirmed Transactions
                                 </span>
                             </div>
-                            <div style="display: flex; justify-content: center; align-items: center">
+                            <div style="display: flex; justify-content: center; align-items: center" *ngIf="!vp.sm">
                                 <app-csv-button
                                     *ngIf="showCSVExportActionButton()"
                                     [address]="address"
