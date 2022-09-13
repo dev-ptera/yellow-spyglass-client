@@ -48,7 +48,7 @@ import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
                 <div>
                     <span class="app-section-title">Amount</span>
                     <span class="app-section-subtitle">
-                         <span [innerHTML]="block.amount_decimal | appComma | appLittleDecimal"></span> BAN |
+                        <span [innerHTML]="block.amount_decimal | appComma | appLittleDecimal"></span> BAN |
                         {{ block.amount }} RAW
                     </span>
                 </div>

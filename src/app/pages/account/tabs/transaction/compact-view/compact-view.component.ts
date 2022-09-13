@@ -65,7 +65,8 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                             {{ tx.showCopiedAddressIcon ? 'check_circle' : 'copy_all' }}
                         </mat-icon>
                     </button>
-                    <a class="link text mono"
+                    <a
+                        class="link text mono"
                         [routerLink]="'/' + navItems.account.route + '/' + (tx.address || tx.newRepresentative)"
                         >{{ util.shortenAddress(tx.address || tx.newRepresentative) }}
                     </a>

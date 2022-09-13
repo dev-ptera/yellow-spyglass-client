@@ -88,7 +88,6 @@
                         </ng-container>
                         <app-account-actions-menu
                             *ngIf="vp.sm || vp.md"
-
                             [data]="address"
                             [(showFilter)]="showFilter"
                             [showFilterActionButton]="showFilterActionButton()"
@@ -106,8 +105,7 @@
                     [style.alignItems]="vp.sm ? 'start' : 'center'"
                     [style.fontSize.px]="vp.sm ? 16 : 16"
                 >
-                    <div *ngIf="hasAlias(address)" style="display: flex"
-                        [style.marginBottom.px]="vp.sm ? 8 : 0">
+                    <div *ngIf="hasAlias(address)" style="display: flex" [style.marginBottom.px]="vp.sm ? 8 : 0">
                         <span>Known as &ldquo;{{ getAlias(address) }}&rdquo;</span>
                         <span *ngIf="!vp.sm" style="margin: 0 8px">|</span>
                     </div>
@@ -170,8 +168,10 @@
                             style="display: flex; align-items: center; margin: 16px 0; line-height: 24px"
                         >
                             <div style="margin-right: 8px">
-                                <span [style.marginRight.px]="8"
-                                      [innerHTML]="confirmedBalance | appComma | appLittleDecimal">
+                                <span
+                                    [style.marginRight.px]="8"
+                                    [innerHTML]="confirmedBalance | appComma | appLittleDecimal"
+                                >
                                 </span>
                                 <span style="font-size: 16px">BAN</span>
                             </div>
@@ -204,12 +204,13 @@
             >
                 <mat-icon>verified</mat-icon>
                 <span>Transactions</span>
-                <span *ngIf="!vp.sm"  [style.marginLeft.px]="vp.sm ? 0 : 4">({{ accountOverview.blockCount | appComma }})</span>
+                <span *ngIf="!vp.sm" [style.marginLeft.px]="vp.sm ? 0 : 4"
+                    >({{ accountOverview.blockCount | appComma }})</span
+                >
             </button>
 
             <button
                 class="divider-border"
-
                 blui-inline
                 mat-flat-button
                 (click)="shownTabNumber = 3"
@@ -294,7 +295,6 @@
                 <mat-card
                     style="padding: 0"
                     class="divider-border mat-elevation-z0"
-
                     [style.border-top-right-radius]="vp.sm ? 0 : 16"
                     [style.borderTopLeftRadius.px]="getReceivableTransactionsCount() > 0 ? 16 : 0"
                 >

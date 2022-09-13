@@ -21,7 +21,7 @@ import { BookmarkButtonComponent } from '@app/common/components/bookmark-button/
 import { ColorAddressPipe } from '@app/common/pipes/color-address.pipe';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { LittleDecimalPipe } from '@app/common/pipes/little-decimal.pipe';
-import {LoadSpinnerComponent} from "@app/common/components/load-spinner/load-spinner.component";
+import { LoadSpinnerComponent } from '@app/common/components/load-spinner/load-spinner.component';
 
 @NgModule({
     declarations: [
@@ -34,7 +34,7 @@ import {LoadSpinnerComponent} from "@app/common/components/load-spinner/load-spi
         SafeHtmlPipe,
         ColorAddressPipe,
         LittleDecimalPipe,
-        LoadSpinnerComponent
+        LoadSpinnerComponent,
     ],
     imports: [
         CommonModule,
@@ -61,7 +61,7 @@ import {LoadSpinnerComponent} from "@app/common/components/load-spinner/load-spi
         SafeHtmlPipe,
         ColorAddressPipe,
         LittleDecimalPipe,
-        LoadSpinnerComponent
+        LoadSpinnerComponent,
     ],
 })
 export class AppCommonModule {}

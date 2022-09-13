@@ -114,10 +114,7 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                 <div style="margin: 0 12px" *ngIf="tx.height && vp.sm">·</div>
                 <div style="display: flex; align-items: center">
                     <mat-icon class="text-secondary meta-icon" style="margin-right: 4px"> receipt</mat-icon>
-                    <a
-                        class="link text-hint mono"
-                        [routerLink]="'/' + navItems.hash.route + '/' + tx.hash"
-                    >
+                    <a class="link text-hint mono" [routerLink]="'/' + navItems.hash.route + '/' + tx.hash">
                         {{ tx.hash?.substring(0, 8) }}...
                     </a>
                 </div>

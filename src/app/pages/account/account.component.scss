@@ -81,7 +81,7 @@
     border-radius: 4px;
     border-top-left-radius: 0px;
     &.sm {
-        border-radius: 0!important;
+        border-radius: 0 !important;
     }
 }
 .tab-buttons {
@@ -127,8 +127,8 @@
                         height: $size;
                         width: $size;
                         font-size: $size;
-                        margin: 0!important;
-                        margin-bottom: 4px!important;
+                        margin: 0 !important;
+                        margin-bottom: 4px !important;
                     }
                     flex-direction: column;
                     * {
