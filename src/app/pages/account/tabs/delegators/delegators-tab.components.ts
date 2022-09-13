@@ -16,7 +16,9 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
                 >
             </div>
             <mat-divider></mat-divider>
-            <table mat-table [style.width.%]="100" [dataSource]="delegatorService.getTableDataSource()" responsive>
+            <table mat-table [style.width.%]="100"
+                   class="delegators-table"
+                   [dataSource]="delegatorService.getTableDataSource()" responsive>
                 <ng-container matColumnDef="position">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
                     <td

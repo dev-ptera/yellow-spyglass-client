@@ -47,6 +47,8 @@ export class AccountComponent implements OnDestroy {
 
     isCompact: boolean;
 
+    borderRadius: 16;
+
     constructor(
         public vp: ViewportService,
         public apiService: ApiService,
@@ -191,7 +193,7 @@ export class AccountComponent implements OnDestroy {
             const firstBits = address.substring(0, 12);
             const midBits = address.substring(12, 58);
             const lastBits = address.substring(58, 64);
-            return `<strong class="">${firstBits}</strong><span class="secondary">${midBits}</span><strong class="">${lastBits}</strong>`;
+            return `<strong class="">${firstBits}</strong><span class="text-secondary">${midBits}</span><strong class="">${lastBits}</strong>`;
         }
     }
 
@@ -205,6 +207,14 @@ export class AccountComponent implements OnDestroy {
 
     withCommas(x: number): string {
         return this._util.numberWithCommas(x);
+    }
+
+    getRepresentativeLabel(): string {
+        return this.accountOverview.principal
+            ? this.vp.sm
+                ? 'Principal Rep'
+                : 'Principal Representative'
+            : 'Representative'
     }
 
     getReceivableTransactionsCount(): number {

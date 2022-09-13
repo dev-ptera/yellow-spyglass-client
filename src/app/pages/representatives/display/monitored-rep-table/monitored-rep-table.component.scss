@@ -11,6 +11,9 @@
 }
 
 .monitored-reps-table {
+    .representatives-address-cell * {
+        font-size: 15px;
+    }
     display: block;
     max-height: 60vh;
     height: 100%;

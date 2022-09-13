@@ -25,10 +25,11 @@
 
 <ng-template #headerContent>
     <mat-card class="account-header divider-border mat-elevation-z0" responsive>
+
         <!-- Loading -->
         <div *ngIf="!accountOverview" style="display: flex">
             <ng-template [ngTemplateOutlet]="desktopMonKey"></ng-template>
-            <div style="display: flex; flex-direction: column; justify-content: center">
+            <div class="account-overview-wrapper">
                 <div class="app-page-title" style="display: flex; align-items: center">
                     <div>Loading</div>
                     <app-load-spinner *ngIf="!accountOverview"></app-load-spinner>
@@ -44,7 +45,8 @@
         <!-- Not Loading -->
         <div *ngIf="accountOverview" style="display: flex">
             <ng-template [ngTemplateOutlet]="desktopMonKey"></ng-template>
-            <div style="display: flex; flex-direction: column; justify-content: center">
+            <div class="account-overview-wrapper">
+
                 <!-- First Line -->
                 <div class="app-page-title">
                     <ng-container *ngIf="!isRepresentative()">
@@ -52,15 +54,7 @@
                         <span *ngIf="!accountOverview.opened"> Unopened Account </span>
                     </ng-container>
                     <div *ngIf="isRepresentative()" style="display: flex; align-items: center">
-                        <div style="margin-right: 16px">
-                            {{
-                                accountOverview.principal
-                                    ? vp.sm
-                                        ? 'Principal Rep'
-                                        : 'Principal Representative'
-                                    : 'Representative'
-                            }}
-                        </div>
+                        <div style="margin-right: 16px"> {{ getRepresentativeLabel() }} </div>
 
                         <mat-icon
                             color="primary"
@@ -154,6 +148,7 @@
                 <div class="account-summary-tags" responsive *ngIf="accountOverview.opened">
                     <ng-template [ngTemplateOutlet]="mobileMonKey"></ng-template>
                     <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 0" responsive>
+
                         <ng-container *ngIf="vp.sm">
                             <ng-template [ngTemplateOutlet]="accountBalance"></ng-template>
                             <div class="text-secondary">
@@ -275,14 +270,8 @@
                     <mat-expansion-panel style="width: 100%" [expanded]="true">
                         <mat-expansion-panel-header style="height: 56px">
                             <mat-panel-title style="font-weight: 400">
-                                <span [style.fontSize.px]="vp.sm ? 14 : 16">
-                                    {{ getReceivableTransactionsCount() | appComma }}
-                                </span>
-                                <span
-                                    [style.fontSize.px]="vp.sm ? 14 : 16"
-                                    style="margin-left: 4px"
-                                    class="text-secondary"
-                                >
+                                <span class="mat-subheading-2">{{ getReceivableTransactionsCount() | appComma }}</span>
+                                <span style="margin-left: 4px" class="mat-body-1 text-secondary">
                                     Receivable Transactions
                                 </span>
                             </mat-panel-title>
@@ -294,31 +283,26 @@
                 <mat-card
                     style="padding: 0"
                     class="divider-border mat-elevation-z0"
-                    [style.border-top-right-radius]="vp.sm ? 0 : 16"
-                    [style.borderTopLeftRadius.px]="getReceivableTransactionsCount() > 0 ? 16 : 0"
+                    [style.border-top-right-radius]="vp.sm ? 0 : borderRadius"
+                    [style.borderTopLeftRadius.px]="getReceivableTransactionsCount() > 0 ? borderRadius : 0"
                 >
                     <ng-container>
                         <div
                             style="
-                                padding: 16px 8px 16px 28px;
+                                padding: 16px 8px 16px 16px;
                                 display: flex;
                                 justify-content: space-between;
                                 align-items: center;
                             "
                         >
-                            <div style="font-weight: 600">
-                                <span [style.fontSize.px]="vp.sm ? 14 : 16">{{
-                                    accountOverview.blockCount | appComma
-                                }}</span>
-                                <span
-                                    [style.fontSize.px]="vp.sm ? 14 : 16"
-                                    style="margin-left: 4px"
-                                    class="text-secondary"
-                                >
+                            <div>
+                                <span class="mat-subheading-2">{{ accountOverview.blockCount | appComma }}</span>
+                                <span style="margin-left: 4px" class="text-secondary mat-body-1">
                                     Confirmed Transactions
                                 </span>
                             </div>
-                            <div style="display: flex; justify-content: center; align-items: center" *ngIf="!vp.sm">
+                            <div *ngIf="accountOverview.opened && !vp.sm"
+                                style="display: flex; justify-content: center; align-items: center" >
                                 <app-csv-button
                                     *ngIf="showCSVExportActionButton()"
                                     [address]="address"

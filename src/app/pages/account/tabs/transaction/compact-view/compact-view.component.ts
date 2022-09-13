@@ -13,7 +13,6 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
     template: `
         <div
             *ngFor="let tx of transactions; trackBy: trackByFn; let last = last"
-            style="position: relative"
             class="animation-content brpd-tab-transaction-list"
         >
             <div style="display: flex; align-items: center">
@@ -66,6 +65,7 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                         </mat-icon>
                     </button>
                     <a
+                        style="font-size: 14px"
                         class="link text mono"
                         [routerLink]="'/' + navItems.account.route + '/' + (tx.address || tx.newRepresentative)"
                         >{{ util.shortenAddress(tx.address || tx.newRepresentative) }}
@@ -162,7 +162,7 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                     </div>
                 </div>
             </div>
-            <mat-divider *ngIf="!last"></mat-divider>
+            <mat-divider *ngIf="!last" style="bottom: 1px"></mat-divider>
             <div class="invisible-full-address">
                 {{ tx.address }}
             </div>
