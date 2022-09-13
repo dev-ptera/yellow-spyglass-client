@@ -31,7 +31,7 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
                     <th mat-header-cell *matHeaderCellDef>Address</th>
                     <td
                         mat-cell
-                        class="delegators-address-cell"
+                        class="delegators-address-cell mono"
                         style="word-break: break-all"
                         [class.link]="element.address !== address"
                         *matCellDef="let element"

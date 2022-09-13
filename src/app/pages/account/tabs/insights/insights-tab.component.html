@@ -111,8 +111,7 @@
             <a
                 blui-info
                 *ngIf="vp.sm"
-                style="font-family: monospace"
-                class="link text-secondary"
+                class="link text-secondary mono"
                 [routerLink]="'/' + navItems.account.route + '/' + insights.mostCommonRecipientAddress"
             >
                 {{ shortenAddr(insights.mostCommonRecipientAddress) }}
@@ -120,8 +119,7 @@
             <a
                 blui-right-content
                 *ngIf="!vp.sm"
-                style="font-family: monospace"
-                class="link text-hint"
+                class="link text-hint mono"
                 [routerLink]="'/' + navItems.account.route + '/' + insights.mostCommonRecipientAddress"
             >
                 {{ shortenAddr(insights.mostCommonRecipientAddress) }}
@@ -187,8 +185,7 @@
             <a
                 blui-info
                 *ngIf="vp.sm"
-                class="link text-secondary"
-                style="font-family: monospace"
+                class="link text-secondary mono"
                 [routerLink]="'/' + navItems.account.route + '/' + insights.mostCommonSenderAddress"
             >
                 {{ shortenAddr(insights.mostCommonSenderAddress) }}
@@ -196,8 +193,7 @@
             <a
                 blui-right-content
                 *ngIf="!vp.sm"
-                class="link text-hint"
-                style="font-family: monospace"
+                class="link text-hint mono"
                 [routerLink]="'/' + navItems.account.route + '/' + insights.mostCommonSenderAddress"
             >
                 {{ shortenAddr(insights.mostCommonSenderAddress) }}

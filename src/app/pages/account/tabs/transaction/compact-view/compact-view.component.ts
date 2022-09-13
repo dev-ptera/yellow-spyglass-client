@@ -25,8 +25,8 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                 <a
                     *ngIf="tx.height"
                     [routerLink]="'/' + navItems.hash.route + '/' + tx.hash"
-                    class="link text"
-                    style="font-family: monospace; margin-right: 24px"
+                    class="link text mono"
+                    style="margin-right: 24px"
                 >
                     <span style="margin-right: 0px" style="font-size: 14px">#</span
                     >{{ util.numberWithCommas(tx.height) }}
@@ -65,9 +65,7 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                             {{ tx.showCopiedAddressIcon ? 'check_circle' : 'copy_all' }}
                         </mat-icon>
                     </button>
-                    <a
-                        style="font-family: monospace"
-                        class="link text"
+                    <a class="link text mono"
                         [routerLink]="'/' + navItems.account.route + '/' + (tx.address || tx.newRepresentative)"
                         >{{ util.shortenAddress(tx.address || tx.newRepresentative) }}
                     </a>

@@ -187,7 +187,7 @@ import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
 
             <div class="hash-section">
                 <span class="app-section-title">Original Block Content</span>
-                <pre style="font-family: monospace" class="original-block-content">{{ block | json }}</pre>
+                <pre class="original-block-content mono">{{ block | json }}</pre>
             </div>
         </ng-template>
 

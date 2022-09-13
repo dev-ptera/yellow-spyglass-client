@@ -50,7 +50,7 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
             <ng-container matColumnDef="address">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 190px">Address</th>
                 <td class="representatives-address-cell" mat-cell *matCellDef="let element">
-                    <a class="link text" [routerLink]="'/' + navItems.account.route + '/' + element.address">
+                    <a class="link text mono" [routerLink]="'/' + navItems.account.route + '/' + element.address">
                         {{ formatShortAddress(element.address) }}
                     </a>
                 </td>

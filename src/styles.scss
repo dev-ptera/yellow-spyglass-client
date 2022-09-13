@@ -10,6 +10,24 @@
 // These can change in the future, I'm not too picky.
 $font-family: -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
 
+
+@font-face {
+    font-family: courier-prime;
+    src: url(assets/fonts/courier-prime/Courier-Prime.ttf);
+}
+
+@font-face {
+    font-family: pt;
+    src: url(assets/fonts/pt-mono/SourceCodePro-Regular.otf);
+}
+.mono {
+    $mono: pt, monospace;
+    font-family: $mono;
+    * {
+        font-family: $mono;
+    }
+}
+
 html {
     * {
         font-family: $font-family;

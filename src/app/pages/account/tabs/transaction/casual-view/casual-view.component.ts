@@ -50,7 +50,7 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                         </div>
                         <a
                             *ngIf="!tx.type || tx.type !== 'change'"
-                            class="address link text"
+                            class="address link text mono"
                             [routerLink]="'/' + navItems.account.route + '/' + tx.address"
                             [innerHTML]="tx.address | colorAddress"
                         ></a>
@@ -115,8 +115,7 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                 <div style="display: flex; align-items: center">
                     <mat-icon class="text-secondary meta-icon" style="margin-right: 4px"> receipt</mat-icon>
                     <a
-                        class="link text-hint"
-                        style="font-family: monospace"
+                        class="link text-hint mono"
                         [routerLink]="'/' + navItems.hash.route + '/' + tx.hash"
                     >
                         {{ tx.hash?.substring(0, 8) }}...

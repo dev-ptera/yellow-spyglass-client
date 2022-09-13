@@ -34,8 +34,8 @@ import { APP_NAV_ITEMS } from '../../navigation/nav-items';
                             <div blui-title>Address</div>
                             <div blui-subtitle>
                                 <a
-                                    style="color: inherit; font-family: monospace"
-                                    class="link"
+                                    style="color: inherit"
+                                    class="link mono"
                                     [routerLink]="'/' + navItems.account.route + '/' + batman"
                                 >
                                     {{ batman }}

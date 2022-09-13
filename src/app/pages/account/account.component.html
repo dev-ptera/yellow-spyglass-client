@@ -27,7 +27,7 @@
                     <app-load-spinner *ngIf="!accountOverview"></app-load-spinner>
                 </div>
                 <div
-                    class="app-page-subtitle account-address-wrapper"
+                    class="app-page-subtitle account-address-wrapper mono"
                     style="word-break: break-all"
                     [innerHTML]="formatAccountAddress(address)"
                 ></div>
@@ -77,7 +77,7 @@
                     style="display: flex; align-items: center; word-break: break-all; margin: 8px 0"
                     class="app-page-subtitle"
                 >
-                    <span class="account-address-wrapper">
+                    <span class="account-address-wrapper mono">
                         <span [innerHTML]="formatAccountAddress(address)"></span>
                     </span>
                     <div style="display: flex" [style.marginLeft.px]="vp.sm ? 4 : 16">

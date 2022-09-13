@@ -21,7 +21,6 @@
             }
         }
         .address-row {
-            max-width: 32ch;
             margin: 8px 0;
         }
         .right-content {
@@ -40,7 +39,6 @@
     }
 }
 
-$mono: monospace;
 .tab-transaction-list {
     padding-top: 0px;
 
@@ -57,10 +55,10 @@ $mono: monospace;
         .address-row {
             box-sizing: border-box;
             max-width: 32ch;
+            max-width: 310px;
             margin-top: 8px;
         }
         .address * {
-            font-family: monospace;
             word-break: break-all;
             font-weight: 400;
         }
