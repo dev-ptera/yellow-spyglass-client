@@ -16,6 +16,13 @@
     />
 </ng-template>
 
+<ng-template #accountBalance>
+    <div style="font-weight: 400">
+        <span [innerHTML]="confirmedBalance | appComma | appLittleDecimal"></span>
+        <span style="margin-left: 8px">BAN</span>
+    </div>
+</ng-template>
+
 <ng-template #headerContent>
     <mat-card class="account-header divider-border mat-elevation-z0" responsive>
         <!-- Loading -->
@@ -148,10 +155,7 @@
                     <ng-template [ngTemplateOutlet]="mobileMonKey"></ng-template>
                     <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 0" responsive>
                         <ng-container *ngIf="vp.sm">
-                            <div>
-                                <span [innerHTML]="confirmedBalance | appComma | appLittleDecimal"></span>
-                                <span style="margin-left: 8px">BAN</span>
-                            </div>
+                            <ng-template [ngTemplateOutlet]="accountBalance"></ng-template>
                             <div class="text-secondary">
                                 <span class="account-btc-amount" [style.marginRight.px]="4">{{
                                     formatBtcPrice(accountOverview.balanceRaw)
@@ -168,12 +172,7 @@
                             style="display: flex; align-items: center; margin: 16px 0; line-height: 24px"
                         >
                             <div style="margin-right: 8px">
-                                <span
-                                    [style.marginRight.px]="8"
-                                    [innerHTML]="confirmedBalance | appComma | appLittleDecimal"
-                                >
-                                </span>
-                                <span style="font-size: 16px">BAN</span>
+                                <ng-template [ngTemplateOutlet]="accountBalance"></ng-template>
                             </div>
                             ·
                             <span class="account-btc-amount text-secondary" style="margin: 0 8px">

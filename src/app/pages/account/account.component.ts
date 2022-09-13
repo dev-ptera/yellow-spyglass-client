@@ -138,9 +138,7 @@ export class AccountComponent implements OnDestroy {
         // Load delegators ahead of time so we can get the weighted delegators count as well.
         void this._delegatorsTabService.fetchDelegators(address, true).then(() => {
             const weightedDelegatorsCount = this._delegatorsTabService.getWeightedDelegatorsCount();
-            if (weightedDelegatorsCount) {
-                this.delegatorCount = weightedDelegatorsCount;
-            }
+            this.delegatorCount = weightedDelegatorsCount;
         });
     }
 
