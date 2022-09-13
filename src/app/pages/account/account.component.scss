@@ -93,11 +93,12 @@
         z-index: 1;
         box-sizing: border-box;
         border-radius: 0;
-        border: solid 1px;
-        border-bottom: 0;
         height: 100%;
         padding: 0 24px;
         //width: 20%;
+        &.divider-border {
+            border-bottom: 0;
+        }
     }
 }
 .account-tabs-container .tab-buttons .mat-button-base {
