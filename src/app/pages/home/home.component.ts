@@ -18,7 +18,7 @@ import { environment } from '../../../environments/environment';
 export class HomeComponent implements OnDestroy {
     showHint: boolean;
     navigation$;
-    value: string;
+    userInput = '';
     routes = APP_NAV_ITEMS;
 
     marketCap = '$xx,xxx,xx';
@@ -74,10 +74,12 @@ export class HomeComponent implements OnDestroy {
     search(searchValue: string, e: MouseEvent): void {
         const ctrl = e.ctrlKey;
 
+        const trimmed = searchValue.trim();
+
         // BRPD feature only - given a user id, searches their address.
-        if (environment.brpd && this.isSearchDisabled() && searchValue.length === 18) {
+        if (environment.brpd && this.isSearchDisabled() && trimmed.length === 18) {
             this._api
-                .fetchDiscordWalletFromUserId(searchValue)
+                .fetchDiscordWalletFromUserId(trimmed)
                 .then((data: DiscordResponseDto[]) => {
                     this._searchService.emitSearch(data[0].address, ctrl);
                 })
@@ -92,7 +94,7 @@ export class HomeComponent implements OnDestroy {
             return;
         }
 
-        this._searchService.emitSearch(searchValue, ctrl);
+        this._searchService.emitSearch(trimmed, ctrl);
     }
 
     isDarkTheme(): boolean {
@@ -100,6 +102,7 @@ export class HomeComponent implements OnDestroy {
     }
 
     isSearchDisabled(): boolean {
-        return !this._searchService.isValidAddress(this.value) && !this._searchService.isValidBlock(this.value);
+        const trimmed = this.userInput.trim();
+        return !this._searchService.isValidAddress(trimmed) && !this._searchService.isValidBlock(trimmed);
     }
 }

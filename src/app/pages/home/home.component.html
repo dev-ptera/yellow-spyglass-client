@@ -14,7 +14,7 @@
                 <div class="home-search-bar" responsive>
                     <app-search-bar
                         placeholder="Search Banano by address, block or alias"
-                        (searchInputChange)="value = $event"
+                        (searchInputChange)="userInput = $event"
                         [onlyFocusWhenActivelySearching]="true"
                     ></app-search-bar>
                     <button
@@ -23,7 +23,7 @@
                         mat-flat-button
                         style="color: #1a1a1a; background-color: #fbdd11"
                         color="accent"
-                        (click)="search(value, $event)"
+                        (click)="search(userInput, $event)"
                     >
                         SEARCH
                     </button>
