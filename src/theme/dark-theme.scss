@@ -296,7 +296,7 @@ $dark-theme: map-merge(
         color: $warn;
     }
     .divider-border {
-        border: solid 1px map-get($theme-foreground, divider);
+        border: solid 1px rgba(map-get(blui.$blui-black, 300), 0.32);
         box-shadow: none !important;
     }
     .app-user-menu .blui-user-menu-avatar {

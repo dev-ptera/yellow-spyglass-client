@@ -56,7 +56,7 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                         ></a>
                         <a
                             *ngIf="tx.type === 'change'"
-                            class="address link text"
+                            class="address link text mono"
                             [routerLink]="'/' + navItems.account.route + '/' + tx.newRepresentative"
                             [innerHTML]="tx.newRepresentative | colorAddress"
                         ></a>
@@ -107,6 +107,7 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                 class="block-info"
                 [style.flexDirection]="vp.sm ? 'row' : 'column'"
                 [style.alignItems]="vp.sm ? 'center' : ''"
+                [routerLink]="'/' + navItems.hash.route + '/' + tx.hash"
             >
                 <div *ngIf="tx.height">
                     <span style="margin-right: 4px">Block No.</span>{{ util.numberWithCommas(tx.height) }}
@@ -114,9 +115,7 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                 <div style="margin: 0 12px" *ngIf="tx.height && vp.sm">·</div>
                 <div style="display: flex; align-items: center">
                     <mat-icon class="text-secondary meta-icon" style="margin-right: 4px"> receipt</mat-icon>
-                    <a class="link text-hint mono" [routerLink]="'/' + navItems.hash.route + '/' + tx.hash">
-                        {{ tx.hash?.substring(0, 8) }}...
-                    </a>
+                    <a class="link text-hint mono"> {{ tx.hash?.substring(0, 8) }}... </a>
                 </div>
             </div>
         </ng-template>

@@ -104,7 +104,7 @@
                     [style.alignItems]="vp.sm ? 'start' : 'center'"
                     [style.fontSize.px]="vp.sm ? 16 : 16"
                 >
-                    <div *ngIf="hasAlias(address)" style="display: flex" [style.marginBottom.px]="vp.sm ? 8 : 0">
+                    <div *ngIf="hasAlias(address)" style="display: flex" [style.marginBottom.px]="vp.sm ? 12 : 0">
                         <span>Known as &ldquo;{{ getAlias(address) }}&rdquo;</span>
                         <span *ngIf="!vp.sm" style="margin: 0 8px">|</span>
                     </div>
@@ -267,8 +267,10 @@
                     <mat-expansion-panel style="width: 100%" [expanded]="true">
                         <mat-expansion-panel-header style="height: 56px">
                             <mat-panel-title style="font-weight: 400">
-                                <span class="mat-subheading-2">{{ getReceivableTransactionsCount() | appComma }}</span>
-                                <span style="margin-left: 4px" class="mat-body-1 text-secondary">
+                                <span class="mat-subheading-2" style="margin-bottom: 0">{{
+                                    getReceivableTransactionsCount() | appComma
+                                }}</span>
+                                <span style="margin-left: 8px" class="mat-body-1 text-secondary">
                                     Receivable Transactions
                                 </span>
                             </mat-panel-title>
