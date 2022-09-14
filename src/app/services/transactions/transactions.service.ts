@@ -186,9 +186,7 @@ export class TransactionsService {
         const currentDate = new Date().getTime() / 1000;
         const oneDay = 24 * 60 * 60; // hours*minutes*seconds*milliseconds
         transactions.map((tx) => {
-            const diffDays = tx.timestamp
-                ? Math.round(((currentDate - tx.timestamp) / oneDay) * 1000) / 1000
-                : undefined;
+            const diffDays = tx.timestamp ? (currentDate - tx.timestamp) / oneDay : undefined;
             this.dateMap.set(tx.hash, {
                 date: this._formatDateString(tx.timestamp),
                 diffDays,
@@ -233,14 +231,18 @@ export class TransactionsService {
                 return `${roundedHours} hour${roundedHours > 1 ? 's' : ''} ago`;
             }
             const roundedMinutes = Math.round(hours * 60);
-            return `${roundedMinutes} ${this._vp.sm ? 'min' : 'minute'}${roundedMinutes > 1 ? 's' : ''} ago`;
+            if (roundedMinutes >= 1) {
+                return `${roundedMinutes} min${roundedMinutes > 1 ? 's' : ''} ago`;
+            }
+            const seconds = Math.round(days * 24 * 60 * 60);
+            return `${seconds} sec ago`;
         }
     }
 
     /** Creates a css class for each transactions' SEND/RECEIVE/CHANGE tag. */
     createTagClass(tx: Transaction, isPending: boolean): string {
         if (isPending) {
-            return 'receive';
+            return 'receivable';
         }
         return tx.type;
     }

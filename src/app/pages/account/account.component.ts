@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { AccountOverviewDto } from '@app/types/dto';
+import { AccountNFTDto, AccountOverviewDto } from '@app/types/dto';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { UtilService } from '@app/services/util/util.service';
 import { ApiService } from '@app/services/api/api.service';
@@ -24,12 +24,15 @@ import { TransactionsService } from '@app/services/transactions/transactions.ser
 export class AccountComponent implements OnDestroy {
     MAX_INSIGHTS = 100_000;
 
+    nfts: AccountNFTDto[];
+    isLoadingNFTs: boolean;
     address: string;
-    confirmedBalance: string;
+    confirmedBalance: number;
     accountRepresentative: string;
 
     showFilter: boolean;
     hasError: boolean;
+    hasNFTsError: boolean;
     isBRPD = environment.brpd;
 
     delegatorCount: number;
@@ -41,6 +44,10 @@ export class AccountComponent implements OnDestroy {
     routeListener: Subscription;
     accountOverviewListener: Subscription;
     accountOverview: AccountOverviewDto;
+
+    isCompact: boolean;
+
+    borderRadius: 16;
 
     constructor(
         public vp: ViewportService,
@@ -84,6 +91,9 @@ export class AccountComponent implements OnDestroy {
         this.hasError = false;
         this.shownTabNumber = 1;
         this.delegatorCount = 0;
+        this.nfts = undefined;
+        this.isLoadingNFTs = false;
+        this.hasNFTsError = false;
 
         // Managing tabs state.  Reset them all.
         this._txTabService.forgetAccount();
@@ -130,9 +140,7 @@ export class AccountComponent implements OnDestroy {
         // Load delegators ahead of time so we can get the weighted delegators count as well.
         void this._delegatorsTabService.fetchDelegators(address, true).then(() => {
             const weightedDelegatorsCount = this._delegatorsTabService.getWeightedDelegatorsCount();
-            if (weightedDelegatorsCount) {
-                this.delegatorCount = weightedDelegatorsCount;
-            }
+            this.delegatorCount = weightedDelegatorsCount;
         });
     }
 
@@ -148,11 +156,7 @@ export class AccountComponent implements OnDestroy {
             return;
         }
 
-        const balance = this.accountOverview.balance;
-        // Make sure 0 is included as well.
-        if (!isNaN(balance)) {
-            this.confirmedBalance = this._util.numberWithCommas(parseFloat(balance.toFixed(4)));
-        }
+        this.confirmedBalance = this.accountOverview.balance;
 
         const rep = this.accountOverview.representative;
         if (rep) {
@@ -189,7 +193,7 @@ export class AccountComponent implements OnDestroy {
             const firstBits = address.substring(0, 12);
             const midBits = address.substring(12, 58);
             const lastBits = address.substring(58, 64);
-            return `<strong class="">${firstBits}</strong><span class="secondary">${midBits}</span><strong class="">${lastBits}</strong>`;
+            return `<strong class="">${firstBits}</strong><span class="text-secondary">${midBits}</span><strong class="">${lastBits}</strong>`;
         }
     }
 
@@ -203,6 +207,14 @@ export class AccountComponent implements OnDestroy {
 
     withCommas(x: number): string {
         return this._util.numberWithCommas(x);
+    }
+
+    getRepresentativeLabel(): string {
+        return this.accountOverview.principal
+            ? this.vp.sm
+                ? 'Principal Rep'
+                : 'Principal Representative'
+            : 'Representative';
     }
 
     getReceivableTransactionsCount(): number {
@@ -219,6 +231,30 @@ export class AccountComponent implements OnDestroy {
             this.accountOverview.opened &&
             (this.accountOverview.blockCount <= this.MAX_INSIGHTS || this.isBRPD)
         );
+    }
+
+    fetchNfts(): void {
+        if (this.nfts) {
+            return;
+        }
+        if (this.isLoadingNFTs) {
+            return;
+        }
+
+        this.nfts = [];
+        this.isLoadingNFTs = true;
+        this.apiService
+            .fetchAccountNFTs(this.address)
+            .then((data) => {
+                this.nfts = data;
+            })
+            .catch((err) => {
+                console.error(err);
+                this.hasNFTsError = true;
+            })
+            .finally(() => {
+                this.isLoadingNFTs = false;
+            });
     }
 
     showCSVExportActionButton(): boolean {

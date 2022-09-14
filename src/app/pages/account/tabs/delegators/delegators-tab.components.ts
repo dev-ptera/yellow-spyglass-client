@@ -11,10 +11,18 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
         <ng-container *ngIf="delegatorService.hasDelegators()">
             <div class="account-delegator-weight">
                 <span class="account-delegator-weight-sum" responsive>{{ delegatorService.getWeight() }}</span>
-                <span class="account-delegator-weight-sum-description" responsive>BAN Delegated Weight</span>
+                <span class="account-delegator-weight-sum-description text-secondary" responsive
+                    >BAN Delegated Weight</span
+                >
             </div>
             <mat-divider></mat-divider>
-            <table mat-table [style.width.%]="100" [dataSource]="delegatorService.getTableDataSource()" responsive>
+            <table
+                mat-table
+                [style.width.%]="100"
+                class="delegators-table"
+                [dataSource]="delegatorService.getTableDataSource()"
+                responsive
+            >
                 <ng-container matColumnDef="position">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
                     <td
@@ -31,7 +39,7 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
                     <th mat-header-cell *matHeaderCellDef>Address</th>
                     <td
                         mat-cell
-                        class="delegators-address-cell"
+                        class="delegators-address-cell mono"
                         style="word-break: break-all"
                         [class.link]="element.address !== address"
                         *matCellDef="let element"

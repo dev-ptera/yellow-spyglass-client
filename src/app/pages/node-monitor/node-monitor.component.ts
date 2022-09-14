@@ -9,10 +9,15 @@ import { APP_NAV_ITEMS } from '../../navigation/nav-items';
     selector: 'app-monitor',
     template: `
         <ng-template #titleContent>
-            <div class="app-page-title">Node Statistics</div>
+            <div class="app-page-title" style="display: flex; align-items: center">
+                <div>Node Statistics</div>
+                <app-load-spinner *ngIf="isLoading"></app-load-spinner>
+            </div>
             <div class="app-page-subtitle">
                 This explorer is powered & maintained by the
-                <a class="link primary" [href]="getMonitoredRepUrl(stats.monitorUrl)"> batman representative</a>.
+                <a class="link primary" [routerLink]="'/' + navItems.account.route + '/' + batman">
+                    batman representative</a
+                >.
             </div>
         </ng-template>
 
@@ -30,11 +35,11 @@ import { APP_NAV_ITEMS } from '../../navigation/nav-items';
                             <div blui-subtitle>
                                 <a
                                     style="color: inherit"
-                                    class="link"
-                                    [routerLink]="'/' + navItems.account.route + '/' + stats.addressAsRepresentative"
+                                    class="link mono"
+                                    [routerLink]="'/' + navItems.account.route + '/' + batman"
                                 >
-                                    {{ stats.addressAsRepresentative }}</a
-                                >
+                                    {{ batman }}
+                                </a>
                             </div>
                         </blui-info-list-item>
                         <blui-info-list-item divider="full">
@@ -139,7 +144,7 @@ import { APP_NAV_ITEMS } from '../../navigation/nav-items';
                             <div blui-title>Uptime</div>
                             <div blui-subtitle>{{ formatUptime(stats.nodeUptimeSeconds) }}</div>
                         </blui-info-list-item>
-                        <blui-info-list-item>
+                        <blui-info-list-item *ngIf="stats.location">
                             <div blui-icon>
                                 <mat-icon>place</mat-icon>
                             </div>
@@ -173,6 +178,7 @@ export class NodeMonitorComponent implements OnInit {
     isLoading = true;
     hasError = false;
     navItems = APP_NAV_ITEMS;
+    batman = 'ban_3batmanuenphd7osrez9c45b3uqw9d9u81ne8xa6m43e1py56y9p48ap69zg';
 
     constructor(private readonly _api: ApiService, public vp: ViewportService, public util: UtilService) {}
 

@@ -10,6 +10,23 @@
 // These can change in the future, I'm not too picky.
 $font-family: -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
 
+@font-face {
+    font-family: courier-prime;
+    src: url(assets/fonts/courier-prime/Courier-Prime.ttf);
+}
+
+@font-face {
+    font-family: pt;
+    src: url(assets/fonts/pt-mono/SourceCodePro-Regular.otf);
+}
+.mono {
+    $mono: pt, monospace;
+    font-family: $mono;
+    * {
+        font-family: $mono;
+    }
+}
+
 html {
     * {
         font-family: $font-family;
@@ -104,9 +121,18 @@ mat-card,
     }
 }
 
+.sm {
+    .flat-top {
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+    }
+}
+
 .sm .flat-edge {
+    // TODO: Remove me or rename me.
     border-radius: 0;
 }
+
 .mat-table {
     border-radius: 4px;
     overflow: hidden !important;
@@ -179,12 +205,13 @@ body {
         }
         @include adjustSize(30px, 20px);
     }
+    /*
     .address-action-button.sm {
         margin-top: -4px;
         margin-left: 4px;
 
         @include adjustSize(24px, 16px);
-    }
+    }*/
 }
 
 /** Hide number arrows */
@@ -200,3 +227,40 @@ input::-webkit-inner-spin-button {
 input[type='number'] {
     -moz-appearance: textfield;
 }
+
+@mixin border-radius {
+    html body {
+        .mat-card,
+        .mat-nav-list,
+        .mat-list-item-ripple,
+        .mat-list-item,
+        .mat-list-item-content,
+        .mat-dialog-container,
+        .tx-content-container,
+        .mat-table {
+            border-radius: 1rem;
+        }
+
+        .blui-list-item-tag-content {
+            padding: 0 0.5rem !important;
+        }
+        .blui-list-item-tag,
+        .blui-list-item-tag-content {
+            border-radius: 0.875rem !important;
+        }
+    }
+
+    /*
+    .sm {
+        mat-card,
+        mat-nav-list,
+        .mat-list-item-ripple,
+        mat-list-item,
+        mat-list-item-content,
+        mat-dialog-container {
+            border-radius: 0rem !important;
+        }
+    } */
+}
+
+@include border-radius();

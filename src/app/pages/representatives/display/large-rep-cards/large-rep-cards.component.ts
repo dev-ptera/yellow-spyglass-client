@@ -41,7 +41,7 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
                 {{ aliasService.getAlias(rep.address) }}
             </a>
             <a
-                class="text link"
+                class="text link mono"
                 style="font-size: 0.875rem; word-break: break-all; margin-bottom: 8px; display: block"
                 [routerLink]="'/' + navItems.account.route + '/' + rep.address"
             >

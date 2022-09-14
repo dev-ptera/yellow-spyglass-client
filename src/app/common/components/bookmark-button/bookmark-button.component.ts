@@ -13,6 +13,7 @@ import { AccountActionsService } from '@app/services/account-actions/account-act
             class="address-action-button"
             (click)="toggleBookmark()"
             responsive
+            matTooltip="Add to Bookmarks"
         >
             <mat-icon class="bookmarked-button">favorite_border</mat-icon>
         </button>
@@ -24,6 +25,7 @@ import { AccountActionsService } from '@app/services/account-actions/account-act
             (click)="toggleBookmark()"
             responsive
             color="warn"
+            matTooltip="Remove from Bookmarks"
         >
             <mat-icon class="bookmarked-button">favorite</mat-icon>
         </button>

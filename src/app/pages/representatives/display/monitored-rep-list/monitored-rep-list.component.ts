@@ -24,7 +24,7 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
                     </div>
                     <div blui-info style="font-size: 0.875rem" class="text-secondary">{{ formatInfoLine(rep) }}</div>
                     <div blui-subtitle style="font-size: 0.875rem; padding-right: 16px">
-                        <a class="link text" [routerLink]="'/' + navItems.account.route + '/' + rep.address">
+                        <a class="link text mono" [routerLink]="'/' + navItems.account.route + '/' + rep.address">
                             {{ rep.address }}
                         </a>
                     </div>
@@ -42,8 +42,7 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
     styles: [
         `
             .monitored-rep-list .mat-list-item-content {
-                padding: 12px 0 12px 0 !important;
-                height: 7rem !important;
+                padding: 24px 0 24px 0 !important;
             }
         `,
     ],

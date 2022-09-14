@@ -93,7 +93,7 @@
     .tab-buttons button {
         color: map-get($foreground, secondary-text) !important;
         // background-color: map-get(blui.$blui-white, 200) !important;
-        border-color: map-get($foreground, divider);
+        //  border-color: map-get($foreground, divider);
     }
     .tab-buttons .active {
         border-bottom-left-radius: 0;
@@ -120,10 +120,17 @@
     .brpd-tab-transaction-list {
         .type {
             &.receive {
+                $receive: $primary;
                 background-color: rgba($primary, 0.05);
                 border: solid 1px $primary;
                 color: $primary;
                 // color: map-get($foreground, secondary-text);
+            }
+            &.receivable {
+                $receivable: map-get(blui.$blui-orange, 500);
+                background-color: rgba($receivable, 0.05);
+                border: solid 1px $receivable;
+                color: $receivable;
             }
             &.send {
                 background-color: rgba($warn, 0.05);
@@ -135,6 +142,12 @@
                 background-color: rgba($change, 0.05);
                 border: solid 1px $change;
                 color: $change;
+            }
+            &.open {
+                $open: map-get(blui.$blui-purple, 500);
+                background-color: rgba($open, 0.05);
+                border: solid 1px $open;
+                color: $open;
             }
         }
     }
@@ -185,7 +198,7 @@ $jungle-green-theme: map-merge(
             secondary-text: map-get(blui.$blui-gray, 500),
             hint-text: map-get(blui.$blui-black, 200),
             base: map-get(blui.$blui-darkBlack, 900),
-            divider: rgba(66, 78, 84, 0.12),
+            divider: rgba(66, 78, 84, 0.1),
             dividers: mat.get-color-from-palette(mat.$light-theme-foreground-palette, dividers),
             disabled: rgba(66, 78, 84, 0.3),
             disabled-button: rgba(black, 0.26),
@@ -262,7 +275,8 @@ $jungle-green-theme: map-merge(
         color: $warn;
     }
     .divider-border {
-        border: solid 1px map-get($theme-foreground, divider);
+        box-shadow: none !important;
+        border: solid 1px map-get(blui.$blui-black, 100);
     }
     textarea:focus,
     input:focus {

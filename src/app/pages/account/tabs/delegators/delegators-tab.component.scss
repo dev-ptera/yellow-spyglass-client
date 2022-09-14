@@ -5,22 +5,20 @@
     align-items: center;
 
     .account-delegator-weight-sum {
-        margin-left: 28px;
-        font-size: 18px;
-        font-weight: 600;
+        margin-left: 16px;
         margin-right: 8px;
-        &.sm {
-            font-size: 16px;
-        }
+        font-size: 16px;
+        font-weight: 600;
     }
 
     .account-delegator-weight-sum-description {
-        font-weight: 400;
         font-size: 16px;
-        &.sm {
-            font-size: 14px;
-        }
     }
+}
+
+.delegators-table.sm {
+    border-top-right-radius: 0 !important;
+    border-top-left-radius: 0 !important;
 }
 
 .delegators-address-cell {

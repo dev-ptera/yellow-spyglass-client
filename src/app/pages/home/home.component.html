@@ -14,7 +14,7 @@
                 <div class="home-search-bar" responsive>
                     <app-search-bar
                         placeholder="Search Banano by address, block or alias"
-                        (searchInputChange)="value = $event"
+                        (searchInputChange)="userInput = $event"
                         [onlyFocusWhenActivelySearching]="true"
                     ></app-search-bar>
                     <button
@@ -23,7 +23,7 @@
                         mat-flat-button
                         style="color: #1a1a1a; background-color: #fbdd11"
                         color="accent"
-                        (click)="search(value, $event)"
+                        (click)="search(userInput, $event)"
                     >
                         SEARCH
                     </button>
@@ -45,7 +45,7 @@
                 >
                     Network Summary
                 </div>
-                <mat-card>
+                <mat-card class="divider-border mat-elevation-z0">
                     <div class="icon-container">
                         <mat-icon>savings</mat-icon>
                     </div>
@@ -82,7 +82,7 @@
                 </mat-card>
                 -->
 
-                <mat-card>
+                <mat-card class="divider-border mat-elevation-z0">
                     <div class="icon-container">
                         <mat-icon>fingerprint</mat-icon>
                     </div>
@@ -95,7 +95,7 @@
                     </div>
                 </mat-card>
 
-                <mat-card>
+                <mat-card class="divider-border mat-elevation-z0">
                     <div class="icon-container">
                         <mat-icon>how_to_vote</mat-icon>
                     </div>
@@ -110,7 +110,7 @@
                     </div>
                 </mat-card>
 
-                <mat-card>
+                <mat-card class="divider-border mat-elevation-z0">
                     <div class="icon-container">
                         <mat-icon>sell</mat-icon>
                     </div>
@@ -124,7 +124,7 @@
                     </div>
                 </mat-card>
 
-                <mat-card>
+                <mat-card class="divider-border mat-elevation-z0">
                     <div class="icon-container">
                         <mat-icon>storage</mat-icon>
                     </div>

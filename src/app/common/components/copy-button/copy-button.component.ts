@@ -5,7 +5,13 @@ import { AccountActionsService } from '@app/services/account-actions/account-act
     selector: 'app-copy-button',
     encapsulation: ViewEncapsulation.None,
     template: `
-        <button mat-icon-button class="address-action-button" responsive (click)="copyToClipboard()">
+        <button
+            mat-icon-button
+            class="address-action-button"
+            responsive
+            (click)="copyToClipboard()"
+            matTooltip="Copy Address"
+        >
             <mat-icon>content_copy</mat-icon>
         </button>
     `,

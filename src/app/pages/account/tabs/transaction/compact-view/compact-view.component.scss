@@ -21,11 +21,6 @@ input:focus {
     border: none !important;
     outline: 0;
 }
-
-.brpd-tab-transaction-list {
-    overflow: hidden;
-}
-
 .invisible-full-address {
     position: absolute;
     color: transparent;
@@ -34,4 +29,9 @@ input:focus {
     font-size: 1px !important;
     letter-spacing: 100vw;
     bottom: 0px;
+}
+
+.brpd-tab-transaction-list {
+    position: relative;
+    overflow: hidden;
 }

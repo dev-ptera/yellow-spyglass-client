@@ -21,6 +21,9 @@
     .mat-button {
         margin-bottom: 0;
     }
+    .mat-subtitle-1 {
+        font-weight: 600;
+    }
     .mat-overline {
         font-size: 0.75rem;
         font-weight: 600;
@@ -34,7 +37,8 @@
         max-width: 1050px;
     }
     .app-page-title {
-        font-size: 48px;
+        font-weight: 600;
+        font-size: 32px;
         display: flex;
         width: 100%;
         margin-bottom: 0px;
@@ -47,7 +51,8 @@
         text-align: left;
     }
     .app-section-title {
-        font-size: 24px;
+        font-size: 18px;
+        font-weight: 600;
     }
     .app-section-subtitle {
         margin-bottom: 32px;

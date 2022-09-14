@@ -1,5 +1,8 @@
 <ng-template #titleContent>
-    <div class="app-page-title">Known Accounts</div>
+    <div class="app-page-title" style="display: flex; align-items: center">
+        <div>Known Accounts</div>
+        <app-load-spinner *ngIf="isLoading"></app-load-spinner>
+    </div>
     <div class="app-page-subtitle">
         <div>A list of known accounts including exchanges, games, faucets, representatives & more.</div>
         <div>
@@ -29,8 +32,8 @@
                 >
                 <br />
                 <a
-                    class="link text-secondary"
-                    style="word-break: break-word; font-family: monospace"
+                    class="link text-secondary mono"
+                    style="word-break: break-word"
                     *ngIf="!vp.sm"
                     [routerLink]="'/' + navItems.account.route + '/' + element.address"
                 >

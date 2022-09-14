@@ -13,7 +13,12 @@ import { environment } from '../../../../environments/environment';
                 [style.marginTop.px]="80"
             >
                 <ng-container *ngIf="!vp.sm">
-                    <div class="mat-headline">Transaction Filters</div>
+                    <div style="display: flex; justify-content: space-between; align-items: center">
+                        <div class="mat-headline" style="margin-bottom: 0">Transaction Filters</div>
+                        <button mat-icon-button (click)="close.emit()">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </div>
                     <div style="margin-bottom: 24px">Use the knobs below to filter your transaction history.</div>
                 </ng-container>
 
@@ -177,6 +182,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class FilterDrawerComponent {
     @Input() defaultPageSize;
+    @Output() close = new EventEmitter<void>();
     @Output() search = new EventEmitter<void>();
 
     localFilters: FilterDialogData;

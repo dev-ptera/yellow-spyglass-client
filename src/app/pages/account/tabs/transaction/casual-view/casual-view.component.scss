@@ -5,8 +5,8 @@
     }
 
     .blui-info-list-item .mat-list-item {
-        padding-top: 16px;
-        padding-bottom: 16px;
+        padding-top: 20px;
+        padding-bottom: 20px;
 
         .blui-info-list-item-icon-wrapper {
             display: none;
@@ -18,6 +18,14 @@
             > span {
                 margin-left: 0;
                 margin-bottom: -4px;
+            }
+        }
+        .address-row {
+            margin: 12px 0;
+            .address {
+                //    max-width: 32ch!important;
+                display: block;
+                //   font-size: 0.875rem !important;
             }
         }
         .right-content {
@@ -36,73 +44,82 @@
     }
 }
 
-$mono: monospace;
-
-.tab-transaction-list:not(.sm) {
-    .tag-row,
-    .address-row,
-    .hash-row {
-        margin-bottom: 1px;
-    }
-}
-
 .tab-transaction-list {
     padding-top: 0px;
+
     .blui-info-list-item {
+        .mat-list-item {
+            padding-top: 4px;
+            padding-bottom: 4px;
+        }
         .tag-row {
             display: flex;
             align-items: center;
+            flex-wrap: wrap;
+        }
+        .address-row {
+            box-sizing: border-box;
+            max-width: 32ch;
+            max-width: 295px;
+            margin-top: 8px;
         }
         .address {
+            line-height: 18px;
+            font-size: 15px;
+        }
+        .address * {
             word-break: break-all;
-        }
-        .address,
-        .hash-row {
             font-weight: 400;
-        }
-        .hash-row {
-            display: inline-flex;
-            font-family: $mono;
-        }
-        .height {
-            font-size: 12px;
-            background-color: unset;
-            font-weight: 600;
-            margin-right: 8px;
         }
         .right-content {
             margin-left: 24px;
         }
     }
+
     .blui-list-item-tag-content {
-        width: 52px;
+        min-width: 52px;
         text-align: center;
     }
+
     .blui-info-list-item .blui-info-list-item-subtitle-wrapper {
         font-size: 0.75rem;
     }
+
     .blui-info-list-item-icon-wrapper > * {
         height: 6rem !important;
         width: 6rem !important;
         font-size: 6rem !important;
     }
+
     .blui-info-list-item-icon-wrapper {
         max-width: unset !important;
         width: unset !important;
         min-width: unset !important;
     }
 
-    .to-from {
-        font-weight: 400;
-        margin-right: 4px;
+    .block-info,
+    .timestamps {
+        display: flex;
+        flex-direction: column;
+        font-size: 14px;
+        text-align: right;
+    }
+    .block-info {
+        cursor: pointer;
+    }
+
+    .meta-icon {
+        font-size: 14px;
+        height: 14px;
+        width: 14px;
+        min-width: 14px;
+        line-height: 14px;
+        box-sizing: border-box;
     }
     .amount {
         font-size: 1rem;
         font-weight: 600;
-    }
-    .timestamps {
-        display: flex;
-        flex-direction: column;
-        text-align: right;
+        margin-right: 12px;
+        margin-left: 12px;
     }
 }

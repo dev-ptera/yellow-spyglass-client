@@ -1,8 +1,8 @@
 <ng-template #titleContent>
     <div responsive>
-        <div class="app-page-title">
-            <ng-container *ngIf="!isLoading">Vanity MonKeys</ng-container>
-            <ng-container *ngIf="isLoading">Loading</ng-container>
+        <div class="app-page-title" style="display: flex; align-items: center">
+            <div>Vanity MonKeys</div>
+            <app-load-spinner *ngIf="isLoading"></app-load-spinner>
         </div>
         <div class="app-page-subtitle">A showcase of accounts with custom vanity MonKeys.</div>
     </div>
@@ -23,7 +23,7 @@
                 <div
                     mat-card-subtitle
                     style="word-wrap: break-word"
-                    class="link"
+                    class="link mono"
                     [routerLink]="'/' + navItems.account.route + '/' + address"
                 >
                     {{ address }}

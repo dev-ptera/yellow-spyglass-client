@@ -20,94 +20,105 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                 [hidePadding]="true"
                 style="position: relative"
             >
-                <div blui-icon>
-                    <img
-                        [src]="apiService.createMonKeyUrl(tx.address || tx.newRepresentative)"
-                        loading="lazy"
-                        style="margin-right: 8px"
-                    />
-                </div>
-                <div blui-left-content [style.width.px]="vp.sm ? 64 : 72" style="justify-content: left">
-                    <blui-list-item-tag
-                        [label]="tx.type || 'receive'"
-                        class="type"
-                        [class]="txService.createTagClass(tx, isPending)"
-                    ></blui-list-item-tag>
+                <div blui-icon style="margin-right: 8px" *ngIf="!vp.sm">
+                    <img [src]="apiService.createMonKeyUrl(tx.address || tx.newRepresentative)" loading="lazy" />
                 </div>
                 <div blui-title>
                     <div class="tag-row">
+                        <blui-list-item-tag
+                            [label]="tx.type || 'Receivable'"
+                            class="type"
+                            [class]="txService.createTagClass(tx, isPending)"
+                        ></blui-list-item-tag>
+
                         <span *ngIf="tx.type !== 'change'" class="amount">
-                            {{ tx.type === 'receive' || isPending ? '+' : '-' }}
-                            {{ util.numberWithCommas(tx.amount) }}
+                            {{ tx.type === 'receive' || tx.type === 'open' || isPending ? '+' : '-' }}
+                            {{ tx.amount | appComma }}
                         </span>
+
+                        <div class="primary" *ngIf="!vp.sm" style="font-size: 1rem">
+                            {{ aliasService.getAlias(tx.address) }}
+                        </div>
                     </div>
                     <div class="address-row">
-                        <ng-container *ngIf="!tx.type || tx.type === 'receive'">
-                            <span class="to-from text-secondary">from</span>
-                            <span>
-                                <a
-                                    class="address link text"
-                                    [routerLink]="'/' + navItems.account.route + '/' + tx.address"
-                                    >{{ aliasService.getAlias(tx.address) || tx.address }}</a
-                                >
-                            </span>
-                        </ng-container>
-
-                        <ng-container *ngIf="tx.type === 'send'">
-                            <span class="to-from text-secondary">to</span>
-                            <span>
-                                <a
-                                    class="address link text"
-                                    [routerLink]="'/' + navItems.account.route + '/' + tx.address"
-                                    >{{ aliasService.getAlias(tx.address) || tx.address }}
-                                </a>
-                            </span>
-                        </ng-container>
-
-                        <ng-container *ngIf="tx.type === 'change'">
-                            <span class="to-from text-secondary">to</span>
-                            <span
-                                ><a
-                                    class="address link text"
-                                    [routerLink]="'/' + navItems.account.route + '/' + tx.newRepresentative"
-                                    >{{ aliasService.getAlias(tx.newRepresentative) || tx.newRepresentative }}</a
-                                >
-                            </span>
-                        </ng-container>
+                        <div
+                            class="primary"
+                            *ngIf="vp.sm && aliasService.has(tx.address)"
+                            style="font-size: 0.875rem; margin: 12px 0 8px 0"
+                        >
+                            {{ aliasService.getAlias(tx.address) }}
+                        </div>
+                        <a
+                            *ngIf="!tx.type || tx.type !== 'change'"
+                            class="address link text mono"
+                            [routerLink]="'/' + navItems.account.route + '/' + tx.address"
+                            [innerHTML]="tx.address | colorAddress"
+                        ></a>
+                        <a
+                            *ngIf="tx.type === 'change'"
+                            class="address link text mono"
+                            [routerLink]="'/' + navItems.account.route + '/' + tx.newRepresentative"
+                            [innerHTML]="tx.newRepresentative | colorAddress"
+                        ></a>
                     </div>
                 </div>
-                <div blui-subtitle class="hash text-hint mat-body-2">
-                    <span *ngIf="tx.height">
-                        <span style="margin-right: 0px">#</span>{{ util.numberWithCommas(tx.height) }}
-                    </span>
-                    <span style="margin: 0 4px" *ngIf="tx.height">·</span>
-                    <a class="link hash text-hint" [routerLink]="'/' + navItems.hash.route + '/' + tx.hash">
-                        {{ tx.hash }}
-                    </a>
+
+                <div blui-subtitle class="hash mat-body-2" *ngIf="vp.sm">
+                    <ng-template *ngTemplateOutlet="hash; context: { tx: tx }"></ng-template>
                 </div>
+
                 <div blui-right-content class="right-content" [style.marginRight.px]="vp.sm ? 0 : 8">
+                    <div *ngIf="!vp.sm">
+                        <ng-template *ngTemplateOutlet="hash; context: { tx: tx }"></ng-template>
+                    </div>
+
                     <div *ngIf="vp.sm" class="small-monkey">
                         <img [src]="apiService.createMonKeyUrl(tx.address || tx.newRepresentative)" loading="lazy" />
                     </div>
-                    <div class="timestamps">
-                        <span class="mat-body-2">{{ txService.dateMap.get(tx.hash).date }}</span>
-                        <span
-                            class="mat-body-2 text-secondary"
+
+                    <div class="timestamps" [style.minWidth.px]="vp.sm ? 0 : 150">
+                        <div>
+                            {{ txService.dateMap.get(tx.hash).date }}
+                        </div>
+                        <div
+                            class="text-hint"
+                            style="margin-top: 0; display: flex; align-items: center; justify-content: flex-end"
                             [style.fontSize.px]="vp.sm ? 12 : 14"
                             (mouseenter)="tx.timestampHovered = true"
                             (mouseleave)="tx.timestampHovered = false"
                         >
+                            <mat-icon *ngIf="!vp.sm" class="text-secondary meta-icon" style="margin-right: 4px"
+                                >schedule
+                            </mat-icon>
                             <ng-container *ngIf="!tx.timestampHovered">
                                 {{ txService.dateMap.get(tx.hash).relativeTime }}
                             </ng-container>
                             <ng-container *ngIf="tx.timestampHovered">
                                 {{ txService.getTime(tx.timestamp) }}
                             </ng-container>
-                        </span>
+                        </div>
                     </div>
                 </div>
             </blui-info-list-item>
         </mat-list>
+
+        <ng-template #hash let-tx="tx">
+            <div
+                class="block-info"
+                [style.flexDirection]="vp.sm ? 'row' : 'column'"
+                [style.alignItems]="vp.sm ? 'center' : ''"
+                [routerLink]="'/' + navItems.hash.route + '/' + tx.hash"
+            >
+                <div *ngIf="tx.height">
+                    <span style="margin-right: 4px">Block No.</span>{{ util.numberWithCommas(tx.height) }}
+                </div>
+                <div style="margin: 0 12px" *ngIf="tx.height && vp.sm">·</div>
+                <div style="display: flex; align-items: center">
+                    <mat-icon class="text-secondary meta-icon" style="margin-right: 4px"> receipt</mat-icon>
+                    <a class="link text-hint mono"> {{ tx.hash?.substring(0, 8) }}... </a>
+                </div>
+            </div>
+        </ng-template>
     `,
 })
 export class CasualViewComponent {

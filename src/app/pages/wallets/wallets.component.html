@@ -1,5 +1,8 @@
 <ng-template #titleContent>
-    <div class="app-page-title">Wallets</div>
+    <div class="app-page-title" style="display: flex; align-items: center">
+        <div>Wallets</div>
+        <app-load-spinner *ngIf="isLoading"></app-load-spinner>
+    </div>
     <div class="app-page-subtitle">See account distribution statistics and the list of the top Banano holders.</div>
 </ng-template>
 
@@ -83,9 +86,11 @@
                     >
                 </div>
 
-                <a class="address link text" [routerLink]="'/' + navItems.account.route + '/' + element.address">
-                    {{ element.address }}
-                </a>
+                <div class="address">
+                    <a class="link text mono" [routerLink]="'/' + navItems.account.route + '/' + element.address">
+                        {{ element.address }}
+                    </a>
+                </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="ban">

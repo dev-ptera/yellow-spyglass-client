@@ -13,8 +13,7 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
     template: `
         <div
             *ngFor="let tx of transactions; trackBy: trackByFn; let last = last"
-            style="position: relative"
-            class="animation-content"
+            class="animation-content brpd-tab-transaction-list"
         >
             <div style="display: flex; align-items: center">
                 <img
@@ -22,18 +21,18 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                     loading="lazy"
                     style="height: 50px; width: 50px; margin-right: 12px"
                 />
-                <div
+                <a
                     *ngIf="tx.height"
                     [routerLink]="'/' + navItems.hash.route + '/' + tx.hash"
-                    class="link"
-                    style="font-family: monospace; margin-right: 24px"
+                    class="link text mono"
+                    style="margin-right: 24px"
                 >
                     <span style="margin-right: 0px" style="font-size: 14px">#</span
                     >{{ util.numberWithCommas(tx.height) }}
-                </div>
+                </a>
 
                 <blui-list-item-tag
-                    style="margin-right: 24px; width: 60px; text-align: center"
+                    style="margin-right: 24px; width: 68px; text-align: center"
                     [label]="tx.type || 'receive'"
                     class="type"
                     [class]="txService.createTagClass(tx, isPending)"
@@ -43,12 +42,11 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                     class="amount"
                     [class.primary]="tx.type === 'receive'"
                     [class.warn]="tx.type === 'send'"
-                    style="width: 200px"
+                    style="width: 220px"
                 >
                     <ng-container *ngIf="tx.type !== 'change'">
                         {{ tx.type === 'receive' || isPending ? '+' : '-' }}
                         {{ formatNumber(tx.amount) }}
-                        BAN
                     </ng-container>
                 </div>
                 <div
@@ -67,8 +65,8 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                         </mat-icon>
                     </button>
                     <a
-                        style="font-family: monospace"
-                        class="link text"
+                        style="font-size: 14px"
+                        class="link text mono"
                         [routerLink]="'/' + navItems.account.route + '/' + (tx.address || tx.newRepresentative)"
                         >{{ util.shortenAddress(tx.address || tx.newRepresentative) }}
                     </a>
@@ -164,7 +162,7 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                     </div>
                 </div>
             </div>
-            <mat-divider *ngIf="!last"></mat-divider>
+            <mat-divider *ngIf="!last" style="bottom: 1px"></mat-divider>
             <div class="invisible-full-address">
                 {{ tx.address }}
             </div>
@@ -184,7 +182,7 @@ export class CompactViewComponent {
         public txService: TransactionsService
     ) {}
 
-    trackByFn(index: number, tx: Transaction): number {
+    trackByFn(index: number): number {
         return index;
     }
 

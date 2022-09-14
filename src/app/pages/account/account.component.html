@@ -3,7 +3,7 @@
         *ngIf="!vp.sm"
         [src]="apiService.createMonKeyUrl(address)"
         loading="lazy"
-        style="min-width: 220px; height: 220px; margin-top: -12px; margin-right: 16px"
+        style="min-width: 200px; height: 200px; margin-top: -12px; margin-right: 16px"
     />
 </ng-template>
 
@@ -16,15 +16,25 @@
     />
 </ng-template>
 
+<ng-template #accountBalance>
+    <div style="font-weight: 400">
+        <span [innerHTML]="confirmedBalance | appComma | appLittleDecimal"></span>
+        <span style="margin-left: 8px">BAN</span>
+    </div>
+</ng-template>
+
 <ng-template #headerContent>
-    <div class="account-header" responsive>
+    <mat-card class="account-header divider-border mat-elevation-z0" responsive>
         <!-- Loading -->
         <div *ngIf="!accountOverview" style="display: flex">
             <ng-template [ngTemplateOutlet]="desktopMonKey"></ng-template>
-            <div>
-                <div class="app-page-title">Loading</div>
+            <div class="account-overview-wrapper">
+                <div class="app-page-title" style="display: flex; align-items: center">
+                    <div>Loading</div>
+                    <app-load-spinner *ngIf="!accountOverview"></app-load-spinner>
+                </div>
                 <div
-                    class="app-page-subtitle"
+                    class="app-page-subtitle account-address-wrapper mono"
                     style="word-break: break-all"
                     [innerHTML]="formatAccountAddress(address)"
                 ></div>
@@ -34,7 +44,7 @@
         <!-- Not Loading -->
         <div *ngIf="accountOverview" style="display: flex">
             <ng-template [ngTemplateOutlet]="desktopMonKey"></ng-template>
-            <div>
+            <div class="account-overview-wrapper">
                 <!-- First Line -->
                 <div class="app-page-title">
                     <ng-container *ngIf="!isRepresentative()">
@@ -42,9 +52,7 @@
                         <span *ngIf="!accountOverview.opened"> Unopened Account </span>
                     </ng-container>
                     <div *ngIf="isRepresentative()" style="display: flex; align-items: center">
-                        <div style="margin-right: 16px">
-                            {{ accountOverview.principal ? 'Principal Rep' : 'Representative' }}
-                        </div>
+                        <div style="margin-right: 16px">{{ getRepresentativeLabel() }}</div>
 
                         <mat-icon
                             color="primary"
@@ -65,21 +73,17 @@
 
                 <!-- Second line -->
                 <div
-                    style="display: flex; align-items: center; word-break: break-all"
+                    style="display: flex; align-items: center; word-break: break-all; margin: 8px 0"
                     class="app-page-subtitle"
-                    [style.marginBottom.px]="vp.sm ? 8 : 4"
                 >
-                    <span [innerHTML]="formatAccountAddress(address)"></span>
-                    <div style="display: flex" [style.marginLeft.px]="vp.sm ? 4 : 16">
+                    <span class="account-address-wrapper mono">
+                        <span [innerHTML]="formatAccountAddress(address)"></span>
+                    </span>
+                    <div style="display: flex" [style.marginLeft.px]="vp.sm ? 8 : 16">
                         <ng-container *ngIf="!vp.sm && !vp.md">
                             <app-copy-button [data]="address"></app-copy-button>
                             <app-qr-button [address]="address"></app-qr-button>
                             <app-bookmark-button [id]="address"></app-bookmark-button>
-                            <app-csv-button *ngIf="showCSVExportActionButton()" [address]="address"></app-csv-button>
-                            <app-filter-button
-                                *ngIf="showFilterActionButton()"
-                                [(showFilter)]="showFilter"
-                            ></app-filter-button>
                         </ng-container>
                         <app-account-actions-menu
                             *ngIf="vp.sm || vp.md"
@@ -95,21 +99,21 @@
                 <div
                     *ngIf="accountOverview.opened"
                     class="text-secondary"
-                    style="display: flex; align-items: center; flex-wrap: wrap"
+                    style="display: flex; flex-wrap: wrap; margin: 4px 0"
+                    [style.flexDirection]="vp.sm ? 'column' : 'row'"
+                    [style.alignItems]="vp.sm ? 'start' : 'center'"
                     [style.fontSize.px]="vp.sm ? 16 : 16"
-                    [style.marginBottom.px]="vp.sm ? 8 : 24"
                 >
-                    <div *ngIf="hasAlias(address)" style="display: flex">
-                        <ng-container *ngIf="vp.sm"> A.K.A </ng-container>
-                        <ng-container *ngIf="!vp.sm"> Also known as </ng-container>
-                        {{ getAlias(address) }}
-                        <span style="margin: 0 8px">|</span>
+                    <div *ngIf="hasAlias(address)" style="display: flex" [style.marginBottom.px]="vp.sm ? 12 : 0">
+                        <span>Known as &ldquo;{{ getAlias(address) }}&rdquo;</span>
+                        <span *ngIf="!vp.sm" style="margin: 0 8px">|</span>
                     </div>
                     <div style="display: flex; align-items: center">
                         <div
                             *ngIf="accountOverview.representative === address"
                             class="mat-overline"
                             style="line-height: unset"
+                            [style.marginTop.px]="2"
                             [style.fontSize.px]="12"
                         >
                             Self-Represented
@@ -141,9 +145,9 @@
                 <!-- Opened Account Price Data -->
                 <div class="account-summary-tags" responsive *ngIf="accountOverview.opened">
                     <ng-template [ngTemplateOutlet]="mobileMonKey"></ng-template>
-                    <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 16" responsive>
+                    <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 0" responsive>
                         <ng-container *ngIf="vp.sm">
-                            <div class="account-ban-amount">{{ confirmedBalance }} BAN</div>
+                            <ng-template [ngTemplateOutlet]="accountBalance"></ng-template>
                             <div class="text-secondary">
                                 <span class="account-btc-amount" [style.marginRight.px]="4">{{
                                     formatBtcPrice(accountOverview.balanceRaw)
@@ -155,10 +159,13 @@
                             </div>
                         </ng-container>
 
-                        <div *ngIf="!vp.sm" style="display: flex; align-items: center">
-                            <span class="account-ban-amount" [style.marginRight.px]="8">
-                                {{ confirmedBalance }} BAN
-                            </span>
+                        <div
+                            *ngIf="!vp.sm"
+                            style="display: flex; align-items: center; margin: 16px 0; line-height: 24px"
+                        >
+                            <div style="margin-right: 8px">
+                                <ng-template [ngTemplateOutlet]="accountBalance"></ng-template>
+                            </div>
                             ·
                             <span class="account-btc-amount text-secondary" style="margin: 0 8px">
                                 {{ formatBtcPrice(accountOverview.balanceRaw) }}</span
@@ -170,112 +177,57 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Unopened Account Price Data -->
-                <div
-                    class="account-summary-tags"
-                    responsive
-                    *ngIf="!accountOverview.opened && getReceivableTransactionsCount() !== 0"
-                >
-                    <ng-template [ngTemplateOutlet]="mobileMonKey"></ng-template>
-                    <div class="account-balance" [style.marginTop.px]="vp.sm ? 16 : 16" responsive>
-                        <ng-container *ngIf="vp.sm">
-                            <div class="account-ban-amount">
-                                {{ withCommas(accountOverview.receivable) }} Receivable BAN
-                            </div>
-                            <div class="text-secondary">
-                                <span class="account-btc-amount" [style.marginRight.px]="4">{{
-                                    formatBtcPrice(accountOverview.receivableRaw)
-                                }}</span>
-                                |
-                                <span class="account-usd-amount" [style.marginLeft.px]="4">{{
-                                    formatUsdPrice(accountOverview.receivableRaw) | currency
-                                }}</span>
-                            </div>
-                        </ng-container>
-
-                        <div *ngIf="!vp.sm" style="display: flex; align-items: center">
-                            <span class="account-ban-amount" [style.marginRight.px]="8">
-                                {{ withCommas(accountOverview.receivable) }} Receivable BAN
-                            </span>
-                            ·
-                            <span class="account-btc-amount text-secondary" style="margin: 0 8px">
-                                {{ formatBtcPrice(accountOverview.receivableRaw) }}</span
-                            >
-                            ·
-                            <span class="account-usd-amount text-secondary" [style.marginLeft.px]="8">
-                                {{ formatUsdPrice(accountOverview.receivableRaw) | currency }}
-                            </span>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
-    </div>
+    </mat-card>
 </ng-template>
 
 <ng-template #bodyContent>
-    <div class="account-tabs-container" responsive>
+    <div
+        class="account-tabs-container"
+        responsive
+        [style.marginTop.px]="vp.sm && getReceivableTransactionsCount() > 0 ? 32 : 0"
+    >
         <div class="tab-buttons" responsive>
             <button
+                class="divider-border"
+                blui-inline
                 mat-flat-button
                 (click)="shownTabNumber = 1"
                 [class.active]="shownTabNumber === 1"
-                style="border-top-left-radius: 4px; border-right: 0"
+                style="border-top-left-radius: 16px; border-right: 0"
             >
-                <ng-container *ngIf="vp.sm">
-                    <mat-icon>verified</mat-icon>
-                    <div class="count-subtitle">
-                        {{ withCommas(accountOverview.blockCount) }}
-                    </div>
-                </ng-container>
-                <ng-container *ngIf="!vp.sm">
-                    Confirmed {{ vp.md ? 'Tx' : 'Transactions' }} ({{ withCommas(accountOverview.blockCount) }})
-                </ng-container>
+                <mat-icon>verified</mat-icon>
+                <span>Transactions</span>
+                <span *ngIf="!vp.sm" [style.marginLeft.px]="vp.sm ? 0 : 4"
+                    >({{ accountOverview.blockCount | appComma }})</span
+                >
             </button>
 
             <button
-                mat-flat-button
-                (click)="shownTabNumber = 2"
-                [class.active]="shownTabNumber === 2"
-                style="border-right: 0"
-            >
-                <ng-container *ngIf="vp.sm">
-                    <mat-icon>pending</mat-icon>
-                    <div class="count-subtitle">
-                        {{ getReceivableTransactionsCount() }}
-                    </div>
-                </ng-container>
-                <ng-container *ngIf="!vp.sm">
-                    Receivable {{ vp.md ? 'Tx' : 'Transactions' }} ({{ getReceivableTransactionsCount() }})
-                </ng-container>
-            </button>
-
-            <button
+                class="divider-border"
+                blui-inline
                 mat-flat-button
                 (click)="shownTabNumber = 3"
                 [class.active]="shownTabNumber === 3"
                 style="border-right: 0"
+                *ngIf="delegatorCount > 0"
             >
-                <ng-container *ngIf="vp.sm">
-                    <mat-icon>how_to_vote</mat-icon>
-                    <div class="count-subtitle">
-                        {{ withCommas(delegatorCount) }}
-                    </div>
-                </ng-container>
-                <ng-container *ngIf="!vp.sm"> Delegators ({{ withCommas(delegatorCount) }}) </ng-container>
+                <mat-icon>how_to_vote</mat-icon>
+                <span>Delegators</span>
+                <span *ngIf="!vp.sm" [style.marginLeft.px]="vp.sm ? 0 : 4">({{ delegatorCount | appComma }})</span>
             </button>
 
             <button
+                class="divider-border"
+                blui-inline
                 mat-flat-button
                 (click)="shownTabNumber = 4"
                 [class.active]="shownTabNumber === 4"
-                style="border-top-right-radius: 4px"
+                style="border-top-right-radius: 16px"
             >
-                <ng-container *ngIf="vp.sm">
-                    <mat-icon>insights</mat-icon>
-                </ng-container>
-                <ng-container *ngIf="!vp.sm"> Insights </ng-container>
+                <mat-icon>insights</mat-icon>
+                <span>Insights</span>
             </button>
 
             <!--
@@ -296,15 +248,91 @@
         <div
             responsive
             class="tx-content-container divider-border"
-            [style.backgroundColor]="shownTabNumber === 4 || shownTabNumber === 5 ? 'unset' : ''"
-            [class.divider-border]="shownTabNumber !== 4 && shownTabNumber !== 5"
+            style="border-top-left-radius: 0"
+            [style.backgroundColor]="
+                shownTabNumber === 4 || shownTabNumber === 5 || shownTabNumber === 1 ? 'unset' : ''
+            "
+            [class.divider-border]="shownTabNumber !== 4 && shownTabNumber !== 5 && shownTabNumber !== 1"
         >
-            <account-tx-tab
-                *ngIf="shownTabNumber === 1"
-                [address]="address"
-                [blockCount]="accountOverview.blockCount"
-            ></account-tx-tab>
-            <account-tx-tab *ngIf="shownTabNumber === 2" [address]="address" [isPending]="true"></account-tx-tab>
+            <ng-container *ngIf="shownTabNumber === 1">
+                <mat-accordion
+                    *ngIf="getReceivableTransactionsCount() > 0"
+                    style="
+                        display: flex;
+                        width: 100%;
+                        padding: 0;
+                        margin-bottom: 16px;
+                        border-radius: 16px;
+                        overflow: hidden;
+                        border-top-left-radius: 0;
+                    "
+                    [style.borderTopRightRadius.px]="vp.sm ? 0 : 16"
+                    class="divider-border"
+                >
+                    <mat-expansion-panel style="width: 100%" [expanded]="true">
+                        <mat-expansion-panel-header style="height: 56px">
+                            <mat-panel-title style="font-weight: 400">
+                                <span class="mat-subheading-2" style="margin-bottom: 0">{{
+                                    getReceivableTransactionsCount() | appComma
+                                }}</span>
+                                <span style="margin-left: 8px" class="mat-body-1 text-secondary">
+                                    Receivable Transactions
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <account-tx-tab [address]="address" [isPending]="true"></account-tx-tab>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+                <mat-card
+                    style="padding: 0"
+                    class="divider-border mat-elevation-z0"
+                    [style.border-top-right-radius]="
+                        vp.sm ? (getReceivableTransactionsCount() > 0 ? borderRadius : 0) : borderRadius
+                    "
+                    [style.borderTopLeftRadius.px]="getReceivableTransactionsCount() > 0 ? borderRadius : 0"
+                >
+                    <ng-container>
+                        <div
+                            style="
+                                padding: 16px 8px 16px 16px;
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                            "
+                        >
+                            <div>
+                                <span class="mat-subheading-2">{{ accountOverview.blockCount | appComma }}</span>
+                                <span style="margin-left: 4px" class="text-secondary mat-body-1">
+                                    Confirmed Transactions
+                                </span>
+                            </div>
+                            <div
+                                *ngIf="accountOverview.opened && !vp.sm"
+                                style="display: flex; justify-content: center; align-items: center"
+                            >
+                                <app-csv-button
+                                    *ngIf="showCSVExportActionButton()"
+                                    [address]="address"
+                                ></app-csv-button>
+                                <app-filter-button
+                                    *ngIf="showFilterActionButton()"
+                                    style="margin-left: 8px"
+                                    [(showFilter)]="showFilter"
+                                ></app-filter-button>
+                                <app-tx-view-button [(isCompact)]="isCompact" *ngIf="!vp.sm"></app-tx-view-button>
+                            </div>
+                        </div>
+                        <mat-divider></mat-divider>
+                    </ng-container>
+                    <account-tx-tab
+                        style="margin-top: 8px"
+                        [isCompact]="isCompact"
+                        [address]="address"
+                        [blockCount]="accountOverview.blockCount"
+                    ></account-tx-tab>
+                </mat-card>
+            </ng-container>
 
             <account-delegators-tab *ngIf="shownTabNumber === 3" [address]="address"></account-delegators-tab>
 
@@ -347,6 +375,7 @@
     >
         <app-transaction-filter-drawer
             *ngIf="accountOverview"
+            (close)="showFilter = false"
             (search)="vp.md || vp.sm ? (showFilter = false) : undefined"
             [defaultPageSize]="isBRPD ? DEFAULT_BRPD_TX_SIZE : DEFAULT_TX_SIZE"
         ></app-transaction-filter-drawer>

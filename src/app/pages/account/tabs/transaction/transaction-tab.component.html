@@ -6,17 +6,17 @@
     </ng-container>
 </ng-template>
 
-<div class="brpd-tab-transaction-list animation-content">
+<div class="animation-content">
     <ng-template *ngTemplateOutlet="transactionPaginator; context: { top: true }"></ng-template>
 
     <app-casual-view
-        *ngIf="!isBRPD"
+        *ngIf="!showCompactView()"
         [transactions]="getDisplayedTransactions()"
         [isPending]="isPending"
     ></app-casual-view>
 
     <app-compact-view
-        *ngIf="isBRPD"
+        *ngIf="showCompactView()"
         [transactions]="getDisplayedTransactions()"
         [isPending]="isPending"
     ></app-compact-view>

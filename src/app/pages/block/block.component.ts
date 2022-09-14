@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
-import { Block, BlockDtoV2 } from '@app/types/dto/BlockDto';
+import { Block } from '@app/types/dto/BlockDto';
 import { UtilService } from '@app/services/util/util.service';
 import { Subscription } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
@@ -11,9 +11,9 @@ import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
     selector: 'app-hash',
     template: `
         <ng-template #titleContent>
-            <div class="app-page-title">
-                <span *ngIf="isLoading">Loading</span>
-                <span *ngIf="!isLoading">State Block</span>
+            <div class="app-page-title" style="display: flex; align-items: center">
+                <div>State Block</div>
+                <app-load-spinner *ngIf="isLoading"></app-load-spinner>
             </div>
             <div class="app-page-subtitle hash-searched">
                 {{ hash }}
@@ -47,9 +47,10 @@ import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Amount</span>
-                    <span class="app-section-subtitle"
-                        >{{ block.amount }} RAW | {{ block.amount_decimal | appComma }} BAN</span
-                    >
+                    <span class="app-section-subtitle">
+                        <span [innerHTML]="block.amount_decimal | appComma | appLittleDecimal"></span> BAN |
+                        {{ block.amount }} RAW
+                    </span>
                 </div>
                 <div class="hash-description text-secondary">Amount of BANANO sent in this transaction</div>
             </div>
@@ -87,7 +88,8 @@ import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
                 <div>
                     <span class="app-section-title">Balance</span>
                     <span class="app-section-subtitle">
-                        {{ block.balance }} RAW | {{ block.balance_decimal | appComma }} BAN
+                        <span [innerHTML]="block.balance_decimal | appComma | appLittleDecimal"></span> BAN |
+                        {{ block.balance }} RAW
                     </span>
                 </div>
                 <div class="hash-description text-secondary">
@@ -185,7 +187,7 @@ import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
 
             <div class="hash-section">
                 <span class="app-section-title">Original Block Content</span>
-                <pre style="font-family: monospace" class="original-block-content">{{ block | json }}</pre>
+                <pre class="original-block-content mono">{{ block | json }}</pre>
             </div>
         </ng-template>
 

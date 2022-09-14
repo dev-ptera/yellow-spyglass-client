@@ -142,6 +142,18 @@
                 border: solid 1px $change;
                 color: $change;
             }
+            &.receivable {
+                $receivable: map-get(blui.$blui-orange, 200);
+                background-color: rgba($receivable, 0.05);
+                border: solid 1px $receivable;
+                color: $receivable;
+            }
+            &.open {
+                $open: map-get(blui.$blui-purple, 200);
+                background-color: rgba($open, 0.05);
+                border: solid 1px $open;
+                color: $open;
+            }
         }
     }
 }
@@ -182,11 +194,11 @@ $dark-theme: map-merge(
             secondary-text: map-get(blui.$blui-black, 200),
             hint-text: map-get(blui.$blui-black, 400),
             base: map-get(blui.$blui-white, 100),
-            divider: rgba(map-get(blui.$blui-black, 300), 0.36),
-            dividers: rgba(map-get(blui.$blui-black, 300), 0.36),
-            disabled: rgba(map-get(blui.$blui-black, 300), 0.36),
+            divider: rgba(map-get(blui.$blui-black, 300), 0.2),
+            dividers: rgba(map-get(blui.$blui-black, 300), 0.2),
+            disabled: rgba(map-get(blui.$blui-black, 300), 0.2),
             disabled-button: rgba(white, 0.3),
-            disabled-text: rgba(map-get(blui.$blui-black, 300), 0.36),
+            disabled-text: rgba(map-get(blui.$blui-black, 300), 0.2),
             elevation: map-get(blui.$blui-darkBlack, 900),
             icon: map-get(blui.$blui-black, 100),
             icons: map-get(blui.$blui-black, 100),
@@ -284,7 +296,7 @@ $dark-theme: map-merge(
         color: $warn;
     }
     .divider-border {
-        border: solid 1px map-get($theme-foreground, divider);
+        border: solid 1px rgba(map-get(blui.$blui-black, 300), 0.32);
         box-shadow: none !important;
     }
     .app-user-menu .blui-user-menu-avatar {

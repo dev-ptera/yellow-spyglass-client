@@ -5,7 +5,13 @@ import { AccountActionsService } from '@app/services/account-actions/account-act
     selector: 'app-qr-button',
     encapsulation: ViewEncapsulation.None,
     template: `
-        <button mat-icon-button class="address-action-button" responsive (click)="openDialog()">
+        <button
+            mat-icon-button
+            class="address-action-button"
+            matTooltip="Show QR Code"
+            responsive
+            (click)="openDialog()"
+        >
             <mat-icon>qr_code_scanner</mat-icon>
         </button>
     `,

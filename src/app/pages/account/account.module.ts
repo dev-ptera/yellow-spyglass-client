@@ -40,6 +40,7 @@ import { CompactViewComponent } from '@app/pages/account/tabs/transaction/compac
 import { TransactionTabComponent } from './tabs/transaction/transaction-tab.component';
 import { TxPaginatorComponent } from '@app/pages/account/tabs/transaction/paginator/paginator.component';
 import { MatTableModule } from '@angular/material/table';
+import { ViewButtonComponent } from '@app/pages/account/action-buttons/view-button/view-button.component';
 
 @NgModule({
     declarations: [
@@ -54,6 +55,7 @@ import { MatTableModule } from '@angular/material/table';
         InsightsTabComponent,
         NftsTabComponents,
         QrButtonComponent,
+        ViewButtonComponent,
         QrDialogComponent,
         TransactionTabComponent,
         TxPaginatorComponent,
