@@ -20,7 +20,11 @@
     </div>
 </div>
 
-<mat-card class="tab-empty-state mat-elevation-z0 divider-border" *ngIf="isLoadingInsights">
+<mat-card
+    class="tab-empty-state mat-elevation-z0 divider-border flat-top"
+    *ngIf="isLoadingInsights"
+    style="border-top-left-radius: 0"
+>
     <blui-empty-state
         responsive
         class="account-empty-state"
@@ -40,11 +44,20 @@
     </blui-empty-state>
 </mat-card>
 
-<mat-card *ngIf="hasError" class="tab-empty-state mat-elevation-z0 divider-border">
+<mat-card
+    class="tab-empty-state mat-elevation-z0 divider-border flat-top"
+    *ngIf="hasError"
+    style="border-top-left-radius: 0"
+>
     <app-error></app-error>
 </mat-card>
 
-<mat-card class="tab-empty-state mat-elevation-z0 divider-border" *ngIf="!insights && !isLoadingInsights && !hasError">
+<mat-card
+    responsive
+    class="tab-empty-state mat-elevation-z0 divider-border"
+    *ngIf="!insights && !isLoadingInsights && !hasError"
+    style="border-top-left-radius: 0"
+>
     <blui-empty-state responsive class="account-empty-state" title="No Insights" [description]="getErrorDescription()">
         <mat-icon blui-empty-icon>disc_full</mat-icon>
     </blui-empty-state>
