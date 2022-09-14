@@ -73,10 +73,16 @@
         </blui-info-list-item>
         <blui-info-list-item [wrapSubtitle]="true" divider="full" [hidePadding]="true">
             <div blui-title>Largest Transaction Sent</div>
-            <div blui-subtitle class="text-secondary">{{ insights.maxAmountSent | appComma }} BAN</div>
+            <div blui-subtitle class="text-secondary">
+                <ng-container *ngIf="insights.maxAmountSentHash">
+                    {{ insights.maxAmountSent | appComma }} BAN
+                </ng-container>
+                <ng-container *ngIf="!insights.maxAmountSentHash"> N/A </ng-container>
+            </div>
             <a
+                *ngIf="insights.maxAmountSentHash"
                 blui-right-content
-                class="link mat-overline text-hint"
+                class="link mono text-hint"
                 [routerLink]="'/' + navItems.hash.route + '/' + insights.maxAmountSentHash"
             >
                 hash
@@ -92,8 +98,9 @@
             <div blui-title>First-Sent Date</div>
             <div blui-subtitle class="text-secondary">{{ formatDate(insights.firstOutTxUnixTimestamp) }}</div>
             <a
+                *ngIf="insights.firstOutTxUnixTimestamp"
                 blui-right-content
-                class="link mat-overline text-hint"
+                class="link mono text-hint"
                 [routerLink]="'/' + navItems.hash.route + '/' + insights.firstOutTxHash"
             >
                 hash
@@ -104,8 +111,9 @@
             <div blui-title>Last-Sent Date</div>
             <div blui-subtitle class="text-secondary">{{ formatDate(insights.lastOutTxUnixTimestamp) }}</div>
             <a
+                *ngIf="insights.lastOutTxUnixTimestamp"
                 blui-right-content
-                class="link mat-overline text-hint"
+                class="link mono text-hint"
                 [routerLink]="'/' + navItems.hash.route + '/' + insights.lastOutTxHash"
             >
                 hash
@@ -123,7 +131,7 @@
             </div>
             <a
                 blui-info
-                *ngIf="vp.sm"
+                *ngIf="vp.sm && insights.mostCommonRecipientAddress"
                 class="link text-secondary mono"
                 [routerLink]="'/' + navItems.account.route + '/' + insights.mostCommonRecipientAddress"
             >
@@ -131,7 +139,7 @@
             </a>
             <a
                 blui-right-content
-                *ngIf="!vp.sm"
+                *ngIf="!vp.sm && insights.mostCommonRecipientAddress"
                 class="link text-hint mono"
                 [routerLink]="'/' + navItems.account.route + '/' + insights.mostCommonRecipientAddress"
             >
@@ -154,7 +162,7 @@
             <div blui-subtitle class="text-secondary">{{ insights.maxAmountReceived | appComma }} BAN</div>
             <a
                 blui-right-content
-                class="link mat-overline text-hint"
+                class="link mono text-hint"
                 [routerLink]="'/' + navItems.hash.route + '/' + insights.maxAmountReceivedHash"
             >
                 hash
@@ -171,7 +179,7 @@
             <div blui-subtitle class="text-secondary">{{ formatDate(insights.firstInTxUnixTimestamp) }}</div>
             <a
                 blui-right-content
-                class="link mat-overline text-hint"
+                class="link mono text-hint"
                 [routerLink]="'/' + navItems.hash.route + '/' + insights.firstInTxHash"
             >
                 hash
@@ -182,7 +190,7 @@
             <div blui-subtitle class="text-secondary">{{ formatDate(insights.lastInTxUnixTimestamp) }}</div>
             <a
                 blui-right-content
-                class="link mat-overline text-hint"
+                class="link mono text-hint"
                 [routerLink]="'/' + navItems.hash.route + '/' + insights.lastInTxHash"
             >
                 hash
@@ -217,7 +225,7 @@
             <div blui-subtitle class="text-secondary">{{ insights.maxBalance | appComma }} BAN</div>
             <a
                 blui-right-content
-                class="link mat-overline text-hint"
+                class="link mono text-hint"
                 [routerLink]="'/' + navItems.hash.route + '/' + insights.maxBalanceHash"
             >
                 hash

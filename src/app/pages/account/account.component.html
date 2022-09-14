@@ -262,6 +262,7 @@
                         overflow: hidden;
                         border-top-left-radius: 0;
                     "
+                    [style.borderTopRightRadius.px]="vp.sm ? 0 : 16"
                     class="divider-border"
                 >
                     <mat-expansion-panel style="width: 100%" [expanded]="true">
@@ -282,7 +283,9 @@
                 <mat-card
                     style="padding: 0"
                     class="divider-border mat-elevation-z0"
-                    [style.border-top-right-radius]="vp.sm ? 0 : borderRadius"
+                    [style.border-top-right-radius]="
+                        vp.sm ? (getReceivableTransactionsCount() > 0 ? borderRadius : 0) : borderRadius
+                    "
                     [style.borderTopLeftRadius.px]="getReceivableTransactionsCount() > 0 ? borderRadius : 0"
                 >
                     <ng-container>
