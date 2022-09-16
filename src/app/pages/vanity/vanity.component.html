@@ -39,7 +39,7 @@
                     {{ address }}
                 </div>
             </ng-container>
-            <div *ngIf="monkeyCache.getMonkey(address)" [innerHTML]="monkeyCache.getMonkey(address) | safe"></div>
+            <img [src]="apiService.createMonKeyUrl(address)" loading="lazy" />
         </mat-card>
     </div>
 </ng-template>

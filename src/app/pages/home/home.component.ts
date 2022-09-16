@@ -71,8 +71,8 @@ export class HomeComponent implements OnDestroy {
         }
     }
 
-    search(searchValue: string, e: MouseEvent): void {
-        const ctrl = e.ctrlKey;
+    search(searchValue: string, mouseEvent?: MouseEvent): void {
+        const ctrl = mouseEvent?.ctrlKey;
 
         const trimmed = searchValue.trim();
 
@@ -101,6 +101,7 @@ export class HomeComponent implements OnDestroy {
         return this._themeService.isDarkMode();
     }
 
+    /** Returns false if userInput is both an invalid hash & an invalid address. */
     isSearchDisabled(): boolean {
         const trimmed = this.userInput.trim();
         return !this._searchService.isValidAddress(trimmed) && !this._searchService.isValidBlock(trimmed);

@@ -61,6 +61,8 @@ export class SearchBarComponent {
     @Input() onlyFocusWhenActivelySearching: boolean;
     @Output() closeSearch: EventEmitter<void> = new EventEmitter<void>();
     @Output() searchInputChange: EventEmitter<string> = new EventEmitter<string>();
+    @Output() enterPressed: EventEmitter<string> = new EventEmitter<string>();
+
 
     knownAccounts: AliasDto[] = [];
     matchingAccounts: AliasDto[] = [];
@@ -122,6 +124,8 @@ export class SearchBarComponent {
 
         // Handle Enter Key
         if (e.key === 'Enter' || e.keyCode === 13) {
+            this.enterPressed.emit(value);
+            console.log('pressed enter');
             if (this._searchService.isValidAddress(value) || this._searchService.isValidBlock(value)) {
                 return this.emitSearch(value);
             }

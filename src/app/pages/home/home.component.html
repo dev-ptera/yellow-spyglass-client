@@ -3,18 +3,11 @@
         <!-- Header -->
         <div class="home-header-container" [class.dark]="isDarkTheme()" responsive>
             <div class="home-header-content" responsive>
-                <!--
-                <div class="home-search-title" style="display: flex; align-items: center; margin-bottom: 16px;"
-                    [class.mat-display-1]="!vp.sm"
-                    [class.mat-headline]="vp.sm">
-                    <img src="assets/bananologo.svg" [style.width.px]="vp.sm ? 150 : 200" style="margin-right: 12px"/>
-                    Block Explorer
-                </div>
-                -->
                 <div class="home-search-bar" responsive>
                     <app-search-bar
                         placeholder="Search Banano by address, block or alias"
                         (searchInputChange)="userInput = $event"
+                        (enterPressed)="userInput = $event; search(userInput)"
                         [onlyFocusWhenActivelySearching]="true"
                     ></app-search-bar>
                     <button
