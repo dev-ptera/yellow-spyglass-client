@@ -23,7 +23,10 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
                         <a class="link text" [href]="repService.getMonitoredRepUrl(rep)">{{ rep.name }}</a>
                     </div>
                     <div blui-info style="font-size: 0.875rem" class="text-secondary">{{ formatInfoLine(rep) }}</div>
-                    <div blui-subtitle style="font-size: 0.875rem; padding-right: 16px">
+                    <div
+                        blui-subtitle
+                        style="font-size: 0.875rem; padding-right: 16px; padding-top: 8px; padding-bottom: 10px;"
+                    >
                         <a class="link text mono" [routerLink]="'/' + navItems.account.route + '/' + rep.address">
                             {{ rep.address }}
                         </a>
