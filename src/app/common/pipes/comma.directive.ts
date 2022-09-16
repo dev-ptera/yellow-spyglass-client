@@ -3,7 +3,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({ name: 'appComma' })
 export class CommaPipe implements PipeTransform {
     transform(value: any): string {
-        return this.numberWithCommas(this.removeInsigFigs(Number(value)));
+        let adjustedValue = value;
+        if (!value) {
+            adjustedValue = 0;
+        }
+
+        return this.numberWithCommas(this.removeInsigFigs(Number(adjustedValue)));
     }
 
     removeInsigFigs(x: number): number {
