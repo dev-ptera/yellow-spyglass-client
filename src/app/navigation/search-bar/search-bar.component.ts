@@ -63,7 +63,6 @@ export class SearchBarComponent {
     @Output() searchInputChange: EventEmitter<string> = new EventEmitter<string>();
     @Output() enterPressed: EventEmitter<string> = new EventEmitter<string>();
 
-
     knownAccounts: AliasDto[] = [];
     matchingAccounts: AliasDto[] = [];
 
