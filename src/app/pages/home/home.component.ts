@@ -72,7 +72,7 @@ export class HomeComponent implements OnDestroy {
     }
 
     search(searchValue: string, mouseEvent?: MouseEvent): void {
-        const ctrl = mouseEvent?.ctrlKey;
+        const ctrl = mouseEvent ? mouseEvent.ctrlKey : false;
 
         const trimmed = searchValue.trim();
 
