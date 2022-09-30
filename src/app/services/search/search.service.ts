@@ -13,9 +13,10 @@ export class SearchService {
         this.searchEvents().subscribe((data: { search: string; openInNewWindow: boolean }) => {
             if (data.openInNewWindow) {
                 if (data.search.startsWith('ban_')) {
-                    window.open(`https://creeper.banano.cc/${APP_NAV_ITEMS.account.route}/${data.search}`, '_blank');
+                    const origin = window.location.origin;
+                    window.open(`${origin}/${APP_NAV_ITEMS.account.route}/${data.search}`, '_blank');
                 } else {
-                    window.open(`https://creeper.banano.cc/${APP_NAV_ITEMS.hash.route}/${data.search}`, '_blank');
+                    window.open(`${origin}/${APP_NAV_ITEMS.hash.route}/${data.search}`, '_blank');
                 }
             } else {
                 if (data.search.startsWith('ban_')) {

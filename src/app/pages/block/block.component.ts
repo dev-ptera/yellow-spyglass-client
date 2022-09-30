@@ -52,7 +52,7 @@ import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
                         {{ block.amount }} RAW
                     </span>
                 </div>
-                <div class="hash-description text-secondary">Amount of BANANO sent in this transaction</div>
+                <div class="hash-description text-secondary">Amount of Banano sent in this transaction</div>
             </div>
 
             <div class="hash-section" *ngIf="block.subtype !== 'change'">

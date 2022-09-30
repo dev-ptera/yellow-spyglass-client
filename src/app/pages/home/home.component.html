@@ -5,9 +5,9 @@
             <div class="home-header-content" responsive>
                 <div class="home-search-bar" responsive>
                     <app-search-bar
+                        #searchBar
                         placeholder="Search Banano by address, block or alias"
-                        (searchInputChange)="userInput = $event"
-                        (enterPressed)="userInput = $event; search(userInput)"
+                        (invalidSearch)="showHint = true"
                         [onlyFocusWhenActivelySearching]="true"
                     ></app-search-bar>
                     <button
@@ -16,14 +16,14 @@
                         mat-flat-button
                         style="color: #1a1a1a; background-color: #fbdd11"
                         color="accent"
-                        (click)="search(userInput, $event)"
+                        (click)="search($event)"
                     >
                         SEARCH
                     </button>
                 </div>
                 <div class="home-search-hint" [style.height.px]="showHint ? 40 : 0">
                     <mat-icon>info</mat-icon>
-                    Please enter a valid banano address or hash
+                    Please enter a valid Banano address or hash
                 </div>
             </div>
         </div>
