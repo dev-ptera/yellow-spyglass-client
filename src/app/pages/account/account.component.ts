@@ -91,6 +91,7 @@ export class AccountComponent implements OnDestroy {
         this.hasError = false;
         this.shownTabNumber = 1;
         this.delegatorCount = 0;
+        this.confirmedBalance = 0;
         this.nfts = undefined;
         this.isLoadingNFTs = false;
         this.hasNFTsError = false;
