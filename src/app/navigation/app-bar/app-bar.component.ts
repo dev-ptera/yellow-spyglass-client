@@ -116,8 +116,6 @@ import { LoadingService } from '@app/services/loading/loading.service';
     encapsulation: ViewEncapsulation.None,
 })
 export class AppBarComponent {
-    @ViewChild('mobileSearchBar') searchBar: ElementRef;
-
     @Input() toolbarTitle: string;
     @Output() openDrawer: EventEmitter<void> = new EventEmitter<void>();
 
@@ -145,8 +143,6 @@ export class AppBarComponent {
 
     openSearch(): void {
         this.hasToggledMobileSearch = true;
-        // focus the input after the animation completes to avoid a jerky transition
-        setTimeout(() => this.searchBar.nativeElement.focus(), 300);
     }
 
     closeSearch(): void {

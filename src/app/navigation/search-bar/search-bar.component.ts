@@ -1,15 +1,15 @@
 import {
-    ChangeDetectorRef,
+    AfterViewChecked,
+    AfterViewInit,
     Component,
-    ElementRef,
     EventEmitter,
     Input,
+    OnInit,
     Output,
     ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
-import { Router } from '@angular/router';
 import { ApiService } from '@app/services/api/api.service';
 import { AliasDto, DiscordResponseDto } from '@app/types/dto';
 import { SearchService } from '@app/services/search/search.service';
@@ -32,36 +32,43 @@ export let APP_SEARCH_BAR_ID = 0;
             [placeholder]="placeholder"
             [(ngModel)]="appbarSearchText"
             (click)="preventEmptyMenu()"
-            (keyup)="filterOrSearch($event); traverseList($event)"
+            (keyup)="handleKeystroke($event)"
             #trigger="matMenuTrigger"
             [matMenuTriggerFor]="menu"
         />
 
         <mat-menu #menu="matMenu" class="alias-search-menu">
-            <button
-                mat-menu-item
-                *ngFor="let item of matchingAccounts; let i = index"
-                (click)="emitSearch(item.address)"
-                [class.yellow]="menuActiveIndex === i"
-                [innerHTML]="item.alias | boldSearch: inputElement.value"
-            ></button>
+            <ng-container *ngFor="let item of matchingAccounts; let i = index">
+                <a
+                    style="text-decoration: unset;"
+                    [routerLink]="createRouterLinkForMenuItem(item.address)"
+                    (click)="handleMenuItemClick($event)"
+                >
+                    <button
+                        mat-menu-item
+                        [class.yellow]="menuActiveIndex === i"
+                        [innerHTML]="item.alias | boldSearch: inputElement.value"
+                    ></button>
+                </a>
+            </ng-container>
         </mat-menu>
     `,
     styleUrls: ['./search-bar.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class SearchBarComponent {
-    @ViewChild('mobileSearchBar') searchBar: ElementRef;
+export class SearchBarComponent implements OnInit, AfterViewInit, AfterViewChecked {
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
     @Input() placeholder: string = 'Search by Address, Block or Alias';
     @Input() toolbarTitle: string;
 
-    /** This input is used to turn off the auto-focus logic, only used when the input is being actively used. */
+    /** This input is used to turn off the auto-focus logic. Home page search does not need auto-focus, but app-bar search does. */
     @Input() onlyFocusWhenActivelySearching: boolean;
+
     @Output() closeSearch: EventEmitter<void> = new EventEmitter<void>();
-    @Output() searchInputChange: EventEmitter<string> = new EventEmitter<string>();
-    @Output() enterPressed: EventEmitter<string> = new EventEmitter<string>();
+
+    /** Emits whenever a search value is neither a hash, discord id, alias, nor address.  Only used on the home page. */
+    @Output() invalidSearch: EventEmitter<void> = new EventEmitter<void>();
 
     knownAccounts: AliasDto[] = [];
     matchingAccounts: AliasDto[] = [];
@@ -73,10 +80,8 @@ export class SearchBarComponent {
     inputElement: HTMLInputElement;
 
     constructor(
-        public router: Router,
         public vp: ViewportService,
         private readonly _api: ApiService,
-        private readonly _ref: ChangeDetectorRef,
         private readonly _searchService: SearchService
     ) {}
 
@@ -106,15 +111,91 @@ export class SearchBarComponent {
         }
     }
 
-    filterOrSearch(e: KeyboardEvent): void {
-        this.matchingAccounts = [];
-        const value = e.target['value'].toLowerCase();
-        this.searchInputChange.emit(value);
+    handleKeystroke(e: KeyboardEvent): void {
+        this._filterOrSearch(e);
+    }
 
+    preventEmptyMenu(): void {
+        if (this.matchingAccounts.length === 0) {
+            this._closeMenu();
+        }
+    }
+
+    createRouterLinkForMenuItem(address: string): string {
+        return `/account/${address}`;
+    }
+
+    /** Call this method to manually search based off of current input field value. */
+    searchCurrentValue(controlKey: boolean, e?: KeyboardEvent): void {
+        const value = this.appbarSearchText || '';
+
+        // Handle Empty Case
         if (!value) {
+            return this.invalidSearch.emit();
+        }
+
+        if (this._searchService.isValidAddress(value) || this._searchService.isValidBlock(value)) {
+            return this._emitSearch(value, controlKey);
+        }
+
+        // Match aliases, then if there's a single match, search for it.
+        this._matchAliases();
+        const match = this.matchingAccounts[this.menuActiveIndex];
+        if (match) {
+            // If the user has hit the enter key, this assumes the menu is open & they have selected an item via key traversal.
+            if (this._isEnterKey(e)) {
+                this._emitSearch(match.address);
+                // Otherwise the input should be specific enough that it matches a single account.
+            } else if (this.matchingAccounts.length === 1) {
+                this._emitSearch(match.address);
+            }
+        }
+
+        // BRPD feature only - given a discord user id, searches their address.
+        if (environment.brpd) {
+            this._api
+                .fetchDiscordWalletFromUserId(value)
+                .then((data: DiscordResponseDto[]) => {
+                    this._emitSearch(data[0].address);
+                })
+                .catch((err) => {
+                    console.error(err);
+                    // Not a valid search.
+                    this.invalidSearch.emit();
+                });
+        } else {
+            // Not a valid search.
+            this.invalidSearch.emit();
+        }
+    }
+
+    private _emitSearch(value: string, ctrl = false): void {
+        this._searchService.emitSearch(value, ctrl);
+        this._dismissMenu();
+    }
+
+    handleMenuItemClick(e: MouseEvent): void {
+        if (!e.ctrlKey) {
+            this._dismissMenu();
+        }
+    }
+
+    private _dismissMenu(): void {
+        this._closeMenu();
+        this.closeSearch.emit();
+        this.matchingAccounts = [];
+        this.inputElement.blur();
+    }
+
+    private _filterOrSearch(e: KeyboardEvent): void {
+        const value = this.appbarSearchText || '';
+
+        // Handle Empty Case
+        if (!value || !e) {
             return this._closeMenu();
         }
 
+        // Dismiss Menu & Clear Value
         if (e.key === 'Escape' || e.keyCode === 27) {
             this.inputElement.blur();
             this.inputElement.value = '';
@@ -122,37 +203,25 @@ export class SearchBarComponent {
         }
 
         // Handle Enter Key
-        if (e.key === 'Enter' || e.keyCode === 13) {
-            this.enterPressed.emit(value);
-            console.log('pressed enter');
-            if (this._searchService.isValidAddress(value) || this._searchService.isValidBlock(value)) {
-                return this.emitSearch(value);
-            }
-
-            // Match aliases, then if there's a single match, search for it.
-            this._matchAliases(value);
-            const match = this.matchingAccounts[this.menuActiveIndex];
-            if (match) {
-                this.emitSearch(match.address);
-            }
-
-            // BRPD feature only - given a user id, searches their address.
-            if (environment.brpd) {
-                this._api
-                    .fetchDiscordWalletFromUserId(value)
-                    .then((data: DiscordResponseDto[]) => {
-                        this.emitSearch(data[0].address);
-                    })
-                    .catch((err) => {
-                        console.error(err);
-                    });
-            }
-        } else {
-            this._matchAliases(value);
+        if (this._isEnterKey(e)) {
+            return this.searchCurrentValue(false, e);
         }
+
+        // Travel List
+        if (this._isTraversalKeystroke(e)) {
+            return this._traverseMenuViaKeyboard(e);
+        }
+
+        // Input value has changed
+        this._matchAliases();
     }
 
-    traverseList(e: KeyboardEvent): void {
+    private _isTraversalKeystroke(e: KeyboardEvent): boolean {
+        return e.key === 'ArrowDown' || e.key === 'Tab' || e.key === 'ArrowUp';
+    }
+
+    /** Handles keyboard traversal of the matching menu, responding to KeyUp, KeyDown, & Tab events. */
+    private _traverseMenuViaKeyboard(e: KeyboardEvent): void {
         const menuEl = document.getElementsByClassName('alias-search-menu')[0];
         if (e.key === 'ArrowDown' || e.key === 'Tab') {
             if (this.menuActiveIndex < this.matchingAccounts.length - 1) {
@@ -170,22 +239,15 @@ export class SearchBarComponent {
         }
     }
 
-    emitSearch(value: string): void {
-        this._searchService.emitSearch(value, false);
-        this.closeSearch.emit();
-        this._closeMenu();
+    private _isEnterKey(e: KeyboardEvent): boolean {
+        return e && (e.key === 'Enter' || e.keyCode === 13);
+    }
+
+    /** Based on current input value, filters the list of known accounts.
+     * If there are matches, it presents the menu overlay.  Otherwise, it closes the menu. */
+    private _matchAliases(): void {
+        const value = (this.appbarSearchText || '').toLowerCase();
         this.matchingAccounts = [];
-        this.inputElement.blur();
-        // this.inputElement.value = 'test';
-    }
-
-    preventEmptyMenu(): void {
-        if (this.matchingAccounts.length === 0) {
-            this._closeMenu();
-        }
-    }
-
-    private _matchAliases(value: string): void {
         this.knownAccounts.map((account) => {
             if (!account.alias) {
                 return;
