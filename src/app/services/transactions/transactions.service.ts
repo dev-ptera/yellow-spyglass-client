@@ -6,6 +6,7 @@ import { Observable, Subject, Subscription } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 export type Transaction = {
+    hashHovered?: boolean;
     timestampHovered?: boolean;
     amount?: number;
     hash: string;
