@@ -171,8 +171,7 @@ export class NavigationComponent {
                         this._title.setTitle(this._makeTitle('Known Accounts'));
                         this._meta.updateTag({
                             name: 'description',
-                            content:
-                                'Known Banano accounts, including exchanges, faucets, and distribution',
+                            content: 'Known Banano accounts, including exchanges, faucets, and distribution',
                         });
                         break;
                     }
