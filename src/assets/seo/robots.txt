@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://creeper.banano.cc/assets/sitemap.xml

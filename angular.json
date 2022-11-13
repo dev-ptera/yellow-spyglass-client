@@ -24,9 +24,11 @@
                         "tsConfig": "tsconfig.app.json",
                         "aot": true,
                         "assets": [
-                            "src/favicon.ico",
                             "src/assets",
-                            "src/banano.json"
+                            "src/banano.json",
+                            {"glob": "banano.json", "input": "src/assets/banano.json", "output": "/"},
+                            {"glob": "robots.txt", "input": "src/assets/seo", "output": "/"},
+                            {"glob": "sitemap.xml", "input": "src/assets/seo", "output": "/"}
                         ],
                         "styles": [
                             "src/styles.scss"

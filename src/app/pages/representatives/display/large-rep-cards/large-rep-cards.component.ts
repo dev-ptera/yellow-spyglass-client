@@ -65,7 +65,7 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
                         Weight:&nbsp; {{ formatWeightPercent(rep.weight) }}
                     </div>
                     <div style="display: flex; align-items: center">
-                        <img src="assets/banano-mark.svg" [width]="16" [height]="16" style="margin-right: 6px" />
+                        <img src="assets/icons/banano-mark.svg" [width]="16" [height]="16" style="margin-right: 6px" />
                         {{ formatBanWeight(rep.weight) }}
                     </div>
                 </div>
