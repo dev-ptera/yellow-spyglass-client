@@ -55,14 +55,14 @@ import { environment } from '../../../../environments/environment';
                 <div style="margin-top: 24px; display: flex; align-items: center; justify-content: space-between">
                     <div style="width: 48%">
                         <mat-form-field blui-input style="width: 100%" appearance="fill">
-                            <img src="assets/banano-mark-gray.svg" width="20" matSuffix />
+                            <img src="assets/icons/banano-mark-gray.svg" width="20" matSuffix />
                             <mat-label>Min BAN</mat-label>
                             <input matInput type="number" [(ngModel)]="localFilters.minAmount" name="min ban" />
                         </mat-form-field>
                     </div>
                     <div style="width: 48%">
                         <mat-form-field blui-input style="width: 100%" appearance="fill">
-                            <img src="assets/banano-mark-gray.svg" width="20" matSuffix />
+                            <img src="assets/icons/banano-mark-gray.svg" width="20" matSuffix />
                             <mat-label>Max BAN</mat-label>
                             <input matInput type="number" [(ngModel)]="localFilters.maxAmount" name="max ban" />
                         </mat-form-field>

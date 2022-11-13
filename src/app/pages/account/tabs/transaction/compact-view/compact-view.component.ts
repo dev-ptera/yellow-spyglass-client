@@ -75,7 +75,7 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                 <!-- JUNGLE TV -->
                 <img
                     *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'jungletv'"
-                    src="assets/social-media/jtv.png"
+                    src="assets/icons/social-media/jtv.png"
                     class="social-media-icon"
                     style="margin-right: 8px"
                 />
@@ -89,7 +89,7 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                 >
                     <img
                         *ngIf="!tx.showCopiedPlatformIdIcon"
-                        src="assets/social-media/twitter.svg"
+                        src="assets/icons/social-media/twitter.svg"
                         class="social-media-icon"
                     />
                     <mat-icon style="font-size: 16px" *ngIf="tx.showCopiedPlatformIdIcon">check_circle</mat-icon>
@@ -104,7 +104,7 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                 >
                     <img
                         *ngIf="!tx.showCopiedPlatformIdIcon"
-                        src="assets/social-media/discord.svg"
+                        src="assets/icons/social-media/discord.svg"
                         class="social-media-icon"
                     />
                     <mat-icon style="font-size: 16px" *ngIf="tx.showCopiedPlatformIdIcon">check_circle</mat-icon>
@@ -119,7 +119,7 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                 >
                     <img
                         *ngIf="!tx.showCopiedPlatformIdIcon"
-                        src="assets/social-media/telegram.svg"
+                        src="assets/icons/social-media/telegram.svg"
                         class="social-media-icon"
                     />
                     <mat-icon style="font-size: 16px" *ngIf="tx.showCopiedPlatformIdIcon">check_circle</mat-icon>

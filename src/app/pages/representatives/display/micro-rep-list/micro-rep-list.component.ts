@@ -33,7 +33,12 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
                     <div blui-right-content style="display: flex; flex-direction: column; align-items: flex-end">
                         <div style="font-size: 0.875rem">{{ formatWeightPercent(rep.weight) }} weight</div>
                         <div style="font-size: 0.75rem; display: flex; align-items: center">
-                            <img src="assets/banano-mark.svg" [width]="16" [height]="16" style="margin-right: 6px" />
+                            <img
+                                src="assets/icon/banano-mark.svg"
+                                [width]="16"
+                                [height]="16"
+                                style="margin-right: 6px"
+                            />
                             {{ formatBanWeight(rep.weight) }} BAN
                         </div>
                     </div>

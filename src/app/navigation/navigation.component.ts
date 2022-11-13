@@ -121,7 +121,7 @@ export class NavigationComponent {
                         this._title.setTitle(this._makeTitle('Representatives'));
                         this._meta.updateTag({
                             name: 'description',
-                            content: 'Search banano representatives, online offline reps, voting weight distribution',
+                            content: 'Search Banano representatives, online offline reps, voting weight distribution',
                         });
                         break;
                     }
@@ -161,7 +161,7 @@ export class NavigationComponent {
                         this._title.setTitle(this._makeTitle('Wallets'));
                         this._meta.updateTag({
                             name: 'description',
-                            content: 'See banano distribution by account, top banano holders, rich list',
+                            content: 'See Banano distribution by account, top Banano holders, rich list',
                         });
                         break;
                     }
@@ -171,8 +171,7 @@ export class NavigationComponent {
                         this._title.setTitle(this._makeTitle('Known Accounts'));
                         this._meta.updateTag({
                             name: 'description',
-                            content:
-                                'Known banano accounts, banano exchanges, banano games, banano developer / owner accounts',
+                            content: 'Known Banano accounts, including exchanges, faucets, and distribution',
                         });
                         break;
                     }
@@ -182,7 +181,7 @@ export class NavigationComponent {
                         this._title.setTitle(this._makeTitle('Vanity MonKeys'));
                         this._meta.updateTag({
                             name: 'description',
-                            content: 'Banano addresses with custom vanity monKeys.',
+                            content: 'Banano addresses with custom vanity monKeys',
                         });
                         break;
                     }
