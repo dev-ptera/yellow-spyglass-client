@@ -28,7 +28,8 @@
                             "src/banano.json",
                             {"glob": "banano.json", "input": "src/assets/banano.json", "output": "/"},
                             {"glob": "robots.txt", "input": "src/assets/seo", "output": "/"},
-                            {"glob": "sitemap.xml", "input": "src/assets/seo", "output": "/"}
+                            {"glob": "sitemap.xml", "input": "src/assets/seo", "output": "/"},
+                            {"glob": "google736091bb9c73b86b.html", "input": "src/assets/seo", "output": "/"}
                         ],
                         "styles": [
                             "src/styles.scss"
