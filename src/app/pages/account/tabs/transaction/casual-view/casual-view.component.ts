@@ -5,6 +5,7 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
 import { ApiService } from '@app/services/api/api.service';
 import { AliasService } from '@app/services/alias/alias.service';
 import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
+import { AccountActionsService } from '@app/services/account-actions/account-actions.service';
 
 @Component({
     selector: 'app-casual-view',
@@ -109,25 +110,26 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                 (mouseenter)="tx.hashHovered = true"
                 (mouseleave)="tx.hashHovered = false"
             >
-                <!--
-                <button mat-icon-button  *ngIf="tx.hashHovered"
-                        style="margin: 0 12px">
-                    <mat-icon style="font-size: 16px">content_copy</mat-icon>
-                </button>
-                -->
                 <a
-                    class="block-info text link"
+                    class="block-info"
                     [style.flexDirection]="vp.sm ? 'row' : 'column'"
                     [style.alignItems]="vp.sm ? 'center' : ''"
-                    [routerLink]="'/' + navItems.hash.route + '/' + tx.hash"
                 >
-                    <div *ngIf="tx.height">
+                    <a *ngIf="tx.height" class="text link" [routerLink]="'/' + navItems.hash.route + '/' + tx.hash">
                         <span style="margin-right: 4px">Block No.</span>{{ util.numberWithCommas(tx.height) }}
-                    </div>
+                    </a>
                     <div style="margin: 0 12px" *ngIf="tx.height && vp.sm">·</div>
                     <div style="display: flex; align-items: center">
-                        <mat-icon class="text-secondary meta-icon" style="margin-right: 4px"> receipt</mat-icon>
-                        <a class="link text-hint mono"> {{ tx.hash?.substring(0, 8) }}... </a>
+                        <mat-icon
+                            class="text-secondary meta-icon"
+                            style="margin-right: 4px"
+                            (click)="showCopiedHashIcon(tx)"
+                        >
+                            {{ tx.showCopiedHashIcon ? 'check_circle' : 'receipt' }}</mat-icon
+                        >
+                        <a class="link text-hint mono" [routerLink]="'/' + navItems.hash.route + '/' + tx.hash">
+                            {{ tx.hash?.substring(0, 8) }}...
+                        </a>
                     </div>
                 </a>
             </div>
@@ -144,10 +146,19 @@ export class CasualViewComponent {
         public vp: ViewportService,
         public apiService: ApiService,
         public aliasService: AliasService,
-        public txService: TransactionsService
+        public txService: TransactionsService,
+        private readonly _accountActionsService: AccountActionsService
     ) {}
 
-    trackByFn(index: number, tx: Transaction): number {
+    trackByFn(index: number): number {
         return index;
+    }
+
+    showCopiedHashIcon(tx: Transaction): void {
+        tx.showCopiedHashIcon = true;
+        this._accountActionsService.copyDataToClipboard(tx.hash);
+        setTimeout(() => {
+            tx.showCopiedHashIcon = false;
+        }, 1000);
     }
 }

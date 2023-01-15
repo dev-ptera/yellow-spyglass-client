@@ -19,6 +19,7 @@ export type Transaction = {
     hoverPlatform?: boolean;
     hoverAddress?: boolean;
     showCopiedPlatformIdIcon?: boolean;
+    showCopiedHashIcon?: boolean;
 };
 
 export type FilterDialogData = {
