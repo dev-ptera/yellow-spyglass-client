@@ -6,10 +6,20 @@ import { Subscription } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 import { ApiService } from '@app/services/api/api.service';
 import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
+import { AliasService } from '@app/services/alias/alias.service';
 
 @Component({
     selector: 'app-hash',
     template: `
+        <ng-template #alias let-address="address">
+            <div *ngIf="getAlias(address)">
+                <mat-icon class="text-secondary" style="margin-right: 8px; font-size: 18px; height: 18px; width: 18px"
+                    >account_circle</mat-icon
+                >
+                <span>{{ getAlias(address) }}</span>
+            </div>
+        </ng-template>
+
         <ng-template #titleContent>
             <div class="app-page-title" style="display: flex; align-items: center">
                 <div>State Block</div>
@@ -24,14 +34,17 @@ import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
 
         <ng-template #bodyContent>
             <div class="hash-section">
-                <div>
-                    <span class="app-section-title">Block Account</span>
-                    <a
-                        class="app-section-subtitle link text"
-                        [routerLink]="'/' + routes.account.route + '/' + block.block_account"
-                    >
-                        {{ block.block_account }}
-                    </a>
+                <div class="alias-row">
+                    <div>
+                        <span class="app-section-title">Block Account</span>
+                        <a
+                            class="app-section-subtitle link text"
+                            [routerLink]="'/' + routes.account.route + '/' + block.block_account"
+                        >
+                            {{ block.block_account }}
+                        </a>
+                    </div>
+                    <ng-container *ngTemplateOutlet="alias; context: { address: block.block_account }"></ng-container>
                 </div>
                 <div class="hash-description text-secondary">The account represented by this state block</div>
             </div>
@@ -55,24 +68,33 @@ import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
                 <div class="hash-description text-secondary">Amount of Banano sent in this transaction</div>
             </div>
 
+            <!-- TODO Make a separate hash-section for each type (send / receive / open) -->
             <div class="hash-section" *ngIf="block.subtype !== 'change'">
-                <div *ngIf="block.subtype === 'send'">
-                    <span class="app-section-title">Recipient</span>
-                    <a
-                        class="app-section-subtitle link text"
-                        [routerLink]="'/' + routes.account.route + '/' + block.contents.link_as_account"
-                    >
-                        {{ block.contents.link_as_account }}
-                    </a>
+                <div *ngIf="block.subtype === 'send'" class="alias-row">
+                    <div>
+                        <span class="app-section-title">Recipient</span>
+                        <a
+                            class="app-section-subtitle link text"
+                            [routerLink]="'/' + routes.account.route + '/' + block.contents.link_as_account"
+                        >
+                            {{ block.contents.link_as_account }}
+                        </a>
+                    </div>
+                    <ng-container
+                        *ngTemplateOutlet="alias; context: { address: block.contents.link_as_account }"
+                    ></ng-container>
                 </div>
-                <div *ngIf="block.subtype === 'receive'">
-                    <span class="app-section-title">Sender</span>
-                    <a
-                        class="app-section-subtitle link text"
-                        [routerLink]="'/' + routes.account.route + '/' + block.source_account"
-                    >
-                        {{ block.source_account }}
-                    </a>
+                <div *ngIf="block.subtype === 'receive'" class="alias-row">
+                    <div>
+                        <span class="app-section-title">Sender</span>
+                        <a
+                            class="app-section-subtitle link text"
+                            [routerLink]="'/' + routes.account.route + '/' + block.source_account"
+                        >
+                            {{ block.source_account }}
+                        </a>
+                    </div>
+                    <ng-container *ngTemplateOutlet="alias; context: { address: block.source_account }"></ng-container>
                 </div>
 
                 <div class="hash-description text-secondary">
@@ -118,14 +140,19 @@ import { accountNavItem, APP_NAV_ITEMS } from '../../navigation/nav-items';
                 <div class="hash-description text-secondary">Whether or not this block is confirmed</div>
             </div>
             <div class="hash-section">
-                <div>
-                    <span class="app-section-title">Representative</span>
-                    <a
-                        class="app-section-subtitle link text"
-                        [routerLink]="'/' + routes.account.route + '/' + block.contents.representative"
-                    >
-                        {{ block.contents.representative }}
-                    </a>
+                <div class="alias-row">
+                    <div>
+                        <span class="app-section-title">Representative</span>
+                        <a
+                            class="app-section-subtitle link text"
+                            [routerLink]="'/' + routes.account.route + '/' + block.contents.representative"
+                        >
+                            {{ block.contents.representative }}
+                        </a>
+                    </div>
+                    <ng-container
+                        *ngTemplateOutlet="alias; context: { address: block.contents.representative }"
+                    ></ng-container>
                 </div>
                 <div class="hash-description text-secondary">The account's representative</div>
             </div>
@@ -227,9 +254,10 @@ export class BlockComponent implements OnDestroy {
     constructor(
         public vp: ViewportService,
         private readonly _router: Router,
-        private readonly _apiService: ApiService,
         private readonly _util: UtilService,
-        private readonly _ref: ChangeDetectorRef
+        private readonly _ref: ChangeDetectorRef,
+        private readonly _apiService: ApiService,
+        private readonly _aliasService: AliasService
     ) {
         this.routeListener = this._router.events.subscribe((route) => {
             if (route instanceof NavigationEnd) {
@@ -289,6 +317,10 @@ export class BlockComponent implements OnDestroy {
         }
 
         return `${new Date(ts * 1000).toLocaleDateString()} ${new Date(ts * 1000).toLocaleTimeString()}`;
+    }
+
+    getAlias(address: string): string {
+        return this._aliasService.getAlias(address);
     }
 
     /*
