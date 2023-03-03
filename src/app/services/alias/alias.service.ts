@@ -8,13 +8,14 @@ import { environment } from '../../../environments/environment';
 })
 /** Fetches account aliases on initialization. */
 export class AliasService {
-    private readonly aliasesMap: Map<string, { alias: string; socialMedia: string; platformUserId: string }>;
     public aliases: AliasDto[] = [];
-    private readonly accountsWithNoAlias: Set<string>;
+
+    private readonly aliasesMap: Map<string, { alias: string; socialMedia: string; platformUserId: string }>;
+    private readonly searchAccounts: Set<string>;
 
     constructor(private readonly _api: ApiService) {
         this.aliasesMap = new Map();
-        this.accountsWithNoAlias = new Set();
+        this.searchAccounts = new Set();
         this._loadAliases();
     }
 
@@ -23,7 +24,7 @@ export class AliasService {
         this._api
             .fetchAliases()
             .then((data: AliasDto[]) => {
-                this.aliases = data;
+                this.aliases.push(...data);
                 for (const account of data) {
                     this.aliasesMap.set(account.address, {
                         alias: account.alias,
@@ -43,28 +44,28 @@ export class AliasService {
             return;
         }
         addresses.forEach((address) => {
-            if (address && !this.accountsWithNoAlias.has(address) && !this.aliasesMap.has(address)) {
+            if (address && !this.searchAccounts.has(address) && !this.aliasesMap.has(address)) {
+                this.searchAccounts.add(address);
                 this._api
                     .fetchSocialMediaAccount(address)
                     .then((data) => {
                         if (data.alias) {
+                            //      this.aliases.push(data); // Add social to search bar results.
                             this.aliasesMap.set(address, {
                                 alias: data.alias,
                                 socialMedia: data.platform,
                                 platformUserId: data.platformUserId,
                             });
-                        } else {
-                            this.accountsWithNoAlias.add(address);
                         }
                     })
                     .catch((err) => {
                         console.error(err);
-                        this.accountsWithNoAlias.add(address);
                     });
             }
         });
     }
 
+    /* TODO: Remove me. */
     has(address: string): boolean {
         return this.aliasesMap.has(address);
     }
@@ -73,6 +74,7 @@ export class AliasService {
         if (this.has(address)) {
             return this.aliasesMap.get(address).alias;
         }
+        this.fetchSocialMediaAliases(new Set([address]));
     }
 
     getSocialMediaUserId(address: string): string {
