@@ -1,5 +1,5 @@
 import { ApiService } from '@app/services/api/api.service';
-import { AliasDto, SocialMediaAccountAliasDto } from '@app/types/dto';
+import { AliasDto } from '@app/types/dto';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 
@@ -8,23 +8,25 @@ import { environment } from '../../../environments/environment';
 })
 /** Fetches account aliases on initialization. */
 export class AliasService {
-    private readonly aliases: Map<string, { alias: string; socialMedia: string; platformUserId: string }>;
-    private readonly accountsWithNoAlias: Set<string>;
+    public aliases: AliasDto[] = [];
+
+    private readonly aliasesMap: Map<string, { alias: string; socialMedia: string; platformUserId: string }>;
+    private readonly searchAccounts: Set<string>;
 
     constructor(private readonly _api: ApiService) {
-        this.aliases = new Map();
-        this.accountsWithNoAlias = new Set();
+        this.aliasesMap = new Map();
+        this.searchAccounts = new Set();
         this._loadAliases();
     }
 
     /** Loads a minified address/alias pair for quick searching. */
-    // TODO: I am called in 2x places.  Stop this.
     private _loadAliases(): void {
         this._api
             .fetchAliases()
             .then((data: AliasDto[]) => {
+                this.aliases.push(...data);
                 for (const account of data) {
-                    this.aliases.set(account.address, {
+                    this.aliasesMap.set(account.address, {
                         alias: account.alias,
                         socialMedia: undefined,
                         platformUserId: undefined,
@@ -42,51 +44,52 @@ export class AliasService {
             return;
         }
         addresses.forEach((address) => {
-            if (address && !this.accountsWithNoAlias.has(address) && !this.aliases.has(address)) {
+            if (address && !this.searchAccounts.has(address) && !this.aliasesMap.has(address)) {
+                this.searchAccounts.add(address);
                 this._api
                     .fetchSocialMediaAccount(address)
                     .then((data) => {
                         if (data.alias) {
-                            this.aliases.set(address, {
+                            //      this.aliases.push(data); // Add social to search bar results.
+                            this.aliasesMap.set(address, {
                                 alias: data.alias,
                                 socialMedia: data.platform,
                                 platformUserId: data.platformUserId,
                             });
-                        } else {
-                            this.accountsWithNoAlias.add(address);
                         }
                     })
                     .catch((err) => {
                         console.error(err);
-                        this.accountsWithNoAlias.add(address);
                     });
             }
         });
     }
 
+    /* TODO: Remove me. */
     has(address: string): boolean {
-        return this.aliases.has(address);
+        return this.aliasesMap.has(address);
     }
 
     getAlias(address: string): string {
         if (this.has(address)) {
-            return this.aliases.get(address).alias;
+            return this.aliasesMap.get(address).alias;
         }
+        this.fetchSocialMediaAliases(new Set([address]));
     }
 
     getSocialMediaUserId(address: string): string {
         if (this.has(address)) {
-            return this.aliases.get(address).platformUserId;
+            return this.aliasesMap.get(address).platformUserId;
         }
     }
 
     getSocialMedia(address: string): string {
         if (this.has(address)) {
-            return this.aliases.get(address).socialMedia;
+            return this.aliasesMap.get(address).socialMedia;
         }
     }
 
     get(address: string): { alias: string; socialMedia: string } {
-        return this.aliases.get(address);
+        return this.aliasesMap.get(address);
     }
 }
