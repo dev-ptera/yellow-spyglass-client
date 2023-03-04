@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { AliasService } from '@app/services/alias/alias.service';
 import { APP_NAV_ITEMS } from '../../../navigation/nav-items';
@@ -70,8 +70,8 @@ import { APP_NAV_ITEMS } from '../../../navigation/nav-items';
             </button>
 
             <a
-                style="font-weight: 600; font-size: 14px; line-height: 18px"
-                class="link text primary"
+                style="font-weight: 600; line-height: 18px"
+                class="link text primary alias"
                 [routerLink]="'/' + navItems.account.route + '/' + address"
             >
                 <ng-container *ngIf="known.socialMedia === 'discord'"> ID: </ng-container>

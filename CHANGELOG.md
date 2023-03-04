@@ -1,5 +1,11 @@
 # Change Log
 
+## v2.2.1 (March 4, 2023)
+
+### Changed
+
+-  Performance optimizations.
+
 ## v2.2.0 (March 3, 2023)
 
 ### Added

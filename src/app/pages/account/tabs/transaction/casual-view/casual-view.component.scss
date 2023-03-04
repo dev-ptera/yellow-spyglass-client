@@ -57,6 +57,9 @@
             display: flex;
             align-items: center;
             flex-wrap: wrap;
+            .alias {
+                font-size: 16px;
+            }
         }
         .address-row {
             box-sizing: border-box;
