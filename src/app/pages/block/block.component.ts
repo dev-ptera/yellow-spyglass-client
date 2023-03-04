@@ -12,11 +12,11 @@ import { AliasService } from '@app/services/alias/alias.service';
     selector: 'app-hash',
     template: `
         <ng-template #alias let-address="address">
-            <div *ngIf="getAlias(address)">
+            <div *ngIf="getAlias(address) as alias">
                 <mat-icon class="text-secondary" style="margin-right: 8px; font-size: 18px; height: 18px; width: 18px"
                     >account_circle</mat-icon
                 >
-                <span>{{ getAlias(address) }}</span>
+                <span>{{ alias }}</span>
             </div>
         </ng-template>
 
@@ -38,7 +38,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                     <div>
                         <span class="app-section-title">Block Account</span>
                         <a
-                            class="app-section-subtitle link text"
+                            class="mat-body-1 link text"
                             [routerLink]="'/' + routes.account.route + '/' + block.block_account"
                         >
                             {{ block.block_account }}
@@ -51,7 +51,7 @@ import { AliasService } from '@app/services/alias/alias.service';
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Subtype</span>
-                    <span class="app-section-subtitle">{{ block.subtype }}</span>
+                    <span class="mat-body-1">{{ block.subtype }}</span>
                 </div>
                 <div class="hash-description text-secondary">
                     Transaction type; can be "send", "receive", or "change"
@@ -60,7 +60,7 @@ import { AliasService } from '@app/services/alias/alias.service';
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Amount</span>
-                    <span class="app-section-subtitle">
+                    <span class="mat-body-1">
                         <span [innerHTML]="block.amount_decimal | appComma | appLittleDecimal"></span> BAN |
                         {{ block.amount }} RAW
                     </span>
@@ -68,13 +68,28 @@ import { AliasService } from '@app/services/alias/alias.service';
                 <div class="hash-description text-secondary">Amount of Banano sent in this transaction</div>
             </div>
 
-            <!-- TODO Make a separate hash-section for each type (send / receive / open) -->
-            <div class="hash-section" *ngIf="block.subtype !== 'change'">
-                <div *ngIf="block.subtype === 'send'" class="alias-row">
+            <div class="hash-section" *ngIf="block.subtype === 'receive'">
+                <div class="alias-row">
+                    <div>
+                        <span class="app-section-title">Sender</span>
+                        <a
+                            class="mat-body-1 link text"
+                            [routerLink]="'/' + routes.account.route + '/' + block.source_account"
+                        >
+                            {{ block.source_account }}
+                        </a>
+                    </div>
+                    <ng-container *ngTemplateOutlet="alias; context: { address: block.source_account }"></ng-container>
+                </div>
+                <div class="hash-description text-secondary">The account that sent the transaction</div>
+            </div>
+
+            <div class="hash-section" *ngIf="block.subtype === 'send'">
+                <div class="alias-row">
                     <div>
                         <span class="app-section-title">Recipient</span>
                         <a
-                            class="app-section-subtitle link text"
+                            class="mat-body-1 link text"
                             [routerLink]="'/' + routes.account.route + '/' + block.contents.link_as_account"
                         >
                             {{ block.contents.link_as_account }}
@@ -84,32 +99,13 @@ import { AliasService } from '@app/services/alias/alias.service';
                         *ngTemplateOutlet="alias; context: { address: block.contents.link_as_account }"
                     ></ng-container>
                 </div>
-                <div *ngIf="block.subtype === 'receive'" class="alias-row">
-                    <div>
-                        <span class="app-section-title">Sender</span>
-                        <a
-                            class="app-section-subtitle link text"
-                            [routerLink]="'/' + routes.account.route + '/' + block.source_account"
-                        >
-                            {{ block.source_account }}
-                        </a>
-                    </div>
-                    <ng-container *ngTemplateOutlet="alias; context: { address: block.source_account }"></ng-container>
-                </div>
-
-                <div class="hash-description text-secondary">
-                    <ng-container *ngIf="block.subtype === 'send'">
-                        The account that is receiving the transaction
-                    </ng-container>
-                    <ng-container *ngIf="block.subtype === 'receive'">
-                        The account that sent the transaction
-                    </ng-container>
-                </div>
+                <div class="hash-description text-secondary">The account that is receiving the transaction</div>
             </div>
+
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Balance</span>
-                    <span class="app-section-subtitle">
+                    <span class="mat-body-1">
                         <span [innerHTML]="block.balance_decimal | appComma | appLittleDecimal"></span> BAN |
                         {{ block.balance }} RAW
                     </span>
@@ -121,21 +117,21 @@ import { AliasService } from '@app/services/alias/alias.service';
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Height</span>
-                    <span class="app-section-subtitle">{{ block.height | appComma }}</span>
+                    <span class="mat-body-1">{{ block.height | appComma }}</span>
                 </div>
                 <div class="hash-description text-secondary">Transaction number of this account</div>
             </div>
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Timestamp</span>
-                    <span class="app-section-subtitle">{{ convertUnixToDate(block.local_timestamp) }}</span>
+                    <span class="mat-body-1">{{ convertUnixToDate(block.local_timestamp) }}</span>
                 </div>
                 <div class="hash-description text-secondary">The date and time this block was discovered</div>
             </div>
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Confirmed</span>
-                    <span class="app-section-subtitle">{{ block.confirmed }}</span>
+                    <span class="mat-body-1">{{ block.confirmed }}</span>
                 </div>
                 <div class="hash-description text-secondary">Whether or not this block is confirmed</div>
             </div>
@@ -144,7 +140,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                     <div>
                         <span class="app-section-title">Representative</span>
                         <a
-                            class="app-section-subtitle link text"
+                            class="mat-body-1 link text"
                             [routerLink]="'/' + routes.account.route + '/' + block.contents.representative"
                         >
                             {{ block.contents.representative }}
@@ -165,24 +161,19 @@ import { AliasService } from '@app/services/alias/alias.service';
             >
                 <div>
                     <span class="app-section-title">Next Block</span>
-                    <a
-                        class="app-section-subtitle text"
-                        [class.link]="block.height !== 1"
-                        [routerLink]="'/' + routes.hash.route + '/' + block.successor"
-                        >{{ block.successor }}
+                    <a class="mat-body-1 text link" [routerLink]="'/' + routes.hash.route + '/' + block.successor">
+                        {{ block.successor }}
                     </a>
                 </div>
                 <div class="hash-description text-secondary">The next block in this account's chain</div>
             </div>
-            <div class="hash-section" *ngIf="block.subtype !== 'change'">
+            <div class="hash-section" *ngIf="block.height !== '1'">
                 <div>
                     <span class="app-section-title">Previous Block</span>
                     <a
-                        class="app-section-subtitle text"
-                        [class.link]="block.height !== 1"
+                        class="mat-body-1 text link"
                         [routerLink]="'/' + routes.hash.route + '/' + block.contents.previous"
-                    >
-                        {{ block.height === 1 ? 'This block opened the account' : block.contents.previous }}</a
+                        >{{ block.contents.previous }}</a
                     >
                 </div>
                 <div class="hash-description text-secondary">The previous block in this account's chain</div>
@@ -190,10 +181,7 @@ import { AliasService } from '@app/services/alias/alias.service';
             <div class="hash-section" *ngIf="block.subtype === 'receive'">
                 <div>
                     <span class="app-section-title">Link</span>
-                    <a
-                        class="app-section-subtitle link text"
-                        [routerLink]="'/' + routes.hash.route + '/' + block.contents.link"
-                    >
+                    <a class="mat-body-1 link text" [routerLink]="'/' + routes.hash.route + '/' + block.contents.link">
                         {{ block.contents.link }}
                     </a>
                 </div>
@@ -202,13 +190,13 @@ import { AliasService } from '@app/services/alias/alias.service';
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Signature</span>
-                    <span class="app-section-subtitle">{{ block.contents.signature }}</span>
+                    <span class="mat-body-1">{{ block.contents.signature }}</span>
                 </div>
             </div>
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Work</span>
-                    <span class="app-section-subtitle">{{ block.contents.work }}</span>
+                    <span class="mat-body-1">{{ block.contents.work }}</span>
                 </div>
             </div>
 

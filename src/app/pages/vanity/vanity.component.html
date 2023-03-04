@@ -16,9 +16,9 @@
             [style.maxWidth.px]="vp.sm ? 300 : 350"
             [style.margin.px]="vp.sm ? 8 : 16"
         >
-            <ng-container *ngIf="aliasService.has(address)">
+            <ng-container *ngIf="aliasService.getAlias(address) as alias">
                 <div mat-card-title class="link" [routerLink]="'/' + navItems.account.route + '/' + address">
-                    {{ aliasService.getAlias(address) }}
+                    {{ alias }}
                 </div>
                 <div
                     mat-card-subtitle
@@ -29,7 +29,7 @@
                     {{ address }}
                 </div>
             </ng-container>
-            <ng-container *ngIf="!aliasService.has(address)">
+            <ng-container *ngIf="!aliasService.getAlias(address)">
                 <div
                     mat-card-title
                     [routerLink]="'/' + navItems.account.route + '/' + address"
