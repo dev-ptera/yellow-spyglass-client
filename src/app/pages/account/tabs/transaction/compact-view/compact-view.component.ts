@@ -1,15 +1,15 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewEncapsulation } from '@angular/core';
 import { Transaction, TransactionsService } from '@app/services/transactions/transactions.service';
 import { UtilService } from '@app/services/util/util.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { ApiService } from '@app/services/api/api.service';
-import { AliasService } from '@app/services/alias/alias.service';
 import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
 
 @Component({
     selector: 'app-compact-view',
     styleUrls: [`compact-view.component.scss`],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <div
             *ngFor="let tx of transactions; trackBy: trackByFn; let last = last"
@@ -25,7 +25,7 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                     *ngIf="tx.height"
                     [routerLink]="'/' + navItems.hash.route + '/' + tx.hash"
                     class="link text mono"
-                    style="margin-right: 24px"
+                    style="margin-right: 24px; min-width: 48px"
                 >
                     <span style="margin-right: 0px" style="font-size: 14px">#</span
                     >{{ util.numberWithCommas(tx.height) }}
@@ -71,76 +71,7 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                         >{{ util.shortenAddress(tx.address || tx.newRepresentative) }}
                     </a>
                 </div>
-
-                <!-- JUNGLE TV -->
-                <img
-                    *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'jungletv'"
-                    src="assets/icons/social-media/jtv.png"
-                    class="social-media-icon"
-                    style="margin-right: 8px"
-                />
-
-                <!-- Twitter -->
-                <button
-                    mat-icon-button
-                    class="social-media-button"
-                    *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'twitter'"
-                    (click)="copyPlatformUserId(tx)"
-                >
-                    <img
-                        *ngIf="!tx.showCopiedPlatformIdIcon"
-                        src="assets/icons/social-media/twitter.svg"
-                        class="social-media-icon"
-                    />
-                    <mat-icon style="font-size: 16px" *ngIf="tx.showCopiedPlatformIdIcon">check_circle</mat-icon>
-                </button>
-
-                <!-- Discord -->
-                <button
-                    mat-icon-button
-                    class="social-media-button"
-                    *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'discord'"
-                    (click)="copyPlatformUserId(tx)"
-                >
-                    <img
-                        *ngIf="!tx.showCopiedPlatformIdIcon"
-                        src="assets/icons/social-media/discord.svg"
-                        class="social-media-icon"
-                    />
-                    <mat-icon style="font-size: 16px" *ngIf="tx.showCopiedPlatformIdIcon">check_circle</mat-icon>
-                </button>
-
-                <!-- Telegram -->
-                <button
-                    mat-icon-button
-                    class="social-media-button"
-                    *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'telegram'"
-                    (click)="copyPlatformUserId(tx)"
-                >
-                    <img
-                        *ngIf="!tx.showCopiedPlatformIdIcon"
-                        src="assets/icons/social-media/telegram.svg"
-                        class="social-media-icon"
-                    />
-                    <mat-icon style="font-size: 16px" *ngIf="tx.showCopiedPlatformIdIcon">check_circle</mat-icon>
-                </button>
-
-                <a
-                    style="font-weight: 600; font-size: 14px"
-                    class="link text primary"
-                    *ngIf="hasNickname(tx.address || tx.newRepresentative)"
-                    [routerLink]="'/' + navItems.account.route + '/' + (tx.address || tx.newRepresentative)"
-                >
-                    <ng-container *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'discord'">
-                        ID:
-                    </ng-container>
-
-                    {{ aliasService.getAlias(tx.address || tx.newRepresentative) }}
-
-                    <!--
-                    <ng-container *ngIf="aliasService.getSocialMedia(tx.address || tx.newRepresentative) === 'discord'">#????</ng-container>
-                    -->
-                </a>
+                <app-account-alias [address]="tx.address || tx.newRepresentative"></app-account-alias>
                 <blui-spacer></blui-spacer>
                 <div style="margin-right: 12px">
                     <div style="display: flex; flex-direction: column; align-items: end">
@@ -178,9 +109,13 @@ export class CompactViewComponent {
         public util: UtilService,
         public vp: ViewportService,
         public apiService: ApiService,
-        public aliasService: AliasService,
-        public txService: TransactionsService
-    ) {}
+        public txService: TransactionsService,
+        private readonly _ref: ChangeDetectorRef
+    ) {
+        this.vp.vpChange.subscribe(() => {
+            this._ref.detectChanges();
+        });
+    }
 
     trackByFn(index: number): number {
         return index;
@@ -192,19 +127,6 @@ export class CompactViewComponent {
         setTimeout(() => {
             item.showCopiedAddressIcon = false;
         }, 700);
-    }
-
-    copyPlatformUserId(item: Transaction): void {
-        const discordId = this.aliasService.getSocialMediaUserId(item.address || item.newRepresentative);
-        void navigator.clipboard.writeText(String(discordId));
-        item.showCopiedPlatformIdIcon = true;
-        setTimeout(() => {
-            item.showCopiedPlatformIdIcon = false;
-        }, 700);
-    }
-
-    hasNickname(address: string): boolean {
-        return this.aliasService.has(address);
     }
 
     formatNumber(x: number): string {

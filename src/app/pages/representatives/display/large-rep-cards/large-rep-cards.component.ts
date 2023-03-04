@@ -33,7 +33,7 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
             </div>
 
             <a
-                *ngIf="aliasService.has(rep.address)"
+                *ngIf="aliasService.getAlias(rep.address)"
                 class="text link"
                 style="font-size: 0.875rem; font-weight: 600; display: block"
                 [routerLink]="'/' + navItems.account.route + '/' + rep.address"

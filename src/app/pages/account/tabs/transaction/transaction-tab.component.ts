@@ -53,7 +53,7 @@ export class TransactionTabComponent implements OnInit, OnDestroy {
     }
 
     showCompactView(): boolean {
-        return (this.isCompact || this.isBRPD) && !this.vp.sm;
+        return this.isCompact && !this.vp.sm;
     }
 
     getDisplayedTransactions(): Transaction[] {

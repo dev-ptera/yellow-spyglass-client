@@ -77,15 +77,7 @@
                 class="wallets-address-cell"
                 *matCellDef="let element"
             >
-                <div *ngIf="aliasService.has(element.address)">
-                    <a
-                        class="wallets-table-alias link primary"
-                        style="margin-bottom: -2px; word-break: break-word"
-                        [routerLink]="'/' + navItems.account.route + '/' + element.address"
-                        >{{ aliasService.getAlias(element.address) }}</a
-                    >
-                </div>
-
+                <app-account-alias [address]="element.address"></app-account-alias>
                 <div class="address">
                     <a class="link text mono" [routerLink]="'/' + navItems.account.route + '/' + element.address">
                         {{ element.address }}
@@ -115,7 +107,7 @@
             </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="columns"></tr>
-        <tr mat-row *matRowDef="let row; columns: columns"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns" style="height: 72px"></tr>
     </table>
     <ng-template [ngTemplateOutlet]="paginator"></ng-template>
 </ng-template>

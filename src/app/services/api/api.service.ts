@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { saveAs } from 'file-saver';
 
@@ -40,7 +40,6 @@ export class ApiService {
     wsApi: string;
     apiToUseSubject = new Subject<string>();
     accountLoadedSubject = new Subject<AccountOverviewDto>();
-    aliasesLoaded$ = new Subject<AliasDto[]>();
 
     constructor(private readonly _http: HttpClient) {
         this._pingServers();

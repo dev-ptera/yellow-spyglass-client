@@ -45,7 +45,7 @@ export class AccountComponent implements OnDestroy {
     accountOverviewListener: Subscription;
     accountOverview: AccountOverviewDto;
 
-    isCompact: boolean;
+    isCompact = environment.brpd;
 
     borderRadius: 16;
 
@@ -161,9 +161,8 @@ export class AccountComponent implements OnDestroy {
 
         const rep = this.accountOverview.representative;
         if (rep) {
-            this.accountRepresentative = this._aliasService.has(rep)
-                ? this._aliasService.getAlias(rep)
-                : `${rep.substr(0, 11)}...${rep.substr(rep.length - 6, rep.length)}`;
+            this.accountRepresentative =
+                this._aliasService.getAlias(rep) || `${rep.substr(0, 11)}...${rep.substr(rep.length - 6, rep.length)}`;
         }
     }
 
@@ -198,16 +197,8 @@ export class AccountComponent implements OnDestroy {
         }
     }
 
-    hasAlias(address: string): boolean {
-        return this._aliasService.has(address);
-    }
-
     getAlias(address: string): string {
         return this._aliasService.getAlias(address);
-    }
-
-    withCommas(x: number): string {
-        return this._util.numberWithCommas(x);
     }
 
     getRepresentativeLabel(): string {
