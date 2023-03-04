@@ -38,7 +38,7 @@ import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
                         <app-account-alias *ngIf="!vp.sm" [address]="tx.address"></app-account-alias>
                     </div>
                     <div class="address-row">
-                        <app-account-alias *ngIf="vp.sm" [marginBottom]="8" [address]="tx.address"></app-account-alias>
+                        <app-account-alias *ngIf="vp.sm" [marginBottom]="12" [address]="tx.address"></app-account-alias>
                         <a
                             *ngIf="!tx.type || tx.type !== 'change'"
                             class="address link text mono"
