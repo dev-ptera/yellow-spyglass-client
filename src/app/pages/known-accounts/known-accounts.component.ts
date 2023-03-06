@@ -69,7 +69,6 @@ export class KnownAccountsComponent implements OnInit {
 
         this._route.fragment.pipe(untilDestroyed(this)).subscribe((fragment) => {
             this.fragment = fragment;
-            this._navigateToFragment(this.fragment);
         });
     }
 
