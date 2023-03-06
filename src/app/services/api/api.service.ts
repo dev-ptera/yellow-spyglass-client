@@ -303,7 +303,7 @@ export class ApiService {
                 includeLore: true,
                 includeOwner: true,
                 includeType: true,
-                includeBalance: true
+                includeBalance: true,
             })
             .toPromise();
     }
