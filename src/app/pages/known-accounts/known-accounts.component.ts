@@ -71,6 +71,10 @@ export class KnownAccountsComponent implements OnInit {
     }
 
     openRow(account: KnownAccountDto): void {
+        if (!account.lore) {
+            return;
+        }
+
         if (this.expandedElement === account) {
             this.expandedElement = undefined;
         } else {

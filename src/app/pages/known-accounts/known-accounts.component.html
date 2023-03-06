@@ -146,7 +146,7 @@
             *matRowDef="let row; columns: getDisplayColumns()"
             class="main-row"
             style="height: 72px"
-            (click)="expandedElement = expandedElement === row ? null : row"
+            (click)="openRow(row)"
         ></tr>
         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
     </table>
