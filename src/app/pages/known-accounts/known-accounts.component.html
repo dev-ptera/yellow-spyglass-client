@@ -86,7 +86,7 @@
             <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
             <td mat-cell *matCellDef="let element" style="text-align: end">
                 <button
-                    *ngIf="element.hasLore || vp.sm"
+                    *ngIf="element.lore || vp.sm"
                     mat-icon-button
                     aria-label="expand row"
                     (click)="openRow(element); $event.stopPropagation()"
