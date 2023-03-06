@@ -1,5 +1,16 @@
 # Change Log
 
+## v2.3.0 (March 6, 2023)
+
+### Added
+
+-  Added type filters on Known Accounts page.
+-  Added optional `description` field on Known Accounts page.
+
+### Changed
+
+-  Changed Known Accounts page mobile view.
+
 ## v2.2.1 (March 4, 2023)
 
 ### Changed
