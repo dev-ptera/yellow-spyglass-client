@@ -260,6 +260,9 @@ $jungle-green-theme: map-merge(
         .main-row {
             background-color: map-get(blui.$blui-white, 50);
         }
+        .expand-td {
+            background-color: map-get(blui.$blui-white, 100);
+        }
     }
     .text {
         color: map-get($theme-foreground, text);

@@ -190,8 +190,8 @@ $dark-theme: map-merge(
     mat.define-dark-theme($material-theme-primary, $material-theme-accent, $material-theme-warn),
     (
         foreground: (
-            text: map-get(blui.$blui-black, 50),
-            secondary-text: map-get(blui.$blui-black, 200),
+            text: map-get(blui.$blui-black, 100),
+            secondary-text: map-get(blui.$blui-black, 300),
             hint-text: map-get(blui.$blui-black, 400),
             base: map-get(blui.$blui-white, 100),
             divider: rgba(map-get(blui.$blui-black, 300), 0.2),
@@ -274,6 +274,9 @@ $dark-theme: map-merge(
         .main-row {
             background-color: #192022;
         }
+        .expand-td {
+            background-color: map-get(blui.$blui-black, 900);
+        }
     }
     .mat-toolbar.mat-primary {
         background-color: map-get(blui.$blui-darkBlack, 300) !important;
@@ -333,6 +336,11 @@ $dark-theme: map-merge(
 
     .original-block-content {
         background-color: map-get(blui.$blui-black, 900);
+    }
+
+    .mat-chip:not([variant='outline']):not([variant='stroked']).mat-chip-selected.mat-primary {
+        color: map-get(blui.$blui-black, 900) !important;
+        background-color: $primary !important;
     }
 
     $sticky-border-color: map-get($theme-foreground, divider);
