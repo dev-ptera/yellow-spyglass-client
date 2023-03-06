@@ -76,7 +76,7 @@ export class KnownAccountsComponent implements OnInit {
                         this.expandedElement = entry;
                     }
                 });
-                this.accountsDataSource.sort = this.sort;
+                this._setSort();
             })
             .catch((err) => {
                 console.error(err);
@@ -132,7 +132,18 @@ export class KnownAccountsComponent implements OnInit {
         } else {
             this.accountsDataSource = new MatTableDataSource(this.unfilteredKnownAccounts);
         }
+        this._setSort();
+    }
+
+    private _setSort(): void {
         this.accountsDataSource.sort = this.sort;
+        this.accountsDataSource.sortingDataAccessor = (data: any, sortHeaderId: string): string => {
+            if (typeof data[sortHeaderId] === 'string') {
+                return data[sortHeaderId].toLocaleLowerCase();
+            }
+
+            return data[sortHeaderId];
+        };
     }
 
     getDisplayColumns(): string[] {
