@@ -99,6 +99,9 @@ export class KnownAccountsComponent implements OnInit {
                 console.error(err);
                 this.hasError = true;
                 this.isLoading = false;
+            })
+            .finally(() => {
+                this._ref.detectChanges();
             });
     }
 
