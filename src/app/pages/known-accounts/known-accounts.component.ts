@@ -111,7 +111,7 @@ export class KnownAccountsComponent implements OnInit {
 
     copyLink(address: string): void {
         const el = document.createElement('textarea');
-        el.value = address;
+        el.value = `${window.location.href.split('#')[0]}#${address}`;
         document.body.appendChild(el);
         el.select();
         document.execCommand('copy');

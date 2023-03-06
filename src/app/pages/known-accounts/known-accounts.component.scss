@@ -5,6 +5,16 @@
     * {
         font-size: 14px;
     }
+    .link-icon {
+        $size: 16px;
+        font-size: $size !important;
+        height: $size;
+        width: $size;
+        line-height: $size;
+    }
+    .expand-button * {
+        font-size: 18px !important;
+    }
     tr.mat-row.example-detail-row {
         height: unset;
         td.mat-cell {
@@ -22,6 +32,9 @@
         margin-right: -16px;
         * {
             font-size: 14px;
+        }
+        .expand-button {
+            margin-right: -8px;
         }
     }
 }
