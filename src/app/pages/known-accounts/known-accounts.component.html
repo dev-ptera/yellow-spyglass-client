@@ -50,16 +50,26 @@
         <ng-container matColumnDef="alias">
             <th mat-header-cell *matHeaderCellDef mat-sort-header [style.paddingLeft.px]="16">Account</th>
             <td mat-cell *matCellDef="let element" class="known-accounts-alias-cell">
-                <a
-                    class="link text"
-                    style="word-break: break-word; font-weight: 600"
-                    [routerLink]="'/' + navItems.account.route + '/' + element.address"
-                    >{{ element.alias }}</a
-                >
-                <br />
+                <div [id]="element.address" style="scroll-margin-top: 72px">
+                    <a
+                        class="link text"
+                        style="word-break: break-word; font-weight: 600"
+                        [class.primary]="element.address === fragment"
+                        [routerLink]="'/' + navItems.account.route + '/' + element.address"
+                        >{{ element.alias }}</a
+                    >
+
+                    <button
+                        mat-icon-button
+                        (click)="copyLink(element.address); $event.stopPropagation()"
+                        style="height: 24px; width: 24px; font-size: 24px; line-height: 24px"
+                    >
+                        <mat-icon>link</mat-icon>
+                    </button>
+                </div>
                 <a
                     class="link text-secondary mono"
-                    style="word-break: break-word"
+                    style="word-break: keep-all"
                     [routerLink]="'/' + navItems.account.route + '/' + element.address"
                 >
                     {{ formatAddr(element.address) }}
@@ -72,7 +82,6 @@
             <td mat-cell *matCellDef="let element">
                 {{ element.type }}
             </td>
-            a
         </ng-container>
 
         <ng-container matColumnDef="owner">
@@ -86,7 +95,7 @@
             <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
             <td mat-cell *matCellDef="let element" style="text-align: end">
                 <button
-                    *ngIf="element.lore || vp.sm"
+                    *ngIf="canOpenRow(element)"
                     mat-icon-button
                     aria-label="expand row"
                     (click)="openRow(element); $event.stopPropagation()"

@@ -4,11 +4,13 @@ import { KnownAccountDto } from '@app/types/dto';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { APP_NAV_ITEMS } from '../../navigation/nav-items';
 import { UtilService } from '@app/services/util/util.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatChip, MatChipList } from '@angular/material/chips';
+import { AccountActionsService } from '@app/services/account-actions/account-actions.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-known-accounts',
@@ -33,6 +35,7 @@ export class KnownAccountsComponent implements OnInit {
     displayedColumns = ['alias', 'type', 'owner', 'expand'];
     mobileDisplayedColumns = ['alias', 'expand'];
     expandedElement: KnownAccountDto | null;
+    private fragment: string;
 
     @ViewChild('sort') sort: MatSort;
     @ViewChild('chipList') chipList: MatChipList;
@@ -42,8 +45,22 @@ export class KnownAccountsComponent implements OnInit {
         private readonly _api: ApiService,
         private readonly _router: Router,
         private readonly _util: UtilService,
-        public vp: ViewportService
-    ) {}
+        private readonly _snackbar: MatSnackBar,
+        private readonly _accountActionsService: AccountActionsService,
+        public vp: ViewportService,
+        private readonly route: ActivatedRoute
+    ) {
+        this.route.fragment.subscribe((fragment) => {
+            this.fragment = fragment;
+            this.navigateToFragment(this.fragment);
+        });
+    }
+
+    navigateToFragment(fragment: string): void {
+        setTimeout(() => {
+            document.querySelector('#' + fragment)?.scrollIntoView({ behavior: 'smooth' });
+        });
+    }
 
     ngOnInit(): void {
         this._api
@@ -53,6 +70,12 @@ export class KnownAccountsComponent implements OnInit {
                 this.unfilteredKnownAccounts = data;
                 this.accountsDataSource = new MatTableDataSource(data);
                 this._ref.detectChanges();
+                this.navigateToFragment(this.fragment);
+                data.forEach((entry) => {
+                    if (entry.address === this.fragment && this.canOpenRow(entry)) {
+                        this.expandedElement = entry;
+                    }
+                });
                 this.accountsDataSource.sort = this.sort;
             })
             .catch((err) => {
@@ -70,8 +93,12 @@ export class KnownAccountsComponent implements OnInit {
         return this.vp.md || this.vp.sm ? this._util.shortenAddress(addr) : addr;
     }
 
+    canOpenRow(account: KnownAccountDto): boolean {
+        return this.vp.sm || Boolean(account.lore);
+    }
+
     openRow(account: KnownAccountDto): void {
-        if (!account.lore) {
+        if (!this.canOpenRow(account)) {
             return;
         }
 
@@ -82,11 +109,23 @@ export class KnownAccountsComponent implements OnInit {
         }
     }
 
+    copyLink(address: string): void {
+        const el = document.createElement('textarea');
+        el.value = address;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        this._snackbar.open('Copied Link', undefined, {
+            duration: 1000,
+        });
+        void this._router.navigate([`/${APP_NAV_ITEMS.knownAccounts.route}`], { fragment: address });
+    }
+
     selectChip(chip: MatChip): void {
         chip.toggleSelected();
         this.types = new Set<string>();
         if (chip.value !== 'all') {
-            console.log(chip.value);
             this.accountsDataSource = new MatTableDataSource(
                 this.unfilteredKnownAccounts.filter((account) => account.type === chip.value)
             );
