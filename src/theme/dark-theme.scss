@@ -270,6 +270,11 @@ $dark-theme: map-merge(
     .mat-row:nth-child(odd) {
         background-color: map-get(blui.$blui-black, 900);
     }
+    .known-accounts-table {
+        .main-row {
+            background-color: #192022;
+        }
+    }
     .mat-toolbar.mat-primary {
         background-color: map-get(blui.$blui-darkBlack, 300) !important;
         border-bottom: solid 1px map-get($theme-foreground, divider);

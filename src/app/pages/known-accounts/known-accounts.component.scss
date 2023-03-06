@@ -5,6 +5,14 @@
     * {
         font-size: 14px;
     }
+    tr.mat-row.example-detail-row {
+        height: unset;
+        td.mat-cell {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+        }
+    }
+
     .link {
         font-size: 14px;
     }
@@ -17,11 +25,33 @@
         }
     }
 }
-
 th.mat-sort-header-sorted {
     color: black;
 }
 
 .known-accounts-table.sm .known-accounts-alias-cell {
     padding-left: 18px !important;
+}
+
+.expand-element {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    .expand-element-description {
+        display: flex;
+        align-items: center;
+        padding: 8px 0;
+        .mat-icon {
+            display: flex;
+            margin-right: 16px;
+            $size: 14px;
+            height: $size;
+            font-size: $size;
+            line-height: $size;
+        }
+    }
+}
+
+tr.example-detail-row {
+    height: 0;
 }
