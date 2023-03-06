@@ -90,6 +90,15 @@
             </td>
         </ng-container>
 
+        <ng-container matColumnDef="balance">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 0 16px" class="balance-header">
+                Balance
+            </th>
+            <td mat-cell *matCellDef="let element" style="text-align: right">
+                {{ element.balance | appComma }}
+            </td>
+        </ng-container>
+
         <ng-container matColumnDef="expand">
             <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
             <td mat-cell *matCellDef="let element" style="text-align: end">
@@ -144,6 +153,15 @@
                                     <div>{{ owner }}</div>
                                 </div>
                             </div>
+                            <div class="expand-element-description">
+                                <div>
+                                    <mat-icon class="text-secondary">savings</mat-icon>
+                                </div>
+                                <div>
+                                    <strong>Balance</strong>
+                                    <div>{{ element.balance | appComma }} BAN</div>
+                                </div>
+                            </div>
                         </ng-container>
                     </div>
                 </div>
@@ -163,7 +181,7 @@
 </ng-template>
 
 <div class="app-page-root" responsive>
-    <div class="app-page-content">
+    <div class="app-page-content known-accounts-page-content">
         <app-error *ngIf="hasError"></app-error>
         <ng-container *ngIf="!hasError">
             <ng-template [ngTemplateOutlet]="titleContent"></ng-template>

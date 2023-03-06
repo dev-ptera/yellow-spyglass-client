@@ -1,9 +1,15 @@
+.app-page-content.known-accounts-page-content {
+    max-width: 1200px;
+}
 .known-accounts-table {
     width: 100%;
     margin-top: 32px;
 
     * {
         font-size: 14px;
+    }
+    .balance-header .mat-sort-header-container {
+        justify-content: flex-end;
     }
     .link-icon {
         $size: 16px;
@@ -47,7 +53,7 @@ th.mat-sort-header-sorted {
 }
 
 .known-accounts-alias-cell {
-    padding-right: 72px !important;
+    padding-right: 56px !important;
 }
 
 .expand-element {

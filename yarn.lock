@@ -202,13 +202,6 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/flex-layout@^13.0.0-beta.38":
-  version "13.0.0-beta.38"
-  resolved "https://registry.npmjs.org/@angular/flex-layout/-/flex-layout-13.0.0-beta.38.tgz"
-  integrity sha512-kcWb7CcoHbvw7fjo/knizWVmSSmvaTnr8v1ML6zOdxu1PK9UPPOcOS8RTm6fy61zoC2LABivP1/6Z2jF5XfpdQ==
-  dependencies:
-    tslib "^2.3.0"
-
 "@angular/forms@~14.2.2":
   version "14.2.2"
   resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-14.2.2.tgz#27dfddddc02091b6860144d5c1b065cc3d9a5712"
@@ -1403,24 +1396,24 @@
     "@babel/helper-validator-identifier" "^7.18.6"
     to-fast-properties "^2.0.0"
 
-"@brightlayer-ui/angular-components@^7.0.3-alpha.1":
-  version "7.0.3-alpha.1"
-  resolved "https://registry.yarnpkg.com/@brightlayer-ui/angular-components/-/angular-components-7.0.3-alpha.1.tgz#d04ddd8a1e5422bbddaa964727109de3ad895bb3"
-  integrity sha512-HDzN/ivhSyNSfwr86e844C7tOijb3IIABUpw4FHOgGtr/xb6Ye8bN10gbpze6Zlx4iSF0SFUQWV+GQi07RrLWA==
+"@brightlayer-ui/angular-components@^8.0.1":
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/@brightlayer-ui/angular-components/-/angular-components-8.0.1.tgz#6a631e0907ba38ac0525b85c736e0667714a44cc"
+  integrity sha512-jvo/Z/YNSZm1QAGp7VdHdqvNnXOZaX/piSzVW352Cc3AIW8/oAHlFylvnoOxs4LIg1OMtx+nQiKYCEUkQgEwgA==
   dependencies:
-    tslib "^2.0.0"
+    tslib "^2.3.0"
 
-"@brightlayer-ui/angular-themes@^7.0.1":
-  version "7.0.1"
-  resolved "https://registry.npmjs.org/@brightlayer-ui/angular-themes/-/angular-themes-7.0.1.tgz"
-  integrity sha512-vsDQvcCeifhDkQ04w5CZqxrfFW4T0yfnxDTq3KMk4PRjQq/zNqhbPu8qxWr5ukx2crMiH2Br0wu9aHibIvoMtQ==
+"@brightlayer-ui/angular-themes@8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@brightlayer-ui/angular-themes/-/angular-themes-8.0.0.tgz#25d813b0efa0815b06e2c227c3115821e2b0edf8"
+  integrity sha512-BOemaG+VCHTQ+hAG+ubiFVaX7BGrhNezj1Ki4TA1Uo0rMqLsqmu+weYD0gUJb5y7iietWCXnCJ35el1v+H7AWA==
   dependencies:
     "@brightlayer-ui/colors" "^3.0.0"
     "@fontsource/open-sans" "^4.1.0"
 
 "@brightlayer-ui/colors-branding@^3.2.1":
   version "3.2.1"
-  resolved "https://registry.npmjs.org/@brightlayer-ui/colors-branding/-/colors-branding-3.2.1.tgz"
+  resolved "https://registry.yarnpkg.com/@brightlayer-ui/colors-branding/-/colors-branding-3.2.1.tgz#5f12375d3c138d987386f0763e5bcda1acddb41e"
   integrity sha512-yPiH50JxeR3BeO6vuDCuGc1W5U84tL+znI3V7wm8fXheoegKXKYUV81sQqU050ryzLxlLrtKoCG7LhdQlS0QeQ==
   dependencies:
     "@brightlayer-ui/types" "^2.0.0"
@@ -1441,24 +1434,6 @@
     eslint-config-prettier ">= 8.0.0"
   optionalDependencies:
     eslint-plugin-react "^7.28.0"
-
-"@brightlayer-ui/icons-svg@^1.11.0":
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/@brightlayer-ui/icons-svg/-/icons-svg-1.11.0.tgz#2f4d6ea83bd7628f8e18064e4391ed19a581647e"
-  integrity sha512-ANrFfZ/QseSdkef4ufUelH9PGDsHfvLZwSdmWyQjkj/WcrXYG+aVn2CB8Pij+4E9nwd2XFv+4HHXrD5L0bNLpw==
-
-"@brightlayer-ui/icons@^1.11.0":
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/@brightlayer-ui/icons/-/icons-1.11.0.tgz#412baae591b9c5fc87dda7b3cdd278dc2671d667"
-  integrity sha512-2pHKJY7Xpao6BQ1ZIRcXxpTFuhSlalOJKw2//D05mNSzIFTZmBCv+6OVtAE45NxbLNIDP/To0/Cykm2mA9I1Vw==
-
-"@brightlayer-ui/ng-progress-icons@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.npmjs.org/@brightlayer-ui/ng-progress-icons/-/ng-progress-icons-1.2.1.tgz"
-  integrity sha512-2YWkQaNfSjQmwr5BXF+xpW/ARzokbTVPDkTcV3+ynh7TkKeXQICk1NxkF8ykhWpvS66lLOOYzYyS99/7EHx1eQ==
-  dependencies:
-    color "^3.1.2"
-    tslib "^1.9.0"
 
 "@brightlayer-ui/prettier-config@^1.0.3":
   version "1.0.3"
@@ -1734,6 +1709,13 @@
   version "2.0.4"
   resolved "https://registry.npmjs.org/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
+
+"@ngneat/until-destroy@^9.2.3":
+  version "9.2.3"
+  resolved "https://registry.yarnpkg.com/@ngneat/until-destroy/-/until-destroy-9.2.3.tgz#c435b686b6c714c9004e82b23a341595a49ba5b5"
+  integrity sha512-ryX0vqDOdmYo53f7v5Ivbj1jcqOEX+vM1iiV9NYepWDha4VJp9lWrDFK9tRt2evAMzF/9u67JLzs4Xjcoh+Taw==
+  dependencies:
+    tslib "^2.3.0"
 
 "@ngtools/webpack@14.2.3":
   version "14.2.3"
@@ -3061,7 +3043,7 @@ clone@^1.0.2:
   resolved "https://registry.npmjs.org/clone/-/clone-1.0.4.tgz"
   integrity sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==
 
-color-convert@^1.9.0, color-convert@^1.9.3:
+color-convert@^1.9.0:
   version "1.9.3"
   resolved "https://registry.npmjs.org/color-convert/-/color-convert-1.9.3.tgz"
   integrity sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==
@@ -3075,7 +3057,7 @@ color-convert@^2.0.1:
   dependencies:
     color-name "~1.1.4"
 
-color-name@1.1.3, color-name@^1.0.0:
+color-name@1.1.3:
   version "1.1.3"
   resolved "https://registry.npmjs.org/color-name/-/color-name-1.1.3.tgz"
   integrity sha512-72fSenhMw2HZMTVHeCA9KCmpEIbzWiQsjN+BHcBbS9vr1mtt+vJjPdksIBNUmKAW8TFUDPJK5SUU3QhE9NEXDw==
@@ -3085,26 +3067,10 @@ color-name@~1.1.4:
   resolved "https://registry.npmjs.org/color-name/-/color-name-1.1.4.tgz"
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
 
-color-string@^1.6.0:
-  version "1.9.1"
-  resolved "https://registry.npmjs.org/color-string/-/color-string-1.9.1.tgz"
-  integrity sha512-shrVawQFojnZv6xM40anx4CkoDP+fZsw/ZerEMsW/pyzsRbElpsL/DBVW7q3ExxwusdNXI3lXpuhEZkzs8p5Eg==
-  dependencies:
-    color-name "^1.0.0"
-    simple-swizzle "^0.2.2"
-
 color-support@^1.1.3:
   version "1.1.3"
   resolved "https://registry.npmjs.org/color-support/-/color-support-1.1.3.tgz"
   integrity sha512-qiBjkpbMLO/HL68y+lh4q0/O1MZFj2RX6X/KmMa3+gJD3z+WwI1ZzDHysvqHGS3mP6mznPckpXmw1nI9cJjyRg==
-
-color@^3.1.2:
-  version "3.2.1"
-  resolved "https://registry.npmjs.org/color/-/color-3.2.1.tgz"
-  integrity sha512-aBl7dZI9ENN6fUGC7mWpMTPNHmWUSNan9tuWN6ahh5ZLNk9baLJOnSMlrQkHcrfFgz2/RigjUVAjdx36VcemKA==
-  dependencies:
-    color-convert "^1.9.3"
-    color-string "^1.6.0"
 
 colorette@^2.0.10:
   version "2.0.19"
@@ -4930,11 +4896,6 @@ is-arrayish@^0.2.1:
   version "0.2.1"
   resolved "https://registry.npmjs.org/is-arrayish/-/is-arrayish-0.2.1.tgz"
   integrity sha512-zz06S8t0ozoDXMG+ube26zeCTNXcKIPJZJi8hBrF4idCLms4CG9QtK7qBl1boi5ODzFpjswb5JPmHCbMpjaYzg==
-
-is-arrayish@^0.3.1:
-  version "0.3.2"
-  resolved "https://registry.npmjs.org/is-arrayish/-/is-arrayish-0.3.2.tgz"
-  integrity sha512-eVRqCvVlZbuw3GrM63ovNSNAeA1K16kaR/LRY/92w0zxQ5/1YzwblUX652i4Xs9RwAGjW9d9y6X88t8OaAJfWQ==
 
 is-bigint@^1.0.1:
   version "1.0.4"
@@ -7611,13 +7572,6 @@ signal-exit@^3.0.2, signal-exit@^3.0.3, signal-exit@^3.0.7:
   version "3.0.7"
   resolved "https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.7.tgz"
   integrity sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==
-
-simple-swizzle@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.npmjs.org/simple-swizzle/-/simple-swizzle-0.2.2.tgz"
-  integrity sha512-JA//kQgZtbuY83m+xT+tXJkmJncGMTFT+C+g2h2R9uxkYIrE2yy9sgmcLhCnw57/WSD+Eh3J97FPEDFnbXnDUg==
-  dependencies:
-    is-arrayish "^0.3.1"
 
 sisteransi@^1.0.5:
   version "1.0.5"

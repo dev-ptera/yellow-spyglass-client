@@ -4,6 +4,7 @@ export type KnownAccountDto = {
     owner?: string;
     hasLore: boolean;
     lore?: string;
+    balance: number;
     type?: KnownAccountType;
 };
 
