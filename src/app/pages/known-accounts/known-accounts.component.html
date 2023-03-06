@@ -84,7 +84,7 @@
 
         <ng-container matColumnDef="expand">
             <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" style="text-align: end">
                 <button
                     *ngIf="element.hasLore || vp.sm"
                     mat-icon-button
