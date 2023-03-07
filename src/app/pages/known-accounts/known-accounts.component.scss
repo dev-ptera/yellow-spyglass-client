@@ -29,6 +29,10 @@
         }
     }
 
+    tr.example-detail-row {
+        height: 0;
+    }
+
     .link {
         font-size: 14px;
     }
@@ -43,38 +47,30 @@
             margin-right: -8px;
         }
     }
-}
-th.mat-sort-header-sorted {
-    color: black;
-}
 
-.known-accounts-table.sm .known-accounts-alias-cell {
-    padding-left: 18px !important;
-}
+    .known-accounts-table.sm .known-accounts-alias-cell {
+        padding-left: 18px !important;
+    }
+    .known-accounts-alias-cell {
+        padding-right: 56px !important;
+    }
 
-.known-accounts-alias-cell {
-    padding-right: 56px !important;
-}
-
-.expand-element {
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    .expand-element-description {
+    .expand-element {
+        overflow: hidden;
         display: flex;
-        align-items: center;
-        padding: 8px 0;
-        .mat-icon {
+        flex-direction: column;
+        .expand-element-description {
             display: flex;
-            margin-right: 16px;
-            $size: 14px;
-            height: $size;
-            font-size: $size;
-            line-height: $size;
+            align-items: center;
+            padding: 8px 0;
+            .mat-icon {
+                display: flex;
+                margin-right: 16px;
+                $size: 14px;
+                height: $size;
+                font-size: $size;
+                line-height: $size;
+            }
         }
     }
-}
-
-tr.example-detail-row {
-    height: 0;
 }
