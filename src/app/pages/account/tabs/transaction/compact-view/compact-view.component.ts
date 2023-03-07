@@ -4,7 +4,9 @@ import { UtilService } from '@app/services/util/util.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { ApiService } from '@app/services/api/api.service';
 import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
     selector: 'app-compact-view',
     styleUrls: [`compact-view.component.scss`],
@@ -112,7 +114,7 @@ export class CompactViewComponent {
         public txService: TransactionsService,
         private readonly _ref: ChangeDetectorRef
     ) {
-        this.vp.vpChange.subscribe(() => {
+        this.vp.vpChange.pipe(untilDestroyed(this)).subscribe(() => {
             this._ref.detectChanges();
         });
     }

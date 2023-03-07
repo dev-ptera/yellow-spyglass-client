@@ -299,7 +299,12 @@ export class ApiService {
     async fetchKnownAccounts(): Promise<KnownAccountDto[]> {
         await this._hasPingedApi();
         return this._http
-            .post<KnownAccountDto[]>(`${this.httpApi}/v1/known/accounts`, { includeOwner: true, includeType: true })
+            .post<KnownAccountDto[]>(`${this.httpApi}/v1/known/accounts`, {
+                includeLore: true,
+                includeOwner: true,
+                includeType: true,
+                includeBalance: true,
+            })
             .toPromise();
     }
 

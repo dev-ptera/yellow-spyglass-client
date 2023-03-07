@@ -5,10 +5,24 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { AppCommonModule } from '@app/common/app-common.module';
 import { RouterModule } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
     declarations: [KnownAccountsComponent],
-    imports: [AppCommonModule, CommonModule, MatTableModule, MatSortModule, RouterModule],
+    imports: [
+        AppCommonModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        CommonModule,
+        MatTableModule,
+        MatSortModule,
+        RouterModule,
+        MatIconModule,
+        MatChipsModule,
+    ],
     exports: [KnownAccountsComponent],
 })
 export class KnownAccountsModule {}

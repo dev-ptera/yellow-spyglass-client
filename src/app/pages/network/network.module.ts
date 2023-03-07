@@ -7,7 +7,6 @@ import { NetworkComponent } from '@app/pages/network/network.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
@@ -23,12 +22,9 @@ import { NetworkLoadingComponent } from '@app/pages/network/network-loading.comp
         CommonModule,
         EmptyStateModule,
         MatIconModule,
-
         BrowserAnimationsModule,
         BrowserModule,
         CommonModule,
-        EmptyStateModule,
-        FlexLayoutModule,
         FormsModule,
         HighchartsChartModule,
         HttpClientModule,
