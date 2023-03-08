@@ -1,5 +1,15 @@
 # Change Log
 
+## v2.4.0 (March 7, 2023)
+
+### Added
+
+-  Added link to Known Accounts page from Accounts page.
+
+### Changed
+
+-  Changed Account page styles.
+
 ## v2.3.0 (March 6, 2023)
 
 ### Added
