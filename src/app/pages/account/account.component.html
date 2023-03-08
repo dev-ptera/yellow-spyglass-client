@@ -26,7 +26,7 @@
 <ng-template #headerContent>
     <mat-card class="account-header divider-border mat-elevation-z0" responsive>
         <!-- Loading -->
-        <div *ngIf="!accountOverview" style="display: flex">
+        <div *ngIf="!accountOverview" style="display: flex; align-items: center">
             <ng-template [ngTemplateOutlet]="desktopMonKey"></ng-template>
             <div class="account-overview-wrapper">
                 <div class="app-page-title" style="display: flex; align-items: center">
@@ -42,11 +42,11 @@
         </div>
 
         <!-- Not Loading -->
-        <div *ngIf="accountOverview" style="display: flex">
+        <div *ngIf="accountOverview" style="display: flex; align-items: center">
             <ng-template [ngTemplateOutlet]="desktopMonKey"></ng-template>
             <div class="account-overview-wrapper">
                 <!-- First Line -->
-                <div class="app-page-title">
+                <div class="app-page-title" style="display: flex; justify-content: space-between; align-items: center">
                     <ng-container *ngIf="!isRepresentative()">
                         <span *ngIf="accountOverview.opened"> Account </span>
                         <span *ngIf="!accountOverview.opened"> Unopened Account </span>
@@ -69,11 +69,26 @@
                             >error_outline</mat-icon
                         >
                     </div>
+
+                    <app-account-actions-menu
+                        style="margin-right: -8px"
+                        *ngIf="vp.sm || vp.md"
+                        [data]="address"
+                        [(showFilter)]="showFilter"
+                        [showFilterActionButton]="showFilterActionButton()"
+                        [showCSVExportActionButton]="showCSVExportActionButton()"
+                    ></app-account-actions-menu>
                 </div>
 
                 <!-- Second line -->
                 <div
-                    style="display: flex; align-items: center; word-break: break-all; margin: 8px 0"
+                    style="
+                        display: flex;
+                        align-items: center;
+                        word-break: break-all;
+                        margin-top: 8px;
+                        margin-bottom: 16px;
+                    "
                     class="app-page-subtitle"
                 >
                     <span class="account-address-wrapper mono">
@@ -85,61 +100,66 @@
                             <app-qr-button [address]="address"></app-qr-button>
                             <app-bookmark-button [id]="address"></app-bookmark-button>
                         </ng-container>
-                        <app-account-actions-menu
-                            *ngIf="vp.sm || vp.md"
-                            [data]="address"
-                            [(showFilter)]="showFilter"
-                            [showFilterActionButton]="showFilterActionButton()"
-                            [showCSVExportActionButton]="showCSVExportActionButton()"
-                        ></app-account-actions-menu>
                     </div>
                 </div>
 
-                <!-- Third Line -->
                 <div
+                    style="display: flex; align-items: center; margin: 4px 0"
                     *ngIf="accountOverview.opened"
                     class="text-secondary"
-                    style="display: flex; flex-wrap: wrap; margin: 4px 0"
-                    [style.flexDirection]="vp.sm ? 'column' : 'row'"
-                    [style.alignItems]="vp.sm ? 'start' : 'center'"
-                    [style.fontSize.px]="vp.sm ? 16 : 16"
                 >
-                    <div *ngIf="getAlias(address)" style="display: flex" [style.marginBottom.px]="vp.sm ? 12 : 0">
-                        <span>Known as &ldquo;{{ getAlias(address) }}&rdquo;</span>
-                        <span *ngIf="!vp.sm" style="margin: 0 8px">|</span>
+                    <div
+                        *ngIf="accountOverview.representative === address"
+                        class="mat-overline"
+                        style="line-height: unset"
+                        [style.marginTop.px]="2"
+                        [style.fontSize.px]="12"
+                    >
+                        Self-Represented
                     </div>
-                    <div style="display: flex; align-items: center">
-                        <div
-                            *ngIf="accountOverview.representative === address"
-                            class="mat-overline"
-                            style="line-height: unset"
-                            [style.marginTop.px]="2"
-                            [style.fontSize.px]="12"
+                    <div *ngIf="accountOverview.representative !== address" style="display: flex; align-items: center">
+                        <mat-icon class="tiny-icon">how_to_vote</mat-icon>
+                        <span
+                            >Represented by
+                            <strong>
+                                <a
+                                    class="link text-secondary"
+                                    [routerLink]="'/' + navItems.account.route + '/' + accountOverview.representative"
+                                >
+                                    {{ getAlias(accountOverview.representative) || accountRepresentative }}
+                                </a>
+                            </strong>
+                        </span>
+
+                        <mat-icon
+                            *ngIf="!onlineRepService.onlineReps.has(accountOverview.representative)"
+                            [matTooltip]="'Account\'s representative is offline'"
+                            [matTooltipPosition]="'right'"
+                            color="warn"
+                            style="height: 16px; width: 16px; font-size: 16px; margin-left: 8px; opacity: 0.7"
                         >
-                            Self-Represented
-                        </div>
-                        <div
-                            *ngIf="accountOverview.representative !== address"
-                            style="display: flex; align-items: center"
-                        >
-                            Represented by&nbsp;
+                            error_outline
+                        </mat-icon>
+                    </div>
+                </div>
+                <div
+                    *ngIf="getAlias(address)"
+                    style="display: flex; align-items: center; margin: 4px 0"
+                    class="text-secondary"
+                >
+                    <mat-icon class="tiny-icon">account_circle</mat-icon>
+                    <span
+                        >Known as
+                        <strong>
                             <a
                                 class="link text-secondary"
-                                [routerLink]="'/' + navItems.account.route + '/' + accountOverview.representative"
+                                [routerLink]="'/' + navItems.knownAccounts.route"
+                                [fragment]="address"
                             >
-                                {{ accountRepresentative }}
+                                {{ getAlias(address) }}
                             </a>
-                            <mat-icon
-                                *ngIf="!onlineRepService.onlineReps.has(accountOverview.representative)"
-                                [matTooltip]="'Account\'s representative is offline'"
-                                [matTooltipPosition]="'right'"
-                                color="warn"
-                                style="height: 16px; width: 16px; font-size: 16px; margin-left: 8px"
-                            >
-                                error_outline
-                            </mat-icon>
-                        </div>
-                    </div>
+                        </strong>
+                    </span>
                 </div>
 
                 <!-- Opened Account Price Data -->
@@ -161,7 +181,7 @@
 
                         <div
                             *ngIf="!vp.sm"
-                            style="display: flex; align-items: center; margin: 16px 0; line-height: 24px"
+                            style="display: flex; align-items: center; margin-top: 24px; line-height: 24px"
                         >
                             <div style="margin-right: 8px">
                                 <ng-template [ngTemplateOutlet]="accountBalance"></ng-template>
