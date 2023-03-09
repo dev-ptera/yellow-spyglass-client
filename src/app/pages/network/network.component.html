@@ -21,19 +21,14 @@
                 {{ nakamotoCoefficient }}
             </div>
         </div>
-        <div
-            class="app-section-subtitle"
-            *ngIf="nakamotoCoefficient > 1"
-            [style.marginTop.px]="vp.sm ? 24 : 0"
-            style="margin-bottom: 0"
-        >
+        <div class="app-section-subtitle" *ngIf="nakamotoCoefficient > 1" style="margin-bottom: 0; margin-top: 0">
             The <strong>{{ nakamotoCoefficient }}</strong> largest reps could potentially collude together to achieve
             >{{ quorum.onlineWeightQuorumPercent }}% of the online voting weight and stall the network.
         </div>
         <div class="app-section-subtitle" *ngIf="nakamotoCoefficient === 1" style="margin-bottom: 0">
             It only takes <strong>one</strong> entity to stall the network.
         </div>
-        <div class="app-caption" style="margin-top: 4px; margin-bottom: 16px">
+        <div class="app-caption" style="margin-top: 16px; margin-bottom: 0">
             See the full representative list
             <a class="link primary" [routerLink]="'/' + navItems.representatives.route">here</a>.
         </div>
@@ -75,7 +70,7 @@
                 <td>{{ supply.circulatingPercent | appPercent }}</td>
             </tr>
         </table>
-        <div class="app-section-subtitle" style="margin-bottom: 0; margin-top: 24px">
+        <div class="mat-body-2" style="margin-bottom: 0; margin-top: 24px">
             <strong>{{ supply.burnedAmount | appComma }}</strong> Banano has been burned.
         </div>
     </mat-card>
