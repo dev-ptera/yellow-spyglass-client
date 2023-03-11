@@ -1,5 +1,12 @@
 # Change Log
 
+## v2.4.1 (March 10, 2023)
+
+### Fixed
+
+-  Fixed representative pie chart legend not being circles. 
+-  Fixed monitored and large rep table sortation.
+
 ## v2.4.0 (March 7, 2023)
 
 ### Added

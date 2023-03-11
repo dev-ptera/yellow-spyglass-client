@@ -28,7 +28,7 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
             </ng-container>
 
             <ng-container matColumnDef="address">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Representative</th>
+                <th mat-header-cell *matHeaderCellDef>Representative</th>
                 <td mat-cell *matCellDef="let element">
                     <div class="all-reps-table-alias-cell">
                         <div class="invisible-full-address">
@@ -105,7 +105,7 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
                 <td mat-cell *matCellDef="let element">{{ numberWithCommas(element.fundedDelegatorsCount) }}</td>
             </ng-container>
 
-            <ng-container matColumnDef="uptimeStats.uptimePercentages.month">
+            <ng-container matColumnDef="uptime">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>
                     <div style="text-align: left">
                         Uptime
@@ -147,7 +147,7 @@ export class LargeRepTableComponent implements OnChanges {
         'weight',
         'percentWeight',
         'fundedDelegatorsCount',
-        'uptimeStats.uptimePercentages.month',
+        'uptime',
     ];
     largeRepsDisplayColumnsMd = ['position', 'address', 'online', 'score', 'weight', 'percentWeight'];
 
@@ -169,6 +169,16 @@ export class LargeRepTableComponent implements OnChanges {
         this.largeRepsDataSource = new MatTableDataSource(this.shownReps);
         this._ref.detectChanges();
         this.largeRepsDataSource.sort = this.sortAll;
+        this.largeRepsDataSource.sortingDataAccessor = (item, property) => {
+            switch (property) {
+                case 'uptime': {
+                    return item.uptimePercentages?.month;
+                }
+                default: {
+                    return item[property];
+                }
+            }
+        };
     }
 
     formatBanWeight(weight: number): string {
