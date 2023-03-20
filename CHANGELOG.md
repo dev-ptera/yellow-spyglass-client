@@ -1,5 +1,11 @@
 # Change Log
 
+## v2.4.2 (March 10, 2023)
+
+### Fixed
+
+-  Fixed bug on accounts page where paginator displays incorrect data on tab switch.
+
 ## v2.4.1 (March 10, 2023)
 
 ### Fixed
