@@ -1,5 +1,12 @@
 # Change Log
 
+## v2.4.3 (March 10, 2023)
+
+### Changed
+
+-  Changed network page "Team funds" to "Distribution funds"
+
+
 ## v2.4.2 (March 10, 2023)
 
 ### Fixed
