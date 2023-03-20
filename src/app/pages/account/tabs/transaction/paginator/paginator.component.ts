@@ -72,7 +72,6 @@ export class TxPaginatorComponent implements OnChanges, OnDestroy {
     private maxPageNumber: number;
 
     constructor(public util: UtilService, public vp: ViewportService, public txService: TransactionsService) {
-
         // Initial state
         this.displayedPageNumber = this.txService.confirmedTransactions.currentPage || 0;
         this.pageSize = this.txService.filterData.size;
