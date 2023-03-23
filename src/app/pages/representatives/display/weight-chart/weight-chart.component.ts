@@ -66,10 +66,10 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
                         [class.representatives-legend-others]="!rep.address"
                         [routerLink]="'/' + navItems.account.route + '/' + rep.address"
                     >
-                        <ng-container *ngIf="aliasService.has(rep.address)">
-                            {{ aliasService.getAlias(rep.address) }}
+                        <ng-container *ngIf="aliasService.getAlias(rep.address) as alias">
+                            {{ alias }}
                         </ng-container>
-                        <ng-container *ngIf="!aliasService.has(rep.address)">
+                        <ng-container *ngIf="!aliasService.getAlias(rep.address)">
                             {{ rep.name }}
                         </ng-container>
                     </a>

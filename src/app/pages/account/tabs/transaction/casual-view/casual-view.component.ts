@@ -1,16 +1,18 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewEncapsulation } from '@angular/core';
 import { Transaction, TransactionsService } from '@app/services/transactions/transactions.service';
 import { UtilService } from '@app/services/util/util.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { ApiService } from '@app/services/api/api.service';
-import { AliasService } from '@app/services/alias/alias.service';
 import { APP_NAV_ITEMS } from '../../../../../navigation/nav-items';
 import { AccountActionsService } from '@app/services/account-actions/account-actions.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
     selector: 'app-casual-view',
     styleUrls: [`casual-view.component.scss`],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <mat-list class="tab-transaction-list" responsive>
             <blui-info-list-item
@@ -36,19 +38,10 @@ import { AccountActionsService } from '@app/services/account-actions/account-act
                             {{ tx.type === 'receive' || tx.type === 'open' || isPending ? '+' : '-' }}
                             {{ tx.amount | appComma }}
                         </span>
-
-                        <div class="primary" *ngIf="!vp.sm" style="font-size: 1rem">
-                            {{ aliasService.getAlias(tx.address) }}
-                        </div>
+                        <app-account-alias *ngIf="!vp.sm" [address]="tx.address"></app-account-alias>
                     </div>
                     <div class="address-row">
-                        <div
-                            class="primary"
-                            *ngIf="vp.sm && aliasService.has(tx.address)"
-                            style="font-size: 0.875rem; margin: 12px 0 8px 0"
-                        >
-                            {{ aliasService.getAlias(tx.address) }}
-                        </div>
+                        <app-account-alias *ngIf="vp.sm" [marginBottom]="12" [address]="tx.address"></app-account-alias>
                         <a
                             *ngIf="!tx.type || tx.type !== 'change'"
                             class="address link text mono"
@@ -145,13 +138,16 @@ export class CasualViewComponent {
         public util: UtilService,
         public vp: ViewportService,
         public apiService: ApiService,
-        public aliasService: AliasService,
         public txService: TransactionsService,
-        private readonly _accountActionsService: AccountActionsService
-    ) {}
+        private readonly _ref: ChangeDetectorRef
+    ) {
+        this.vp.vpChange.pipe(untilDestroyed(this)).subscribe(() => {
+            this._ref.detectChanges();
+        });
+    }
 
-    trackByFn(index: number): number {
-        return index;
+    trackByFn(index: number, tx: Transaction): number {
+        return tx.height;
     }
 
     showCopiedHashIcon(tx: Transaction): void {

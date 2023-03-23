@@ -13,6 +13,11 @@
             font-size: 14px;
         }
 
+        .alias-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
         margin: 24px 0;
         word-break: break-word;
         div {

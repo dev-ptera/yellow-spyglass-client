@@ -1,0 +1,33 @@
+:host {
+    display: flex;
+}
+
+.social-media-icon {
+    width: 14px;
+    height: 14px;
+    font-size: 14px;
+    line-height: 24px;
+    opacity: 0.75;
+}
+
+.social-media-button {
+    $size: 24px;
+    cursor: pointer;
+    font-size: 16px !important;
+    height: $size !important;
+    width: $size !important;
+    line-height: $size !important;
+    margin-right: 4px;
+    min-width: unset !important;
+    min-height: unset !important;
+    padding: 0;
+}
+.social-media-button .mat-button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.alias {
+    font-size: 14px;
+}

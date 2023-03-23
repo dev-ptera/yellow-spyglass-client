@@ -2,6 +2,9 @@ export type KnownAccountDto = {
     address: string;
     alias: string;
     owner?: string;
+    hasLore: boolean;
+    lore?: string;
+    balance: number;
     type?: KnownAccountType;
 };
 

@@ -1,3 +1,6 @@
+.app-page-content.known-accounts-page-content {
+    max-width: 1200px;
+}
 .known-accounts-table {
     width: 100%;
     margin-top: 32px;
@@ -5,6 +8,31 @@
     * {
         font-size: 14px;
     }
+    .balance-header .mat-sort-header-container {
+        justify-content: flex-end;
+    }
+    .link-icon {
+        $size: 16px;
+        font-size: $size !important;
+        height: $size;
+        width: $size;
+        line-height: $size;
+    }
+    .expand-button * {
+        font-size: 18px !important;
+    }
+    tr.mat-row.example-detail-row {
+        height: unset;
+        td.mat-cell {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+        }
+    }
+
+    tr.example-detail-row {
+        height: 0;
+    }
+
     .link {
         font-size: 14px;
     }
@@ -15,13 +43,30 @@
         * {
             font-size: 14px;
         }
+        .expand-button {
+            margin-right: -8px;
+        }
     }
-}
+    .known-accounts-alias-cell {
+        width: 100%;
+    }
 
-th.mat-sort-header-sorted {
-    color: black;
-}
-
-.known-accounts-table.sm .known-accounts-alias-cell {
-    padding-left: 18px !important;
+    .expand-element {
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        .expand-element-description {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            .mat-icon {
+                display: flex;
+                margin-right: 16px;
+                $size: 14px;
+                height: $size;
+                font-size: $size;
+                line-height: $size;
+            }
+        }
+    }
 }

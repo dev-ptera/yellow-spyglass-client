@@ -99,7 +99,7 @@ export class NetworkComponent implements OnInit {
                             y: supply.circulatingAmount,
                         },
                         {
-                            name: 'Team Funds',
+                            name: 'Distribution Funds',
                             y: supply.devFundAmount,
                         },
                     ],

@@ -1,6 +1,6 @@
 {
     "name": "yellow-spyglass-client",
-    "version": "1.1.0",
+    "version": "2.4.3",
     "scripts": {
         "ng": "ng",
         "start": "ng serve -c development --open --host 0.0.0.0",
@@ -13,7 +13,8 @@
         "npm-check-updates": "npm-check-updates --target minor -u",
         "prettier": "prettier \"src/**/**.{ts,js,json,css,scss,html}\" --write",
         "prettier:check": "prettier \"src/**/**.{ts,js,json,css,scss,html}\" --check",
-        "preflight": "npm update && npm run npm-check-updates && npm run ng update && npm i && npm audit fix && npm run lint:fix && npm run prettier && npm outdated"
+        "preflight": "npm update && npm run npm-check-updates && npm run ng update && npm i && npm audit fix && npm run lint:fix && npm run prettier && npm outdated",
+        "tag:package": "npx -p @brightlayer-ui/tag blui-tag"
     },
     "private": true,
     "dependencies": {
@@ -27,14 +28,12 @@
         "@angular/platform-browser": "~14.2.2",
         "@angular/platform-browser-dynamic": "~14.2.2",
         "@angular/router": "~14.2.2",
-        "@brightlayer-ui/angular-components": "^7.0.3-alpha.1",
-        "@brightlayer-ui/angular-themes": "^7.0.1",
+        "@brightlayer-ui/angular-components": "^8.0.1",
+        "@brightlayer-ui/angular-themes": "8.0.0",
         "@brightlayer-ui/colors": "^3.1.1",
         "@brightlayer-ui/colors-branding": "^3.2.1",
-        "@brightlayer-ui/icons": "^1.11.0",
-        "@brightlayer-ui/icons-svg": "^1.11.0",
-        "@brightlayer-ui/ng-progress-icons": "^1.2.1",
         "@dev-ptera/nano-node-rpc": "^2.0.2",
+        "@ngneat/until-destroy": "^9.2.3",
         "banano-unit-converter": "^0.1.0",
         "core-js": "^2.5.4",
         "file-saver": "^2.0.5",

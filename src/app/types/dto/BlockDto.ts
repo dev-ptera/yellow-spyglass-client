@@ -5,6 +5,7 @@ export type Block = {
     balance?: string;
     height: string;
     local_timestamp: string;
+    balance_decimal: string;
     confirmed: boolean;
     successor?: string;
     contents: {

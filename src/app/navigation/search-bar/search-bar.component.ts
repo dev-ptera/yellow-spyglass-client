@@ -15,6 +15,7 @@ import { AliasDto, DiscordResponseDto } from '@app/types/dto';
 import { SearchService } from '@app/services/search/search.service';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { environment } from '../../../environments/environment';
+import { AliasService } from '@app/services/alias/alias.service';
 
 export let APP_SEARCH_BAR_ID = 0;
 
@@ -62,7 +63,7 @@ export class SearchBarComponent implements OnInit, AfterViewInit, AfterViewCheck
     @Input() placeholder: string = 'Search by Address, Block or Alias';
     @Input() toolbarTitle: string;
 
-    /** This input is used to turn off the auto-focus logic. Home page search does not need auto-focus, but app-bar search does. */
+    /** This input is used to turn off the autofocus logic. Home page search does not need autofocus, but app-bar search does. */
     @Input() onlyFocusWhenActivelySearching: boolean;
 
     @Output() closeSearch: EventEmitter<void> = new EventEmitter<void>();
@@ -70,7 +71,6 @@ export class SearchBarComponent implements OnInit, AfterViewInit, AfterViewCheck
     /** Emits whenever a search value is neither a hash, discord id, alias, nor address.  Only used on the home page. */
     @Output() invalidSearch: EventEmitter<void> = new EventEmitter<void>();
 
-    knownAccounts: AliasDto[] = [];
     matchingAccounts: AliasDto[] = [];
 
     appbarSearchText: string;
@@ -82,20 +82,13 @@ export class SearchBarComponent implements OnInit, AfterViewInit, AfterViewCheck
     constructor(
         public vp: ViewportService,
         private readonly _api: ApiService,
-        private readonly _searchService: SearchService
+        private readonly _searchService: SearchService,
+        public aliasService: AliasService
     ) {}
 
     ngOnInit(): void {
         APP_SEARCH_BAR_ID++;
         this.inputId = `app_search_bar_input_no_${APP_SEARCH_BAR_ID}`;
-        this._api
-            .fetchAliases()
-            .then((data: AliasDto[]) => {
-                this.knownAccounts = data;
-            })
-            .catch((err) => {
-                console.error(err);
-            });
     }
 
     ngAfterViewInit(): void {
@@ -248,7 +241,7 @@ export class SearchBarComponent implements OnInit, AfterViewInit, AfterViewCheck
     private _matchAliases(): void {
         const value = (this.appbarSearchText || '').toLowerCase();
         this.matchingAccounts = [];
-        this.knownAccounts.map((account) => {
+        this.aliasService.aliases.map((account) => {
             if (!account.alias) {
                 return;
             }

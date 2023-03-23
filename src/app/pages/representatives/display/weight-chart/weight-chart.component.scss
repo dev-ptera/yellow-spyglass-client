@@ -35,8 +35,11 @@
         align-items: center;
     }
     .representatives-legend-color {
-        width: 12px;
-        height: 12px;
+        $size: 12px;
+        min-width: $size;
+        width: $size;
+        height: $size;
+        min-height: $size;
         border-radius: 100%;
         margin-right: 16px;
     }

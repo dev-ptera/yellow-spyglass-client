@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { saveAs } from 'file-saver';
 
@@ -192,14 +192,6 @@ export class ApiService {
         return this._http.get<HostNodeStatsDto>(`${this.httpApi}/v1/network/node-stats`).toPromise();
     }
 
-    /** Fetches monKey avatar for a given account. */
-    async fetchMonKey(address: string): Promise<string> {
-        await this._hasPingedApi();
-        const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
-        const monkeyUrl = this.createMonKeyUrl(address);
-        return this._http.get(monkeyUrl, { headers, responseType: 'text' }).toPromise<string>();
-    }
-
     /** Fetches representatives stats. */
     async fetchLargeRepresentatives(): Promise<RepresentativeDto[]> {
         await this._hasPingedApi();
@@ -307,7 +299,12 @@ export class ApiService {
     async fetchKnownAccounts(): Promise<KnownAccountDto[]> {
         await this._hasPingedApi();
         return this._http
-            .post<KnownAccountDto[]>(`${this.httpApi}/v1/known/accounts`, { includeOwner: true, includeType: true })
+            .post<KnownAccountDto[]>(`${this.httpApi}/v1/known/accounts`, {
+                includeLore: true,
+                includeOwner: true,
+                includeType: true,
+                includeBalance: true,
+            })
             .toPromise();
     }
 

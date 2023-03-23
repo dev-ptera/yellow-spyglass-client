@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, ViewEncapsulation } from '@angular/core';
 import { UtilService } from '@app/services/util/util.service';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { Subscription } from 'rxjs';
@@ -62,7 +62,7 @@ import { TransactionsService } from '@app/services/transactions/transactions.ser
         </div>
     `,
 })
-export class TxPaginatorComponent implements OnChanges {
+export class TxPaginatorComponent implements OnChanges, OnDestroy {
     @Input() blockCount: number;
 
     pageSize: number;
@@ -73,7 +73,7 @@ export class TxPaginatorComponent implements OnChanges {
 
     constructor(public util: UtilService, public vp: ViewportService, public txService: TransactionsService) {
         // Initial state
-        this.displayedPageNumber = 0;
+        this.displayedPageNumber = this.txService.confirmedTransactions.currentPage || 0;
         this.pageSize = this.txService.filterData.size;
 
         this.pageLoad$ = this.txService.emitPageLoad().subscribe(() => {

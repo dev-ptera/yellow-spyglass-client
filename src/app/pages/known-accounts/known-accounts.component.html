@@ -13,8 +13,34 @@
 </ng-template>
 
 <ng-template #bodyContent>
+    <div class="app-section-title" style="margin-bottom: 16px">Filter by Type</div>
+    <mat-chip-list aria-label="Type Selection" [multiple]="false" #chipList>
+        <mat-chip color="primary" #all="matChip" (click)="selectChip(all)" value="all" [selected]="true">All</mat-chip>
+        <mat-chip color="primary" #burn="matChip" (click)="selectChip(burn)" value="burn">Burn</mat-chip>
+        <mat-chip color="primary" #distribution="matChip" (click)="selectChip(distribution)" value="distribution"
+            >Distribution</mat-chip
+        >
+        <mat-chip color="primary" #donation="matChip" (click)="selectChip(donation)" value="donation"
+            >Donation</mat-chip
+        >
+        <mat-chip color="primary" #event="matChip" (click)="selectChip(event)" value="event">Event</mat-chip>
+        <mat-chip color="primary" #exchange="matChip" (click)="selectChip(exchange)" value="exchange"
+            >Exchange</mat-chip
+        >
+        <mat-chip color="primary" #faucet="matChip" (click)="selectChip(faucet)" value="faucet">Faucet</mat-chip>
+        <mat-chip color="primary" #gambling="matChip" (click)="selectChip(gambling)" value="gambling"
+            >Gambling</mat-chip
+        >
+        <mat-chip color="primary" #rep="matChip" (click)="selectChip(rep)" value="representative"
+            >Representative</mat-chip
+        >
+        <mat-chip color="primary" #team="matChip" (click)="selectChip(team)" value="team-member">Team Member</mat-chip>
+        <mat-chip color="primary" #service="matChip" (click)="selectChip(service)" value="service">Service</mat-chip>
+    </mat-chip-list>
+
     <table
         mat-table
+        multiTemplateDataRows
         responsive
         [dataSource]="accountsDataSource"
         #sort="matSort"
@@ -24,21 +50,30 @@
         <ng-container matColumnDef="alias">
             <th mat-header-cell *matHeaderCellDef mat-sort-header [style.paddingLeft.px]="16">Account</th>
             <td mat-cell *matCellDef="let element" class="known-accounts-alias-cell">
-                <a
-                    class="link text"
-                    style="word-break: break-word; font-weight: 600"
-                    [routerLink]="'/' + navItems.account.route + '/' + element.address"
-                    >{{ element.alias }}</a
-                >
-                <br />
-                <a
-                    class="link text-secondary mono"
-                    style="word-break: break-word"
-                    *ngIf="!vp.sm"
-                    [routerLink]="'/' + navItems.account.route + '/' + element.address"
-                >
-                    {{ formatAddr(element.address) }}
-                </a>
+                <div [id]="element.address" class="alias-line" style="scroll-margin-top: 72px">
+                    <a
+                        class="link text"
+                        style="word-break: break-word; font-weight: 600"
+                        [class.primary]="element.address === fragment"
+                        [routerLink]="'/' + navItems.account.route + '/' + element.address"
+                        >{{ element.alias }}</a
+                    >
+                </div>
+                <div style="display: flex; align-items: center">
+                    <a
+                        class="link text-secondary mono"
+                        style="word-break: keep-all; margin-right: 16px"
+                        [routerLink]="'/' + navItems.account.route + '/' + element.address"
+                    >
+                        {{ formatAddr(element.address) }}
+                    </a>
+                    <mat-icon
+                        (click)="copyLink(element.address); $event.stopPropagation()"
+                        class="link-icon text-secondary"
+                        style="cursor: pointer"
+                        >link</mat-icon
+                    >
+                </div>
             </td>
         </ng-container>
 
@@ -47,23 +82,107 @@
             <td mat-cell *matCellDef="let element">
                 {{ element.type }}
             </td>
-            a
         </ng-container>
 
         <ng-container matColumnDef="owner">
             <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 0 16px">Owner</th>
-            <td mat-cell *matCellDef="let element" style="word-break: break-all; padding: 0 18px">
+            <td mat-cell *matCellDef="let element" style="word-break: break-all; min-width: 120px">
                 {{ element.owner }}
             </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns" style="height: 56px"></tr>
+        <ng-container matColumnDef="balance">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 0 16px" class="balance-header">
+                Balance
+            </th>
+            <td mat-cell *matCellDef="let element" style="text-align: right">
+                {{ element.balance | appComma }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expand">
+            <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+            <td mat-cell *matCellDef="let element" style="text-align: end">
+                <button
+                    class="expand-button"
+                    *ngIf="canOpenRow(element)"
+                    mat-icon-button
+                    aria-label="expand row"
+                    (click)="openRow(element); $event.stopPropagation()"
+                >
+                    <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+                    <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expandedDetail">
+            <td
+                class="expand-td"
+                mat-cell
+                *matCellDef="let element"
+                [attr.colspan]="getDisplayColumns().length"
+                [style.borderWidth.px]="expandedElement === element ? 1 : 0"
+            >
+                <div class="expand-element" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                    <div style="padding: 8px 0">
+                        <div class="expand-element-description" *ngIf="element.lore as lore">
+                            <div>
+                                <mat-icon class="text-secondary">info</mat-icon>
+                            </div>
+                            <div>
+                                <strong>Description </strong>
+                                <div>{{ lore }}</div>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="vp.sm">
+                            <div class="expand-element-description">
+                                <div>
+                                    <mat-icon class="text-secondary">category</mat-icon>
+                                </div>
+                                <div>
+                                    <strong>Type</strong>
+                                    <div>{{ element.type }}</div>
+                                </div>
+                            </div>
+                            <div class="expand-element-description" *ngIf="element.owner as owner">
+                                <div>
+                                    <mat-icon class="text-secondary">person</mat-icon>
+                                </div>
+                                <div>
+                                    <strong>Owned by</strong>
+                                    <div>{{ owner }}</div>
+                                </div>
+                            </div>
+                            <div class="expand-element-description">
+                                <div>
+                                    <mat-icon class="text-secondary">savings</mat-icon>
+                                </div>
+                                <div>
+                                    <strong>Balance</strong>
+                                    <div>{{ element.balance | appComma }} BAN</div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="getDisplayColumns()"></tr>
+        <tr
+            mat-row
+            *matRowDef="let row; columns: getDisplayColumns()"
+            class="main-row"
+            style="height: 72px"
+            (click)="openRow(row)"
+        ></tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
     </table>
 </ng-template>
 
 <div class="app-page-root" responsive>
-    <div class="app-page-content">
+    <div class="app-page-content known-accounts-page-content">
         <app-error *ngIf="hasError"></app-error>
         <ng-container *ngIf="!hasError">
             <ng-template [ngTemplateOutlet]="titleContent"></ng-template>

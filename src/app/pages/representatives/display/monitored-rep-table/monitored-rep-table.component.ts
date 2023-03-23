@@ -71,7 +71,7 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
             </ng-container>
 
             <ng-container matColumnDef="weightPercent">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 70px">%</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="min-width: 70px">Weight</th>
                 <td mat-cell *matCellDef="let element">
                     <ng-container *ngIf="element.weight">
                         {{ formatWeightPercent(element.weight) }}<span style="font-size: 10px">%</span>
@@ -193,17 +193,23 @@ export class MonitoredRepTableComponent implements OnChanges {
         this.monitoredRepsDataSource.sort = this.sortMonitored;
         this.monitoredRepsDataSource.sortingDataAccessor = (item, property) => {
             switch (property) {
+                case 'name': {
+                    return item.name?.toLowerCase();
+                }
                 case 'isPrincipal': {
-                    return item['weight'];
+                    return item.weight;
                 }
                 case 'weightBan': {
-                    return item['weight'];
+                    return item.weight;
                 }
                 case 'weightPercent': {
-                    return item['weight'];
+                    return item.weight;
+                }
+                case 'location': {
+                    return item.location?.toLowerCase();
                 }
                 case 'uptime': {
-                    return this.monitoredRepMap.get(item['address'])?.uptimePercentages.semiAnnual;
+                    return item.uptimePercentages?.month;
                 }
                 default: {
                     return item[property];
