@@ -25,6 +25,7 @@ import { NetworkLoadingComponent } from '@app/pages/network/network-loading.comp
         BrowserAnimationsModule,
         BrowserModule,
         CommonModule,
+        EmptyStateModule,
         FormsModule,
         HighchartsChartModule,
         HttpClientModule,
