@@ -138,6 +138,7 @@ export class CasualViewComponent {
         public util: UtilService,
         public vp: ViewportService,
         public apiService: ApiService,
+        private readonly _accountActionsService: AccountActionsService,
         public txService: TransactionsService,
         private readonly _ref: ChangeDetectorRef
     ) {
@@ -155,6 +156,7 @@ export class CasualViewComponent {
         this._accountActionsService.copyDataToClipboard(tx.hash);
         setTimeout(() => {
             tx.showCopiedHashIcon = false;
+            this._ref.detectChanges();
         }, 1000);
     }
 }
