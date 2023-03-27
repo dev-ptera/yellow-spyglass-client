@@ -47,7 +47,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
                         style="margin-bottom: .5rem"
                         [style.marginTop.px]="vp.sm ? 16 : 8"
                     >
-                        ~ <strong>{{ tx.amount | appTxFee | appComma }}</strong> send transaction fee
+                        ~ <strong>{{ tx.amount | appTxFee | appComma }}</strong> BAN transaction fee
                     </div>
                     <div class="address-row">
                         <app-account-alias *ngIf="vp.sm" [marginBottom]="12" [address]="tx.address"></app-account-alias>

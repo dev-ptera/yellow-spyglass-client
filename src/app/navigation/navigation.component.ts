@@ -11,6 +11,7 @@ import { UtilService } from '@app/services/util/util.service';
 
 @Component({
     selector: 'app-navigation',
+    styleUrls: ['ha.scss'],
     templateUrl: './navigation.component.html',
 })
 export class NavigationComponent {

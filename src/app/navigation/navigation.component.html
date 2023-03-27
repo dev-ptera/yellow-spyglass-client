@@ -39,7 +39,7 @@
             </blui-drawer-nav-group>
         </blui-drawer-body>
     </blui-drawer>
-    <div blui-content class="navigation-drawer-content" [class.home]="isHome()" responsive>
+    <div blui-content class="navigation-drawer-content" [class.isPranked]="showPrank" [class.home]="isHome()" responsive>
         <mat-toolbar
             *ngIf="showPrank"
             id="fee-announcement-bar"
@@ -71,7 +71,7 @@
                     <div style="width: 100%">
                         <div><strong>V25 Protocol Update</strong></div>
                         <span style="white-space: break-spaces"
-                            >Heads up, monkeys! V25 introduces a small transaction fee when sending transactions; all
+                            >Heads up, monkeys! V25 introduces a small fee when transactions are sent; all
                             incurred fees recoup RQ's losses in the Kalium Valley bank collapse - more details
                             <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">here</a>.
                         </span>

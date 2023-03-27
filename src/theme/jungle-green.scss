@@ -15,6 +15,9 @@
     .app-user-menu .blui-user-menu-avatar {
         color: map-get(blui.$blui-white, 50);
     }
+    #fee-announcement-bar {
+        background: map-get($greenPalette, 900);
+    }
     #fee-announcement-bar * {
         color: map-get(blui.$blui-white, 50);
     }
