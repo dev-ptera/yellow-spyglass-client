@@ -48,6 +48,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                 </div>
                 <div class="hash-description text-secondary">The account represented by this state block</div>
             </div>
+
             <div class="hash-section">
                 <div>
                     <span class="app-section-title">Subtype</span>
@@ -66,6 +67,17 @@ import { AliasService } from '@app/services/alias/alias.service';
                     </span>
                 </div>
                 <div class="hash-description text-secondary">Amount of Banano sent in this transaction</div>
+            </div>
+
+            <div class="hash-section" *ngIf="block.subtype === 'send'">
+                <div>
+                    <span class="app-section-title">Transaction Fee </span>
+                    <span class="mat-body-1">
+                        <span [innerHTML]="block.amount_decimal | appTxFee | appComma | appLittleDecimal"></span> BAN |
+                        00000{{ block.amount_decimal | appTxFee }}00000000000000000000000000000 RAW
+                    </span>
+                </div>
+                <div class="hash-description text-secondary">Fee required to send this transaction</div>
             </div>
 
             <div class="hash-section" *ngIf="block.subtype === 'receive'">

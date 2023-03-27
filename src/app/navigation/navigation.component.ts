@@ -16,6 +16,7 @@ import { UtilService } from '@app/services/util/util.service';
 export class NavigationComponent {
     toolbarTitle: string;
     routeListener: Subscription;
+    showPrank = true;
 
     explorerNavGroup = EXPLORER_NAV_GROUP;
     networkNavGroup = NETWORK_NAV_GROUP;

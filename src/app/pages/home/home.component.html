@@ -38,6 +38,23 @@
                 >
                     Network Summary
                 </div>
+
+                <mat-card class="divider-border mat-elevation-z0">
+                    <div class="icon-container">
+                        <mat-icon>toll</mat-icon>
+                    </div>
+                    <div class="text-container">
+                        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="title link"
+                            >Transaction Fees</a
+                        >
+                        <blui-list-item-tag label="New!" style="margin-left: 16px"></blui-list-item-tag>
+                        <div class="desc">
+                            Approximately <span class="stronger">{{ fees$ | async | appComma }} </span> BAN transaction
+                            fees collected to date.
+                        </div>
+                    </div>
+                </mat-card>
+
                 <mat-card class="divider-border mat-elevation-z0">
                     <div class="icon-container">
                         <mat-icon>savings</mat-icon>
@@ -98,7 +115,7 @@
                             There are
                             <span class="stronger">{{ summaryData.representativesOnlineCount }}</span> Representatives
                             online, <span class="stronger">{{ summaryData.principalRepsOnlineCount }}</span> of which
-                            are Principal Representatives
+                            are Principal Representatives.
                         </div>
                     </div>
                 </mat-card>

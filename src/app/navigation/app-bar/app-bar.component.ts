@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { Meta, Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -9,7 +9,7 @@ import { LoadingService } from '@app/services/loading/loading.service';
 @Component({
     selector: 'app-bar',
     template: `
-        <div class="navigation-app-bar-container" responsive>
+        <div class="navigation-app-bar-container" responsive [class.isPranked]="isPranked">
             <mat-toolbar class="navigation-app-bar mat-elevation-z2" color="primary" responsive>
                 <div style="display: flex; width: 100%; align-items: center">
                     <button *ngIf="vp.sm" mat-icon-button (click)="openDrawer.emit()" [style.marginRight.px]="16">
@@ -117,6 +117,7 @@ import { LoadingService } from '@app/services/loading/loading.service';
 })
 export class AppBarComponent {
     @Input() toolbarTitle: string;
+    @Input() isPranked: boolean;
     @Output() openDrawer: EventEmitter<void> = new EventEmitter<void>();
 
     isLoading = false;

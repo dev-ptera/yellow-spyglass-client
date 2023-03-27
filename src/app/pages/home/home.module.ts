@@ -11,6 +11,7 @@ import { NavigationModule } from '../../navigation/navigation.module';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { ListItemTagModule } from '@brightlayer-ui/angular-components';
 
 @NgModule({
     declarations: [HomeComponent],
@@ -27,6 +28,7 @@ import { RouterModule } from '@angular/router';
         MatIconModule,
         FormsModule,
         RouterModule,
+        ListItemTagModule,
     ],
     exports: [HomeComponent],
 })

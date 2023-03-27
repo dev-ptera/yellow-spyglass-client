@@ -24,9 +24,11 @@ import { LittleDecimalPipe } from '@app/common/pipes/little-decimal.pipe';
 import { LoadSpinnerComponent } from '@app/common/components/load-spinner/load-spinner.component';
 import { AliasComponent } from '@app/common/components/alias/alias.component';
 import { RouterLinkWithHref } from '@angular/router';
+import { TxFeePipe } from '@app/common/pipes/tx-fee.pipe';
 
 @NgModule({
     declarations: [
+        TxFeePipe,
         BookmarkButtonComponent,
         CommaPipe,
         CopyButtonComponent,
@@ -56,6 +58,7 @@ import { RouterLinkWithHref } from '@angular/router';
         RouterLinkWithHref,
     ],
     exports: [
+        TxFeePipe,
         BookmarkButtonComponent,
         CommaPipe,
         CopyButtonComponent,

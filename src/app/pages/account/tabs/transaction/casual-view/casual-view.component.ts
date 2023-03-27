@@ -40,6 +40,15 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
                         </span>
                         <app-account-alias *ngIf="!vp.sm" [address]="tx.address"></app-account-alias>
                     </div>
+
+                    <div
+                        *ngIf="tx.type === 'send'"
+                        class="mat-body-2 mat-hint"
+                        style="margin-bottom: .5rem"
+                        [style.marginTop.px]="vp.sm ? 16 : 8"
+                    >
+                        ~ <strong>{{ tx.amount | appTxFee | appComma }}</strong> send transaction fee
+                    </div>
                     <div class="address-row">
                         <app-account-alias *ngIf="vp.sm" [marginBottom]="12" [address]="tx.address"></app-account-alias>
                         <a

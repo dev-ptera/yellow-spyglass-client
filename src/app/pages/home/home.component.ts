@@ -6,6 +6,8 @@ import { ApiService } from '@app/services/api/api.service';
 import { ExplorerSummaryDto } from '@app/types/dto';
 import { APP_NAV_ITEMS } from '../../navigation/nav-items';
 import { SearchBarComponent } from '../../navigation/search-bar/search-bar.component';
+import { interval, of } from 'rxjs';
+import { concatMap, delay, flatMap, map, repeat, startWith, switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-home',
@@ -15,6 +17,31 @@ import { SearchBarComponent } from '../../navigation/search-bar/search-bar.compo
 })
 export class HomeComponent {
     @ViewChild('searchBar') searchBar: SearchBarComponent;
+
+    randomIntFromInterval = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1) + min);
+
+    initFees(): number {
+        const fees = window.localStorage.getItem('fees');
+        return isNaN(Number(fees))
+            ? this.randomIntFromInterval(1_900, 19_000) + 10_000
+            : Number(fees) + this.getRandomIncrease() * 10;
+    }
+    getRandomIncrease(): number {
+        return this.randomIntFromInterval(0, 1_000_000) * 0.0000019;
+    }
+    getRandomDelay(): number {
+        return Math.random() * 2500 + 200;
+    }
+    fees = this.initFees();
+    fees$ = interval(0).pipe(
+        concatMap(() => {
+            this.fees += this.getRandomIncrease();
+            window.localStorage.setItem('fees', String(this.fees));
+            return of(this.fees).pipe(delay(this.getRandomDelay()));
+        }),
+        repeat(),
+        startWith(this.fees)
+    );
 
     showHint: boolean;
     routes = APP_NAV_ITEMS;

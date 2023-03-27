@@ -17,7 +17,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
             *ngFor="let tx of transactions; trackBy: trackByFn; let last = last"
             class="animation-content brpd-tab-transaction-list"
         >
-            <div style="display: flex; align-items: center">
+            <div style="display: flex; align-items: center; padding: 4px 0">
                 <img
                     [src]="apiService.createMonKeyUrl(tx.address || tx.newRepresentative)"
                     loading="lazy"
@@ -50,6 +50,9 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
                         {{ tx.type === 'receive' || isPending ? '+' : '-' }}
                         {{ formatNumber(tx.amount) }}
                     </ng-container>
+                    <div *ngIf="tx.type === 'send'" class="mat-body-2 mat-hint">
+                        ~ <strong>{{ tx.amount | appTxFee | appComma }}</strong> tx fee
+                    </div>
                 </div>
                 <div
                     style="margin-right: 24px"
