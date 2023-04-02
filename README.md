@@ -2,7 +2,7 @@
 
 This is a [Banano](https://banano.cc/) network explorer, written in Angular.  It currently supports the following pages & features:
 
-## Pages
+## Pages 
 
 #### [Explore](https://www.yellowspyglass.com/) 
 See address history & block hash information
