@@ -120,7 +120,7 @@ export class SearchBarComponent implements OnInit, AfterViewInit, AfterViewCheck
 
     /** Call this method to manually search based off of current input field value. */
     searchCurrentValue(controlKey: boolean, e?: KeyboardEvent): void {
-        const value = this.appbarSearchText || '';
+        const value = this.appbarSearchText ? this.appbarSearchText.trim() : '';
 
         // Handle Empty Case
         if (!value) {
