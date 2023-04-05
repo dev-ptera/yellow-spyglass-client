@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.4.4 (April 4, 2023)
+
+### Fixed
+
+-  Trimmed search strings to prevent search errors; fixed in [#45](https://github.com/dev-ptera/yellow-spyglass-client/pull/45).
+
 ## v2.4.3 (March 10, 2023)
 
 ### Changed

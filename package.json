@@ -1,6 +1,6 @@
 {
     "name": "yellow-spyglass-client",
-    "version": "2.4.3",
+    "version": "2.4.4",
     "scripts": {
         "ng": "ng",
         "start": "ng serve -c development --open --host 0.0.0.0",
