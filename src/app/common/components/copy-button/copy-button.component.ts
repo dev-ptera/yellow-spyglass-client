@@ -10,7 +10,7 @@ import { AccountActionsService } from '@app/services/account-actions/account-act
             class="address-action-button"
             responsive
             (click)="copyToClipboard()"
-            matTooltip="Copy Address"
+            [matTooltip]="getToolTip()"
         >
             <mat-icon>content_copy</mat-icon>
         </button>
@@ -23,5 +23,10 @@ export class CopyButtonComponent {
 
     copyToClipboard(): void {
         this._accountActionsService.copyDataToClipboard(this.data);
+    }
+
+    getToolTip(): string {
+        const isHash = !this.data.includes('ban_');
+        return isHash ? 'Copy Hash' : 'Copy Address';
     }
 }

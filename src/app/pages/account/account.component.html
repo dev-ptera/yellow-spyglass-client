@@ -24,7 +24,8 @@
 </ng-template>
 
 <ng-template #headerContent>
-    <mat-card class="account-header divider-border mat-elevation-z0" responsive>
+    <mat-card class="account-header divider-border mat-elevation-z0" responsive *ngIf="!badAccount">
+
         <!-- Loading -->
         <div *ngIf="!accountOverview" style="display: flex; align-items: center">
             <ng-template [ngTemplateOutlet]="desktopMonKey"></ng-template>
@@ -404,8 +405,20 @@
                     <ng-template [ngTemplateOutlet]="bodyContent"></ng-template>
                 </div>
                 <ng-container *ngIf="hasError">
-                    <mat-divider></mat-divider>
-                    <app-error></app-error>
+                    <ng-container *ngIf="!badAccount">
+                        <mat-divider></mat-divider>
+                        <app-error></app-error>
+                    </ng-container>
+                    <div  *ngIf="badAccount" style="display: flex; justify-content: center">
+                        <blui-empty-state style="max-width: 420px; margin-top: 64px">
+                            <mat-icon blui-empty-icon>info</mat-icon>
+                            <div blui-title>Unknown Address</div>
+                            <div blui-description>
+                                The address you searched could not be found.  Please double-check the address is correct or try again later.
+                            </div>
+                            <button blui-actions mat-flat-button color="primary" (click)="goBack()">Go Back</button>
+                        </blui-empty-state>
+                    </div>
                 </ng-container>
             </div>
         </div>

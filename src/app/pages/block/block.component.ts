@@ -212,7 +212,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                     <blui-empty-state
                         style="max-width: 420px; margin-top: 64px"
                         title="Unknown Block"
-                        description="The block you requested in not found.  Please double-check the hash entered is correct or try again later."
+                        description="The block you requested in not found.  Please double-check the hash is correct or try again later."
                     >
                         <button blui-actions mat-flat-button color="primary" (click)="goBack()">Go Back</button>
                         <mat-icon blui-empty-icon>info</mat-icon>

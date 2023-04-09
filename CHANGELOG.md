@@ -1,6 +1,13 @@
 # Change Log
 
-## 2.4.4 (April 4, 2023)
+## v2.4.5 (April 9, 2023)
+
+### Fixed
+
+-  Fixed issue where "Copy Hash" button on Block page was not displaying correct text.
+-  Fixed issue where unknown addresses were not being handled correctly.
+
+## v2.4.4 (April 4, 2023)
 
 ### Fixed
 
@@ -11,7 +18,6 @@
 ### Changed
 
 -  Changed network page "Team funds" to "Distribution funds"
-
 
 ## v2.4.2 (March 10, 2023)
 
