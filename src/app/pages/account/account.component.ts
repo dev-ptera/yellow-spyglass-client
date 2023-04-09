@@ -30,6 +30,7 @@ export class AccountComponent implements OnDestroy {
     confirmedBalance: number;
     accountRepresentative: string;
 
+    badAccount: boolean;
     showFilter: boolean;
     hasError: boolean;
     hasNFTsError: boolean;
@@ -87,6 +88,7 @@ export class AccountComponent implements OnDestroy {
     /** Call this method whenever a new address is searched. */
     private _resetPage(): void {
         this.address = undefined;
+        this.badAccount = false;
         this.accountOverview = undefined;
         this.hasError = false;
         this.shownTabNumber = 1;
@@ -134,6 +136,10 @@ export class AccountComponent implements OnDestroy {
             this.apiService.fetchAccountOverview(address),
             this._txTabService.loadConfirmedTransactionsPage(0, pageSize),
         ]).catch((err) => {
+            // Check bad account number
+            if (err.error && err.error.error && err.error.error.toLowerCase().includes('bad account')) {
+                this.badAccount = true;
+            }
             console.error(err);
             this.hasError = true;
         });
@@ -185,6 +191,10 @@ export class AccountComponent implements OnDestroy {
     formatBtcPrice(raw: string): string {
         const ban = this._util.convertRawToBan(raw, { precision: 2, comma: false });
         return `₿${this._util.numberWithCommas(this._priceService.priceInBitcoin(Number(ban)).toFixed(4))}`;
+    }
+
+    goBack(): void {
+        window.history.back();
     }
 
     /** Puts emphasis on the first & last bits of an address. */
