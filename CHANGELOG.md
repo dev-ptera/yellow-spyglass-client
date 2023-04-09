@@ -4,7 +4,7 @@
 
 ### Fixed
 
--  Fixed issue where "Copy Hash" button on Block page was not displaying correct text.
+-  Fixed issue  where "Copy Hash" button on Block page was not displaying correct text.
 -  Fixed issue where unknown addresses were not being handled correctly.
 
 ## v2.4.4 (April 4, 2023)
