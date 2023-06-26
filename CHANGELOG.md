@@ -1,5 +1,12 @@
 # Change Log
 
+## v2.5.0 (June 26, 2023)
+
+### Added
+
+-  Added known accounts onto Delegators tab on Account page.
+-  Added min-weight coefficient data to the Network page.
+
 ## v2.4.5 (April 9, 2023)
 
 ### Fixed
