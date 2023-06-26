@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, Input, ViewEncapsulation } from '@angular
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { DelegatorsTabService } from '@app/pages/account/tabs/delegators/delegators-tab.service';
 import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
+import { AliasService } from '@app/services/alias/alias.service';
 
 @Component({
     selector: 'account-delegators-tab',
@@ -39,20 +40,25 @@ import { APP_NAV_ITEMS } from '../../../../navigation/nav-items';
                     <th mat-header-cell *matHeaderCellDef>Address</th>
                     <td
                         mat-cell
-                        class="delegators-address-cell mono"
+                        class="delegators-address-cell "
                         style="word-break: break-all"
-                        [class.link]="element.address !== address"
                         *matCellDef="let element"
                     >
-                        <a class="text link" [routerLink]="'/' + navItems.account.route + '/' + element.address">
+                        <a
+                            class="text link mono"
+                            [routerLink]="'/' + navItems.account.route + '/' + element.address"
+                            [class.link]="element.address !== address"
+                        >
                             {{ element.address }}
                         </a>
                         <span
                             *ngIf="element.address === address"
                             class="text-secondary mat-body-2"
                             style="margin-left: 8px;; word-break: normal"
-                            >(This Account)</span
-                        >
+                            >(This Account)
+                        </span>
+
+                        <div class="primary" style="font-weight: 600">{{ getAlias(element.address) }}</div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="weight">
@@ -98,11 +104,16 @@ export class DelegatorsTabComponent {
     constructor(
         public vp: ViewportService,
         public delegatorService: DelegatorsTabService,
+        private readonly _aliasService: AliasService,
         private readonly _ref: ChangeDetectorRef
     ) {}
 
     async loadMoreDelegators(): Promise<void> {
         await this.delegatorService.fetchDelegators(this.address);
         this._ref.detectChanges();
+    }
+
+    getAlias(address: string): string {
+        return this._aliasService.getAlias(address);
     }
 }

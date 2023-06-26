@@ -17,6 +17,7 @@ import {
     ExplorerSummaryDto,
     HostNodeStatsDto,
     KnownAccountDto,
+    MinWeightCoefficientDto,
     MonitoredRepDto,
     NakamotoCoefficientDto,
     PeerVersionsDto,
@@ -243,6 +244,12 @@ export class ApiService {
     async fetchNakamotoCoefficient(): Promise<NakamotoCoefficientDto> {
         await this._hasPingedApi();
         return this._http.get<NakamotoCoefficientDto>(`${this.httpApi}/v1/network/nakamoto-coefficient`).toPromise();
+    }
+
+    /** Fetches how many offline actors required to stall network. */
+    async fetchMinWeightCoefficient(): Promise<MinWeightCoefficientDto> {
+        await this._hasPingedApi();
+        return this._http.get<MinWeightCoefficientDto>(`${this.httpApi}/v1/network/min-weight-coefficient`).toPromise();
     }
 
     /** Fetches list of accounts with their respective balance & representative. */

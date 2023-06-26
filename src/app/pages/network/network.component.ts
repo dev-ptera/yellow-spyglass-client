@@ -33,6 +33,7 @@ export class NetworkComponent implements OnInit {
 
     totalNumberOfPeers = 0;
     nakamotoCoefficient: number;
+    minWeightCoefficient: number;
 
     constructor(
         public vp: ViewportService,
@@ -51,13 +52,15 @@ export class NetworkComponent implements OnInit {
             this._apiService.fetchSupplyStats(),
             this._apiService.fetchPeerVersions(),
             this._apiService.fetchNakamotoCoefficient(),
+            this._apiService.fetchMinWeightCoefficient(),
             this._apiService.fetchQuorumStats(),
         ])
             .then((response) => {
                 this.supply = response[0];
                 this.peerVersions = response[1];
                 this.nakamotoCoefficient = response[2].nakamotoCoefficient;
-                this.quorum = response[3];
+                this.minWeightCoefficient = response[3].coefficient;
+                this.quorum = response[4];
                 this.consensusChartOptions = this._createVoteWeightChart(this.quorum);
                 this.supplyChartOptions = this._createSupplyChart(this.supply);
                 this.peerVersions.map((version) => {
