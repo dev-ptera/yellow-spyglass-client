@@ -17,7 +17,7 @@ import {
     ExplorerSummaryDto,
     HostNodeStatsDto,
     KnownAccountDto,
-    MinWeightCoefficientDto,
+    QuorumCoefficientDto,
     MonitoredRepDto,
     NakamotoCoefficientDto,
     PeerVersionsDto,
@@ -247,9 +247,9 @@ export class ApiService {
     }
 
     /** Fetches how many offline actors required to stall network. */
-    async fetchMinWeightCoefficient(): Promise<MinWeightCoefficientDto> {
+    async fetchQuorumCoefficient(): Promise<QuorumCoefficientDto> {
         await this._hasPingedApi();
-        return this._http.get<MinWeightCoefficientDto>(`${this.httpApi}/v1/network/min-weight-coefficient`).toPromise();
+        return this._http.get<QuorumCoefficientDto>(`${this.httpApi}/v1/network/quorum-coefficient`).toPromise();
     }
 
     /** Fetches list of accounts with their respective balance & representative. */

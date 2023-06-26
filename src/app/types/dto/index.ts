@@ -14,7 +14,7 @@ export * from './HostNodeStatsDto';
 export * from './InsightsDto';
 export * from './KnownAccountDto';
 export * from './NakamotoCoefficientDto';
-export * from './MinWeightCoefficientDto';
+export * from './QuorumCoefficientDto';
 export * from './MonitoredRepDto';
 export * from './PeerVersionsDto';
 export * from './PriceDataDto';

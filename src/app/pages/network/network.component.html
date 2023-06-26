@@ -26,7 +26,7 @@
             achieve >{{ quorum.onlineWeightQuorumPercent }}% of the online voting weight and compromise the network.
         </div>
         <div class="app-section-subtitle" *ngIf="nakamotoCoefficient === 1" style="margin-bottom: 0">
-            It only takes <strong>one</strong> entity to compromise the network.
+            It only takes <strong>one</strong> entity to achieve >{{ quorum.onlineWeightQuorumPercent }}% of the online voting weight and compromise the network.
         </div>
         <div class="app-caption" style="margin-top: 16px; margin-bottom: 0">
             See the full representative list
@@ -35,21 +35,20 @@
     </mat-card>
 
     <mat-card responsive class="divider-border">
-        <div class="section-title">Min-weight Coefficient</div>
+        <div class="section-title">Quorum Coefficient</div>
         <div class="app-section-subtitle" style="margin-bottom: 0px">
-            What is the minimum number of representatives needed to go offline to stall the network?
+            What is the minimum number of representatives needed to stall the network?
         </div>
         <div style="display: flex; justify-content: center; margin: 16px 0; text-align: center">
             <div class="network-nakamoto">
-                {{ minWeightCoefficient }}
+                {{ quorumCoefficient }}
             </div>
         </div>
-        <div class="app-section-subtitle" *ngIf="minWeightCoefficient > 1" style="margin-bottom: 0; margin-top: 0">
-            The <strong>{{ minWeightCoefficient }}</strong> largest representatives could potentially go offline and
-            stall the network.
+        <div class="app-section-subtitle" *ngIf="quorumCoefficient > 1" style="margin-bottom: 0; margin-top: 0">
+            The <strong>{{ quorumCoefficient }}</strong> largest representatives could potentially collude together to achieve {{ 100 - quorum.onlineWeightQuorumPercent }}% of the online voting weight to disrupt quorum & stall the network.
         </div>
-        <div class="app-section-subtitle" *ngIf="minWeightCoefficient === 1" style="margin-bottom: 0">
-            It only takes <strong>one</strong> entity to stall the network.
+        <div class="app-section-subtitle" *ngIf="quorumCoefficient === 1" style="margin-bottom: 0">
+            It only takes <strong>one</strong> entity to achieve >{{ 100 - quorum.onlineWeightQuorumPercent }}% of the online voting weight to disrupt quorum & stall the network.
         </div>
     </mat-card>
 
