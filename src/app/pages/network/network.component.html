@@ -47,12 +47,12 @@
         </div>
         <div class="app-section-subtitle" *ngIf="quorumCoefficient > 1" style="margin-bottom: 0; margin-top: 0">
             The <strong>{{ quorumCoefficient }}</strong> largest representatives could potentially collude together to
-            achieve {{ 100 - quorum.onlineWeightQuorumPercent }}% of the online voting weight to disrupt quorum & stall
+            achieve {{ 100 - quorum.onlineWeightQuorumPercent }}% of the online voting weight to prevent quorum and stall
             the network.
         </div>
         <div class="app-section-subtitle" *ngIf="quorumCoefficient === 1" style="margin-bottom: 0">
             It only takes <strong>one</strong> entity to achieve >{{ 100 - quorum.onlineWeightQuorumPercent }}% of the
-            online voting weight to disrupt quorum & stall the network.
+            online voting weight to prevent quorum and stall the network.
         </div>
     </mat-card>
 
