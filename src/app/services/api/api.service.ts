@@ -17,6 +17,7 @@ import {
     ExplorerSummaryDto,
     HostNodeStatsDto,
     KnownAccountDto,
+    QuorumCoefficientDto,
     MonitoredRepDto,
     NakamotoCoefficientDto,
     PeerVersionsDto,
@@ -243,6 +244,12 @@ export class ApiService {
     async fetchNakamotoCoefficient(): Promise<NakamotoCoefficientDto> {
         await this._hasPingedApi();
         return this._http.get<NakamotoCoefficientDto>(`${this.httpApi}/v1/network/nakamoto-coefficient`).toPromise();
+    }
+
+    /** Fetches how many offline actors required to stall network. */
+    async fetchQuorumCoefficient(): Promise<QuorumCoefficientDto> {
+        await this._hasPingedApi();
+        return this._http.get<QuorumCoefficientDto>(`${this.httpApi}/v1/network/quorum-coefficient`).toPromise();
     }
 
     /** Fetches list of accounts with their respective balance & representative. */
