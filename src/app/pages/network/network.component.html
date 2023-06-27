@@ -38,7 +38,7 @@
     <mat-card responsive class="divider-border">
         <div class="section-title">Quorum Coefficient</div>
         <div class="app-section-subtitle" style="margin-bottom: 0px">
-            What is the minimum number of representatives needed to stall the network?
+            What is the minimum number of entities required to stall the network?
         </div>
         <div style="display: flex; justify-content: center; margin: 16px 0; text-align: center">
             <div class="network-nakamoto">
@@ -47,8 +47,8 @@
         </div>
         <div class="app-section-subtitle" *ngIf="quorumCoefficient > 1" style="margin-bottom: 0; margin-top: 0">
             The <strong>{{ quorumCoefficient }}</strong> largest representatives could potentially collude together to
-            achieve {{ 100 - quorum.onlineWeightQuorumPercent }}% of the online voting weight to prevent quorum and stall
-            the network.
+            achieve {{ 100 - quorum.onlineWeightQuorumPercent }}% of the online voting weight to prevent quorum and
+            stall the network.
         </div>
         <div class="app-section-subtitle" *ngIf="quorumCoefficient === 1" style="margin-bottom: 0">
             It only takes <strong>one</strong> entity to achieve >{{ 100 - quorum.onlineWeightQuorumPercent }}% of the
