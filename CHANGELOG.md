@@ -1,5 +1,11 @@
 # Change Log
 
+## v2.6.0 (June 28, 2023)
+
+### Added
+
+-  Added quorum coefficient subtext.
+
 ## v2.5.0 (June 26, 2023)
 
 ### Added
