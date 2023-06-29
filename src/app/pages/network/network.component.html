@@ -54,6 +54,10 @@
             It only takes <strong>one</strong> entity to achieve >{{ 100 - quorum.onlineWeightQuorumPercent }}% of the
             online voting weight to prevent quorum and stall the network.
         </div>
+        <div class="app-caption" style="margin-top: 16px; margin-bottom: 0">
+            <strong> {{ nextLevelQuorumCoefficientDifference | appComma }} </strong> BAN weight needs to migrate from
+            the largest representatives to increase this metric by 1.
+        </div>
     </mat-card>
 
     <mat-card responsive class="divider-border">

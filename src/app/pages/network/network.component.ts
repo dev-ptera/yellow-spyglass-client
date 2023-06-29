@@ -34,6 +34,7 @@ export class NetworkComponent implements OnInit {
     totalNumberOfPeers = 0;
     nakamotoCoefficient: number;
     quorumCoefficient: number;
+    nextLevelQuorumCoefficientDifference: number;
 
     constructor(
         public vp: ViewportService,
@@ -60,6 +61,7 @@ export class NetworkComponent implements OnInit {
                 this.peerVersions = response[1];
                 this.nakamotoCoefficient = response[2].nakamotoCoefficient;
                 this.quorumCoefficient = response[3].coefficient;
+                this.nextLevelQuorumCoefficientDifference = Math.ceil(response[3].repsWeight - response[3].delta);
                 this.quorum = response[4];
                 this.consensusChartOptions = this._createVoteWeightChart(this.quorum);
                 this.supplyChartOptions = this._createSupplyChart(this.supply);
