@@ -1,5 +1,11 @@
 # Change Log
 
+## v2.6.1 (July 22, 2023)
+
+### Fixed
+
+-  Update account page to ignore anchor tags from URL.
+
 ## v2.6.0 (June 28, 2023)
 
 ### Added
