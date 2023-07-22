@@ -67,7 +67,9 @@ export class AccountComponent implements OnDestroy {
         this.routeListener = this._router.events.subscribe((route) => {
             if (route instanceof NavigationEnd) {
                 const splitUrl = this._router.url.replace('/history', '').split('/');
-                this._searchAccount(splitUrl[splitUrl.length - 1]);
+                const path = splitUrl[splitUrl.length - 1];
+                const address = path.substring(0, 64);
+                this._searchAccount(address);
             }
         });
 
