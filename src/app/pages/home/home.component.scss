@@ -172,6 +172,7 @@ $darkBackground: url('~assets/branding/creeper-bg-dark.svg');
             box-sizing: border-box;
         }
         .home-search-button {
+            text-transform: uppercase;
             height: $inputHeight;
             border-radius: 8px;
             margin-left: 16px;

@@ -33,6 +33,7 @@
         "@brightlayer-ui/colors": "^3.1.1",
         "@brightlayer-ui/colors-branding": "^3.2.1",
         "@dev-ptera/nano-node-rpc": "^2.0.2",
+        "@ngneat/transloco": "4.3.0",
         "@ngneat/until-destroy": "^9.2.3",
         "banano-unit-converter": "^0.1.0",
         "core-js": "^2.5.4",

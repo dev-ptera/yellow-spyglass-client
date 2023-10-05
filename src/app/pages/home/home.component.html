@@ -1,166 +1,180 @@
-<div class="app-page-root home-root">
-    <div class="home-body" [class.dark]="isDarkTheme()" responsive>
-        <!-- Header -->
-        <div class="home-header-container" [class.dark]="isDarkTheme()" responsive>
-            <div class="home-header-content" responsive>
-                <div class="home-search-bar" responsive>
-                    <app-search-bar
-                        #searchBar
-                        placeholder="Search Banano by address, block or alias"
-                        (invalidSearch)="showHint = true"
-                        [onlyFocusWhenActivelySearching]="true"
-                    ></app-search-bar>
-                    <button
-                        responsive
-                        class="home-search-button"
-                        mat-flat-button
-                        style="color: #1a1a1a; background-color: #fbdd11"
-                        color="accent"
-                        (click)="search($event)"
-                    >
-                        SEARCH
-                    </button>
-                </div>
-                <div class="home-search-hint" [style.height.px]="showHint ? 40 : 0">
-                    <mat-icon>info</mat-icon>
-                    Please enter a valid Banano address or hash
+<ng-container *transloco="let t">
+    <div class="app-page-root home-root">
+        <div class="home-body" [class.dark]="isDarkTheme()" responsive>
+            <!-- Header -->
+            <div class="home-header-container" [class.dark]="isDarkTheme()" responsive>
+                <div class="home-header-content" responsive>
+                    <div class="home-search-bar" responsive>
+                        <app-search-bar
+                            #searchBar
+                            placeholder="Search Banano by address, block or alias"
+                            (invalidSearch)="showHint = true"
+                            [onlyFocusWhenActivelySearching]="true"
+                        ></app-search-bar>
+                        <button
+                            responsive
+                            class="home-search-button"
+                            mat-flat-button
+                            style="color: #1a1a1a; background-color: #fbdd11"
+                            color="accent"
+                            (click)="search($event)"
+                        >
+                            {{ t('search') }}
+                        </button>
+                    </div>
+                    <div class="home-search-hint" [style.height.px]="showHint ? 40 : 0">
+                        <mat-icon>info</mat-icon> {{ t('searchInvalidHint') }}
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!--Summary Cards -->
-        <div style="display: flex; flex: 1; height: 100%">
-            <div class="home-summary-cards-container" responsive>
-                <div
-                    class="mat-overline summary-text"
-                    style="width: 100%; text-align: center; height: 32px"
-                    [style.marginTop.px]="vp.sm ? 40 : -32"
-                >
-                    Network Summary
+            <!--Summary Cards -->
+            <div style="display: flex; flex: 1; height: 100%">
+                <div class="home-summary-cards-container" responsive>
+                    <div
+                        class="mat-overline summary-text"
+                        style="width: 100%; text-align: center; height: 32px"
+                        [style.marginTop.px]="vp.sm ? 40 : -32"
+                    >
+                        Network Summary
+                    </div>
+                    <mat-card class="divider-border mat-elevation-z0">
+                        <div class="icon-container">
+                            <mat-icon>savings</mat-icon>
+                        </div>
+                        <div class="text-container">
+                            <a [routerLink]="routes.network.route" class="title link">{{ t('supplyCard.title') }}</a>
+                            <div class="desc">
+                                {{ t('supplyCard.description.circulating') }}
+                                <span class="stronger">{{ summaryData.circulatingCount | appComma }}</span>
+                                {{ t('supplyCard.description.middleConnection') }}
+                                <span class="stronger">{{ summaryData.devFundCount | appComma }}</span>
+                                {{ t('supplyCard.description.devFundCount') }}
+                            </div>
+                        </div>
+                    </mat-card>
+
+                    <!--
+                    <mat-card>
+                        <div class="icon-container">
+                            <mat-icon>timer</mat-icon>
+                        </div>
+                        <div class="text-container">
+                            <div class="title">Transactions 24H</div>
+                            <div class="desc timestats" style="display: flex; justify-content: space-between">
+                                <div style="flex: 1; padding-right: 16px">
+                                    <div><span>1 Min:</span> <span class="stronger">20</span></div>
+                                    <div><span>5 Min:</span> <span class="stronger">291</span></div>
+                                    <div><span>1 Hour:</span> <span class="stronger">9,291</span></div>
+                                </div>
+                                <div style="flex: 1; padding-left: 16px">
+                                    <div><span>6H:</span> <span class="stronger">19,292</span></div>
+                                    <div><span>12H:</span> <span class="stronger">190,992</span></div>
+                                    <div><span>24H:</span> <span class="stronger">999,999</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card>
+                    -->
+
+                    <mat-card class="divider-border mat-elevation-z0">
+                        <div class="icon-container">
+                            <mat-icon>fingerprint</mat-icon>
+                        </div>
+                        <div class="text-container">
+                            <a [routerLink]="routes.knownAccounts.route" class="title link">{{
+                                t('knownAccountsCard.title')
+                            }}</a>
+                            <div class="desc">
+                                <span class="stronger">{{ summaryData.knownAccountsCount }}</span>
+                                {{ t('knownAccountsCard.description') }}
+                            </div>
+                        </div>
+                    </mat-card>
+
+                    <mat-card class="divider-border mat-elevation-z0">
+                        <div class="icon-container">
+                            <mat-icon>how_to_vote</mat-icon>
+                        </div>
+                        <div class="text-container">
+                            <a [routerLink]="routes.representatives.route" class="title link">{{
+                                t('representativesCard.title')
+                            }}</a>
+                            <div class="desc">
+                                {{ t('representativesCard.description.intro') }}
+                                <span class="stronger">{{ summaryData.representativesOnlineCount }}</span>
+                                {{ t('representativesCard.description.reps') }}
+                                <span class="stronger">{{ summaryData.principalRepsOnlineCount }}</span>
+                                {{ t('representativesCard.description.principals') }}
+                            </div>
+                        </div>
+                    </mat-card>
+
+                    <mat-card class="divider-border mat-elevation-z0">
+                        <div class="icon-container">
+                            <mat-icon>sell</mat-icon>
+                        </div>
+                        <div class="text-container">
+                            <a href="https://www.coingecko.com/en/coins/banano" class="title link">
+                                {{ t('marketCapCard.title') }}
+                            </a>
+                            <div class="desc">
+                                {{ t('marketCapCard.description.circulating') }}
+                                <span class="stronger">{{ marketCap }}</span>
+                                {{ t('marketCapCard.description.tradingPrice') }}
+                                <span class="stronger">${{ summaryData.bananoPriceUsd }}</span
+                                >.
+                            </div>
+                        </div>
+                    </mat-card>
+
+                    <mat-card class="divider-border mat-elevation-z0">
+                        <div class="icon-container">
+                            <mat-icon>storage</mat-icon>
+                        </div>
+                        <div class="text-container">
+                            <a [routerLink]="routes.node.route" class="title link">Ledger Size</a>
+                            <div class="desc">
+                                <div>
+                                    <span class="stronger">{{
+                                        summaryData.confirmedTransactionsCount | appComma
+                                    }}</span>
+                                    transactions confirmed
+                                </div>
+                                <div>
+                                    <span class="stronger">{{ summaryData.ledgerSizeMB }}GB</span> database size
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card>
                 </div>
-                <mat-card class="divider-border mat-elevation-z0">
-                    <div class="icon-container">
-                        <mat-icon>savings</mat-icon>
-                    </div>
-                    <div class="text-container">
-                        <a [routerLink]="routes.network.route" class="title link">Supply</a>
-                        <div class="desc">
-                            Banano has a circulating supply of
-                            <span class="stronger">{{ summaryData.circulatingCount | appComma }}</span> BAN with
-                            <span class="stronger">{{ summaryData.devFundCount | appComma }}</span> BAN undistributed.
-                        </div>
-                    </div>
-                </mat-card>
-
-                <!--
-                <mat-card>
-                    <div class="icon-container">
-                        <mat-icon>timer</mat-icon>
-                    </div>
-                    <div class="text-container">
-                        <div class="title">Transactions 24H</div>
-                        <div class="desc timestats" style="display: flex; justify-content: space-between">
-                            <div style="flex: 1; padding-right: 16px">
-                                <div><span>1 Min:</span> <span class="stronger">20</span></div>
-                                <div><span>5 Min:</span> <span class="stronger">291</span></div>
-                                <div><span>1 Hour:</span> <span class="stronger">9,291</span></div>
-                            </div>
-                            <div style="flex: 1; padding-left: 16px">
-                                <div><span>6H:</span> <span class="stronger">19,292</span></div>
-                                <div><span>12H:</span> <span class="stronger">190,992</span></div>
-                                <div><span>24H:</span> <span class="stronger">999,999</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </mat-card>
-                -->
-
-                <mat-card class="divider-border mat-elevation-z0">
-                    <div class="icon-container">
-                        <mat-icon>fingerprint</mat-icon>
-                    </div>
-                    <div class="text-container">
-                        <a [routerLink]="routes.knownAccounts.route" class="title link">Known Accounts</a>
-                        <div class="desc">
-                            <span class="stronger">{{ summaryData.knownAccountsCount }}</span> accounts with publicly
-                            known aliases.
-                        </div>
-                    </div>
-                </mat-card>
-
-                <mat-card class="divider-border mat-elevation-z0">
-                    <div class="icon-container">
-                        <mat-icon>how_to_vote</mat-icon>
-                    </div>
-                    <div class="text-container">
-                        <a [routerLink]="routes.representatives.route" class="title link">Representatives</a>
-                        <div class="desc">
-                            There are
-                            <span class="stronger">{{ summaryData.representativesOnlineCount }}</span> Representatives
-                            online, <span class="stronger">{{ summaryData.principalRepsOnlineCount }}</span> of which
-                            are Principal Representatives
-                        </div>
-                    </div>
-                </mat-card>
-
-                <mat-card class="divider-border mat-elevation-z0">
-                    <div class="icon-container">
-                        <mat-icon>sell</mat-icon>
-                    </div>
-                    <div class="text-container">
-                        <a href="https://www.coingecko.com/en/coins/banano" class="title link">Market Cap</a>
-                        <div class="desc">
-                            Circulating market cap is <span class="stronger">{{ marketCap }}</span> with a trading price
-                            of <span class="stronger">${{ summaryData.bananoPriceUsd }}</span
-                            >.
-                        </div>
-                    </div>
-                </mat-card>
-
-                <mat-card class="divider-border mat-elevation-z0">
-                    <div class="icon-container">
-                        <mat-icon>storage</mat-icon>
-                    </div>
-                    <div class="text-container">
-                        <a [routerLink]="routes.node.route" class="title link">Ledger Size</a>
-                        <div class="desc">
-                            <div>
-                                <span class="stronger">{{ summaryData.confirmedTransactionsCount | appComma }}</span>
-                                transactions confirmed
-                            </div>
-                            <div>
-                                <span class="stronger">{{ summaryData.ledgerSizeMB }}GB</span> database size
-                            </div>
-                        </div>
-                    </div>
-                </mat-card>
             </div>
-        </div>
 
-        <div class="home-footer">
-            <div style="display: flex; align-items: center">
-                <span style="margin-right: 24px">
-                    <a
-                        href="https://banano.cc"
-                        target="_blank"
-                        style="text-align: center; margin: 8px 0px"
-                        class="link primary"
-                        [style.color]="!isDarkTheme() && vp.sm ? 'white' : ''"
-                        >Banano</a
-                    >
-                </span>
+            <div class="home-footer">
+                <div style="display: flex; align-items: center">
+                    <span style="margin-right: 24px">
+                        <a
+                            href="https://banano.cc"
+                            target="_blank"
+                            style="text-align: center; margin: 8px 0px"
+                            class="link primary"
+                            [style.color]="!isDarkTheme() && vp.sm ? 'white' : ''"
+                            >Banano</a
+                        >
+                    </span>
 
-                <span>
-                    <a
-                        href="https://github.com/dev-ptera/yellow-spyglass-client"
-                        target="_blank"
-                        style="text-align: center; margin: 8px 0px"
-                        class="link primary"
-                        [style.color]="!isDarkTheme() && vp.sm ? 'white' : ''"
-                        >GitHub</a
-                    >
-                </span>
+                    <span>
+                        <a
+                            href="https://github.com/dev-ptera/yellow-spyglass-client"
+                            target="_blank"
+                            style="text-align: center; margin: 8px 0px"
+                            class="link primary"
+                            [style.color]="!isDarkTheme() && vp.sm ? 'white' : ''"
+                            >GitHub</a
+                        >
+                    </span>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</ng-container>

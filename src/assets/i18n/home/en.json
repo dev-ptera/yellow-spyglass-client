@@ -1,0 +1,31 @@
+{
+    "search": "Search",
+    "searchInvalidHint": "Please enter a valid Banano address or hash",
+    "supplyCard": {
+        "title": "Supply",
+        "description": {
+            "circulating": "Banano has a circulating supply of ",
+            "middleConnection": " BAN with ",
+            "devFundCount": " BAN undistributed."
+        }
+    },
+    "knownAccountsCard": {
+        "title": "Known Accounts",
+        "description": " accounts with publicly known aliases."
+    },
+    "representativesCard": {
+        "title": "Representatives",
+        "description": {
+            "intro": "There are ",
+            "reps": "Representatives online, ",
+            "principals": " of which are Principal Representatives."
+        }
+    },
+    "marketCapCard": {
+        "title": "Market Cap",
+        "description": {
+            "circulating": "Circulating market cap is ",
+            "tradingPrice": " with a trading price of "
+        }
+    }
+}
