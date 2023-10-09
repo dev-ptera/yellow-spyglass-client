@@ -57,7 +57,10 @@ export class WalletPaginatorComponent implements OnInit {
 
     maxPageNumber: number;
 
-    constructor(public util: UtilService, public vp: ViewportService) {}
+    constructor(
+        public util: UtilService,
+        public vp: ViewportService
+    ) {}
 
     ngOnInit(): void {
         this.maxPageNumber = Math.floor(this.maxElements / this.pageSize);

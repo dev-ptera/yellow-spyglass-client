@@ -20,5 +20,8 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
     `,
 })
 export class DeleteBookmarkDialog {
-    constructor(@Inject(MAT_DIALOG_DATA) public data: { alias: string }, public vp: ViewportService) {}
+    constructor(
+        @Inject(MAT_DIALOG_DATA) public data: { alias: string },
+        public vp: ViewportService
+    ) {}
 }

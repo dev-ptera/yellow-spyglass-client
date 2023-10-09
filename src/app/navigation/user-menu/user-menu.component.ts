@@ -36,7 +36,10 @@ export class AppUserMenuComponent {
     userMenuOpen = false;
     navItems = APP_NAV_ITEMS;
 
-    constructor(private readonly _router: Router, private readonly _theme: ThemeService) {}
+    constructor(
+        private readonly _router: Router,
+        private readonly _theme: ThemeService
+    ) {}
 
     openBookmarks(): void {
         this.userMenuOpen = false;

@@ -1,6 +1,7 @@
 {
     "search": "Search",
     "searchInvalidHint": "Please enter a valid Banano address or hash",
+    "networkSummary": "Network summary",
     "supplyCard": {
         "title": "Supply",
         "description": {
@@ -26,6 +27,13 @@
         "description": {
             "circulating": "Circulating market cap is ",
             "tradingPrice": " with a trading price of "
+        }
+    },
+    "ledgerCard": {
+        "title": "Ledger Size",
+        "description": {
+            "transactions": " transactions confirmed",
+            "database": " database size"
         }
     }
 }

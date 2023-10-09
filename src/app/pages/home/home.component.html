@@ -1,4 +1,4 @@
-<ng-container *transloco="let t">
+<ng-container *transloco="let t; scope: 'home'; read: 'home'">
     <div class="app-page-root home-root">
         <div class="home-body" [class.dark]="isDarkTheme()" responsive>
             <!-- Header -->
@@ -19,7 +19,7 @@
                             color="accent"
                             (click)="search($event)"
                         >
-                            {{ t('search') }}
+                            {{ t('home.search') }}
                         </button>
                     </div>
                     <div class="home-search-hint" [style.height.px]="showHint ? 40 : 0">
@@ -36,7 +36,7 @@
                         style="width: 100%; text-align: center; height: 32px"
                         [style.marginTop.px]="vp.sm ? 40 : -32"
                     >
-                        Network Summary
+                        {{ t('networkSummary') }}
                     </div>
                     <mat-card class="divider-border mat-elevation-z0">
                         <div class="icon-container">
@@ -133,16 +133,17 @@
                             <mat-icon>storage</mat-icon>
                         </div>
                         <div class="text-container">
-                            <a [routerLink]="routes.node.route" class="title link">Ledger Size</a>
+                            <a [routerLink]="routes.node.route" class="title link">{{ t('ledgerCard.title') }}</a>
                             <div class="desc">
                                 <div>
                                     <span class="stronger">{{
                                         summaryData.confirmedTransactionsCount | appComma
                                     }}</span>
-                                    transactions confirmed
+                                    {{ t('ledgerCard.description.transactions') }}
                                 </div>
                                 <div>
-                                    <span class="stronger">{{ summaryData.ledgerSizeMB }}GB</span> database size
+                                    <span class="stronger">{{ summaryData.ledgerSizeMB }}GB</span>
+                                    {{ t('ledgerCard.description.database') }}
                                 </div>
                             </div>
                         </div>

@@ -180,7 +180,11 @@ export class NodeMonitorComponent implements OnInit {
     navItems = APP_NAV_ITEMS;
     batman = 'ban_3batmanuenphd7osrez9c45b3uqw9d9u81ne8xa6m43e1py56y9p48ap69zg';
 
-    constructor(private readonly _api: ApiService, public vp: ViewportService, public util: UtilService) {}
+    constructor(
+        private readonly _api: ApiService,
+        public vp: ViewportService,
+        public util: UtilService
+    ) {}
 
     ngOnInit(): void {
         this._api

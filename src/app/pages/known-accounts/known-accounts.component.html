@@ -1,41 +1,54 @@
-<ng-template #titleContent>
+<ng-template #titleContent let-t="t">
     <div class="app-page-title" style="display: flex; align-items: center">
-        <div>Known Accounts</div>
+        <div>{{ t('page.title') }}</div>
         <app-load-spinner *ngIf="isLoading"></app-load-spinner>
     </div>
     <div class="app-page-subtitle">
-        <div>A list of known accounts including exchanges, games, faucets, representatives & more.</div>
+        <div>{{ t('page.description') }}</div>
         <div>
-            Accounts with custom vanity MonKeys can be seen
-            <span (click)="routeVanityAddresses()" class="primary link">here</span>.
+            {{ t('page.additionalContext') }}
+            <span (click)="routeVanityAddresses()" class="primary link">{{ t('page.here') }}</span
+            >.
         </div>
     </div>
 </ng-template>
 
-<ng-template #bodyContent>
-    <div class="app-section-title" style="margin-bottom: 16px">Filter by Type</div>
+<ng-template #bodyContent let-t="t">
+    <div class="app-section-title" style="margin-bottom: 16px">{{ t('filter.instructions') }}</div>
     <mat-chip-list aria-label="Type Selection" [multiple]="false" #chipList>
-        <mat-chip color="primary" #all="matChip" (click)="selectChip(all)" value="all" [selected]="true">All</mat-chip>
-        <mat-chip color="primary" #burn="matChip" (click)="selectChip(burn)" value="burn">Burn</mat-chip>
-        <mat-chip color="primary" #distribution="matChip" (click)="selectChip(distribution)" value="distribution"
-            >Distribution</mat-chip
-        >
-        <mat-chip color="primary" #donation="matChip" (click)="selectChip(donation)" value="donation"
-            >Donation</mat-chip
-        >
-        <mat-chip color="primary" #event="matChip" (click)="selectChip(event)" value="event">Event</mat-chip>
-        <mat-chip color="primary" #exchange="matChip" (click)="selectChip(exchange)" value="exchange"
-            >Exchange</mat-chip
-        >
-        <mat-chip color="primary" #faucet="matChip" (click)="selectChip(faucet)" value="faucet">Faucet</mat-chip>
-        <mat-chip color="primary" #gambling="matChip" (click)="selectChip(gambling)" value="gambling"
-            >Gambling</mat-chip
-        >
-        <mat-chip color="primary" #rep="matChip" (click)="selectChip(rep)" value="representative"
-            >Representative</mat-chip
-        >
-        <mat-chip color="primary" #team="matChip" (click)="selectChip(team)" value="team-member">Team Member</mat-chip>
-        <mat-chip color="primary" #service="matChip" (click)="selectChip(service)" value="service">Service</mat-chip>
+        <mat-chip color="primary" #all="matChip" (click)="selectChip(all)" value="all" [selected]="true">{{
+            t('filter.chips.all')
+        }}</mat-chip>
+        <mat-chip color="primary" #burn="matChip" (click)="selectChip(burn)" value="burn">{{
+            t('filter.chips.burn')
+        }}</mat-chip>
+        <mat-chip color="primary" #distribution="matChip" (click)="selectChip(distribution)" value="distribution">{{
+            t('filter.chips.distribution')
+        }}</mat-chip>
+        <mat-chip color="primary" #donation="matChip" (click)="selectChip(donation)" value="donation">{{
+            t('filter.chips.donation')
+        }}</mat-chip>
+        <mat-chip color="primary" #event="matChip" (click)="selectChip(event)" value="event">{{
+            t('filter.chips.event')
+        }}</mat-chip>
+        <mat-chip color="primary" #exchange="matChip" (click)="selectChip(exchange)" value="exchange">{{
+            t('filter.chips.exchange')
+        }}</mat-chip>
+        <mat-chip color="primary" #faucet="matChip" (click)="selectChip(faucet)" value="faucet">{{
+            t('filter.chips.faucet')
+        }}</mat-chip>
+        <mat-chip color="primary" #gambling="matChip" (click)="selectChip(gambling)" value="gambling">{{
+            t('filter.chips.gambling')
+        }}</mat-chip>
+        <mat-chip color="primary" #rep="matChip" (click)="selectChip(rep)" value="representative">{{
+            t('filter.chips.representative')
+        }}</mat-chip>
+        <mat-chip color="primary" #team="matChip" (click)="selectChip(team)" value="team-member">{{
+            t('filter.chips.team')
+        }}</mat-chip>
+        <mat-chip color="primary" #service="matChip" (click)="selectChip(service)" value="service">{{
+            t('filter.chips.service')
+        }}</mat-chip>
     </mat-chip-list>
 
     <table
@@ -181,14 +194,16 @@
     </table>
 </ng-template>
 
-<div class="app-page-root" responsive>
-    <div class="app-page-content known-accounts-page-content">
-        <app-error *ngIf="hasError"></app-error>
-        <ng-container *ngIf="!hasError">
-            <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
-            <div *ngIf="!isLoading" class="animation-body">
-                <ng-template [ngTemplateOutlet]="bodyContent"></ng-template>
-            </div>
-        </ng-container>
+<ng-container *transloco="let t; scope: 'knownAccounts'; read: 'knownAccounts'">
+    <div class="app-page-root" responsive>
+        <div class="app-page-content known-accounts-page-content">
+            <app-error *ngIf="hasError"></app-error>
+            <ng-container *ngIf="!hasError">
+                <ng-template [ngTemplateOutlet]="titleContent" [ngTemplateOutletContext]="{ t }"></ng-template>
+                <div *ngIf="!isLoading" class="animation-body">
+                    <ng-template [ngTemplateOutlet]="bodyContent" [ngTemplateOutletContext]="{ t }"></ng-template>
+                </div>
+            </ng-container>
+        </div>
     </div>
-</div>
+</ng-container>

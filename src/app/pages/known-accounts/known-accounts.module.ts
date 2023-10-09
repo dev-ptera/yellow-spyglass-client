@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @NgModule({
     declarations: [KnownAccountsComponent],
@@ -22,6 +23,7 @@ import { MatChipsModule } from '@angular/material/chips';
         RouterModule,
         MatIconModule,
         MatChipsModule,
+        TranslocoModule,
     ],
     exports: [KnownAccountsComponent],
 })
