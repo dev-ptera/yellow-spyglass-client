@@ -7,7 +7,7 @@
                     <div class="home-search-bar" responsive>
                         <app-search-bar
                             #searchBar
-                            placeholder="Search Banano by address, block or alias"
+                            [placeholder]="t('search.inputPlaceholder')"
                             (invalidSearch)="showHint = true"
                             [onlyFocusWhenActivelySearching]="true"
                         ></app-search-bar>
@@ -19,11 +19,11 @@
                             color="accent"
                             (click)="search($event)"
                         >
-                            {{ t('home.search') }}
+                            {{ t('search.button') }}
                         </button>
                     </div>
                     <div class="home-search-hint" [style.height.px]="showHint ? 40 : 0">
-                        <mat-icon>info</mat-icon> {{ t('searchInvalidHint') }}
+                        <mat-icon>info</mat-icon> {{ t('search.hint') }}
                     </div>
                 </div>
             </div>

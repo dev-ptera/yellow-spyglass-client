@@ -1,6 +1,9 @@
 {
-    "search": "Search",
-    "searchInvalidHint": "Please enter a valid Banano address or hash",
+    "search": {
+        "button": "Search",
+        "inputPlaceholder": "Search Banano by address, block or alias",
+        "hint": "Please enter a valid Banano address or hash"
+    },
     "networkSummary": "Network summary",
     "supplyCard": {
         "title": "Supply",

@@ -50,9 +50,11 @@
     </mat-card>
 
     <mat-card responsive class="divider-border">
-        <div class="section-title">Quorum Coefficient</div>
+        <div class="section-title">
+            {{ t('quorumCoefficientCard.title') }}
+        </div>
         <div class="app-section-subtitle" style="margin-bottom: 0px">
-            What is the minimum number of entities required to stall the network?
+            {{ t('quorumCoefficientCard.subtitle') }}
         </div>
         <div style="display: flex; justify-content: center; margin: 16px 0; text-align: center">
             <div class="network-nakamoto">
@@ -75,8 +77,12 @@
     </mat-card>
 
     <mat-card responsive class="divider-border">
-        <div class="section-title">Supply</div>
-        <div class="app-section-subtitle">How much Banano is circulating?</div>
+        <div class="section-title">
+            {{ t('supplyCard.title') }}
+        </div>
+        <div class="app-section-subtitle">
+            {{ t('supplyCard.subtitle') }}
+        </div>
         <div style="display: flex; justify-content: center">
             <highcharts-chart
                 [update]="true"
@@ -90,28 +96,28 @@
         </div>
         <table class="network-supply-table" responsive>
             <tr>
-                <th>Description</th>
-                <th>Amount</th>
-                <th>Percent</th>
+                <th> {{ t('supplyCard.table.headers.description') }}</th>
+                <th> {{ t('supplyCard.table.headers.amount') }}</th>
+                <th> {{ t('supplyCard.table.headers.percent') }}</th>
             </tr>
             <tr>
-                <td>Total Supply</td>
+                <td>{{ t('supplyCard.table.totalSupply') }}</td>
                 <td>{{ supply.totalAmount - supply.burnedAmount | appComma }}</td>
                 <td>100%</td>
             </tr>
             <tr>
-                <td>Distribution Funds</td>
+                <td>{{ t('supplyCard.table.distributionFunds') }}</td>
                 <td>{{ supply.devFundAmount | appComma }}</td>
                 <td>{{ supply.devFundPercent | appPercent }}</td>
             </tr>
             <tr>
-                <td>Circulating Supply</td>
+                <td>{{ t('supplyCard.table.circulatingSupply') }}</td>
                 <td>{{ supply.circulatingAmount | appComma }}</td>
                 <td>{{ supply.circulatingPercent | appPercent }}</td>
             </tr>
         </table>
         <div class="mat-body-2" style="margin-bottom: 0; margin-top: 24px">
-            <strong>{{ supply.burnedAmount | appComma }}</strong> Banano has been burned.
+            <strong>{{ supply.burnedAmount | appComma }}</strong> {{ t('supplyCard.burned') }}
         </div>
     </mat-card>
 

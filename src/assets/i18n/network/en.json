@@ -19,11 +19,12 @@
         "hintLink": "here"
     },
     "quorumCoefficientCard": {
-        "title": "Quorum Coefficient"
+        "title": "Quorum Coefficient",
+        "subtitle": "What is the minimum number of entities required to stall the network?"
     },
     "supplyCard": {
         "title": "Supply",
-        "subtitle": "How much Banano is circulating",
+        "subtitle": "How much Banano is circulating?",
         "legend": {
             "distributionFunds": "Distribution Funds",
             "circulatingFunds": "Circulating"
@@ -37,7 +38,8 @@
             "totalSupply": "Total Supply",
             "distributionFunds": "Distribution Funds",
             "circulatingSupply": "Circulating Supply"
-        }
+        },
+        "burned": " Banano has been burned."
     },
     "voteWeightCard": {
         "title": "Vote weight",
