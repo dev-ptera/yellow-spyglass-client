@@ -27,6 +27,9 @@
             "category": "Category",
             "owner": "Owner",
             "balance": "Balance"
+        },
+        "expansion": {
+            "description": "Description"
         }
     }
 }

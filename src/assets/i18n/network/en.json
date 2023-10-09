@@ -1,0 +1,69 @@
+{
+    "page": {
+        "title": "Network",
+        "description": "Banano network overview, including supply, quorum and voting weight statistics."
+    },
+    "nakamotoCoefficientCard": {
+        "title": "Nakamoto Coefficient",
+        "subtitle": "What is the minimum number of entities required to attack the network?",
+        "greatThanOneBody": {
+            "intro": "The ",
+            "largestReps": " largest representatives could potentially collude together to achieve {{ onlineWeightQuorumPercent }}% of the online voting weight and compromise the network."
+        },
+        "oneBody": {
+            "intro": "It only takes ",
+            "one": "one",
+            "largestReps": "entity to achieve >{{ onlineWeightQuorumPercent }}% of the online voting weight and compromise the network."
+        },
+        "hint": "See the full representative list ",
+        "hintLink": "here"
+    },
+    "supplyCard": {
+        "title": "Supply",
+        "subtitle": "How much Banano is circulating",
+        "legend": {
+            "distributionFunds": "Distribution Funds",
+            "circulatingFunds": "Circulating"
+        },
+        "table": {
+            "headers": {
+                "description": "Description",
+                "amount": "Amount",
+                "percent": "Percent"
+            },
+            "totalSupply": "Total Supply",
+            "distributionFunds": "Distribution Funds",
+            "circulatingSupply": "Circulating Supply"
+        }
+    },
+    "voteWeightCard": {
+        "title": "Vote weight",
+        "subtitle": "How is network voting weight allocated?",
+        "legend": {
+            "noRep": "No Rep",
+            "offline": "Offline",
+            "online": "Online"
+        },
+        "headers": {
+            "representatives": "Representatives",
+            "amount": "Amount",
+            "percent": "Percent"
+        }
+    },
+    "protocolCard": {
+        "title": "Protocol",
+        "subtitle": "What protocol version are nodes running?",
+        "version": "Version",
+        "amount": "Amount",
+        "percentage": "Percentage"
+    },
+    "quorumCard": {
+        "title": "Quorum",
+        "subtitle": "How much Banano is needed to achieve consensus?",
+        "onlineAmount": "Current online stake total",
+        "quorumPercent": "Online weight quorum percent",
+        "delta": "Delta",
+        "deltaHint": "number which quorum is achieved",
+        "minOnlineAmount": "Minimum online weight"
+    }
+}

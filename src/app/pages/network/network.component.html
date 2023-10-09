@@ -1,20 +1,22 @@
-<ng-template #titleContent>
+<ng-template #titleContent let-t="t">
     <div responsive>
         <div class="app-page-title" style="display: flex; align-items: center">
-            <div>Network</div>
+            <div>{{ t('page.title') }}</div>
             <app-load-spinner *ngIf="isLoading"></app-load-spinner>
         </div>
         <div class="app-page-subtitle">
-            Banano network overview, including supply, quorum and voting weight statistics.
+            {{ t('page.description') }}
         </div>
     </div>
 </ng-template>
 
-<ng-template #bodyContent>
+<ng-template #bodyContent let-t="t">
     <mat-card responsive class="divider-border">
-        <div class="section-title">Nakamoto Coefficient</div>
+        <div class="section-title">
+            {{ t('nakamotoCoefficientCard.title') }}
+        </div>
         <div class="app-section-subtitle" style="margin-bottom: 0px">
-            What is the minimum number of entities required to attack the network?
+            {{ t('nakamotoCoefficientCard.subtitle') }}
         </div>
         <div style="display: flex; justify-content: center; margin: 16px 0; text-align: center">
             <div class="network-nakamoto">
@@ -22,16 +24,28 @@
             </div>
         </div>
         <div class="app-section-subtitle" *ngIf="nakamotoCoefficient > 1" style="margin-bottom: 0; margin-top: 0">
-            The <strong>{{ nakamotoCoefficient }}</strong> largest representatives could potentially collude together to
-            achieve >{{ quorum.onlineWeightQuorumPercent }}% of the online voting weight and compromise the network.
+            {{ t('nakamotoCoefficientCard.greatThanOneBody.intro') }}
+            <strong>{{ nakamotoCoefficient }}</strong>
+            {{
+                t('nakamotoCoefficientCard.greatThanOneBody.largestReps', {
+                    onlineWeightQuorumPercent: quorum.onlineWeightQuorumPercent
+                })
+            }}
         </div>
         <div class="app-section-subtitle" *ngIf="nakamotoCoefficient === 1" style="margin-bottom: 0">
-            It only takes <strong>one</strong> entity to achieve >{{ quorum.onlineWeightQuorumPercent }}% of the online
-            voting weight and compromise the network.
+            {{ t('nakamotoCoefficientCard.oneBody.intro') }}
+            <strong>{{ t('nakamotoCoefficientCard.oneBody.one') }}</strong>
+            {{
+                t('nakamotoCoefficientCard.oneBody.largestReps', {
+                    onlineWeightQuorumPercent: quorum.onlineWeightQuorumPercent
+                })
+            }}
         </div>
         <div class="app-caption" style="margin-top: 16px; margin-bottom: 0">
-            See the full representative list
-            <a class="link primary" [routerLink]="'/' + navItems.representatives.route">here</a>.
+            {{ t('nakamotoCoefficientCard.hint') }}
+            <a class="link primary" [routerLink]="'/' + navItems.representatives.route">
+                {{ t('nakamotoCoefficientCard.hintLink') }}</a
+            >.
         </div>
     </mat-card>
 
@@ -191,15 +205,17 @@
     </mat-card>
 </ng-template>
 
-<div class="network-root app-page-root" responsive>
-    <div class="app-page-content" [class.error]="hasError">
-        <app-error *ngIf="hasError"></app-error>
-        <ng-container *ngIf="!hasError">
-            <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
-            <!--<app-network-loading [show]="isLoading"></app-network-loading>-->
-            <div *ngIf="!isLoading" class="animation-body network-container">
-                <ng-template [ngTemplateOutlet]="bodyContent"></ng-template>
-            </div>
-        </ng-container>
+<ng-container *transloco="let t; scope: 'network'; read: 'network'">
+    <div class="network-root app-page-root" responsive>
+        <div class="app-page-content" [class.error]="hasError">
+            <app-error *ngIf="hasError"></app-error>
+            <ng-container *ngIf="!hasError">
+                <ng-template [ngTemplateOutlet]="titleContent" [ngTemplateOutletContext]="{ t }"></ng-template>
+                <!--<app-network-loading [show]="isLoading"></app-network-loading>-->
+                <div *ngIf="!isLoading" class="animation-body network-container">
+                    <ng-template [ngTemplateOutlet]="bodyContent" [ngTemplateOutletContext]="{ t }"></ng-template>
+                </div>
+            </ng-container>
+        </div>
     </div>
-</div>
+</ng-container>

@@ -14,6 +14,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { MatDividerModule } from '@angular/material/divider';
 import { RouterModule } from '@angular/router';
 import { NetworkLoadingComponent } from '@app/pages/network/network-loading.component';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @NgModule({
     declarations: [NetworkComponent, NetworkLoadingComponent],
@@ -35,6 +36,7 @@ import { NetworkLoadingComponent } from '@app/pages/network/network-loading.comp
         MatDividerModule,
         RouterModule,
         SpacerModule,
+        TranslocoModule,
     ],
     exports: [NetworkComponent, NetworkLoadingComponent],
 })
