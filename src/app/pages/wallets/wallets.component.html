@@ -1,14 +1,14 @@
-<ng-template #titleContent>
+<ng-template #titleContent let-t="t">
     <div class="app-page-title" style="display: flex; align-items: center">
-        <div>Wallets</div>
+        <div>{{ t('page.title') }}</div>
         <app-load-spinner *ngIf="isLoading"></app-load-spinner>
     </div>
-    <div class="app-page-subtitle">See account distribution statistics and the list of the top Banano holders.</div>
+    <div class="app-page-subtitle">{{ t('page.description') }}</div>
 </ng-template>
 
-<ng-template #bodyContent>
-    <div class="app-section-title">BAN Distribution Chart</div>
-    <div class="app-section-subtitle">The chart below shows the distribution of Banano among all opened accounts.</div>
+<ng-template #bodyContent let-t="t">
+    <div class="app-section-title">{{ t('distribution.title') }}</div>
+    <div class="app-section-subtitle">{{ t('distribution.description') }}</div>
     <mat-card class="wallets-chart mat-elevation-z2 divider-border" responsive>
         <highcharts-chart
             [update]="true"
@@ -19,12 +19,11 @@
         ></highcharts-chart>
     </mat-card>
 
-    <div class="app-section-title">All Accounts</div>
+    <div class="app-section-title">{{ t('allAccounts.title') }}</div>
     <div class="app-section-subtitle" [style.marginBottom.px]="12">
-        All Banano accounts, sorted by balance. Any account with an offline representative is marked with a warning
-        flag.
+        {{ t('allAccounts.description') }}
         <ng-container *ngIf="!vp.sm">
-            It is encouraged that these accounts change their representative if their current rep is constantly offline.
+            {{ t('allAccounts.offlineHint') }}
         </ng-container>
     </div>
     <ng-template #paginator>
@@ -69,7 +68,9 @@
         </ng-container>
 
         <ng-container matColumnDef="addr">
-            <th mat-header-cell *matHeaderCellDef>Address</th>
+            <th mat-header-cell *matHeaderCellDef>
+                {{ t('table.headers.address') }}
+            </th>
             <td
                 mat-cell
                 [style.paddingTop.px]="12"
@@ -86,7 +87,9 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="ban">
-            <th mat-header-cell [style.paddingLeft.px]="16" *matHeaderCellDef>Amount</th>
+            <th mat-header-cell [style.paddingLeft.px]="16" *matHeaderCellDef>
+                {{ t('table.headers.amount') }}
+            </th>
             <td mat-cell style="padding: 8px 16px 8px 16px" *matCellDef="let element">
                 <div style="display: flex; align-items: center; font-size: 15px">
                     <img
@@ -112,19 +115,21 @@
     <ng-template [ngTemplateOutlet]="paginator"></ng-template>
 </ng-template>
 
-<div class="app-page-root" responsive>
-    <div class="app-page-content">
-        <app-error
-            *ngIf="hasError"
-            title="Try again later"
-            description="The list of wallets is being updated right now"
-            icon="sync_problem"
-        ></app-error>
-        <ng-container *ngIf="!hasError">
-            <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
-            <div *ngIf="!isLoading" class="animation-body">
-                <ng-template [ngTemplateOutlet]="bodyContent"></ng-template>
-            </div>
-        </ng-container>
+<ng-container *transloco="let t; scope: 'wallets'; read: 'wallets'">
+    <div class="app-page-root" responsive>
+        <div class="app-page-content">
+            <app-error
+                *ngIf="hasError"
+                [title]="t('error.title')"
+                [description]="t('error.description')"
+                icon="sync_problem"
+            ></app-error>
+            <ng-container *ngIf="!hasError">
+                <ng-template [ngTemplateOutlet]="titleContent" [ngTemplateOutletContext]="{ t }"></ng-template>
+                <div *ngIf="!isLoading" class="animation-body">
+                    <ng-template [ngTemplateOutlet]="bodyContent" [ngTemplateOutletContext]="{ t }"></ng-template>
+                </div>
+            </ng-container>
+        </div>
     </div>
-</div>
+</ng-container>

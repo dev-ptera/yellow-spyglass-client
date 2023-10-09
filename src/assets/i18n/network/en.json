@@ -18,6 +18,9 @@
         "hint": "See the full representative list ",
         "hintLink": "here"
     },
+    "quorumCoefficientCard": {
+        "title": "Quorum Coefficient"
+    },
     "supplyCard": {
         "title": "Supply",
         "subtitle": "How much Banano is circulating",

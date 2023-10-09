@@ -11,6 +11,7 @@ import { MatCardModule } from '@angular/material/card';
 import { WalletPaginatorComponent } from '@app/pages/wallets/paginator/paginator.component';
 import { SpacerModule } from '@brightlayer-ui/angular-components';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @NgModule({
     declarations: [WalletsComponent, WalletPaginatorComponent],
@@ -25,6 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
         MatTableModule,
         SpacerModule,
         RouterModule,
+        TranslocoModule,
     ],
     exports: [WalletsComponent],
 })

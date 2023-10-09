@@ -8,30 +8,31 @@ import { APP_NAV_ITEMS } from '../../navigation/nav-items';
 @Component({
     selector: 'app-monitor',
     template: `
-        <ng-template #titleContent>
+        <ng-template #titleContent let-t="t">
             <div class="app-page-title" style="display: flex; align-items: center">
-                <div>Node Statistics</div>
+                <div>{{ t('page.title') }}</div>
                 <app-load-spinner *ngIf="isLoading"></app-load-spinner>
             </div>
             <div class="app-page-subtitle">
-                This explorer is powered & maintained by the
-                <a class="link primary" [routerLink]="'/' + navItems.account.route + '/' + batman">
-                    batman representative</a
+                {{ t('page.description') }}
+                <a class="link primary" [routerLink]="'/' + navItems.account.route + '/' + batman">{{
+                    t('page.batman')
+                }}</a
                 >.
             </div>
         </ng-template>
 
-        <ng-template #bodyContent>
+        <ng-template #bodyContent let-t="t">
             <div class="node-section-wrapper" responsive>
                 <mat-card class="divider-border">
-                    <div class="primary node-monitor-section-title">Node</div>
+                    <div class="primary node-monitor-section-title">{{ t('nodeCard.title') }}</div>
                     <mat-divider></mat-divider>
                     <mat-list [style.paddingTop.px]="0">
                         <blui-info-list-item [wrapSubtitle]="true" divider="full" *ngIf="stats.addressAsRepresentative">
                             <div blui-icon>
                                 <mat-icon>how_to_vote</mat-icon>
                             </div>
-                            <div blui-title>Address</div>
+                            <div blui-title>{{ t('nodeCard.address') }}</div>
                             <div blui-subtitle>
                                 <a
                                     style="color: inherit"
@@ -46,27 +47,27 @@ import { APP_NAV_ITEMS } from '../../navigation/nav-items';
                             <div blui-icon>
                                 <mat-icon>browser_updated</mat-icon>
                             </div>
-                            <div blui-title>Protocol Version</div>
+                            <div blui-title>{{ t('nodeCard.protocolVersion') }}</div>
                             <div blui-subtitle>{{ stats.nodeVendor }}</div>
                         </blui-info-list-item>
                         <blui-info-list-item>
                             <div blui-icon>
                                 <mat-icon>disc_full</mat-icon>
                             </div>
-                            <div blui-title>Database Version</div>
+                            <div blui-title>{{ t('nodeCard.databaseVersion') }}</div>
                             <div blui-subtitle>{{ stats.storeVendor }}</div>
                         </blui-info-list-item>
                     </mat-list>
                 </mat-card>
                 <mat-card class="divider-border">
-                    <div class="primary node-monitor-section-title">Block Count</div>
+                    <div class="primary node-monitor-section-title">{{ t('blockCard.title') }}</div>
                     <mat-divider></mat-divider>
                     <mat-list [style.paddingTop.px]="0">
                         <blui-info-list-item divider="full">
                             <div blui-icon>
                                 <mat-icon>check_circle</mat-icon>
                             </div>
-                            <div blui-title>Current Block</div>
+                            <div blui-title>{{ t('blockCard.currentBlock') }}</div>
                             <div blui-subtitle>
                                 {{ util.numberWithCommas(stats.currentBlock) }}
                             </div>
@@ -75,7 +76,7 @@ import { APP_NAV_ITEMS } from '../../navigation/nav-items';
                             <div blui-icon>
                                 <mat-icon>check_circle</mat-icon>
                             </div>
-                            <div blui-title>Cemented Blocks</div>
+                            <div blui-title>{{ t('blockCard.cementedBlocks') }}</div>
                             <div blui-subtitle>
                                 {{ util.numberWithCommas(stats.cementedBlocks) }}
                             </div>
@@ -84,7 +85,7 @@ import { APP_NAV_ITEMS } from '../../navigation/nav-items';
                             <div blui-icon>
                                 <mat-icon>running_with_errors</mat-icon>
                             </div>
-                            <div blui-title>Unchecked Blocks</div>
+                            <div blui-title>{{ t('blockCard.uncheckedBlocks') }}</div>
                             <div blui-subtitle>
                                 {{ util.numberWithCommas(stats.uncheckedBlocks) }}
                             </div>
@@ -92,14 +93,14 @@ import { APP_NAV_ITEMS } from '../../navigation/nav-items';
                     </mat-list>
                 </mat-card>
                 <mat-card class="divider-border">
-                    <div class="primary node-monitor-section-title">System Resources</div>
+                    <div class="primary node-monitor-section-title">{{ t('systemResourcesCard.title') }}</div>
                     <mat-divider></mat-divider>
                     <mat-list [style.paddingTop.px]="0">
                         <blui-info-list-item divider="full">
                             <div blui-icon>
                                 <mat-icon>memory</mat-icon>
                             </div>
-                            <div blui-title>Memory Usage</div>
+                            <div blui-title>{{ t('systemResourcesCard.mem') }}</div>
                             <div blui-subtitle>
                                 {{ formatMemory(stats.usedMemoryGB) }} / {{ formatMemory(stats.totalMemoryGB) }}GB
                                 <span class="mat-subheading-1" [style.marginLeft.px]="8">
@@ -111,44 +112,48 @@ import { APP_NAV_ITEMS } from '../../navigation/nav-items';
                             <div blui-icon>
                                 <mat-icon>download</mat-icon>
                             </div>
-                            <div blui-title>Ledger Size</div>
+                            <div blui-title>{{ t('systemResourcesCard.ledgerSize') }}</div>
                             <div blui-subtitle>
                                 {{ formatLedgerSize(stats.ledgerSizeMB) }} GB
-                                <span style="margin-left: 8px">({{ formatLedgerPercent() }} of disk space)</span>
+                                <span style="margin-left: 8px"
+                                    >({{ t('systemResourcesCard.total', { usagePercentage: formatLedgerPercent() }) }})
+                                </span>
                             </div>
                         </blui-info-list-item>
                         <blui-info-list-item>
                             <div blui-icon>
                                 <mat-icon>storage</mat-icon>
                             </div>
-                            <div blui-title>Available Disk Space</div>
+                            <div blui-title>{{ t('systemResourcesCard.availableDiskSpace') }}</div>
                             <div blui-subtitle>{{ formatAvailableSpace(stats.availableDiskSpaceGB) }} GB</div>
                         </blui-info-list-item>
                     </mat-list>
                 </mat-card>
                 <mat-card class="divider-border">
-                    <div class="primary node-monitor-section-title">Connectivity</div>
+                    <div class="primary node-monitor-section-title">{{ t('peersCard.title') }}</div>
                     <mat-divider></mat-divider>
                     <mat-list [style.paddingTop.px]="0">
                         <blui-info-list-item divider="full">
                             <div blui-icon>
                                 <mat-icon>account_circle</mat-icon>
                             </div>
-                            <div blui-title>Peers</div>
+                            <div blui-title>{{ t('peersCard.peers') }}</div>
                             <div blui-subtitle>{{ stats.peerCount }}</div>
                         </blui-info-list-item>
                         <blui-info-list-item divider="full">
                             <div blui-icon>
                                 <mat-icon>timer</mat-icon>
                             </div>
-                            <div blui-title>Uptime</div>
-                            <div blui-subtitle>{{ formatUptime(stats.nodeUptimeSeconds) }}</div>
+                            <div blui-title>{{ t('peersCard.uptime') }}</div>
+                            <div blui-subtitle>
+                                {{ formatUptime(stats.nodeUptimeSeconds) }} {{ t('peersCard.days') }}
+                            </div>
                         </blui-info-list-item>
                         <blui-info-list-item *ngIf="stats.location">
                             <div blui-icon>
                                 <mat-icon>place</mat-icon>
                             </div>
-                            <div blui-title>Location</div>
+                            <div blui-title>{{ t('peersCard.location') }}</div>
                             <div blui-subtitle>
                                 {{ stats.location }}
                             </div>
@@ -158,17 +163,22 @@ import { APP_NAV_ITEMS } from '../../navigation/nav-items';
             </div>
         </ng-template>
 
-        <div class="app-page-root" responsive>
-            <div class="app-page-content node-monitor-content" responsive>
-                <app-error *ngIf="hasError"></app-error>
-                <ng-container *ngIf="!hasError">
-                    <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
-                    <div *ngIf="!isLoading" class="animation-body">
-                        <ng-template [ngTemplateOutlet]="bodyContent"></ng-template>
-                    </div>
-                </ng-container>
+        <ng-container *transloco="let t; scope: 'node'; read: 'node'">
+            <div class="app-page-root" responsive>
+                <div class="app-page-content node-monitor-content" responsive>
+                    <app-error *ngIf="hasError"></app-error>
+                    <ng-container *ngIf="!hasError">
+                        <ng-template [ngTemplateOutlet]="titleContent" [ngTemplateOutletContext]="{ t }"></ng-template>
+                        <div *ngIf="!isLoading" class="animation-body">
+                            <ng-template
+                                [ngTemplateOutlet]="bodyContent"
+                                [ngTemplateOutletContext]="{ t }"
+                            ></ng-template>
+                        </div>
+                    </ng-container>
+                </div>
             </div>
-        </div>
+        </ng-container>
     `,
     styleUrls: ['./node-monitor.component.scss'],
     encapsulation: ViewEncapsulation.None,
@@ -223,7 +233,7 @@ export class NodeMonitorComponent implements OnInit {
 
     formatUptime(seconds: number): string {
         if (seconds) {
-            return `~ ${Math.round(seconds / 60 / 60 / 24)} days`;
+            return `~ ${Math.round(seconds / 60 / 60 / 24)}`;
         }
     }
 
@@ -237,9 +247,5 @@ export class NodeMonitorComponent implements OnInit {
         if (num) {
             return Math.round(Number(num.toFixed(2)) * 100);
         }
-    }
-
-    getMonitoredRepUrl(ip: string): string {
-        return `http://${ip}`;
     }
 }

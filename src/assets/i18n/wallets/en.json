@@ -1,0 +1,26 @@
+{
+    "page": {
+        "title": "Wallets",
+        "description": "See account distribution statistics and the list of the top Banano holders."
+    },
+    "error": {
+        "title": "Try again later",
+        "description": "The list of wallets is being updated right now"
+    },
+    "distribution": {
+        "title": "BAN Distribution Chart",
+        "description": "The chart below shows the distribution of Banano among all opened accounts."
+    },
+    "allAccounts": {
+        "title": "All Accounts",
+        "description": "All Banano accounts, sorted by balance. Any account with an offline representative is marked with a warning flag.",
+        "offlineHint": "It is encouraged that these accounts change their representative if their current rep is constantly offline."
+    },
+    "table": {
+        "paginator": "Showing {{ pageMin }} of {{ pageMax }} of {{ pages }}",
+        "headers": {
+            "amount": "Amount",
+            "address": "Address"
+        }
+    }
+}

@@ -7,44 +7,47 @@ import { ViewportService } from '@app/services/viewport/viewport.service';
     selector: 'app-wallet-paginator',
     encapsulation: ViewEncapsulation.None,
     template: `
-        <div style="display: flex; align-items: center; height: 56px" class="text-secondary">
-            <ng-container *ngIf="maxElements > pageSize">
-                <button
-                    mat-icon-button
-                    [disabled]="pageIndex === 0 || disableMove"
-                    [style.marginRight.px]="vp.sm ? 0 : 8"
-                    (click)="firstPage()"
-                >
-                    <mat-icon>first_page</mat-icon>
-                </button>
-                <button mat-icon-button [disabled]="pageIndex === 0 || disableMove" (click)="prevPage()">
-                    <mat-icon>chevron_left</mat-icon>
-                </button>
-            </ng-container>
-            <blui-spacer></blui-spacer>
-            <div [style.fontSize.px]="vp.sm ? 12 : 14">
-                Showing
-                <span>{{ getCurrPageMin() }}</span>
-                to
-                <span>{{ getCurrPageMax() }}</span>
-                of
-                <span>{{ util.numberWithCommas(maxElements) }}</span>
+        <ng-container *transloco="let t; scope: 'wallets'; read: 'wallets'">
+            <div style="display: flex; align-items: center; height: 56px" class="text-secondary">
+                <ng-container *ngIf="maxElements > pageSize">
+                    <button
+                        mat-icon-button
+                        [disabled]="pageIndex === 0 || disableMove"
+                        [style.marginRight.px]="vp.sm ? 0 : 8"
+                        (click)="firstPage()"
+                    >
+                        <mat-icon>first_page</mat-icon>
+                    </button>
+                    <button mat-icon-button [disabled]="pageIndex === 0 || disableMove" (click)="prevPage()">
+                        <mat-icon>chevron_left</mat-icon>
+                    </button>
+                </ng-container>
+                <blui-spacer></blui-spacer>
+                <div [style.fontSize.px]="vp.sm ? 12 : 14">
+                    {{
+                        t('table.paginator', {
+                            pageMin: getCurrPageMin(),
+                            pageMax: getCurrPageMax(),
+                            pages: util.numberWithCommas(maxElements)
+                        })
+                    }}
+                </div>
+                <blui-spacer></blui-spacer>
+                <ng-container *ngIf="maxElements > pageSize">
+                    <button
+                        mat-icon-button
+                        [disabled]="isMaxPageNum() || disableMove"
+                        [style.marginRight.px]="vp.sm ? 0 : 8"
+                        (click)="nextPage()"
+                    >
+                        <mat-icon>chevron_right</mat-icon>
+                    </button>
+                    <button mat-icon-button [disabled]="isMaxPageNum() || disableMove" (click)="lastPage()">
+                        <mat-icon>last_page</mat-icon>
+                    </button>
+                </ng-container>
             </div>
-            <blui-spacer></blui-spacer>
-            <ng-container *ngIf="maxElements > pageSize">
-                <button
-                    mat-icon-button
-                    [disabled]="isMaxPageNum() || disableMove"
-                    [style.marginRight.px]="vp.sm ? 0 : 8"
-                    (click)="nextPage()"
-                >
-                    <mat-icon>chevron_right</mat-icon>
-                </button>
-                <button mat-icon-button [disabled]="isMaxPageNum() || disableMove" (click)="lastPage()">
-                    <mat-icon>last_page</mat-icon>
-                </button>
-            </ng-container>
-        </div>
+        </ng-container>
     `,
 })
 export class WalletPaginatorComponent implements OnInit {
