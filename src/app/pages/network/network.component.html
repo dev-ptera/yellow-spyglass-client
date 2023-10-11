@@ -122,8 +122,8 @@
     </mat-card>
 
     <mat-card responsive class="divider-border">
-        <div class="section-title">Vote weight</div>
-        <div class="app-section-subtitle">How is network voting weight allocated?</div>
+        <div class="section-title">{{ t('voteWeightCard.title') }}</div>
+        <div class="app-section-subtitle">{{ t('voteWeightCard.subtitle') }}</div>
         <div style="display: flex; justify-content: center">
             <highcharts-chart
                 [update]="true"
@@ -137,9 +137,9 @@
 
         <table class="network-consensus-table" responsive>
             <tr>
-                <th>Representatives</th>
-                <th>Amount</th>
-                <th>Percent</th>
+                <th>{{ t('voteWeightCard.headers.representatives') }}</th>
+                <th>{{ t('voteWeightCard.headers.amount') }}</th>
+                <th>{{ t('voteWeightCard.headers.percent') }}</th>
             </tr>
             <tr>
                 <td>
