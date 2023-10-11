@@ -1,0 +1,15 @@
+{
+    "explore": "Explore",
+    "status": "Status",
+    "knownAccounts": "Known Accounts",
+    "network": "Network",
+    "node": "Node",
+    "reps": "Representatives",
+    "wallets": "Wallets",
+    "searchHint": "Search by Address, Block or Alias",
+    "settings": "User Settings",
+    "themes": "Themes",
+    "bookmarks": "Bookmarks",
+    "light": "Light Theme",
+    "dark": "Dark Theme"
+}

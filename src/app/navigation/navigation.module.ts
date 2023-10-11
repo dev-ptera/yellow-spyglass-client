@@ -13,6 +13,7 @@ import { AppBarComponent } from './app-bar/app-bar.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { BoldSearchPipe } from './search-bar/bold-search.pipe';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @NgModule({
     declarations: [NavigationComponent, AppUserMenuComponent, AppBarComponent, SearchBarComponent, BoldSearchPipe],
@@ -30,6 +31,7 @@ import { BoldSearchPipe } from './search-bar/bold-search.pipe';
         FormsModule,
         EmptyStateModule,
         MatMenuModule,
+        TranslocoModule,
     ],
     exports: [NavigationComponent, AppUserMenuComponent, AppBarComponent, SearchBarComponent, BoldSearchPipe],
 })

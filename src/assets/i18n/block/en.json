@@ -1,0 +1,10 @@
+{
+    "pageTitle": "State Block",
+    "blockAccount": {
+        "title": "Block Account",
+        "description": "The account represented by this state block"
+    },
+    "subtype": {
+        "title": "Subtype"
+    }
+}

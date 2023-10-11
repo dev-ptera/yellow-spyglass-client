@@ -1,7 +1,6 @@
-import { ChangeDetectorRef, Component, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { ViewportService } from '@app/services/viewport/viewport.service';
 import { Block } from '@app/types/dto/BlockDto';
-import { UtilService } from '@app/services/util/util.service';
 import { Subscription } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 import { ApiService } from '@app/services/api/api.service';
@@ -20,7 +19,7 @@ import { AliasService } from '@app/services/alias/alias.service';
             </div>
         </ng-template>
 
-        <ng-template #titleContent>
+        <ng-template #titleContent let-t="t">
             <div class="app-page-title" style="display: flex; align-items: center">
                 <div>State Block</div>
                 <app-load-spinner *ngIf="isLoading"></app-load-spinner>
@@ -32,11 +31,11 @@ import { AliasService } from '@app/services/alias/alias.service';
             </div>
         </ng-template>
 
-        <ng-template #bodyContent>
+        <ng-template #bodyContent let-t="t">
             <div class="hash-section">
                 <div class="alias-row">
                     <div>
-                        <span class="app-section-title">Block Account</span>
+                        <span class="app-section-title">{{ t('blockAccount.title') }}</span>
                         <a
                             class="mat-body-1 link text"
                             [routerLink]="'/' + routes.account.route + '/' + block.block_account"
@@ -46,7 +45,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                     </div>
                     <ng-container *ngTemplateOutlet="alias; context: { address: block.block_account }"></ng-container>
                 </div>
-                <div class="hash-description text-secondary">The account represented by this state block</div>
+                <div class="hash-description text-secondary">{{ t('blockAccount.description') }}</div>
             </div>
             <div class="hash-section">
                 <div>
@@ -206,26 +205,31 @@ import { AliasService } from '@app/services/alias/alias.service';
             </div>
         </ng-template>
 
-        <div class="hash-root app-page-root" responsive [style.justifyContent.center]="hasError">
-            <div class="app-page-content">
-                <div *ngIf="hasError" style="display: flex; justify-content: center;">
-                    <blui-empty-state
-                        style="max-width: 420px; margin-top: 64px"
-                        title="Unknown Block"
-                        description="The block you requested in not found.  Please double-check the hash is correct or try again later."
-                    >
-                        <button blui-actions mat-flat-button color="primary" (click)="goBack()">Go Back</button>
-                        <mat-icon blui-empty-icon>info</mat-icon>
-                    </blui-empty-state>
-                </div>
-                <ng-container *ngIf="!hasError">
-                    <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
-                    <div *ngIf="!isLoading" class="animation-body network-container">
-                        <ng-template [ngTemplateOutlet]="bodyContent"></ng-template>
+        <ng-container *transloco="let t; scope: 'block'; read: 'block'">
+            <div class="hash-root app-page-root" responsive [style.justifyContent.center]="hasError">
+                <div class="app-page-content">
+                    <div *ngIf="hasError" style="display: flex; justify-content: center;">
+                        <blui-empty-state
+                            style="max-width: 420px; margin-top: 64px"
+                            title="Unknown Block"
+                            description="The block you requested in not found.  Please double-check the hash is correct or try again later."
+                        >
+                            <button blui-actions mat-flat-button color="primary" (click)="goBack()">Go Back</button>
+                            <mat-icon blui-empty-icon>info</mat-icon>
+                        </blui-empty-state>
                     </div>
-                </ng-container>
+                    <ng-container *ngIf="!hasError">
+                        <ng-template [ngTemplateOutlet]="titleContent" [ngTemplateOutletContext]="{ t }"></ng-template>
+                        <div *ngIf="!isLoading" class="animation-body network-container">
+                            <ng-template
+                                [ngTemplateOutlet]="bodyContent"
+                                [ngTemplateOutletContext]="{ t }"
+                            ></ng-template>
+                        </div>
+                    </ng-container>
+                </div>
             </div>
-        </div>
+        </ng-container>
     `,
     styleUrls: ['./block.component.scss'],
     encapsulation: ViewEncapsulation.None,
@@ -242,8 +246,6 @@ export class BlockComponent implements OnDestroy {
     constructor(
         public vp: ViewportService,
         private readonly _router: Router,
-        private readonly _util: UtilService,
-        private readonly _ref: ChangeDetectorRef,
         private readonly _apiService: ApiService,
         private readonly _aliasService: AliasService
     ) {
@@ -310,11 +312,4 @@ export class BlockComponent implements OnDestroy {
     getAlias(address: string): string {
         return this._aliasService.getAlias(address);
     }
-
-    /*
-    search(value: string, e: MouseEvent): void {
-        if (value !== '0000000000000000000000000000000000000000000000000000000000000000') {
-            this._searchService.emitSearch(value, e.ctrlKey);
-        }
-    } */
 }

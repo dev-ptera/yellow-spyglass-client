@@ -1,10 +1,10 @@
-<ng-template #titleContent>
+<ng-template #titleContent let-t="t">
     <div responsive>
         <div class="app-page-title" style="display: flex; align-items: center">
-            <div>Vanity MonKeys</div>
+            <div>{{ t('page.title') }}</div>
             <app-load-spinner *ngIf="isLoading"></app-load-spinner>
         </div>
-        <div class="app-page-subtitle">A showcase of accounts with custom vanity MonKeys.</div>
+        <div class="app-page-subtitle">{{ t('page.description') }}</div>
     </div>
 </ng-template>
 
@@ -44,14 +44,16 @@
     </div>
 </ng-template>
 
-<div class="vanity-root app-page-root" responsive>
-    <div class="app-page-content" style="max-width: 1250px">
-        <app-error *ngIf="hasError"></app-error>
-        <ng-container *ngIf="!hasError">
-            <ng-template [ngTemplateOutlet]="titleContent"></ng-template>
-            <div *ngIf="!isLoading" class="animation-body">
-                <ng-template [ngTemplateOutlet]="bodyContent"></ng-template>
-            </div>
-        </ng-container>
+<ng-container *transloco="let t; scope: 'vanity'; read: 'vanity'">
+    <div class="vanity-root app-page-root" responsive>
+        <div class="app-page-content" style="max-width: 1250px">
+            <app-error *ngIf="hasError"></app-error>
+            <ng-container *ngIf="!hasError">
+                <ng-template [ngTemplateOutlet]="titleContent" [ngTemplateOutletContext]="{ t }"></ng-template>
+                <div *ngIf="!isLoading" class="animation-body">
+                    <ng-template [ngTemplateOutlet]="bodyContent"></ng-template>
+                </div>
+            </ng-container>
+        </div>
     </div>
-</div>
+</ng-container>

@@ -60,7 +60,7 @@ export let APP_SEARCH_BAR_ID = 0;
 export class SearchBarComponent implements OnInit, AfterViewInit, AfterViewChecked {
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
-    @Input() placeholder: string = 'Search by Address, Block or Alias';
+    @Input() placeholder: string;
     @Input() toolbarTitle: string;
 
     /** This input is used to turn off the autofocus logic. Home page search does not need autofocus, but app-bar search does. */

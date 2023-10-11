@@ -6,10 +6,19 @@ import { InfoListItemModule } from '@brightlayer-ui/angular-components';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @NgModule({
     declarations: [NodeMonitorComponent],
-    imports: [AppCommonModule, CommonModule, InfoListItemModule, MatListModule, MatCardModule, RouterModule],
+    imports: [
+        AppCommonModule,
+        CommonModule,
+        InfoListItemModule,
+        MatListModule,
+        MatCardModule,
+        RouterModule,
+        TranslocoModule,
+    ],
     exports: [NodeMonitorComponent],
 })
 export class NodeMonitorModule {}

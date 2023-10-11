@@ -1,5 +1,11 @@
 # Change Log
 
+## v2.7.0 (October 8, 2023)
+
+### Added
+
+-  Update spanish translations.
+
 ## v2.6.1 (July 22, 2023)
 
 ### Fixed

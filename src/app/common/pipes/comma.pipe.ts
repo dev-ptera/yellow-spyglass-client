@@ -8,6 +8,10 @@ export class CommaPipe implements PipeTransform {
             adjustedValue = 0;
         }
 
+        if (isNaN(adjustedValue)) {
+            return adjustedValue;
+        }
+
         return this.numberWithCommas(this.removeInsigFigs(Number(adjustedValue)));
     }
 

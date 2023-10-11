@@ -1,0 +1,16 @@
+{
+    "pageTitle": "Bookmarks",
+    "pageDescription": "Bookmarks allow you to quickly save addresses or transactions. Manage your bookmarks below.",
+    "headers": {
+        "bookmark": "Bookmark",
+        "alias": "Alias"
+    },
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "noBookmarksTitle": "No Bookmarks Found",
+    "noBookmarksDescription": "To add a bookmark, search an address or transaction hash and save it.",
+    "removeBookmark": "Remove bookmark?",
+    "yes": "Yes",
+    "no": "No"
+}

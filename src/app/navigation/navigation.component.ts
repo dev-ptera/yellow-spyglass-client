@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 import { ViewportService } from '../services/viewport/viewport.service';
 import { DrawerStateService } from '../services/drawer-state/drawer-state.service';
 import { APP_NAV_ITEMS, EXPLORER_NAV_GROUP, NavItem, NETWORK_NAV_GROUP } from './nav-items';
-import { SearchService } from '@app/services/search/search.service';
 import { Meta, Title } from '@angular/platform-browser';
 import { environment } from '../../environments/environment';
 import { UtilService } from '@app/services/util/util.service';
@@ -26,8 +25,6 @@ export class NavigationComponent {
         private readonly _meta: Meta,
         private readonly _router: Router,
         private readonly _utilService: UtilService,
-        private readonly _searchService: SearchService,
-        private readonly _viewportService: ViewportService,
         private readonly _stateService: DrawerStateService
     ) {
         this._listenForRouteChanges();

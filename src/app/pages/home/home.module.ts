@@ -11,6 +11,7 @@ import { NavigationModule } from '../../navigation/navigation.module';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @NgModule({
     declarations: [HomeComponent],
@@ -26,6 +27,7 @@ import { RouterModule } from '@angular/router';
         MatCardModule,
         MatIconModule,
         FormsModule,
+        TranslocoModule,
         RouterModule,
     ],
     exports: [HomeComponent],

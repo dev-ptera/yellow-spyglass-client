@@ -8,7 +8,7 @@ import { ResponsiveDirective } from '@app/common/directives/responsive.directive
 import { SafeHtmlPipe } from '@app/common/pipes/safe.pipe';
 import { ErrorComponent } from '@app/common/components/error/error.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { CommaPipe } from '@app/common/pipes/comma.directive';
+import { CommaPipe } from '@app/common/pipes/comma.pipe';
 import { PercentagePipe } from '@app/common/pipes/percentage.pipe';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
