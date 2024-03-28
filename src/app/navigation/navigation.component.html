@@ -39,7 +39,13 @@
             </blui-drawer-nav-group>
         </blui-drawer-body>
     </blui-drawer>
-    <div blui-content class="navigation-drawer-content" [class.isPranked]="showPrank" [class.home]="isHome()" responsive>
+    <div
+        blui-content
+        class="navigation-drawer-content"
+        [class.isPranked]="showPrank"
+        [class.home]="isHome()"
+        responsive
+    >
         <mat-toolbar
             *ngIf="showPrank"
             id="fee-announcement-bar"
@@ -67,14 +73,15 @@
                 "
             >
                 <div class="mat-body-2" style="display: flex; align-items: center; width: 100%">
-                    <div style="font-size: 36px; margin-right: 16px">🎉</div>
+                    <div style="font-size: 36px; margin-right: 16px">🙈</div>
                     <div style="width: 100%">
-                        <div><strong>V25 Protocol Update</strong></div>
+                        <div><strong>V28: Benissis Announcement</strong></div>
                         <span style="white-space: break-spaces"
-                            >Heads up, monkeys! V25 introduces a small fee when transactions are sent; all
-                            incurred fees recoup RQ's losses in the Kalium Valley bank collapse - more details
-                            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">here</a>.
-                        </span>
+                            >Protocol V28 introduces KYM (Know your monKey) to adhere to global regulations, requiring
+                            POM (Proof of monKey) for each interaction. Join the
+                            <a href="https://chat.banano.cc/" target="_blank">#jungle</a> for our global compliance
+                            celebration!</span
+                        >
                     </div>
                 </div>
                 <button mat-icon-button (click)="showPrank = false">

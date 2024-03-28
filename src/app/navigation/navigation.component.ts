@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 import { ViewportService } from '../services/viewport/viewport.service';
 import { DrawerStateService } from '../services/drawer-state/drawer-state.service';
 import { APP_NAV_ITEMS, EXPLORER_NAV_GROUP, NavItem, NETWORK_NAV_GROUP } from './nav-items';
-import { SearchService } from '@app/services/search/search.service';
 import { Meta, Title } from '@angular/platform-browser';
 import { environment } from '../../environments/environment';
 import { UtilService } from '@app/services/util/util.service';
@@ -28,11 +27,21 @@ export class NavigationComponent {
         private readonly _meta: Meta,
         private readonly _router: Router,
         private readonly _utilService: UtilService,
-        private readonly _searchService: SearchService,
-        private readonly _viewportService: ViewportService,
         private readonly _stateService: DrawerStateService
     ) {
         this._listenForRouteChanges();
+    }
+
+    isBetweenApril1And2(): boolean {
+        const today = new Date();
+        const april1 = new Date(today.getFullYear(), 3, 1); // April is 3 (zero-based index)
+        const april2 = new Date(today.getFullYear(), 3, 2);
+        const currentDate = today.getDate();
+        return currentDate >= april1.getDate() && currentDate <= april2.getDate();
+    }
+
+    ngOnInit(): void {
+        this.showPrank = this.isBetweenApril1And2();
     }
 
     navigate(url: string): void {
