@@ -14,6 +14,7 @@ import { HomeModule } from '@app/pages/home/home.module';
 import { AccountModule } from '@app/pages/account/account.module';
 import { BlockModule } from '@app/pages/block/block.module';
 import { PlausibleService } from '@app/services/plausible/plausible.service';
+import { TranslocoRootModule } from './transloco-root.module';
 
 @Component({
     selector: 'app-root',
@@ -42,6 +43,7 @@ export class AppComponent {
         RouterModule,
         VanityModule,
         WalletsModule,
+        TranslocoRootModule,
     ],
     bootstrap: [AppComponent],
 })

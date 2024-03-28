@@ -10,84 +10,96 @@ import { APP_NAV_ITEMS } from '../../navigation/nav-items';
 @Component({
     selector: 'app-bookmarks',
     template: `
-        <div class="app-page-root" responsive>
-            <div class="app-page-content" *ngIf="bookmarks.length > 0">
-                <div class="app-page-title">Bookmarks</div>
+        <ng-container *transloco="let t; scope: 'bookmarks'; read: 'bookmarks'">
+            <div class="app-page-root" responsive>
+                <div class="app-page-content" *ngIf="bookmarks.length > 0">
+                    <div class="app-page-title">{{ t('pageTitle') }}</div>
 
-                <div class="app-page-subtitle">
-                    Bookmarks allow you to quickly save addresses or transactions. Manage your bookmarks below.
-                </div>
-                <table mat-table [style.width.%]="100" [dataSource]="bookmarks" class="mat-elevation-z2">
-                    <ng-container matColumnDef="data">
-                        <th mat-header-cell *matHeaderCellDef>Bookmark</th>
-                        <td mat-cell [style.paddingTop.px]="8" [style.paddingBottom.px]="8" *matCellDef="let element">
-                            <div class="bookmarks-data-cell" *ngIf="element.id !== currentEditId">
+                    <div class="app-page-subtitle">
+                        {{ t('pageDescription') }}
+                    </div>
+                    <table mat-table [style.width.%]="100" [dataSource]="bookmarks" class="mat-elevation-z2">
+                        <ng-container matColumnDef="data">
+                            <th mat-header-cell *matHeaderCellDef>{{ t('headers.bookmark') }}</th>
+                            <td
+                                mat-cell
+                                [style.paddingTop.px]="8"
+                                [style.paddingBottom.px]="8"
+                                *matCellDef="let element"
+                            >
+                                <div class="bookmarks-data-cell" *ngIf="element.id !== currentEditId">
+                                    <button
+                                        mat-icon-button
+                                        (click)="enableEditBookmark(element.id)"
+                                        [style.marginRight.px]="16"
+                                    >
+                                        <mat-icon>edit</mat-icon>
+                                    </button>
+                                    <a
+                                        class="bookmarks-data text link"
+                                        [routerLink]="'/' + navItems.account.route + '/' + element.id"
+                                    >
+                                        {{ element.alias }}
+                                    </a>
+                                </div>
+                                <div class="bookmarks-data-cell" *ngIf="element.id === currentEditId">
+                                    <mat-form-field appearance="outline" style="width: 100%">
+                                        <mat-label>{{ t('headers.alias') }}</mat-label>
+                                        <input matInput name="address" autocomplete="off" [formControl]="formControl" />
+                                    </mat-form-field>
+                                </div>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell [style.paddingLeft.px]="16" *matHeaderCellDef></th>
+                            <td
+                                mat-cell
+                                [style.paddingLeft.px]="16"
+                                *matCellDef="let element"
+                                style="text-align: right"
+                            >
                                 <button
-                                    mat-icon-button
-                                    (click)="enableEditBookmark(element.id)"
-                                    [style.marginRight.px]="16"
+                                    *ngIf="element.id !== currentEditId"
+                                    mat-stroked-button
+                                    color="warn"
+                                    (click)="openDeleteDialog(element.id, element.alias)"
                                 >
-                                    <mat-icon>edit</mat-icon>
+                                    {{ t('delete') }}
                                 </button>
-                                <a
-                                    class="bookmarks-data text link"
-                                    [routerLink]="'/' + navItems.account.route + '/' + element.id"
+                                <button
+                                    *ngIf="element.id === currentEditId"
+                                    style="margin-right: 16px; margin-bottom: 4px;"
+                                    mat-flat-button
+                                    color="primary"
+                                    (click)="saveEdit(element.id)"
                                 >
-                                    {{ element.alias }}
-                                </a>
-                            </div>
-                            <div class="bookmarks-data-cell" *ngIf="element.id === currentEditId">
-                                <mat-form-field appearance="outline" style="width: 100%">
-                                    <mat-label>Alias</mat-label>
-                                    <input matInput name="address" autocomplete="off" [formControl]="formControl" />
-                                </mat-form-field>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="actions">
-                        <th mat-header-cell [style.paddingLeft.px]="16" *matHeaderCellDef></th>
-                        <td mat-cell [style.paddingLeft.px]="16" *matCellDef="let element" style="text-align: right">
-                            <button
-                                *ngIf="element.id !== currentEditId"
-                                mat-stroked-button
-                                color="warn"
-                                (click)="openDeleteDialog(element.id, element.alias)"
-                            >
-                                Delete
-                            </button>
-                            <button
-                                *ngIf="element.id === currentEditId"
-                                style="margin-right: 16px; margin-bottom: 4px;"
-                                mat-flat-button
-                                color="primary"
-                                (click)="saveEdit(element.id)"
-                            >
-                                Save
-                            </button>
-                            <button
-                                *ngIf="element.id === currentEditId"
-                                mat-stroked-button
-                                color="primary"
-                                (click)="cancelEdit()"
-                            >
-                                Cancel
-                            </button>
-                        </td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="columns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: columns"></tr>
-                </table>
+                                    {{ t('save') }}
+                                </button>
+                                <button
+                                    *ngIf="element.id === currentEditId"
+                                    mat-stroked-button
+                                    color="primary"
+                                    (click)="cancelEdit()"
+                                >
+                                    {{ t('cancel') }}
+                                </button>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: columns"></tr>
+                    </table>
+                </div>
+                <div style="display: flex; height: 100%; align-items: center">
+                    <blui-empty-state
+                        *ngIf="bookmarks.length === 0"
+                        [title]="t('noBookmarksTitle')"
+                        [description]="t('noBookmarksDescription')"
+                    >
+                        <mat-icon blui-empty-icon>bookmarks</mat-icon>
+                    </blui-empty-state>
+                </div>
             </div>
-            <div style="display: flex; height: 100%; align-items: center">
-                <blui-empty-state
-                    *ngIf="bookmarks.length === 0"
-                    title="No Bookmarks Found"
-                    description="To add a bookmark, search an address or transaction hash and save it."
-                >
-                    <mat-icon blui-empty-icon>bookmarks</mat-icon>
-                </blui-empty-state>
-            </div>
-        </div>
+        </ng-container>
     `,
     styleUrls: ['./bookmarks.component.scss'],
 })

@@ -187,7 +187,10 @@ export class FilterDrawerComponent {
 
     localFilters: FilterDialogData;
 
-    constructor(public vp: ViewportService, public txService: TransactionsService) {}
+    constructor(
+        public vp: ViewportService,
+        public txService: TransactionsService
+    ) {}
 
     ngOnInit(): void {
         this.resetFilters();

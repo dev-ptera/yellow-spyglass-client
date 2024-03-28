@@ -1,0 +1,35 @@
+{
+    "page": {
+        "title": "Known Accounts",
+        "description": "A list of known accounts including exchanges, games, faucets, representatives & more.",
+        "additionalContext": "Accounts with custom vanity MonKeys can be seen ",
+        "here": "here"
+    },
+    "filter": {
+        "instructions": "Filter by Type",
+        "chips": {
+            "all": "All",
+            "burn": "Burn",
+            "distribution": "Distribution",
+            "donation": "Donation",
+            "event": "Event",
+            "exchange": "Exchange",
+            "faucet": "Faucet",
+            "gambling": "Gambling",
+            "representative": "Representative",
+            "team": "Team Member",
+            "service": "Service"
+        }
+    },
+    "table": {
+        "headers": {
+            "account": "Account",
+            "category": "Category",
+            "owner": "Owner",
+            "balance": "Balance"
+        },
+        "expansion": {
+            "description": "Description"
+        }
+    }
+}

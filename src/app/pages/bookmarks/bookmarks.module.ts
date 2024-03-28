@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { DeleteBookmarkDialog } from '@app/pages/bookmarks/delete-bookmark-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @NgModule({
     declarations: [BookmarksComponent, DeleteBookmarkDialog],
@@ -28,6 +29,7 @@ import { RouterModule } from '@angular/router';
         MatDialogModule,
         ReactiveFormsModule,
         RouterModule,
+        TranslocoModule,
     ],
     exports: [BookmarksComponent, DeleteBookmarkDialog],
 })

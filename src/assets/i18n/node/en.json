@@ -1,0 +1,33 @@
+{
+    "page": {
+        "title": "Node",
+        "description": "This explorer is powered & maintained by the ",
+        "batman": "batman representative"
+    },
+    "nodeCard": {
+        "title": "Node",
+        "address": "Address",
+        "protocolVersion": "Protocol Version",
+        "databaseVersion": "Database Version"
+    },
+    "blockCard": {
+        "title": "Block Count",
+        "currentBlock": "Current Block",
+        "cementedBlocks": "Cemented Blocks",
+        "uncheckedBlocks": "Unchecked Blocks"
+    },
+    "systemResourcesCard": {
+        "title": "System Resources",
+        "mem": "Memory Usage",
+        "ledgerSize": "Ledger Size",
+        "total": "{{ usagePercentage }} of disk space",
+        "availableDiskSpace": "Available Disk Space"
+    },
+    "peersCard": {
+        "title": "Connectivity",
+        "peers": "Peers",
+        "uptime": "Uptime",
+        "days": " days",
+        "location": "Location"
+    }
+}
