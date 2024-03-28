@@ -19,6 +19,9 @@
             color: map-get($foreground, text);
         }
     }
+    #fee-announcement-bar * {
+        color: map-get($foreground, text);
+    }
     .mat-drawer-backdrop.mat-drawer-shown {
         background-color: rgb(62 63 62 / 67%);
     }

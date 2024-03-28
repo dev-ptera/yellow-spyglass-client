@@ -1,0 +1,14 @@
+::ng-deep .navigation-drawer-content.isPranked {
+    .mat-drawer-content {
+        height: unset !important;
+    }
+    app-home .app-page-root {
+        padding-top: 0 !important;
+    }
+    .app-page-root {
+        padding-top: 48px;
+    }
+    .sm.app-page-root {
+        padding-top: 32px;
+    }
+}
