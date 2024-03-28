@@ -1,0 +1,41 @@
+{
+    "page": {
+        "title": "Representatives",
+        "description": "Representatives validate transactions on the Banano network. See all representatives below."
+    },
+    "weightSection": {
+        "title": "Weight Distribution",
+        "description":"Online voting weight allocation between the largest representatives.",
+        "offlineToggleText": "Include offline representatives"
+    },
+    "monitoredRepsSection": {
+        "title": "Monitored Representatives",
+        "description": "Online representatives that use the {{ nodeMonitor }} software are shown in the list below.",
+        "desktop": {
+            "table": {
+                "headers": {
+                    "rep": "Representative",
+                    "address": "Address",
+                    "version": "Version",
+                    "delegators": "Delegators",
+                    "weight": "Weight",
+                    "weightPercent": "Weight",
+                    "peers": "Peers",
+                    "uncheckedBlocks": "Unchecked\nBlocks",
+                    "cementedBlocks": "Cemented\nBlocks",
+                    "memory": "Memory",
+                    "location": "Location",
+                    "lastRestart": "Last Restart",
+                    "PR": "",
+                    "uptime": "",
+                    "day": "",
+                    "week": "",
+                    "month": ""
+                }
+            }
+        },
+        "mobile": {
+            
+        }
+    }
+}

@@ -5,6 +5,65 @@
         "description": "The account represented by this state block"
     },
     "subtype": {
-        "title": "Subtype"
+        "title": "Subtype",
+        "description": "Transaction type; can be \"send\", \"receive\", or \"change\""
+    },
+    "amount": {
+        "title": "Amount",
+        "description": "Amount of Banano sent in this transaction"
+    },
+    "recipient": {
+        "title": "Recipient",
+        "description": "The account that is receiving the transaction"
+    },
+    "sender": {
+        "title": "Sender",
+        "description": "The account that sent the transaction"
+    },
+    "balance": {
+        "title": "Balance",
+        "description": "Block account balance once this transaction is confirmed"
+    },
+    "height": {
+        "title": "Height",
+        "description": "Transaction number of this account"
+    },
+    "timestamp": {
+        "title": "Timestamp",
+        "description": "The date and time this block was discovered"
+    },
+    "confirmed": {
+        "title": "Confirmed",
+        "description": "Whether or not this block is confirmed"
+    },
+    "representative": {
+        "title": "Representative",
+        "description": "The account's representative"
+    },
+    "nextBlock": {
+        "title": "Next Block",
+        "description": "The next block in this account's chain"
+    },
+    "prevBlock": {
+        "title": "Previous Block",
+        "description": "The previous block in this account's chain"
+    },
+    "link": {
+        "title": "Previous Block",
+        "description": "The previous block in this account's chain"
+    },
+    "sig": {
+        "title": "Signature"
+    },
+    "work": {
+        "title": "Work"
+    },
+    "originalBlock": {
+        "title": "Original Block Content"
+    },
+    "unknownBlock": {
+        "title": "Unknown Block",
+        "description": "The block you requested in not found.  Please double-check the hash is correct or try again later.",
+        "buttonText": "Go Back"
     }
 }

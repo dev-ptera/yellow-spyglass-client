@@ -49,28 +49,26 @@ import { AliasService } from '@app/services/alias/alias.service';
             </div>
             <div class="hash-section">
                 <div>
-                    <span class="app-section-title">Subtype</span>
+                    <span class="app-section-title">{{ t('subtype.title') }}</span>
                     <span class="mat-body-1">{{ block.subtype }}</span>
                 </div>
-                <div class="hash-description text-secondary">
-                    Transaction type; can be "send", "receive", or "change"
-                </div>
+                <div class="hash-description text-secondary">{{ t('subtype.description') }}</div>
             </div>
             <div class="hash-section">
                 <div>
-                    <span class="app-section-title">Amount</span>
+                    <span class="app-section-title">{{ t('amount.title') }}</span>
                     <span class="mat-body-1">
                         <span [innerHTML]="block.amount_decimal | appComma | appLittleDecimal"></span> BAN |
                         {{ block.amount }} RAW
                     </span>
                 </div>
-                <div class="hash-description text-secondary">Amount of Banano sent in this transaction</div>
+                <div class="hash-description text-secondary">{{ t('amount.description') }}</div>
             </div>
 
             <div class="hash-section" *ngIf="block.subtype === 'receive'">
                 <div class="alias-row">
                     <div>
-                        <span class="app-section-title">Sender</span>
+                        <span class="app-section-title">{{ t('sender.title') }}</span>
                         <a
                             class="mat-body-1 link text"
                             [routerLink]="'/' + routes.account.route + '/' + block.source_account"
@@ -80,13 +78,13 @@ import { AliasService } from '@app/services/alias/alias.service';
                     </div>
                     <ng-container *ngTemplateOutlet="alias; context: { address: block.source_account }"></ng-container>
                 </div>
-                <div class="hash-description text-secondary">The account that sent the transaction</div>
+                <div class="hash-description text-secondary">{{ t('sender.description') }}</div>
             </div>
 
             <div class="hash-section" *ngIf="block.subtype === 'send'">
                 <div class="alias-row">
                     <div>
-                        <span class="app-section-title">Recipient</span>
+                        <span class="app-section-title">{{ t('recipient.title') }}</span>
                         <a
                             class="mat-body-1 link text"
                             [routerLink]="'/' + routes.account.route + '/' + block.contents.link_as_account"
@@ -98,46 +96,44 @@ import { AliasService } from '@app/services/alias/alias.service';
                         *ngTemplateOutlet="alias; context: { address: block.contents.link_as_account }"
                     ></ng-container>
                 </div>
-                <div class="hash-description text-secondary">The account that is receiving the transaction</div>
+                <div class="hash-description text-secondary">{{ t('recipient.description') }}</div>
             </div>
 
             <div class="hash-section">
                 <div>
-                    <span class="app-section-title">Balance</span>
+                    <span class="app-section-title">{{ t('balance.title') }}</span>
                     <span class="mat-body-1">
                         <span [innerHTML]="block.balance_decimal | appComma | appLittleDecimal"></span> BAN |
                         {{ block.balance }} RAW
                     </span>
                 </div>
-                <div class="hash-description text-secondary">
-                    Block account balance once this transaction is confirmed
-                </div>
+                <div class="hash-description text-secondary">{{ t('balance.description') }}</div>
             </div>
             <div class="hash-section">
                 <div>
-                    <span class="app-section-title">Height</span>
+                    <span class="app-section-title">{{ t('height.title') }}</span>
                     <span class="mat-body-1">{{ block.height | appComma }}</span>
                 </div>
-                <div class="hash-description text-secondary">Transaction number of this account</div>
+                <div class="hash-description text-secondary">{{ t('height.description') }}</div>
             </div>
             <div class="hash-section">
                 <div>
-                    <span class="app-section-title">Timestamp</span>
+                    <span class="app-section-title">{{ t('timestamp.title') }}</span>
                     <span class="mat-body-1">{{ convertUnixToDate(block.local_timestamp) }}</span>
                 </div>
-                <div class="hash-description text-secondary">The date and time this block was discovered</div>
+                <div class="hash-description text-secondary">{{ t('timestamp.description') }}</div>
             </div>
             <div class="hash-section">
                 <div>
-                    <span class="app-section-title">Confirmed</span>
+                    <span class="app-section-title">{{ t('confirmed.title') }}</span>
                     <span class="mat-body-1">{{ block.confirmed }}</span>
                 </div>
-                <div class="hash-description text-secondary">Whether or not this block is confirmed</div>
+                <div class="hash-description text-secondary">{{ t('confirmed.description') }}</div>
             </div>
             <div class="hash-section">
                 <div class="alias-row">
                     <div>
-                        <span class="app-section-title">Representative</span>
+                        <span class="app-section-title">{{ t('representative.title') }}</span>
                         <a
                             class="mat-body-1 link text"
                             [routerLink]="'/' + routes.account.route + '/' + block.contents.representative"
@@ -149,7 +145,7 @@ import { AliasService } from '@app/services/alias/alias.service';
                         *ngTemplateOutlet="alias; context: { address: block.contents.representative }"
                     ></ng-container>
                 </div>
-                <div class="hash-description text-secondary">The account's representative</div>
+                <div class="hash-description text-secondary">{{ t('representative.description') }}</div>
             </div>
             <div
                 class="hash-section"
@@ -159,48 +155,48 @@ import { AliasService } from '@app/services/alias/alias.service';
                 "
             >
                 <div>
-                    <span class="app-section-title">Next Block</span>
+                    <span class="app-section-title">{{ t('nextBlock.title') }}</span>
                     <a class="mat-body-1 text link" [routerLink]="'/' + routes.hash.route + '/' + block.successor">
                         {{ block.successor }}
                     </a>
                 </div>
-                <div class="hash-description text-secondary">The next block in this account's chain</div>
+                <div class="hash-description text-secondary">{{ t('nextBlock.description') }}</div>
             </div>
             <div class="hash-section" *ngIf="block.height !== '1'">
                 <div>
-                    <span class="app-section-title">Previous Block</span>
+                    <span class="app-section-title">{{ t('prevBlock.title') }}</span>
                     <a
                         class="mat-body-1 text link"
                         [routerLink]="'/' + routes.hash.route + '/' + block.contents.previous"
                         >{{ block.contents.previous }}</a
                     >
                 </div>
-                <div class="hash-description text-secondary">The previous block in this account's chain</div>
+                <div class="hash-description text-secondary">{{ t('prevBlock.description') }}</div>
             </div>
             <div class="hash-section" *ngIf="block.subtype === 'receive'">
                 <div>
-                    <span class="app-section-title">Link</span>
+                    <span class="app-section-title">{{ t('link.title') }}</span>
                     <a class="mat-body-1 link text" [routerLink]="'/' + routes.hash.route + '/' + block.contents.link">
                         {{ block.contents.link }}
                     </a>
                 </div>
-                <div class="hash-description text-secondary">The corresponding block that started this transaction</div>
+                <div class="hash-description text-secondary">{{ t('link.description') }}</div>
             </div>
             <div class="hash-section">
                 <div>
-                    <span class="app-section-title">Signature</span>
+                    <span class="app-section-title">{{ t('sig.title') }}</span>
                     <span class="mat-body-1">{{ block.contents.signature }}</span>
                 </div>
             </div>
             <div class="hash-section">
                 <div>
-                    <span class="app-section-title">Work</span>
+                    <span class="app-section-title">{{ t('work.title') }}</span>
                     <span class="mat-body-1">{{ block.contents.work }}</span>
                 </div>
             </div>
 
             <div class="hash-section">
-                <span class="app-section-title">Original Block Content</span>
+                <span class="app-section-title">{{ t('originalBlock.title') }}</span>
                 <pre class="original-block-content mono">{{ block | json }}</pre>
             </div>
         </ng-template>
@@ -211,10 +207,12 @@ import { AliasService } from '@app/services/alias/alias.service';
                     <div *ngIf="hasError" style="display: flex; justify-content: center;">
                         <blui-empty-state
                             style="max-width: 420px; margin-top: 64px"
-                            title="Unknown Block"
-                            description="The block you requested in not found.  Please double-check the hash is correct or try again later."
+                            [title]="t('unknownBlock.title')"
+                            [description]="t('unknownBlock.description')"
                         >
-                            <button blui-actions mat-flat-button color="primary" (click)="goBack()">Go Back</button>
+                            <button blui-actions mat-flat-button color="primary" (click)="goBack()">
+                                {{ t('unknownBlock.buttonText') }}
+                            </button>
                             <mat-icon blui-empty-icon>info</mat-icon>
                         </blui-empty-state>
                     </div>
