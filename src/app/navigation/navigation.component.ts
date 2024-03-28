@@ -41,7 +41,7 @@ export class NavigationComponent {
     }
 
     ngOnInit(): void {
-        this.showPrank = this.isBetweenApril1And2();
+        this.showPrank = this.isBetweenApril1And2(); // TODO: TURN THIS OFF AFTER
     }
 
     navigate(url: string): void {
