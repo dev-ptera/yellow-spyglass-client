@@ -39,8 +39,50 @@
             </blui-drawer-nav-group>
         </blui-drawer-body>
     </blui-drawer>
-    <div blui-content class="navigation-drawer-content" [class.home]="isHome()" responsive>
-        <app-bar [toolbarTitle]="toolbarTitle" (openDrawer)="openDrawer()"></app-bar>
+    <div blui-content class="navigation-drawer-content" [class.isPranked]="showPrank" [class.home]="isHome()" responsive>
+        <mat-toolbar
+            *ngIf="showPrank"
+            id="fee-announcement-bar"
+            color="accent"
+            style="
+                max-height: unset;
+                height: auto;
+                padding: 16px 16px;
+                z-index: 999;
+                max-width: 100vw;
+                border-bottom: solid 1px rgba(183, 183, 183, 0.37);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            "
+            class="prank-bar-bro"
+        >
+            <div
+                style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    width: 100%;
+                    max-width: 1600px;
+                "
+            >
+                <div class="mat-body-2" style="display: flex; align-items: center; width: 100%">
+                    <div style="font-size: 36px; margin-right: 16px">🎉</div>
+                    <div style="width: 100%">
+                        <div><strong>V25 Protocol Update</strong></div>
+                        <span style="white-space: break-spaces"
+                            >Heads up, monkeys! V25 introduces a small fee when transactions are sent; all
+                            incurred fees recoup RQ's losses in the Kalium Valley bank collapse - more details
+                            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">here</a>.
+                        </span>
+                    </div>
+                </div>
+                <button mat-icon-button (click)="showPrank = false">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </mat-toolbar>
+        <app-bar [toolbarTitle]="toolbarTitle" (openDrawer)="openDrawer()" [isPranked]="showPrank"></app-bar>
 
         <!--
         MAINTENANCE COMMENT

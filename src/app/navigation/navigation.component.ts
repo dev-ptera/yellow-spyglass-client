@@ -11,11 +11,13 @@ import { UtilService } from '@app/services/util/util.service';
 
 @Component({
     selector: 'app-navigation',
+    styleUrls: ['ha.scss'],
     templateUrl: './navigation.component.html',
 })
 export class NavigationComponent {
     toolbarTitle: string;
     routeListener: Subscription;
+    showPrank = true;
 
     explorerNavGroup = EXPLORER_NAV_GROUP;
     networkNavGroup = NETWORK_NAV_GROUP;
