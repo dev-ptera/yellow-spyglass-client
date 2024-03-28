@@ -14,10 +14,7 @@ export class DelegatorsTabService {
     private matTableDatasource: any;
     private delegators: DelegatorDto[] = [];
 
-    constructor(
-        private readonly _apiService: ApiService,
-        private readonly _util: UtilService
-    ) {}
+    constructor(private readonly _apiService: ApiService, private readonly _util: UtilService) {}
 
     forgetAccount(): void {
         this.matTableDatasource = [];

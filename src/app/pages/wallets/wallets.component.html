@@ -99,7 +99,7 @@
                 </div>
                 <div class="wallets-rich-list-conversion text-secondary">
                     <div>
-                        {{ formatUsdPrice(element.amount) | currency: 'USD' : 'symbol' : '1.0' }}
+                        {{ formatUsdPrice(element.amount) | currency: 'USD':'symbol':'1.0' }}
                         <ng-container>·</ng-container>
                         {{ formatBtcPrice(element.amount) }}
                     </div>

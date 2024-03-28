@@ -70,10 +70,7 @@ export class TransactionsService {
 
     accountOverviewListener: Subscription;
 
-    constructor(
-        private readonly _vp: ViewportService,
-        private readonly _apiService: ApiService
-    ) {
+    constructor(private readonly _vp: ViewportService, private readonly _apiService: ApiService) {
         this.forgetAccount();
 
         this.accountOverviewListener = this._apiService.accountLoadedSubject.subscribe((overview) => {

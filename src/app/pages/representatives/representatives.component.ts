@@ -63,10 +63,7 @@ export class RepresentativesComponent implements OnInit {
         uptime: false,
     };
 
-    constructor(
-        public vp: ViewportService,
-        private readonly _api: ApiService
-    ) {}
+    constructor(public vp: ViewportService, private readonly _api: ApiService) {}
 
     ngOnInit(): void {
         this._parseMonitoredRepsShownColumns();

@@ -112,11 +112,7 @@ export class WeightChartComponent implements OnChanges {
     chartShownRepsCol1: Array<{ name: string; address: string }> = [];
     chartShownRepsCol2: Array<{ name: string; address: string }> = [];
 
-    constructor(
-        public vp: ViewportService,
-        public aliasService: AliasService,
-        private readonly _util: UtilService
-    ) {
+    constructor(public vp: ViewportService, public aliasService: AliasService, private readonly _util: UtilService) {
         this.vp.vpChange.subscribe(() => {
             setTimeout(() => {
                 window.dispatchEvent(new Event('resize'));
