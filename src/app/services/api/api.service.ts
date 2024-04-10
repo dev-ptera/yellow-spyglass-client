@@ -110,7 +110,7 @@ export class ApiService {
     /** Fetches explorer summary information. */
     async fetchDiscordWalletFromUserId(id: string): Promise<DiscordResponseDto[]> {
         await this._hasPingedApi();
-        return this._http.get<any>(`https://bananobotapi.banano.cc/wfu/${id}`).toPromise();
+        return this._http.get<any>(`${this.httpApi}/v1/wfu/${id}`).toPromise();
     }
 
     /** Fetches account summary information. Also emits an event via `accountLoadedSubject` when loaded. */
