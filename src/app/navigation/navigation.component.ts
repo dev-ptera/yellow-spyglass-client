@@ -32,16 +32,16 @@ export class NavigationComponent {
         this._listenForRouteChanges();
     }
 
-    isBetweenApril1And2(): boolean {
+    isAprilFoolsDay(): boolean {
         const today = new Date();
-        const april1 = new Date(today.getFullYear(), 3, 1); // April is 3 (zero-based index)
-        const april2 = new Date(today.getFullYear(), 3, 2);
-        const currentDate = today.getDate();
-        return currentDate >= april1.getDate() && currentDate <= april2.getDate();
+        const month = today.getMonth(); // getMonth() returns 0-indexed months (0 for January, 1 for February, etc.)
+        const day = today.getDate();
+
+        return month === 3 && day === 1; // April is the 4th month, but 0-indexed, so April is represented as 3
     }
 
     ngOnInit(): void {
-        this.showPrank = this.isBetweenApril1And2(); // TODO: TURN THIS OFF AFTER
+        this.showPrank = this.isAprilFoolsDay();
     }
 
     navigate(url: string): void {

@@ -1,5 +1,9 @@
 # Change Log
 
+## v2.7.0 (April 28, 2024)
+
+-  Added birthday banner which displays every Apirl 1st.
+
 ## v2.6.1 (July 22, 2023)
 
 ### Fixed
