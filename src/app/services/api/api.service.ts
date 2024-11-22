@@ -204,6 +204,17 @@ export class ApiService {
             .toPromise();
     }
 
+    /** Fetch/query BNS domain. */
+    async fetchBNSDomain(domain_name: string, tld: string): Promise<any> {
+        await this._hasPingedApi();
+        return this._http
+            .post<any>(`${this.httpApi}/v1/account/bns`, {
+                domain_name,
+                tld,
+            })
+            .toPromise();
+    }
+
     /** Fetches monitored representatives stats. */
     async fetchMonitoredRepresentatives(): Promise<MonitoredRepDto[]> {
         await this._hasPingedApi();
