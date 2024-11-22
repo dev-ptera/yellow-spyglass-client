@@ -127,7 +127,11 @@ export class SearchBarComponent implements OnInit, AfterViewInit, AfterViewCheck
             return this.invalidSearch.emit();
         }
 
-        if (this._searchService.isValidAddress(value) || this._searchService.isValidBlock(value) || this._searchService.isValidBNSDomain(value)) {
+        if (
+            this._searchService.isValidAddress(value) ||
+            this._searchService.isValidBlock(value) ||
+            this._searchService.isValidBNSDomain(value)
+        ) {
             return this._emitSearch(value, controlKey);
         }
 

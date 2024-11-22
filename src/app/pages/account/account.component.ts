@@ -123,13 +123,15 @@ export class AccountComponent implements OnDestroy {
         }
 
         if (!address.startsWith('ban_')) {
-            const parts = address.split(".");
+            const parts = address.split('.');
             if (parts.length === 2) {
                 //search in api
-                const domain = await this.apiService.fetchBNSDomain(parts[0], parts[1]);
-                if (domain.domain?.resolved_address) {
-                  return this._redirectToAccountPage(domain.domain?.resolved_address);
-                }
+                try {
+                    const domain = await this.apiService.fetchBNSDomain(parts[0], parts[1]);
+                    if (domain.domain?.resolved_address) {
+                        return this._redirectToAccountPage(domain.domain?.resolved_address);
+                    }
+                } catch (_) {}
             }
             this._redirectToHashPage(address);
         }
