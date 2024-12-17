@@ -45,4 +45,10 @@ export class UtilService {
     shortenAddress(addr: string): string {
         return `${addr.substr(0, 12)}...${addr.substr(addr.length - 6, addr.length)}`;
     }
+
+    isValidBNSDomain(bns: string): boolean {
+        const parts = bns.split('.');
+        //later, can also check for illegal characters once that is more settled
+        return parts.length === 2 && parts[0].length <= 32;
+    }
 }

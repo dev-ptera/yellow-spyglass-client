@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { UtilService } from '@app/services/util/util.service';
 import { Observable, Subject } from 'rxjs';
 import { APP_NAV_ITEMS } from '../../navigation/nav-items';
 import { Router } from '@angular/router';
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 export class SearchService {
     search$ = new Subject<{ search: string; openInNewWindow: boolean }>();
 
-    constructor(router: Router) {
+    constructor(router: Router, private readonly _utilService: UtilService) {
         this.searchEvents().subscribe((data: { search: string; openInNewWindow: boolean }) => {
             if (data.openInNewWindow) {
                 if (data.search.startsWith('ban_') || this.isValidBNSDomain(data.search)) {
@@ -49,8 +50,6 @@ export class SearchService {
     }
 
     isValidBNSDomain(bns: string): boolean {
-        const parts = bns.split('.');
-        //later, can also check for illegal characters once that is more settled
-        return parts.length === 2 && parts[0].length <= 32;
+        return this._utilService.isValidBNSDomain(bns);
     }
 }

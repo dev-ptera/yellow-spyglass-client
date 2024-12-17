@@ -123,16 +123,18 @@ export class AccountComponent implements OnDestroy {
         }
 
         if (!address.startsWith('ban_')) {
-            const parts = address.split('.');
-            if (parts.length === 2) {
+            //if not a banano address, and is in the format <string>.<string>, search in api
+            if (this._util.isValidBNSDomain(address)) {
                 //search in api
                 try {
+                    const parts = address.split('.');
                     const domain = await this.apiService.fetchBNSDomain(parts[0], parts[1]);
                     if (domain.domain?.resolved_address) {
                         return this._redirectToAccountPage(domain.domain?.resolved_address);
                     }
                 } catch (_) {}
             }
+            //if not in that format, or not found in api, assume it is a block hash
             this._redirectToHashPage(address);
         }
 
