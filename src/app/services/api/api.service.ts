@@ -209,7 +209,7 @@ export class ApiService {
     async fetchBNSDomain(domain_name: string, tld: string): Promise<BNSDomainDto> {
         await this._hasPingedApi();
         return this._http
-            .post<any>(`${this.httpApi}/v1/account/bns`, {
+            .post<BNSDomainDto>(`${this.httpApi}/v1/account/bns`, {
                 domain_name,
                 tld,
             })

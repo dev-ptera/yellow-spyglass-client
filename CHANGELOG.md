@@ -1,5 +1,9 @@
 # Change Log
 
+## v2.8.0 (December 21, 2024)
+
+-  Added ability to search BNS addresses.
+
 ## v2.7.0 (April 28, 2024)
 
 -  Added birthday banner which displays every Apirl 1st.
