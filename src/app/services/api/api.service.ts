@@ -11,6 +11,7 @@ import {
     AliasDto,
     BlockAtHeightDto,
     BlockDtoV2,
+    BNSDomainDto,
     ConfirmedTransactionDto,
     DelegatorsOverviewDto,
     DiscordResponseDto,
@@ -200,6 +201,17 @@ export class ApiService {
             .post<RepresentativeDto[]>(`${this.httpApi}/v1/representatives`, {
                 minimumWeight: 100_000,
                 includeDelegatorCount: true,
+            })
+            .toPromise();
+    }
+
+    /** Fetch/query BNS domain. */
+    async fetchBNSDomain(domain_name: string, tld: string): Promise<BNSDomainDto> {
+        await this._hasPingedApi();
+        return this._http
+            .post<BNSDomainDto>(`${this.httpApi}/v1/account/bns`, {
+                domain_name,
+                tld,
             })
             .toPromise();
     }

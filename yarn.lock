@@ -2554,6 +2554,11 @@ axios@^0.21.1:
   dependencies:
     follow-redirects "^1.14.0"
 
+b4a@^1.0.1:
+  version "1.6.7"
+  resolved "https://registry.yarnpkg.com/b4a/-/b4a-1.6.7.tgz#a99587d4ebbfbd5a6e3b21bdb5d5fa385767abe4"
+  integrity sha512-OnAYlL5b7LEkALw87fUVafQw5rVR9RjwGd4KUwNQ6DrrNmaVaUCgLipfVlzrPQ4tWOR9P0IXGNOx50jYCCdSJg==
+
 babel-loader@8.2.5:
   version "8.2.5"
   resolved "https://registry.npmjs.org/babel-loader/-/babel-loader-8.2.5.tgz"
@@ -2611,6 +2616,20 @@ balanced-match@^1.0.0:
   resolved "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
+banani-bns@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/banani-bns/-/banani-bns-0.0.9.tgz#30eea4c94fbc3f1c9cf6e0282731c7a3edc3d550"
+  integrity sha512-G9eRXk24ykHLqSCr2LgqNHyUvuzye0VTpNMZdyD4/8HtZRU05Pv1Dbk1lbINkz0ZVf1Y2Jl6dF0ivXMLWBqIRA==
+  dependencies:
+    banani "^1.0.4"
+
+banani@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/banani/-/banani-1.0.4.tgz#62a9102e70cefdbdb7826b0e66dca33ea8a64943"
+  integrity sha512-/W5cedmDLcrQ9T/Y17Yrk82t1EtJPf3sH14JAzgoHWgqsza2QC0YQallIOc51sY/WxEdnqLSSSoNk9hFkcd3og==
+  dependencies:
+    blake2b "^2.1.4"
+
 banano-unit-converter@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npmjs.org/banano-unit-converter/-/banano-unit-converter-0.1.0.tgz"
@@ -2651,6 +2670,22 @@ bl@^4.1.0:
     buffer "^5.5.0"
     inherits "^2.0.4"
     readable-stream "^3.4.0"
+
+blake2b-wasm@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/blake2b-wasm/-/blake2b-wasm-2.4.0.tgz#9115649111edbbd87eb24ce7c04b427e4e2be5be"
+  integrity sha512-S1kwmW2ZhZFFFOghcx73+ZajEfKBqhP82JMssxtLVMxlaPea1p9uoLiUZ5WYyHn0KddwbLc+0vh4wR0KBNoT5w==
+  dependencies:
+    b4a "^1.0.1"
+    nanoassert "^2.0.0"
+
+blake2b@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/blake2b/-/blake2b-2.1.4.tgz#817d278526ddb4cd673bfb1af16d1ad61e393ba3"
+  integrity sha512-AyBuuJNI64gIvwx13qiICz6H6hpmjvYS5DGkG6jbXMOT8Z3WUJ3V1X0FlhIoT1b/5JtHE3ki+xjtMvu1nn+t9A==
+  dependencies:
+    blake2b-wasm "^2.4.0"
+    nanoassert "^2.0.0"
 
 body-parser@1.20.0, body-parser@^1.19.0:
   version "1.20.0"
@@ -5877,6 +5912,11 @@ mute-stream@0.0.8:
   version "0.0.8"
   resolved "https://registry.npmjs.org/mute-stream/-/mute-stream-0.0.8.tgz"
   integrity sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==
+
+nanoassert@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/nanoassert/-/nanoassert-2.0.0.tgz#a05f86de6c7a51618038a620f88878ed1e490c09"
+  integrity sha512-7vO7n28+aYO4J+8w96AzhmU8G+Y/xpPDJz/se19ICsqj/momRbb9mh9ZUtkoJ5X3nTnPdhEJyc0qnM6yAsHBaA==
 
 nanoid@^3.3.3, nanoid@^3.3.4:
   version "3.3.4"

@@ -151,5 +151,8 @@
             }
         }
     },
-    "defaultProject": "yellow-spyglass-client"
+    "defaultProject": "yellow-spyglass-client",
+    "cli": {
+      "analytics": false
+    }
 }
