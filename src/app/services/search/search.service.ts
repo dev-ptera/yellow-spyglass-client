@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { UtilService } from '@app/services/util/util.service';
 import { Observable, Subject } from 'rxjs';
 import { APP_NAV_ITEMS } from '../../navigation/nav-items';
 import { Router } from '@angular/router';
@@ -9,17 +10,17 @@ import { Router } from '@angular/router';
 export class SearchService {
     search$ = new Subject<{ search: string; openInNewWindow: boolean }>();
 
-    constructor(router: Router) {
+    constructor(router: Router, private readonly _utilService: UtilService) {
         this.searchEvents().subscribe((data: { search: string; openInNewWindow: boolean }) => {
             if (data.openInNewWindow) {
-                if (data.search.startsWith('ban_')) {
+                if (data.search.startsWith('ban_') || this.isValidBNSDomain(data.search)) {
                     const origin = window.location.origin;
                     window.open(`${origin}/${APP_NAV_ITEMS.account.route}/${data.search}`, '_blank');
                 } else {
                     window.open(`${origin}/${APP_NAV_ITEMS.hash.route}/${data.search}`, '_blank');
                 }
             } else {
-                if (data.search.startsWith('ban_')) {
+                if (data.search.startsWith('ban_') || this.isValidBNSDomain(data.search)) {
                     void router.navigate([`${APP_NAV_ITEMS.account.route}/${data.search}`]);
                 } else {
                     void router.navigate([`${APP_NAV_ITEMS.hash.route}/${data.search}`]);
@@ -46,5 +47,9 @@ export class SearchService {
 
     isValidBlock(block: string): boolean {
         return block && block.length === 64;
+    }
+
+    isValidBNSDomain(bns: string): boolean {
+        return this._utilService.isValidBNSDomain(bns);
     }
 }

@@ -9,7 +9,7 @@ import { OnlineRepsService } from '@app/services/online-reps/online-reps.service
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AliasService } from '@app/services/alias/alias.service';
-import { APP_NAV_ITEMS, hashNavItem } from '../../navigation/nav-items';
+import { APP_NAV_ITEMS, accountNavItem, hashNavItem } from '../../navigation/nav-items';
 import { environment } from '../../../environments/environment';
 import { DelegatorsTabService } from '@app/pages/account/tabs/delegators/delegators-tab.service';
 import { InsightsTabService } from '@app/pages/account/tabs/insights/insights-tab.service';
@@ -64,12 +64,12 @@ export class AccountComponent implements OnDestroy {
         private readonly _insightsTabService: InsightsTabService,
         private readonly _delegatorsTabService: DelegatorsTabService
     ) {
-        this.routeListener = this._router.events.subscribe((route) => {
+        this.routeListener = this._router.events.subscribe(async (route) => {
             if (route instanceof NavigationEnd) {
                 const splitUrl = this._router.url.replace('/history', '').split('/');
                 const path = splitUrl[splitUrl.length - 1];
                 const address = path.substring(0, 64);
-                this._searchAccount(address);
+                await this._searchAccount(address);
             }
         });
 
@@ -111,13 +111,30 @@ export class AccountComponent implements OnDestroy {
         void this._router.navigate([`/${hashNavItem.route}/${hash}`], { replaceUrl: true });
     }
 
+    /** Call this method whenever someone has enters a BNS domain, and it is resolved to a Banano address. */
+    private _redirectToAccountPage(account: string): void {
+        void this._router.navigate([`/${accountNavItem.route}/${account}`], { replaceUrl: true });
+    }
+
     /** Given a ban address, searches for account. */
-    private _searchAccount(address): void {
+    private async _searchAccount(address): Promise<void> {
         if (!address) {
             return;
         }
 
         if (!address.startsWith('ban_')) {
+            //if not a banano address, and is in the format <string>.<string>, search in api
+            if (this._util.isValidBNSDomain(address)) {
+                //search in api
+                try {
+                    const parts = address.split('.');
+                    const domain = await this.apiService.fetchBNSDomain(parts[0], parts[1]);
+                    if (domain.domain?.resolved_address) {
+                        return this._redirectToAccountPage(domain.domain?.resolved_address);
+                    }
+                } catch (_) {}
+            }
+            //if not in that format, or not found in api, assume it is a block hash
             this._redirectToHashPage(address);
         }
 
