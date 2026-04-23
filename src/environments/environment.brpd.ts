@@ -6,6 +6,6 @@ export const environment = {
     production: true,
     brpd: true,
     //api1: 'http://localhost:3001/banano',
-    api1: 'https://api.spyglass.pw/banano',
+    api1: 'https://spyglass-api.prussia.dev/banano',
     api2: 'https://api.creeper.banano.cc/banano',
 };
